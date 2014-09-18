@@ -14,6 +14,13 @@ interface NodeInterface extends AreaContainerInterface, BlockContainerInterface,
 
     const ROOT_NODE_ID = 'root';
     /**
+     * Set id
+     *
+     * @param string $id
+     */
+    public function setId($id);
+
+    /**
      * Get id
      *
      * @return string $id
