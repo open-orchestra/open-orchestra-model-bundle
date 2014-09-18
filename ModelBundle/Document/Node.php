@@ -156,6 +156,24 @@ class Node implements NodeInterface
     }
 
     /**
+     * Clone
+     */
+    public function __clone()
+    {
+//        $this->version = ++self::$version;
+    }
+
+    /**
+     * Set id
+     *
+     * @param string $Id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
      * Get id
      *
      * @return string $id
