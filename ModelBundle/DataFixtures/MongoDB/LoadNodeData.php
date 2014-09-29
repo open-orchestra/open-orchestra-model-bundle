@@ -643,7 +643,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $siteHomeBlock1 = new Block();
         $siteHomeBlock1->setComponent('tiny_mce_wysiwyg');
         $siteHomeBlock1->setAttributes(array(
-            "_htmlContent" => "<ul id='mySubMenu'> <li><a href='/app_dev.php/node/fixture_page_about_us'> A PROPOS </a></li> <li><a href='/app_dev.php/node/fixture_page_our_team'> NOTRE EQUIPE </a></li><li><a href='/app_dev.php/node/fixture_page_news'> NOTRE ACTU </a></li><li><a href='/app_dev.php/node/fixture_page_join_us'>  NOUS REJOINDRE</a></li> <li><a href='/app_dev.php/node/fixture_page_networks'> NETWORKS </a></li> </ul>",
+            "_htmlContent" => "<ul id='mySubMenu'> <li><a href='/page-home/page-about-us'> A PROPOS </a></li> <li><a href='/app_dev.php/page-home/page-our-team'> NOTRE EQUIPE </a></li><li><a href='/page-home/page-our-news'> NOTRE ACTU </a></li><li><a href='/page-home/page-nous-rejoindre'>  NOUS REJOINDRE</a></li> <li><a href='/page-home/page-networks'> NETWORKS </a></li> </ul>",
         ));
 
         $siteHomeBlockMenu = new Block();
@@ -1427,7 +1427,7 @@ Ces Victoires mettent en lumière celles et ceux qui, chaque jour, agissent pour
         $siteNews->setSiteId(2);
         $siteNews->setParentId('fixture_page_home');
         $siteNews->setPath('-');
-        $siteNews->setAlias('page our news');
+        $siteNews->setAlias('page-our-news');
         $siteNews->setVersion(1);
         $siteNews->setLanguage('fr');
         $siteNews->setStatus($this->getReference('status-published'));
