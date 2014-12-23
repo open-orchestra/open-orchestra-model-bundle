@@ -11,6 +11,7 @@ use PHPOrchestra\ModelInterface\Model\ContentAttributeInterface;
 use PHPOrchestra\ModelInterface\Model\ContentInterface;
 use PHPOrchestra\ModelInterface\Model\StatusInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
+use PHPOrchestra\ModelInterface\MongoTrait\KeywordableDocument;
 
 /**
  * Description of Content

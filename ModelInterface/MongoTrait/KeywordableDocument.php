@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Document;
+namespace PHPOrchestra\ModelInterface\MongoTrait;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PHPOrchestra\ModelInterface\Model\KeywordInterface;
