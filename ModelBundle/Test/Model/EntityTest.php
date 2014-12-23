@@ -37,7 +37,6 @@ class EntityTest extends \PHPUnit_Framework_TestCase
             array('Node',             'StatusableInterface'),
             array('Content',          'StatusableInterface'),
             array('ContentType',      'StatusableInterface'),
-            array('Template',         'StatusableInterface'),
             array('ContentType',      'TranslatedValueContainerInterface'),
             array('FieldType',        'TranslatedValueContainerInterface'),
             array('Area',             'AreaInterface'),
