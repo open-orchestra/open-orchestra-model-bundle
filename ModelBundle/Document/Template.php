@@ -69,13 +69,6 @@ class Template implements TemplateInterface
     protected $language;
 
     /**
-     * @var StatusInterface $status
-     *
-     * @MongoDB\EmbedOne(targetDocument="EmbedStatus")
-     */
-    protected $status;
-
-    /**
      * @var boolean
      *
      * @MongoDB\Field(type="boolean")
@@ -245,30 +238,6 @@ class Template implements TemplateInterface
     public function getSiteId()
     {
         return $this->siteId;
-    }
-
-    /**
-     * Set status
-     *
-     * @param StatusInterface|null $status
-     */
-    public function setStatus(StatusInterface $status = null)
-    {
-        if ($status instanceof StatusInterface) {
-            $this->status = EmbedStatus::createFromStatus($status);
-        } else {
-            $this->status = null;
-        }
-    }
-
-    /**
-     * Get status
-     *
-     * @return StatusInterface $status
-     */
-    public function getStatus()
-    {
-        return $this->status;
     }
 
     /**
