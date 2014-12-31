@@ -177,9 +177,9 @@ class NodeRepository extends DocumentRepository implements FieldAutoGenerableRep
             $qb->field('version')->equals((int) $version);
 
             return $qb->getQuery()->getSingleResult();
-        } else {
-            return $this->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($nodeId, $language);
         }
+
+        return $this->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($nodeId, $language);
     }
 
     /**
@@ -359,17 +359,18 @@ class NodeRepository extends DocumentRepository implements FieldAutoGenerableRep
         $nodes = array();
 
         foreach ($list as $node) {
-            if (!empty($nodes[$node->getNodeId()])) {
-                if ($nodes[$node->getNodeId()]->getVersion() < $node->getVersion()) {
-                    $nodes[$node->getNodeId()] = $node;
-                }
-            } else {
+            if (empty($nodes[$node->getNodeId()])) {
+                $nodes[$node->getNodeId()] = $node;
+                continue;
+            }
+            if ($nodes[$node->getNodeId()]->getVersion() < $node->getVersion()) {
                 $nodes[$node->getNodeId()] = $node;
             }
         }
 
         return $nodes;
     }
+
     /**
      * @param string $name
      *
