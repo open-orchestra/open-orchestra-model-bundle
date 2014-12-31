@@ -287,8 +287,6 @@ class Content implements ContentInterface
     {
         if ($status instanceof StatusInterface) {
             $this->status = EmbedStatus::createFromStatus($status);
-        } else {
-            $this->status = null;
         }
     }
 

@@ -363,11 +363,10 @@ class NodeRepositoryTest extends KernelTestCase
 
         $this->assertCount($nodeNumber, $nodes);
 
-        if ($local) {
-            $this->assertSameNode($local, $version, $siteId, $nodes[0], $nodeId);
-        } else {
-            $this->assertSameNode('fr', $version, $siteId, $nodes[0], $nodeId);
+        if (is_null($local)) {
+            $local = 'fr';
         }
+        $this->assertSameNode($local, $version, $siteId, $nodes[0], $nodeId);
 
         $this->assertSame('published', $nodes[0]->getStatus()->getName());
     }
