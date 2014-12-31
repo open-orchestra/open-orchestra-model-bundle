@@ -22,7 +22,8 @@ class Document extends Annotation
      *
      * @return string
      */
-    public function getServiceName(){
+    public function getServiceName()
+    {
         return $this->serviceName;
     }
 
@@ -31,7 +32,8 @@ class Document extends Annotation
      *
      * @return string
      */
-    public function getTestMethod(){
+    public function getTestMethod()
+    {
         return $this->testMethod;
     }
 
@@ -60,10 +62,11 @@ class Document extends Annotation
     }
 
     /**
-     * Get generated value
-     *
      * @param string $target
      *
+     * @return string
+     * @throws MethodNotFoundException
+     * @throws PropertyNotFoundException
      */
     public function setGenerated($target)
     {
@@ -71,14 +74,14 @@ class Document extends Annotation
     }
 
     /**
-     * Get generated value
-     *
      * @param string $target
      * @param string $property
      * @param string $pre
      *
+     * @return string
+     * @throws MethodNotFoundException
+     * @throws PropertyNotFoundException
      */
-
     protected function getMethod($target, $property, $pre = 'get')
     {
         if(isset($this->$property)){
@@ -86,12 +89,8 @@ class Document extends Annotation
             if(method_exists($target, $method)){
                 return $method;
             }
-            else {
-                throw new MethodNotFoundException($method, get_class($target));
-            }
+            throw new MethodNotFoundException($method, get_class($target));
         }
-        else {
-            throw new PropertyNotFoundException($property, get_class($target));
-        }
+        throw new PropertyNotFoundException($property, get_class($target));
     }
 }

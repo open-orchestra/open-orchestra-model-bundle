@@ -42,11 +42,10 @@ class ContentTypeRepository extends DocumentRepository implements ContentTypeRep
         $contentTypes = array();
 
         foreach ($list as $contentType) {
-            if (!empty($contentTypes[$contentType->getContentTypeId()])) {
-                if ($contentTypes[$contentType->getContentTypeId()]->getVersion() < $contentType->getVersion()) {
-                    $contentTypes[$contentType->getContentTypeId()] = $contentType;
-                }
-            } else {
+            if (empty($contentTypes[$contentType->getContentTypeId()])) {
+                $contentTypes[$contentType->getContentTypeId()] = $contentType;
+            }
+            if ($contentTypes[$contentType->getContentTypeId()]->getVersion() < $contentType->getVersion()) {
                 $contentTypes[$contentType->getContentTypeId()] = $contentType;
             }
         }
