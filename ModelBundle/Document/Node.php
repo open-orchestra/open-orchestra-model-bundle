@@ -371,10 +371,9 @@ class Node implements NodeInterface
      */
     public function setStatus(StatusInterface $status = null)
     {
+        $this->status = null;
         if ($status instanceof StatusInterface) {
             $this->status = EmbedStatus::createFromStatus($status);
-        } else {
-            $this->status = null;
         }
     }
 

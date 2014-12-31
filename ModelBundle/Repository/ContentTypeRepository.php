@@ -21,10 +21,9 @@ class ContentTypeRepository extends DocumentRepository implements ContentTypeRep
         $qb = $this->createQueryBuilder('n');
         $qb->field('contentTypeId')->equals($contentType);
 
+        $qb->sort('version', 'desc');
         if ($version) {
             $qb->field('version')->equals($version);
-        } else {
-            $qb->sort('version', 'desc');
         }
 
         return $qb->getQuery()->getSingleResult();
