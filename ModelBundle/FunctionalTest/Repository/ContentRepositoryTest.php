@@ -2,7 +2,7 @@
 
 namespace PHPOrchestra\ModelBundle\FunctionalTest\Repository;
 
-use PHPOrchestra\ModelBundle\Repository\ContentRepository;
+use PHPOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 class ContentRepositoryTest extends KernelTestCase
 {
     /**
-     * @var ContentRepository
+     * @var ContentRepositoryInterface
      */
     protected $repository;
 
