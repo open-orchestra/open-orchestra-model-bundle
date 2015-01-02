@@ -97,6 +97,7 @@ class PreventProhibitedStatusChangeValidatorTest extends \PHPUnit_Framework_Test
         Phake::verify($this->context, Phake::times($numberOfViolation))->addViolationAt('status', $this->message);
         Phake::verify($this->translator, Phake::times($numberOfViolation))->trans($this->constraint->message);
     }
+
     /**
      * @return array
      */
@@ -155,6 +156,7 @@ class PreventProhibitedStatusChangeValidatorTest extends \PHPUnit_Framework_Test
 
         $this->assertEquals($canSwitch, $result);
     }
+
     /**
      * @return array
      */
