@@ -38,15 +38,15 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
     }
 
     /**
-     * @param string $keyword
+     * @param string $keywords
      *
      * @return array
      */
-    public function findByKeyword($keyword)
+    public function findByKeywords($keywords)
     {
         $qb = $this->createQueryBuilder('c');
 
-        $qb->field('keywords.label')->equals($keyword);
+        $qb->field('keywords.label')->in(explode(',', $keywords));
 
         return $qb->getQuery()->execute();
     }

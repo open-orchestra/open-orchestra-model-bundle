@@ -27,24 +27,28 @@ class ContentRepositoryTest extends KernelTestCase
     }
 
     /**
-     * @param string $keyword
+     * @param string $keywords
      * @param int    $count
      *
      * @dataProvider provideKeywordAndCount
      */
-    public function testFindByKeyword($keyword, $count)
+    public function testFindByKeywords($keywords, $count)
     {
-        $keywords = $this->repository->findByKeyword($keyword);
+        $keywordsElement = $this->repository->findByKeywords($keywords);
 
-        $this->assertCount($count, $keywords);
+        $this->assertCount($count, $keywordsElement);
     }
 
+    /**
+     * @return array
+     */
     public function provideKeywordAndCount()
     {
         return array(
             array('Lorem', 2),
-            array('Sit', 3),
+            array('Sit', 4),
             array('Dolor', 0),
+            array('Lorem,Sit', 5),
         );
     }
 }
