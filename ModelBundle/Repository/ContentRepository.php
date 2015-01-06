@@ -38,20 +38,6 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
     }
 
     /**
-     * @param string $keywords
-     *
-     * @return array
-     */
-    public function findByKeywords($keywords)
-    {
-        $qb = $this->createQueryBuilder('c');
-
-        $qb->field('keywords.label')->in(explode(',', $keywords));
-
-        return $qb->getQuery()->execute();
-    }
-
-    /**
      * @param string $contentId
      *
      * @return ContentInterface
@@ -62,13 +48,24 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
     }
 
     /**
-     * @param string $contentType
+     * @param string      $contentType
+     * @param string|null $keywords
      *
-     * @return array
+     * @return mixed
      */
-    public function findByContentType($contentType)
+    public function findByContentTypeAndKeywords($contentType = '', $keywords = null)
     {
-        return $this->findBy(array('contentType' => $contentType));
+        $qb = $this->createQueryBuilder('c');
+
+        if (!is_null($keywords)) {
+            $qb->field('keywords.label')->in(explode(',', $keywords));
+        }
+
+        if ('' !== $contentType) {
+            $qb->field('contentType')->equals($contentType);
+        }
+
+        return $qb->getQuery()->execute();
     }
 
     /**
