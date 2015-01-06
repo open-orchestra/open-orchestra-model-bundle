@@ -270,7 +270,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
      */
     protected function generateBlockContentList($class, $url, $blockLabel, $areaId, $nodeId, $nbCharacters = 0)
     {
-        $contentList = $this->generateBlock(DisplayBlockInterface::CONTENT_LIST_BY_TYPE, $blockLabel, $nodeId, $areaId);
+        $contentList = $this->generateBlock(DisplayBlockInterface::CONTENT_LIST, $blockLabel, $nodeId, $areaId);
         $contentList->setAttributes(array(
             'contentType' => 'news',
             'id' => 'contentNewsList',
