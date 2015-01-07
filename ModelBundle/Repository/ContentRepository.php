@@ -7,6 +7,7 @@ use PHPOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use PHPOrchestra\ModelBundle\Repository\FieldAutoGenerableRepositoryInterface;
 use PHPOrchestra\ModelInterface\Model\ContentInterface;
 use PHPOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
+use Doctrine\ODM\MongoDB\Query\Builder;
 
 /**
  * Class ContentRepository
@@ -24,6 +25,30 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
     public function setCurrentSiteManager(CurrentSiteIdInterface $currentSiteManager)
     {
         $this->currentSiteManager = $currentSiteManager;
+    }
+
+    /**
+     * @param string      $contentId
+     * @param string|null $language
+     * @param int|null    $version
+     *
+     * @return Builder
+     */
+    public function defaultQueryCriteria(Builder $qb, $contentId, $language = null, $version = null)
+    {
+        if (is_null($language)) {
+            $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
+        }
+        $qb->field('contentId')->equals($contentId);
+        $qb->field('language')->equals($language);
+        $qb->field('deleted')->equals(false);
+        if (is_null($version)) {
+            $qb->sort('version', 'desc');
+        } else {
+            $qb->field('version')->equals((int) $version);
+        }
+
+        return $qb;
     }
 
     /**
@@ -65,7 +90,7 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
      * @param string      $contentType
      * @param string|null $keywords
      *
-     * @return mixed
+     * @return array
      */
     public function findByContentTypeAndKeywords($contentType = '', $keywords = null)
     {
@@ -83,12 +108,12 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
     }
 
     /**
-     * @param string $contentId
-     * @param string $language
+     * @param string      $contentId
+     * @param string|null $language
      *
-     * @return mixed
+     * @return ContentInterface|null
      */
-    public function findOneByContentIdAndLanguage($contentId, $language)
+    public function findOneByContentIdAndLanguage($contentId, $language = null)
     {
         return $this->findOneByContentIdAndLanguageAndVersion($contentId, $language, null);
     }
@@ -97,11 +122,11 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
      * @param string      $contentId
      * @param string|null $language
      *
-     * @return mixed
+     * @return array
      */
     public function findByContentIdAndLanguage($contentId, $language = null)
     {
-        return $this->findByContentIdAndLanguageAndVersion($contentId, $language, false);
+        return $this->findByContentIdAndLanguageAndVersion($contentId, $language, null);
     }
 
     /**
@@ -109,11 +134,14 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
      * @param string|null $language
      * @param int|null    $version
      *
-     * @return mixed
+     * @return ContentInterface|null
      */
     public function findOneByContentIdAndLanguageAndVersion($contentId, $language = null, $version = null)
     {
-        return $this->findByContentIdAndLanguageAndVersion($contentId, $language, $version);
+        $qb = $this->createQueryBuilder('c');
+        $qb = $this->defaultQueryCriteria($qb, $contentId, $language, $version);
+
+        return $qb->getQuery()->getSingleResult();
     }
 
     /**
@@ -121,29 +149,13 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
      * @param string|null $language
      * @param int|null    $version
      *
-     * @return mixed
+     * @return array
      */
-    public function findByContentIdAndLanguageAndVersion($contentId, $language = null, $version = false)
+    public function findByContentIdAndLanguageAndVersion($contentId, $language = null, $version = null)
     {
-        if (is_null($language)) {
-            $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
-        }
         $qb = $this->createQueryBuilder('c');
-        $qb->field('contentId')->equals($contentId);
-        $qb->field('language')->equals($language);
-        $qb->field('deleted')->equals(false);
+        $qb = $this->defaultQueryCriteria($qb, $contentId, $language, $version);
 
-        if ($version === false) {
-            $qb->sort('version', 'desc');
-            return $qb->getQuery()->execute();
-        }
-
-        if (is_null($version)) {
-            $qb->sort('version', 'desc');
-            return $qb->getQuery()->getSingleResult();
-        }
-
-        $qb->field('version')->equals((int) $version);
-        return $qb->getQuery()->getSingleResult();
+        return $qb->getQuery()->execute();
     }
 }
