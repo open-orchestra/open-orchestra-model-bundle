@@ -27,28 +27,40 @@ class ContentRepositoryTest extends KernelTestCase
     }
 
     /**
-     * @param string $keywords
-     * @param int    $count
+     * @param string      $contentType
+     * @param string|null $keywords
+     * @param int         $count
      *
-     * @dataProvider provideKeywordAndCount
+     * @dataProvider provideContentTypeKeywordAndCount
      */
-    public function testFindByKeywords($keywords, $count)
+    public function testFindByContentTypeAndKeywords($contentType = '', $keywords = null, $count)
     {
-        $keywordsElement = $this->repository->findByKeywords($keywords);
+        $element = $this->repository->findByContentTypeAndKeywords($contentType, $keywords);
 
-        $this->assertCount($count, $keywordsElement);
+        $this->assertCount($count, $element);
     }
 
     /**
      * @return array
      */
-    public function provideKeywordAndCount()
+    public function provideContentTypeKeywordAndCount()
     {
         return array(
-            array('Lorem', 2),
-            array('Sit', 4),
-            array('Dolor', 0),
-            array('Lorem,Sit', 5),
+            array('car', 'Lorem', 1),
+            array('car', 'Sit', 0),
+            array('car', 'Dolor', 0),
+            array('car', 'Lorem,Sit', 1),
+            array('news', 'Lorem', 0),
+            array('news', 'Sit', 3),
+            array('news', 'Dolor', 0),
+            array('news', 'Lorem,Sit', 3),
+            array('news', null, 5),
+            array('car', null, 1),
+            array('', null, 7),
+            array('', 'Lorem', 2),
+            array('', 'Sit', 4),
+            array('', 'Dolor', 0),
+            array('', 'Lorem,Sit', 5),
         );
     }
 }
