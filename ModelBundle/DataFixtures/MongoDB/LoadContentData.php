@@ -65,7 +65,6 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
         $content->setStatus($this->getReference('status-published'));
         $content->setVersion(2);
         $content->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-lorem')));
-        $content->setSiteId('1');
 
         $content->addAttribute($attribute1);
         $content->addAttribute($attribute2);
@@ -103,7 +102,6 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
         $content->setVersion(2);
         $content->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-lorem')));
         $content->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-sit')));
-        $content->setSiteId('1');
 
         $content->addAttribute($attribute1);
         $content->addAttribute($attribute2);
