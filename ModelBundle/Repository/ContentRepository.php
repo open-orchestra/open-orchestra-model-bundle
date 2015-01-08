@@ -126,7 +126,10 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
      */
     public function findByContentIdAndLanguage($contentId, $language = null)
     {
-        return $this->findByContentIdAndLanguageAndVersion($contentId, $language, null);
+        $qb = $this->createQueryBuilder('c');
+        $qb = $this->defaultQueryCriteria($qb, $contentId, $language, null);
+
+        return $qb->getQuery()->execute();
     }
 
     /**
@@ -142,20 +145,5 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
         $qb = $this->defaultQueryCriteria($qb, $contentId, $language, $version);
 
         return $qb->getQuery()->getSingleResult();
-    }
-
-    /**
-     * @param string      $contentId
-     * @param string|null $language
-     * @param int|null    $version
-     *
-     * @return array
-     */
-    public function findByContentIdAndLanguageAndVersion($contentId, $language = null, $version = null)
-    {
-        $qb = $this->createQueryBuilder('c');
-        $qb = $this->defaultQueryCriteria($qb, $contentId, $language, $version);
-
-        return $qb->getQuery()->execute();
     }
 }
