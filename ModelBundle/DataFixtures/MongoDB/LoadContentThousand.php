@@ -47,6 +47,12 @@ class LoadContentThousand extends AbstractFixture implements OrderedFixtureInter
         return 530;
     }
 
+    /**
+     * @param string $name
+     * @param string $value
+     * 
+     * @return ContentAttribute
+     */
     public function generateAttributes($name, $value)
     {
         $attribute = new ContentAttribute();
