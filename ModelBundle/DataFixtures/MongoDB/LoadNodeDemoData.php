@@ -392,6 +392,7 @@ Nativement, multi-sites multi support, facile d’intégration au SI, ouvert ver
         $siteWhat->setSiteId('2');
         $siteWhat->setParentId(NodeInterface::ROOT_NODE_ID);
         $siteWhat->setPath('-');
+        $siteWhat->setOrder(0);
         $siteWhat->setAlias('page-what-is-orchestra');
         $siteWhat->setVersion(1);
         $siteWhat->setLanguage('fr');
@@ -484,6 +485,7 @@ Nativement, multi-sites multi support, facile d’intégration au SI, ouvert ver
         $siteStart->setPath('-');
         $siteStart->setAlias('page-start-orchestra');
         $siteStart->setVersion(1);
+        $siteStart->setOrder(1);
         $siteStart->setLanguage('fr');
         $siteStart->setStatus($this->getReference('status-published'));
         $siteStart->setDeleted(false);
@@ -573,6 +575,7 @@ Note, that many languages are just under translation, and the untranslated parts
         $siteDoc->setName('Documentation');
         $siteDoc->setSiteId('2');
         $siteDoc->setParentId(NodeInterface::ROOT_NODE_ID);
+        $siteDoc->setOrder(2);
         $siteDoc->setPath('-');
         $siteDoc->setAlias('page-documentation');
         $siteDoc->setVersion(1);
@@ -672,6 +675,7 @@ Enfin, la digitalisation des applications et les stratégies mobiles de l’entr
         $siteCom->setSiteId('2');
         $siteCom->setParentId(NodeInterface::ROOT_NODE_ID);
         $siteCom->setPath('-');
+        $siteCom->setOrder(3);
         $siteCom->setAlias('page-community');
         $siteCom->setVersion(1);
         $siteCom->setLanguage('fr');
@@ -763,6 +767,7 @@ Enfin, la digitalisation des applications et les stratégies mobiles de l’entr
         $siteAboutUs->setName('A propos');
         $siteAboutUs->setSiteId('2');
         $siteAboutUs->setParentId(NodeInterface::ROOT_NODE_ID);
+        $siteAboutUs->setOrder(4);
         $siteAboutUs->setPath('-');
         $siteAboutUs->setAlias('page-about-us');
         $siteAboutUs->setVersion(1);
@@ -857,6 +862,7 @@ Enfin, la digitalisation des applications et les stratégies mobiles de l’entr
         $siteOurTeam->setName('Fixture page our team');
         $siteOurTeam->setSiteId('2');
         $siteOurTeam->setParentId(NodeInterface::ROOT_NODE_ID);
+        $siteOurTeam->setOrder(5);
         $siteOurTeam->setPath('-');
         $siteOurTeam->setAlias('page-our-team');
         $siteOurTeam->setVersion(1);
@@ -952,6 +958,7 @@ Ces Victoires mettent en lumière celles et ceux qui, chaque jour, agissent pour
         $siteNews->setName('Fixture page news');
         $siteNews->setSiteId('2');
         $siteNews->setParentId(NodeInterface::ROOT_NODE_ID);
+        $siteNews->setOrder(6);
         $siteNews->setPath('-');
         $siteNews->setAlias('page-our-news');
         $siteNews->setVersion(1);
@@ -1038,6 +1045,7 @@ Ces Victoires mettent en lumière celles et ceux qui, chaque jour, agissent pour
         $siteJoinUs->setName('Fixture page join us');
         $siteJoinUs->setSiteId('2');
         $siteJoinUs->setParentId(NodeInterface::ROOT_NODE_ID);
+        $siteJoinUs->setOrder(7);
         $siteJoinUs->setPath('-');
         $siteJoinUs->setAlias('page-nous-rejoindre');
         $siteJoinUs->setVersion(1);
@@ -1128,6 +1136,7 @@ Smart.eolas est le fruit de 15 ans d’expérience, à la fois en tant que spéc
         $siteNetwork->setName('Fixture page networks');
         $siteNetwork->setSiteId('2');
         $siteNetwork->setParentId(NodeInterface::ROOT_NODE_ID);
+        $siteNetwork->setOrder(8);
         $siteNetwork->setPath('-');
         $siteNetwork->setAlias('page-networks');
         $siteNetwork->setVersion(1);
@@ -1207,6 +1216,7 @@ Smart.eolas est le fruit de 15 ans d’expérience, à la fois en tant que spéc
         $siteContact->setName('Contact');
         $siteContact->setSiteId('2');
         $siteContact->setParentId(NodeInterface::ROOT_NODE_ID);
+        $siteContact->setOrder(9);
         $siteContact->setPath('-');
         $siteContact->setAlias('page-contact');
         $siteContact->setVersion(1);
@@ -1300,6 +1310,7 @@ Smart.eolas est le fruit de 15 ans d’expérience, à la fois en tant que spéc
         $siteLegal->setName('Fixture page legal mentions');
         $siteLegal->setSiteId('2');
         $siteLegal->setParentId(NodeInterface::ROOT_NODE_ID);
+        $siteLegal->setOrder(10);
         $siteLegal->setPath('-');
         $siteLegal->setAlias('page legal mentions');
         $siteLegal->setVersion(1);

@@ -132,6 +132,9 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
         $node->setTheme('echonext');
         $node->setInMenu($params['inMenu']);
         $node->setInFooter($params['inFooter']);
+        if (array_key_exists('order', $params)) {
+            $node->setOrder($params['order']);
+        }
 
         return $node;
     }
@@ -643,6 +646,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
             'inMenu' => true,
             'inFooter' => true,
             'language' => $language,
+            'order' => 1
         ));
 
         $node->addArea($headerArea);
@@ -699,6 +703,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
             'inMenu' => true,
             'inFooter' => true,
             'language' => $language,
+            'order' => 2,
         ));
 
         $node->addArea($headerArea);
@@ -753,6 +758,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
             'inMenu' => true,
             'inFooter' => true,
             'language' => $language,
+            'order' => 3
         ));
 
         $node->addArea($headerArea);
@@ -893,6 +899,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
             'inMenu' => true,
             'inFooter' => true,
             'language' => $language,
+            'order' => 1,
         ));
 
         $node->addArea($headerArea);
@@ -964,6 +971,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
             'inMenu' => true,
             'inFooter' => true,
             'language' => $language,
+            'order' => 2
         ));
 
         $node->addArea($headerArea);
@@ -1035,6 +1043,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
             'inMenu' => true,
             'inFooter' => true,
             'language' => $language,
+            'order' => 3,
         ));
 
         $node->addArea($headerArea);
