@@ -293,4 +293,14 @@ class Content implements ContentInterface
     {
         return $this->version;
     }
+
+    /**
+     * Clone method
+     */
+    public function __clone()
+    {
+        if (!is_null($this->id)) {
+            $this->id = null;
+        }
+    }
 }
