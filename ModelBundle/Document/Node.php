@@ -166,6 +166,13 @@ class Node implements NodeInterface
     protected $blocks;
 
     /**
+     * @var int
+     *
+     * @ODM\Field(type="int")
+     */
+    protected $order = 0;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -629,5 +636,21 @@ class Node implements NodeInterface
             $this->setCreatedAt(new \DateTime());
             $this->setUpdatedAt(new \DateTime());
         }
+    }
+
+    /**
+     * @param int $order
+     */
+    public function setOrder($order)
+    {
+        $this->order =$order;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOrder()
+    {
+        return $this->order;
     }
 }

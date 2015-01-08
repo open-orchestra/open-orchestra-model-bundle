@@ -449,6 +449,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $generic->setSiteId('1');
         $generic->setParentId(NodeInterface::ROOT_NODE_ID);
         $generic->setPath('-');
+        $generic->setOrder(1);
         $generic->setAlias('fixture-generic');
         $generic->setName('Generic Node');
         $generic->setVersion(1);
@@ -503,6 +504,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $aboutUs->setSiteId('1');
         $aboutUs->setParentId(NodeInterface::ROOT_NODE_ID);
         $aboutUs->setPath('-');
+        $aboutUs->setOrder(2);
         $aboutUs->setAlias('qui-sommes-nous');
         $aboutUs->setVersion(1);
         $aboutUs->setLanguage('fr');
@@ -546,6 +548,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $aboutUs->setSiteId('1');
         $aboutUs->setParentId(NodeInterface::ROOT_NODE_ID);
         $aboutUs->setPath('-');
+        $aboutUs->setOrder(3);
         $aboutUs->setAlias('deleted');
         $aboutUs->setVersion(1);
         $aboutUs->setLanguage('fr');
@@ -685,6 +688,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $interakting->setSiteId('1');
         $interakting->setParentId('fixture_about_us');
         $interakting->setPath('-');
+        $interakting->setOrder(1);
         $interakting->setAlias('interakting');
         $interakting->setVersion(1);
         $interakting->setLanguage('fr');
@@ -730,6 +734,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $contactUs->setPath('-');
         $contactUs->setAlias('nous-contacter');
         $contactUs->setVersion(1);
+        $contactUs->setOrder(4);
         $contactUs->setLanguage('fr');
         $contactUs->setStatus($this->getReference('status-published'));
         $contactUs->setDeleted(false);
@@ -771,6 +776,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $directory->setSiteId('1');
         $directory->setParentId(NodeInterface::ROOT_NODE_ID);
         $directory->setPath('-');
+        $directory->setOrder(5);
         $directory->setAlias('nous-contacter');
         $directory->setVersion(1);
         $directory->setLanguage('fr');
@@ -897,6 +903,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $search->setSiteId('1');
         $search->setParentId(NodeInterface::ROOT_NODE_ID);
         $search->setPath('-');
+        $search->setOrder(6);
         $search->setAlias('nous-contacter');
         $search->setVersion(1);
         $search->setLanguage('fr');
