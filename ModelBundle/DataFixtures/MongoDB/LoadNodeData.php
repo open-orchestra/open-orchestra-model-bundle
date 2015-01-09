@@ -182,6 +182,16 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         ));
         $blockLanguage->addArea(array('nodeId' => 0, 'areaId' => 'main'));
 
+        $blockDailymotion = new Block();
+        $blockDailymotion->setLabel('dailymotion');
+        $blockDailymotion->setComponent('dailymotion');
+        $blockDailymotion->setAttributes(array(
+            'class' => 'dailymotionClass',
+            'id' => 'dailymotion',
+            'videoId' => 'x2eci0m'
+        ));
+        $blockDailymotion->addArea(array('nodeId' => 0, 'areaId' => 'main'));
+
         $homeArea = new Area();
         $homeArea->setLabel('Main');
         $homeArea->setAreaId('main');
@@ -190,6 +200,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
             array('nodeId' => 0, 'blockId' => 1),
             array('nodeId' => 0, 'blockId' => 2),
             array('nodeId' => 0, 'blockId' => 3),
+            array('nodeId' => 0, 'blockId' => 4),
         ));
 
         $home = new Node();
@@ -213,6 +224,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $home->addBlock($loginBlock);
         $home->addBlock($blocksubmenu);
         $home->addBlock($blockLanguage);
+        $home->addBlock($blockDailymotion);
 
         return $home;
     }
