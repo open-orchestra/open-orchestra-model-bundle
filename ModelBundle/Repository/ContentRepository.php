@@ -34,7 +34,7 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
      *
      * @return Builder
      */
-    public function defaultQueryCriteria(Builder $qb, $contentId, $language = null, $version = null)
+    protected function defaultQueryCriteria(Builder $qb, $contentId, $language = null, $version = null)
     {
         if (is_null($language)) {
             $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
