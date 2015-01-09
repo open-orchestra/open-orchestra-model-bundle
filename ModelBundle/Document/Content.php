@@ -299,8 +299,6 @@ class Content implements ContentInterface
      */
     public function __clone()
     {
-        if (!is_null($this->id)) {
-            $this->id = null;
-        }
+        $this->id = null;
     }
 }
