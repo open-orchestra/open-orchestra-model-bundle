@@ -54,13 +54,6 @@ class Content implements ContentInterface
     protected $contentType;
 
     /**
-     * @var string $siteId
-     *
-     * @ODM\Field(type="string")
-     */
-    protected $siteId;
-
-    /**
      * @var string $name
      *
      * @ODM\Field(type="string")
@@ -263,22 +256,6 @@ class Content implements ContentInterface
     }
 
     /**
-     * @param string $siteId
-     */
-    public function setSiteId($siteId)
-    {
-        $this->siteId = $siteId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSiteId()
-    {
-        return $this->siteId;
-    }
-
-    /**
      * Set status
      *
      * @param StatusInterface|null $status
@@ -315,5 +292,13 @@ class Content implements ContentInterface
     public function getVersion()
     {
         return $this->version;
+    }
+
+    /**
+     * Clone method
+     */
+    public function __clone()
+    {
+        $this->id = null;
     }
 }
