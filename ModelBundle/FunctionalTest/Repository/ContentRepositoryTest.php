@@ -32,6 +32,9 @@ class ContentRepositoryTest extends KernelTestCase
         $this->repository->setCurrentSiteManager($this->currentSiteManager);
     }
 
+    /**
+     * Test find all news
+     */
     public function testFindAllNews()
     {
         $elements = $this->repository->findAllNews();
@@ -73,7 +76,7 @@ class ContentRepositoryTest extends KernelTestCase
     public function testFindOneByContentId($contentId)
     {
         $content = $this->repository->findOneByContentId($contentId);
-        $this->assertSameContent(null, null, null, $content, $contentId);
+        $this->assertSameContent(null, null, null, $contentId, $content);
         $this->assertEquals($contentId, $content->getContentId());
     }
 
@@ -136,7 +139,7 @@ class ContentRepositoryTest extends KernelTestCase
     {
         $content = $this->repository->findOneByContentIdAndLanguage($contentId, $language);
 
-        $this->assertSameContent($language, null, null, $content, $contentId);
+        $this->assertSameContent($language, null, null, $contentId, $content);
     }
 
     /**
@@ -161,7 +164,7 @@ class ContentRepositoryTest extends KernelTestCase
         $contents = $this->repository->findByContentIdAndLanguage($contentId, $language);
 
         foreach($contents as $content){
-            $this->assertSameContent($language, null, null, $content, $contentId);
+            $this->assertSameContent($language, null, null, $contentId, $content);
         }
 
     }
@@ -188,7 +191,7 @@ class ContentRepositoryTest extends KernelTestCase
     {
         $content = $this->repository->findOneByContentIdAndLanguageAndVersion($contentId, $language, $version);
 
-        $this->assertSameContent($language, $version, null, $content, $contentId);
+        $this->assertSameContent($language, $version, null, $contentId, $content);
 
     }
 
@@ -207,10 +210,10 @@ class ContentRepositoryTest extends KernelTestCase
      * @param string        $language
      * @param int           $version
      * @param string        $siteId
-     * @param NodeInterface $content
+     * @param ContentInterface $content
      * @param string        $contentId
      */
-    protected function assertSameContent($language, $version, $siteId, $content, $contentId)
+    protected function assertSameContent($language, $version, $siteId, $contentId, $content)
     {
         $this->assertInstanceOf('PHPOrchestra\ModelInterface\Model\ContentInterface', $content);
         $this->assertSame($contentId, $content->getContentId());
