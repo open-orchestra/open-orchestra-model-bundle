@@ -261,13 +261,25 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $loginBlock->setComponent('login');
         $loginBlock->addArea(array('nodeId' => 0, 'areaId' => 'main'));
 
+        $blockVimeo = new Block();
+        $blockVimeo->setLabel('vimeo');
+        $blockVimeo->setComponent('vimeo');
+        $blockVimeo->setAttributes(array(
+            'class' => 'vimeoClass',
+            'id' => 'vimeo',
+            'videoId' => '116362234'
+        ));
+        $blockVimeo->addArea(array('nodeId' => 0, 'areaId' => 'main'));
+
         $homeArea = new Area();
         $homeArea->setLabel('Main');
         $homeArea->setAreaId('main');
         $homeArea->setBlocks(array(
             array('nodeId' => 0, 'blockId' => 0),
             array('nodeId' => 0, 'blockId' => 1),
+            array('nodeId' => 0, 'blockId' => 2),
         ));
+
 
         $home = new Node();
         $home->setNodeId(NodeInterface::ROOT_NODE_ID);
@@ -288,6 +300,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $home->addArea($homeArea);
         $home->addBlock($homeBlock);
         $home->addBlock($loginBlock);
+        $home->addBlock($blockVimeo);
 
         return $home;
     }
