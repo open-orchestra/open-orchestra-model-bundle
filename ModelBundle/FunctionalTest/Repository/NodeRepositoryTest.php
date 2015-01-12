@@ -391,4 +391,31 @@ class NodeRepositoryTest extends KernelTestCase
             array(NodeInterface::ROOT_NODE_ID, 1, 10, 1, '3'),
         );
     }
+
+
+
+    /**
+     * @param string $siteId
+     * @param int    $count
+     *
+     * @dataProvider provideSiteIdAndDeletedCount
+     */
+    public function testFindLastVersionByDeletedAndSiteId($siteId, $count)
+    {
+        Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn($siteId);
+
+        $this->assertCount($count, $this->repository->findLastVersionByDeletedAndSiteId());
+    }
+
+    /**
+     * @return array
+     */
+    public function provideSiteIdAndDeletedCount()
+    {
+        return array(
+            array('1', 3),
+            array('2', 0),
+            array('3', 0),
+        );
+    }
 }

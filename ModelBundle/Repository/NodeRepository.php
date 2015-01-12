@@ -308,6 +308,23 @@ class NodeRepository extends DocumentRepository implements FieldAutoGenerableRep
     }
 
     /**
+     * @param string $type
+     *
+     * @return array
+     */
+    public function findLastVersionByDeletedAndSiteId($type = NodeInterface::TYPE_DEFAULT)
+    {
+        $qb = $this->createQueryBuilder('n');
+        $qb->field('deleted')->equals(true);
+        $qb->field('siteId')->equals($this->currentSiteManager->getCurrentSiteId());
+        $qb->field('nodeType')->equals($type);
+
+        $list = $qb->getQuery()->execute();
+
+        return $this->findLastVersion($list);
+    }
+
+    /**
      * @param string $path
      *
      * @return Cursor
