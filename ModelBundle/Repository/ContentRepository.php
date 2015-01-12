@@ -146,4 +146,12 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
 
         return $qb->getQuery()->getSingleResult();
     }
+
+    /**
+     * @return array
+     */
+    public function findAllDeleted()
+    {
+        return parent::findBy(array('deleted' => true));
+    }
 }
