@@ -111,6 +111,9 @@ class LoadContentThousand extends AbstractFixture implements OrderedFixtureInter
     protected function addNewsAttributes($news, $title, $intro, $text)
     {
         $news->addAttribute($title);
+        $news->addAttribute($this->generateAttributes('publish_start', '2014-08-26'));
+        $news->addAttribute($this->generateAttributes('publish_end', '2014-12-19'));
+        $news->addAttribute($this->generateAttributes('image', ''));
         $news->addAttribute($intro);
         $news->addAttribute($text);
 
