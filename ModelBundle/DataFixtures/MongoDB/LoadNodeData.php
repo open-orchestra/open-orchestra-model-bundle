@@ -516,17 +516,19 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         ));
         $aboutUsBlock->addArea(array('nodeId' => 0, 'areaId' => 'main'));
 
-        $contentListBlock = new Block();
-        $contentListBlock->setLabel('Content list');
-        $contentListBlock->setComponent(DisplayBlockInterface::CONTENT_LIST);
-        $contentListBlock->setAttributes(array(
-            'contentType' => 'news',
-            'id' => 'contentNewsList',
-            'class' => 'contentListClass',
-            'url' => 'fixture_bd',
-            'characterNumber' => 50
+        $contentGmap = new Block();
+        $contentGmap->setLabel('gmap');
+        $contentGmap->setComponent(DisplayBlockInterface::GMAP);
+        $contentGmap->setAttributes(array(
+            'id' => 'gmap',
+            'class' => 'gmapClass',
+            'latitude' => '48.8832139',
+            'longitude' => '2.2976792',
+            'zoom' => '17'
         ));
-        $contentListBlock->addArea(array('nodeId' => 0, 'areaId' => 'main'));
+        $contentGmap->addArea(array('nodeId' => 0, 'areaId' => 'main'));
+
+
 
         $aboutUsArea = new Area();
         $aboutUsArea->setLabel('Main');
@@ -553,7 +555,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $aboutUs->setInMenu(true);
         $aboutUs->addArea($aboutUsArea);
         $aboutUs->addBlock($aboutUsBlock);
-        $aboutUs->addBlock($contentListBlock);
+        $aboutUs->addBlock($contentGmap);
 
         return $aboutUs;
     }
