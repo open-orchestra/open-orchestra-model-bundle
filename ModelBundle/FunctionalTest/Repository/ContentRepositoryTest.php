@@ -93,14 +93,15 @@ class ContentRepositoryTest extends KernelTestCase
 
     /**
      * @param string      $contentType
+     * @param string      $choiceType
      * @param string|null $keywords
      * @param int         $count
      *
      * @dataProvider provideContentTypeKeywordAndCount
      */
-    public function testFindByContentTypeAndKeywords($contentType = '', $keywords = null, $count)
+    public function testFindByContentTypeAndChoiceTypeAndKeywords($contentType = '', $choiceType, $keywords = null, $count)
     {
-        $elements = $this->repository->findByContentTypeAndKeywords($contentType, $keywords);
+        $elements = $this->repository->findByContentTypeAndChoiceTypeAndKeywords($contentType, $choiceType, $keywords);
 
         $this->assertCount($count, $elements);
     }
@@ -111,21 +112,36 @@ class ContentRepositoryTest extends KernelTestCase
     public function provideContentTypeKeywordAndCount()
     {
         return array(
-            array('car', 'Lorem', 1),
-            array('car', 'Sit', 0),
-            array('car', 'Dolor', 0),
-            array('car', 'Lorem,Sit', 1),
-            array('news', 'Lorem', 0),
-            array('news', 'Sit', 3),
-            array('news', 'Dolor', 0),
-            array('news', 'Lorem,Sit', 3),
-            array('news', null, 1755),
-            array('car', null, 1),
-            array('', null, 1757),
-            array('', 'Lorem', 2),
-            array('', 'Sit', 4),
-            array('', 'Dolor', 0),
-            array('', 'Lorem,Sit', 5),
+            array('car', ContentRepositoryInterface::CHOICE_AND, 'Lorem', 1),
+            array('car', ContentRepositoryInterface::CHOICE_AND, 'Sit', 0),
+            array('car', ContentRepositoryInterface::CHOICE_AND, 'Dolor', 0),
+            array('car', ContentRepositoryInterface::CHOICE_AND, 'Lorem,Sit', 1),
+            array('news', ContentRepositoryInterface::CHOICE_AND, 'Lorem', 0),
+            array('news', ContentRepositoryInterface::CHOICE_AND, 'Sit', 3),
+            array('news', ContentRepositoryInterface::CHOICE_AND, 'Dolor', 0),
+            array('news', ContentRepositoryInterface::CHOICE_AND, 'Lorem,Sit', 3),
+            array('news', ContentRepositoryInterface::CHOICE_AND, null, 1755),
+            array('car', ContentRepositoryInterface::CHOICE_AND, null, 1),
+            array('', ContentRepositoryInterface::CHOICE_AND, null, 1757),
+            array('', ContentRepositoryInterface::CHOICE_AND, 'Lorem', 2),
+            array('', ContentRepositoryInterface::CHOICE_AND, 'Sit', 4),
+            array('', ContentRepositoryInterface::CHOICE_AND, 'Dolor', 0),
+            array('', ContentRepositoryInterface::CHOICE_AND, 'Lorem,Sit', 5),
+            array('car', ContentRepositoryInterface::CHOICE_OR, 'Lorem', 2),
+            array('car', ContentRepositoryInterface::CHOICE_OR, 'Sit', 5),
+            array('car', ContentRepositoryInterface::CHOICE_OR, 'Dolor', 1),
+            array('car', ContentRepositoryInterface::CHOICE_OR, 'Lorem,Sit', 5),
+            array('news', ContentRepositoryInterface::CHOICE_OR, 'Lorem', 1757),
+            array('news', ContentRepositoryInterface::CHOICE_OR, 'Sit', 1756),
+            array('news', ContentRepositoryInterface::CHOICE_OR, 'Dolor', 1755),
+            array('news', ContentRepositoryInterface::CHOICE_OR, 'Lorem,Sit', 1757),
+            array('news', ContentRepositoryInterface::CHOICE_OR, null, 1755),
+            array('car', ContentRepositoryInterface::CHOICE_OR, null, 1),
+            array('', ContentRepositoryInterface::CHOICE_OR, null, 1757),
+            array('', ContentRepositoryInterface::CHOICE_OR, 'Lorem', 2),
+            array('', ContentRepositoryInterface::CHOICE_OR, 'Sit', 4),
+            array('', ContentRepositoryInterface::CHOICE_OR, 'Dolor', 0),
+            array('', ContentRepositoryInterface::CHOICE_OR, 'Lorem,Sit', 5),
         );
     }
 

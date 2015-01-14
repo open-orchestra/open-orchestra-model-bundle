@@ -87,21 +87,26 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
     }
 
     /**
-     * @param string      $contentType
-     * @param string|null $keywords
+     * @param string $contentType
+     * @param string $choiceType
+     * @param string $keywords
      *
      * @return array
      */
-    public function findByContentTypeAndKeywords($contentType = '', $keywords = null)
+    public function findByContentTypeAndChoiceTypeAndKeywords($contentType = '', $choiceType = self::CHOICE_AND, $keywords = null)
     {
         $qb = $this->createQueryBuilder('c');
 
-        if (!is_null($keywords)) {
-            $qb->field('keywords.label')->in(explode(',', $keywords));
+        $addMethod = 'addAnd';
+        if ($choiceType == self::CHOICE_OR) {
+            $addMethod = 'addOr';
         }
 
+        if (!is_null($keywords)) {
+            $qb->$addMethod($qb->expr()->field('keywords.label')->in(explode(',', $keywords)));
+        }
         if ('' !== $contentType) {
-            $qb->field('contentType')->equals($contentType);
+            $qb->$addMethod($qb->expr()->field('contentType')->equals($contentType));
         }
 
         return $qb->getQuery()->execute();
