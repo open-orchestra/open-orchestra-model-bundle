@@ -21,6 +21,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *   collection="node",
  *   repositoryClass="PHPOrchestra\ModelBundle\Repository\NodeRepository"
  * )
+ * @ODM\Indexes({
+ *  @ODM\Index(keys={"nodeId"="asc"})
+ * })
  * @ORCHESTRA\Document(
  *   generatedField="nodeId",
  *   sourceField="name",
