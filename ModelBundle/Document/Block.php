@@ -27,6 +27,20 @@ class Block implements BlockInterface
     protected $label;
 
     /**
+     * @var string $class
+     *
+     * @MongoDB\Field(type="string")
+     */
+    protected $class;
+
+    /**
+     * @var string $id
+     *
+     * @MongoDB\Field(type="string")
+     */
+    protected $id;
+
+    /**
      * @var array $attributes
      *
      * @MongoDB\Field(type="hash")
@@ -135,5 +149,45 @@ class Block implements BlockInterface
                 unset($this->areas[$key]);
             }
         }
+    }
+
+    /**
+     * Set class
+     *
+     * @param string $class
+     */
+    public function setClass($class)
+    {
+        $this->class = $class;
+    }
+
+    /**
+     * Get class
+     *
+     * @return string $class
+     */
+    public function getClass()
+    {
+        return $this->class;
+    }
+
+    /**
+     * Set id
+     *
+     * @param string $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * Get id
+     *
+     * @return string $id
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }
