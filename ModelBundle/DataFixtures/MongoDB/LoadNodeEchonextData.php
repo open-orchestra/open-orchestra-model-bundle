@@ -10,6 +10,7 @@ use PHPOrchestra\ModelBundle\Document\Area;
 use PHPOrchestra\ModelBundle\Document\Block;
 use PHPOrchestra\ModelBundle\Document\Node;
 use PHPOrchestra\ModelInterface\Model\NodeInterface;
+use PHPOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 
 /**
  * Class LoadNodeEchonextData
@@ -281,6 +282,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
             'url' => $url,
             'characterNumber' => $nbCharacters,
             'keywords' => null,
+            'choiceType' => ContentRepositoryInterface::CHOICE_AND,
         ));
 
         return $contentList;
