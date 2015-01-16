@@ -129,13 +129,27 @@ class Node implements NodeInterface
     protected $templateId;
 
     /**
+     * @var string $sitemapChangefreq
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $sitemapChangefreq;
+
+    /**
+     * @var string $sitemapPriority
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $sitemapPriority;
+
+    /**
      * @var string $theme
      *
      * @ODM\Field(type="string")
      */
     protected $theme;
 
-    /**
+/**
      * @var boolean
      *
      * @ODM\Field(type="boolean")
@@ -440,6 +454,46 @@ class Node implements NodeInterface
     }
 
     /**
+     * Set sitemapChangefreq
+     *
+     * @param string $sitemapChangefreq
+     */
+    public function setSitemapChangefreq($sitemapChangefreq)
+    {
+        $this->sitemapChangefreq = $sitemapChangefreq;
+    }
+
+    /**
+     * Get sitemapChangefreq
+     *
+     * @return string $sitemapChangefreq
+     */
+    public function getSitemapChangefreq()
+    {
+        return $this->sitemapChangefreq;
+    }
+    
+    /**
+     * Set sitemapPriority
+     *
+     * @param string $sitemapPriority
+     */
+    public function setSitemapPriority($sitemapPriority)
+    {
+        $this->sitemapPriority = $sitemapPriority;
+    }
+
+    /**
+     * Get sitemapPriority
+     *
+     * @return string $sitemapPriority
+     */
+    public function getSitemapPriority()
+    {
+        return $this->sitemapPriority;
+    }
+    
+    /**
      * Set theme
      *
      * @param string $theme
@@ -458,7 +512,7 @@ class Node implements NodeInterface
     {
         return $this->theme;
     }
-
+    
     /**
      * Add block
      *
