@@ -13,6 +13,7 @@ use PHPOrchestra\ModelInterface\Model\BlockInterface;
 use PHPOrchestra\ModelInterface\Model\NodeInterface;
 use PHPOrchestra\ModelInterface\Model\StatusInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
+use PHPOrchestra\ModelInterface\MongoTrait\MetaableDocument;
 
 /**
  * Description of Node
@@ -34,6 +35,7 @@ class Node implements NodeInterface
 {
     use BlameableDocument;
     use TimestampableDocument;
+    use MetaableDocument;
 
     /**
      * @var string $id
@@ -104,34 +106,6 @@ class Node implements NodeInterface
      * @ODM\Field(type="string")
      */
     protected $language;
-
-    /**
-     * @var string $metaKeywords
-     *
-     * @ODM\Field(type="string")
-     */
-    protected $metaKeywords;
-
-    /**
-     * @var string $metaDescription
-     *
-     * @ODM\Field(type="string")
-     */
-    protected $metaDescription;
-
-    /**
-     * @var boolean metaIndex
-     *
-     * @ODM\Field(type="boolean")
-     */
-    protected $metaIndex = false;
-
-    /**
-     * @var boolean metaFollow
-     *
-     * @ODM\Field(type="boolean")
-     */
-    protected $metaFollow = false;
 
     /**
      * @var StatusInterface $status
@@ -400,70 +374,6 @@ class Node implements NodeInterface
     public function getLanguage()
     {
         return $this->language;
-    }
-
-    /**
-     * @param string $metaKeywords
-     */
-    public function setMetaKeywords($metaKeywords)
-    {
-        $this->metaKeywords = $metaKeywords;
-    }
-
-    /**
-     * @return string
-     */
-    public function getMetaKeywords()
-    {
-        return $this->metaKeywords;
-    }
-
-    /**
-     * @param string $metaDescription
-     */
-    public function setMetaDescription($metaDescription)
-    {
-        $this->metaDescription = $metaDescription;
-    }
-
-    /**
-     * @return string
-     */
-    public function getMetaDescription()
-    {
-        return $this->metaDescription;
-    }
-
-    /**
-     * @param boolean $index
-     */
-    public function setMetaIndex($metaIndex)
-    {
-        $this->metaIndex = $metaIndex;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function getMetaIndex()
-    {
-        return $this->metaIndex;
-    }
-
-    /**
-     * @param boolean $follow
-     */
-    public function setMetaFollow($metaFollow)
-    {
-        $this->metaFollow = $metaFollow;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function getMetaFollow()
-    {
-        return $this->metaFollow;
     }
 
     /**
