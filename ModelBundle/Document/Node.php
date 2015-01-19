@@ -149,7 +149,7 @@ class Node implements NodeInterface
      */
     protected $theme;
 
-/**
+    /**
      * @var boolean
      *
      * @ODM\Field(type="boolean")
@@ -512,7 +512,7 @@ class Node implements NodeInterface
     {
         return $this->theme;
     }
-    
+
     /**
      * Add block
      *
