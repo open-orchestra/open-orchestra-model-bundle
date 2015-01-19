@@ -2,13 +2,13 @@
 
 namespace PHPOrchestra\ModelBundle\Document;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use PHPOrchestra\ModelInterface\Model\FieldIndexInterface;
 
 /**
  * Description of FieldIndex class
  *
- * @MongoDB\Document(
+ * @ODM\Document(
  *   collection="field_index",
  *   repositoryClass="PHPOrchestra\ModelBundle\Repository\FieldIndexRepository"
  * )
@@ -18,28 +18,28 @@ class FieldIndex implements FieldIndexInterface
     /**
      * @var string $id
      *
-     * @MongoDB\Id
+     * @ODM\Id
      */
     protected $id;
 
     /**
      * @var string $fieldName
      *
-     * @MongoDB\Field(type="string")
+     * @ODM\Field(type="string")
      */
     protected $fieldName;
 
     /**
      * @var string $fieldType
      *
-     * @MongoDB\Field(type="string")
+     * @ODM\Field(type="string")
      */
     protected $fieldType;
 
     /**
      * @var boolean
      *
-     * @MongoDB\Field(type="boolean")
+     * @ODM\Field(type="boolean")
      */
     protected $isLink;
 

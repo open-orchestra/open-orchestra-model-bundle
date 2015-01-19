@@ -3,7 +3,7 @@
 namespace PHPOrchestra\ModelBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use PHPOrchestra\ModelInterface\Model\SiteInterface;
 use PHPOrchestra\ModelInterface\Model\ThemeInterface;
 use PHPOrchestra\ModelInterface\MongoTrait\MetaableDocument;
@@ -11,7 +11,7 @@ use PHPOrchestra\ModelInterface\MongoTrait\MetaableDocument;
 /**
  * Description of Site
  *
- * @MongoDB\Document(
+ * @ODM\Document(
  *   collection="site",
  *   repositoryClass="PHPOrchestra\ModelBundle\Repository\SiteRepository"
  * )
@@ -23,63 +23,63 @@ class Site implements SiteInterface
     /**
      * @var string $id
      *
-     * @MongoDB\Id
+     * @ODM\Id
      */
     protected $id;
 
     /**
      * @var string $siteId
      *
-     * @MongoDB\Field(type="string")
+     * @ODM\Field(type="string")
      */
     protected $siteId;
 
     /**
      * @var string $domain
      *
-     * @MongoDB\Field(type="string")
+     * @ODM\Field(type="string")
      */
     protected $domain;
 
     /**
      * @var string $alias
      *
-     * @MongoDB\Field(type="string")
+     * @ODM\Field(type="string")
      */
     protected $alias;
 
     /**
      * @var string $defaultLanguage
      *
-     * @MongoDB\Field(type="string")
+     * @ODM\Field(type="string")
      */
     protected $defaultLanguage;
 
     /**
      * @var array $languages
      *
-     * @MongoDB\Field(type="collection")
+     * @ODM\Field(type="collection")
      */
     protected $languages = array();
 
     /**
      * @var boolean
      *
-     * @MongoDB\Field(type="boolean")
+     * @ODM\Field(type="boolean")
      */
     protected $deleted = false;
 
     /**
      * @var ArrayCollection
      *
-     * @MongoDB\Field(type="hash")
+     * @ODM\Field(type="hash")
      */
     protected $blocks = array();
 
     /**
      * @var ThemeInterface $theme
      *
-     * @MongoDB\ReferenceOne(targetDocument="Theme")
+     * @ODM\ReferenceOne(targetDocument="Theme")
      */
     protected $theme;
 

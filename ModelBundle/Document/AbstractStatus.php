@@ -5,7 +5,7 @@ namespace PHPOrchestra\ModelBundle\Document;
 use Doctrine\Common\Collections\ArrayCollection;
 use PHPOrchestra\ModelInterface\Model\StatusInterface;
 use PHPOrchestra\ModelInterface\Model\TranslatedValueInterface;
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
  * Class AbstractStatus
@@ -15,52 +15,52 @@ abstract class AbstractStatus implements StatusInterface
     /**
      * @var string $id
      *
-     * @MongoDB\Id
+     * @ODM\Id
      */
     protected $id;
 
     /**
      * @var string $name
      *
-     * @MongoDB\Field(type="string")
+     * @ODM\Field(type="string")
      */
     protected $name;
 
     /**
-     * @MongoDB\EmbedMany(targetDocument="TranslatedValue")
+     * @ODM\EmbedMany(targetDocument="TranslatedValue")
      */
     protected $labels;
 
     /**
      * @var bool
      *
-     * @MongoDB\Field(type="boolean")
+     * @ODM\Field(type="boolean")
      */
     protected $published = false;
 
     /**
      * @var ArrayCollection
      *
-     * @MongoDB\ReferenceMany(targetDocument="PHPOrchestra\ModelBundle\Document\Role", mappedBy="fromStatus")
+     * @ODM\ReferenceMany(targetDocument="PHPOrchestra\ModelBundle\Document\Role", mappedBy="fromStatus")
      */
     protected $fromRoles;
 
     /**
      * @var string
      *
-     * @MongoDB\ReferenceMany(targetDocument="PHPOrchestra\ModelBundle\Document\Role", mappedBy="toStatus")
+     * @ODM\ReferenceMany(targetDocument="PHPOrchestra\ModelBundle\Document\Role", mappedBy="toStatus")
      */
     protected $toRoles;
 
     /**
-     * @MongoDB\Field(type="boolean")
+     * @ODM\Field(type="boolean")
      */
     protected $initial = false;
 
     /**
      * @var string
      *
-     * @MongoDB\Field(type="string")
+     * @ODM\Field(type="string")
      */
     protected $displayColor;
 

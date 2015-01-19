@@ -3,14 +3,14 @@
 namespace PHPOrchestra\ModelBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use PHPOrchestra\ModelInterface\Model\EmbedStatusInterface;
 use PHPOrchestra\ModelInterface\Model\StatusInterface;
 
 /**
  * Class EmbedStatus
  *
- * @MongoDB\EmbeddedDocument
+ * @ODM\EmbeddedDocument
  */
 class EmbedStatus extends AbstractStatus implements EmbedStatusInterface
 {

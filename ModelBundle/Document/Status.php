@@ -2,12 +2,12 @@
 
 namespace PHPOrchestra\ModelBundle\Document;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
  * Class Status
  *
- * @MongoDB\Document(
+ * @ODM\Document(
  *   collection="status",
  *   repositoryClass="PHPOrchestra\ModelBundle\Repository\StatusRepository"
  * )
