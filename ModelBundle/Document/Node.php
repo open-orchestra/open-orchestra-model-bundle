@@ -133,14 +133,14 @@ class Node implements NodeInterface
      *
      * @ODM\Field(type="string")
      */
-    protected $sitemapChangefreq = 'never';
+    protected $sitemapChangefreq = NodeInterface::CHANGE_FREQ_DEFAULT;
 
     /**
      * @var string $sitemapPriority
      *
      * @ODM\Field(type="string")
      */
-    protected $sitemapPriority = '0.5';
+    protected $sitemapPriority = NodeInterface::PRIORITY_DEFAULT;
 
     /**
      * @var string $theme
