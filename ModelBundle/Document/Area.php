@@ -3,65 +3,65 @@
 namespace PHPOrchestra\ModelBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use PHPOrchestra\ModelInterface\Model\AreaInterface;
 
 /**
  * Description of BaseArea
  *
- * @MongoDB\EmbeddedDocument
+ * @ODM\EmbeddedDocument
  */
 class Area implements AreaInterface
 {
     /**
      * @var string $label
      *
-     * @MongoDB\Field(type="string")
+     * @ODM\Field(type="string")
      */
     protected $label;
 
     /**
      * @var string $areaId
      *
-     * @MongoDB\Field(type="string")
+     * @ODM\Field(type="string")
      */
     protected $areaId;
 
     /**
      * @var string $htmlClass
      *
-     * @MongoDB\Field(type="string")
+     * @ODM\Field(type="string")
      */
     protected $htmlClass;
 
     /**
      * @var string $boDirection
      *
-     * @MongoDB\Field(type="string")
+     * @ODM\Field(type="string")
      */
     protected $boDirection;
 
     /**
      * @var float $boPercent
      *
-     * @MongoDB\Field(type="float")
+     * @ODM\Field(type="float")
      */
     protected $boPercent;
 
     /**
-     * @MongoDB\Field(type="collection")
+     * @ODM\Field(type="collection")
      */
     protected $classes = array();
 
     /**
      * @var ArrayCollection
      *
-     * @MongoDB\EmbedMany(targetDocument="Area")
+     * @ODM\EmbedMany(targetDocument="Area")
      */
     protected $subAreas;
 
     /**
-     * @MongoDB\Field(type="collection")
+     * @ODM\Field(type="collection")
      */
     protected $blocks = array();
 

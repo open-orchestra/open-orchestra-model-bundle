@@ -13,6 +13,7 @@ use PHPOrchestra\ModelInterface\Model\BlockInterface;
 use PHPOrchestra\ModelInterface\Model\NodeInterface;
 use PHPOrchestra\ModelInterface\Model\StatusInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
+use PHPOrchestra\ModelInterface\MongoTrait\MetaableDocument;
 
 /**
  * Description of Node
@@ -34,6 +35,7 @@ class Node implements NodeInterface
 {
     use BlameableDocument;
     use TimestampableDocument;
+    use MetaableDocument;
 
     /**
      * @var string $id

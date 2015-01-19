@@ -2,53 +2,53 @@
 
 namespace PHPOrchestra\ModelBundle\Document;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use PHPOrchestra\ModelInterface\Model\BlockInterface;
 
 /**
  * Description of BaseBlock
  *
- * @MongoDB\EmbeddedDocument
+ * @ODM\EmbeddedDocument
  */
 class Block implements BlockInterface
 {
     /**
      * @var string $component
      *
-     * @MongoDB\Field(type="string")
+     * @ODM\Field(type="string")
      */
     protected $component;
 
     /**
      * @var string $label
      *
-     * @MongoDB\Field(type="string")
+     * @ODM\Field(type="string")
      */
     protected $label;
 
     /**
      * @var string $class
      *
-     * @MongoDB\Field(type="string")
+     * @ODM\Field(type="string")
      */
     protected $class;
 
     /**
      * @var string $id
      *
-     * @MongoDB\Field(type="string")
+     * @ODM\Field(type="string")
      */
     protected $id;
 
     /**
      * @var array $attributes
      *
-     * @MongoDB\Field(type="hash")
+     * @ODM\Field(type="hash")
      */
     protected $attributes = array();
 
     /**
-     * @MongoDB\Field(type="collection")
+     * @ODM\Field(type="collection")
      */
     protected $areas = array();
 

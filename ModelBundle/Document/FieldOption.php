@@ -2,27 +2,27 @@
 
 namespace PHPOrchestra\ModelBundle\Document;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use PHPOrchestra\ModelInterface\Model\FieldOptionInterface;
 
 /**
  * Description of FieldOption
  *
- * @MongoDB\EmbeddedDocument
+ * @ODM\EmbeddedDocument
  */
 class FieldOption implements FieldOptionInterface
 {
     /**
      * @var string
      *
-     * @MongoDB\Field(type="string")
+     * @ODM\Field(type="string")
      */
     protected $key;
 
     /**
      * @var string
      *
-     * @MongoDB\Field(type="string")
+     * @ODM\Field(type="string")
      */
     protected $value;
 

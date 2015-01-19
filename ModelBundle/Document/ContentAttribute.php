@@ -2,27 +2,27 @@
 
 namespace PHPOrchestra\ModelBundle\Document;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use PHPOrchestra\ModelInterface\Model\ContentAttributeInterface;
 
 /**
  * Description of ContentAttribute
  *
- * @MongoDB\EmbeddedDocument
+ * @ODM\EmbeddedDocument
  */
 class ContentAttribute implements ContentAttributeInterface
 {
     /**
      * @var string $name
      *
-     * @MongoDB\Field(type="string")
+     * @ODM\Field(type="string")
      */
     protected $name;
 
     /**
      * @var string $value
      *
-     * @MongoDB\Field(type="string")
+     * @ODM\Field(type="string")
      */
     protected $value;
 

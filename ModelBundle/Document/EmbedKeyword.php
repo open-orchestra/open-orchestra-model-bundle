@@ -2,14 +2,14 @@
 
 namespace PHPOrchestra\ModelBundle\Document;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use PHPOrchestra\ModelInterface\Model\EmbedKeywordInterface;
 use PHPOrchestra\ModelInterface\Model\KeywordInterface;
 
 /**
  * Class EmbedKeyword
  *
- * @MongoDB\EmbeddedDocument
+ * @ODM\EmbeddedDocument
  */
 class EmbedKeyword extends AbstractKeyword implements EmbedKeywordInterface
 {
