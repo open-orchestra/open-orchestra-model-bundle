@@ -3,13 +3,13 @@
 namespace PHPOrchestra\ModelBundle\Document;
 
 use PHPOrchestra\ModelInterface\Model\ThemeInterface;
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use PHPOrchestra\ModelBundle\Mapping\Annotations as ORCHESTRA;
 
 /**
  * Class Theme
  *
- * @MongoDB\Document(
+ * @ODM\Document(
  *   collection="theme",
  *   repositoryClass="PHPOrchestra\ModelBundle\Repository\ThemeRepository"
  * )
@@ -19,14 +19,14 @@ class Theme implements ThemeInterface
     /**
      * @var string $id
      *
-     * @MongoDB\Id
+     * @ODM\Id
      */
     protected $id;
 
     /**
      * @var string $name
      *
-     * @MongoDB\Field(type="string")
+     * @ODM\Field(type="string")
      */
     protected $name;
 

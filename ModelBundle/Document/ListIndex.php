@@ -2,13 +2,13 @@
 
 namespace PHPOrchestra\ModelBundle\Document;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use PHPOrchestra\ModelInterface\Model\ListIndexInterface;
 
 /**
  * Class ListIndex
  *
- * @MongoDB\Document(
+ * @ODM\Document(
  *   collection="list_index",
  *   repositoryClass="PHPOrchestra\ModelBundle\Repository\ListIndexRepository"
  * )
@@ -18,21 +18,21 @@ class ListIndex implements ListIndexInterface
     /**
      * @var string $id
      *
-     * @MongoDB\Id
+     * @ODM\Id
      */
     protected $id;
 
     /**
      * @var string $nodeId
      *
-     * @MongoDB\Field(type="string")
+     * @ODM\Field(type="string")
      */
     protected $nodeId;
 
     /**
      * @var string $contentId
      *
-     * @MongoDB\Field(type="string")
+     * @ODM\Field(type="string")
      */
     protected $contentId;
 
