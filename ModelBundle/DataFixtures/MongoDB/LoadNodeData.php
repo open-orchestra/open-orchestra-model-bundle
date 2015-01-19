@@ -152,7 +152,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $homeBlock->setComponent('sample');
         $homeBlock->setAttributes(array(
             'title' => 'Accueil',
-            'news' => "Bienvenu sur le site de démo issu des fixtures.",
+            'news' => "Bienvenue sur le site de démo issu des fixtures.",
             'author' => ''
         ));
         $homeBlock->addArea(array('nodeId' => 0, 'areaId' => 'main'));
@@ -187,8 +187,19 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $blockDailymotion->setComponent('dailymotion');
         $blockDailymotion->setAttributes(array(
             'class' => 'dailymotionClass',
+            'background' => '#b51b15',
+            'foreground' => '#121514',
+            'highlight' => '#15c417',
+            'videoId' => 'x2eci0m',
             'id' => 'dailymotion',
-            'videoId' => 'x2eci0m'
+            'chromeless' => false,
+            'autoplay' => true,
+            'quality' => '720',
+            'related' => false,
+            'height' => '269',
+            'width' => '480',
+            'info' => false,
+            'logo' => false,
         ));
         $blockDailymotion->addArea(array('nodeId' => 0, 'areaId' => 'main'));
 
@@ -196,9 +207,21 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $blockYoutube->setLabel('youtube');
         $blockYoutube->setComponent('youtube');
         $blockYoutube->setAttributes(array(
+            'videoId' => '3O-2klyE80w',
             'class' => 'youtubeClass',
+            'disablekb' => true,
+            'controls' => true,
+            'showinfo' => true,
+            'autoplay' => true,
             'id' => 'youtube',
-            'videoId' => '3O-2klyE80w'
+            'height' => '269',
+            'width' => '480',
+            'theme' => true,
+            'color' => true,
+            'loop' => true,
+            'rel' => true,
+            'fs' => true,
+            'hl' => 'en',
         ));
         $blockYoutube->addArea(array('nodeId' => 0, 'areaId' => 'main'));
 
@@ -265,9 +288,19 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $blockVimeo->setLabel('vimeo');
         $blockVimeo->setComponent('vimeo');
         $blockVimeo->setAttributes(array(
+            'videoId' => '116362234',
             'class' => 'vimeoClass',
+            'fullscreen' => true,
+            'color' => 'b51b15',
+            'portrait' => false,
+            'autoplay' => true,
+            'height' => '269',
+            'byline' => false,
+            'badge' => false,
+            'width' => '480',
+            'title' => false,
             'id' => 'vimeo',
-            'videoId' => '116362234'
+            'loop' => true,
         ));
         $blockVimeo->addArea(array('nodeId' => 0, 'areaId' => 'main'));
 
