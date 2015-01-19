@@ -3,7 +3,7 @@
 namespace PHPOrchestra\ModelBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use PHPOrchestra\ModelBundle\Mapping\Annotations as ORCHESTRA;
 use PHPOrchestra\ModelInterface\Model\AreaInterface;
 use PHPOrchestra\ModelInterface\Model\BlockInterface;
@@ -13,7 +13,7 @@ use PHPOrchestra\ModelInterface\Model\TemplateInterface;
 /**
  * Description of Template
  *
- * @MongoDB\Document(
+ * @ODM\Document(
  *   collection="template",
  *   repositoryClass="PHPOrchestra\ModelBundle\Repository\TemplateRepository"
  * )
@@ -29,70 +29,70 @@ class Template implements TemplateInterface
     /**
      * @var string $id
      *
-     * @MongoDB\Id
+     * @ODM\Id
      */
     protected $id;
 
     /**
      * @var string $templateId
      *
-     * @MongoDB\Field(type="string")
+     * @ODM\Field(type="string")
      */
     protected $templateId;
 
     /**
      * @var string $siteId
      *
-     * @MongoDB\Field(type="string")
+     * @ODM\Field(type="string")
      */
     protected $siteId;
 
     /**
      * @var string $name
      *
-     * @MongoDB\Field(type="string")
+     * @ODM\Field(type="string")
      */
     protected $name;
 
     /**
      * @var int $version
      *
-     * @MongoDB\Field(type="int")
+     * @ODM\Field(type="int")
      */
     protected $version;
 
     /**
      * @var string
      *
-     * @MongoDB\Field(type="string")
+     * @ODM\Field(type="string")
      */
     protected $language;
 
     /**
      * @var boolean
      *
-     * @MongoDB\Field(type="boolean")
+     * @ODM\Field(type="boolean")
      */
     protected $deleted = false;
 
     /**
      * @var AreaInterface
      *
-     * @MongoDB\EmbedMany(targetDocument="Area")
+     * @ODM\EmbedMany(targetDocument="Area")
      */
     protected $areas;
 
     /**
      * @var string $boDirection
      *
-     * @MongoDB\Field(type="string")
+     * @ODM\Field(type="string")
      */
     protected $boDirection;
 
     /**
      * @var ArrayCollection
      *
-     * @MongoDB\EmbedMany(targetDocument="Block")
+     * @ODM\EmbedMany(targetDocument="Block")
      */
     protected $blocks;
 

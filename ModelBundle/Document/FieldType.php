@@ -4,63 +4,63 @@ namespace PHPOrchestra\ModelBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Inflector\Inflector;
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use PHPOrchestra\ModelInterface\Model\FieldOptionInterface;
 use PHPOrchestra\ModelInterface\Model\FieldTypeInterface;
 
 /**
  * Description of Base FieldType
  *
- * @MongoDB\EmbeddedDocument
+ * @ODM\EmbeddedDocument
  */
 class FieldType implements FieldTypeInterface
 {
     /**
      * @var string $fieldId
      *
-     * @MongoDB\Field(type="string")
+     * @ODM\Field(type="string")
      */
     protected $fieldId;
 
     /**
      * @var ArrayCollection $labels
      *
-     * @MongoDB\EmbedMany(targetDocument="TranslatedValue")
+     * @ODM\EmbedMany(targetDocument="TranslatedValue")
      */
     protected $labels;
 
     /**
      * @var string $defaultValue
      *
-     * @MongoDB\Field(type="string")
+     * @ODM\Field(type="string")
      */
     protected $defaultValue;
 
     /**
      * @var boolean $searchable
      *
-     * @MongoDB\Field(type="boolean")
+     * @ODM\Field(type="boolean")
      */
     protected $searchable;
 
     /**
      * @var string $type
      *
-     * @MongoDB\Field(type="string")
+     * @ODM\Field(type="string")
      */
     protected $type;
 
     /**
      * @var string $symfonyType
      *
-     * @MongoDB\Field(type="string")
+     * @ODM\Field(type="string")
      */
     protected $symfonyType;
 
     /**
      * @var ArrayCollection $options
      *
-     * @MongoDB\EmbedMany(targetDocument="FieldOption")
+     * @ODM\EmbedMany(targetDocument="FieldOption")
      */
     protected $options;
 
