@@ -301,6 +301,9 @@ class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterfac
         $siteHome->addBlock($siteHomeCarrousel);
         $siteHome->addBlock($siteHomeBlock4);
 
+        $siteHome->setSitemapChangefreq('always');
+        $siteHome->setSitemapPriority('0.75');
+
         return $siteHome;
     }
 
@@ -407,6 +410,9 @@ Nativement, multi-sites multi support, facile d’intégration au SI, ouvert ver
         $siteWhat->addArea($siteWhatArea7);
         $siteWhat->addBlock($siteWhatBlock0);
 
+        $siteWhat->setSitemapChangefreq('hourly');
+        $siteWhat->setSitemapPriority('0.8');
+
         return $siteWhat;
     }
 
@@ -498,6 +504,10 @@ Nativement, multi-sites multi support, facile d’intégration au SI, ouvert ver
         $siteStart->addArea($siteStartArea7);
         $siteStart->addBlock($siteStartBlock0);
 
+        $siteStart->setSitemapChangefreq('monthly');
+        $siteStart->setSitemapPriority('0.25');
+
+        
         return $siteStart;
     }
 
