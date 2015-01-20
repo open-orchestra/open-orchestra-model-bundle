@@ -84,6 +84,13 @@ class Site implements SiteInterface
     protected $theme;
 
     /**
+     * @var string $robotsTxt
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $robotsTxt;
+
+    /**
      * @param string $alias
      */
     public function setAlias($alias)
@@ -233,5 +240,25 @@ class Site implements SiteInterface
     public function getTheme()
     {
         return $this->theme;
+    }
+
+    /**
+     * Set robotsTxt
+     *
+     * @param string $robotsTxt
+     */
+    public function setRobotsTxt($robotsTxt)
+    {
+        $this->robotsTxt = $robotsTxt;
+    }
+
+    /**
+     * Get robotsTxt
+     *
+     * @return string $robotsTxt
+     */
+    public function getRobotsTxt()
+    {
+        return $this->robotsTxt;
     }
 }
