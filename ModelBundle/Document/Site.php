@@ -91,6 +91,13 @@ class Site implements SiteInterface
     protected $robotsTxt;
 
     /**
+     * Constructor
+     */
+    public function __construct(){
+        $this->setRobotsTxt(SiteInterface::ROBOTS_TXT_DEFAULT);
+    }
+
+    /**
      * @param string $alias
      */
     public function setAlias($alias)
