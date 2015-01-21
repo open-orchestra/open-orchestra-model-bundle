@@ -93,7 +93,8 @@ class Site implements SiteInterface
     /**
      * Constructor
      */
-    public function __construct(){
+    public function __construct()
+    {
         $this->setRobotsTxt(SiteInterface::ROBOTS_TXT_DEFAULT);
     }
 
