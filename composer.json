@@ -26,7 +26,7 @@
         "stof/doctrine-extensions-bundle": "1.1.0"
     },
     "require-dev": {
-        "itkg/phporchestra-base-bundle": "*",
+        "itkg/phporchestra-base-bundle": "dev-master",
         "scrutinizer/ocular": "1.1.1",
         "symfony/validator": "2.5.5",
         "jmikola/geojson": "1.0.1",
