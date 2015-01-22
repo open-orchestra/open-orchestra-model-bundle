@@ -244,4 +244,27 @@ class ContentRepositoryTest extends KernelTestCase
         }
         $this->assertSame(false, $content->getDeleted());
     }
+
+    /**
+     * @param string $contentType
+     * @param int    $count
+     *
+     * @dataProvider provideCountByContentType
+     */
+    public function testFindByContentTypeInLastVersion($contentType, $count)
+    {
+        $this->assertCount($count, $this->repository->findByContentTypeInLastVersion($contentType));
+    }
+
+    /**
+     * @return array
+     */
+    public function provideCountByContentType()
+    {
+        return array(
+            array('news', 255),
+            array('car', 1),
+            array('customer', 1),
+        );
+    }
 }

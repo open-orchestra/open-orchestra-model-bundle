@@ -153,6 +153,37 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
     }
 
     /**
+     * @param string $contentType
+     *
+     * @return array
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
+    public function findByContentTypeInLastVersion($contentType = null)
+    {
+        $qb = $this->createQueryBuilder('c');
+        if ($contentType) {
+            $qb->field('contentType')->equals($contentType);
+        }
+        $qb->field('deleted')->equals(false);
+
+        $list = $qb->getQuery()->execute();
+
+        $contents = array();
+
+        foreach ($list as $content) {
+            if (empty($contents[$content->getContentId()])) {
+                $contents[$content->getContentId()] = $content;
+                continue;
+            }
+            if ($contents[$content->getContentId()]->getVersion() < $content->getVersion()) {
+                $contents[$content->getContentId()] = $content;
+            }
+        }
+
+        return $contents;
+    }
+
+    /**
      * @return array
      */
     public function findAllDeleted()

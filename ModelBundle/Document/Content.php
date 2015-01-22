@@ -107,8 +107,7 @@ class Content implements ContentInterface
      */
     public function __construct()
     {
-        $this->attributes = new ArrayCollection();
-        $this->keywords = new ArrayCollection();
+        $this->initializeCollections();
     }
 
     /**
@@ -300,5 +299,15 @@ class Content implements ContentInterface
     public function __clone()
     {
         $this->id = null;
+        $this->initializeCollections();
+    }
+
+    /**
+     * initialize collections
+     */
+    protected function initializeCollections()
+    {
+        $this->attributes = new ArrayCollection();
+        $this->keywords = new ArrayCollection();
     }
 }
