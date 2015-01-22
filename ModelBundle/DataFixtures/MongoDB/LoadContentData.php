@@ -19,11 +19,11 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $objectManager)
     {
-        $content3 = $this->generateContent3();
-        $objectManager->persist($content3);
+        $objectManager->persist($this->generateContent3('fr'));
+        $objectManager->persist($this->generateContent3('en'));
 
-        $content4 = $this->generateContent4();
-        $objectManager->persist($content4);
+        $objectManager->persist($this->generateContent4('fr'));
+        $objectManager->persist($this->generateContent4('en'));
 
         $objectManager->flush();
     }
@@ -40,7 +40,7 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
     /**
      * @return Content
      */
-    public function generateContent3()
+    public function generateContent3($language)
     {
         $content = new Content();
 
@@ -60,8 +60,8 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
         $content->setContentType("car");
         $content->setContentTypeVersion(1);
         $content->setDeleted(false);
-        $content->setName("R5 3 portes");
-        $content->setLanguage("en");
+        $content->setName("R5 3 portes " . $language);
+        $content->setLanguage($language);
         $content->setStatus($this->getReference('status-published'));
         $content->setVersion(2);
         $content->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-lorem')));
@@ -76,7 +76,7 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
     /**
      * @return Content
      */
-    public function generateContent4()
+    public function generateContent4($language)
     {
         $content = new Content();
 
@@ -97,7 +97,7 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
         $content->setContentTypeVersion(1);
         $content->setDeleted(false);
         $content->setName("Jean-Paul");
-        $content->setLanguage("fr");
+        $content->setLanguage($language);
         $content->setStatus($this->getReference('status-published'));
         $content->setVersion(2);
         $content->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-lorem')));
