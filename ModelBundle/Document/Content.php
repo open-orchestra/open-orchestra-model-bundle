@@ -65,7 +65,7 @@ class Content implements ContentInterface
      *
      * @ODM\Field(type="int")
      */
-    protected $version;
+    protected $version = 1;
 
     /**
      * @var int $contentTypeVersion
