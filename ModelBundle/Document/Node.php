@@ -192,12 +192,18 @@ class Node implements NodeInterface
     protected $order = 0;
 
     /**
+     * @var string
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $routePattern;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->blocks = new ArrayCollection();
-        $this->areas = new ArrayCollection();
+        $this->initializeCollections();
     }
 
     /**
@@ -690,8 +696,7 @@ class Node implements NodeInterface
     {
         if (!is_null($this->id)) {
             $this->id = null;
-            $this->areas = new ArrayCollection();
-            $this->blocks = new ArrayCollection();
+            $this->initializeCollections();
             $this->setCreatedAt(new \DateTime());
             $this->setUpdatedAt(new \DateTime());
         }
@@ -711,5 +716,30 @@ class Node implements NodeInterface
     public function getOrder()
     {
         return $this->order;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRoutePattern()
+    {
+        return $this->routePattern;
+    }
+
+    /**
+     * @param string $routePattern
+     */
+    public function setRoutePattern($routePattern)
+    {
+        $this->routePattern = $routePattern;
+    }
+
+    /**
+     * Initialize collections
+     */
+    protected function initializeCollections()
+    {
+        $this->areas = new ArrayCollection();
+        $this->blocks = new ArrayCollection();
     }
 }

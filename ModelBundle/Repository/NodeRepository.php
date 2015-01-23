@@ -431,5 +431,15 @@ class NodeRepository extends DocumentRepository implements FieldAutoGenerableRep
         return $this->findOneBy(array('nodeId' => $nodeId));
     }
 
-
+    /**
+     * @param string $type
+     *
+     * @throws \Exception
+     *
+     * @return array
+     */
+    public function findByNodeType($type = NodeInterface::TYPE_DEFAULT)
+    {
+        return parent::findBy(array('nodeType' => $type));
+    }
 }

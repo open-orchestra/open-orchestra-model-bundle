@@ -244,6 +244,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $home->setParentId('-');
         $home->setAlias('-');
         $home->setPath('-');
+        $home->setRoutePattern('/');
         $home->setName('Fixture Home');
         $home->setVersion($version);
         $home->setLanguage('fr');
@@ -321,6 +322,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $home->setParentId('-');
         $home->setAlias('-');
         $home->setPath('-');
+        $home->setRoutePattern('/');
         $home->setName('Fixture Home');
         $home->setVersion(1);
         $home->setLanguage('en');
@@ -477,6 +479,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $full->setParentId(NodeInterface::ROOT_NODE_ID);
         $full->setPath('-');
         $full->setAlias('fixture-full');
+        $full->setRoutePattern('/fixture-full');
         $full->setName('Fixture full sample');
         $full->setVersion(1);
         $full->setLanguage('fr');
@@ -513,25 +516,26 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $genericArea->setLabel('Generic Area');
         $genericArea->setAreaId('Generic Area');
 
-        $generic = new Node();
-        $generic->setNodeId('fixutre_generic');
-        $generic->setNodeType(NodeInterface::TYPE_DEFAULT);
-        $generic->setSiteId('1');
-        $generic->setParentId(NodeInterface::ROOT_NODE_ID);
-        $generic->setPath('-');
-        $generic->setOrder(1);
-        $generic->setAlias('fixture-generic');
-        $generic->setName('Generic Node');
-        $generic->setVersion(1);
-        $generic->setLanguage('fr');
-        $generic->setStatus($this->getReference('status-published'));
-        $generic->setTemplateId('template_generic');
-        $generic->setDeleted(true);
-        $generic->setInMenu(false);
-        $generic->setInFooter(false);
-        $generic->addArea($genericArea);
+        $node = new Node();
+        $node->setNodeId('fixutre_generic');
+        $node->setNodeType(NodeInterface::TYPE_DEFAULT);
+        $node->setSiteId('1');
+        $node->setParentId(NodeInterface::ROOT_NODE_ID);
+        $node->setPath('-');
+        $node->setOrder(1);
+        $node->setAlias('fixture-generic');
+        $node->setRoutePattern('/fixture-generic');
+        $node->setName('Generic Node');
+        $node->setVersion(1);
+        $node->setLanguage('fr');
+        $node->setStatus($this->getReference('status-published'));
+        $node->setTemplateId('template_generic');
+        $node->setDeleted(true);
+        $node->setInMenu(false);
+        $node->setInFooter(false);
+        $node->addArea($genericArea);
 
-        return $generic;
+        return $node;
     }
 
     /**
@@ -579,29 +583,30 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $aboutUsArea->addBlock(array('nodeId' => 0, 'blockId' => 1));
         $aboutUsArea->addBlock(array('nodeId' => 0, 'blockId' => 2 ));
 
-        $aboutUs = new Node();
-        $aboutUs->setNodeId('fixture_about_us');
-        $aboutUs->setNodeType(NodeInterface::TYPE_DEFAULT);
-        $aboutUs->setName('Fixture About Us');
-        $aboutUs->setSiteId('1');
-        $aboutUs->setParentId(NodeInterface::ROOT_NODE_ID);
-        $aboutUs->setPath('-');
-        $aboutUs->setOrder(2);
-        $aboutUs->setAlias('qui-sommes-nous');
-        $aboutUs->setVersion(1);
-        $aboutUs->setLanguage('fr');
-        $aboutUs->setStatus($this->getReference('status-published'));
-        $aboutUs->setDeleted(false);
-        $aboutUs->setTemplateId('template_home');
-        $aboutUs->setTheme('theme2');
-        $aboutUs->setInFooter(true);
-        $aboutUs->setInMenu(true);
-        $aboutUs->addArea($aboutUsArea);
-        $aboutUs->addBlock($aboutUsBlock);
-        $aboutUs->addBlock($contentGmap);
-        $aboutUs->addBlock($addThis);
+        $node = new Node();
+        $node->setNodeId('fixture_about_us');
+        $node->setNodeType(NodeInterface::TYPE_DEFAULT);
+        $node->setName('Fixture About Us');
+        $node->setSiteId('1');
+        $node->setParentId(NodeInterface::ROOT_NODE_ID);
+        $node->setPath('-');
+        $node->setOrder(2);
+        $node->setAlias('qui-sommes-nous');
+        $node->setRoutePattern('/qui-sommes-nous');
+        $node->setVersion(1);
+        $node->setLanguage('fr');
+        $node->setStatus($this->getReference('status-published'));
+        $node->setDeleted(false);
+        $node->setTemplateId('template_home');
+        $node->setTheme('theme2');
+        $node->setInFooter(true);
+        $node->setInMenu(true);
+        $node->addArea($aboutUsArea);
+        $node->addBlock($aboutUsBlock);
+        $node->addBlock($contentGmap);
+        $node->addBlock($addThis);
 
-        return $aboutUs;
+        return $node;
     }
 
     /**
@@ -624,27 +629,28 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $aboutUsArea->setAreaId('main');
         $aboutUsArea->addBlock(array('nodeId' => 0, 'blockId' => 0));
 
-        $aboutUs = new Node();
-        $aboutUs->setNodeId('fixture_deleted');
-        $aboutUs->setNodeType(NodeInterface::TYPE_DEFAULT);
-        $aboutUs->setName('Fixture deleted');
-        $aboutUs->setSiteId('1');
-        $aboutUs->setParentId(NodeInterface::ROOT_NODE_ID);
-        $aboutUs->setPath('-');
-        $aboutUs->setOrder(3);
-        $aboutUs->setAlias('deleted');
-        $aboutUs->setVersion(1);
-        $aboutUs->setLanguage('fr');
-        $aboutUs->setStatus($this->getReference('status-published'));
-        $aboutUs->setDeleted(true);
-        $aboutUs->setTemplateId('template_home');
-        $aboutUs->setTheme('theme2');
-        $aboutUs->setInFooter(true);
-        $aboutUs->setInMenu(true);
-        $aboutUs->addArea($aboutUsArea);
-        $aboutUs->addBlock($aboutUsBlock);
+        $node = new Node();
+        $node->setNodeId('fixture_deleted');
+        $node->setNodeType(NodeInterface::TYPE_DEFAULT);
+        $node->setName('Fixture deleted');
+        $node->setSiteId('1');
+        $node->setParentId(NodeInterface::ROOT_NODE_ID);
+        $node->setPath('-');
+        $node->setRoutePattern('/fixture-deleted');
+        $node->setOrder(3);
+        $node->setAlias('deleted');
+        $node->setVersion(1);
+        $node->setLanguage('fr');
+        $node->setStatus($this->getReference('status-published'));
+        $node->setDeleted(true);
+        $node->setTemplateId('template_home');
+        $node->setTheme('theme2');
+        $node->setInFooter(true);
+        $node->setInMenu(true);
+        $node->addArea($aboutUsArea);
+        $node->addBlock($aboutUsBlock);
 
-        return $aboutUs;
+        return $node;
     }
 
     /**
@@ -673,6 +679,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $aboutUs->setName('Fixture deleted son');
         $aboutUs->setSiteId('1');
         $aboutUs->setParentId('fixture_deleted');
+        $aboutUs->setRoutePattern('/fixture-deleted/fixture-deleted-son');
         $aboutUs->setPath('-');
         $aboutUs->setAlias('deleted');
         $aboutUs->setVersion(1);
@@ -727,6 +734,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $bd->setName('Fixture B&D');
         $bd->setSiteId('1');
         $bd->setParentId('fixture_about_us');
+        $bd->setRoutePattern('/qui-sommes-nous/b-et-d');
         $bd->setPath('-');
         $bd->setAlias('b-et-d');
         $bd->setVersion(1);
@@ -773,6 +781,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $interakting->setPath('-');
         $interakting->setOrder(1);
         $interakting->setAlias('interakting');
+        $interakting->setRoutePattern('/qui-sommes-nous/interakting');
         $interakting->setVersion(1);
         $interakting->setLanguage('fr');
         $interakting->setStatus($this->getReference('status-published'));
@@ -816,6 +825,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $contactUs->setParentId(NodeInterface::ROOT_NODE_ID);
         $contactUs->setPath('-');
         $contactUs->setAlias('nous-contacter');
+        $contactUs->setRoutePattern('/nous-contacter');
         $contactUs->setVersion(1);
         $contactUs->setOrder(4);
         $contactUs->setLanguage('fr');
@@ -861,6 +871,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $directory->setPath('-');
         $directory->setOrder(5);
         $directory->setAlias('nous-contacter');
+        $directory->setRoutePattern('/directory');
         $directory->setVersion(1);
         $directory->setLanguage('fr');
         $directory->setStatus($this->getReference('status-published'));
@@ -988,6 +999,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $search->setPath('-');
         $search->setOrder(6);
         $search->setAlias('nous-contacter');
+        $search->setRoutePattern('/search');
         $search->setVersion(1);
         $search->setLanguage('fr');
         $search->setStatus($this->getReference('status-published'));
