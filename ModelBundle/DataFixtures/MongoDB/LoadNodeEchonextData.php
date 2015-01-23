@@ -529,7 +529,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
             'inMenu' => false,
             'inFooter' => false,
             'language' => $language,
-            'routePattern' => '/news',
+            'routePattern' => '/news/{newsId}',
         ));
 
         $node->addArea($headerArea);
