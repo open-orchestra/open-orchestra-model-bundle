@@ -95,19 +95,21 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
      */
     public function findByContentTypeAndChoiceTypeAndKeywords($contentType = '', $choiceType = self::CHOICE_AND, $keywords = null)
     {
-        $qb = $this->createQueryBuilder('c');
+        $qb = $this->getQueryFindByContentTypeAndChoiceTypeAndKeywords($contentType, $choiceType, $keywords);
 
-        $addMethod = 'addAnd';
-        if ($choiceType == self::CHOICE_OR) {
-            $addMethod = 'addOr';
-        }
+        return $qb->getQuery()->execute();
+    }
 
-        if (!is_null($keywords)) {
-            $qb->$addMethod($qb->expr()->field('keywords.label')->in(explode(',', $keywords)));
-        }
-        if ('' !== $contentType) {
-            $qb->$addMethod($qb->expr()->field('contentType')->equals($contentType));
-        }
+    /**
+     * @param string $contentType
+     * @param string $choiceType
+     * @param string $keywords
+     *
+     * @return array
+     */
+    public function findByContentTypeAndChoiceTypeAndKeywordsNotHydrated($contentType = '', $choiceType = self::CHOICE_AND, $keywords = null)
+    {
+        $qb = $this->getQueryFindByContentTypeAndChoiceTypeAndKeywords($contentType, $choiceType, $keywords);
 
         return $qb->hydrate(false)->getQuery()->execute();
     }
@@ -189,5 +191,30 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
     public function findAllDeleted()
     {
         return parent::findBy(array('deleted' => true));
+    }
+
+    /**
+     * @param $contentType
+     * @param $choiceType
+     * @param $keywords
+     * @return Builder
+     */
+    protected function getQueryFindByContentTypeAndChoiceTypeAndKeywords($contentType, $choiceType, $keywords)
+    {
+        $qb = $this->createQueryBuilder('c');
+
+        $addMethod = 'addAnd';
+        if ($choiceType == self::CHOICE_OR) {
+            $addMethod = 'addOr';
+        }
+
+        if (!is_null($keywords)) {
+            $qb->$addMethod($qb->expr()->field('keywords.label')->in(explode(',', $keywords)));
+        }
+        if ('' !== $contentType) {
+            $qb->$addMethod($qb->expr()->field('contentType')->equals($contentType));
+            return $qb;
+        }
+        return $qb;
     }
 }
