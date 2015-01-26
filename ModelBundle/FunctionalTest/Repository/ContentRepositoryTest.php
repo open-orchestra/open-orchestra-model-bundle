@@ -107,6 +107,21 @@ class ContentRepositoryTest extends KernelTestCase
     }
 
     /**
+     * @param string      $contentType
+     * @param string      $choiceType
+     * @param string|null $keywords
+     * @param int         $count
+     *
+     * @dataProvider provideContentTypeKeywordAndCount
+     */
+    public function testFindByContentTypeAndChoiceTypeAndKeywordsNotHydrated($contentType = '', $choiceType, $keywords = null, $count)
+    {
+        $elements = $this->repository->findByContentTypeAndChoiceTypeAndKeywordsNotHydrated($contentType, $choiceType, $keywords);
+
+        $this->assertCount($count, $elements);
+    }
+
+    /**
      * @return array
      */
     public function provideContentTypeKeywordAndCount()
