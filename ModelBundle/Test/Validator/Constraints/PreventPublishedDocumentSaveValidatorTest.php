@@ -29,7 +29,7 @@ class PreventPublishedDocumentSaveValidatorTest extends \PHPUnit_Framework_TestC
      */
     public function setUp()
     {
-        $this->translator = Phake::mock('Symfony\Component\Translation\Translator');
+        $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn($this->message);
         $this->context = Phake::mock('Symfony\Component\Validator\Context\ExecutionContext');
         $this->constraint = new PreventPublishedDocumentSave();

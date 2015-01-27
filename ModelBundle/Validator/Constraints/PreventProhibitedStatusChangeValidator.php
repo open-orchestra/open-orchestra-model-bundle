@@ -3,7 +3,7 @@
 namespace PHPOrchestra\ModelBundle\Validator\Constraints;
 
 use Symfony\Component\Security\Core\SecurityContextInterface;
-use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Doctrine\ODM\MongoDB\DocumentManager;
@@ -21,13 +21,13 @@ class PreventProhibitedStatusChangeValidator extends ConstraintValidator
 
     /**
      * @param SecurityContextInterface $securityContext
-     * @param Translator               $translator
+     * @param TranslatorInterface      $translator
      * @param DocumentManager          $documentManager
      * @param RoleRepository           $roleRepository
      */
     public function __construct(
         SecurityContextInterface $securityContext,
-        Translator $translator,
+        TranslatorInterface $translator,
         DocumentManager $documentManager,
         RoleRepository $roleRepository
     )
