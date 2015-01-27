@@ -151,7 +151,7 @@ class TransversalNodeCreatorListenerTest extends \PHPUnit_Framework_TestCase
         $this->listener->postFlush($event);
 
         foreach ($nodes as $node) {
-            Phake::verify($this->documentManager)->persist($node);
+            Phake::verify($this->documentManager, Phake::atLeast(1))->persist($node);
         }
         Phake::verify($this->documentManager)->flush();
         $this->assertEmpty($this->listener->nodes);
