@@ -2,7 +2,7 @@
 
 namespace PHPOrchestra\ModelBundle\Validator\Constraints;
 
-use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Doctrine\ODM\MongoDB\DocumentManager;
@@ -17,10 +17,10 @@ class PreventPublishedDocumentSaveValidator extends ConstraintValidator
     protected $documentManager;
 
     /**
-     * @param Translator      $translator
-     * @param DocumentManager $documentManager
+     * @param TranslatorInterface $translator
+     * @param DocumentManager     $documentManager
      */
-    public function __construct(Translator $translator, DocumentManager $documentManager)
+    public function __construct(TranslatorInterface $translator, DocumentManager $documentManager)
     {
         $this->translator = $translator;
         $this->documentManager = $documentManager;
