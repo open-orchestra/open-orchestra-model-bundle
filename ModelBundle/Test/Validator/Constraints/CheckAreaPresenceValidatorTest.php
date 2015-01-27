@@ -28,7 +28,7 @@ class CheckAreaPresenceValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->translator = Phake::mock('Symfony\Component\Translation\Translator');
+        $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn($this->message);
         $this->constraint = new CheckAreaPresence();
         $this->context = Phake::mock('Symfony\Component\Validator\Context\ExecutionContext');

@@ -3,7 +3,7 @@
 namespace PHPOrchestra\ModelBundle\Validator\Constraints;
 
 use PHPOrchestra\ModelInterface\Model\NodeInterface;
-use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
@@ -15,9 +15,9 @@ class CheckAreaPresenceValidator extends ConstraintValidator
     protected $translator;
 
     /**
-     * @param Translator $translator
+     * @param TranslatorInterface $translator
      */
-    public function __construct(Translator $translator)
+    public function __construct(TranslatorInterface $translator)
     {
         $this->translator = $translator;
     }
