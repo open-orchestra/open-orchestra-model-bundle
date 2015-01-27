@@ -39,7 +39,7 @@ class PreventProhibitedStatusChangeValidatorTest extends \PHPUnit_Framework_Test
      */
     public function setUp()
     {
-        $this->translator = Phake::mock('Symfony\Component\Translation\Translator');
+        $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn($this->message);
         $this->securityContext = Phake::mock('Symfony\Component\Security\Core\SecurityContextInterface');
         $this->constraint = new PreventProhibitedStatusChange();
