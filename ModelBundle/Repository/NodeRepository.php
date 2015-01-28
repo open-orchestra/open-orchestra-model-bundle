@@ -143,12 +143,8 @@ class NodeRepository extends DocumentRepository implements FieldAutoGenerableRep
     public function findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $language = null, $version = null)
     {
         if (!is_null($version)) {
-            $qb = $this->createQueryBuilderWithSiteId();
+            $qb = $this->createQueryBuilderWithSiteIdAndLanguage(null, $language);
             $qb->field('nodeId')->equals($nodeId);
-            if (is_null($language)) {
-                $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
-            }
-            $qb->field('language')->equals($language);
             $qb->field('deleted')->equals(false);
             $qb->field('version')->equals((int) $version);
 
