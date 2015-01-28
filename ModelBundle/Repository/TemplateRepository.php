@@ -3,16 +3,19 @@
 namespace PHPOrchestra\ModelBundle\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
+use PHPOrchestra\ModelBundle\Repository\RepositoryTrait\AreaFinderTrait;
 use PHPOrchestra\ModelInterface\Model\AreaInterface;
-use PHPOrchestra\ModelBundle\Repository\FieldAutoGenerableRepositoryInterface;
 use PHPOrchestra\ModelInterface\Model\TemplateInterface;
 use PHPOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
+use PHPOrchestra\ModelInterface\Model\AreaContainerInterface;
 
 /**
  * Class TemplateRepository
  */
 class TemplateRepository extends DocumentRepository implements FieldAutoGenerableRepositoryInterface, TemplateRepositoryInterface
 {
+    use AreaFinderTrait;
+
     /**
      * @param string $templateId
      * @param string $areaId
@@ -23,16 +26,7 @@ class TemplateRepository extends DocumentRepository implements FieldAutoGenerabl
     {
         $template = $this->findOneByTemplateId($templateId);
 
-        foreach ($template->getAreas() as $area) {
-            if ($areaId == $area->getAreaId()) {
-                return $area;
-            }
-            if ($selectedArea = $this->findAreaByAreaId($area, $areaId)) {
-                return $selectedArea;
-            }
-        }
-
-        return null;
+        return $this->findAreaByAreaId($template, $areaId);
     }
 
     /**
@@ -53,26 +47,6 @@ class TemplateRepository extends DocumentRepository implements FieldAutoGenerabl
     public function findByDeleted($deleted)
     {
         return $this->findBy(array('deleted' => $deleted));
-    }
-
-    /**
-     * @param AreaInterface $area
-     * @param string        $areaId
-     *
-     * @return null|AreaInterface
-     */
-    protected function findAreaByAreaId(AreaInterface $area, $areaId)
-    {
-        foreach ($area->getAreas() as $subArea) {
-            if ($areaId == $subArea->getAreaId()) {
-                return $subArea;
-            }
-            if ($selectedArea = $this->findAreaByAreaId($subArea, $areaId)) {
-                return $selectedArea;
-            }
-        }
-
-        return null;
     }
 
     /**
