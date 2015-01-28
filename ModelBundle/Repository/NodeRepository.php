@@ -247,13 +247,7 @@ class NodeRepository extends DocumentRepository implements FieldAutoGenerableRep
      */
     public function findLastVersionBySiteId($type = NodeInterface::TYPE_DEFAULT, $siteId = null)
     {
-        $qb = $this->createQueryBuilderWithSiteId($siteId);
-        $qb->field('deleted')->equals(false);
-        $qb->field('nodeType')->equals($type);
-
-        $list = $qb->getQuery()->execute();
-
-        return $this->findLastVersion($list);
+        return $this->prepareFindLastVersion($type, $siteId, false);
     }
 
     /**
@@ -263,13 +257,7 @@ class NodeRepository extends DocumentRepository implements FieldAutoGenerableRep
      */
     public function findLastVersionByDeletedAndSiteId($type = NodeInterface::TYPE_DEFAULT)
     {
-        $qb = $this->createQueryBuilderWithSiteId();
-        $qb->field('deleted')->equals(true);
-        $qb->field('nodeType')->equals($type);
-
-        $list = $qb->getQuery()->execute();
-
-        return $this->findLastVersion($list);
+        return $this->prepareFindLastVersion($type, null, true);
     }
 
     /**
@@ -431,5 +419,24 @@ class NodeRepository extends DocumentRepository implements FieldAutoGenerableRep
         $qb->field('language')->equals($language);
 
         return $qb;
+    }
+
+    /**
+     * @param string $type
+     * @param string $siteId
+     * @param bool   $deleted
+     *
+     * @return array
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
+    protected function prepareFindLastVersion($type, $siteId = null, $deleted)
+    {
+        $qb = $this->createQueryBuilderWithSiteId($siteId);
+        $qb->field('deleted')->equals($deleted);
+        $qb->field('nodeType')->equals($type);
+
+        $list = $qb->getQuery()->execute();
+
+        return $this->findLastVersion($list);
     }
 }
