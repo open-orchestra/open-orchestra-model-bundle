@@ -36,12 +36,7 @@ class NodeRepository extends DocumentRepository implements FieldAutoGenerableRep
      */
     public function getFooterTree($language = null)
     {
-        $qb = $this->buildTreeRequest($language);
-        $qb->field('inFooter')->equals(true);
-
-        $list = $qb->getQuery()->execute();
-
-        return $this->findLastVersion($list);
+        return $this->getTreeByLanguageAndField($language, 'inFooter');
     }
 
     /**
@@ -51,12 +46,7 @@ class NodeRepository extends DocumentRepository implements FieldAutoGenerableRep
      */
     public function getMenuTree($language = null)
     {
-        $qb = $this->buildTreeRequest($language);
-        $qb->field('inMenu')->equals(true);
-
-        $list = $qb->getQuery()->execute();
-
-        return $this->findLastVersion($list);
+        return $this->getTreeByLanguageAndField($language, 'inMenu');
     }
 
     /**
@@ -434,6 +424,23 @@ class NodeRepository extends DocumentRepository implements FieldAutoGenerableRep
         $qb = $this->createQueryBuilderWithSiteId($siteId);
         $qb->field('deleted')->equals($deleted);
         $qb->field('nodeType')->equals($type);
+
+        $list = $qb->getQuery()->execute();
+
+        return $this->findLastVersion($list);
+    }
+
+    /**
+     * @param string|null $language
+     * @param string      $field
+     *
+     * @return array
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
+    protected function getTreeByLanguageAndField($language = null, $field)
+    {
+        $qb = $this->buildTreeRequest($language);
+        $qb->field($field)->equals(true);
 
         $list = $qb->getQuery()->execute();
 
