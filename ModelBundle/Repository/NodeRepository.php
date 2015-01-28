@@ -6,9 +6,10 @@ use Doctrine\ODM\MongoDB\Cursor;
 use Doctrine\ODM\MongoDB\DocumentRepository;
 use Doctrine\ODM\MongoDB\Mapping;
 use PHPOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
+use PHPOrchestra\ModelBundle\Repository\RepositoryTrait\AreaFinderTrait;
 use PHPOrchestra\ModelInterface\Model\AreaInterface;
 use PHPOrchestra\ModelInterface\Model\NodeInterface;
-use PHPOrchestra\ModelBundle\Repository\FieldAutoGenerableRepositoryInterface;
+use PHPOrchestra\ModelInterface\Model\AreaContainerInterface;
 use PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 
 /**
@@ -16,6 +17,8 @@ use PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
  */
 class NodeRepository extends DocumentRepository implements FieldAutoGenerableRepositoryInterface, NodeRepositoryInterface
 {
+    use AreaFinderTrait;
+
     /**
      * @var CurrentSiteIdInterface
      */
@@ -65,46 +68,6 @@ class NodeRepository extends DocumentRepository implements FieldAutoGenerableRep
         $list = array_merge($list, $this->getTreeParentIdLevelAndLanguage($node->getNodeId(), $nbLevel, $language));
 
         return $list;
-    }
-
-    /**
-     * @param NodeInterface $node
-     * @param string        $areaId
-     *
-     * @return AreaInterface|null
-     */
-    public function findAreaFromNodeAndAreaId(NodeInterface $node, $areaId)
-    {
-        foreach ($node->getAreas() as $area) {
-            if ($areaId == $area->getAreaId()) {
-                return $area;
-            }
-            if ($selectedArea = $this->findAreaByAreaId($area, $areaId)) {
-                return $selectedArea;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @param AreaInterface $area
-     * @param string        $areaId
-     *
-     * @return null|AreaInterface
-     */
-    protected function findAreaByAreaId(AreaInterface $area, $areaId)
-    {
-        foreach ($area->getAreas() as $subArea) {
-            if ($areaId == $subArea->getAreaId()) {
-                return $subArea;
-            }
-            if ($selectedArea = $this->findAreaByAreaId($subArea, $areaId)) {
-                return $selectedArea;
-            }
-        }
-
-        return null;
     }
 
     /**
