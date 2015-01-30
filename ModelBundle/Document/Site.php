@@ -7,6 +7,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use PHPOrchestra\ModelInterface\Model\SiteInterface;
 use PHPOrchestra\ModelInterface\Model\ThemeInterface;
 use PHPOrchestra\ModelInterface\MongoTrait\MetaableDocument;
+use PHPOrchestra\ModelInterface\MongoTrait\SitemapableDocument;
 
 /**
  * Description of Site
@@ -19,6 +20,7 @@ use PHPOrchestra\ModelInterface\MongoTrait\MetaableDocument;
 class Site implements SiteInterface
 {
     use MetaableDocument;
+    use SitemapableDocument;
 
     /**
      * @var string $id
