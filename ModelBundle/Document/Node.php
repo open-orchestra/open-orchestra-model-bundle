@@ -14,6 +14,7 @@ use PHPOrchestra\ModelInterface\Model\NodeInterface;
 use PHPOrchestra\ModelInterface\Model\StatusInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use PHPOrchestra\ModelInterface\MongoTrait\MetaableDocument;
+use PHPOrchestra\ModelInterface\MongoTrait\SitemapableDocument;
 
 /**
  * Description of Node
@@ -36,6 +37,7 @@ class Node implements NodeInterface
     use BlameableDocument;
     use TimestampableDocument;
     use MetaableDocument;
+    use SitemapableDocument;
 
     /**
      * @var string $id
@@ -127,20 +129,6 @@ class Node implements NodeInterface
      * @ODM\Field(type="string")
      */
     protected $templateId;
-
-    /**
-     * @var string $sitemapChangefreq
-     *
-     * @ODM\Field(type="string")
-     */
-    protected $sitemapChangefreq = NodeInterface::CHANGE_FREQ_DEFAULT;
-
-    /**
-     * @var string $sitemapPriority
-     *
-     * @ODM\Field(type="string")
-     */
-    protected $sitemapPriority = NodeInterface::PRIORITY_DEFAULT;
 
     /**
      * @var string $theme
@@ -459,46 +447,6 @@ class Node implements NodeInterface
         return $this->templateId;
     }
 
-    /**
-     * Set sitemapChangefreq
-     *
-     * @param string $sitemapChangefreq
-     */
-    public function setSitemapChangefreq($sitemapChangefreq)
-    {
-        $this->sitemapChangefreq = $sitemapChangefreq;
-    }
-
-    /**
-     * Get sitemapChangefreq
-     *
-     * @return string $sitemapChangefreq
-     */
-    public function getSitemapChangefreq()
-    {
-        return $this->sitemapChangefreq;
-    }
-    
-    /**
-     * Set sitemapPriority
-     *
-     * @param string $sitemapPriority
-     */
-    public function setSitemapPriority($sitemapPriority)
-    {
-        $this->sitemapPriority = $sitemapPriority;
-    }
-
-    /**
-     * Get sitemapPriority
-     *
-     * @return string $sitemapPriority
-     */
-    public function getSitemapPriority()
-    {
-        return $this->sitemapPriority;
-    }
-    
     /**
      * Set theme
      *
