@@ -61,7 +61,7 @@ class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface
     {
         $site2 = new Site();
         $site2->setSiteId('2');
-        $site2->setDomain('demo-phporchestra.dev');
+        $site2->setDomain('demo-phporchestra-front.dev');
         $site2->setAlias('demo-phporchestra-front.inte');
         $site2->setDefaultLanguage('fr');
         $site2->setLanguages(array('en', 'fr'));
@@ -79,7 +79,7 @@ class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface
     {
         $site3 = new Site();
         $site3->setSiteId('3');
-        $site3->setDomain('echonext-phporchestra.dev');
+        $site3->setDomain('echonext.phporchestra.dev');
         $site3->setAlias('echonext.phporchestra.inte');
         $site3->setDefaultLanguage('fr');
         $site3->setLanguages(array('en', 'fr'));

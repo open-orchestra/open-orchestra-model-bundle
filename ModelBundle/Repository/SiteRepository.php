@@ -22,6 +22,16 @@ class SiteRepository extends DocumentRepository implements SiteRepositoryInterfa
     }
 
     /**
+     * @param $siteId
+     * 
+     * @return SiteInterface
+     */
+    public function findOneBySiteIdNotDeleted($siteId)
+    {
+        return $this->findOneBy(array('siteId' => $siteId, 'deleted' => false));
+    }
+
+    /**
      * @param boolean $deleted
      *
      * @return array
