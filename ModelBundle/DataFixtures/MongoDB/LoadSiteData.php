@@ -6,6 +6,7 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use PHPOrchestra\ModelBundle\Document\Site;
+use PHPOrchestra\ModelBundle\Document\SiteAlias;
 
 /**
  * Class LoadSiteData
@@ -43,10 +44,9 @@ class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface
     {
         $site1 = new Site();
         $site1->setSiteId('1');
-        $site1->setDomain('front-phporchestra.dev');
-        $site1->setAlias('front-phporchestra-front.inte');
-        $site1->setDefaultLanguage('fr');
-        $site1->setLanguages(array('en', 'fr'));
+        $site1->setName('First site');
+        $site1->addAlias($this->generateSiteAlias('front-phporchestra.dev'));
+        $site1->addAlias($this->generateSiteAlias('front-phporchestra-front.inte'));
         $site1->setDeleted(true);
         $site1->setTheme($this->getReference('themePresentation'));
         $site1->addBlock('sample');
@@ -61,10 +61,9 @@ class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface
     {
         $site2 = new Site();
         $site2->setSiteId('2');
-        $site2->setDomain('demo-phporchestra-front.dev');
-        $site2->setAlias('demo-phporchestra-front.inte');
-        $site2->setDefaultLanguage('fr');
-        $site2->setLanguages(array('en', 'fr'));
+        $site2->setName('Demo site');
+        $site2->addAlias($this->generateSiteAlias('demo-phporchestra-front.inte'));
+        $site2->addAlias($this->generateSiteAlias('demo-phporchestra-front.dev'));
         $site2->setDeleted(false);
         $site2->setTheme($this->getReference('themePresentation'));
         $site2->addBlock('sample');
@@ -79,10 +78,9 @@ class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface
     {
         $site3 = new Site();
         $site3->setSiteId('3');
-        $site3->setDomain('echonext.phporchestra.dev');
-        $site3->setAlias('echonext.phporchestra.inte');
-        $site3->setDefaultLanguage('fr');
-        $site3->setLanguages(array('en', 'fr'));
+        $site3->setName('Echonext site');
+        $site3->addAlias($this->generateSiteAlias('echonext.phporchestra.inte'));
+        $site3->addAlias($this->generateSiteAlias('echonext.phporchestra.dev'));
         $site3->setDeleted(false);
         $site3->setTheme($this->getReference('themePresentation'));
         $site3->addBlock('sample');
@@ -97,10 +95,9 @@ class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface
     {
         $site4 = new Site();
         $site4->setSiteId('4');
-        $site4->setDomain('empty-orchestra.dev');
-        $site4->setAlias('empty-php-orchestra.inte');
-        $site4->setDefaultLanguage('fr');
-        $site4->setLanguages(array('en', 'fr'));
+        $site4->setName('Empty site');
+        $site4->addAlias($this->generateSiteAlias('empty-php-orchestra.inte'));
+        $site4->addAlias($this->generateSiteAlias('empty-orchestra.dev'));
         $site4->setDeleted(true);
         $site4->setTheme($this->getReference('themePresentation'));
         $site4->addBlock('sample');
@@ -116,5 +113,20 @@ class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface
     public function getOrder()
     {
         return 300;
+    }
+
+    /**
+     * @param string $domainName
+     *
+     * @return SiteAlias
+     */
+    protected function generateSiteAlias($domainName)
+    {
+        $siteAlias = new SiteAlias();
+        $siteAlias->setDomain($domainName);
+        $siteAlias->setDefaultLanguage('fr');
+        $siteAlias->setLanguages(array('en', 'fr'));
+
+        return $siteAlias;
     }
 }
