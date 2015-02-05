@@ -170,14 +170,14 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
         $qb->field('deleted')->equals(false);
         $qb->sort('version', 'desc');
 
-        $keys = array("contentId" => 1);
-        $initial = array("first" => true, 'content' => array());
-        $reduce = "function (obj, prev) { if (prev.rank) prev.content = obj; prev.rank = false;}";
+        $keys = array();
+
+        $initial = array('listMongoId' => array(), 'currentContentId' => 0);
+        $reduce = "function (obj, prev) { if (prev.currentContentId != obj.contentId) {prev.currentContentId = obj.contentId; prev.listMongoId.push(obj._id);}}";
         $qb->group($keys, $initial, $reduce);
-
-        $contents = array_map(create_function('$content', 'return $content["content"];'), $qb->getQuery()->execute()->toArray());
-
-        return new ArrayCollection($contents);
+        $mongoId = $qb->getQuery()->execute()->current();
+        $qb = $this->createQueryBuilder('c')->field('_id')->in($mongoId['listMongoId']);
+        return $qb->getQuery()->execute();
     }
 
     /**
