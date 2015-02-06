@@ -418,4 +418,34 @@ class NodeRepositoryTest extends KernelTestCase
             array('3', 0),
         );
     }
+
+    /**
+     * @param string $language
+     * @param string $siteId
+     * @param int    $count
+     *
+     * @dataProvider provideLanguageSiteIdAndCount
+     */
+    public function testFindLastPublishedVersionByLanguageAndSiteId($language, $siteId, $count)
+    {
+        $nodes = $this->repository->findLastPublishedVersionByLanguageAndSiteId($language, $siteId);
+
+        $this->assertCount($count, $nodes);
+        foreach ($nodes as $node) {
+            $this->assertSame($language, $node->getLanguage());
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function provideLanguageSiteIdAndCount()
+    {
+        return array(
+            array('en', '2', 0),
+            array('fr', '2', 12),
+            array('en', '3', 10),
+            array('fr', '3', 10),
+        );
+    }
 }
