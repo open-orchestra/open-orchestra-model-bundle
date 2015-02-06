@@ -125,7 +125,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
         $node->setAlias($params['alias']);
         $node->setPath($params['path']);
         $node->setName($params['name']);
-        $node->setRoutePattern($params['routePattern']);
+        $node->setRoutePattern('/' . $params['language'] . $params['routePattern']);
         $node->setVersion(1);
         $node->setLanguage($params['language']);
         $node->setStatus($this->getReference('status-published'));
@@ -265,7 +265,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
      * Generate a list of Content
      *
      * @param string $class
-     * @param string $url
+     * @param string $newsNodeId
      * @param string $blockLabel
      * @param string $areaId
      * @param string $nodeId
@@ -273,14 +273,14 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
      *
      * @return Block
      */
-    protected function generateBlockContentList($class, $url, $blockLabel, $areaId, $nodeId, $nbCharacters = 0)
+    protected function generateBlockContentList($class, $newsNodeId, $blockLabel, $areaId, $nodeId, $nbCharacters = 0)
     {
         $contentList = $this->generateBlock(DisplayBlockInterface::CONTENT_LIST, $blockLabel, $nodeId, $areaId);
         $contentList->setAttributes(array(
             'contentType' => 'news',
             'id' => 'contentNewsList',
             'class' => $class,
-            'url' => $url,
+            'newsNodeId' => $newsNodeId,
             'characterNumber' => $nbCharacters,
             'keywords' => null,
             'choiceType' => ContentRepositoryInterface::CHOICE_AND,
@@ -471,7 +471,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
             'inMenu' => true,
             'inFooter' => true,
             'language' => $language,
-            'routePattern' => '/',
+            'routePattern' => '',
         ));
 
         $node->addArea($headerArea);
