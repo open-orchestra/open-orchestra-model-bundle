@@ -49,7 +49,7 @@ class OrchestraSiteTypeTest extends \PHPUnit_Framework_TestCase
 
         Phake::verify($resolverMock)->setDefaults(array(
             'class' => $this->siteClass,
-            'property' => 'domain',
+            'property' => 'name',
             'query_builder' => function (DocumentRepository $dr) {
                 return $dr->createQueryBuilder('s')->field('deleted')->equals(false);
             },

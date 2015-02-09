@@ -71,7 +71,8 @@ class TransversalNodeCreatorListener
 
         if ($document instanceof SiteInterface) {
             foreach ($document->getLanguages() as $language) {
-                $node = $this->getNodeRepository()->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, $language, $document->getSiteId());
+                $node = $this->getNodeRepository()
+                    ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, $language, $document->getSiteId());
                 if (!$node instanceof NodeInterface) {
                     $this->nodes[] = $this->nodeManager->createTransverseNode($language, $document->getSiteId());
                 }

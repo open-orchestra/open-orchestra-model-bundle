@@ -195,6 +195,7 @@ class NodeRepository extends DocumentRepository implements FieldAutoGenerableRep
 
     /**
      * @param string $type
+     * @param string $siteId
      *
      * @return array
      */
@@ -329,6 +330,23 @@ class NodeRepository extends DocumentRepository implements FieldAutoGenerableRep
     }
 
     /**
+     * @param string $language
+     * @param string $siteId
+     *
+     * @return array
+     */
+    public function findLastPublishedVersionByLanguageAndSiteId($language, $siteId)
+    {
+        $qb = $this->createQueryBuilderWithSiteIdAndLanguage($siteId, $language);
+        $qb->field('status.published')->equals(true);
+        $qb->field('nodeType')->equals(NodeInterface::TYPE_DEFAULT);
+
+        $list = $qb->getQuery()->execute();
+
+        return $this->findLastVersion($list);
+    }
+
+    /**
      * @param string|null $siteId
      *
      * @return \Doctrine\ODM\MongoDB\Query\Builder
@@ -340,6 +358,7 @@ class NodeRepository extends DocumentRepository implements FieldAutoGenerableRep
         }
         $qb = $this->createQueryBuilder('n');
         $qb->field('siteId')->equals($siteId);
+
         return $qb;
     }
 

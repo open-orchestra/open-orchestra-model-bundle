@@ -3,7 +3,9 @@
 namespace PHPOrchestra\ModelBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+use PHPOrchestra\ModelInterface\Model\SiteAliasInterface;
 use PHPOrchestra\ModelInterface\Model\SiteInterface;
 use PHPOrchestra\ModelInterface\Model\ThemeInterface;
 use PHPOrchestra\ModelInterface\MongoTrait\MetaableDocument;
@@ -37,34 +39,6 @@ class Site implements SiteInterface
     protected $siteId;
 
     /**
-     * @var string $domain
-     *
-     * @ODM\Field(type="string")
-     */
-    protected $domain;
-
-    /**
-     * @var string $alias
-     *
-     * @ODM\Field(type="string")
-     */
-    protected $alias;
-
-    /**
-     * @var string $defaultLanguage
-     *
-     * @ODM\Field(type="string")
-     */
-    protected $defaultLanguage;
-
-    /**
-     * @var array $languages
-     *
-     * @ODM\Field(type="collection")
-     */
-    protected $languages = array();
-
-    /**
      * @var boolean
      *
      * @ODM\Field(type="boolean")
@@ -93,27 +67,50 @@ class Site implements SiteInterface
     protected $robotsTxt;
 
     /**
+     * @var string $name
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $name;
+
+    /**
+     * @var Collection
+     *
+     * @ODM\EmbedMany(targetDocument="SiteAlias")
+     */
+    protected $aliases;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->setRobotsTxt(SiteInterface::ROBOTS_TXT_DEFAULT);
+        $this->robotsTxt = SiteInterface::ROBOTS_TXT_DEFAULT;
+        $this->aliases = new ArrayCollection();
     }
 
     /**
-     * @param string $alias
+     * @param SiteAliasInterface $alias
      */
-    public function setAlias($alias)
+    public function addAlias(SiteAliasInterface $alias)
     {
-        $this->alias = $alias;
+        $this->aliases->add($alias);
     }
 
     /**
-     * @return string
+     * @param SiteAliasInterface $alias
      */
-    public function getAlias()
+    public function removeAlias(SiteAliasInterface $alias)
     {
-        return $this->alias;
+        $this->aliases->removeElement($alias);
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getAliases()
+    {
+        return $this->aliases;
     }
 
     /**
@@ -141,59 +138,11 @@ class Site implements SiteInterface
     }
 
     /**
-     * @param string $defaultLanguage
-     */
-    public function setDefaultLanguage($defaultLanguage)
-    {
-        $this->defaultLanguage = $defaultLanguage;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDefaultLanguage()
-    {
-        return $this->defaultLanguage;
-    }
-
-    /**
-     * @param string $domain
-     */
-    public function setDomain($domain)
-    {
-        $this->domain = $domain;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDomain()
-    {
-        return $this->domain;
-    }
-
-    /**
      * @return string
      */
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @param array $languages
-     */
-    public function setLanguages($languages)
-    {
-        $this->languages = $languages;
-    }
-
-    /**
-     * @return array
-     */
-    public function getLanguages()
-    {
-        return $this->languages;
     }
 
     /**
@@ -270,5 +219,56 @@ class Site implements SiteInterface
     public function getRobotsTxt()
     {
         return $this->robotsTxt;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string $name
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * Get all languages of the site
+     *
+     * @return array
+     */
+    public function getLanguages()
+    {
+        $languages = array();
+
+        /** @var SiteAliasInterface $siteAlias */
+        foreach ($this->getAliases() as $siteAlias) {
+            foreach ($siteAlias->getLanguages() as $language) {
+                if (!in_array($language, $languages)) {
+                    $languages[] = $language;
+                }
+            }
+        }
+
+        return $languages;
+    }
+
+    /**
+     * Return one of the defailt site language
+     *
+     * @return string
+     */
+    public function getDefaultLanguage()
+    {
+        return $this->getAliases()->first()->getDefaultLanguage();
     }
 }
