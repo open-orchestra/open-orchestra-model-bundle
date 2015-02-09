@@ -3,3 +3,4 @@ PHPOrchestra\ModelBundle\Document\Node:
           - PHPOrchestra\ModelBundle\Validator\Constraints\PreventProhibitedStatusChange: ~
 #          - PHPOrchestra\ModelBundle\Validator\Constraints\PreventPublishedDocumentSave: ~
           - PHPOrchestra\ModelBundle\Validator\Constraints\CheckAreaPresence: ~
+          - PHPOrchestra\ModelBundle\Validator\Constraints\CheckRoutePattern: ~
