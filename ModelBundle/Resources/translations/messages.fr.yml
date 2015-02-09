@@ -3,3 +3,5 @@ php_orchestra_model:
         impossible_change: Vous n'avez pas les droits pour modifier le statut
     area:
         presence_required: Vous devez choisir l'un d'eux
+    node:
+        check_route_pattern: Le pattern de route est déjà utilisé sur ce site

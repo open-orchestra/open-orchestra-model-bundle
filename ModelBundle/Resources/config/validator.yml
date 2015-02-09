@@ -2,6 +2,7 @@ parameters:
     php_orchestra_model.validator.prevent_prohibited_status_change.class: PHPOrchestra\ModelBundle\Validator\Constraints\PreventProhibitedStatusChangeValidator
     php_orchestra_model.validator.prevent_published_document_save.class: PHPOrchestra\ModelBundle\Validator\Constraints\PreventPublishedDocumentSaveValidator
     php_orchestra_model.validator.check_area_presence.class: PHPOrchestra\ModelBundle\Validator\Constraints\CheckAreaPresenceValidator
+    php_orchestra_model.validator.check_route_pattern.class: PHPOrchestra\ModelBundle\Validator\Constraints\CheckRoutePatternValidator
 
 services:
     php_orchestra_model.validator.prevent_prohibited_status_change:
@@ -26,3 +27,10 @@ services:
             - @translator
         tags:
             - { name: validator.constraint_validator, alias: check_area_presence}
+    php_orchestra_model.validator.check_route_pattern:
+        class: %php_orchestra_model.validator.check_route_pattern.class%
+        arguments:
+            - @translator
+            - @php_orchestra_model.repository.node
+        tags:
+            - { name: validator.constraint_validator, alias: check_route_pattern}
