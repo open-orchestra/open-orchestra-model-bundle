@@ -125,7 +125,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
         $node->setAlias($params['alias']);
         $node->setPath($params['path']);
         $node->setName($params['name']);
-        $node->setRoutePattern('/' . $params['language'] . $params['routePattern']);
+        $node->setRoutePattern($params['routePattern']);
         $node->setVersion(1);
         $node->setLanguage($params['language']);
         $node->setStatus($this->getReference('status-published'));
@@ -471,7 +471,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
             'inMenu' => true,
             'inFooter' => true,
             'language' => $language,
-            'routePattern' => '',
+            'routePattern' => $language,
         ));
 
         $node->addArea($headerArea);
@@ -584,7 +584,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
             'inMenu' => true,
             'inFooter' => true,
             'language' => $language,
-            'routePattern' => '/espace-bddf',
+            'routePattern' => 'espace-bddf',
         ));
 
         $node->addArea($headerArea);
@@ -654,7 +654,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
             'inMenu' => true,
             'inFooter' => true,
             'language' => $language,
-            'routePattern' => '/espace-cardif',
+            'routePattern' => 'espace-cardif',
             'order' => 1
         ));
 
@@ -712,7 +712,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
             'inMenu' => true,
             'inFooter' => true,
             'language' => $language,
-            'routePattern' => '/espace-arval',
+            'routePattern' => 'espace-arval',
             'order' => 2,
         ));
 
@@ -768,7 +768,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
             'inMenu' => true,
             'inFooter' => true,
             'language' => $language,
-            'routePattern' => '/espace-xxx',
+            'routePattern' => 'espace-xxx',
             'order' => 3
         ));
 
@@ -839,7 +839,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
             'inMenu' => false,
             'inFooter' => false,
             'language' => $language,
-            'routePattern' => '/espace-cardif/bienvenu',
+            'routePattern' => 'bienvenu',
         ));
 
         $node->addArea($headerArea);
@@ -912,7 +912,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
             'inFooter' => true,
             'language' => $language,
             'order' => 1,
-            'routePattern' => '/espace-cardif/actualite',
+            'routePattern' => 'actualite',
         ));
 
         $node->addArea($headerArea);
@@ -984,7 +984,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
             'inMenu' => true,
             'inFooter' => true,
             'language' => $language,
-            'routePattern' => '/espace-cardif/meissions',
+            'routePattern' => 'meissions',
             'order' => 2,
         ));
 
@@ -1058,7 +1058,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
             'inFooter' => true,
             'language' => $language,
             'order' => 3,
-            'routePattern' => '/espace-cardif/remunerations-variables',
+            'routePattern' => 'remunerations-variables',
         ));
 
         $node->addArea($headerArea);
