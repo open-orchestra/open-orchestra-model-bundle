@@ -296,6 +296,8 @@ class NodeRepository extends DocumentRepository implements FieldAutoGenerableRep
      * @param string $alias
      * @param string $siteId
      *
+     * @deprecated Used in dynamic routing only
+     *
      * @return mixed
      */
     public function findOneByParendIdAndAliasAndSiteId($parentId, $alias, $siteId)
@@ -427,5 +429,22 @@ class NodeRepository extends DocumentRepository implements FieldAutoGenerableRep
         $list = $qb->getQuery()->execute();
 
         return $this->findLastVersion($list);
+    }
+
+    /**
+     * @param string $parentId
+     * @param string $routePattern
+     * @param string $nodeId
+     *
+     * @return array
+     */
+    public function findByParentIdAndRoutePatternAndNotNodeId($parentId, $routePattern, $nodeId)
+    {
+        $qb = $this->createQueryBuilderWithSiteId();
+        $qb->field('parentId')->equals($parentId);
+        $qb->field('routePattern')->equals($routePattern);
+        $qb->field('nodeId')->notEqual($nodeId);
+
+        return $qb->getQuery()->execute();
     }
 }
