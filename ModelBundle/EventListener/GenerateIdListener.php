@@ -4,8 +4,6 @@ namespace PHPOrchestra\ModelBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
 use Doctrine\Common\Annotations\AnnotationReader;
-use PHPOrchestra\ModelInterface\Model\NodeInterface;
-use Assetic\Exception\Exception;
 use Symfony\Component\DependencyInjection\Container;
 use PHPOrchestra\ModelBundle\Repository\FieldAutoGenerableRepositoryInterface;
 

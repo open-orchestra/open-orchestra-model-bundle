@@ -4,10 +4,7 @@ namespace PHPOrchestra\BackofficeBundle\Test\EventListener;
 
 use Phake;
 use PHPOrchestra\ModelBundle\EventListener\GeneratePathListener;
-use PHPOrchestra\ModelBundle\EventListener\NodeListener;
 use PHPOrchestra\ModelBundle\Document\Node;
-use PHPOrchestra\ModelBundle\Document\Status;
-use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 use Doctrine\Common\Collections\ArrayCollection;
 

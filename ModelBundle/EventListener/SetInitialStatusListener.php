@@ -17,7 +17,7 @@ class SetInitialStatusListener
     public function prePersist(LifecycleEventArgs $eventArgs)
     {
         $document = $eventArgs->getDocument();
-        if ($document instanceof StatusableInterface && $document->getStatus() == null) {
+        if ($document instanceof StatusableInterface && is_null($document->getStatus())) {
             $documentManager = $eventArgs->getDocumentManager();
             $status = $documentManager->getRepository('PHPOrchestraModelBundle:Status')->findOneByInitial();
             if ($status instanceof StatusInterface) {

@@ -4,7 +4,6 @@ namespace PHPOrchestra\ModelBundle\Document;
 
 use PHPOrchestra\ModelInterface\Model\ThemeInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use PHPOrchestra\ModelBundle\Mapping\Annotations as ORCHESTRA;
 
 /**
  * Class Theme
