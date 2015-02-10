@@ -7,6 +7,7 @@ use Doctrine\Common\Inflector\Inflector;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use PHPOrchestra\ModelInterface\Model\FieldOptionInterface;
 use PHPOrchestra\ModelInterface\Model\FieldTypeInterface;
+use PHPOrchestra\ModelInterface\Model\TranslatedValueInterface;
 
 /**
  * Description of Base FieldType
@@ -93,17 +94,17 @@ class FieldType implements FieldTypeInterface
     }
 
     /**
-     * @param TranslatedValue $label
+     * @param TranslatedValueInterface $label
      */
-    public function addLabel(TranslatedValue $label)
+    public function addLabel(TranslatedValueInterface $label)
     {
         $this->labels->add($label);
     }
 
     /**
-     * @param TranslatedValue $label
+     * @param TranslatedValueInterface $label
      */
-    public function removeLabel(TranslatedValue $label)
+    public function removeLabel(TranslatedValueInterface $label)
     {
         $this->labels->removeElement($label);
     }

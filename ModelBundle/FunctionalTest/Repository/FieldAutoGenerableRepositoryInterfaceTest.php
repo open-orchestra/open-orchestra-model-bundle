@@ -2,8 +2,6 @@
 
 namespace PHPOrchestra\ModelBundle\FunctionalTest\Repository;
 
-use Phake;
-use PHPOrchestra\ModelBundle\Repository\FieldAutoGenerableRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**

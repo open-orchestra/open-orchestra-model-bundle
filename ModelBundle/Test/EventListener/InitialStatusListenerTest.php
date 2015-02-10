@@ -5,8 +5,6 @@ namespace PHPOrchestra\ModelBundle\Test\EventListener;
 use Phake;
 use PHPOrchestra\ModelBundle\EventListener\InitialStatusListener;
 use PHPOrchestra\ModelBundle\Document\Status;
-use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\Query\Builder;
 
 /**
  * Class InitialStatusListenerTest

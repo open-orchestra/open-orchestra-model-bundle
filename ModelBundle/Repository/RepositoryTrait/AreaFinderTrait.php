@@ -3,7 +3,6 @@
 namespace PHPOrchestra\ModelBundle\Repository\RepositoryTrait;
 
 use PHPOrchestra\ModelInterface\Model\AreaContainerInterface;
-use PHPOrchestra\ModelInterface\Model\AreaInterface;
 
 /**
  * Trait AreaFinderTrait

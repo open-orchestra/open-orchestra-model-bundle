@@ -5,8 +5,6 @@ namespace PHPOrchestra\BackofficeBundle\Test\EventListener;
 use Phake;
 use PHPOrchestra\ModelBundle\Document\Node;
 use PHPOrchestra\ModelBundle\Document\Status;
-use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
-use Doctrine\Common\Collections\ArrayCollection;
 use PHPOrchestra\ModelBundle\EventListener\SetInitialStatusListener;
 
 /**
