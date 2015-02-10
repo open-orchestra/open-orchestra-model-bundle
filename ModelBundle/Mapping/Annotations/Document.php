@@ -5,7 +5,6 @@ namespace PHPOrchestra\ModelBundle\Mapping\Annotations;
 use Doctrine\Common\Annotations\Annotation;
 use PHPOrchestra\ModelBundle\Exceptions\PropertyNotFoundException;
 use PHPOrchestra\ModelBundle\Exceptions\MethodNotFoundException;
-use Symfony\Component\DependencyInjection\Container;
 
 /**
  * @Annotation

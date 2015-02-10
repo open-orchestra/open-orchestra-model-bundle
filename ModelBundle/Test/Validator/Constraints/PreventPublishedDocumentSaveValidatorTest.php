@@ -2,7 +2,6 @@
 
 namespace PHPOrchestra\ModelBundle\Test\Validator\Constraints;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Phake;
 use PHPOrchestra\ModelBundle\Validator\Constraints\PreventPublishedDocumentSave;
 use PHPOrchestra\ModelBundle\Validator\Constraints\PreventPublishedDocumentSaveValidator;

@@ -7,7 +7,6 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use PHPOrchestra\ModelBundle\Mapping\Annotations as ORCHESTRA;
 use PHPOrchestra\ModelInterface\Model\AreaInterface;
 use PHPOrchestra\ModelInterface\Model\BlockInterface;
-use PHPOrchestra\ModelInterface\Model\StatusInterface;
 use PHPOrchestra\ModelInterface\Model\TemplateInterface;
 
 /**

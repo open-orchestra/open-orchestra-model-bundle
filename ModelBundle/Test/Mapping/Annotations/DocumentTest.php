@@ -1,9 +1,9 @@
 <?php
+
 namespace PHPOrchestra\ModelBundle\Test\Mapping\Annotations;
 
 use Phake;
 use PHPOrchestra\ModelBundle\Mapping\Annotations\Document;
-use PHPOrchestra\ModelInterface\Model\NodeInterface;
 
 /**
  * Class DocumentTest

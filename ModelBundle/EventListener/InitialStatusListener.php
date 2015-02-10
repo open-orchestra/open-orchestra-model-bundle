@@ -1,4 +1,5 @@
 <?php
+
 namespace PHPOrchestra\ModelBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;

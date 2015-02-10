@@ -1,5 +1,6 @@
 {
     "name": "itkg/phporchestra-model-bundle",
+    "description": "An implemantation of the model-interface for phporchestra on mongo",
     "license": "MIT",
     "authors": [
         {
