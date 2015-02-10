@@ -2,7 +2,6 @@
 
 namespace PHPOrchestra\ModelBundle\Test\Validator\Constraints;
 
-use Phake;
 use PHPOrchestra\ModelBundle\Validator\Constraints\PreventProhibitedStatusChange;
 use Symfony\Component\Validator\Constraint;
 

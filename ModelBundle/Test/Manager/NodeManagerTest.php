@@ -2,7 +2,6 @@
 
 namespace PHPOrchestra\ModelBundle\Test\Manager;
 
-use Phake;
 use PHPOrchestra\ModelBundle\Manager\NodeManager;
 use PHPOrchestra\ModelInterface\Model\NodeInterface;
 

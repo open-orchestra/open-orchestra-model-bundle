@@ -3,8 +3,6 @@
 namespace PHPOrchestra\ModelBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
-use Doctrine\ODM\MongoDB\Event\PostFlushEventArgs;
-use PHPOrchestra\ModelInterface\Model\StatusInterface;
 use PHPOrchestra\ModelInterface\Model\StatusableInterface;
 
 /**
