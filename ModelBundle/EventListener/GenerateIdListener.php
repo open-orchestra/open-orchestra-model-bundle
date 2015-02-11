@@ -36,7 +36,6 @@ class GenerateIdListener
         if (!is_null($generateAnnotations)) {
             $repository = $this->container->get($generateAnnotations->getServiceName());
 
-            $documentManager = $event->getDocumentManager();
             $getSource = $generateAnnotations->getSource($document);
             $getGenerated = $generateAnnotations->getGenerated($document);
             $setGenerated = $generateAnnotations->setGenerated($document);
