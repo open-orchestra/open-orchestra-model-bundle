@@ -20,33 +20,40 @@ class SiteAlias implements SiteAliasInterface
     protected $domain;
 
     /**
-     * @var string $defaultLanguage
+     * @var string $language
      *
      * @ODM\Field(type="string")
      */
-    protected $defaultLanguage;
+    protected $language;
 
     /**
-     * @var array $languages
+     * @var string $prefix
      *
-     * @ODM\Field(type="collection")
+     * @ODM\Field(type="string")
      */
-    protected $languages = array();
+    protected $prefix;
 
     /**
-     * @param string $defaultLanguage
+     * @var boolean $main
+     *
+     * @ODM\Field(type="boolean")
      */
-    public function setDefaultLanguage($defaultLanguage)
+    protected $main;
+
+    /**
+     * @param string $language
+     */
+    public function setLanguage($language)
     {
-        $this->defaultLanguage = $defaultLanguage;
+        $this->language = $language;
     }
 
     /**
      * @return string
      */
-    public function getDefaultLanguage()
+    public function getLanguage()
     {
-        return $this->defaultLanguage;
+        return $this->language;
     }
 
     /**
@@ -66,18 +73,34 @@ class SiteAlias implements SiteAliasInterface
     }
 
     /**
-     * @param array $languages
+     * @param string $prefix
      */
-    public function setLanguages($languages)
+    public function setPrefix($prefix)
     {
-        $this->languages = $languages;
+        $this->prefix = $prefix;
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function getLanguages()
+    public function getPrefix()
     {
-        return $this->languages;
+        return $this->prefix;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isMain()
+    {
+        return $this->main;
+    }
+
+    /**
+     * @param bool $main
+     */
+    public function setMain($main)
+    {
+        $this->main = $main;
     }
 }
