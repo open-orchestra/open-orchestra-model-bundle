@@ -252,10 +252,9 @@ class Site implements SiteInterface
 
         /** @var SiteAliasInterface $siteAlias */
         foreach ($this->getAliases() as $siteAlias) {
-            foreach ($siteAlias->getLanguages() as $language) {
-                if (!in_array($language, $languages)) {
-                    $languages[] = $language;
-                }
+            $language = $siteAlias->getLanguage();
+            if (!in_array($language, $languages)) {
+                $languages[] = $language;
             }
         }
 
@@ -269,6 +268,21 @@ class Site implements SiteInterface
      */
     public function getDefaultLanguage()
     {
-        return $this->getAliases()->first()->getDefaultLanguage();
+        return $this->getMainAlias()->getLanguage();
+    }
+
+    /**
+     * @return SiteAliasInterface
+     */
+    public function getMainAlias()
+    {
+        /** @var SiteAliasInterface $alias */
+        foreach ($this->getAliases() as $alias) {
+            if ($alias->isMain()) {
+                return $alias;
+            }
+        }
+
+        return $alias;
     }
 }
