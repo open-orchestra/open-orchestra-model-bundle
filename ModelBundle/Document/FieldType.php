@@ -124,7 +124,7 @@ class FieldType implements FieldTypeInterface
      */
     public function getLabel($language = 'en')
     {
-        $choosenLanguage = $this->labels->filter(function ($translatedValue) use ($language) {
+        $choosenLanguage = $this->labels->filter(function (TranslatedValueInterface $translatedValue) use ($language) {
             return $language == $translatedValue->getLanguage();
         });
 
@@ -212,7 +212,7 @@ class FieldType implements FieldTypeInterface
      */
     public function hasOption($key)
     {
-        return $this->options->filter(function($option) use ($key) {
+        return $this->options->filter(function(FieldOptionInterface $option) use ($key) {
             return $option->getKey() == $key;
         })->count();
     }

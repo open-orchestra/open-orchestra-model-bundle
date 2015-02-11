@@ -43,7 +43,7 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
     {
         $document = new Document($parameters);
         $this->setExpectedException($exception);
-        $result = $document->getSource($this->node);
+        $document->getSource($this->node);
     }
 
     /**
@@ -69,7 +69,7 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
     {
         $document = new Document($parameters);
         $this->setExpectedException($exception);
-        $result = $document->getGenerated($this->node);
+        $document->getGenerated($this->node);
     }
 
     /**
@@ -95,7 +95,7 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
     {
         $document = new Document($parameters);
         $this->setExpectedException($exception);
-        $result = $document->setGenerated($this->node);
+        $document->setGenerated($this->node);
     }
 
     /**
