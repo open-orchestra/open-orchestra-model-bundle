@@ -4,3 +4,6 @@ PHPOrchestra\ModelBundle\Document\Node:
 #          - PHPOrchestra\ModelBundle\Validator\Constraints\PreventPublishedDocumentSave: ~
           - PHPOrchestra\ModelBundle\Validator\Constraints\CheckAreaPresence: ~
           - PHPOrchestra\ModelBundle\Validator\Constraints\CheckRoutePattern: ~
+PHPOrchestra\ModelBundle\Document\Site:
+    constraints:
+        - PHPOrchestra\ModelBundle\Validator\Constraints\UniqueMainAlias: ~
