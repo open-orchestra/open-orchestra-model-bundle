@@ -83,10 +83,10 @@ class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface
         $site3 = new Site();
         $site3->setSiteId('3');
         $site3->setName('Echonext site');
-        $site3->addAlias($this->generateSiteAlias('echonext.phporchestra.inte', 'fr', true));
-        $site3->addAlias($this->generateSiteAlias('echonext.phporchestra.inte', 'en'));
-        $site3->addAlias($this->generateSiteAlias('echonext.phporchestra.dev', 'fr'));
-        $site3->addAlias($this->generateSiteAlias('echonext.phporchestra.dev', 'en'));
+        $site3->addAlias($this->generateSiteAlias('echonext.phporchestra.inte', 'fr', true, 'fr'));
+        $site3->addAlias($this->generateSiteAlias('echonext.phporchestra.inte', 'en', false, 'en'));
+        $site3->addAlias($this->generateSiteAlias('echonext.phporchestra.dev', 'fr', false, 'fr'));
+        $site3->addAlias($this->generateSiteAlias('echonext.phporchestra.dev', 'en', false, 'en'));
         $site3->setDeleted(false);
         $site3->setTheme($this->getReference('themePresentation'));
         $site3->addBlock('sample');
@@ -127,15 +127,17 @@ class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface
      * @param string $domainName
      * @param string $language
      * @param bool   $main
+     * @param string $prefix
      *
      * @return SiteAlias
      */
-    protected function generateSiteAlias($domainName, $language, $main = false)
+    protected function generateSiteAlias($domainName, $language, $main = false, $prefix = null)
     {
         $siteAlias = new SiteAlias();
         $siteAlias->setDomain($domainName);
         $siteAlias->setLanguage($language);
         $siteAlias->setMain($main);
+        $siteAlias->setPrefix($prefix);
 
         return $siteAlias;
     }
