@@ -51,7 +51,7 @@ class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface
         $site1->addAlias($this->generateSiteAlias('front-phporchestra-front.inte', 'en'));
         $site1->setDeleted(true);
         $site1->setTheme($this->getReference('themePresentation'));
-        $site1->addBlock('sample');
+        $site1->addBlock('menu');
 
         return $site1;
     }
@@ -70,7 +70,24 @@ class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface
         $site2->addAlias($this->generateSiteAlias('demo-phporchestra-front.dev', 'en'));
         $site2->setDeleted(false);
         $site2->setTheme($this->getReference('themePresentation'));
-        $site2->addBlock('sample');
+        $site2->addBlock('carrousel');
+        $site2->addBlock('gallery');
+        $site2->addBlock('header');
+        $site2->addBlock('footer');
+        $site2->addBlock('menu');
+        $site2->addBlock('sub_menu');
+        $site2->addBlock('language_list');
+        $site2->addBlock('tiny_mce_wysiwyg');
+        $site2->addBlock('configurable_content');
+        $site2->addBlock('content_list');
+        $site2->addBlock('content');
+        $site2->addBlock('media_list_by_keyword');
+        $site2->addBlock('youtube');
+        $site2->addBlock('dailymotion');
+        $site2->addBlock('vimeo');
+        $site2->addBlock('gmap');
+        $site2->addBlock('add_this');
+        $site2->addBlock('audience_analysis');
 
         return $site2;
     }
@@ -89,7 +106,6 @@ class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface
         $site3->addAlias($this->generateSiteAlias('echonext.phporchestra.dev', 'en', false, 'en'));
         $site3->setDeleted(false);
         $site3->setTheme($this->getReference('themePresentation'));
-        $site3->addBlock('sample');
 
         return $site3;
     }
