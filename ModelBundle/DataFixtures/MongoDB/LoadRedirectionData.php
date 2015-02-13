@@ -32,6 +32,7 @@ class LoadRedirectionData implements FixtureInterface
     {
         $redirection = new Redirection();
         $redirection->setSiteId('3');
+        $redirection->setSiteName('Echonext site');
         $redirection->setRoutePattern('/news/{newsId}');
         $redirection->setLocale('fr');
         $redirection->setNodeId('news');
@@ -47,6 +48,7 @@ class LoadRedirectionData implements FixtureInterface
     {
         $redirection = new Redirection();
         $redirection->setSiteId('3');
+        $redirection->setSiteName('Echonext site');
         $redirection->setRoutePattern('/');
         $redirection->setLocale('fr');
         $redirection->setNodeId(NodeInterface::ROOT_NODE_ID);
@@ -62,6 +64,7 @@ class LoadRedirectionData implements FixtureInterface
     {
         $redirection = new Redirection();
         $redirection->setSiteId('3');
+        $redirection->setSiteName('Echonext site');
         $redirection->setRoutePattern('/google');
         $redirection->setLocale('fr');
         $redirection->setUrl('http://google.fr');
