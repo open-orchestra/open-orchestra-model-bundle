@@ -280,7 +280,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
             'contentType' => 'news',
             'id' => 'contentNewsList',
             'class' => $class,
-            'newsNodeId' => $newsNodeId,
+            'contentNodeId' => $newsNodeId,
             'characterNumber' => $nbCharacters,
             'keywords' => null,
             'choiceType' => ContentRepositoryInterface::CHOICE_AND,
