@@ -180,7 +180,6 @@ class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterfac
         $nodeTransverse->setSiteId('2');
         $nodeTransverse->setParentId('-');
         $nodeTransverse->setPath('-');
-        $nodeTransverse->setAlias('');
         $nodeTransverse->setVersion(1);
         $nodeTransverse->setLanguage($language);
         $nodeTransverse->setStatus($this->getReference('status-published'));
@@ -286,7 +285,6 @@ class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterfac
         $siteHome->setSiteId('2');
         $siteHome->setParentId('-');
         $siteHome->setPath('-');
-        $siteHome->setAlias('page-home');
         $siteHome->setRoutePattern('/');
         $siteHome->setVersion(1);
         $siteHome->setLanguage('fr');
@@ -397,7 +395,6 @@ Nativement, multi-sites multi support, facile d’intégration au SI, ouvert ver
         $siteWhat->setParentId(NodeInterface::ROOT_NODE_ID);
         $siteWhat->setPath('-');
         $siteWhat->setOrder(0);
-        $siteWhat->setAlias('page-what-is-orchestra');
         $siteWhat->setRoutePattern('/page-what-is-orchestra');
         $siteWhat->setVersion(1);
         $siteWhat->setLanguage('fr');
@@ -491,7 +488,6 @@ Nativement, multi-sites multi support, facile d’intégration au SI, ouvert ver
         $siteStart->setSiteId('2');
         $siteStart->setParentId(NodeInterface::ROOT_NODE_ID);
         $siteStart->setPath('-');
-        $siteStart->setAlias('page-start-orchestra');
         $siteStart->setRoutePattern('/page-start-orchestra');
         $siteStart->setVersion(1);
         $siteStart->setOrder(1);
@@ -590,7 +586,6 @@ Note, that many languages are just under translation, and the untranslated parts
         $siteDoc->setParentId(NodeInterface::ROOT_NODE_ID);
         $siteDoc->setOrder(2);
         $siteDoc->setPath('-');
-        $siteDoc->setAlias('page-documentation');
         $siteDoc->setRoutePattern('/page-documentation');
         $siteDoc->setVersion(1);
         $siteDoc->setLanguage('fr');
@@ -690,7 +685,6 @@ Enfin, la digitalisation des applications et les stratégies mobiles de l’entr
         $siteCom->setParentId(NodeInterface::ROOT_NODE_ID);
         $siteCom->setPath('-');
         $siteCom->setOrder(3);
-        $siteCom->setAlias('page-community');
         $siteCom->setRoutePattern('/page-community');
         $siteCom->setVersion(1);
         $siteCom->setLanguage('fr');
@@ -784,7 +778,6 @@ Enfin, la digitalisation des applications et les stratégies mobiles de l’entr
         $siteAboutUs->setParentId(NodeInterface::ROOT_NODE_ID);
         $siteAboutUs->setOrder(4);
         $siteAboutUs->setPath('-');
-        $siteAboutUs->setAlias('page-about-us');
         $siteAboutUs->setRoutePattern('page-about-us');
         $siteAboutUs->setVersion(1);
         $siteAboutUs->setLanguage('fr');
@@ -880,7 +873,6 @@ Enfin, la digitalisation des applications et les stratégies mobiles de l’entr
         $siteOurTeam->setParentId(NodeInterface::ROOT_NODE_ID);
         $siteOurTeam->setOrder(5);
         $siteOurTeam->setPath('-');
-        $siteOurTeam->setAlias('page-our-team');
         $siteOurTeam->setRoutePattern('/page-our-team');
         $siteOurTeam->setVersion(1);
         $siteOurTeam->setLanguage('fr');
@@ -977,7 +969,6 @@ Ces Victoires mettent en lumière celles et ceux qui, chaque jour, agissent pour
         $siteNews->setParentId(NodeInterface::ROOT_NODE_ID);
         $siteNews->setOrder(6);
         $siteNews->setPath('-');
-        $siteNews->setAlias('page-our-news');
         $siteNews->setRoutePattern('/page-our-news');
         $siteNews->setVersion(1);
         $siteNews->setLanguage('fr');
@@ -1065,7 +1056,6 @@ Ces Victoires mettent en lumière celles et ceux qui, chaque jour, agissent pour
         $siteJoinUs->setParentId(NodeInterface::ROOT_NODE_ID);
         $siteJoinUs->setOrder(7);
         $siteJoinUs->setPath('-');
-        $siteJoinUs->setAlias('page-nous-rejoindre');
         $siteJoinUs->setRoutePattern('/page-nous-rejoindre');
         $siteJoinUs->setVersion(1);
         $siteJoinUs->setLanguage('fr');
@@ -1157,7 +1147,6 @@ Smart.eolas est le fruit de 15 ans d’expérience, à la fois en tant que spéc
         $siteNetwork->setParentId(NodeInterface::ROOT_NODE_ID);
         $siteNetwork->setOrder(8);
         $siteNetwork->setPath('-');
-        $siteNetwork->setAlias('page-networks');
         $siteNetwork->setRoutePattern('/page-networks');
         $siteNetwork->setVersion(1);
         $siteNetwork->setLanguage('fr');
@@ -1238,7 +1227,6 @@ Smart.eolas est le fruit de 15 ans d’expérience, à la fois en tant que spéc
         $siteContact->setParentId(NodeInterface::ROOT_NODE_ID);
         $siteContact->setOrder(9);
         $siteContact->setPath('-');
-        $siteContact->setAlias('page-contact');
         $siteContact->setRoutePattern('/page-contact');
         $siteContact->setVersion(1);
         $siteContact->setLanguage('fr');
@@ -1333,7 +1321,6 @@ Smart.eolas est le fruit de 15 ans d’expérience, à la fois en tant que spéc
         $siteLegal->setParentId(NodeInterface::ROOT_NODE_ID);
         $siteLegal->setOrder(10);
         $siteLegal->setPath('-');
-        $siteLegal->setAlias('page legal mentions');
         $siteLegal->setRoutePattern('/page-legal-mentions');
         $siteLegal->setVersion(1);
         $siteLegal->setLanguage('fr');
