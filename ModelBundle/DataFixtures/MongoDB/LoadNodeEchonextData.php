@@ -122,7 +122,6 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
         $node->setNodeType('page');
         $node->setSiteId('3');
         $node->setParentId($params['parentId']);
-        $node->setAlias($params['alias']);
         $node->setPath($params['path']);
         $node->setName($params['name']);
         $node->setRoutePattern($params['routePattern']);
@@ -405,7 +404,6 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
             'parentId' => '-',
             'path' => '-',
             'name' => NodeInterface::TRANSVERSE_NODE_ID,
-            'alias' => NodeInterface::TRANSVERSE_NODE_ID,
             'inMenu' => false,
             'inFooter' => false,
             'language' => $language,
@@ -466,7 +464,6 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
             'parentId' => '-',
             'path' => '-',
             'name' => 'Home',
-            'alias' => 'home',
             'url' => 'home',
             'inMenu' => true,
             'inFooter' => true,
@@ -524,7 +521,6 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
             'parentId' => NodeInterface::ROOT_NODE_ID,
             'path' => 'news',
             'name' => 'News',
-            'alias' => 'news',
             'url' => 'news',
             'inMenu' => false,
             'inFooter' => false,
@@ -579,7 +575,6 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
             'parentId' => NodeInterface::ROOT_NODE_ID,
             'path' => 'espace-bddf',
             'name' => 'Espace BDDF',
-            'alias' => 'espace-bddf',
             'url' => 'espace-bddf',
             'inMenu' => true,
             'inFooter' => true,
@@ -649,7 +644,6 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
             'parentId' => NodeInterface::ROOT_NODE_ID,
             'path' => 'espace-cardif',
             'name' => 'Espace Cardif',
-            'alias' => 'espace-cardif',
             'url' => 'espace-cardif',
             'inMenu' => true,
             'inFooter' => true,
@@ -707,7 +701,6 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
             'parentId' => NodeInterface::ROOT_NODE_ID,
             'path' => 'espace-arval',
             'name' => 'Espace Arval',
-            'alias' => 'espace-arval',
             'url' => 'espace-arval',
             'inMenu' => true,
             'inFooter' => true,
@@ -763,7 +756,6 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
             'parentId' => NodeInterface::ROOT_NODE_ID,
             'path' => 'espace-xxx',
             'name' => 'Espace XXX',
-            'alias' => 'espace-xxx',
             'url' => 'espace-xxx',
             'inMenu' => true,
             'inFooter' => true,
@@ -834,7 +826,6 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
             'parentId' => 'espace_Cardif',
             'path' => 'bienvenu',
             'name' => 'Bienvenu',
-            'alias' => 'bienvenu',
             'url' => 'bienvenu',
             'inMenu' => false,
             'inFooter' => false,
@@ -906,7 +897,6 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
             'parentId' => 'espace_Cardif',
             'path' => 'actualite',
             'name' => 'Actualité',
-            'alias' => 'actualite',
             'url' => 'actualite',
             'inMenu' => true,
             'inFooter' => true,
@@ -979,7 +969,6 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
             'parentId' => 'espace_Cardif',
             'path' => 'missions',
             'name' => 'Mission',
-            'alias' => 'missions',
             'url' => 'missions',
             'inMenu' => true,
             'inFooter' => true,
@@ -1052,7 +1041,6 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
             'parentId' => 'espace_Cardif',
             'path' => 'remunarations-variables',
             'name' => 'Remunerations',
-            'alias' => 'remunarations-variables',
             'url' => 'remunarations-variables',
             'inMenu' => true,
             'inFooter' => true,

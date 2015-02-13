@@ -293,18 +293,18 @@ class NodeRepository extends DocumentRepository implements FieldAutoGenerableRep
 
     /**
      * @param string $parentId
-     * @param string $alias
+     * @param string $routePattern
      * @param string $siteId
      *
      * @deprecated Used in dynamic routing only
      *
      * @return mixed
      */
-    public function findOneByParendIdAndAliasAndSiteId($parentId, $alias, $siteId)
+    public function findOneByParendIdAndRoutePatternAndSiteId($parentId, $routePattern, $siteId)
     {
         return $this->findOneBy(array(
             'parentId' => $parentId,
-            'alias' => $alias,
+            'routePattern' => $routePattern,
             'siteId' => $siteId
         ));
     }

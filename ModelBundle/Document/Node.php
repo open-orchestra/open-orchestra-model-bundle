@@ -82,13 +82,6 @@ class Node implements NodeInterface
     protected $path;
 
     /**
-     * @var string $alias
-     *
-     * @ODM\Field(type="string")
-     */
-    protected $alias;
-
-    /**
      * @var string $name
      *
      * @ODM\Field(type="string")
@@ -302,26 +295,6 @@ class Node implements NodeInterface
     public function getPath()
     {
         return $this->path;
-    }
-
-    /**
-     * Set alias
-     *
-     * @param string $alias
-     */
-    public function setAlias($alias)
-    {
-        $this->alias = $alias;
-    }
-
-    /**
-     * Get alias
-     *
-     * @return string $alias
-     */
-    public function getAlias()
-    {
-        return $this->alias;
     }
 
     /**
