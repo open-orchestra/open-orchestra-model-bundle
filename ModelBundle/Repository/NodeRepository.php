@@ -73,12 +73,13 @@ class NodeRepository extends DocumentRepository implements FieldAutoGenerableRep
     /**
      * @param string      $nodeId
      * @param string|null $language
+     * @param string|null $siteId
      *
      * @return mixed
      */
-    public function findOneByNodeIdAndLanguageWithPublishedAndLastVersionAndSiteId($nodeId, $language = null)
+    public function findOneByNodeIdAndLanguageWithPublishedAndLastVersionAndSiteId($nodeId, $language = null, $siteId = null)
     {
-        $qb = $this->buildTreeRequest($language);
+        $qb = $this->buildTreeRequest($language, $siteId);
 
         $qb->field('nodeId')->equals($nodeId);
         $qb->sort('version', 'desc');
@@ -366,12 +367,13 @@ class NodeRepository extends DocumentRepository implements FieldAutoGenerableRep
 
     /**
      * @param string|null $language
+     * @param string|null $siteId
      *
      * @return \Doctrine\ODM\MongoDB\Query\Builder
      */
-    protected function buildTreeRequest($language = null)
+    protected function buildTreeRequest($language = null, $siteId = null)
     {
-        $qb = $this->createQueryBuilderWithSiteIdAndLanguage(null, $language);
+        $qb = $this->createQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         $qb->field('status.published')->equals(true);
         $qb->field('deleted')->equals(false);
 
