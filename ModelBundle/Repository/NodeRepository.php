@@ -126,6 +126,25 @@ class NodeRepository extends DocumentRepository implements FieldAutoGenerableRep
     }
 
     /**
+     * @param string      $nodeId
+     * @param string|null $language
+     * @param string|null $siteId
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     *
+     * @return mixed
+     */
+    public function findByNodeIdAndLanguageAndSiteIdAndPublishedOrderedByVersion($nodeId, $language = null, $siteId = null)
+    {
+        $qb = $this->createQueryBuilderWithSiteIdAndLanguage($siteId, $language);
+        $qb->field('nodeId')->equals($nodeId);
+        $qb->field('status.published')->equals(true);
+        $qb->sort('version', 'desc');
+
+        return $qb->getQuery()->execute();
+    }
+
+    /**
      * @param string $nodeId
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
