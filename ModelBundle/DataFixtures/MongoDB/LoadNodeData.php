@@ -164,9 +164,9 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $blocksubmenu = new Block();
         $blocksubmenu->setLabel('subMenu');
         $blocksubmenu->setComponent('sub_menu');
+        $blocksubmenu->setId('idmenu');
+        $blocksubmenu->setClass('sousmenu');
         $blocksubmenu->setAttributes(array(
-            'class' => 'sousmenu',
-            'id' => 'idmenu',
             'nbLevel' => 2,
             'node' => 'fixture_about_us',
         ));
@@ -175,22 +175,20 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $blockLanguage = new Block();
         $blockLanguage->setLabel('languages');
         $blockLanguage->setComponent('language_list');
-        $blockLanguage->setAttributes(array(
-            'class' => 'languageClass',
-            'id' => 'languages'
-        ));
+        $blockLanguage->setId('languages');
+        $blockLanguage->setClass('languageClass');
         $blockLanguage->addArea(array('nodeId' => 0, 'areaId' => 'main'));
 
         $blockDailymotion = new Block();
         $blockDailymotion->setLabel('dailymotion');
         $blockDailymotion->setComponent('dailymotion');
+        $blockDailymotion->setId('dailymotion');
+        $blockDailymotion->setClass('dailymotionClass');
         $blockDailymotion->setAttributes(array(
-            'class' => 'dailymotionClass',
             'background' => '#b51b15',
             'foreground' => '#121514',
             'highlight' => '#15c417',
             'videoId' => 'x2eci0m',
-            'id' => 'dailymotion',
             'chromeless' => false,
             'autoplay' => true,
             'quality' => '720',
@@ -205,14 +203,14 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $blockYoutube = new Block();
         $blockYoutube->setLabel('youtube');
         $blockYoutube->setComponent('youtube');
+        $blockYoutube->setId('youtube');
+        $blockYoutube->setClass('youtubeClass');
         $blockYoutube->setAttributes(array(
             'videoId' => '3O-2klyE80w',
-            'class' => 'youtubeClass',
             'disablekb' => true,
             'controls' => true,
             'showinfo' => true,
             'autoplay' => true,
-            'id' => 'youtube',
             'height' => '269',
             'width' => '480',
             'theme' => true,
@@ -286,9 +284,10 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $blockVimeo = new Block();
         $blockVimeo->setLabel('vimeo');
         $blockVimeo->setComponent('vimeo');
+        $blockVimeo->setId('vimeo');
+        $blockVimeo->setClass('vimeoClass');
         $blockVimeo->setAttributes(array(
             'videoId' => '116362234',
-            'class' => 'vimeoClass',
             'fullscreen' => true,
             'color' => 'b51b15',
             'portrait' => false,
@@ -298,7 +297,6 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
             'badge' => false,
             'width' => '480',
             'title' => false,
-            'id' => 'vimeo',
             'loop' => true,
         ));
         $blockVimeo->addArea(array('nodeId' => 0, 'areaId' => 'main'));
@@ -360,10 +358,8 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $block1 = new Block();
         $block1->setLabel('block 2');
         $block1->setComponent('menu');
-        $block1->setAttributes(array(
-            'class' => 'menuclass',
-            'id' => 'idmenu',
-        ));
+        $block1->setId('idmenu');
+        $block1->setClass('menuclass');
         $block1->addArea(array('nodeId' => 0, 'areaId' => 'left_menu'));
 
         $block2 = new Block();
@@ -410,18 +406,16 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $block6 = new Block();
         $block6->setLabel('block 7');
         $block6->setComponent('footer');
-        $block6->setAttributes(array(
-            'id' => 'idFooter',
-            'class' => 'footerclass',
-        ));
+        $block6->setId('idFooter');
+        $block6->setClass('footerclass');
         $block6->addArea(array('nodeId' => 0, 'areaId' => 'footer'));
 
         $block7 = new Block();
         $block7->setLabel('block 8');
         $block7->setComponent('search');
+        $block7->setClass('classbouton');
         $block7->setAttributes(array(
             'value' => 'Rechercher',
-            'class' => 'classbouton',
             'nodeId' => 'fixture_search',
             'limit' => 8
         ));
@@ -551,9 +545,9 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $contentGmap = new Block();
         $contentGmap->setLabel('gmap');
         $contentGmap->setComponent(DisplayBlockInterface::GMAP);
+        $contentGmap->setId('gmap');
+        $contentGmap->setClass('gmapClass');
         $contentGmap->setAttributes(array(
-            'id' => 'gmap',
-            'class' => 'gmapClass',
             'latitude' => '48.8832139',
             'longitude' => '2.2976792',
             'zoom' => '17'
@@ -563,9 +557,9 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $addThis = new Block();
         $addThis->setLabel('add this');
         $addThis->setComponent(DisplayBlockInterface::ADDTHIS);
+        $addThis->setId('addthis');
+        $addThis->setClass('addthisClass');
         $addThis->setAttributes(array(
-            'id' => 'addthis',
-            'class' => 'addthisClass',
             'pubid' => 'ra-54b3f8543eead09b',
             'addThisClass' => 'addthis_sharing_toolbox'
         ));
@@ -706,10 +700,10 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $contentBlock = new Block();
         $contentBlock->setLabel('content news');
         $contentBlock->setComponent(DisplayBlockInterface::CONTENT_LIST);
+        $contentBlock->setId('contentNewsList');
+        $contentBlock->setClass('contentListClass');
         $contentBlock->setAttributes(array(
             'contentType' => 'news',
-            'id' => 'contentNewsList',
-            'class' => 'contentListClass',
             'contentNodeId' => 'fixture_bd'
         ));
         $contentBlock->addArea(array('nodeId' => 0, 'areaId' => 'main'));
@@ -901,10 +895,10 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $searchBlock2 = new Block();
         $searchBlock2->setLabel('search');
         $searchBlock2->setComponent('search');
+        $searchBlock2->setClass('classbouton');
         $searchBlock2->setAttributes(array(
             'value' => 'Rechercher',
             'name' => "btnSearch",
-            'class' => 'classbouton',
             'nodeId' => 'fixture_search'
         ));
         $searchBlock2->addArea(array('nodeId' => 0, 'areaId' => 'content'));
