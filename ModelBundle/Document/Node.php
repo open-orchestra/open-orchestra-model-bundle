@@ -15,6 +15,7 @@ use PHPOrchestra\ModelInterface\Model\StatusInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use PHPOrchestra\ModelInterface\MongoTrait\MetaableDocument;
 use PHPOrchestra\ModelInterface\MongoTrait\SitemapableDocument;
+use PHPOrchestra\ModelInterface\MongoTrait\SchemeAbilityDocument;
 
 /**
  * Description of Node
@@ -38,6 +39,7 @@ class Node implements NodeInterface
     use TimestampableDocument;
     use MetaableDocument;
     use SitemapableDocument;
+    use SchemeAbilityDocument;
 
     /**
      * @var string $id
