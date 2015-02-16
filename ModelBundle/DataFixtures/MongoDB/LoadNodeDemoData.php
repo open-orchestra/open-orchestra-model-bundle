@@ -132,10 +132,8 @@ class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterfac
         $siteHomeBlockMenu = new Block();
         $siteHomeBlockMenu->setLabel('Menu');
         $siteHomeBlockMenu->setComponent('menu');
-        $siteHomeBlockMenu->setAttributes(array(
-            'class' => 'menuClass',
-            'id' => 'myMainMenu',
-        ));
+        $siteHomeBlockMenu->setId('myMainMenu');
+        $siteHomeBlockMenu->setClass('menuClass');
         $siteHomeBlockMenu->addArea(array('nodeId' => 0, 'areaId' => 'main'));
 
         $siteHomeBlock5 = new Block();
@@ -157,10 +155,8 @@ class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterfac
         $siteWhatBlock7 = new Block();
         $siteWhatBlock7->setLabel('Contact');
         $siteWhatBlock7->setComponent('contact');
-        $siteWhatBlock7->setAttributes(array(
-            "id" => "myFormContact",
-            "class" => "myFormContact",
-        ));
+        $siteWhatBlock7->setId('myFormContact');
+        $siteWhatBlock7->setClass('myFormContact');
         $siteWhatBlock7->addArea(array('nodeId' => 0, 'areaId' => 'main'));
 
         $mainArea = new Area();

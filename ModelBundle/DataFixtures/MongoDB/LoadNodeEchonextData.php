@@ -147,14 +147,18 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
      * @param string $blockLabel
      * @param int    $nodeId
      * @param string $areaId
+     * @param string $id
+     * @param string $class
      *
      * @return Block
      */
-    protected function generateBlock($blockType, $blockLabel, $nodeId, $areaId)
+    protected function generateBlock($blockType, $blockLabel, $nodeId, $areaId, $id = null, $class = null)
     {
         $block = new Block();
         $block->setLabel($blockLabel);
         $block->setComponent($blockType);
+        $block->setId($id);
+        $block->setClass($class);
         $block->addArea(array('nodeId' => $nodeId, 'areaId' => $areaId));
 
         return $block;
@@ -170,11 +174,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
      */
     protected function generateBlockLang($areaId, $nodeId = 0)
     {
-        $blockLang = $this->generateBlock('language_list', 'Language', $nodeId, $areaId);
-        $blockLang->setAttributes(array(
-            'class' => 'lang',
-            'id' => 'lang'
-        ));
+        $blockLang = $this->generateBlock('language_list', 'Language', $nodeId, $areaId, 'lang', 'lang');
 
         return $blockLang;
     }
@@ -182,9 +182,9 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
     /**
      * Generate a login block
      *
-     * @param sting $blockLabel
-     * @param int   $nodeId
+     * @param string $blockLabel
      * @param string $areaId
+     * @param int    $nodeId
      *
      * @return Block
      */
@@ -206,11 +206,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
      */
     protected function generateBlockMenu($blockLabel, $areaId, $nodeId = 0)
     {
-        $menuBlock = $this->generateBlock('menu', $blockLabel, $nodeId, $areaId);
-        $menuBlock->setAttributes(array(
-            'class' => 'menu',
-            'id' => 'menu',
-        ));
+        $menuBlock = $this->generateBlock('menu', $blockLabel, $nodeId, $areaId, 'menu', 'menu');
 
         return $menuBlock;
     }
@@ -274,11 +270,9 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
      */
     protected function generateBlockContentList($class, $newsNodeId, $blockLabel, $areaId, $nodeId, $nbCharacters = 0)
     {
-        $contentList = $this->generateBlock(DisplayBlockInterface::CONTENT_LIST, $blockLabel, $nodeId, $areaId);
+        $contentList = $this->generateBlock(DisplayBlockInterface::CONTENT_LIST, $blockLabel, $nodeId, $areaId, 'contentNewsList', $class);
         $contentList->setAttributes(array(
             'contentType' => 'news',
-            'id' => 'contentNewsList',
-            'class' => $class,
             'contentNodeId' => $newsNodeId,
             'characterNumber' => $nbCharacters,
             'keywords' => null,
@@ -300,11 +294,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
      */
     protected function generateBlockContent($divClass, $blockLabel, $areaId, $nodeId = 0)
     {
-        $contentBlock = $this->generateBlock('content', $blockLabel, $nodeId, $areaId);
-        $contentBlock->setAttributes(array(
-            'id' => 'contentNews',
-            'class' => $divClass,
-        ));
+        $contentBlock = $this->generateBlock('content', $blockLabel, $nodeId, $areaId, 'contentNews', $divClass);
 
         return $contentBlock;
     }
@@ -324,10 +314,8 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
      */
     protected function generateBlockSubMenu($class, $idmenu, $nbLevel, $node, $blockLabel, $areaId, $nodeId = 0)
     {
-        $subMenuBlock = $this->generateBlock('sub_menu', $blockLabel, $nodeId, $areaId);
+        $subMenuBlock = $this->generateBlock('sub_menu', $blockLabel, $nodeId, $areaId, $idmenu, $class);
         $subMenuBlock->setAttributes(array(
-            'class' => $class,
-            'id' => $idmenu,
             'nbLevel' => $nbLevel,
             'node' => $node,
         ));
@@ -365,11 +353,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
      */
     protected function generateFooterBlock($blockLabel, $areaId, $nodeId = 0)
     {
-        $footerBlock = $this->generateBlock('footer', $blockLabel, $nodeId, $areaId);
-        $footerBlock->setAttributes(array(
-            'id' => 'footer_content',
-            'class' => 'footer',
-        ));
+        $footerBlock = $this->generateBlock('footer', $blockLabel, $nodeId, $areaId, 'footer_content', 'footer');
 
         return $footerBlock;
     }
