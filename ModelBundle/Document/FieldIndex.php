@@ -41,7 +41,7 @@ class FieldIndex implements FieldIndexInterface
      *
      * @ODM\Field(type="boolean")
      */
-    protected $isLink;
+    protected $link;
 
     /**
      * @param string $fieldName
@@ -76,18 +76,18 @@ class FieldIndex implements FieldIndexInterface
     }
 
     /**
-     * @param boolean $isLink
+     * @param boolean $link
      */
-    public function setIsLink($isLink)
+    public function setLink($link)
     {
-        $this->isLink = $isLink;
+        $this->link = $link;
     }
 
     /**
      * @return boolean
      */
-    public function getIsLink()
+    public function isLink()
     {
-        return $this->isLink;
+        return $this->link;
     }
 }
