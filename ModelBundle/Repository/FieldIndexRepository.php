@@ -17,6 +17,6 @@ class FieldIndexRepository extends DocumentRepository implements FieldIndexRepos
      */
     public function findAllLink()
     {
-        return $this->findBy(array('isLink' => true));
+        return $this->findBy(array('link' => true));
     }
 }
