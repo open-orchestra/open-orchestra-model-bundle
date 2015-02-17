@@ -168,7 +168,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $blocksubmenu->setClass('sousmenu');
         $blocksubmenu->setAttributes(array(
             'nbLevel' => 2,
-            'node' => 'fixture_about_us',
+            'nodeName' => 'fixture_about_us',
         ));
         $blocksubmenu->addArea(array('nodeId' => 0, 'areaId' => 'main'));
 
