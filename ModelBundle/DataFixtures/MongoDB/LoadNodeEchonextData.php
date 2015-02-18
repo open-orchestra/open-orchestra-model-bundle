@@ -268,15 +268,15 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
      *
      * @return Block
      */
-    protected function generateBlockContentList($class, $newsNodeId, $blockLabel, $areaId, $nodeId, $nbCharacters = 0)
+    protected function generateBlockContentList($class, $newsNodeId, $blockLabel, $areaId, $nodeId, $nbCharacters = 0, $contentType = 'news')
     {
         $contentList = $this->generateBlock(DisplayBlockInterface::CONTENT_LIST, $blockLabel, $nodeId, $areaId, 'contentNewsList', $class);
         $contentList->setAttributes(array(
-            'contentType' => 'news',
+            'contentType' => $contentType,
             'contentNodeId' => $newsNodeId,
             'characterNumber' => $nbCharacters,
             'keywords' => null,
-            'choiceType' => ContentRepositoryInterface::CHOICE_AND,
+            'choiceType' => ContentRepositoryInterface::CHOICE_OR,
         ));
 
         return $contentList;
@@ -540,10 +540,13 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
 
         // Main
         $titleBlock = $this->generateBlockWysiwyg('BDDF', '<h1>Page Espace BDDF</h1>', 'main');
+        $contentListBlock = $this->generateBlockContentList('', 'news', 'car block', 'main', 0, 70, 'car');
+        $contentListBlock->addAttribute('contentTemplate', '<div>On affiche le contenu {{ content.name }} avec un template de la base</div>');
 
         $mainArea = $this->generateArea('Main', 'main',
             array(
                 array('nodeId' => 0, 'blockId' => 0),
+                array('nodeId' => 0, 'blockId' => 1),
             )
         );
 
@@ -571,6 +574,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
         $node->addArea($footerArea);
 
         $node->addBlock($titleBlock);
+        $node->addBlock($contentListBlock);
 
         return $node;
     }
