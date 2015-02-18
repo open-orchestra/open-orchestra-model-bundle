@@ -103,6 +103,15 @@ class Block implements BlockInterface
     }
 
     /**
+     * @param string $name
+     * @param string $value
+     */
+    public function addAttribute($name, $value)
+    {
+        $this->attributes[$name] = $value;
+    }
+
+    /**
      * Get attributes
      *
      * @return array
