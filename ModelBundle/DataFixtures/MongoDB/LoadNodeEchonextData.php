@@ -10,6 +10,7 @@ use PHPOrchestra\ModelBundle\Document\Area;
 use PHPOrchestra\ModelBundle\Document\Block;
 use PHPOrchestra\ModelBundle\Document\Node;
 use PHPOrchestra\ModelInterface\Model\NodeInterface;
+use PHPOrchestra\ModelInterface\Model\SchemeAbilityInterface;
 use PHPOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 
 /**
@@ -1036,6 +1037,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
             'order' => 3,
             'routePattern' => 'remunerations-variables',
         ));
+        $node->setScheme(SchemeAbilityInterface::SCHEME_HTTPS);
 
         $node->addArea($headerArea);
         $node->addArea($bodyArea);
