@@ -8,6 +8,7 @@ use PHPOrchestra\ModelBundle\Repository\FieldAutoGenerableRepositoryInterface;
 use PHPOrchestra\ModelInterface\Model\ContentInterface;
 use PHPOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use Doctrine\ODM\MongoDB\Query\Builder;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Class ContentRepository
@@ -167,22 +168,16 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
             $qb->field('contentType')->equals($contentType);
         }
         $qb->field('deleted')->equals(false);
+        $qb->sort('version', 'desc');
 
-        $list = $qb->getQuery()->execute();
+        $keys = array();
 
-        $contents = array();
-
-        foreach ($list as $content) {
-            if (empty($contents[$content->getContentId()])) {
-                $contents[$content->getContentId()] = $content;
-                continue;
-            }
-            if ($contents[$content->getContentId()]->getVersion() < $content->getVersion()) {
-                $contents[$content->getContentId()] = $content;
-            }
-        }
-
-        return $contents;
+        $initial = array('listMongoId' => array(), 'currentContentId' => 0);
+        $reduce = "function (obj, prev) { if (prev.currentContentId != obj.contentId) {prev.currentContentId = obj.contentId; prev.listMongoId.push(obj._id);}}";
+        $qb->group($keys, $initial, $reduce);
+        $mongoId = $qb->getQuery()->execute()->current();
+        $qb = $this->createQueryBuilder('c')->field('_id')->in($mongoId['listMongoId']);
+        return $qb->getQuery()->execute();
     }
 
     /**
