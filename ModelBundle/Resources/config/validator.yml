@@ -4,6 +4,7 @@ parameters:
     php_orchestra_model.validator.check_area_presence.class: PHPOrchestra\ModelBundle\Validator\Constraints\CheckAreaPresenceValidator
     php_orchestra_model.validator.check_route_pattern.class: PHPOrchestra\ModelBundle\Validator\Constraints\CheckRoutePatternValidator
     php_orchestra_model.validator.unique_main_alias.class: PHPOrchestra\ModelBundle\Validator\Constraints\UniqueMainAliasValidator
+    php_orchestra_model.validator.unique_site_id.class: PHPOrchestra\ModelBundle\Validator\Constraints\UniqueSiteIdValidator
 
 services:
     php_orchestra_model.validator.prevent_prohibited_status_change:
@@ -41,3 +42,10 @@ services:
             - @translator
         tags:
             - { name: validator.constraint_validator, alias: unique_main_alias}
+    php_orchestra_model.validator.unique_site_id:
+        class: %php_orchestra_model.validator.unique_site_id.class%
+        arguments:
+            - @translator
+            - @php_orchestra_model.repository.site
+        tags:
+            - { name: validator.constraint_validator, alias: unique_site_id}
