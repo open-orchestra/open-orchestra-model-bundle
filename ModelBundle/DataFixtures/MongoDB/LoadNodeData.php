@@ -185,6 +185,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $blockDailymotion->setId('dailymotion');
         $blockDailymotion->setClass('dailymotionClass');
         $blockDailymotion->setAttributes(array(
+            'videoType' => 'dailymotion',
             'dailymotionBackground' => '#b51b15',
             'dailymotionForeground' => '#121514',
             'dailymotionHighlight' => '#15c417',
@@ -206,6 +207,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $blockYoutube->setId('youtube');
         $blockYoutube->setClass('youtubeClass');
         $blockYoutube->setAttributes(array(
+            'videoType' => 'youtube',
             'youtubeVideoId' => '3O-2klyE80w',
             'youtubeDisablekb' => true,
             'youtubeControls' => true,
@@ -287,6 +289,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $blockVimeo->setId('vimeo');
         $blockVimeo->setClass('vimeoClass');
         $blockVimeo->setAttributes(array(
+            'videoType' => 'vimeo',
             'vimeoVideoId' => '116362234',
             'vimeoFullscreen' => true,
             'vimeoColor' => 'b51b15',
