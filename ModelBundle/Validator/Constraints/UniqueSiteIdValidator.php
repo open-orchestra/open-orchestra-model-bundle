@@ -38,10 +38,8 @@ class UniqueSiteIdValidator extends ConstraintValidator
     {
         $result = $this->repository->findOneBySiteId($value->getSiteId());
 
-        if (null !== $result) {
-            if ($result->getId() !== $value->getId()) {
-                $this->context->addViolationAt('siteId', $this->translator->trans($constraint->message));
-            }
+        if (null !== $result && $result->getId() !== $value->getId()) {
+            $this->context->addViolationAt('siteId', $this->translator->trans($constraint->message));
         }
     }
 }
