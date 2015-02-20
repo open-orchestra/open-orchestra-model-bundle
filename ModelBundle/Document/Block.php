@@ -122,6 +122,20 @@ class Block implements BlockInterface
     }
 
     /**
+     * @param string $name
+     *
+     * @return string|null
+     */
+    public function getAttribute($name)
+    {
+        if (array_key_exists($name, $this->attributes)) {
+            return $this->attributes[$name];
+        }
+
+        return null;
+    }
+
+    /**
      * @return array
      */
     public function getAreas()
