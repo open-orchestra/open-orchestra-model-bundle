@@ -5,6 +5,7 @@ namespace PHPOrchestra\ModelBundle\Test\Validator\Constraints;
 use Phake;
 use PHPOrchestra\ModelBundle\Validator\Constraints\UniqueSiteId;
 use PHPOrchestra\ModelBundle\Validator\Constraints\UniqueSiteIdValidator;
+use PHPOrchestra\ModelInterface\Model\SiteInterface;
 
 /**
  * Class UniqueSiteIdValidatorTest
@@ -72,8 +73,9 @@ class UniqueSiteIdValidatorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test Validate
-     * @param $id
-     * @param $site2
+     *
+     * @param string        $id
+     * @param SiteInterface $site2
      *
      * @dataProvider generateNoViolation
      */
