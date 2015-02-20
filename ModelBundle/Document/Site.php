@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use PHPOrchestra\ModelInterface\Model\SiteAliasInterface;
+use PHPOrchestra\ModelBundle\Mapping\Annotations as ORCHESTRA;
 use PHPOrchestra\ModelInterface\Model\SiteInterface;
 use PHPOrchestra\ModelInterface\Model\ThemeInterface;
 use PHPOrchestra\ModelInterface\MongoTrait\MetaableDocument;
@@ -17,6 +18,11 @@ use PHPOrchestra\ModelInterface\MongoTrait\SitemapableDocument;
  * @ODM\Document(
  *   collection="site",
  *   repositoryClass="PHPOrchestra\ModelBundle\Repository\SiteRepository"
+ * )
+ * @ORCHESTRA\Document(
+ *   generatedField="siteId",
+ *   sourceField="name",
+ *   serviceName="php_orchestra_model.repository.site",
  * )
  */
 class Site implements SiteInterface
