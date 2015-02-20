@@ -11,6 +11,7 @@ use PHPOrchestra\ModelInterface\Model\AreaInterface;
 use PHPOrchestra\ModelInterface\Model\NodeInterface;
 use PHPOrchestra\ModelInterface\Model\AreaContainerInterface;
 use PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
+use Doctrine\ODM\MongoDB\Query\Builder;
 
 /**
  * Class NodeRepository
@@ -281,16 +282,15 @@ class NodeRepository extends DocumentRepository implements FieldAutoGenerableRep
      *
      * @return array
      */
-    protected function findLastVersion($list)
+    protected function findLastVersion(Builder $qb)
     {
+        $qb->sort('version', 'desc');
+        $list = $qb->getQuery()->execute();
+
         $nodes = array();
 
         foreach ($list as $node) {
             if (empty($nodes[$node->getNodeId()])) {
-                $nodes[$node->getNodeId()] = $node;
-                continue;
-            }
-            if ($nodes[$node->getNodeId()]->getVersion() < $node->getVersion()) {
                 $nodes[$node->getNodeId()] = $node;
             }
         }
@@ -363,9 +363,7 @@ class NodeRepository extends DocumentRepository implements FieldAutoGenerableRep
         $qb->field('status.published')->equals(true);
         $qb->field('nodeType')->equals(NodeInterface::TYPE_DEFAULT);
 
-        $list = $qb->getQuery()->execute();
-
-        return $this->findLastVersion($list);
+        return $this->findLastVersion($qb);
     }
 
     /**
@@ -430,9 +428,7 @@ class NodeRepository extends DocumentRepository implements FieldAutoGenerableRep
         $qb->field('deleted')->equals($deleted);
         $qb->field('nodeType')->equals($type);
 
-        $list = $qb->getQuery()->execute();
-
-        return $this->findLastVersion($list);
+        return $this->findLastVersion($qb);
     }
 
     /**
@@ -447,9 +443,7 @@ class NodeRepository extends DocumentRepository implements FieldAutoGenerableRep
         $qb = $this->buildTreeRequest($language);
         $qb->field($field)->equals(true);
 
-        $list = $qb->getQuery()->execute();
-
-        return $this->findLastVersion($list);
+        return $this->findLastVersion($qb);
     }
 
     /**
