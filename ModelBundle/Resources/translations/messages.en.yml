@@ -7,3 +7,4 @@ php_orchestra_model:
         check_route_pattern: The route pattern is already used in this website
     website:
         unique_main_alias: Principal alias has to be unique
+        unique_site_id: Site id has to be unique
