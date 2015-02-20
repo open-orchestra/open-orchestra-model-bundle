@@ -7,3 +7,4 @@ PHPOrchestra\ModelBundle\Document\Node:
 PHPOrchestra\ModelBundle\Document\Site:
     constraints:
         - PHPOrchestra\ModelBundle\Validator\Constraints\UniqueMainAlias: ~
+        - PHPOrchestra\ModelBundle\Validator\Constraints\UniqueSiteId: ~
