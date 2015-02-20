@@ -167,6 +167,7 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
             $qb->field('contentType')->equals($contentType);
         }
         $qb->field('deleted')->equals(false);
+        $qb->sort('version', 'desc');
 
         $list = $qb->getQuery()->execute();
 
@@ -174,10 +175,6 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
 
         foreach ($list as $content) {
             if (empty($contents[$content->getContentId()])) {
-                $contents[$content->getContentId()] = $content;
-                continue;
-            }
-            if ($contents[$content->getContentId()]->getVersion() < $content->getVersion()) {
                 $contents[$content->getContentId()] = $content;
             }
         }
