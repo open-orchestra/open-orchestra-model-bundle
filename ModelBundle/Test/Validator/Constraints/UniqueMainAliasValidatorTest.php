@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Test\Validator\Constraints;
+namespace OpenOrchestra\ModelBundle\Test\Validator\Constraints;
 
 use Phake;
-use PHPOrchestra\ModelBundle\Validator\Constraints\UniqueMainAlias;
-use PHPOrchestra\ModelBundle\Validator\Constraints\UniqueMainAliasValidator;
+use OpenOrchestra\ModelBundle\Validator\Constraints\UniqueMainAlias;
+use OpenOrchestra\ModelBundle\Validator\Constraints\UniqueMainAliasValidator;
 
 /**
  * Test UniqueMainAliasValidatorTest
@@ -37,7 +37,7 @@ class UniqueMainAliasValidatorTest extends \PHPUnit_Framework_TestCase
         $this->siteAliases = Phake::mock('Doctrine\Common\Collections\Collection');
         Phake::when($this->siteAliases)->filter(Phake::anyParameters())->thenReturn($this->siteAliases);
 
-        $this->site = Phake::mock('PHPOrchestra\ModelInterface\Model\SiteInterface');
+        $this->site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
         Phake::when($this->site)->getAliases()->thenReturn($this->siteAliases);
 
         $this->validator = new UniqueMainAliasValidator($this->translator);

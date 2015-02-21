@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\FunctionalTest\Repository;
+namespace OpenOrchestra\ModelBundle\FunctionalTest\Repository;
 
 use Phake;
-use PHPOrchestra\ModelInterface\Model\NodeInterface;
-use PHPOrchestra\ModelBundle\Repository\NodeRepository;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelBundle\Repository\NodeRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
@@ -26,12 +26,12 @@ class NodeRepositoryTest extends KernelTestCase
     {
         parent::setUp();
 
-        $this->currentSiteManager = Phake::mock('PHPOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
+        $this->currentSiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
         Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn('1');
         Phake::when($this->currentSiteManager)->getCurrentSiteDefaultLanguage()->thenReturn('fr');
 
         static::bootKernel();
-        $this->repository = static::$kernel->getContainer()->get('php_orchestra_model.repository.node');
+        $this->repository = static::$kernel->getContainer()->get('open_orchestra_model.repository.node');
         $this->repository->setCurrentSiteManager($this->currentSiteManager);
     }
 
@@ -266,7 +266,7 @@ class NodeRepositoryTest extends KernelTestCase
      */
     protected function assertSameNode($language, $version, $siteId, $node, $nodeId = NodeInterface::ROOT_NODE_ID)
     {
-        $this->assertInstanceOf('PHPOrchestra\ModelInterface\Model\NodeInterface', $node);
+        $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\NodeInterface', $node);
         $this->assertSame($nodeId, $node->getNodeId());
         $this->assertSame($language, $node->getLanguage());
         $this->assertSame($version, $node->getVersion());

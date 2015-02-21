@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\DataFixtures\MongoDB;
+namespace OpenOrchestra\ModelBundle\DataFixtures\MongoDB;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use PHPOrchestra\ModelBundle\Document\ListIndex;
+use OpenOrchestra\ModelBundle\Document\ListIndex;
 
 /**
  * Class LoadListIndex

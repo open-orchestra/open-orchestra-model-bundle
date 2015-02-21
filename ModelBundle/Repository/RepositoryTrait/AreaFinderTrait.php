@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Repository\RepositoryTrait;
+namespace OpenOrchestra\ModelBundle\Repository\RepositoryTrait;
 
-use PHPOrchestra\ModelInterface\Model\AreaContainerInterface;
+use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
 
 /**
  * Trait AreaFinderTrait

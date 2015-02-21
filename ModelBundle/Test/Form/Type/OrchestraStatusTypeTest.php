@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Test\Form\Type;
+namespace OpenOrchestra\ModelBundle\Test\Form\Type;
 
 use Phake;
-use PHPOrchestra\ModelBundle\Form\Type\OrchestraStatusType;
+use OpenOrchestra\ModelBundle\Form\Type\OrchestraStatusType;
 
 /**
  * Class OrchestraStatusTypeTest
@@ -25,7 +25,7 @@ class OrchestraStatusTypeTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->builder = Phake::mock('Symfony\Component\Form\FormBuilder');
-        $this->transformer = Phake::mock('PHPOrchestra\ModelBundle\Form\DataTransformer\EmbedStatusToStatusTransformer');
+        $this->transformer = Phake::mock('OpenOrchestra\ModelBundle\Form\DataTransformer\EmbedStatusToStatusTransformer');
 
         $this->form = new OrchestraStatusType($this->transformer, $this->statusClass);
     }

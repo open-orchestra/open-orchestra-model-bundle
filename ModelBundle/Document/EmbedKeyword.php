@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Document;
+namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use PHPOrchestra\ModelInterface\Model\EmbedKeywordInterface;
-use PHPOrchestra\ModelInterface\Model\KeywordInterface;
+use OpenOrchestra\ModelInterface\Model\EmbedKeywordInterface;
+use OpenOrchestra\ModelInterface\Model\KeywordInterface;
 
 /**
  * Class EmbedKeyword

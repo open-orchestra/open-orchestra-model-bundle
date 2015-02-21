@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Document;
+namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use PHPOrchestra\ModelInterface\Model\FieldOptionInterface;
+use OpenOrchestra\ModelInterface\Model\FieldOptionInterface;
 
 /**
  * Description of FieldOption

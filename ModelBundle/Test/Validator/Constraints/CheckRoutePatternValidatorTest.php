@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Test\Validator\Constraints;
+namespace OpenOrchestra\ModelBundle\Test\Validator\Constraints;
 
 use Phake;
-use PHPOrchestra\ModelBundle\Validator\Constraints\CheckRoutePattern;
-use PHPOrchestra\ModelBundle\Validator\Constraints\CheckRoutePatternValidator;
+use OpenOrchestra\ModelBundle\Validator\Constraints\CheckRoutePattern;
+use OpenOrchestra\ModelBundle\Validator\Constraints\CheckRoutePatternValidator;
 
 /**
  * Class CheckRoutePatternValidatorTest
@@ -29,7 +29,7 @@ class CheckRoutePatternValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->nodeRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
+        $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
         $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
         Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn($this->message);
 
@@ -37,7 +37,7 @@ class CheckRoutePatternValidatorTest extends \PHPUnit_Framework_TestCase
         $this->context = Phake::mock('Symfony\Component\Validator\Context\ExecutionContext');
         $this->areas = Phake::mock('Doctrine\Common\Collections\ArrayCollection');
 
-        $this->node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $this->node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($this->node)->getAreas()->thenReturn($this->areas);
 
         $this->validator = new CheckRoutePatternValidator($this->translator, $this->nodeRepository);

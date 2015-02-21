@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Mapping\Annotations;
+namespace OpenOrchestra\ModelBundle\Mapping\Annotations;
 
 use Doctrine\Common\Annotations\Annotation;
-use PHPOrchestra\ModelBundle\Exceptions\PropertyNotFoundException;
-use PHPOrchestra\ModelBundle\Exceptions\MethodNotFoundException;
+use OpenOrchestra\ModelBundle\Exceptions\PropertyNotFoundException;
+use OpenOrchestra\ModelBundle\Exceptions\MethodNotFoundException;
 
 /**
  * @Annotation

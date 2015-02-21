@@ -1,15 +1,15 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\DataFixtures\MongoDB;
+namespace OpenOrchestra\ModelBundle\DataFixtures\MongoDB;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
-use PHPOrchestra\ModelBundle\Document\Area;
-use PHPOrchestra\ModelBundle\Document\Block;
-use PHPOrchestra\ModelBundle\Document\Node;
-use PHPOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\ModelBundle\Document\Area;
+use OpenOrchestra\ModelBundle\Document\Block;
+use OpenOrchestra\ModelBundle\Document\Node;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 
 /**
  * Class LoadNodeData
@@ -311,7 +311,7 @@ class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterfac
         $siteWhatBlock0->setLabel('Wysiwyg');
         $siteWhatBlock0->setComponent(DisplayBlockInterface::TINYMCEWYSIWYG);
         $siteWhatBlock0->setAttributes(array(
-            "htmlContent" => "<div class='content2'><h1>PHPOrchestra</h1><p>
+            "htmlContent" => "<div class='content2'><h1>OpenOrchestra</h1><p>
 PHP Orchestra est une plateforme développée conjointement par Interakting et Zend Technologies. Cette offre, dédiée au marketing est destinée aux grands projets de nouvelle génération en digital marketing et entreprise 2.0.
 
 L’objectif de PHP Factory est de répondre aux exigences les plus élevées des grands comptes en termes de haute disponibilité, de performance et d'industrialisation des processus de création et de diffusion de contenus vers le Web et les mobiles.

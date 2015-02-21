@@ -1,13 +1,13 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\DataFixtures\MongoDB;
+namespace OpenOrchestra\ModelBundle\DataFixtures\MongoDB;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use PHPOrchestra\ModelBundle\Document\Content;
-use PHPOrchestra\ModelBundle\Document\ContentAttribute;
-use PHPOrchestra\ModelBundle\Document\EmbedKeyword;
+use OpenOrchestra\ModelBundle\Document\Content;
+use OpenOrchestra\ModelBundle\Document\ContentAttribute;
+use OpenOrchestra\ModelBundle\Document\EmbedKeyword;
 
 /**
  * Class LoadContentData

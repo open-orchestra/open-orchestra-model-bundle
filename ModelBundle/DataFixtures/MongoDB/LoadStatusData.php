@@ -1,12 +1,12 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\DataFixtures\MongoDB;
+namespace OpenOrchestra\ModelBundle\DataFixtures\MongoDB;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use PHPOrchestra\ModelBundle\Document\Status;
-use PHPOrchestra\ModelBundle\Document\TranslatedValue;
+use OpenOrchestra\ModelBundle\Document\Status;
+use OpenOrchestra\ModelBundle\Document\TranslatedValue;
 
 /**
  * Class LoadStatusData

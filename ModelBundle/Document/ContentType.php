@@ -1,23 +1,23 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Document;
+namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Gedmo\Blameable\Traits\BlameableDocument;
 use Gedmo\Timestampable\Traits\TimestampableDocument;
 use Gedmo\Mapping\Annotation as Gedmo;
-use PHPOrchestra\ModelInterface\Model\ContentTypeInterface;
-use PHPOrchestra\ModelInterface\Model\FieldTypeInterface;
+use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
+use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
-use PHPOrchestra\ModelInterface\Model\StatusInterface;
-use PHPOrchestra\ModelInterface\Model\TranslatedValueInterface;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
+use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
 
 /**
  * Description of ContentType
  *
  * @ODM\Document(
  *   collection="content_type",
- *   repositoryClass="PHPOrchestra\ModelBundle\Repository\ContentTypeRepository"
+ *   repositoryClass="OpenOrchestra\ModelBundle\Repository\ContentTypeRepository"
  * )
  */
 class ContentType implements ContentTypeInterface

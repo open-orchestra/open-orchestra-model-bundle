@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Test\Manager;
+namespace OpenOrchestra\ModelBundle\Test\Manager;
 
-use PHPOrchestra\ModelBundle\Manager\NodeManager;
-use PHPOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelBundle\Manager\NodeManager;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 
 /**
  * Class NodeManagerTest
@@ -19,7 +19,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->nodeClass = 'PHPOrchestra\ModelBundle\Document\Node';
+        $this->nodeClass = 'OpenOrchestra\ModelBundle\Document\Node';
 
         $this->manager = new NodeManager($this->nodeClass);
     }
@@ -34,7 +34,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
     {
         $node = $this->manager->createTransverseNode($language, $siteId);
 
-        $this->assertInstanceOf('PHPOrchestra\ModelInterface\Model\NodeInterface', $node);
+        $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\NodeInterface', $node);
         $this->assertSame($siteId, $node->getSiteId());
         $this->assertSame(NodeInterface::TRANSVERSE_NODE_ID, $node->getNodeId());
         $this->assertSame(NodeInterface::TRANSVERSE_NODE_ID, $node->getName());

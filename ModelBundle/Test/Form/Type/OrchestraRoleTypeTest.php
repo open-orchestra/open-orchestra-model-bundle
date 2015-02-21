@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Test\Form\Type;
+namespace OpenOrchestra\ModelBundle\Test\Form\Type;
 
 use Phake;
-use PHPOrchestra\ModelBundle\Form\Type\OrchestraRoleType;
+use OpenOrchestra\ModelBundle\Form\Type\OrchestraRoleType;
 
 /**
  * Class OrchestraStatusTypeTest

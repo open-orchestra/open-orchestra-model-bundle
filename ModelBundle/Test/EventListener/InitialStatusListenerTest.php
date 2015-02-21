@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Test\EventListener;
+namespace OpenOrchestra\ModelBundle\Test\EventListener;
 
 use Phake;
-use PHPOrchestra\ModelBundle\EventListener\InitialStatusListener;
-use PHPOrchestra\ModelBundle\Document\Status;
+use OpenOrchestra\ModelBundle\EventListener\InitialStatusListener;
+use OpenOrchestra\ModelBundle\Document\Status;
 
 /**
  * Class InitialStatusListenerTest
@@ -46,11 +46,11 @@ class InitialStatusListenerTest extends \PHPUnit_Framework_TestCase
         $documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
         $queryBuilder = Phake::mock('Doctrine\ODM\MongoDB\Query\Builder');
         $query = Phake::mock('Doctrine\ODM\MongoDB\Query\Query');
-        $statusRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\StatusRepository');
+        $statusRepository = Phake::mock('OpenOrchestra\ModelBundle\Repository\StatusRepository');
 
         Phake::when($statusRepository)->findOtherByInitial(Phake::anyParameters())->thenReturn($documents);
         Phake::when($query)->execute()->thenReturn($documents);
-        Phake::when($documentManager)->getRepository('PHPOrchestraModelBundle:Status')->thenReturn($statusRepository);
+        Phake::when($documentManager)->getRepository('OpenOrchestraModelBundle:Status')->thenReturn($statusRepository);
         Phake::when($statusRepository)->createQueryBuilder()->thenReturn($queryBuilder);
         Phake::when($this->lifecycleEventArgs)->getDocument()->thenReturn($status);
         Phake::when($this->lifecycleEventArgs)->getDocumentManager()->thenReturn($documentManager);
@@ -67,11 +67,11 @@ class InitialStatusListenerTest extends \PHPUnit_Framework_TestCase
      */
     public function provideStatus()
     {
-        $status = Phake::mock('PHPOrchestra\ModelBundle\Document\Status');
+        $status = Phake::mock('OpenOrchestra\ModelBundle\Document\Status');
         Phake::when($status)->isPublished()->thenReturn(true);
         Phake::when($status)->isInitial()->thenReturn(true);
 
-        $document0 = Phake::mock('PHPOrchestra\ModelBundle\Document\Status');
+        $document0 = Phake::mock('OpenOrchestra\ModelBundle\Document\Status');
         Phake::when($document0)->isInitial()->thenReturn(true);
 
         return array(

@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Form\Type;
+namespace OpenOrchestra\ModelBundle\Form\Type;
 
-use PHPOrchestra\ModelInterface\Form\Type\AbstractOrchestraRoleType;
+use OpenOrchestra\ModelInterface\Form\Type\AbstractOrchestraRoleType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**

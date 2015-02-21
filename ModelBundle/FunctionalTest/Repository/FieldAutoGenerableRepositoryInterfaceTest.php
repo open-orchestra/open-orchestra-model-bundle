@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\FunctionalTest\Repository;
+namespace OpenOrchestra\ModelBundle\FunctionalTest\Repository;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -28,7 +28,7 @@ class FieldAutoGenerableRepositoryInterfaceTest extends KernelTestCase
     {
         $repository = static::$kernel->getContainer()->get($serviceName);
 
-        $this->assertInstanceOf('PHPOrchestra\ModelBundle\Repository\FieldAutoGenerableRepositoryInterface', $repository);
+        $this->assertInstanceOf('OpenOrchestra\ModelBundle\Repository\FieldAutoGenerableRepositoryInterface', $repository);
     }
 
     /**
@@ -37,9 +37,9 @@ class FieldAutoGenerableRepositoryInterfaceTest extends KernelTestCase
     public function provideServiceName()
     {
         return array(
-            array('php_orchestra_model.repository.node'),
-            array('php_orchestra_model.repository.template'),
-            array('php_orchestra_model.repository.content'),
+            array('open_orchestra_model.repository.node'),
+            array('open_orchestra_model.repository.template'),
+            array('open_orchestra_model.repository.content'),
         );
     }
 }

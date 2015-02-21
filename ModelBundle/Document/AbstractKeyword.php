@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Document;
+namespace OpenOrchestra\ModelBundle\Document;
 
-use PHPOrchestra\ModelInterface\Model\KeywordInterface;
+use OpenOrchestra\ModelInterface\Model\KeywordInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**

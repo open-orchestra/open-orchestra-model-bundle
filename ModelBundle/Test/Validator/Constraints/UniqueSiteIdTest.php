@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Test\Validator\Constraints;
+namespace OpenOrchestra\ModelBundle\Test\Validator\Constraints;
 
-use PHPOrchestra\ModelBundle\Validator\Constraints\UniqueSiteId;
+use OpenOrchestra\ModelBundle\Validator\Constraints\UniqueSiteId;
 use Symfony\Component\Validator\Constraint;
 
 /**
@@ -52,6 +52,6 @@ class UniqueSiteIdTest extends \PHPUnit_Framework_TestCase
      */
     public function testMessages()
     {
-        $this->assertSame('php_orchestra_model.website.unique_site_id', $this->constraint->message);
+        $this->assertSame('open_orchestra_model.website.unique_site_id', $this->constraint->message);
     }
 }

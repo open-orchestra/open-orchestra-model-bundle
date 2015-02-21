@@ -1,13 +1,13 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Repository;
+namespace OpenOrchestra\ModelBundle\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
-use PHPOrchestra\ModelBundle\Repository\RepositoryTrait\AreaFinderTrait;
-use PHPOrchestra\ModelInterface\Model\AreaInterface;
-use PHPOrchestra\ModelInterface\Model\TemplateInterface;
-use PHPOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
-use PHPOrchestra\ModelInterface\Model\AreaContainerInterface;
+use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\AreaFinderTrait;
+use OpenOrchestra\ModelInterface\Model\AreaInterface;
+use OpenOrchestra\ModelInterface\Model\TemplateInterface;
+use OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
+use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
 
 /**
  * Class TemplateRepository
