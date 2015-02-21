@@ -1,4 +1,4 @@
-php_orchestra_model:
+open_orchestra_model:
     status:
         impossible_change: You don't have the right to change the status
     area:

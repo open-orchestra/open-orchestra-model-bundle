@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Test\Validator\Constraints;
+namespace OpenOrchestra\ModelBundle\Test\Validator\Constraints;
 
 use Phake;
-use PHPOrchestra\ModelBundle\Validator\Constraints\CheckAreaPresence;
-use PHPOrchestra\ModelBundle\Validator\Constraints\CheckAreaPresenceValidator;
+use OpenOrchestra\ModelBundle\Validator\Constraints\CheckAreaPresence;
+use OpenOrchestra\ModelBundle\Validator\Constraints\CheckAreaPresenceValidator;
 
 /**
  * Class CheckAreaPresenceValidatorTest
@@ -34,7 +34,7 @@ class CheckAreaPresenceValidatorTest extends \PHPUnit_Framework_TestCase
         $this->context = Phake::mock('Symfony\Component\Validator\Context\ExecutionContext');
         $this->areas = Phake::mock('Doctrine\Common\Collections\ArrayCollection');
 
-        $this->node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $this->node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($this->node)->getAreas()->thenReturn($this->areas);
 
         $this->validator = new CheckAreaPresenceValidator($this->translator);

@@ -1,17 +1,17 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Document;
+namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use PHPOrchestra\ModelInterface\Model\RoleInterface;
-use PHPOrchestra\ModelInterface\Model\StatusInterface;
+use OpenOrchestra\ModelInterface\Model\RoleInterface;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
 
 /**
  * Class Role
  *
  * @ODM\Document(
  *   collection="role",
- *   repositoryClass="PHPOrchestra\ModelBundle\Repository\RoleRepository"
+ *   repositoryClass="OpenOrchestra\ModelBundle\Repository\RoleRepository"
  * )
  */
 class Role implements RoleInterface
@@ -29,14 +29,14 @@ class Role implements RoleInterface
     /**
      * @var StatusInterface
      *
-     * @ODM\ReferenceOne(targetDocument="PHPOrchestra\ModelBundle\Document\Status", inversedBy="fromRoles")
+     * @ODM\ReferenceOne(targetDocument="OpenOrchestra\ModelBundle\Document\Status", inversedBy="fromRoles")
      */
     protected $fromStatus;
 
     /**
      * @var StatusInterface
      *
-     * @ODM\ReferenceOne(targetDocument="PHPOrchestra\ModelBundle\Document\Status", inversedBy="toRoles")
+     * @ODM\ReferenceOne(targetDocument="OpenOrchestra\ModelBundle\Document\Status", inversedBy="toRoles")
      */
     protected $toStatus;
 

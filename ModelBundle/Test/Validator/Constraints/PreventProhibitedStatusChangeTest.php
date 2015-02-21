@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Test\Validator\Constraints;
+namespace OpenOrchestra\ModelBundle\Test\Validator\Constraints;
 
-use PHPOrchestra\ModelBundle\Validator\Constraints\PreventProhibitedStatusChange;
+use OpenOrchestra\ModelBundle\Validator\Constraints\PreventProhibitedStatusChange;
 use Symfony\Component\Validator\Constraint;
 
 /**
@@ -52,6 +52,6 @@ class PreventProhibitedStatusChangeTest extends \PHPUnit_Framework_TestCase
      */
     public function testMessages()
     {
-        $this->assertSame('php_orchestra_model.status.impossible_change', $this->constraint->message);
+        $this->assertSame('open_orchestra_model.status.impossible_change', $this->constraint->message);
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Document;
+namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PHPOrchestra\ModelInterface\Model\StatusInterface;
-use PHPOrchestra\ModelInterface\Model\TranslatedValueInterface;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
+use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
@@ -41,14 +41,14 @@ abstract class AbstractStatus implements StatusInterface
     /**
      * @var ArrayCollection
      *
-     * @ODM\ReferenceMany(targetDocument="PHPOrchestra\ModelBundle\Document\Role", mappedBy="fromStatus")
+     * @ODM\ReferenceMany(targetDocument="OpenOrchestra\ModelBundle\Document\Role", mappedBy="fromStatus")
      */
     protected $fromRoles;
 
     /**
      * @var string
      *
-     * @ODM\ReferenceMany(targetDocument="PHPOrchestra\ModelBundle\Document\Role", mappedBy="toStatus")
+     * @ODM\ReferenceMany(targetDocument="OpenOrchestra\ModelBundle\Document\Role", mappedBy="toStatus")
      */
     protected $toRoles;
 

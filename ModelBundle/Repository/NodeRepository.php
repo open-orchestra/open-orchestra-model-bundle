@@ -1,16 +1,16 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Repository;
+namespace OpenOrchestra\ModelBundle\Repository;
 
 use Doctrine\ODM\MongoDB\Cursor;
 use Doctrine\ODM\MongoDB\DocumentRepository;
 use Doctrine\ODM\MongoDB\Mapping;
-use PHPOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
-use PHPOrchestra\ModelBundle\Repository\RepositoryTrait\AreaFinderTrait;
-use PHPOrchestra\ModelInterface\Model\AreaInterface;
-use PHPOrchestra\ModelInterface\Model\NodeInterface;
-use PHPOrchestra\ModelInterface\Model\AreaContainerInterface;
-use PHPOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
+use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
+use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\AreaFinderTrait;
+use OpenOrchestra\ModelInterface\Model\AreaInterface;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
+use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Doctrine\ODM\MongoDB\Query\Builder;
 
 /**

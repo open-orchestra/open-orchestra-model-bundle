@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Validator\Constraints;
+namespace OpenOrchestra\ModelBundle\Validator\Constraints;
 
-use PHPOrchestra\ModelInterface\Model\SiteAliasInterface;
-use PHPOrchestra\ModelInterface\Model\SiteInterface;
+use OpenOrchestra\ModelInterface\Model\SiteAliasInterface;
+use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;

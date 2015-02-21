@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Test\EventListener;
+namespace OpenOrchestra\ModelBundle\Test\EventListener;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Phake;
-use PHPOrchestra\ModelBundle\EventListener\TransversalNodeCreatorListener;
-use PHPOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelBundle\EventListener\TransversalNodeCreatorListener;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 
 /**
  * Class TransversalNodeCreatorListenerTest
@@ -34,13 +34,13 @@ class TransversalNodeCreatorListenerTest extends \PHPUnit_Framework_TestCase
         $this->siteId = '1';
         $this->nodes = new ArrayCollection();
 
-        $this->newNode = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
-        $this->nodeFr = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $this->newNode = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        $this->nodeFr = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($this->nodeFr)->getLanguage()->thenReturn('fr');
-        $this->nodeEn = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $this->nodeEn = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($this->nodeEn)->getLanguage()->thenReturn('en');
 
-        $this->nodeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\NodeRepository');
+        $this->nodeRepository = Phake::mock('OpenOrchestra\ModelBundle\Repository\NodeRepository');
         Phake::when($this->nodeRepository)
             ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'fr', $this->siteId)
             ->thenReturn($this->nodeFr);
@@ -50,9 +50,9 @@ class TransversalNodeCreatorListenerTest extends \PHPUnit_Framework_TestCase
         $this->container = Phake::mock('Symfony\Component\DependencyInjection\Container');
         Phake::when($this->container)->get(Phake::anyParameters())->thenReturn($this->nodeRepository);
 
-        $this->site = Phake::mock('PHPOrchestra\ModelInterface\Model\SiteInterface');
+        $this->site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
         Phake::when($this->site)->getSiteId()->thenReturn($this->siteId);
-        $this->nodeManager = Phake::mock('PHPOrchestra\ModelBundle\Manager\NodeManager');
+        $this->nodeManager = Phake::mock('OpenOrchestra\ModelBundle\Manager\NodeManager');
         Phake::when($this->nodeManager)->createTransverseNode(Phake::anyParameters())->thenReturn($this->newNode);
         $this->documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
         $this->event = Phake::mock('Doctrine\ODM\MongoDB\Event\LifecycleEventArgs');
@@ -162,9 +162,9 @@ class TransversalNodeCreatorListenerTest extends \PHPUnit_Framework_TestCase
      */
     public function provideNodes()
     {
-        $node1 = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
-        $node2 = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
-        $node3 = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $node1 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        $node2 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        $node3 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
 
         return array(
             array($node1),

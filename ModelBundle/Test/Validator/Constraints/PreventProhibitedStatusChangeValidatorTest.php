@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Test\Validator\Constraints;
+namespace OpenOrchestra\ModelBundle\Test\Validator\Constraints;
 
 use Phake;
-use PHPOrchestra\ModelBundle\Validator\Constraints\PreventProhibitedStatusChange;
-use PHPOrchestra\ModelBundle\Validator\Constraints\PreventProhibitedStatusChangeValidator;
+use OpenOrchestra\ModelBundle\Validator\Constraints\PreventProhibitedStatusChange;
+use OpenOrchestra\ModelBundle\Validator\Constraints\PreventProhibitedStatusChangeValidator;
 
 /**
  * Class PreventProhibitedStatusChangeValidatorTest
@@ -45,21 +45,21 @@ class PreventProhibitedStatusChangeValidatorTest extends \PHPUnit_Framework_Test
         $this->context = Phake::mock('Symfony\Component\Validator\Context\ExecutionContext');
 
         $this->roleName = 'ROLE';
-        $this->role = Phake::mock('PHPOrchestra\ModelBundle\Document\Role');
+        $this->role = Phake::mock('OpenOrchestra\ModelBundle\Document\Role');
         Phake::when($this->role)->getName()->thenReturn($this->roleName);
-        $this->status = Phake::mock('PHPOrchestra\ModelInterface\Model\StatusInterface');
+        $this->status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         Phake::when($this->status)->getId()->thenReturn('newId');
 
-        $this->roleRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\RoleRepository');
+        $this->roleRepository = Phake::mock('OpenOrchestra\ModelBundle\Repository\RoleRepository');
         Phake::when($this->roleRepository)->findOneByFromStatusAndToStatus(Phake::anyParameters())->thenReturn($this->role);
 
-        $this->node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $this->node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($this->node)->getStatus()->thenReturn($this->status);
 
         $this->oldRoleName = 'OLD_ROLE';
-        $this->oldRole = Phake::mock('PHPOrchestra\ModelBundle\Document\Role');
+        $this->oldRole = Phake::mock('OpenOrchestra\ModelBundle\Document\Role');
         Phake::when($this->oldRole)->getName()->thenReturn($this->oldRoleName);
-        $this->oldStatus = Phake::mock('PHPOrchestra\ModelInterface\Model\StatusInterface');
+        $this->oldStatus = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         Phake::when($this->oldStatus)->getId()->thenReturn('oldId');
 
         $this->oldNode = array('status' => $this->oldStatus);

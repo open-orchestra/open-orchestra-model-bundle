@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\FunctionalTest\Repository;
+namespace OpenOrchestra\ModelBundle\FunctionalTest\Repository;
 
-use PHPOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
@@ -23,7 +23,7 @@ class ContentTypeRepositoryTest extends KernelTestCase
         parent::setUp();
 
         static::bootKernel();
-        $this->repository = static::$kernel->getContainer()->get('php_orchestra_model.repository.content_type');
+        $this->repository = static::$kernel->getContainer()->get('open_orchestra_model.repository.content_type');
     }
 
     /**

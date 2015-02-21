@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Repository;
+namespace OpenOrchestra\ModelBundle\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
-use PHPOrchestra\ModelInterface\Model\RoleInterface;
-use PHPOrchestra\ModelInterface\Model\StatusInterface;
-use PHPOrchestra\ModelInterface\Repository\RoleRepositoryInterface;
+use OpenOrchestra\ModelInterface\Model\RoleInterface;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
+use OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface;
 
 /**
  * Class RoleRepository

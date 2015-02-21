@@ -1,10 +1,10 @@
-PHPOrchestra\ModelBundle\Document\Node:
+OpenOrchestra\ModelBundle\Document\Node:
     constraints:
-          - PHPOrchestra\ModelBundle\Validator\Constraints\PreventProhibitedStatusChange: ~
-#          - PHPOrchestra\ModelBundle\Validator\Constraints\PreventPublishedDocumentSave: ~
-          - PHPOrchestra\ModelBundle\Validator\Constraints\CheckAreaPresence: ~
-          - PHPOrchestra\ModelBundle\Validator\Constraints\CheckRoutePattern: ~
-PHPOrchestra\ModelBundle\Document\Site:
+          - OpenOrchestra\ModelBundle\Validator\Constraints\PreventProhibitedStatusChange: ~
+#          - OpenOrchestra\ModelBundle\Validator\Constraints\PreventPublishedDocumentSave: ~
+          - OpenOrchestra\ModelBundle\Validator\Constraints\CheckAreaPresence: ~
+          - OpenOrchestra\ModelBundle\Validator\Constraints\CheckRoutePattern: ~
+OpenOrchestra\ModelBundle\Document\Site:
     constraints:
-        - PHPOrchestra\ModelBundle\Validator\Constraints\UniqueMainAlias: ~
-        - PHPOrchestra\ModelBundle\Validator\Constraints\UniqueSiteId: ~
+        - OpenOrchestra\ModelBundle\Validator\Constraints\UniqueMainAlias: ~
+        - OpenOrchestra\ModelBundle\Validator\Constraints\UniqueSiteId: ~

@@ -1,16 +1,16 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Document;
+namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use PHPOrchestra\ModelInterface\Model\FieldIndexInterface;
+use OpenOrchestra\ModelInterface\Model\FieldIndexInterface;
 
 /**
  * Description of FieldIndex class
  *
  * @ODM\Document(
  *   collection="field_index",
- *   repositoryClass="PHPOrchestra\ModelBundle\Repository\FieldIndexRepository"
+ *   repositoryClass="OpenOrchestra\ModelBundle\Repository\FieldIndexRepository"
  * )
  */
 class FieldIndex implements FieldIndexInterface

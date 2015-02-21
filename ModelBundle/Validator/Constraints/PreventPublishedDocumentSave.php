@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Validator\Constraints;
+namespace OpenOrchestra\ModelBundle\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 
@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraint;
  */
 class PreventPublishedDocumentSave extends Constraint
 {
-    public $message = 'php_orchestra_model.document.impossible_save';
+    public $message = 'open_orchestra_model.document.impossible_save';
 
     /**
      * @return string

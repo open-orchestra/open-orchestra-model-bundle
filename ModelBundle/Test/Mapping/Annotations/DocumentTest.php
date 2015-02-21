@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Test\Mapping\Annotations;
+namespace OpenOrchestra\ModelBundle\Test\Mapping\Annotations;
 
 use Phake;
-use PHPOrchestra\ModelBundle\Mapping\Annotations\Document;
+use OpenOrchestra\ModelBundle\Mapping\Annotations\Document;
 
 /**
  * Class DocumentTest
@@ -17,7 +17,7 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->node = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $this->node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
     }
 
     /**
@@ -120,8 +120,8 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
         $parameters1 = array('sourceField' => 'fakeproperty');
 
         return array(
-            array($parameters0, 'PHPOrchestra\ModelBundle\Exceptions\PropertyNotFoundException'),
-            array($parameters1, 'PHPOrchestra\ModelBundle\Exceptions\MethodNotFoundException'),
+            array($parameters0, 'OpenOrchestra\ModelBundle\Exceptions\PropertyNotFoundException'),
+            array($parameters1, 'OpenOrchestra\ModelBundle\Exceptions\MethodNotFoundException'),
         );
     }
 
@@ -147,8 +147,8 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
         $parameters1 = array('generatedField' => 'fakeproperty');
 
         return array(
-            array($parameters0, 'PHPOrchestra\ModelBundle\Exceptions\PropertyNotFoundException'),
-            array($parameters1, 'PHPOrchestra\ModelBundle\Exceptions\MethodNotFoundException'),
+            array($parameters0, 'OpenOrchestra\ModelBundle\Exceptions\PropertyNotFoundException'),
+            array($parameters1, 'OpenOrchestra\ModelBundle\Exceptions\MethodNotFoundException'),
         );
     }
 
@@ -174,8 +174,8 @@ class DocumentTest extends \PHPUnit_Framework_TestCase
         $parameters1 = array('generatedField' => 'fakeproperty');
 
         return array(
-            array($parameters0, 'PHPOrchestra\ModelBundle\Exceptions\PropertyNotFoundException'),
-            array($parameters1, 'PHPOrchestra\ModelBundle\Exceptions\MethodNotFoundException'),
+            array($parameters0, 'OpenOrchestra\ModelBundle\Exceptions\PropertyNotFoundException'),
+            array($parameters1, 'OpenOrchestra\ModelBundle\Exceptions\MethodNotFoundException'),
         );
     }
 }

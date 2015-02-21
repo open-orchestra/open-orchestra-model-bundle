@@ -1,29 +1,29 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Document;
+namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Gedmo\Blameable\Traits\BlameableDocument;
 use Gedmo\Timestampable\Traits\TimestampableDocument;
-use PHPOrchestra\ModelBundle\Mapping\Annotations as ORCHESTRA;
-use PHPOrchestra\ModelInterface\Model\ContentAttributeInterface;
-use PHPOrchestra\ModelInterface\Model\ContentInterface;
-use PHPOrchestra\ModelInterface\Model\StatusInterface;
+use OpenOrchestra\ModelBundle\Mapping\Annotations as ORCHESTRA;
+use OpenOrchestra\ModelInterface\Model\ContentAttributeInterface;
+use OpenOrchestra\ModelInterface\Model\ContentInterface;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
-use PHPOrchestra\ModelInterface\MongoTrait\KeywordableDocument;
+use OpenOrchestra\ModelInterface\MongoTrait\KeywordableDocument;
 
 /**
  * Description of Content
  *
  * @ODM\Document(
  *   collection="content",
- *   repositoryClass="PHPOrchestra\ModelBundle\Repository\ContentRepository"
+ *   repositoryClass="OpenOrchestra\ModelBundle\Repository\ContentRepository"
  * )
  * @ORCHESTRA\Document(
  *   generatedField="contentId",
  *   sourceField="name",
- *   serviceName="php_orchestra_model.repository.content",
+ *   serviceName="open_orchestra_model.repository.content",
  * )
  */
 class Content implements ContentInterface

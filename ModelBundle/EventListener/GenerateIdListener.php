@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\EventListener;
+namespace OpenOrchestra\ModelBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Component\DependencyInjection\Container;
-use PHPOrchestra\ModelBundle\Repository\FieldAutoGenerableRepositoryInterface;
+use OpenOrchestra\ModelBundle\Repository\FieldAutoGenerableRepositoryInterface;
 
 /**
  * Class GenerateIdListener
@@ -32,7 +32,7 @@ class GenerateIdListener
     {
         $document = $event->getDocument();
         $className = get_class($document);
-        $generateAnnotations = $this->annotationReader->getClassAnnotation(new \ReflectionClass($className), 'PHPOrchestra\ModelBundle\Mapping\Annotations\Document');
+        $generateAnnotations = $this->annotationReader->getClassAnnotation(new \ReflectionClass($className), 'OpenOrchestra\ModelBundle\Mapping\Annotations\Document');
         if (!is_null($generateAnnotations)) {
             $repository = $this->container->get($generateAnnotations->getServiceName());
 

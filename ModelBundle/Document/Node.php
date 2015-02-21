@@ -1,28 +1,28 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Document;
+namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use PHPOrchestra\ModelBundle\Mapping\Annotations as ORCHESTRA;
+use OpenOrchestra\ModelBundle\Mapping\Annotations as ORCHESTRA;
 use Gedmo\Blameable\Traits\BlameableDocument;
 use Gedmo\Timestampable\Traits\TimestampableDocument;
-use PHPOrchestra\ModelInterface\Model\AreaInterface;
-use PHPOrchestra\ModelInterface\Model\BlockInterface;
-use PHPOrchestra\ModelInterface\Model\NodeInterface;
-use PHPOrchestra\ModelInterface\Model\StatusInterface;
+use OpenOrchestra\ModelInterface\Model\AreaInterface;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
-use PHPOrchestra\ModelInterface\MongoTrait\MetaableDocument;
-use PHPOrchestra\ModelInterface\MongoTrait\SitemapableDocument;
-use PHPOrchestra\ModelInterface\MongoTrait\SchemeAbilityDocument;
+use OpenOrchestra\ModelInterface\MongoTrait\MetaableDocument;
+use OpenOrchestra\ModelInterface\MongoTrait\SitemapableDocument;
+use OpenOrchestra\ModelInterface\MongoTrait\SchemeAbilityDocument;
 
 /**
  * Description of Node
  *
  * @ODM\Document(
  *   collection="node",
- *   repositoryClass="PHPOrchestra\ModelBundle\Repository\NodeRepository"
+ *   repositoryClass="OpenOrchestra\ModelBundle\Repository\NodeRepository"
  * )
  * @ODM\Indexes({
  *  @ODM\Index(keys={"nodeId"="asc"})
@@ -30,7 +30,7 @@ use PHPOrchestra\ModelInterface\MongoTrait\SchemeAbilityDocument;
  * @ORCHESTRA\Document(
  *   generatedField="nodeId",
  *   sourceField="name",
- *   serviceName="php_orchestra_model.repository.node",
+ *   serviceName="open_orchestra_model.repository.node",
  * )
  */
 class Node implements NodeInterface

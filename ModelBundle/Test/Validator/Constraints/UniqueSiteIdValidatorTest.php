@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Test\Validator\Constraints;
+namespace OpenOrchestra\ModelBundle\Test\Validator\Constraints;
 
 use Phake;
-use PHPOrchestra\ModelBundle\Validator\Constraints\UniqueSiteId;
-use PHPOrchestra\ModelBundle\Validator\Constraints\UniqueSiteIdValidator;
-use PHPOrchestra\ModelInterface\Model\SiteInterface;
+use OpenOrchestra\ModelBundle\Validator\Constraints\UniqueSiteId;
+use OpenOrchestra\ModelBundle\Validator\Constraints\UniqueSiteIdValidator;
+use OpenOrchestra\ModelInterface\Model\SiteInterface;
 
 /**
  * Class UniqueSiteIdValidatorTest
@@ -38,12 +38,12 @@ class UniqueSiteIdValidatorTest extends \PHPUnit_Framework_TestCase
         $this->constraint = new UniqueSiteId();
         $this->context = Phake::mock('Symfony\Component\Validator\Context\ExecutionContext');
 
-        $this->site = Phake::mock('PHPOrchestra\ModelInterface\Model\SiteInterface');
-        $this->site2 = Phake::mock('PHPOrchestra\ModelInterface\Model\SiteInterface');
+        $this->site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
+        $this->site2 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
         Phake::when($this->site)->getSiteId()->thenReturn($this->siteId);
         Phake::when($this->site)->getId()->thenReturn($this->id);
 
-        $this->repository = Phake::mock('PHPOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
+        $this->repository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
 
         $this->validator = new UniqueSiteIdValidator($this->translator, $this->repository);
         $this->validator->initialize($this->context);

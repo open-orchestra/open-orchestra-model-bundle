@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Validator\Constraints;
+namespace OpenOrchestra\ModelBundle\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 
@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraint;
  */
 class PreventProhibitedStatusChange extends Constraint
 {
-    public $message = 'php_orchestra_model.status.impossible_change';
+    public $message = 'open_orchestra_model.status.impossible_change';
 
     /**
      * @return string|void

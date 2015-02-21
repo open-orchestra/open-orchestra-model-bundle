@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Test\Model;
+namespace OpenOrchestra\ModelBundle\Test\Model;
 
 /**
  * Description of BaseNodeTest
@@ -15,8 +15,8 @@ class EntityTest extends \PHPUnit_Framework_TestCase
      */
     public function testInstance($class, $interface)
     {
-        $fullClass = 'PHPOrchestra\ModelBundle\Document\\' . $class;
-        $fullInterface = 'PHPOrchestra\ModelInterface\Model\\' . $interface;
+        $fullClass = 'OpenOrchestra\ModelBundle\Document\\' . $class;
+        $fullInterface = 'OpenOrchestra\ModelInterface\Model\\' . $interface;
         $entity = new $fullClass();
 
         $this->assertInstanceOf($fullInterface, $entity);

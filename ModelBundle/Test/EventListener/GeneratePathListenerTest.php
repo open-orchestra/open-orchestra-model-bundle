@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\EventListener;
+namespace OpenOrchestra\BackofficeBundle\Test\EventListener;
 
 use Phake;
-use PHPOrchestra\ModelBundle\EventListener\GeneratePathListener;
-use PHPOrchestra\ModelBundle\Document\Node;
+use OpenOrchestra\ModelBundle\EventListener\GeneratePathListener;
+use OpenOrchestra\ModelBundle\Document\Node;
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -25,7 +25,7 @@ class GeneratePathListenerTest extends \PHPUnit_Framework_TestCase
     {
         $this->lifecycleEventArgs = Phake::mock('Doctrine\ODM\MongoDB\Event\LifecycleEventArgs');
 
-        $this->nodeRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\NodeRepository');
+        $this->nodeRepository = Phake::mock('OpenOrchestra\ModelBundle\Repository\NodeRepository');
         $this->container = Phake::mock('Symfony\Component\DependencyInjection\Container');
         Phake::when($this->container)->get(Phake::anyParameters())->thenReturn($this->nodeRepository);
 
@@ -59,7 +59,7 @@ class GeneratePathListenerTest extends \PHPUnit_Framework_TestCase
 
         Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(Phake::anyParameters())->thenReturn($parentNode);
         Phake::when($unitOfWork)->recomputeSingleDocumentChangeSet(Phake::anyParameters())->thenReturn('test');
-        Phake::when($documentManager)->getClassMetadata(Phake::anyParameters())->thenReturn(new ClassMetadata('PHPOrchestra\ModelBundle\Document\Node'));
+        Phake::when($documentManager)->getClassMetadata(Phake::anyParameters())->thenReturn(new ClassMetadata('OpenOrchestra\ModelBundle\Document\Node'));
         Phake::when($documentManager)->getUnitOfWork()->thenReturn($unitOfWork);
         Phake::when($this->lifecycleEventArgs)->getDocument()->thenReturn($node);
         Phake::when($this->lifecycleEventArgs)->getDocumentManager()->thenReturn($documentManager);
@@ -83,15 +83,15 @@ class GeneratePathListenerTest extends \PHPUnit_Framework_TestCase
      */
     public function provideNodeForUpdate()
     {
-        $node = Phake::mock('PHPOrchestra\ModelBundle\Document\Node');
+        $node = Phake::mock('OpenOrchestra\ModelBundle\Document\Node');
         Phake::when($node)->getNodeId()->thenReturn('fakeId');
         Phake::when($node)->getPath()->thenReturn('fakeParentPath/fakePastId');
 
-        $parentNode = Phake::mock('PHPOrchestra\ModelBundle\Document\Node');
+        $parentNode = Phake::mock('OpenOrchestra\ModelBundle\Document\Node');
         Phake::when($parentNode)->getPath()->thenReturn('fakePath');
         Phake::when($parentNode)->getPath()->thenReturn('fakeParentPath');
 
-        $child0 = Phake::mock('PHPOrchestra\ModelBundle\Document\Node');
+        $child0 = Phake::mock('OpenOrchestra\ModelBundle\Document\Node');
         Phake::when($child0)->getPath()->thenReturn('fakeParentPath/fakePastId/fakeChild0Id');
 
         $childs = new ArrayCollection();
