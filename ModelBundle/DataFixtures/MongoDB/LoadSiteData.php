@@ -1,13 +1,13 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\DataFixtures\MongoDB;
+namespace OpenOrchestra\ModelBundle\DataFixtures\MongoDB;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use PHPOrchestra\ModelBundle\Document\Site;
-use PHPOrchestra\ModelBundle\Document\SiteAlias;
-use PHPOrchestra\ModelInterface\Model\SchemeAbilityInterface;
+use OpenOrchestra\ModelBundle\Document\Site;
+use OpenOrchestra\ModelBundle\Document\SiteAlias;
+use OpenOrchestra\ModelInterface\Model\SchemeAbilityInterface;
 
 /**
  * Class LoadSiteData

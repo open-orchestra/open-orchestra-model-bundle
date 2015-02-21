@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Repository;
+namespace OpenOrchestra\ModelBundle\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
-use PHPOrchestra\ModelInterface\Model\StatusInterface;
-use PHPOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
+use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 
 /**
  * Class StatusRepository

@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\EventListener;
+namespace OpenOrchestra\BackofficeBundle\Test\EventListener;
 
 use Phake;
-use PHPOrchestra\ModelBundle\EventListener\SavePublishedDocumentListener;
+use OpenOrchestra\ModelBundle\EventListener\SavePublishedDocumentListener;
 
 /**
  * Class SavePublishedDocumentListenerTest
@@ -50,10 +50,10 @@ class SavePublishedDocumentListenerTest extends \PHPUnit_Framework_TestCase
      */
     public function testPreUpdateWithNoPreviousData($published, $deleted, $numberOfDetach)
     {
-        $status = Phake::mock('PHPOrchestra\ModelInterface\Model\StatusInterface');
+        $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         Phake::when($status)->isPublished()->thenReturn($published);
 
-        $nodeInterface = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $nodeInterface = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($nodeInterface)->getStatus()->thenReturn($status);
         Phake::when($nodeInterface)->isDeleted()->thenReturn($deleted);
 
@@ -101,13 +101,13 @@ class SavePublishedDocumentListenerTest extends \PHPUnit_Framework_TestCase
      */
     public function testWithPreUpdateOldClass($published, $oldPublished, $deleted, $numberOfDetach)
     {
-        $status = Phake::mock('PHPOrchestra\ModelInterface\Model\StatusInterface');
+        $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         Phake::when($status)->isPublished()->thenReturn($published);
 
-        $oldStatus = Phake::mock('PHPOrchestra\ModelInterface\Model\StatusInterface');
+        $oldStatus = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         Phake::when($oldStatus)->isPublished()->thenReturn($oldPublished);
 
-        $nodeInterface = Phake::mock('PHPOrchestra\ModelInterface\Model\NodeInterface');
+        $nodeInterface = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($nodeInterface)->getStatus()->thenReturn($status);
         Phake::when($nodeInterface)->isDeleted()->thenReturn($deleted);
 

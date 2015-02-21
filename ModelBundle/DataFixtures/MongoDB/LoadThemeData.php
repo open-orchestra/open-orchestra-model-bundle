@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\DataFixtures\MongoDB;
+namespace OpenOrchestra\ModelBundle\DataFixtures\MongoDB;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use PHPOrchestra\ModelBundle\Document\Theme;
+use OpenOrchestra\ModelBundle\Document\Theme;
 
 /**
  * Class LoadThemeData

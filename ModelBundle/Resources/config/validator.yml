@@ -1,51 +1,51 @@
 parameters:
-    php_orchestra_model.validator.prevent_prohibited_status_change.class: PHPOrchestra\ModelBundle\Validator\Constraints\PreventProhibitedStatusChangeValidator
-    php_orchestra_model.validator.prevent_published_document_save.class: PHPOrchestra\ModelBundle\Validator\Constraints\PreventPublishedDocumentSaveValidator
-    php_orchestra_model.validator.check_area_presence.class: PHPOrchestra\ModelBundle\Validator\Constraints\CheckAreaPresenceValidator
-    php_orchestra_model.validator.check_route_pattern.class: PHPOrchestra\ModelBundle\Validator\Constraints\CheckRoutePatternValidator
-    php_orchestra_model.validator.unique_main_alias.class: PHPOrchestra\ModelBundle\Validator\Constraints\UniqueMainAliasValidator
-    php_orchestra_model.validator.unique_site_id.class: PHPOrchestra\ModelBundle\Validator\Constraints\UniqueSiteIdValidator
+    open_orchestra_model.validator.prevent_prohibited_status_change.class: OpenOrchestra\ModelBundle\Validator\Constraints\PreventProhibitedStatusChangeValidator
+    open_orchestra_model.validator.prevent_published_document_save.class: OpenOrchestra\ModelBundle\Validator\Constraints\PreventPublishedDocumentSaveValidator
+    open_orchestra_model.validator.check_area_presence.class: OpenOrchestra\ModelBundle\Validator\Constraints\CheckAreaPresenceValidator
+    open_orchestra_model.validator.check_route_pattern.class: OpenOrchestra\ModelBundle\Validator\Constraints\CheckRoutePatternValidator
+    open_orchestra_model.validator.unique_main_alias.class: OpenOrchestra\ModelBundle\Validator\Constraints\UniqueMainAliasValidator
+    open_orchestra_model.validator.unique_site_id.class: OpenOrchestra\ModelBundle\Validator\Constraints\UniqueSiteIdValidator
 
 services:
-    php_orchestra_model.validator.prevent_prohibited_status_change:
-        class: %php_orchestra_model.validator.prevent_prohibited_status_change.class%
+    open_orchestra_model.validator.prevent_prohibited_status_change:
+        class: %open_orchestra_model.validator.prevent_prohibited_status_change.class%
         arguments:
             - @security.context
             - @translator
             - @doctrine_mongodb.odm.default_document_manager
-            - @php_orchestra_model.repository.role
+            - @open_orchestra_model.repository.role
         tags:
             - { name: validator.constraint_validator, alias: prevent_prohibited_status_change}
-    php_orchestra_model.validator.prevent_published_document_save:
-        class: %php_orchestra_model.validator.prevent_published_document_save.class%
+    open_orchestra_model.validator.prevent_published_document_save:
+        class: %open_orchestra_model.validator.prevent_published_document_save.class%
         arguments:
             - @translator
             - @doctrine.odm.mongodb.document_manager
         tags:
             - { name: validator.constraint_validator, alias: prevent_published_document_save}
-    php_orchestra_model.validator.check_area_presence:
-        class: %php_orchestra_model.validator.check_area_presence.class%
+    open_orchestra_model.validator.check_area_presence:
+        class: %open_orchestra_model.validator.check_area_presence.class%
         arguments:
             - @translator
         tags:
             - { name: validator.constraint_validator, alias: check_area_presence}
-    php_orchestra_model.validator.check_route_pattern:
-        class: %php_orchestra_model.validator.check_route_pattern.class%
+    open_orchestra_model.validator.check_route_pattern:
+        class: %open_orchestra_model.validator.check_route_pattern.class%
         arguments:
             - @translator
-            - @php_orchestra_model.repository.node
+            - @open_orchestra_model.repository.node
         tags:
             - { name: validator.constraint_validator, alias: check_route_pattern}
-    php_orchestra_model.validator.unique_main_alias:
-        class: %php_orchestra_model.validator.unique_main_alias.class%
+    open_orchestra_model.validator.unique_main_alias:
+        class: %open_orchestra_model.validator.unique_main_alias.class%
         arguments:
             - @translator
         tags:
             - { name: validator.constraint_validator, alias: unique_main_alias}
-    php_orchestra_model.validator.unique_site_id:
-        class: %php_orchestra_model.validator.unique_site_id.class%
+    open_orchestra_model.validator.unique_site_id:
+        class: %open_orchestra_model.validator.unique_site_id.class%
         arguments:
             - @translator
-            - @php_orchestra_model.repository.site
+            - @open_orchestra_model.repository.site
         tags:
             - { name: validator.constraint_validator, alias: unique_site_id}

@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\EventListener;
+namespace OpenOrchestra\ModelBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
-use PHPOrchestra\ModelInterface\Model\StatusableInterface;
+use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 
 /**
  * Class SavePublishedDocumentListener

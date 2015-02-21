@@ -1,14 +1,14 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\DataFixtures\MongoDB;
+namespace OpenOrchestra\ModelBundle\DataFixtures\MongoDB;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use PHPOrchestra\ModelBundle\Document\ContentType;
-use PHPOrchestra\ModelBundle\Document\FieldType;
-use PHPOrchestra\ModelBundle\Document\FieldOption;
-use PHPOrchestra\ModelBundle\Document\TranslatedValue;
+use OpenOrchestra\ModelBundle\Document\ContentType;
+use OpenOrchestra\ModelBundle\Document\FieldType;
+use OpenOrchestra\ModelBundle\Document\FieldOption;
+use OpenOrchestra\ModelBundle\Document\TranslatedValue;
 
 /**
  * Class LoadContentTypeData

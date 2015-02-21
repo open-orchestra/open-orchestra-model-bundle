@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Document;
+namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use PHPOrchestra\ModelInterface\Model\BlockInterface;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
 
 /**
  * Description of BaseBlock

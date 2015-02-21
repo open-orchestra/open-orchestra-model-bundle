@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Form\Type;
+namespace OpenOrchestra\ModelBundle\Form\Type;
 
-use PHPOrchestra\ModelInterface\Form\Type\AbstractOrchestraThemeType;
+use OpenOrchestra\ModelInterface\Form\Type\AbstractOrchestraThemeType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**

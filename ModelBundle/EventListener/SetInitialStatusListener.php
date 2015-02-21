@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\EventListener;
+namespace OpenOrchestra\ModelBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
-use PHPOrchestra\ModelInterface\Model\StatusInterface;
-use PHPOrchestra\ModelInterface\Model\StatusableInterface;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
+use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 
 /**
  * Class SetInitialStatusListener
@@ -19,7 +19,7 @@ class SetInitialStatusListener
         $document = $eventArgs->getDocument();
         if ($document instanceof StatusableInterface && is_null($document->getStatus())) {
             $documentManager = $eventArgs->getDocumentManager();
-            $status = $documentManager->getRepository('PHPOrchestraModelBundle:Status')->findOneByInitial();
+            $status = $documentManager->getRepository('OpenOrchestraModelBundle:Status')->findOneByInitial();
             if ($status instanceof StatusInterface) {
                 $document->setStatus($status);
             }

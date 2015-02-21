@@ -1,15 +1,15 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\DataFixtures\MongoDB;
+namespace OpenOrchestra\ModelBundle\DataFixtures\MongoDB;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use PHPOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
-use PHPOrchestra\ModelBundle\Document\Area;
-use PHPOrchestra\ModelBundle\Document\Block;
-use PHPOrchestra\ModelBundle\Document\Node;
-use PHPOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\ModelBundle\Document\Area;
+use OpenOrchestra\ModelBundle\Document\Block;
+use OpenOrchestra\ModelBundle\Document\Node;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 
 /**
  * Class LoadNodeData

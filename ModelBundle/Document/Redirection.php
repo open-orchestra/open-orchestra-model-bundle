@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Document;
+namespace OpenOrchestra\ModelBundle\Document;
 
-use PHPOrchestra\ModelInterface\Model\RedirectionInterface;
+use OpenOrchestra\ModelInterface\Model\RedirectionInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
@@ -10,7 +10,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
  *
  * @ODM\Document(
  *   collection="redirection",
- *   repositoryClass="PHPOrchestra\ModelBundle\Repository\RedirectionRepository"
+ *   repositoryClass="OpenOrchestra\ModelBundle\Repository\RedirectionRepository"
  * )
  */
 class Redirection implements RedirectionInterface

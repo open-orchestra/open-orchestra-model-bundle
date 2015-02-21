@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Manager;
+namespace OpenOrchestra\ModelBundle\Manager;
 
-use PHPOrchestra\ModelBundle\Document\Area;
-use PHPOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelBundle\Document\Area;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 
 /**
  * Class NodeManager

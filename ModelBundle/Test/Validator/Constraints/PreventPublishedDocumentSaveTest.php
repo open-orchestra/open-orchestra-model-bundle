@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Test\Validator\Constraints;
+namespace OpenOrchestra\ModelBundle\Test\Validator\Constraints;
 
-use PHPOrchestra\ModelBundle\Validator\Constraints\PreventPublishedDocumentSave;
+use OpenOrchestra\ModelBundle\Validator\Constraints\PreventPublishedDocumentSave;
 use Symfony\Component\Validator\Constraint;
 
 /**
@@ -52,6 +52,6 @@ class PreventPublishedDocumentSaveTest extends \PHPUnit_Framework_TestCase
      */
     public function testMessages()
     {
-        $this->assertSame('php_orchestra_model.document.impossible_save', $this->constraint->message);
+        $this->assertSame('open_orchestra_model.document.impossible_save', $this->constraint->message);
     }
 }

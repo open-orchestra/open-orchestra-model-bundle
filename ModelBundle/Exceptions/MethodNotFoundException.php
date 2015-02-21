@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Exceptions;
+namespace OpenOrchestra\ModelBundle\Exceptions;
 
 /**
  * Class MethodNotFoundException

@@ -1,12 +1,12 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\DataFixtures\MongoDB;
+namespace OpenOrchestra\ModelBundle\DataFixtures\MongoDB;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use PHPOrchestra\ModelBundle\Document\Area;
-use PHPOrchestra\ModelBundle\Document\Template;
+use OpenOrchestra\ModelBundle\Document\Area;
+use OpenOrchestra\ModelBundle\Document\Template;
 
 /**
  * Class LoadTemplateData

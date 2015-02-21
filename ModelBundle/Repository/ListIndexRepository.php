@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Repository;
+namespace OpenOrchestra\ModelBundle\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
-use PHPOrchestra\ModelInterface\Repository\ListIndexRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\ListIndexRepositoryInterface;
 
 /**
  * Class ListIndexRepository
