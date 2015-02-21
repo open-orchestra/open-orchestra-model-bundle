@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\EventListener;
+namespace OpenOrchestra\ModelBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
-use PHPOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Symfony\Component\DependencyInjection\Container;
 
 /**
@@ -28,7 +28,7 @@ class GeneratePathListener
     {
         $document = $eventArgs->getDocument();
         if ($document instanceof NodeInterface) {
-            $nodeRepository = $this->container->get('php_orchestra_model.repository.node');
+            $nodeRepository = $this->container->get('open_orchestra_model.repository.node');
             $nodeId = $document->getNodeId();
             $documentManager = $eventArgs->getDocumentManager();
             $path = '';

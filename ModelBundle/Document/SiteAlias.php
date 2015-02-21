@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Document;
+namespace OpenOrchestra\ModelBundle\Document;
 
-use PHPOrchestra\ModelInterface\Model\SiteAliasInterface;
+use OpenOrchestra\ModelInterface\Model\SiteAliasInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use PHPOrchestra\ModelInterface\MongoTrait\SchemeAbilityDocument;
+use OpenOrchestra\ModelInterface\MongoTrait\SchemeAbilityDocument;
 
 /**
  * Class SiteAlias

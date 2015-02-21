@@ -1,6 +1,6 @@
 {
-    "name": "itkg/phporchestra-model-bundle",
-    "description": "An implemantation of the model-interface for phporchestra on mongo",
+    "name": "itkg/open-orchestra-model-bundle",
+    "description": "An implemantation of the model-interface for OpenOrchestra on mongo",
     "license": "MIT",
     "authors": [
         {
@@ -39,8 +39,8 @@
     },
     "autoload": {
         "psr-0": {
-            "PHPOrchestra\\ModelBundle": ""
+            "OpenOrchestra\\ModelBundle": ""
         }
     },
-    "target-dir": "PHPOrchestra"
+    "target-dir": "OpenOrchestra"
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Form\Type;
+namespace OpenOrchestra\ModelBundle\Form\Type;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
-use PHPOrchestra\ModelInterface\Form\Type\AbstractOrchestraSiteType;
+use OpenOrchestra\ModelInterface\Form\Type\AbstractOrchestraSiteType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**

@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\BackofficeBundle\Test\EventListener;
+namespace OpenOrchestra\BackofficeBundle\Test\EventListener;
 
 use Phake;
-use PHPOrchestra\ModelBundle\Document\Node;
-use PHPOrchestra\ModelBundle\Document\Status;
-use PHPOrchestra\ModelBundle\EventListener\SetInitialStatusListener;
+use OpenOrchestra\ModelBundle\Document\Node;
+use OpenOrchestra\ModelBundle\Document\Status;
+use OpenOrchestra\ModelBundle\EventListener\SetInitialStatusListener;
 
 /**
  * Class SetInitialStatusListenerTest
@@ -45,9 +45,9 @@ class SetInitialStatusListenerTest extends \PHPUnit_Framework_TestCase
     public function testprePersist(Node $node, Status $status)
     {
         $documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
-        $statusRepository = Phake::mock('PHPOrchestra\ModelBundle\Repository\StatusRepository');
+        $statusRepository = Phake::mock('OpenOrchestra\ModelBundle\Repository\StatusRepository');
         Phake::when($statusRepository)->findOneByInitial()->thenReturn($status);
-        Phake::when($documentManager)->getRepository('PHPOrchestraModelBundle:Status')->thenReturn($statusRepository);
+        Phake::when($documentManager)->getRepository('OpenOrchestraModelBundle:Status')->thenReturn($statusRepository);
         Phake::when($this->lifecycleEventArgs)->getDocument()->thenReturn($node);
         Phake::when($this->lifecycleEventArgs)->getDocumentManager()->thenReturn($documentManager);
 
@@ -62,8 +62,8 @@ class SetInitialStatusListenerTest extends \PHPUnit_Framework_TestCase
      */
     public function provideNodeForPersist()
     {
-        $node = Phake::mock('PHPOrchestra\ModelBundle\Document\Node');
-        $status = Phake::mock('PHPOrchestra\ModelBundle\Document\Status');
+        $node = Phake::mock('OpenOrchestra\ModelBundle\Document\Node');
+        $status = Phake::mock('OpenOrchestra\ModelBundle\Document\Status');
 
         return array(
             array($node, $status)

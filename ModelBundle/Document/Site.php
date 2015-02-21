@@ -1,28 +1,28 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Document;
+namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use PHPOrchestra\ModelInterface\Model\SiteAliasInterface;
-use PHPOrchestra\ModelBundle\Mapping\Annotations as ORCHESTRA;
-use PHPOrchestra\ModelInterface\Model\SiteInterface;
-use PHPOrchestra\ModelInterface\Model\ThemeInterface;
-use PHPOrchestra\ModelInterface\MongoTrait\MetaableDocument;
-use PHPOrchestra\ModelInterface\MongoTrait\SitemapableDocument;
+use OpenOrchestra\ModelInterface\Model\SiteAliasInterface;
+use OpenOrchestra\ModelBundle\Mapping\Annotations as ORCHESTRA;
+use OpenOrchestra\ModelInterface\Model\SiteInterface;
+use OpenOrchestra\ModelInterface\Model\ThemeInterface;
+use OpenOrchestra\ModelInterface\MongoTrait\MetaableDocument;
+use OpenOrchestra\ModelInterface\MongoTrait\SitemapableDocument;
 
 /**
  * Description of Site
  *
  * @ODM\Document(
  *   collection="site",
- *   repositoryClass="PHPOrchestra\ModelBundle\Repository\SiteRepository"
+ *   repositoryClass="OpenOrchestra\ModelBundle\Repository\SiteRepository"
  * )
  * @ORCHESTRA\Document(
  *   generatedField="siteId",
  *   sourceField="name",
- *   serviceName="php_orchestra_model.repository.site",
+ *   serviceName="open_orchestra_model.repository.site",
  * )
  */
 class Site implements SiteInterface

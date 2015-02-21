@@ -1,16 +1,16 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Document;
+namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use PHPOrchestra\ModelInterface\Model\ListIndexInterface;
+use OpenOrchestra\ModelInterface\Model\ListIndexInterface;
 
 /**
  * Class ListIndex
  *
  * @ODM\Document(
  *   collection="list_index",
- *   repositoryClass="PHPOrchestra\ModelBundle\Repository\ListIndexRepository"
+ *   repositoryClass="OpenOrchestra\ModelBundle\Repository\ListIndexRepository"
  * )
  */
 class ListIndex implements ListIndexInterface

@@ -1,13 +1,13 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\EventListener;
+namespace OpenOrchestra\ModelBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
 use Doctrine\ODM\MongoDB\Event\PostFlushEventArgs;
-use PHPOrchestra\ModelBundle\Manager\NodeManager;
-use PHPOrchestra\ModelInterface\Model\NodeInterface;
-use PHPOrchestra\ModelInterface\Model\SiteInterface;
-use PHPOrchestra\ModelBundle\Repository\NodeRepository;
+use OpenOrchestra\ModelBundle\Manager\NodeManager;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Model\SiteInterface;
+use OpenOrchestra\ModelBundle\Repository\NodeRepository;
 use Symfony\Component\DependencyInjection\Container;
 
 /**
@@ -85,6 +85,6 @@ class TransversalNodeCreatorListener
      */
     protected function getNodeRepository()
     {
-        return $this->container->get('php_orchestra_model.repository.node');
+        return $this->container->get('open_orchestra_model.repository.node');
     }
 }

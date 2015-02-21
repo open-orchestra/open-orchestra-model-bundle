@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\EventListener;
+namespace OpenOrchestra\ModelBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
 use Doctrine\ODM\MongoDB\Event\PostFlushEventArgs;
-use PHPOrchestra\ModelInterface\Model\StatusInterface;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
 
 /**
  * Class InitialStatusListener
@@ -21,7 +21,7 @@ class InitialStatusListener
         $document = $eventArgs->getDocument();
         if ($document instanceof StatusInterface && $document->isPublished() && $document->isInitial()) {
             $documentManager = $eventArgs->getDocumentManager();
-            $statuses = $documentManager->getRepository('PHPOrchestraModelBundle:Status')->findOtherByInitial($document->getName());
+            $statuses = $documentManager->getRepository('OpenOrchestraModelBundle:Status')->findOtherByInitial($document->getName());
             foreach ($statuses as $status) {
                 $status->setInitial(false);
                 $this->statuses[] = $status;

@@ -1,11 +1,11 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Document;
+namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use PHPOrchestra\ModelInterface\Model\EmbedStatusInterface;
-use PHPOrchestra\ModelInterface\Model\StatusInterface;
+use OpenOrchestra\ModelInterface\Model\EmbedStatusInterface;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
 
 /**
  * Class EmbedStatus

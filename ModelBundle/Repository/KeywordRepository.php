@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Repository;
+namespace OpenOrchestra\ModelBundle\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
-use PHPOrchestra\ModelInterface\Model\KeywordInterface;
-use PHPOrchestra\ModelInterface\Repository\KeywordRepositoryInterface;
+use OpenOrchestra\ModelInterface\Model\KeywordInterface;
+use OpenOrchestra\ModelInterface\Repository\KeywordRepositoryInterface;
 
 /**
  * Class KeywordRepository

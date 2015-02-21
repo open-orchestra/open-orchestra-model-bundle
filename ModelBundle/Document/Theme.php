@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Document;
+namespace OpenOrchestra\ModelBundle\Document;
 
-use PHPOrchestra\ModelInterface\Model\ThemeInterface;
+use OpenOrchestra\ModelInterface\Model\ThemeInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
@@ -10,7 +10,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
  *
  * @ODM\Document(
  *   collection="theme",
- *   repositoryClass="PHPOrchestra\ModelBundle\Repository\ThemeRepository"
+ *   repositoryClass="OpenOrchestra\ModelBundle\Repository\ThemeRepository"
  * )
  */
 class Theme implements ThemeInterface

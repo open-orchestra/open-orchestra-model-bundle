@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Document;
+namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
@@ -9,7 +9,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
  *
  * @ODM\Document(
  *   collection="keyword",
- *   repositoryClass="PHPOrchestra\ModelBundle\Repository\KeywordRepository"
+ *   repositoryClass="OpenOrchestra\ModelBundle\Repository\KeywordRepository"
  * )
  */
 class Keyword extends AbstractKeyword

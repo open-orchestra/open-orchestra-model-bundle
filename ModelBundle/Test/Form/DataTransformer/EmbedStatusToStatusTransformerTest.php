@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Test\Form\DataTransformer;
+namespace OpenOrchestra\ModelBundle\Test\Form\DataTransformer;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Phake;
-use PHPOrchestra\ModelBundle\Form\DataTransformer\EmbedStatusToStatusTransformer;
+use OpenOrchestra\ModelBundle\Form\DataTransformer\EmbedStatusToStatusTransformer;
 
 /**
  * Class EmbedStatusToStatusTransformerTest
@@ -27,18 +27,18 @@ class EmbedStatusToStatusTransformerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->embedStatusClass = 'PHPOrchestra\ModelBundle\Document\EmbedStatus';
+        $this->embedStatusClass = 'OpenOrchestra\ModelBundle\Document\EmbedStatus';
         $this->statusId = 'statusId';
 
-        $this->status = Phake::mock('PHPOrchestra\ModelInterface\Model\StatusInterface');
+        $this->status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         Phake::when($this->status)->getId()->thenReturn($this->statusId);
         Phake::when($this->status)->getToRoles()->thenReturn(new ArrayCollection());
         Phake::when($this->status)->getFromRoles()->thenReturn(new ArrayCollection());
 
-        $this->embedStatus = Phake::mock('PHPOrchestra\ModelBundle\Document\EmbedStatus');
+        $this->embedStatus = Phake::mock('OpenOrchestra\ModelBundle\Document\EmbedStatus');
         Phake::when($this->embedStatus)->getId()->thenReturn($this->statusId);
 
-        $this->statusRepository = Phake::mock('PHPOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
+        $this->statusRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface');
         Phake::when($this->statusRepository)->find(Phake::anyParameters())->thenReturn($this->status);
 
         $this->transformer = new EmbedStatusToStatusTransformer($this->statusRepository, $this->embedStatusClass);
@@ -69,7 +69,7 @@ class EmbedStatusToStatusTransformerTest extends \PHPUnit_Framework_TestCase
     {
         $embedStatus = $this->transformer->reverseTransform($this->status);
 
-        $this->assertInstanceOf('PHPOrchestra\ModelInterface\Model\EmbedStatusInterface', $embedStatus);
+        $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\EmbedStatusInterface', $embedStatus);
         $this->assertSame($this->statusId, $embedStatus->getId());
     }
 }

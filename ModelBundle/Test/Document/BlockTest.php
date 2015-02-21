@@ -1,8 +1,8 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Test\Document;
+namespace OpenOrchestra\ModelBundle\Test\Document;
 
-use PHPOrchestra\ModelBundle\Document\Block;
+use OpenOrchestra\ModelBundle\Document\Block;
 
 /**
  * Class BlockTest

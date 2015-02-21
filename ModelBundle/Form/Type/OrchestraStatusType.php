@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Form\Type;
+namespace OpenOrchestra\ModelBundle\Form\Type;
 
-use PHPOrchestra\ModelBundle\Form\DataTransformer\EmbedStatusToStatusTransformer;
-use PHPOrchestra\ModelInterface\Form\Type\AbstractOrchestraStatusType;
+use OpenOrchestra\ModelBundle\Form\DataTransformer\EmbedStatusToStatusTransformer;
+use OpenOrchestra\ModelInterface\Form\Type\AbstractOrchestraStatusType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 

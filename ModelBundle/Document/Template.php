@@ -1,25 +1,25 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Document;
+namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use PHPOrchestra\ModelBundle\Mapping\Annotations as ORCHESTRA;
-use PHPOrchestra\ModelInterface\Model\AreaInterface;
-use PHPOrchestra\ModelInterface\Model\BlockInterface;
-use PHPOrchestra\ModelInterface\Model\TemplateInterface;
+use OpenOrchestra\ModelBundle\Mapping\Annotations as ORCHESTRA;
+use OpenOrchestra\ModelInterface\Model\AreaInterface;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
+use OpenOrchestra\ModelInterface\Model\TemplateInterface;
 
 /**
  * Description of Template
  *
  * @ODM\Document(
  *   collection="template",
- *   repositoryClass="PHPOrchestra\ModelBundle\Repository\TemplateRepository"
+ *   repositoryClass="OpenOrchestra\ModelBundle\Repository\TemplateRepository"
  * )
  * @ORCHESTRA\Document(
  *   generatedField="templateId",
  *   sourceField="name",
- *   serviceName="php_orchestra_model.repository.template",
+ *   serviceName="open_orchestra_model.repository.template",
  * )
  */
 

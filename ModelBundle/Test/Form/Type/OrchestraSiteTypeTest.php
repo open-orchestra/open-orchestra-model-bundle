@@ -1,10 +1,10 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\Test\Form\Type;
+namespace OpenOrchestra\ModelBundle\Test\Form\Type;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
 use Phake;
-use PHPOrchestra\ModelBundle\Form\Type\OrchestraSiteType;
+use OpenOrchestra\ModelBundle\Form\Type\OrchestraSiteType;
 
 /**
  * Class OrchestraSiteTypeTest

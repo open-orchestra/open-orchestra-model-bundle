@@ -1,9 +1,9 @@
 <?php
 
-namespace PHPOrchestra\ModelBundle\FunctionalTest\Repository;
+namespace OpenOrchestra\ModelBundle\FunctionalTest\Repository;
 
 use Phake;
-use PHPOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
@@ -23,12 +23,12 @@ class ContentRepositoryTest extends KernelTestCase
     {
         parent::setUp();
 
-        $this->currentSiteManager = Phake::mock('PHPOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
+        $this->currentSiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
         Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn('1');
         Phake::when($this->currentSiteManager)->getCurrentSiteDefaultLanguage()->thenReturn('fr');
 
         static::bootKernel();
-        $this->repository = static::$kernel->getContainer()->get('php_orchestra_model.repository.content');
+        $this->repository = static::$kernel->getContainer()->get('open_orchestra_model.repository.content');
         $this->repository->setCurrentSiteManager($this->currentSiteManager);
     }
 
@@ -246,7 +246,7 @@ class ContentRepositoryTest extends KernelTestCase
      */
     protected function assertSameContent($language, $version, $siteId, $contentId, $content)
     {
-        $this->assertInstanceOf('PHPOrchestra\ModelInterface\Model\ContentInterface', $content);
+        $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\ContentInterface', $content);
         $this->assertSame($contentId, $content->getContentId());
         if (!is_null($language)) {
             $this->assertSame($language, $content->getLanguage());
