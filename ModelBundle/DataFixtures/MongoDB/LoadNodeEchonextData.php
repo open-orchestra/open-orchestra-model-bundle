@@ -367,7 +367,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
         // Header
         $languageBlock = $this->generateBlockLang('main');
         $search = $this->generateBlockWysiwyg('Search', "<div class=search><input type='text'><button type='submit'>Rechercher</button></div>", 'main');
-        $logoBlock = $this->generateBlockWysiwyg('Logo', "<a href='#' id='myLogo'> <img src='http://media.phporchestra.inte/echonext-head_logo.png' /> </a><img src='http://media.phporchestra.inte/echonext-head_img.jpg' class='bg-header'/>", 'main');
+        $logoBlock = $this->generateBlockWysiwyg('Logo', "<a href='#' id='myLogo'> <img src='http://media.openorchestra.inte/echonext-head_logo.png' /> </a><img src='http://media.openorchestra.inte/echonext-head_img.jpg' class='bg-header'/>", 'main');
         $loginBlock = $this->generateBlockLogin('Login', 'main');
         $menuBlock = $this->generateBlockMenu('Menu', 'main');
         $footerBlock = $this->generateFooterBlock('Footer', 'main');
