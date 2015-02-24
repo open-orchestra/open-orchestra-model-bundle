@@ -132,7 +132,13 @@ class Site implements SiteInterface
      */
     public function removeBlock($block)
     {
-        null;
+        $newBlocks = array();
+        foreach ($this->blocks as $blockSite) {
+            if ($blockSite !== $block) {
+                $newBlocks[] = $blockSite;
+            }
+        }
+        $this->blocks = $newBlocks;
     }
 
     /**
