@@ -4,7 +4,7 @@ namespace OpenOrchestra\ModelBundle\Document;
 
 use OpenOrchestra\ModelInterface\Model\SiteAliasInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use OpenOrchestra\ModelInterface\MongoTrait\SchemeAbilityDocument;
+use OpenOrchestra\ModelInterface\MongoTrait\Schemeable;
 
 /**
  * Class SiteAlias
@@ -13,7 +13,7 @@ use OpenOrchestra\ModelInterface\MongoTrait\SchemeAbilityDocument;
  */
 class SiteAlias implements SiteAliasInterface
 {
-    use SchemeAbilityDocument;
+    use Schemeable;
 
     /**
      * @var string $domain

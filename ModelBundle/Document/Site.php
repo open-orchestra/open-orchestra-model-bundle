@@ -9,8 +9,8 @@ use OpenOrchestra\ModelInterface\Model\SiteAliasInterface;
 use OpenOrchestra\ModelBundle\Mapping\Annotations as ORCHESTRA;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\ModelInterface\Model\ThemeInterface;
-use OpenOrchestra\ModelInterface\MongoTrait\MetaableDocument;
-use OpenOrchestra\ModelInterface\MongoTrait\SitemapableDocument;
+use OpenOrchestra\ModelInterface\MongoTrait\Metaable;
+use OpenOrchestra\ModelInterface\MongoTrait\Sitemapable;
 
 /**
  * Description of Site
@@ -27,8 +27,8 @@ use OpenOrchestra\ModelInterface\MongoTrait\SitemapableDocument;
  */
 class Site implements SiteInterface
 {
-    use MetaableDocument;
-    use SitemapableDocument;
+    use Metaable;
+    use Sitemapable;
 
     /**
      * @var string $id
