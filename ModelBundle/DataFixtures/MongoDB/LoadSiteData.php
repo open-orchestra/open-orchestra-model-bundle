@@ -7,7 +7,7 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\ModelBundle\Document\Site;
 use OpenOrchestra\ModelBundle\Document\SiteAlias;
-use OpenOrchestra\ModelInterface\Model\SchemeAbilityInterface;
+use OpenOrchestra\ModelInterface\Model\SchemeableInterface;
 
 /**
  * Class LoadSiteData
@@ -152,7 +152,7 @@ class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface
         $siteAlias->setLanguage($language);
         $siteAlias->setMain($main);
         $siteAlias->setPrefix($prefix);
-        $siteAlias->setScheme(SchemeAbilityInterface::SCHEME_HTTP);
+        $siteAlias->setScheme(SchemeableInterface::SCHEME_HTTP);
 
         return $siteAlias;
     }

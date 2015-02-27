@@ -10,7 +10,7 @@ use OpenOrchestra\ModelBundle\Document\Area;
 use OpenOrchestra\ModelBundle\Document\Block;
 use OpenOrchestra\ModelBundle\Document\Node;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
-use OpenOrchestra\ModelInterface\Model\SchemeAbilityInterface;
+use OpenOrchestra\ModelInterface\Model\SchemeableInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 
 /**
@@ -318,7 +318,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
         $subMenuBlock = $this->generateBlock('sub_menu', $blockLabel, $nodeId, $areaId, $idmenu, $class);
         $subMenuBlock->setAttributes(array(
             'nbLevel' => $nbLevel,
-            'nodeName' => $node,
+            'node' => $node,
         ));
 
         return $subMenuBlock;
@@ -510,7 +510,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
             'inMenu' => false,
             'inFooter' => false,
             'language' => $language,
-            'routePattern' => '/url/start/news/{newsId}',
+            'routePattern' => '/news/{newsId}',
         ));
 
         $node->addArea($headerArea);
@@ -1037,7 +1037,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
             'order' => 3,
             'routePattern' => 'remunerations-variables',
         ));
-        $node->setScheme(SchemeAbilityInterface::SCHEME_HTTPS);
+        $node->setScheme(SchemeableInterface::SCHEME_HTTPS);
 
         $node->addArea($headerArea);
         $node->addArea($bodyArea);

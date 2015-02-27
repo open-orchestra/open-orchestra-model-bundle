@@ -13,9 +13,9 @@ use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
-use OpenOrchestra\ModelInterface\MongoTrait\MetaableDocument;
-use OpenOrchestra\ModelInterface\MongoTrait\SitemapableDocument;
-use OpenOrchestra\ModelInterface\MongoTrait\SchemeAbilityDocument;
+use OpenOrchestra\ModelInterface\MongoTrait\Metaable;
+use OpenOrchestra\ModelInterface\MongoTrait\Sitemapable;
+use OpenOrchestra\ModelInterface\MongoTrait\Schemeable;
 
 /**
  * Description of Node
@@ -37,9 +37,9 @@ class Node implements NodeInterface
 {
     use BlameableDocument;
     use TimestampableDocument;
-    use MetaableDocument;
-    use SitemapableDocument;
-    use SchemeAbilityDocument;
+    use Metaable;
+    use Sitemapable;
+    use Schemeable;
 
     /**
      * @var string $id
