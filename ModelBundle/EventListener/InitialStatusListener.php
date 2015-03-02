@@ -11,7 +11,7 @@ use OpenOrchestra\ModelInterface\Model\StatusInterface;
  */
 class InitialStatusListener
 {
-    protected $statuses = [];
+    protected $statuses = array();
 
     /**
      * @param LifecycleEventArgs $eventArgs
@@ -39,7 +39,7 @@ class InitialStatusListener
             foreach ($this->statuses as $status) {
                 $documentManager->persist($status);
             }
-            $this->statuses = [];
+            $this->statuses = array();
             $documentManager->flush();
         }
     }
