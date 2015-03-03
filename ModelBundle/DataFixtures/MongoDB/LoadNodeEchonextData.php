@@ -318,7 +318,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
         $subMenuBlock = $this->generateBlock('sub_menu', $blockLabel, $nodeId, $areaId, $idmenu, $class);
         $subMenuBlock->setAttributes(array(
             'nbLevel' => $nbLevel,
-            'node' => $node,
+            'nodeName' => $node,
         ));
 
         return $subMenuBlock;
