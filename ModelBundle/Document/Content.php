@@ -11,7 +11,7 @@ use OpenOrchestra\ModelInterface\Model\ContentAttributeInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
-use OpenOrchestra\ModelInterface\MongoTrait\KeywordableDocument;
+use OpenOrchestra\ModelInterface\MongoTrait\Keywordable;
 
 /**
  * Description of Content
@@ -30,7 +30,7 @@ class Content implements ContentInterface
 {
     use BlameableDocument;
     use TimestampableDocument;
-    use KeywordableDocument;
+    use Keywordable;
 
     /**
      * @var string $id
