@@ -33,7 +33,7 @@ class LoadRedirectionData implements FixtureInterface
         $redirection = new Redirection();
         $redirection->setSiteId('3');
         $redirection->setSiteName('Echonext site');
-        $redirection->setRoutePattern('/news/{newsId}');
+        $redirection->setRoutePattern('/news/{contentId}');
         $redirection->setLocale('fr');
         $redirection->setNodeId('news');
         $redirection->setPermanent(false);
