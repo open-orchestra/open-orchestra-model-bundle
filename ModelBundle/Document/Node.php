@@ -671,11 +671,11 @@ class Node implements NodeInterface
      */
     public function isEditable()
     {
-        $isPublished = false;
+        $isEditable = true;
         if ($this->getNodeId() != self::TRANSVERSE_NODE_ID && $this->getStatus() instanceof StatusInterface) {
-            $isPublished = $this->getStatus()->isPublished();
+            $isEditable = !$this->getStatus()->isPublished();
         }
 
-        return $isPublished;
+        return $isEditable;
     }
 }
