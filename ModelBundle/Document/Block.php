@@ -41,6 +41,13 @@ class Block implements BlockInterface
     protected $id;
 
     /**
+     * @var int $id
+     *
+     * @ODM\Field(type="int")
+     */
+    protected $maxAge;
+
+    /**
      * @var array $attributes
      *
      * @ODM\Field(type="hash")
@@ -212,5 +219,21 @@ class Block implements BlockInterface
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxAge()
+    {
+        return $this->maxAge;
+    }
+
+    /**
+     * @param int $maxAge
+     */
+    public function setMaxAge($maxAge)
+    {
+        $this->maxAge = $maxAge;
     }
 }
