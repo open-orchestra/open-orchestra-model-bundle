@@ -665,4 +665,17 @@ class Node implements NodeInterface
         $this->areas = new ArrayCollection();
         $this->blocks = new ArrayCollection();
     }
+
+    /**
+     * @return boolean
+     */
+    public function isEditable()
+    {
+        $isEditable = true;
+        if ($this->getNodeId() != self::TRANSVERSE_NODE_ID && $this->getStatus() instanceof StatusInterface) {
+            $isEditable = !$this->getStatus()->isPublished();
+        }
+
+        return $isEditable;
+    }
 }
