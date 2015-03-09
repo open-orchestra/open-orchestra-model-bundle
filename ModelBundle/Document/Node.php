@@ -13,6 +13,7 @@ use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
+use OpenOrchestra\ModelInterface\MongoTrait\Cacheable;
 use OpenOrchestra\ModelInterface\MongoTrait\Metaable;
 use OpenOrchestra\ModelInterface\MongoTrait\Sitemapable;
 use OpenOrchestra\ModelInterface\MongoTrait\Schemeable;
@@ -40,6 +41,7 @@ class Node implements NodeInterface
     use Metaable;
     use Sitemapable;
     use Schemeable;
+    use Cacheable;
 
     /**
      * @var string $id
