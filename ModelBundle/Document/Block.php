@@ -4,6 +4,7 @@ namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
+use OpenOrchestra\ModelInterface\MongoTrait\Cacheable;
 
 /**
  * Description of BaseBlock
@@ -12,6 +13,8 @@ use OpenOrchestra\ModelInterface\Model\BlockInterface;
  */
 class Block implements BlockInterface
 {
+    use Cacheable;
+
     /**
      * @var string $component
      *
@@ -39,13 +42,6 @@ class Block implements BlockInterface
      * @ODM\Field(type="string")
      */
     protected $id;
-
-    /**
-     * @var int $id
-     *
-     * @ODM\Field(type="int")
-     */
-    protected $maxAge;
 
     /**
      * @var array $attributes
@@ -219,21 +215,5 @@ class Block implements BlockInterface
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @return int
-     */
-    public function getMaxAge()
-    {
-        return $this->maxAge;
-    }
-
-    /**
-     * @param int $maxAge
-     */
-    public function setMaxAge($maxAge)
-    {
-        $this->maxAge = $maxAge;
     }
 }
