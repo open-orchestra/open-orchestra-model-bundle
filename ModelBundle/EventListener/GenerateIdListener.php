@@ -16,7 +16,7 @@ class GenerateIdListener
     protected $annotationReader;
 
     /**
-     * @param Container $container
+     * @param Container        $container
      * @param AnnotationReader $annotationReader
      */
     public function __construct(Container $container, AnnotationReader $annotationReader)
