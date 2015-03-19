@@ -51,6 +51,10 @@ class EmbedStatusToStatusTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
+        if ($value === null) {
+            return null;
+        }
+
         $embedStatusClass = $this->embedStatusClass;
 
         return $embedStatusClass::createFromStatus($value);
