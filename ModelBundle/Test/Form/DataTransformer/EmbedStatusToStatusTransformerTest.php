@@ -72,4 +72,14 @@ class EmbedStatusToStatusTransformerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\EmbedStatusInterface', $embedStatus);
         $this->assertSame($this->statusId, $embedStatus->getId());
     }
+
+    /**
+     * Test reverse transform
+     */
+    public function testReverseTransformWithNullElement()
+    {
+        $embedStatus = $this->transformer->reverseTransform(null);
+
+        $this->assertNull($embedStatus);
+    }
 }
