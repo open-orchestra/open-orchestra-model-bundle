@@ -56,18 +56,33 @@ class OrchestraStatusTypeTest extends \PHPUnit_Framework_TestCase
         $this->form->setDefaultOptions($resolverMock);
 
         Phake::verify($resolverMock)->setDefaults(array(
+            'embedded' => true,
             'class' => $this->statusClass,
             'property' => 'labels',
         ));
     }
 
     /**
-     * Test model transformer
+     * @param array $config
+     * @param int   $times
+     *
+     * @dataProvider provideConfigAndCount
      */
-    public function testBuildForm()
+    public function testBuildForm($config, $times)
     {
-        $this->form->buildForm($this->builder, array());
+        $this->form->buildForm($this->builder, $config);
 
-        Phake::verify($this->builder)->addModelTransformer($this->transformer);
+        Phake::verify($this->builder, Phake::times($times))->addModelTransformer($this->transformer);
+    }
+
+    /**
+     * @return array
+     */
+    public function provideConfigAndCount()
+    {
+        return array(
+            array(array('embedded' => true), 1),
+            array(array('embedded' => false), 0),
+        );
     }
 }
