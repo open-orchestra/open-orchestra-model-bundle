@@ -31,7 +31,9 @@ class OrchestraStatusType extends AbstractOrchestraStatusType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addModelTransformer($this->statusTransformer);
+        if ($options['embedded']) {
+            $builder->addModelTransformer($this->statusTransformer);
+        }
     }
 
     /**
@@ -39,12 +41,11 @@ class OrchestraStatusType extends AbstractOrchestraStatusType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(
-            array(
-                'class' => $this->statusClass,
-                'property' => 'labels',
-            )
-        );
+        $resolver->setDefaults(array(
+            'embedded' => true,
+            'class' => $this->statusClass,
+            'property' => 'labels',
+        ));
     }
 
     /**
