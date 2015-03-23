@@ -20,4 +20,12 @@ class KeywordRepository extends DocumentRepository implements KeywordRepositoryI
     {
         return $this->findOneBy(array('label' => $label));
     }
+
+    /**
+     * @return mixed
+     */
+    public function getManager()
+    {
+        return $this->getDocumentManager();
+    }
 }
