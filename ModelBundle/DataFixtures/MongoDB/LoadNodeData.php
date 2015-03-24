@@ -5,7 +5,9 @@ namespace OpenOrchestra\ModelBundle\DataFixtures\MongoDB;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\AddThisStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentListStrategy;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\GmapStrategy;
 use OpenOrchestra\ModelBundle\Document\Area;
 use OpenOrchestra\ModelBundle\Document\Block;
 use OpenOrchestra\ModelBundle\Document\Node;
@@ -547,7 +549,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
 
         $contentGmap = new Block();
         $contentGmap->setLabel('gmap');
-        $contentGmap->setComponent(DisplayBlockInterface::GMAP);
+        $contentGmap->setComponent(GmapStrategy::GMAP);
         $contentGmap->setId('gmap');
         $contentGmap->setClass('gmapClass');
         $contentGmap->setAttributes(array(
@@ -559,7 +561,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
 
         $addThis = new Block();
         $addThis->setLabel('add this');
-        $addThis->setComponent(DisplayBlockInterface::ADDTHIS);
+        $addThis->setComponent(AddThisStrategy::ADDTHIS);
         $addThis->setId('addthis');
         $addThis->setClass('addthisClass');
         $addThis->setAttributes(array(
@@ -702,7 +704,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
 
         $contentBlock = new Block();
         $contentBlock->setLabel('content news');
-        $contentBlock->setComponent(DisplayBlockInterface::CONTENT_LIST);
+        $contentBlock->setComponent(ContentListStrategy::CONTENT_LIST);
         $contentBlock->setId('contentNewsList');
         $contentBlock->setClass('contentListClass');
         $contentBlock->setAttributes(array(
