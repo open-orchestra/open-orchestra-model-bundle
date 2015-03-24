@@ -5,7 +5,7 @@ namespace OpenOrchestra\ModelBundle\DataFixtures\MongoDB;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use OpenOrchestra\DisplayBundle\DisplayBlock\DisplayBlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\ContentListStrategy;
 use OpenOrchestra\ModelBundle\Document\Area;
 use OpenOrchestra\ModelBundle\Document\Block;
 use OpenOrchestra\ModelBundle\Document\Node;
@@ -271,7 +271,7 @@ class LoadNodeEchonextData extends AbstractFixture implements OrderedFixtureInte
      */
     protected function generateBlockContentList($class, $newsNodeId, $blockLabel, $areaId, $nodeId, $nbCharacters = 0, $contentType = 'news')
     {
-        $contentList = $this->generateBlock(DisplayBlockInterface::CONTENT_LIST, $blockLabel, $nodeId, $areaId, 'contentNewsList', $class);
+        $contentList = $this->generateBlock(ContentListStrategy::CONTENT_LIST, $blockLabel, $nodeId, $areaId, 'contentNewsList', $class);
         $contentList->setAttributes(array(
             'contentType' => $contentType,
             'contentNodeId' => $newsNodeId,
