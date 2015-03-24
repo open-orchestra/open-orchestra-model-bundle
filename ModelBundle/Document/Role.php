@@ -2,9 +2,11 @@
 
 namespace OpenOrchestra\ModelBundle\Document;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\ModelInterface\Model\RoleInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
+use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
 
 /**
  * Class Role
@@ -39,6 +41,19 @@ class Role implements RoleInterface
      * @ODM\ReferenceOne(targetDocument="OpenOrchestra\ModelBundle\Document\Status", inversedBy="toRoles")
      */
     protected $toStatus;
+
+    /**
+     * @ODM\EmbedMany(targetDocument="TranslatedValue")
+     */
+    protected $descriptions;
+
+    /**
+     * Construct the class
+     */
+    public function __construct()
+    {
+        $this->descriptions = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -104,5 +119,51 @@ class Role implements RoleInterface
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * @param TranslatedValueInterface $description
+     */
+    public function addDescription(TranslatedValueInterface $description)
+    {
+        $this->descriptions->add($description);
+    }
+
+    /**
+     * @param TranslatedValueInterface $description
+     */
+    public function removeDescription(TranslatedValueInterface $description)
+    {
+        $this->descriptions->removeElement($description);
+    }
+
+    /**
+     * @param string $language
+     *
+     * @return string
+     */
+    public function getDescription($language = 'en')
+    {
+        $choosenLanguage = $this->descriptions->filter(function (TranslatedValueInterface $translatedValue) use ($language) {
+            return $language == $translatedValue->getLanguage();
+        });
+
+        return $choosenLanguage->first()->getValue();
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getDescriptions()
+    {
+        return $this->descriptions;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTranslatedProperties()
+    {
+        return array('getDescriptions');
     }
 }
