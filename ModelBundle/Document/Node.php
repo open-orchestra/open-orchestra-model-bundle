@@ -576,8 +576,18 @@ class Node implements NodeInterface
 
     /**
      * @return boolean
+     *
+     * @deprecated use isInFooter
      */
     public function getInFooter()
+    {
+        return $this->isInFooter();
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isInFooter()
     {
         return $this->inFooter;
     }
@@ -593,9 +603,19 @@ class Node implements NodeInterface
     /**
      * @return boolean
      */
-    public function getInMenu()
+    public function isInMenu()
     {
         return $this->inMenu;
+    }
+
+    /**
+     * @return boolean
+     *
+     * @deprecated use isInMenu
+     */
+    public function getInMenu()
+    {
+        return $this->isInMenu();
     }
 
     /**
