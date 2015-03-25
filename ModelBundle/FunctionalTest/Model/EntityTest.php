@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\ModelBundle\Test\Model;
+namespace OpenOrchestra\ModelBundle\FunctionalTest\Model;
 
 /**
  * Description of BaseNodeTest
@@ -29,7 +29,10 @@ class EntityTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array('Node',             'NodeInterface'),
+            array('Node',             'ReadNodeInterface'),
             array('Node',             'AreaContainerInterface'),
+            array('Node',             'SchemeableInterface'),
+            array('Node',             'ReadSchemeableInterface'),
             array('Area',             'AreaContainerInterface'),
             array('Template',         'AreaContainerInterface'),
             array('Node',             'BlockContainerInterface'),
@@ -40,14 +43,21 @@ class EntityTest extends \PHPUnit_Framework_TestCase
             array('ContentType',      'TranslatedValueContainerInterface'),
             array('FieldType',        'TranslatedValueContainerInterface'),
             array('Area',             'AreaInterface'),
+            array('Area',             'ReadAreaInterface'),
             array('Block',            'BlockInterface'),
+            array('Block',            'ReadBlockInterface'),
             array('ContentAttribute', 'ContentAttributeInterface'),
+            array('ContentAttribute', 'ReadContentAttributeInterface'),
             array('Content',          'ContentInterface'),
+            array('Content',          'ReadContentInterface'),
             array('ContentType',      'ContentTypeInterface'),
             array('ContentType',      'FieldTypeContainerInterface'),
             array('FieldType',        'FieldTypeInterface'),
             array('FieldOption',      'FieldOptionInterface'),
             array('Site',             'SiteInterface'),
+            array('SiteAlias',        'SiteAliasInterface'),
+            array('SiteAlias',        'SchemeableInterface'),
+            array('SiteAlias',        'ReadSchemeableInterface'),
             array('Template',         'TemplateInterface'),
             array('TranslatedValue',  'TranslatedValueInterface'),
             array('Node',             'BlameableInterface'),
@@ -60,6 +70,8 @@ class EntityTest extends \PHPUnit_Framework_TestCase
             array('Area',             'HtmlClassContainerInterface'),
             array('Keyword',          'KeywordInterface'),
             array('Content',          'KeywordableInterface'),
+            array('Redirection',      'RedirectionInterface'),
+            array('Redirection',      'ReadRedirectionInterface'),
         );
     }
 }
