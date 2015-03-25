@@ -5,6 +5,7 @@ namespace OpenOrchestra\ModelBundle\Document;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+use OpenOrchestra\ModelInterface\Model\ReadSiteAliasInterface;
 use OpenOrchestra\ModelInterface\Model\SiteAliasInterface;
 use OpenOrchestra\ModelBundle\Mapping\Annotations as ORCHESTRA;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
@@ -284,7 +285,7 @@ class Site implements SiteInterface
     }
 
     /**
-     * @return SiteAliasInterface
+     * @return ReadSiteAliasInterface
      */
     public function getMainAlias()
     {

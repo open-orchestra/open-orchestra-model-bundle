@@ -9,6 +9,7 @@ use Gedmo\Timestampable\Traits\TimestampableDocument;
 use OpenOrchestra\ModelBundle\Mapping\Annotations as ORCHESTRA;
 use OpenOrchestra\ModelInterface\Model\ContentAttributeInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
+use OpenOrchestra\ModelInterface\Model\ReadContentAttributeInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use OpenOrchestra\ModelInterface\MongoTrait\Keywordable;
@@ -121,7 +122,7 @@ class Content implements ContentInterface
     /**
      * @param string $name
      *
-     * @return ContentAttributeInterface|null
+     * @return ReadContentAttributeInterface|null
      */
     public function getAttributeByName($name)
     {
