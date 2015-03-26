@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenOrchestra\ModelBundle\FunctionalTests\Model;
+namespace OpenOrchestra\ModelBundle\Tests\Functional\Model;
 
 /**
  * Description of BaseNodeTest
