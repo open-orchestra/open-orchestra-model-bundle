@@ -205,7 +205,7 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
             $addMethod = 'addOr';
         }
 
-        if (!is_null($keywords)) {
+        if (!is_null($keywords) && '' !== $keywords) {
             $qb->$addMethod($qb->expr()->field('keywords.label')->in(explode(',', $keywords)));
         }
         if ('' !== $contentType) {
