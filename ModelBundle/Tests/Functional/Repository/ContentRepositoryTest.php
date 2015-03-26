@@ -135,9 +135,10 @@ class ContentRepositoryTest extends KernelTestCase
             array('news', ContentRepositoryInterface::CHOICE_AND, 'Sit', 3),
             array('news', ContentRepositoryInterface::CHOICE_AND, 'Dolor', 0),
             array('news', ContentRepositoryInterface::CHOICE_AND, 'Lorem,Sit', 3),
-            array('news', ContentRepositoryInterface::CHOICE_AND, null, 1755),
-            array('car', ContentRepositoryInterface::CHOICE_AND, null, 2),
+            array('news', ContentRepositoryInterface::CHOICE_AND, '', 1755),
+            array('car', ContentRepositoryInterface::CHOICE_AND, '', 2),
             array('', ContentRepositoryInterface::CHOICE_AND, null, 1759),
+            array('', ContentRepositoryInterface::CHOICE_AND, '', 1759),
             array('', ContentRepositoryInterface::CHOICE_AND, 'Lorem', 4),
             array('', ContentRepositoryInterface::CHOICE_AND, 'Sit', 5),
             array('', ContentRepositoryInterface::CHOICE_AND, 'Dolor', 0),
@@ -150,13 +151,14 @@ class ContentRepositoryTest extends KernelTestCase
             array('news', ContentRepositoryInterface::CHOICE_OR, 'Sit', 1757),
             array('news', ContentRepositoryInterface::CHOICE_OR, 'Dolor', 1755),
             array('news', ContentRepositoryInterface::CHOICE_OR, 'Lorem,Sit', 1759),
-            array('news', ContentRepositoryInterface::CHOICE_OR, null, 1755),
+            array('news', ContentRepositoryInterface::CHOICE_OR, '', 1755),
             array('car', ContentRepositoryInterface::CHOICE_OR, null, 2),
             array('', ContentRepositoryInterface::CHOICE_OR, null, 1759),
             array('', ContentRepositoryInterface::CHOICE_OR, 'Lorem', 4),
             array('', ContentRepositoryInterface::CHOICE_OR, 'Sit', 5),
             array('', ContentRepositoryInterface::CHOICE_OR, 'Dolor', 0),
             array('', ContentRepositoryInterface::CHOICE_OR, 'Lorem,Sit', 7),
+            array('', ContentRepositoryInterface::CHOICE_OR, '', 1759),
         );
     }
 
