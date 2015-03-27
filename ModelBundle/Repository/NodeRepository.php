@@ -7,9 +7,7 @@ use Doctrine\ODM\MongoDB\DocumentRepository;
 use Doctrine\ODM\MongoDB\Mapping;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\AreaFinderTrait;
-use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
-use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Doctrine\ODM\MongoDB\Query\Builder;
 
