@@ -59,8 +59,6 @@ class NodeRepositoryTest extends KernelTestCase
         return array(
             array('en', 1, '1'),
             array('fr', 2, '1'),
-            array('fr', 1, '3'),
-            array('en', 1, '3'),
             array('fr', 1, '2'),
         );
     }
@@ -165,8 +163,6 @@ class NodeRepositoryTest extends KernelTestCase
             array(array(1), 'en', '1'),
             array(array(1, 2, 3), 'fr', '1'),
             array(array(1), 'fr', '2'),
-            array(array(1), 'fr', '3'),
-            array(array(1), 'en', '3'),
         );
     }
 
@@ -253,7 +249,6 @@ class NodeRepositoryTest extends KernelTestCase
     {
         return array(
             array('2', 12, 1),
-            array('3', 10, 1),
         );
     }
 
@@ -306,8 +301,6 @@ class NodeRepositoryTest extends KernelTestCase
             array('1', 6, 1, 'fr', 'fixture_about_us'),
             array('1', 0, 1, 'en'),
             array('2', 0, 1),
-            array('3', 8, 1, 'fr', NodeInterface::ROOT_NODE_ID),
-            array('3', 8, 1, 'en', NodeInterface::ROOT_NODE_ID),
         );
     }
 
@@ -340,8 +333,6 @@ class NodeRepositoryTest extends KernelTestCase
             array('1', 8, 2, 'fr'),
             array('1', 1, 1, 'en'),
             array('2', 6, 1, 'fr'),
-            array('3', 8, 1, 'fr'),
-            array('3', 8, 1, 'en'),
         );
     }
 
@@ -384,11 +375,6 @@ class NodeRepositoryTest extends KernelTestCase
             array(NodeInterface::ROOT_NODE_ID, 0, 6, 2, '1'),
             array(NodeInterface::ROOT_NODE_ID, 1, 12, 1, '2', 'fr'),
             array(NodeInterface::ROOT_NODE_ID, 1, 12, 1, '2'),
-            array(NodeInterface::ROOT_NODE_ID, 1, 10, 1, '3', 'fr'),
-            array(NodeInterface::ROOT_NODE_ID, 0, 6, 1, '3', 'fr'),
-            array('espace_Cardif', 0, 5, 1, '3', 'fr'),
-            array('espace_Cardif', 0, 5, 1, '3', 'en'),
-            array(NodeInterface::ROOT_NODE_ID, 1, 10, 1, '3'),
         );
     }
 
@@ -415,7 +401,6 @@ class NodeRepositoryTest extends KernelTestCase
         return array(
             array('1', 3),
             array('2', 0),
-            array('3', 0),
         );
     }
 
@@ -444,8 +429,6 @@ class NodeRepositoryTest extends KernelTestCase
         return array(
             array('en', '2', 0),
             array('fr', '2', 12),
-            array('en', '3', 10),
-            array('fr', '3', 10),
         );
     }
 }

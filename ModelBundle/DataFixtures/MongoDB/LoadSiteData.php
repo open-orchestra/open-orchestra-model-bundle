@@ -31,10 +31,6 @@ class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($site3);
         $this->addReference('site3', $site3);
 
-        $site4 = $this->getSite4();
-        $manager->persist($site4);
-        $this->addReference('site4', $site4);
-
         $manager->flush();
     }
 
@@ -97,34 +93,16 @@ class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface
     {
         $site3 = new Site();
         $site3->setSiteId('3');
-        $site3->setName('Echonext site');
-        $site3->addAlias($this->generateSiteAlias('echonext.openorchestra.inte', 'fr', true, 'fr'));
-        $site3->addAlias($this->generateSiteAlias('echonext.openorchestra.inte', 'en', false, 'en'));
-        $site3->addAlias($this->generateSiteAlias('echonext.openorchestra.dev', 'fr', false, 'fr'));
-        $site3->addAlias($this->generateSiteAlias('echonext.openorchestra.dev', 'en', false, 'en'));
-        $site3->setDeleted(false);
+        $site3->setName('Empty site');
+        $site3->addAlias($this->generateSiteAlias('empty.openorchestra.inte', 'fr', true));
+        $site3->addAlias($this->generateSiteAlias('empty.openorchestra.inte', 'en'));
+        $site3->addAlias($this->generateSiteAlias('empty.openorchestra.dev', 'fr'));
+        $site3->addAlias($this->generateSiteAlias('empty.openorchestra.dev', 'en'));
+        $site3->setDeleted(true);
         $site3->setTheme($this->getReference('themePresentation'));
+        $site3->addBlock('sample');
 
         return $site3;
-    }
-
-    /**
-     * @return Site
-     */
-    protected function getSite4()
-    {
-        $site4 = new Site();
-        $site4->setSiteId('4');
-        $site4->setName('Empty site');
-        $site4->addAlias($this->generateSiteAlias('empty.openorchestra.inte', 'fr', true));
-        $site4->addAlias($this->generateSiteAlias('empty.openorchestra.inte', 'en'));
-        $site4->addAlias($this->generateSiteAlias('empty.openorchestra.dev', 'fr'));
-        $site4->addAlias($this->generateSiteAlias('empty.openorchestra.dev', 'en'));
-        $site4->setDeleted(true);
-        $site4->setTheme($this->getReference('themePresentation'));
-        $site4->addBlock('sample');
-
-        return $site4;
     }
 
     /**

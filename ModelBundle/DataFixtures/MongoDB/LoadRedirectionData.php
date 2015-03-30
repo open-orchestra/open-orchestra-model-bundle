@@ -18,8 +18,6 @@ class LoadRedirectionData implements FixtureInterface
      */
     function load(ObjectManager $manager)
     {
-        $manager->persist($this->generateMainRedirection());
-        $manager->persist($this->generateNewsRedirection());
         $manager->persist($this->generateGoogleRedirection());
 
         $manager->flush();
@@ -28,43 +26,11 @@ class LoadRedirectionData implements FixtureInterface
     /**
      * @return Redirection
      */
-    protected function generateNewsRedirection()
-    {
-        $redirection = new Redirection();
-        $redirection->setSiteId('3');
-        $redirection->setSiteName('Echonext site');
-        $redirection->setRoutePattern('/news/{contentId}');
-        $redirection->setLocale('fr');
-        $redirection->setNodeId('news');
-        $redirection->setPermanent(false);
-
-        return $redirection;
-    }
-
-    /**
-     * @return Redirection
-     */
-    protected function generateMainRedirection()
-    {
-        $redirection = new Redirection();
-        $redirection->setSiteId('3');
-        $redirection->setSiteName('Echonext site');
-        $redirection->setRoutePattern('/');
-        $redirection->setLocale('fr');
-        $redirection->setNodeId(NodeInterface::ROOT_NODE_ID);
-        $redirection->setPermanent(true);
-
-        return $redirection;
-    }
-
-    /**
-     * @return Redirection
-     */
     protected function generateGoogleRedirection()
     {
         $redirection = new Redirection();
-        $redirection->setSiteId('3');
-        $redirection->setSiteName('Echonext site');
+        $redirection->setSiteId('2');
+        $redirection->setSiteName('Demo site');
         $redirection->setRoutePattern('/google');
         $redirection->setLocale('fr');
         $redirection->setUrl('http://google.fr');
