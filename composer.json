@@ -1,7 +1,7 @@
 {
     "name": "itkg/open-orchestra-model-bundle",
     "description": "An implemantation of the model-interface for OpenOrchestra on mongo",
-    "license": "MIT",
+    "license": "Apache-2.0",
     "authors": [
         {
             "name": "Nicolas Thal",
