@@ -50,7 +50,7 @@ class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface
         $site1->addAlias($this->generateSiteAlias('front.openorchestra.dev', 'en'));
         $site1->addAlias($this->generateSiteAlias('front.openorchestra.inte', 'fr', true));
         $site1->addAlias($this->generateSiteAlias('front.openorchestra.inte', 'en'));
-        $site1->setDeleted(true);
+        $site1->setDeleted(false);
         $site1->setTheme($this->getReference('themePresentation'));
         $site1->addBlock('menu');
 
