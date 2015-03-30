@@ -16,6 +16,8 @@ class ContentRepositoryTest extends KernelTestCase
      */
     protected $repository;
 
+    protected $currentSiteManager;
+
     /**
      * Set up test
      */
@@ -43,9 +45,8 @@ class ContentRepositoryTest extends KernelTestCase
     }
 
     /**
-     * @param string      $name
-     * @param boolean     $exists
-     * @param int         $count
+     * @param string  $name
+     * @param boolean $exists
      *
      * @dataProvider provideTestUnicityInContext
      */
@@ -86,7 +87,7 @@ class ContentRepositoryTest extends KernelTestCase
     public function provideFindOneByContentId()
     {
         return array(
-            array('echonext'),
+            array('notre_vision'),
             array('bien_vivre_en_france'),
         );
     }
@@ -132,38 +133,38 @@ class ContentRepositoryTest extends KernelTestCase
             array('car', ContentRepositoryInterface::CHOICE_AND, 'Dolor', 0),
             array('car', ContentRepositoryInterface::CHOICE_AND, 'Lorem,Sit', 2),
             array('news', ContentRepositoryInterface::CHOICE_AND, 'Lorem', 0),
-            array('news', ContentRepositoryInterface::CHOICE_AND, 'Sit', 3),
+            array('news', ContentRepositoryInterface::CHOICE_AND, 'Sit', 2),
             array('news', ContentRepositoryInterface::CHOICE_AND, 'Dolor', 0),
-            array('news', ContentRepositoryInterface::CHOICE_AND, 'Lorem,Sit', 3),
-            array('news', ContentRepositoryInterface::CHOICE_AND, '', 1755),
+            array('news', ContentRepositoryInterface::CHOICE_AND, 'Lorem,Sit', 2),
+            array('news', ContentRepositoryInterface::CHOICE_AND, '', 1754),
             array('car', ContentRepositoryInterface::CHOICE_AND, '', 2),
-            array('', ContentRepositoryInterface::CHOICE_AND, null, 1759),
-            array('', ContentRepositoryInterface::CHOICE_AND, '', 1759),
+            array('', ContentRepositoryInterface::CHOICE_AND, null, 1758),
+            array('', ContentRepositoryInterface::CHOICE_AND, '', 1758),
             array('', ContentRepositoryInterface::CHOICE_AND, 'Lorem', 4),
-            array('', ContentRepositoryInterface::CHOICE_AND, 'Sit', 5),
+            array('', ContentRepositoryInterface::CHOICE_AND, 'Sit', 4),
             array('', ContentRepositoryInterface::CHOICE_AND, 'Dolor', 0),
-            array('', ContentRepositoryInterface::CHOICE_AND, 'Lorem,Sit', 7),
+            array('', ContentRepositoryInterface::CHOICE_AND, 'Lorem,Sit', 6),
             array('car', ContentRepositoryInterface::CHOICE_OR, 'Lorem', 4),
-            array('car', ContentRepositoryInterface::CHOICE_OR, 'Sit', 7),
+            array('car', ContentRepositoryInterface::CHOICE_OR, 'Sit', 6),
             array('car', ContentRepositoryInterface::CHOICE_OR, 'Dolor', 2),
-            array('car', ContentRepositoryInterface::CHOICE_OR, 'Lorem,Sit', 7),
-            array('news', ContentRepositoryInterface::CHOICE_OR, 'Lorem', 1759),
-            array('news', ContentRepositoryInterface::CHOICE_OR, 'Sit', 1757),
-            array('news', ContentRepositoryInterface::CHOICE_OR, 'Dolor', 1755),
-            array('news', ContentRepositoryInterface::CHOICE_OR, 'Lorem,Sit', 1759),
-            array('news', ContentRepositoryInterface::CHOICE_OR, '', 1755),
+            array('car', ContentRepositoryInterface::CHOICE_OR, 'Lorem,Sit', 6),
+            array('news', ContentRepositoryInterface::CHOICE_OR, 'Lorem', 1758),
+            array('news', ContentRepositoryInterface::CHOICE_OR, 'Sit', 1756),
+            array('news', ContentRepositoryInterface::CHOICE_OR, 'Dolor', 1754),
+            array('news', ContentRepositoryInterface::CHOICE_OR, 'Lorem,Sit', 1758),
+            array('news', ContentRepositoryInterface::CHOICE_OR, '', 1754),
             array('car', ContentRepositoryInterface::CHOICE_OR, null, 2),
-            array('', ContentRepositoryInterface::CHOICE_OR, null, 1759),
+            array('', ContentRepositoryInterface::CHOICE_OR, null, 1758),
             array('', ContentRepositoryInterface::CHOICE_OR, 'Lorem', 4),
-            array('', ContentRepositoryInterface::CHOICE_OR, 'Sit', 5),
+            array('', ContentRepositoryInterface::CHOICE_OR, 'Sit', 4),
             array('', ContentRepositoryInterface::CHOICE_OR, 'Dolor', 0),
-            array('', ContentRepositoryInterface::CHOICE_OR, 'Lorem,Sit', 7),
-            array('', ContentRepositoryInterface::CHOICE_OR, '', 1759),
+            array('', ContentRepositoryInterface::CHOICE_OR, 'Lorem,Sit', 6),
+            array('', ContentRepositoryInterface::CHOICE_OR, '', 1758),
         );
     }
 
     /**
-     * @param string $contentType
+     * @param string $contentId
      * @param string $language
      *
      * @dataProvider provideFindOneByContentIdAndLanguage
@@ -181,13 +182,13 @@ class ContentRepositoryTest extends KernelTestCase
     public function provideFindOneByContentIdAndLanguage()
     {
         return array(
-            array('echonext', 'fr'),
+            array('notre_vision', 'fr'),
             array('bien_vivre_en_france', 'fr'),
         );
     }
 
     /**
-     * @param string $contentType
+     * @param string $contentId
      * @param string $language
      *
      * @dataProvider provideFindByContentIdAndLanguage
@@ -208,13 +209,13 @@ class ContentRepositoryTest extends KernelTestCase
     public function provideFindByContentIdAndLanguage()
     {
         return array(
-            array('echonext', 'fr'),
+            array('notre_vision', 'fr'),
             array('bien_vivre_en_france', 'fr'),
         );
     }
 
     /**
-     * @param string $contentType
+     * @param string $contentId
      * @param string $language
      * @param int    $version
      *
@@ -234,7 +235,7 @@ class ContentRepositoryTest extends KernelTestCase
     public function provideFindOneByContentIdAndLanguageAndVersion()
     {
         return array(
-            array('echonext', 'fr', 1),
+            array('notre_vision', 'fr', 1),
             array('bien_vivre_en_france', 'fr', 1),
         );
     }
@@ -279,7 +280,7 @@ class ContentRepositoryTest extends KernelTestCase
     public function provideCountByContentType()
     {
         return array(
-            array('news', 255),
+            array('news', 254),
             array('car', 1),
             array('customer', 1),
         );
