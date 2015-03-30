@@ -22,11 +22,6 @@ class LoadThemeData extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($theme1);
         $this->addReference('themePresentation', $theme1);
 
-        $theme2 = new Theme();
-        $theme2->setName('echonext');
-        $manager->persist($theme2);
-        $this->addReference('echonext', $theme2);
-
         $manager->flush();
     }
 
