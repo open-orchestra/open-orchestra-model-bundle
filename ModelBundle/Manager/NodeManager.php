@@ -31,6 +31,7 @@ class NodeManager
         $node->setLanguage($language);
         $node->setNodeId(NodeInterface::TRANSVERSE_NODE_ID);
         $node->setName(NodeInterface::TRANSVERSE_NODE_ID);
+        $node->setNodeType(NodeInterface::TYPE_GENERAL);
         $node->setSiteId($siteId);
         $node->addArea($area);
 

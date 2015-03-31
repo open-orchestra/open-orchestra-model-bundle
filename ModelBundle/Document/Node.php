@@ -8,6 +8,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\ModelBundle\Mapping\Annotations as ORCHESTRA;
 use Gedmo\Blameable\Traits\BlameableDocument;
 use Gedmo\Timestampable\Traits\TimestampableDocument;
+use OpenOrchestra\ModelBundle\MongoTrait\Statusable;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
@@ -42,6 +43,7 @@ class Node implements NodeInterface
     use Sitemapable;
     use Schemeable;
     use Cacheable;
+    use Statusable;
 
     /**
      * @var string $id
@@ -105,13 +107,6 @@ class Node implements NodeInterface
      * @ODM\Field(type="string")
      */
     protected $language;
-
-    /**
-     * @var StatusInterface $status
-     *
-     * @ODM\EmbedOne(targetDocument="EmbedStatus")
-     */
-    protected $status;
 
     /**
      * @var boolean
@@ -359,29 +354,6 @@ class Node implements NodeInterface
     public function getLanguage()
     {
         return $this->language;
-    }
-
-    /**
-     * Set status
-     *
-     * @param StatusInterface|null $status
-     */
-    public function setStatus(StatusInterface $status = null)
-    {
-        $this->status = null;
-        if ($status instanceof StatusInterface) {
-            $this->status = EmbedStatus::createFromStatus($status);
-        }
-    }
-
-    /**
-     * Get status
-     *
-     * @return StatusInterface $status
-     */
-    public function getStatus()
-    {
-        return $this->status;
     }
 
     /**
