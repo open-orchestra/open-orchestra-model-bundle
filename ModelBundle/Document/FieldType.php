@@ -8,6 +8,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\ModelInterface\Model\FieldOptionInterface;
 use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
+use OpenOrchestra\ModelInterface\ModelTrait\TranslatedValueFilter;
 
 /**
  * Description of Base FieldType
@@ -16,6 +17,8 @@ use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
  */
 class FieldType implements FieldTypeInterface
 {
+    use TranslatedValueFilter;
+
     /**
      * @var string $fieldId
      *
@@ -124,11 +127,7 @@ class FieldType implements FieldTypeInterface
      */
     public function getLabel($language = 'en')
     {
-        $choosenLanguage = $this->labels->filter(function (TranslatedValueInterface $translatedValue) use ($language) {
-            return $language == $translatedValue->getLanguage();
-        });
-
-        return $choosenLanguage->first()->getValue();
+        return $this->filterByLanguage($this->labels, $language);
     }
 
     /**
