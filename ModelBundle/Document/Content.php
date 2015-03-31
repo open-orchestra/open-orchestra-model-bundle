@@ -7,10 +7,10 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Gedmo\Blameable\Traits\BlameableDocument;
 use Gedmo\Timestampable\Traits\TimestampableDocument;
 use OpenOrchestra\ModelBundle\Mapping\Annotations as ORCHESTRA;
+use OpenOrchestra\ModelBundle\MongoTrait\Statusable;
 use OpenOrchestra\ModelInterface\Model\ContentAttributeInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Model\ReadContentAttributeInterface;
-use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use OpenOrchestra\ModelInterface\MongoTrait\Keywordable;
 
@@ -32,6 +32,7 @@ class Content implements ContentInterface
     use BlameableDocument;
     use TimestampableDocument;
     use Keywordable;
+    use Statusable;
 
     /**
      * @var string $id
@@ -81,13 +82,6 @@ class Content implements ContentInterface
      * @ODM\Field(type="string")
      */
     protected $language;
-
-    /**
-     * @var StatusInterface $status
-     *
-     * @ODM\EmbedOne(targetDocument="EmbedStatus")
-     */
-    protected $status;
 
     /**
      * @var boolean
@@ -253,29 +247,6 @@ class Content implements ContentInterface
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set status
-     *
-     * @param StatusInterface|null $status
-     */
-    public function setStatus(StatusInterface $status = null)
-    {
-        $this->status = null;
-        if ($status instanceof StatusInterface) {
-            $this->status = EmbedStatus::createFromStatus($status);
-        }
-    }
-
-    /**
-     * Get status
-     *
-     * @return StatusInterface $status
-     */
-    public function getStatus()
-    {
-        return $this->status;
     }
 
     /**

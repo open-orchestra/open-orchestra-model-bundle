@@ -38,6 +38,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($siteId, $node->getSiteId());
         $this->assertSame(NodeInterface::TRANSVERSE_NODE_ID, $node->getNodeId());
         $this->assertSame(NodeInterface::TRANSVERSE_NODE_ID, $node->getName());
+        $this->assertSame(NodeInterface::TYPE_GENERAL, $node->getNodeType());
         $this->assertSame(1, $node->getVersion());
         $this->assertSame($language, $node->getLanguage());
         $this->assertCount(1, $node->getAreas());
