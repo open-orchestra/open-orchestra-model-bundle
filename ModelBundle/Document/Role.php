@@ -7,6 +7,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\ModelInterface\Model\RoleInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
+use OpenOrchestra\ModelInterface\ModelTrait\TranslatedValueFilter;
 
 /**
  * Class Role
@@ -18,6 +19,8 @@ use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
  */
 class Role implements RoleInterface
 {
+    use TranslatedValueFilter;
+
     /**
      * @ODM\Id()
      */
@@ -144,11 +147,7 @@ class Role implements RoleInterface
      */
     public function getDescription($language = 'en')
     {
-        $choosenLanguage = $this->descriptions->filter(function (TranslatedValueInterface $translatedValue) use ($language) {
-            return $language == $translatedValue->getLanguage();
-        });
-
-        return $choosenLanguage->first()->getValue();
+        return $this->filterByLanguage($this->descriptions, $language);
     }
 
     /**
