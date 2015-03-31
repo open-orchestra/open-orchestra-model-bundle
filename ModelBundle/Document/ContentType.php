@@ -11,6 +11,7 @@ use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
+use OpenOrchestra\ModelInterface\ModelTrait\TranslatedValueFilter;
 
 /**
  * Description of ContentType
@@ -24,6 +25,7 @@ class ContentType implements ContentTypeInterface
 {
     use BlameableDocument;
     use TimestampableDocument;
+    use TranslatedValueFilter;
 
     /**
      * @var string $id
@@ -176,11 +178,7 @@ class ContentType implements ContentTypeInterface
      */
     public function getName($language = 'en')
     {
-        $choosenLanguage = $this->names->filter(function (TranslatedValueInterface $translatedValue) use ($language) {
-            return $language == $translatedValue->getLanguage();
-        });
-
-        return $choosenLanguage->first()->getValue();
+        return $this->filterByLanguage($this->names, $language);
     }
 
     /**
