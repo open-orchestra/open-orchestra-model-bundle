@@ -463,16 +463,14 @@ class NodeRepository extends DocumentRepository implements FieldAutoGenerableRep
     }
 
     /**
-     * @param string $siteId
-     *
      * @return ReadNodeInterface
      */
-    public function findLastPublishedBySiteId($siteId)
+    public function findLastPublished()
     {
-        $qb = $this->createQueryBuilderWithSiteIdAndLanguage($siteId);
+        $qb = $this->createQueryBuilder();
         $qb->field('status.published')->equals(true);
         $qb->field('deleted')->equals(false);
-        $qb->sort('updateAt', 'desc');
+        $qb->sort('updatedAt', 'desc');
 
         return $qb->getQuery()->getSingleResult();
     }
