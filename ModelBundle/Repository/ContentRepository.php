@@ -212,6 +212,7 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
             $qb->$addMethod($qb->expr()->field('contentType')->equals($contentType));
             return $qb;
         }
+
         return $qb;
     }
 }

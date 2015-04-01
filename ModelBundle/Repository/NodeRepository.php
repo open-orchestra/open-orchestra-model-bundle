@@ -8,6 +8,7 @@ use Doctrine\ODM\MongoDB\Mapping;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\AreaFinderTrait;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use Doctrine\ODM\MongoDB\Query\Builder;
 
@@ -459,5 +460,20 @@ class NodeRepository extends DocumentRepository implements FieldAutoGenerableRep
         $qb->field('nodeId')->notEqual($nodeId);
 
         return $qb->getQuery()->execute();
+    }
+
+    /**
+     * @param string $siteId
+     *
+     * @return ReadNodeInterface
+     */
+    public function findLastPublishedBySiteId($siteId)
+    {
+        $qb = $this->createQueryBuilderWithSiteIdAndLanguage($siteId);
+        $qb->field('status.published')->equals(true);
+        $qb->field('deleted')->equals(false);
+        $qb->sort('updateAt', 'desc');
+
+        return $qb->getQuery()->getSingleResult();
     }
 }
