@@ -3,6 +3,7 @@
 namespace OpenOrchestra\ModelBundle\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
+use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 
@@ -41,4 +42,16 @@ class SiteRepository extends DocumentRepository implements SiteRepositoryInterfa
         return $this->findBy(array('deleted' => $deleted));
     }
 
+    /**
+     * @param string $domain
+     *
+     * @return ReadSiteInterface
+     */
+    public function findByAliasDomain($domain)
+    {
+        $qb = $this->createQueryBuilder();
+        $qb->field('aliases.domain')->equals($domain);
+
+        return $qb->getQuery()->getSingleResult();
+    }
 }
