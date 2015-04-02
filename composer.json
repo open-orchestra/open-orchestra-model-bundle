@@ -1,5 +1,5 @@
 {
-    "name": "itkg/open-orchestra-model-bundle",
+    "name": "open-orchestra/open-orchestra-model-bundle",
     "description": "An implemantation of the model-interface for OpenOrchestra on mongo",
     "license": "Apache-2.0",
     "authors": [
@@ -8,26 +8,16 @@
             "email": "nico.th4l@gmail.com"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/itkg/open-orchestra-base-bundle"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/itkg/open-orchestra-model-interface"
-        }
-    ],
     "minimum-stability": "dev",
     "require": {
-        "itkg/open-orchestra-model-interface": "*",
+        "open-orchestra/open-orchestra-model-interface": "*",
         "doctrine/data-fixtures":"1.0.0",
         "doctrine/mongodb-odm": "1.0.0-BETA11",
         "doctrine/mongodb-odm-bundle" : "3.0.0-BETA6",
         "stof/doctrine-extensions-bundle": "1.1.0"
     },
     "require-dev": {
-        "itkg/open-orchestra-base-bundle": "dev-master",
+        "open-orchestra/open-orchestra-base-bundle": "dev-master",
         "scrutinizer/ocular": "1.1.1",
         "symfony/validator": "2.5.5",
         "jmikola/geojson": "1.0.1",
