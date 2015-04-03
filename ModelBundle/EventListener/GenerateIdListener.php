@@ -32,7 +32,7 @@ class GenerateIdListener
     {
         $document = $event->getDocument();
         $className = get_class($document);
-        $generateAnnotations = $this->annotationReader->getClassAnnotation(new \ReflectionClass($className), 'OpenOrchestra\ModelBundle\Mapping\Annotations\Document');
+        $generateAnnotations = $this->annotationReader->getClassAnnotation(new \ReflectionClass($className), 'OpenOrchestra\ModelInterface\Mapping\Annotations\Document');
         if (!is_null($generateAnnotations)) {
             $repository = $this->container->get($generateAnnotations->getServiceName());
 
