@@ -59,8 +59,8 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
      */
     public function findOneByContentId($contentId)
     {
-        $qb = $this->createQueryBuilder('c');
-        $qb = $this->LanguageAndPublishedQueryCriteria($qb);
+      
+        $qb = $this->createQueryWithLanguageAndPublished();
 
         $qb->field('contentId')->equals($contentId);
         $qb->sort('version', 'desc');
@@ -77,8 +77,8 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
      */
     public function findByContentTypeAndChoiceTypeAndKeywords($contentType = '', $choiceType = self::CHOICE_AND, $keywords = null)
     {
-        $qb = $this->getQueryFindByContentTypeAndChoiceTypeAndKeywords($contentType, $choiceType, $keywords);
-        $qb = $this->LanguageAndPublishedQueryCriteria($qb);
+        $qb = $this->createQueryWithLanguageAndPublished();
+        $qb = $this->getQueryFindByContentTypeAndChoiceTypeAndKeywords($qb, $contentType, $choiceType, $keywords);
 
         return $this->findLastVersion($qb);
     }
@@ -102,8 +102,7 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
      */
     public function findByContentIdAndLanguage($contentId, $language = null)
     {
-        $qb = $this->createQueryBuilder('c');
-        $qb = $this->defaultQueryCriteria($qb, $contentId, $language, null);
+        $qb = $this->createQueryWithDefaultCriteria($contentId, $language, null);
 
         return $qb->getQuery()->execute();
     }
@@ -117,8 +116,7 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
      */
     public function findOneByContentIdAndLanguageAndVersion($contentId, $language = null, $version = null)
     {
-        $qb = $this->createQueryBuilder('c');
-        $qb = $this->defaultQueryCriteria($qb, $contentId, $language, $version);
+        $qb = $this->createQueryWithDefaultCriteria($contentId, $language, $version);
 
         return $qb->getQuery()->getSingleResult();
     }
@@ -149,21 +147,37 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
     }
 
     /**
+     * @param string|null $languageAndPublishedQueryCriteria
+     *
+     * @return Builder
+     */
+    protected function createQueryWithLanguage($language = null)
+    {
+        $qb = $this->createQueryBuilder('c');
+
+        if (is_null($language)) {
+            $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
+        }
+
+        $qb->field('language')->equals($language);
+
+        return $qb;
+    }
+
+    /**
      * @param string      $contentId
      * @param string|null $language
      * @param int|null    $version
      *
      * @return Builder
      */
-    protected function defaultQueryCriteria(Builder $qb, $contentId, $language = null, $version = null)
+    protected function createQueryWithDefaultCriteria($contentId, $language = null, $version = null)
     {
-        if (is_null($language)) {
-            $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
-        }
+        $qb = $this->createQueryWithLanguage($language);
 
         $qb->field('contentId')->equals($contentId);
-        $qb->field('language')->equals($language);
         $qb->field('deleted')->equals(false);
+
         if (is_null($version)) {
             $qb->sort('version', 'desc');
         } else {
@@ -178,13 +192,10 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
      *
      * @return Builder
      */
-    protected function languageAndPublishedQueryCriteria(Builder $qb, $language = null)
+    protected function createQueryWithLanguageAndPublished($language = null)
     {
-        if (is_null($language)) {
-            $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
-        }
+        $qb = $this->createQueryWithLanguage($language);
 
-        $qb->field('language')->equals($language);
         $qb->field('deleted')->equals(false);
         $qb->field('status.published')->equals(true);
 
@@ -216,10 +227,8 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
      * @param $keywords
      * @return Builder
      */
-    protected function getQueryFindByContentTypeAndChoiceTypeAndKeywords($contentType, $choiceType, $keywords)
+    protected function getQueryFindByContentTypeAndChoiceTypeAndKeywords(Builder $qb, $contentType, $choiceType, $keywords)
     {
-        $qb = $this->createQueryBuilder('c');
-
         $addMethod = 'addAnd';
         if ($choiceType == self::CHOICE_OR) {
             $addMethod = 'addOr';
