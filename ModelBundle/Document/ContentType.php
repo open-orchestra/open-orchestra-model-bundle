@@ -6,6 +6,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Gedmo\Blameable\Traits\BlameableDocument;
 use Gedmo\Timestampable\Traits\TimestampableDocument;
 use Gedmo\Mapping\Annotation as Gedmo;
+use OpenOrchestra\ModelBundle\MongoTrait\Statusable;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -23,6 +24,7 @@ use OpenOrchestra\ModelInterface\ModelTrait\TranslatedValueFilter;
  */
 class ContentType implements ContentTypeInterface
 {
+    use Statusable;
     use BlameableDocument;
     use TimestampableDocument;
     use TranslatedValueFilter;
@@ -52,13 +54,6 @@ class ContentType implements ContentTypeInterface
      * @ODM\Field(type="int")
      */
     protected $version = 1;
-
-    /**
-     * @var StatusInterface $status
-     *
-     * @ODM\EmbedOne(targetDocument="EmbedStatus")
-     */
-    protected $status;
 
     /**
      * @var boolean $deleted
@@ -187,26 +182,6 @@ class ContentType implements ContentTypeInterface
     public function getNames()
     {
         return $this->names;
-    }
-
-    /**
-     * Set status
-     *
-     * @param StatusInterface|null $status
-     */
-    public function setStatus(StatusInterface $status = null)
-    {
-        $this->status = $status;
-    }
-
-    /**
-     * Get status
-     *
-     * @return StatusInterface $status
-     */
-    public function getStatus()
-    {
-        return $this->status;
     }
 
     /**
