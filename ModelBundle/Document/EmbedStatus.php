@@ -20,11 +20,11 @@ class EmbedStatus extends AbstractStatus implements EmbedStatusInterface
     public function __construct(StatusInterface $status)
     {
         $this->id = $status->getId();
+        $this->setName($status->getName());
         $this->setPublished($status->isPublished());
         $this->setInitial($status->isInitial());
-        $this->setName($status->getName());
+        $this->setDisplayColor($status->getDisplayColor());
         $this->labels = $status->getLabels();
-        $this->displayColor = $status->getDisplayColor();
 
         $this->toRoles = new ArrayCollection();
         foreach ($status->getToRoles() as $toRole) {
