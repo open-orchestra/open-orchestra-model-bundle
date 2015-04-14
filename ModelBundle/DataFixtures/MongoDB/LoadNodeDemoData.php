@@ -171,6 +171,7 @@ class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterfac
 
         $nodeTransverse = new Node();
         $nodeTransverse->setNodeId(NodeInterface::TRANSVERSE_NODE_ID);
+        $nodeTransverse->setMaxAge(1000);
         $nodeTransverse->setNodeType(NodeInterface::TYPE_GENERAL);
         $nodeTransverse->setName(NodeInterface::TRANSVERSE_NODE_ID);
         $nodeTransverse->setSiteId('2');
@@ -276,6 +277,7 @@ class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterfac
 
         $siteHome = new Node();
         $siteHome->setNodeId(NodeInterface::ROOT_NODE_ID);
+        $siteHome->setMaxAge(1000);
         $siteHome->setNodeType('page');
         $siteHome->setName('Home');
         $siteHome->setSiteId('2');
@@ -385,6 +387,7 @@ Nativement, multi-sites multi support, facile d’intégration au SI, ouvert ver
 
         $siteWhat = new Node();
         $siteWhat->setNodeId('fixture_page_what_is_orchestra');
+        $siteWhat->setMaxAge(1000);
         $siteWhat->setNodeType('page');
         $siteWhat->setName('Orchestra ?');
         $siteWhat->setSiteId('2');
@@ -479,6 +482,7 @@ Nativement, multi-sites multi support, facile d’intégration au SI, ouvert ver
 
         $siteStart = new Node();
         $siteStart->setNodeId('fixture_page_start_orchestra');
+        $siteStart->setMaxAge(1000);
         $siteStart->setNodeType('page');
         $siteStart->setName('Get Started');
         $siteStart->setSiteId('2');
@@ -502,7 +506,7 @@ Nativement, multi-sites multi support, facile d’intégration au SI, ouvert ver
         $siteStart->setSitemapChangefreq('monthly');
         $siteStart->setSitemapPriority('0.25');
 
-        
+
         return $siteStart;
     }
 
@@ -576,6 +580,7 @@ Note, that many languages are just under translation, and the untranslated parts
 
         $siteDoc = new Node();
         $siteDoc->setNodeId('fixture_page_documentation');
+        $siteDoc->setMaxAge(1000);
         $siteDoc->setNodeType('page');
         $siteDoc->setName('Documentation');
         $siteDoc->setSiteId('2');
@@ -675,6 +680,7 @@ Enfin, la digitalisation des applications et les stratégies mobiles de l’entr
 
         $siteCom = new Node();
         $siteCom->setNodeId('fixture_page_community');
+        $siteCom->setMaxAge(1000);
         $siteCom->setNodeType('page');
         $siteCom->setName('Communauté');
         $siteCom->setSiteId('2');
@@ -768,6 +774,7 @@ Enfin, la digitalisation des applications et les stratégies mobiles de l’entr
 
         $siteAboutUs = new Node();
         $siteAboutUs->setNodeId('fixture_page_about_us');
+        $siteAboutUs->setMaxAge(1000);
         $siteAboutUs->setNodeType('page');
         $siteAboutUs->setName('A propos');
         $siteAboutUs->setSiteId('2');
@@ -863,6 +870,7 @@ Enfin, la digitalisation des applications et les stratégies mobiles de l’entr
 
         $siteOurTeam = new Node();
         $siteOurTeam->setNodeId('fixture_page_our_team');
+        $siteOurTeam->setMaxAge(1000);
         $siteOurTeam->setNodeType('page');
         $siteOurTeam->setName('Fixture page our team');
         $siteOurTeam->setSiteId('2');
@@ -959,6 +967,7 @@ Ces Victoires mettent en lumière celles et ceux qui, chaque jour, agissent pour
 
         $siteNews = new Node();
         $siteNews->setNodeId('fixture_page_news');
+        $siteNews->setMaxAge(1000);
         $siteNews->setNodeType('page');
         $siteNews->setName('Fixture page news');
         $siteNews->setSiteId('2');
@@ -1046,6 +1055,7 @@ Ces Victoires mettent en lumière celles et ceux qui, chaque jour, agissent pour
 
         $siteJoinUs = new Node();
         $siteJoinUs->setNodeId('fixture_page_join_us');
+        $siteJoinUs->setMaxAge(1000);
         $siteJoinUs->setNodeType('page');
         $siteJoinUs->setName('Fixture page join us');
         $siteJoinUs->setSiteId('2');
@@ -1137,6 +1147,7 @@ Smart.eolas est le fruit de 15 ans d’expérience, à la fois en tant que spéc
 
         $siteNetwork = new Node();
         $siteNetwork->setNodeId('fixture_page_networks');
+        $siteNetwork->setMaxAge(1000);
         $siteNetwork->setNodeType('page');
         $siteNetwork->setName('Fixture page networks');
         $siteNetwork->setSiteId('2');
@@ -1217,6 +1228,7 @@ Smart.eolas est le fruit de 15 ans d’expérience, à la fois en tant que spéc
 
         $siteContact = new Node();
         $siteContact->setNodeId('fixture_page_contact');
+        $siteContact->setMaxAge(1000);
         $siteContact->setNodeType('page');
         $siteContact->setName('Contact');
         $siteContact->setSiteId('2');
@@ -1311,6 +1323,7 @@ Smart.eolas est le fruit de 15 ans d’expérience, à la fois en tant que spéc
 
         $siteLegal = new Node();
         $siteLegal->setNodeId('fixture_page_legal_mentions');
+        $siteLegal->setMaxAge(1000);
         $siteLegal->setNodeType('page');
         $siteLegal->setName('Fixture page legal mentions');
         $siteLegal->setSiteId('2');
