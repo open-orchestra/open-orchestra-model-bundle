@@ -129,7 +129,7 @@ class ContentRepositoryTest extends KernelTestCase
 
         $this->assertCount($count, $elements);
     }
-    
+
     /**
      * @return array
      */
