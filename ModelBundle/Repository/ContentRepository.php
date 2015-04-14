@@ -53,14 +53,24 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
     }
 
     /**
+    * @param string $contentId
+    *
+    * @return ContentInterface
+    */
+    public function findOneByContentId($contentId)
+    {
+        return $this->findOneBy(array('contentId' => $contentId));
+    }
+
+    /**
      * @param string $contentId
+     * @param string|null $language
      *
      * @return ContentInterface
      */
-    public function findOneByContentId($contentId)
+    public function findLastPublishedVersionByContentIdAndLanguage($contentId, $language = null)
     {
-      
-        $qb = $this->createQueryWithLanguageAndPublished();
+        $qb = $this->createQueryWithLanguageAndPublished($language);
 
         $qb->field('contentId')->equals($contentId);
         $qb->sort('version', 'desc');

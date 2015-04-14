@@ -93,6 +93,29 @@ class ContentRepositoryTest extends KernelTestCase
     }
 
     /**
+     * @param string $contentId
+     *
+     * @dataProvider providefindLastPublishedVersionByContentIdAndLanguage
+     */
+    public function testFindLastPublishedVersionByContentIdAndLanguage($contentId, $version, $language = null)
+    {
+        $content = $this->repository->findOneByContentId($contentId);
+        $this->assertSameContent($language, $version, null, $contentId, $content);
+        $this->assertEquals($contentId, $content->getContentId());
+    }
+
+    /**
+     * @return array
+     */
+    public function providefindLastPublishedVersionByContentIdAndLanguage()
+    {
+        return array(
+            array('notre_vision', 1, 'fr'),
+            array('bien_vivre_en_france', 1),
+        );
+    }
+
+    /**
      * @param string      $contentType
      * @param string      $choiceType
      * @param string|null $keywords
