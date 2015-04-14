@@ -124,6 +124,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
 
         $nodeTransverse = new Node();
         $nodeTransverse->setNodeId(NodeInterface::TRANSVERSE_NODE_ID);
+        $nodeTransverse->setMaxAge(1000);
         $nodeTransverse->setNodeType(NodeInterface::TYPE_GENERAL);
         $nodeTransverse->setName(NodeInterface::TRANSVERSE_NODE_ID);
         $nodeTransverse->setSiteId('1');
@@ -240,6 +241,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
 
         $home = new Node();
         $home->setNodeId(NodeInterface::ROOT_NODE_ID);
+        $home->setMaxAge(1000);
         $home->setNodeType(NodeInterface::TYPE_DEFAULT);
         $home->setSiteId('1');
         $home->setParentId('-');
@@ -318,6 +320,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
 
         $home = new Node();
         $home->setNodeId(NodeInterface::ROOT_NODE_ID);
+        $home->setMaxAge(1000);
         $home->setNodeType(NodeInterface::TYPE_DEFAULT);
         $home->setSiteId('1');
         $home->setParentId('-');
@@ -470,6 +473,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
 
         $full = new Node();
         $full->setNodeId('fixture_full');
+        $full->setMaxAge(1000);
         $full->setNodeType(NodeInterface::TYPE_DEFAULT);
         $full->setSiteId('1');
         $full->setParentId(NodeInterface::ROOT_NODE_ID);
@@ -513,6 +517,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
 
         $node = new Node();
         $node->setNodeId('fixutre_generic');
+        $node->setMaxAge(1000);
         $node->setNodeType(NodeInterface::TYPE_DEFAULT);
         $node->setSiteId('1');
         $node->setParentId(NodeInterface::ROOT_NODE_ID);
@@ -579,6 +584,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
 
         $node = new Node();
         $node->setNodeId('fixture_about_us');
+        $node->setMaxAge(1000);
         $node->setNodeType(NodeInterface::TYPE_DEFAULT);
         $node->setName('Fixture About Us');
         $node->setSiteId('1');
@@ -624,6 +630,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
 
         $node = new Node();
         $node->setNodeId('fixture_deleted');
+        $node->setMaxAge(1000);
         $node->setNodeType(NodeInterface::TYPE_DEFAULT);
         $node->setName('Fixture deleted');
         $node->setSiteId('1');
@@ -667,6 +674,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
 
         $aboutUs = new Node();
         $aboutUs->setNodeId('fixture_deleted_son');
+        $aboutUs->setMaxAge(1000);
         $aboutUs->setNodeType(NodeInterface::TYPE_DEFAULT);
         $aboutUs->setName('Fixture deleted son');
         $aboutUs->setSiteId('1');
@@ -721,6 +729,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
 
         $bd = new Node();
         $bd->setNodeId('fixture_bd');
+        $bd->setMaxAge(1000);
         $bd->setNodeType(NodeInterface::TYPE_DEFAULT);
         $bd->setName('Fixture B&D');
         $bd->setSiteId('1');
@@ -764,6 +773,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
 
         $interakting = new Node();
         $interakting->setNodeId('fixture_interakting');
+        $interakting->setMaxAge(1000);
         $interakting->setNodeType(NodeInterface::TYPE_DEFAULT);
         $interakting->setName('Fixture Interakting');
         $interakting->setSiteId('1');
@@ -808,6 +818,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
 
         $contactUs = new Node();
         $contactUs->setNodeId('fixture_contact_us');
+        $contactUs->setMaxAge(1000);
         $contactUs->setNodeType(NodeInterface::TYPE_DEFAULT);
         $contactUs->setName('Fixture Contact Us');
         $contactUs->setSiteId('1');
@@ -852,6 +863,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
 
         $directory = new Node();
         $directory->setNodeId('fixture_directory');
+        $directory->setMaxAge(1000);
         $directory->setNodeType(NodeInterface::TYPE_DEFAULT);
         $directory->setName('Fixture Directory');
         $directory->setSiteId('1');
@@ -979,6 +991,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
 
         $search = new Node();
         $search->setNodeId('fixture_search');
+        $search->setMaxAge(1000);
         $search->setNodeType(NodeInterface::TYPE_DEFAULT);
         $search->setName('Fixture Search');
         $search->setSiteId('1');
