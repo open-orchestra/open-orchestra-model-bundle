@@ -87,8 +87,7 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
      */
     public function findByContentTypeAndChoiceTypeAndKeywords($contentType = '', $choiceType = self::CHOICE_AND, $keywords = null)
     {
-        $qb = $this->createQueryWithLanguageAndPublished();
-        $qb = $this->getQueryFindByContentTypeAndChoiceTypeAndKeywords($qb, $contentType, $choiceType, $keywords);
+        $qb = $this->createQueryFindByContentTypeAndChoiceTypeAndKeywords($contentType, $choiceType, $keywords);
 
         return $this->findLastVersion($qb);
     }
@@ -232,13 +231,16 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
     }
 
     /**
-     * @param $contentType
-     * @param $choiceType
-     * @param $keywords
+     * @param string $contentType
+     * @param string $choiceType
+     * @param string $keywords
+     *
      * @return Builder
      */
-    protected function getQueryFindByContentTypeAndChoiceTypeAndKeywords(Builder $qb, $contentType, $choiceType, $keywords)
+    protected function createQueryFindByContentTypeAndChoiceTypeAndKeywords($contentType, $choiceType, $keywords)
     {
+        $qb = $this->createQueryWithLanguageAndPublished();
+
         $addMethod = 'addAnd';
         if ($choiceType == self::CHOICE_OR) {
             $addMethod = 'addOr';
