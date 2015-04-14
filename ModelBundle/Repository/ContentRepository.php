@@ -53,10 +53,10 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
     }
 
     /**
-    * @param string $contentId
-    *
-    * @return ContentInterface
-    */
+     * @param string $contentId
+     *
+     * @return ContentInterface
+     */
     public function findOneByContentId($contentId)
     {
         return $this->findOneBy(array('contentId' => $contentId));
