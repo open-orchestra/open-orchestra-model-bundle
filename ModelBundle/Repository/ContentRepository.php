@@ -28,30 +28,6 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
     }
 
     /**
-     * @param string      $contentId
-     * @param string|null $language
-     * @param int|null    $version
-     *
-     * @return Builder
-     */
-    protected function defaultQueryCriteria(Builder $qb, $contentId, $language = null, $version = null)
-    {
-        if (is_null($language)) {
-            $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
-        }
-        $qb->field('contentId')->equals($contentId);
-        $qb->field('language')->equals($language);
-        $qb->field('deleted')->equals(false);
-        if (is_null($version)) {
-            $qb->sort('version', 'desc');
-        } else {
-            $qb->field('version')->equals((int) $version);
-        }
-
-        return $qb;
-    }
-
-    /**
      * Get all content if the contentType is "news"
      *
      * @return array list of news
@@ -87,17 +63,19 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
     }
 
     /**
-     * @param string $contentType
-     * @param string $choiceType
-     * @param string $keywords
+     * @param string $contentId
+     * @param string|null $language
      *
-     * @return array
+     * @return ContentInterface
      */
-    public function findByContentTypeAndChoiceTypeAndKeywords($contentType = '', $choiceType = self::CHOICE_AND, $keywords = null)
+    public function findLastPublishedVersionByContentIdAndLanguage($contentId, $language = null)
     {
-        $qb = $this->getQueryFindByContentTypeAndChoiceTypeAndKeywords($contentType, $choiceType, $keywords);
+        $qb = $this->createQueryWithLanguageAndPublished($language);
 
-        return $qb->getQuery()->execute();
+        $qb->field('contentId')->equals($contentId);
+        $qb->sort('version', 'desc');
+
+        return $qb->getQuery()->getSingleResult();
     }
 
     /**
@@ -107,11 +85,11 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
      *
      * @return array
      */
-    public function findByContentTypeAndChoiceTypeAndKeywordsNotHydrated($contentType = '', $choiceType = self::CHOICE_AND, $keywords = null)
+    public function findByContentTypeAndChoiceTypeAndKeywords($contentType = '', $choiceType = self::CHOICE_AND, $keywords = null)
     {
-        $qb = $this->getQueryFindByContentTypeAndChoiceTypeAndKeywords($contentType, $choiceType, $keywords);
+        $qb = $this->createQueryFindByContentTypeAndChoiceTypeAndKeywords($contentType, $choiceType, $keywords);
 
-        return $qb->hydrate(false)->getQuery()->execute();
+        return $this->findLastVersion($qb);
     }
 
     /**
@@ -133,8 +111,7 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
      */
     public function findByContentIdAndLanguage($contentId, $language = null)
     {
-        $qb = $this->createQueryBuilder('c');
-        $qb = $this->defaultQueryCriteria($qb, $contentId, $language, null);
+        $qb = $this->createQueryWithDefaultCriteria($contentId, $language, null);
 
         return $qb->getQuery()->execute();
     }
@@ -148,8 +125,7 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
      */
     public function findOneByContentIdAndLanguageAndVersion($contentId, $language = null, $version = null)
     {
-        $qb = $this->createQueryBuilder('c');
-        $qb = $this->defaultQueryCriteria($qb, $contentId, $language, $version);
+        $qb = $this->createQueryWithDefaultCriteria($contentId, $language, $version);
 
         return $qb->getQuery()->getSingleResult();
     }
@@ -167,8 +143,80 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
             $qb->field('contentType')->equals($contentType);
         }
         $qb->field('deleted')->equals(false);
-        $qb->sort('version', 'desc');
 
+        return $this->findLastVersion($qb);
+    }
+
+    /**
+     * @return array
+     */
+    public function findAllDeleted()
+    {
+        return parent::findBy(array('deleted' => true));
+    }
+
+    /**
+     * @param string|null $languageAndPublishedQueryCriteria
+     *
+     * @return Builder
+     */
+    protected function createQueryWithLanguage($language = null)
+    {
+        $qb = $this->createQueryBuilder('c');
+
+        if (is_null($language)) {
+            $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
+        }
+
+        $qb->field('language')->equals($language);
+
+        return $qb;
+    }
+
+    /**
+     * @param string      $contentId
+     * @param string|null $language
+     * @param int|null    $version
+     *
+     * @return Builder
+     */
+    protected function createQueryWithDefaultCriteria($contentId, $language = null, $version = null)
+    {
+        $qb = $this->createQueryWithLanguage($language);
+
+        $qb->field('contentId')->equals($contentId);
+        $qb->field('deleted')->equals(false);
+
+        if (is_null($version)) {
+            $qb->sort('version', 'desc');
+        } else {
+            $qb->field('version')->equals((int) $version);
+        }
+
+        return $qb;
+    }
+
+    /**
+     * @param string|null $language
+     *
+     * @return Builder
+     */
+    protected function createQueryWithLanguageAndPublished($language = null)
+    {
+        $qb = $this->createQueryWithLanguage($language);
+
+        $qb->field('deleted')->equals(false);
+        $qb->field('status.published')->equals(true);
+
+        return $qb;
+    }
+
+    /**
+     * @return array
+     */
+    protected function findLastVersion(Builder $qb)
+    {
+        $qb->sort('version', 'desc');
         $list = $qb->getQuery()->execute();
 
         $contents = array();
@@ -183,22 +231,15 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
     }
 
     /**
-     * @return array
-     */
-    public function findAllDeleted()
-    {
-        return parent::findBy(array('deleted' => true));
-    }
-
-    /**
-     * @param $contentType
-     * @param $choiceType
-     * @param $keywords
+     * @param string $contentType
+     * @param string $choiceType
+     * @param string $keywords
+     *
      * @return Builder
      */
-    protected function getQueryFindByContentTypeAndChoiceTypeAndKeywords($contentType, $choiceType, $keywords)
+    protected function createQueryFindByContentTypeAndChoiceTypeAndKeywords($contentType, $choiceType, $keywords)
     {
-        $qb = $this->createQueryBuilder('c');
+        $qb = $this->createQueryWithLanguageAndPublished();
 
         $addMethod = 'addAnd';
         if ($choiceType == self::CHOICE_OR) {
