@@ -10,6 +10,7 @@ use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\AreaFinderTrait;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\FieldAutoGenerableRepositoryInterface;
 use Doctrine\ODM\MongoDB\Query\Builder;
 
 /**

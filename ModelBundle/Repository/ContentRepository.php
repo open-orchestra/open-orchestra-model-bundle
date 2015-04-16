@@ -4,7 +4,7 @@ namespace OpenOrchestra\ModelBundle\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
-use OpenOrchestra\ModelBundle\Repository\FieldAutoGenerableRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\FieldAutoGenerableRepositoryInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use Doctrine\ODM\MongoDB\Query\Builder;
