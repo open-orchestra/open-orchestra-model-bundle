@@ -8,7 +8,6 @@ use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\TemplateInterface;
 use OpenOrchestra\ModelInterface\Repository\FieldAutoGenerableRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
-use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
 
 /**
  * Class TemplateRepository
