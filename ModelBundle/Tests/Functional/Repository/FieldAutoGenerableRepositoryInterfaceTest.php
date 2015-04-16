@@ -28,7 +28,7 @@ class FieldAutoGenerableRepositoryInterfaceTest extends KernelTestCase
     {
         $repository = static::$kernel->getContainer()->get($serviceName);
 
-        $this->assertInstanceOf('OpenOrchestra\ModelBundle\Repository\FieldAutoGenerableRepositoryInterface', $repository);
+        $this->assertInstanceOf('OpenOrchestra\ModelInterface\Repository\FieldAutoGenerableRepositoryInterface', $repository);
     }
 
     /**

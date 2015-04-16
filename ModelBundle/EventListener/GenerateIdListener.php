@@ -5,7 +5,7 @@ namespace OpenOrchestra\ModelBundle\EventListener;
 use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Component\DependencyInjection\Container;
-use OpenOrchestra\ModelBundle\Repository\FieldAutoGenerableRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\FieldAutoGenerableRepositoryInterface;
 
 /**
  * Class GenerateIdListener
