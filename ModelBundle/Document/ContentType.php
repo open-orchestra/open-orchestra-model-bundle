@@ -63,6 +63,13 @@ class ContentType implements ContentTypeInterface
     protected $deleted = false;
 
     /**
+     * @var string $template
+     * 
+     * @ODM\Field(type="string")
+     */
+    protected $template;
+
+    /**
      * @var ArrayCollection $fields
      *
      * @ODM\EmbedMany(targetDocument="FieldType")
@@ -108,6 +115,22 @@ class ContentType implements ContentTypeInterface
     public function getDeleted()
     {
         return $this->deleted;
+    }
+
+    /**
+     * @param string $template
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTemplate()
+    {
+        return $this->template;
     }
 
     /**
