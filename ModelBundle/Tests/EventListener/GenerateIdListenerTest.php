@@ -123,7 +123,7 @@ class GenerateIdListenerTest extends \PHPUnit_Framework_TestCase
 
         $repository2 = Phake::mock('Doctrine\ODM\MongoDB\DocumentRepository');
         Phake::when($repository2)->fakeMethod('fakename')->thenReturn(true);
-        Phake::when($repository2)->fakeMethod('fakename_0')->thenReturn(false);
+        Phake::when($repository2)->fakeMethod('fakename_1')->thenReturn(false);
 
         $repository3 = Phake::mock('OpenOrchestra\ModelBundle\Repository\NodeRepository');
         Phake::when($repository3)->testUnicityInContext('fakename')->thenReturn(false);
@@ -131,7 +131,7 @@ class GenerateIdListenerTest extends \PHPUnit_Framework_TestCase
         return array(
             array($repository0, $annotations0, $document0, 'fakename'),
             array($repository1, $annotations1, $document1, 'aaaaaceeeeiiiinooooouuuuyyaaaaaceeeeiiiinooooouuuuy%20%5C'),
-            array($repository2, $annotations2, $document2, 'fakename_0'),
+            array($repository2, $annotations2, $document2, 'fakename_1'),
             array($repository3, $annotations3, $document3, 'fakename'),
         );
     }
