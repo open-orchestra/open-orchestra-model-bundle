@@ -52,7 +52,7 @@ class GenerateIdListener
                 $sourceField = strtolower($sourceField);
                 $sourceField = rawurlencode($sourceField);
                 $generatedField = $sourceField;
-                $count = 0;
+                $count = 1;
                 while($repository->$testMethod($generatedField)){
                     $generatedField = $sourceField . '_' . $count;
                     $count++;

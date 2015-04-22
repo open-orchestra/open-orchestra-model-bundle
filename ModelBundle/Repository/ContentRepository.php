@@ -43,13 +43,13 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
     }
 
     /**
-     * @param string $name
+     * @param string $contentId
      *
      * @return boolean
      */
-    public function testUnicityInContext($name)
+    public function testUnicityInContext($contentId)
     {
-        return $this->findOneByName($name) !== null;
+        return $this->findOneByContentId($contentId) !== null;
     }
 
     /**
