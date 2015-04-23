@@ -64,7 +64,7 @@ class ContentRepositoryTest extends KernelTestCase
     public function provideTestUnicityInContext()
     {
         return array(
-            array('Welcome', true),
+            array('welcome', true),
             array('fakeContentId', false),
         );
     }
