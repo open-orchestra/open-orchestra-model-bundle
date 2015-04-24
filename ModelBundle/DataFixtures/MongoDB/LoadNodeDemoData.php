@@ -1176,78 +1176,116 @@ Smart.eolas est le fruit de 15 ans d’expérience, à la fois en tant que spéc
      */
     public function generateNodeSiteContact()
     {
-        $siteContactBlock0 = new Block();
-        $siteContactBlock0->setLabel('Wysiwyg');
-        $siteContactBlock0->setComponent(TinyMCEWysiwygStrategy::TINYMCEWYSIWYG);
-        $siteContactBlock0->setAttributes(array(
-            "htmlContent" => "<div class='content2' id='contactArea' ><div id='contactInformation'><h3>Contactez-nous</h3><img src='http://media.phporchestra.inte/themePresentation-logoOrchestra.png' /><div id='infoInterakting'><p><b>Interakting</b> <br>Groupe Business & Decision<br>153 Rue de Courcelles<br>75017 PARIS FRANCE<br><span class='fontOrange'>Tél:</span> +33 1 56 21 21 21<br> <span class='fontOrange'>Fax:</span> +33 1 56 21 21 22</p></div><div id='accessInterakting'><h3>Accès:</h3> <p><span class='fontOrange'>Metro ligne 3</span> arrêt Pereire<br><span class='fontOrange'>RER ligne C</span> arrêt Pereire-Levallois</p> </div><div id='googleMapsInterakting'><iframe width='425' height='350' frameborder='0' scrolling='no' marginheight='0' marginwidth='0' src='https://maps.google.fr/maps?f=q&amp;source=s_q&amp;hl=fr&amp;geocode=&amp;q=153+Rue+de+Courcelles+75817+Paris&amp;aq=&amp;sll=48.834414,2.499298&amp;sspn=0.523838,0.909805&amp;ie=UTF8&amp;hq=&amp;hnear=153+Rue+de+Courcelles,+75817+Paris&amp;ll=48.883747,2.298345&amp;spn=0.004088,0.007108&amp;t=m&amp;z=14&amp;output=embed'></iframe><br /><small><a href='https://maps.google.fr/maps?f=q&amp;source=embed&amp;hl=fr&amp;geocode=&amp;q=153+Rue+de+Courcelles+75817+Paris&amp;aq=&amp;sll=48.834414,2.499298&amp;sspn=0.523838,0.909805&amp;ie=UTF8&amp;hq=&amp;hnear=153+Rue+de+Courcelles,+75817+Paris&amp;ll=48.883747,2.298345&amp;spn=0.004088,0.007108&amp;t=m&amp;z=14' style='color:#0000FF;text-align:left'>Agrandir le plan</a></small></div></div><div id='contactForm'><h3>Une Demande ?<table border='0'><tbody><tr><td valign='top'> Nom </td><td> <input type='text' placeholder='Votre nom' required/> </td></tr><tr> <td valign='top'> Société </td><td> <input type='text' placeholder='Votre société'/> </td></tr><tr><td valign='top'> Email  </td><td> <input type='email' placeholder='Votre e-mail' required/> </td></tr><tr> <td valign='top'> Téléphone </td><td> <input type='tel' placeholder='Votre téléphone' required/></tr><tr><td valign='top'> Sujet   </td><td> <input type='text' placeholder='Votre sujet' required/> </td></tr><tr> <td valign='top'> Type de demande   </td><td> <select><option> Orchestra </option><option> Presse </option><option> Information </option><option> Emploi </option></select></td></tr><tr><td valign='top'> Message </td><td> <textarea  rows='10' cols='25' placeholder='Votre message' required> </textarea> </td></tr> <tr> <td> <input type='submit' value='OK' /></td> </tr> </tbody></table></div></div>",
-        ));
-        $siteContactBlock0->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));
+	    $siteContactBlock0 = new Block();
+	    $siteContactBlock0->setLabel('Wysiwyg');
+	    $siteContactBlock0->setComponent(TinyMCEWysiwygStrategy::TINYMCEWYSIWYG);
+	    $siteContactBlock0->setAttributes(array(
+		    "htmlContent" => '<h1>Une demande ?</h1>
+<form action="#" method="post" name="Contact" id="contactForm">
+    <label class="required" for="Contact_name">Nom</label>
+<input type="text" required="required" name="Contact[name]" id="Contact_name" />
+<label class="Contact_company" for="Contact_company">Entreprise</label>
+<input type="text" required="required" name="Contact[company]" id="Contact_company">
+<label class="required" for="Contact_email">Email</label>
+<input type="email" required="required" name="Contact[email]" id="Contact_email">
+<label class="Contact_phone" for="Contact_phone">Téléphone</label>
+<input type="text" required="required" name="Contact[phone]" id="Contact_phone">
+<label class="required" for="Contact_subject">Sujet</label>
+<input type="text" required="required" name="Contact[subject]" id="Contact_subject">
+<label class="required" for="Contact_demandType">Type de demande</label>
+<select required="required" name="Contact[demandType]" id="Contact_demandType"><option value="orchestra"> Orchestra </option><option value="press"> Presse </option><option value="information"> Information </option><option value="job"> Emploi </option></select>
+<label class="required" for="Contact_message">Message</label>
+<textarea required="required" name="Contact[message]" id="Contact_message"></textarea>
+<button name="Contact[submit]" id="Contact_submit" type="submit">Submit</button>
+<input type="hidden" value="zM1Vy_ZYqb3_GpBvBN_PyHHWqEE26UTwrsbGD3Sp1m8" name="Contact[_token]" id="Contact__token">
+</form>',
+	    ));
+	    $siteContactBlock0->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));
 
-        $siteContactArea1 = new Area();
-        $siteContactArea1->setLabel('Logo');
-        $siteContactArea1->setAreaId('logo');
-        $siteContactArea1->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 0));
+	    $siteContactBlock1 = new Block();
+	    $siteContactBlock1->setLabel('Wysiwyg 2');
+	    $siteContactBlock1->setComponent(TinyMCEWysiwygStrategy::TINYMCEWYSIWYG);
+	    $siteContactBlock1->setAttributes(array("htmlContent" =>
+		    '<div id="contactInformation">
+<h3>Contactez-nous</h3>
+<img src="http://media.phporchestra.inte/themePresentation-logoOrchestra.png" />
+<div id="infoInterakting" ><p><b>Interakting</b><br>Groupe Business & Decision<br>153 Rue de Courcelles<br>75017 PARIS FRANCE<br><span class="fontOrange">Tél:</span> +33 1 56 21 21 21<br><span class="fontOrange">Fax:</span> +33 1 56 21 21 22</p></div>
+<div id="accessInterakting"><h3>Accès:</h3> <p><span class="fontOrange">Metro ligne 3</span> arrêt Pereire<br><span class="fontOrange">RER ligne C</span> arrêt Pereire-Levallois</p></div>
+<div id="googleMapsInterakting""><iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.fr/maps?f=q&amp;source=s_q&amp;hl=fr&amp;geocode=&amp;q=153+Rue+de+Courcelles+75817+Paris&amp;aq=&amp;sll=48.834414,2.499298&amp;sspn=0.523838,0.909805&amp;ie=UTF8&amp;hq=&amp;hnear=153+Rue+de+Courcelles,+75817+Paris&amp;ll=48.883747,2.298345&amp;spn=0.004088,0.007108&amp;t=m&amp;z=14&amp;output=embed"></iframe><br /><small><a href="https://maps.google.fr/maps?f=q&amp;source=embed&amp;hl=fr&amp;geocode=&amp;q=153+Rue+de+Courcelles+75817+Paris&amp;aq=&amp;sll=48.834414,2.499298&amp;sspn=0.523838,0.909805&amp;ie=UTF8&amp;hq=&amp;hnear=153+Rue+de+Courcelles,+75817+Paris&amp;ll=48.883747,2.298345&amp;spn=0.004088,0.007108&amp;t=m&amp;z=14" style="color:#0000FF;text-align:left">Agrandir le plan</a></small></div>
+</div>'));
+	    $siteContactBlock1->addArea(array('nodeId' => 0, 'areaId' => 'moduleArea'));
 
-        $siteContactArea2 = new Area();
-        $siteContactArea2->setLabel('Sub menu');
-        $siteContactArea2->setAreaId('sub_menu');
-        $siteContactArea2->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 1));
+	    $siteContactArea1 = new Area();
+	    $siteContactArea1->setLabel('Logo');
+	    $siteContactArea1->setAreaId('logo');
+	    $siteContactArea1->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 0));
 
-        $siteContactArea3 = new Area();
-        $siteContactArea3->setLabel('Main menu');
-        $siteContactArea3->setAreaId('main_menu');
-        $siteContactArea3->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 2));
+	    $siteContactArea2 = new Area();
+	    $siteContactArea2->setLabel('Sub menu');
+	    $siteContactArea2->setAreaId('sub_menu');
+	    $siteContactArea2->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 1));
 
-        $siteContactArea0 = new Area();
-        $siteContactArea0->setLabel('Header');
-        $siteContactArea0->setAreaId('header');
-        $siteContactArea0->addArea($siteContactArea1);
-        $siteContactArea0->addArea($siteContactArea2);
-        $siteContactArea0->addArea($siteContactArea3);
+	    $siteContactArea3 = new Area();
+	    $siteContactArea3->setLabel('Main menu');
+	    $siteContactArea3->setAreaId('main_menu');
+	    $siteContactArea3->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 2));
 
-        $siteContactArea5 = new Area();
-        $siteContactArea5->setLabel('Main content area 1');
-        $siteContactArea5->setAreaId('mainContentArea1');
-        $siteContactArea5->addBlock(array('nodeId' => 0, 'blockId' => 0));
 
-        $siteContactArea4 = new Area();
-        $siteContactArea4->setLabel('My main');
-        $siteContactArea4->setAreaId('myMain');
-        $siteContactArea4->addArea($siteContactArea5);
+	    $siteContactArea0 = new Area();
+	    $siteContactArea0->setLabel('Header');
+	    $siteContactArea0->setAreaId('header');
+	    $siteContactArea0->addArea($siteContactArea1);
+	    $siteContactArea0->addArea($siteContactArea2);
+	    $siteContactArea0->addArea($siteContactArea3);
 
-        $siteContactArea8 = new Area();
-        $siteContactArea8->setLabel('Containe footer');
-        $siteContactArea8->setAreaId('containeFooter');
-        $siteContactArea8->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3));
+	    $siteContactArea5 = new Area();
+	    $siteContactArea5->setLabel('Main content area 1');
+	    $siteContactArea5->setAreaId('mainContentArea1');
+	    $siteContactArea5->addBlock(array('nodeId' => 0, 'blockId' => 0));
 
-        $siteContactArea7 = new Area();
-        $siteContactArea7->setLAbel('Footer');
-        $siteContactArea7->setAreaId('footer');
-        $siteContactArea7->addArea($siteContactArea8);
+	    $siteContactArea6 = new Area();
+	    $siteContactArea6->setLabel('Module area');
+	    $siteContactArea6->setAreaId('moduleArea');
+	    $siteContactArea6->addBlock(array('nodeId' => 0, 'blockId' => 1));
 
-        $siteContact = new Node();
-        $siteContact->setNodeId('fixture_page_contact');
-        $siteContact->setMaxAge(1000);
-        $siteContact->setNodeType('page');
-        $siteContact->setName('Contact');
-        $siteContact->setSiteId('2');
-        $siteContact->setParentId(NodeInterface::ROOT_NODE_ID);
-        $siteContact->setOrder(9);
-        $siteContact->setPath('-');
-        $siteContact->setRoutePattern('/page-contact');
-        $siteContact->setVersion(1);
-        $siteContact->setLanguage('fr');
-        $siteContact->setStatus($this->getReference('status-published'));
-        $siteContact->setDeleted(false);
-        $siteContact->setTemplateId('');
-        $siteContact->setTheme('themePresentation');
-        $siteContact->setInFooter(false);
-        $siteContact->setInMenu(true);
-        $siteContact->addArea($siteContactArea0);
-        $siteContact->addArea($siteContactArea4);
-        $siteContact->addArea($siteContactArea7);
-        $siteContact->addBlock($siteContactBlock0);
+	    $siteContactArea4 = new Area();
+	    $siteContactArea4->setLabel('My main');
+	    $siteContactArea4->setAreaId('myMain');
+	    $siteContactArea4->addArea($siteContactArea5);
+	    $siteContactArea4->addArea($siteContactArea6);
+
+	    $siteContactArea8 = new Area();
+	    $siteContactArea8->setLabel('Containe footer');
+	    $siteContactArea8->setAreaId('containeFooter');
+	    $siteContactArea8->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3));
+
+	    $siteContactArea7 = new Area();
+	    $siteContactArea7->setLAbel('Footer');
+	    $siteContactArea7->setAreaId('footer');
+	    $siteContactArea7->addArea($siteContactArea8);
+
+	    $siteContact = new Node();
+	    $siteContact->setNodeId('fixture_page_contact');
+	    $siteContact->setNodeType('page');
+	    $siteContact->setName('Contact');
+	    $siteContact->setSiteId('2');
+	    $siteContact->setParentId(NodeInterface::ROOT_NODE_ID);
+	    $siteContact->setOrder(9);
+	    $siteContact->setPath('-');
+	    $siteContact->setRoutePattern('/page-contact');
+	    $siteContact->setVersion(1);
+	    $siteContact->setLanguage('fr');
+	    $siteContact->setStatus($this->getReference('status-published'));
+	    $siteContact->setDeleted(false);
+	    $siteContact->setTemplateId('');
+	    $siteContact->setTheme('themePresentation');
+	    $siteContact->setInFooter(false);
+	    $siteContact->setInMenu(true);
+	    $siteContact->addArea($siteContactArea0);
+	    $siteContact->addArea($siteContactArea4);
+	    $siteContact->addArea($siteContactArea7);
+	    $siteContact->addBlock($siteContactBlock0);
+	    $siteContact->addBlock($siteContactBlock1);
 
         return $siteContact;
     }
