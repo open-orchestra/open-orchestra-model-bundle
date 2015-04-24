@@ -221,6 +221,7 @@ EOF
 
         $nodeTransverse = new Node();
         $nodeTransverse->setNodeId(NodeInterface::TRANSVERSE_NODE_ID);
+	    $nodeTransverse->setMaxAge(1000);
         $nodeTransverse->setNodeType(NodeInterface::TYPE_GENERAL);
         $nodeTransverse->setName(NodeInterface::TRANSVERSE_NODE_ID);
         $nodeTransverse->setSiteId('2');
@@ -1394,9 +1395,9 @@ EOF
         return $siteNetwork;
     }
 
-     /**
-      * @return Node
-      */
+    /*
+     * @return Node
+     */
     public function generateNodeSiteContact()
     {
         $siteContactBlock1 = new Block();
@@ -1430,7 +1431,6 @@ EOF
 EOF
         ));
         $siteContactBlock1->addArea(array('nodeId' => 0, 'areaId' => 'moduleArea'));
-
 
         $siteContactArea1 = new Area();
         $siteContactArea1->setLabel('Logo');
@@ -1469,6 +1469,11 @@ EOF
         $siteContactArea6->setAreaId('moduleArea');
         $siteContactArea6->setHtmlClass('module-area-contact');
         $siteContactArea6->addBlock(array('nodeId' => 0, 'blockId' => 0));
+
+        $siteContactArea6 = new Area();
+        $siteContactArea6->setLabel('Module area');
+        $siteContactArea6->setAreaId('moduleArea');
+        $siteContactArea6->addBlock(array('nodeId' => 0, 'blockId' => 1));
 
         $siteContactArea4 = new Area();
         $siteContactArea4->setLabel('My main');
