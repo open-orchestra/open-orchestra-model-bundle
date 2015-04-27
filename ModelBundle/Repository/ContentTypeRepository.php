@@ -11,25 +11,6 @@ use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 class ContentTypeRepository extends DocumentRepository implements ContentTypeRepositoryInterface
 {
     /**
-     * @param string   $contentType
-     * @param int|null $version
-     * 
-     * @return array|null|object
-     */
-    public function findOneByContentTypeIdAndVersion($contentType, $version = null)
-    {
-        $qb = $this->createQueryBuilder('n');
-        $qb->field('contentTypeId')->equals($contentType);
-
-        $qb->sort('version', 'desc');
-        if ($version) {
-            $qb->field('version')->equals($version);
-        }
-
-        return $qb->getQuery()->getSingleResult();
-    }
-
-    /**
      * @return array
      */
     public function findAllByDeletedInLastVersion()
