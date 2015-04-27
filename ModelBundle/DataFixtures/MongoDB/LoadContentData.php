@@ -19,11 +19,11 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $objectManager)
     {
-        $objectManager->persist($this->generateContent3('fr'));
-        $objectManager->persist($this->generateContent3('en'));
+        $objectManager->persist($this->generateCarR5('fr'));
+        $objectManager->persist($this->generateCarR5('en'));
 
-        $objectManager->persist($this->generateContent4('fr'));
-        $objectManager->persist($this->generateContent4('en'));
+        $objectManager->persist($this->generateCustomerConvenant('fr'));
+        $objectManager->persist($this->generateCustomerConvenant('en'));
 
         $objectManager->flush();
     }
@@ -37,24 +37,34 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
     {
         return 510;
     }
+
+    /**
+     * Generate a content attribute
+     *
+     * @param string $name
+     * @param string $value
+     *
+     * @return ContentAttribute
+     */
+    protected function generateContentAttribute($name, $value)
+    {
+        $attribute = new ContentAttribute();
+        $attribute->setName($name);
+        $attribute->setValue($value);
+
+        return $attribute;
+    }
+
     /**
      * @return Content
      */
-    public function generateContent3($language)
+    public function generateCarR5($language)
     {
         $content = new Content();
 
-        $attribute1 = new ContentAttribute();
-        $attribute1->setName("name");
-        $attribute1->setValue("R5 3 doors");
-
-        $attribute2 = new ContentAttribute();
-        $attribute2->setName("image");
-        $attribute2->setValue("r5.png");
-
-        $attribute3 = new ContentAttribute();
-        $attribute3->setName("description");
-        $attribute3->setValue("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean non feugiat sem. Aliquam a mauris tellus. In hac habitasse platea dictumst. Nunc eget interdum ante, id mollis diam. Suspendisse sed magna lectus. Aenean fringilla elementum lorem id suscipit. Phasellus feugiat tellus sapien, id tempus nisi ultrices ut.");
+        $attribute1 = $this->generateContentAttribute('car_name', 'R5');
+        $attribute2 = $this->generateContentAttribute('image', 'r5.png');
+        $attribute3 = $this->generateContentAttribute('description', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean non feugiat sem. Aliquam a mauris tellus. In hac habitasse platea dictumst. Nunc eget interdum ante, id mollis diam. Suspendisse sed magna lectus. Aenean fringilla elementum lorem id suscipit. Phasellus feugiat tellus sapien, id tempus nisi ultrices ut.');
 
         $content->setContentId("r5_3_portes");
         $content->setContentType("car");
@@ -76,21 +86,13 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
     /**
      * @return Content
      */
-    public function generateContent4($language)
+    public function generateCustomerConvenant($language)
     {
         $content = new Content();
 
-        $attribute1 = new ContentAttribute();
-        $attribute1->setName("firstname");
-        $attribute1->setValue("Jean-Claude");
-
-        $attribute2 = new ContentAttribute();
-        $attribute2->setName("lastname");
-        $attribute2->setValue("Convenant");
-
-        $attribute3 = new ContentAttribute();
-        $attribute3->setName("identifier");
-        $attribute3->setValue(28);
+        $attribute1 = $this->generateContentAttribute('firstname', 'Jean-Claude');
+        $attribute2 = $this->generateContentAttribute('lastname', 'Convenant');
+        $attribute3 = $this->generateContentAttribute('identifier', 28);
 
         $content->setContentId("jean_paul");
         $content->setContentType("customer");

@@ -51,4 +51,20 @@ class ContentTypeRepository extends DocumentRepository implements ContentTypeRep
 
         return $contentTypes;
     }
+
+    /**
+     * @param string   $contentType
+     * @param int|null $version
+     * 
+     * @return array|null|object
+     */
+    public function findOneByContentTypeIdInLastVersion($contentType)
+    {
+        $qb = $this->createQueryBuilder('n');
+
+        $qb->field('contentTypeId')->equals($contentType);
+        $qb->sort('version', 'desc');
+
+        return $qb->getQuery()->getSingleResult();
+    }
 }

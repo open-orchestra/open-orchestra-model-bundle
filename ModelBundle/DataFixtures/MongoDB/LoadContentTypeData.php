@@ -28,9 +28,6 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $car = $this->generateContentTypeCar();
         $manager->persist($car);
 
-        $carV2 = $this->generateContentTypeCarV2();
-        $manager->persist($carV2);
-
         $customer = $this->generateContentTypeCustomer();
         $manager->persist($customer);
 
@@ -207,7 +204,7 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $frLabel->setValue('Nom');
 
         $carName = new FieldType();
-        $carName->setFieldId('name');
+        $carName->setFieldId('car_name');
         $carName->addLabel($enLabel);
         $carName->addLabel($frLabel);
         $carName->setDefaultValue('');
@@ -248,71 +245,6 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $car->setDeleted(false);
         $car->setStatus($this->getReference('status-published'));
         $car->setVersion(2);
-
-        $car->addFieldType($carName);
-        $car->addFieldType($carDescription);
-
-        return $car;
-    }
-
-    /**
-     * @return ContentType
-     */
-    protected function generateContentTypeCarV2()
-    {
-        $maxLengthOption = $this->generateOption('max_length', 25);
-
-        $required = $this->generateOption('required', true);
-
-        $enLabel = new TranslatedValue();
-        $enLabel->setLanguage('en');
-        $frLabel = new TranslatedValue();
-        $frLabel->setLanguage('fr');
-        $enLabel->setValue('Name');
-        $frLabel->setValue('Nom');
-
-        $carName = new FieldType();
-        $carName->setFieldId('name');
-        $carName->addLabel($enLabel);
-        $carName->addLabel($frLabel);
-        $carName->setDefaultValue('Entrez le nom de la voiture ici');
-        $carName->setSearchable(true);
-        $carName->setType('text');
-        $carName->addOption($maxLengthOption);
-        $carName->addOption($required);
-
-        $enLabel = new TranslatedValue();
-        $enLabel->setLanguage('en');
-        $frLabel = new TranslatedValue();
-        $frLabel->setLanguage('fr');
-        $enLabel->setValue('Description');
-        $frLabel->setValue('Description');
-
-        $carDescription = new FieldType();
-        $carDescription->setFieldId('description');
-        $carDescription->addLabel($enLabel);
-        $carDescription->addLabel($frLabel);
-        $carDescription->setDefaultValue('Et ici une courte description');
-        $carDescription->setSearchable(true);
-        $carDescription->setType('text');
-        $carDescription->addOption($maxLengthOption);
-        $carDescription->addOption($required);
-
-        $en = new TranslatedValue();
-        $en->setLanguage('en');
-        $en->setValue('Car');
-
-        $fr = new TranslatedValue();
-        $fr->setLanguage('fr');
-        $fr->setValue('Voiture');
-
-        $car = new ContentType();
-        $car->setContentTypeId('car');
-        $car->addName($en);
-        $car->addName($fr);
-        $car->setDeleted(false);
-        $car->setStatus($this->getReference('status-draft'));
-        $car->setVersion(3);
 
         $car->addFieldType($carName);
         $car->addFieldType($carDescription);
