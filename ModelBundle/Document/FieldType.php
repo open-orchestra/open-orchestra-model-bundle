@@ -225,6 +225,14 @@ class FieldType implements FieldTypeInterface
     }
 
     /**
+     * Set Options
+     */
+    public function clearOptions()
+    {
+        $this->options = new ArrayCollection();
+    }
+
+    /**
      * @return array
      */
     public function getFormOptions()
