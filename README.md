@@ -14,7 +14,7 @@ The Open Orchestra model bundle
 Usage
 -----
 
-Once you have installed the bundle, you should activate the aggregator query bundle also in the AppKernel :
+Once you have installed the bundle, you should activate the aggregator query bundle also in the AppKernel::registerBundles() :
 
     new OpenOrchestra\ModelBundle\OpenOrchestraModelBundle(),
     new Solution\MongoAggregationBundle\SolutionMongoAggregationBundle(),
@@ -23,6 +23,9 @@ This will allow you to create aggregation query in your repositories by using th
 
     AbstractRepository::createAggregationQuery()
 
-And also return object with the method :
+With the aggregation, mongo does not return the original document, but by using the `$$ROOT` parameter, you can for it to
+add all the informations of the document.
+
+To hydrate all the document using the database result, use the method :
 
     AbstractRepository::hydrateAggregateQuery()
