@@ -34,7 +34,11 @@ class OpenOrchestraModelExtension extends Extension
                             ->addArgument($content['class'])
                             ->addMethodCall('setCurrentSiteManager', array(
                                 new Reference('open_orchestra.manager.current_site')
-                            ));
+                            ))
+                            ->addMethodCall('setAggregationQueryBuilder', array(
+                                new Reference('doctrine_mongodb.odm.default_aggregation_query')
+                            ))
+                        ;
                     } else {
                         $container->register('open_orchestra_model.repository.' . $class, $content['repository'])
                             ->setFactoryService('doctrine.odm.mongodb.document_manager')

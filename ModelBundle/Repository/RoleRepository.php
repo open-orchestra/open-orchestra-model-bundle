@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ModelBundle\Repository;
 
-use Doctrine\ODM\MongoDB\DocumentRepository;
 use OpenOrchestra\ModelInterface\Model\RoleInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface;
@@ -10,7 +9,7 @@ use OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface;
 /**
  * Class RoleRepository
  */
-class RoleRepository extends DocumentRepository implements RoleRepositoryInterface
+class RoleRepository extends AbstractRepository implements RoleRepositoryInterface
 {
     /**
      * Find the role that connect fromStatus to toStatus

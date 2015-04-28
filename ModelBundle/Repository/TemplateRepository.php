@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ModelBundle\Repository;
 
-use Doctrine\ODM\MongoDB\DocumentRepository;
 use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\AreaFinderTrait;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\TemplateInterface;
@@ -12,7 +11,7 @@ use OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
 /**
  * Class TemplateRepository
  */
-class TemplateRepository extends DocumentRepository implements FieldAutoGenerableRepositoryInterface, TemplateRepositoryInterface
+class TemplateRepository extends AbstractRepository implements FieldAutoGenerableRepositoryInterface, TemplateRepositoryInterface
 {
     use AreaFinderTrait;
 

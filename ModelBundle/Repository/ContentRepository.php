@@ -2,8 +2,6 @@
 
 namespace OpenOrchestra\ModelBundle\Repository;
 
-use Doctrine\ODM\MongoDB\DocumentRepository;
-use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Repository\FieldAutoGenerableRepositoryInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
@@ -12,21 +10,8 @@ use Doctrine\ODM\MongoDB\Query\Builder;
 /**
  * Class ContentRepository
  */
-class ContentRepository extends DocumentRepository implements FieldAutoGenerableRepositoryInterface, ContentRepositoryInterface
+class ContentRepository extends AbstractRepository implements FieldAutoGenerableRepositoryInterface, ContentRepositoryInterface
 {
-    /**
-     * @var CurrentSiteIdInterface
-     */
-    protected $currentSiteManager;
-
-    /**
-     * @param CurrentSiteIdInterface $currentSiteManager
-     */
-    public function setCurrentSiteManager(CurrentSiteIdInterface $currentSiteManager)
-    {
-        $this->currentSiteManager = $currentSiteManager;
-    }
-
     /**
      * Get all content if the contentType is "news"
      *
@@ -140,13 +125,20 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
      */
     public function findByContentTypeInLastVersion($contentType = null)
     {
-        $qb = $this->createQueryBuilder('c');
-        if ($contentType) {
-            $qb->field('contentType')->equals($contentType);
-        }
-        $qb->field('deleted')->equals(false);
+        $qa = $this->createAggregationQuery();
 
-        return $this->findLastVersion($qb);
+        if ($contentType) {
+            $qa->match(array('contentType' => $contentType));
+        }
+
+        $elementName = 'content';
+        $qa->group(array(
+            '_id' => array('contentId' => '$contentId'),
+            'version' => array('$max' => '$version'),
+            $elementName => array('$last' => '$$ROOT')
+        ));
+
+        return $this->hydrateAggregateQuery($qa, $elementName);
     }
 
     /**
@@ -158,7 +150,7 @@ class ContentRepository extends DocumentRepository implements FieldAutoGenerable
     }
 
     /**
-     * @param string|null $languageAndPublishedQueryCriteria
+     * @param string|null $language
      *
      * @return Builder
      */
