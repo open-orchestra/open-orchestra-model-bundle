@@ -27,30 +27,6 @@ class ContentTypeRepositoryTest extends KernelTestCase
     }
 
     /**
-     * Test find one with no version
-     */
-    public function testFindOneByContentTypeIdAndVersionWithNoVersion()
-    {
-        $contentType = $this->repository->findOneByContentTypeIdAndVersion('car');
-
-        $this->assertGreaterThanOrEqual(3, $contentType->getVersion());
-    }
-
-    /**
-     * Test find one with version
-     *
-     * @param int $version
-     *
-     * @dataProvider provideCarVersion
-     */
-    public function testFindOneByContentTypeIdAndVersionWithVersion($version)
-    {
-        $contentType = $this->repository->findOneByContentTypeIdAndVersion('car', $version);
-
-        $this->assertEquals($version, $contentType->getVersion());
-    }
-
-    /**
      * @return array
      */
     public function provideCarVersion()

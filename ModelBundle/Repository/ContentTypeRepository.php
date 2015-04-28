@@ -11,6 +11,8 @@ use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 class ContentTypeRepository extends DocumentRepository implements ContentTypeRepositoryInterface
 {
     /**
+     * @deprecated use findOneByContentTypeIdInLastVersion to get the last version
+     * 
      * @param string   $contentType
      * @param int|null $version
      * 
@@ -50,5 +52,21 @@ class ContentTypeRepository extends DocumentRepository implements ContentTypeRep
         }
 
         return $contentTypes;
+    }
+
+    /**
+     * @param string   $contentType
+     * @param int|null $version
+     * 
+     * @return array|null|object
+     */
+    public function findOneByContentTypeIdInLastVersion($contentType)
+    {
+        $qb = $this->createQueryBuilder('n');
+
+        $qb->field('contentTypeId')->equals($contentType);
+        $qb->sort('version', 'desc');
+
+        return $qb->getQuery()->getSingleResult();
     }
 }
