@@ -23,9 +23,9 @@ This will allow you to create aggregation query in your repositories by using th
 
     AbstractRepository::createAggregationQuery()
 
-With the aggregation, mongo does not return the original document, but by using the `$$ROOT` parameter, you can for it to
-add all the informations of the document.
+With the aggregation, mongo does not return the original document, but by using the `$$ROOT` parameter, you can add all 
+the fields of the document to the response.
 
-To hydrate all the document using the database result, use the method :
+To hydrate all the documents using the database result, use the method :
 
     AbstractRepository::hydrateAggregateQuery()
