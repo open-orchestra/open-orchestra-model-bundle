@@ -173,7 +173,6 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $news->addName($enLabel);
         $news->addName($frLabel);
         $news->setDeleted(false);
-        $news->setStatus($this->getReference('status-published'));
         $news->setVersion(1);
 
         $news->addFieldType($newsTitle);
@@ -243,7 +242,6 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $car->addName($en);
         $car->addName($fr);
         $car->setDeleted(false);
-        $car->setStatus($this->getReference('status-published'));
         $car->setVersion(2);
 
         $car->addFieldType($carName);
@@ -324,7 +322,6 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $customer->addName($en);
         $customer->addName($fr);
         $customer->setDeleted(false);
-        $customer->setStatus($this->getReference('status-published'));
         $customer->setVersion(1);
 
         $customer->addFieldType($customerFirstName);
