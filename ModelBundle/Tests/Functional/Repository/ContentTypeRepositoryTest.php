@@ -27,13 +27,26 @@ class ContentTypeRepositoryTest extends KernelTestCase
     }
 
     /**
+     * @param string $contentType
+     * @param int    $version
+     *
+     * @dataProvider provideContentTypeAndVersionNumber
+     */
+    public function testFindOneByContentTypeIdInLastVersion($contentType, $version)
+    {
+        $contentTypeElement = $this->repository->findOneByContentTypeIdInLastVersion($contentType);
+
+        $this->assertEquals($version, $contentTypeElement->getVersion());
+    }
+
+    /**
      * @return array
      */
-    public function provideCarVersion()
+    public function provideContentTypeAndVersionNumber()
     {
         return array(
-            array(2),
-            array(3),
+            array('news', 1),
+            array('customer', 1),
         );
     }
 }
