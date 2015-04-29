@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\Repository;
 
+use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 
 /**
@@ -55,9 +56,8 @@ class ContentTypeRepository extends AbstractRepository implements ContentTypeRep
 
     /**
      * @param string   $contentType
-     * @param int|null $version
-     * 
-     * @return array|null|object
+     *
+     * @return ContentTypeInterface
      */
     public function findOneByContentTypeIdInLastVersion($contentType)
     {
