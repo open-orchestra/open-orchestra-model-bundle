@@ -6,11 +6,9 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Gedmo\Blameable\Traits\BlameableDocument;
 use Gedmo\Timestampable\Traits\TimestampableDocument;
 use Gedmo\Mapping\Annotation as Gedmo;
-use OpenOrchestra\ModelBundle\MongoTrait\Statusable;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
-use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
 use OpenOrchestra\ModelInterface\ModelTrait\TranslatedValueFilter;
 
@@ -24,7 +22,6 @@ use OpenOrchestra\ModelInterface\ModelTrait\TranslatedValueFilter;
  */
 class ContentType implements ContentTypeInterface
 {
-    use Statusable;
     use BlameableDocument;
     use TimestampableDocument;
     use TranslatedValueFilter;
