@@ -3,9 +3,7 @@
 namespace OpenOrchestra\ModelBundle\Repository;
 
 use Doctrine\ODM\MongoDB\Cursor;
-use Doctrine\ODM\MongoDB\DocumentRepository;
 use Doctrine\ODM\MongoDB\Mapping;
-use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\AreaFinderTrait;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
@@ -16,22 +14,9 @@ use Doctrine\ODM\MongoDB\Query\Builder;
 /**
  * Class NodeRepository
  */
-class NodeRepository extends DocumentRepository implements FieldAutoGenerableRepositoryInterface, NodeRepositoryInterface
+class NodeRepository extends AbstractRepository implements FieldAutoGenerableRepositoryInterface, NodeRepositoryInterface
 {
     use AreaFinderTrait;
-
-    /**
-     * @var CurrentSiteIdInterface
-     */
-    protected $currentSiteManager;
-
-    /**
-     * @param CurrentSiteIdInterface $currentSiteManager
-     */
-    public function setCurrentSiteManager(CurrentSiteIdInterface $currentSiteManager)
-    {
-        $this->currentSiteManager = $currentSiteManager;
-    }
 
     /**
      * @param string $language

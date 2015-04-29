@@ -2,14 +2,13 @@
 
 namespace OpenOrchestra\ModelBundle\Repository;
 
-use Doctrine\ODM\MongoDB\DocumentRepository;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 
 /**
  * Class StatusRepository
  */
-class StatusRepository extends DocumentRepository implements StatusRepositoryInterface
+class StatusRepository extends AbstractRepository implements StatusRepositoryInterface
 {
     /**
      * @return StatusInterface

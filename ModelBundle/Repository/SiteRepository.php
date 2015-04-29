@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ModelBundle\Repository;
 
-use Doctrine\ODM\MongoDB\DocumentRepository;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
@@ -10,7 +9,7 @@ use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 /**
  * Class SiteRepository
  */
-class SiteRepository extends DocumentRepository implements SiteRepositoryInterface
+class SiteRepository extends AbstractRepository implements SiteRepositoryInterface
 {
     /**
      * @param string $siteId

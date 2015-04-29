@@ -2,14 +2,13 @@
 
 namespace OpenOrchestra\ModelBundle\Repository;
 
-use Doctrine\ODM\MongoDB\DocumentRepository;
 use OpenOrchestra\ModelInterface\Model\KeywordInterface;
 use OpenOrchestra\ModelInterface\Repository\KeywordRepositoryInterface;
 
 /**
  * Class KeywordRepository
  */
-class KeywordRepository extends DocumentRepository implements KeywordRepositoryInterface
+class KeywordRepository extends AbstractRepository implements KeywordRepositoryInterface
 {
     /**
      * @param string $label

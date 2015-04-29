@@ -2,13 +2,12 @@
 
 namespace OpenOrchestra\ModelBundle\Repository;
 
-use Doctrine\ODM\MongoDB\DocumentRepository;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 
 /**
  * Class ContentTypeRepository
  */
-class ContentTypeRepository extends DocumentRepository implements ContentTypeRepositoryInterface
+class ContentTypeRepository extends AbstractRepository implements ContentTypeRepositoryInterface
 {
     /**
      * @deprecated use findOneByContentTypeIdInLastVersion to get the last version
