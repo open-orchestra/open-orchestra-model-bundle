@@ -127,11 +127,11 @@ class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterfac
         $siteHomeBlock1->setAttributes(array(
             "htmlContent" => <<<EOF
 <ul id="mySubMenu">
-    <li><a href="/page-home/page-about-us">A PROPOS</a></li>
-    <li><a href="/page-home/page-our-team">NOTRE EQUIPE</a></li>
-    <li><a href="/page-home/page-our-news">NOTRE ACTU</a></li>
-    <li><a href="/page-home/page-nous-rejoindre">NOUS REJOINDRE</a></li>
-    <li><a href="/page-home/page-networks">NETWORKS</a></li>
+    <li><a href="/page-about-us">A PROPOS</a></li>
+    <li><a href="/page-our-team">NOTRE EQUIPE</a></li>
+    <li><a href="/page-our-news">NOTRE ACTU</a></li>
+    <li><a href="/page-nous-rejoindre">NOUS REJOINDRE</a></li>
+    <li><a href="/page-networks">NETWORKS</a></li>
 </ul>
 EOF
         ));
@@ -221,7 +221,7 @@ EOF
 
         $nodeTransverse = new Node();
         $nodeTransverse->setNodeId(NodeInterface::TRANSVERSE_NODE_ID);
-	    $nodeTransverse->setMaxAge(1000);
+        $nodeTransverse->setMaxAge(1000);
         $nodeTransverse->setNodeType(NodeInterface::TYPE_GENERAL);
         $nodeTransverse->setName(NodeInterface::TRANSVERSE_NODE_ID);
         $nodeTransverse->setSiteId('2');
@@ -379,27 +379,27 @@ EOF
         $siteWhatBlock0->setAttributes(array(
             "htmlContent" => <<<EOF
 <div class='content2'>
-<h1>OpenOrchestra</h1>
+    <h1>OpenOrchestra</h1>
     <p>
         PHP Orchestra est une plateforme développée conjointement par Interakting et Zend Technologies. Cette offre, dédiée au marketing est destinée aux grands projets de nouvelle génération en digital marketing et entreprise 2.0.
-
         L’objectif de PHP Factory est de répondre aux exigences les plus élevées des grands comptes en termes de haute disponibilité, de performance et d'industrialisation des processus de création et de diffusion de contenus vers le Web et les mobiles.
-
+    </p>
+    <p>
         Elle a été développé  autour des standards PHP de Zend. Elle est constituée d’une bibliothèque de composants : gestion de contenu web et multi-média, d’e-commerce, d’animation de réseaux sociaux, de Portail et de Mobilité.
-        PHP FACTORY est la solution omnicanal qui accélère la construction de votre écosysteme digital.
-
-        Quelles que soient les interactions entre une marque et ses clients, quel que soit l’écran, quel que soit le terminal, l’expérience se construit à chaque point de contact.
-
+        PHP FACTORY est la solution omnicanal qui accélère la construction de votre écosysteme digital.Quelles que soient les interactions entre une marque et ses clients, quel que soit l’écran, quel que soit le terminal, l’expérience se construit à chaque point de contact.
+    </p>
+    <p>
         Notre promesse : « Economies d’échelle et mutualisation des investissements pour une expérience web cohérente sur tous les canaux fixe mobile, tablette, TV, bornes… »
-        <br>
+    <p>
+    <p>
         Une solution ciblée :
-        <br>
-        Projet où «l’expérience», qu’elle soit clients, collaborateurs, partenaires ou distributeurs est au cœur de la problématique.
-        <br>Projet à dimension internationale nécessitant des économies d’échelles.
-        <br>Projet avec des équations complexes à résoudre et où les systèmes d’informations internes et partenaires sont fortement sollicités.
-        <br>Projet dont l’objectif est de bâtir des écosystèmes digitaux (e-commerce, communication, référentiel, selfcare, mobilité, distribution, …) cohérents avec des synergies fonctionnelles et technologiques.
-        <br>Nativement, multi-sites multi support, facile d’intégration au SI, ouvert vers l’extérieur, taillé pour les fortes charges et la sécurité, modulaire (tout est composant, modèle HMVC), 100% Zend.
-        <br>
+        <ul>
+            <li>Projet où «l’expérience», qu’elle soit clients, collaborateurs, partenaires ou distributeurs est au cœur de la problématique.</li>
+            <li>Projet à dimension internationale nécessitant des économies d’échelles.</li>
+            <li>Projet avec des équations complexes à résoudre et où les systèmes d’informations internes et partenaires sont fortement sollicités.</li>
+            <li>Projet dont l’objectif est de bâtir des écosystèmes digitaux (e-commerce, communication, référentiel, selfcare, mobilité, distribution, …) cohérents avec des synergies fonctionnelles et technologiques.</li>
+            <li>Nativement, multi-sites multi support, facile d’intégration au SI, ouvert vers l’extérieur, taillé pour les fortes charges et la sécurité, modulaire (tout est composant, modèle HMVC), 100% Zend.</li>
+        </ul>
     </p>
 </div>
 EOF
@@ -617,7 +617,7 @@ EOF
 <h1>PHP Documentation</h1>
     <p>The PHP Manual is available online in a selection of languages. Please pick a language from the list below.
 
-    More information about php.net URL shortcuts by visiting our URL howto page.
+    More information about php.net URL shortcuts by visiting our URL how to page.
 
     Note, that many languages are just under translation, and the untranslated parts are still in English. Also some translated parts might be outdated. The translation teams are open to contributions.</p>
 </div>
@@ -939,13 +939,12 @@ EOF
             "htmlContent" => <<<EOF
 <div class='content2'>
     <h1>Our Team</h1>
-    <br>
-    <p>
-        Une agence digitale nouvelle génération classée par le Forrester parmi les 12 plus grandes agences européennes, avec un positionnement conseil et technologies.<br>
-        Une présence internationale, un modèle de delivery industriel, une organisation en centre de services, des plateformes near shore et off shore.<br>
-        pour les grands projets de transformation « digital » et pour adresser les marchés du « customer experience management), entreprise digitale et secteur public.<br>
-        Partenaire stratégique des grands projets, nos interventions s’inscrivent dans la durée.
-    </p>
+    <ul>
+        <li>Une agence digitale nouvelle génération classée par le Forrester parmi les 12 plus grandes agences européennes, avec un positionnement conseil et technologies.</li>
+        <li>Une présence internationale, un modèle de delivery industriel, une organisation en centre de services, des plateformes near shore et off shore.</li>
+        <li>pour les grands projets de transformation « digital » et pour adresser les marchés du « customer experience management), entreprise digitale et secteur public.</li>
+        <li>Partenaire stratégique des grands projets, nos interventions s’inscrivent dans la durée.</li>
+    </ul>
 </div>
 EOF
         ));
@@ -1045,22 +1044,25 @@ EOF
         $siteNewsBlock0->setComponent(TinyMCEWysiwygStrategy::TINYMCEWYSIWYG);
         $siteNewsBlock0->setAttributes(array(
             "htmlContent" => <<<EOF
-<div class='content2'>
+<div class="content2">
     <h1>Actu</h1>
-    <br>
-    <p>
+    <article>
         <h2>ZADIG & VOLTAIRE PUBLIE SES MAGAZINES SUR IPAD AVEC INTERAKTING</h2>
-        <br>
-        Zadig & Voltaire étend et enrichit ses activités commerciales à travers des sites web marchands, les réseaux sociaux et des applications mobiles. L’équipe Marketing Digital de Zadig & Voltaire a opté d’une part pour le développement d’un site mobile, dupliqué du site marchand internet, et d’autre part d’une application iPad pour publier des magazines dérivés de ses catalogues papier. L’objectif de l’application iPad consiste à allier graphisme, ergonomie, interactivité, géolocalisation et e-Commerce pour ainsi développer la visibilité de la marque tout en créant une approche inédite du e-shopping.<br>
-
+        <p>
+            Zadig & Voltaire étend et enrichit ses activités commerciales à travers des sites web marchands, les réseaux sociaux et des applications mobiles.
+            L’équipe Marketing Digital de Zadig & Voltaire a opté d’une part pour le développement d’un site mobile, dupliqué du site marchand internet,
+             et d’autre part d’une application iPad pour publier des magazines dérivés de ses catalogues papier. L’objectif de l’application iPad consiste à allier graphisme,
+              ergonomie, interactivité, géolocalisation et e-Commerce pour ainsi développer la visibilité de la marque tout en créant une approche inédite du e-shopping.
+        </p>
         <h2>FUN DISTINGUÉ PAR LE GRAND PRIX DES LECTEURS D’ACTEURS PUBLICS COMME LA MEILLEURE INITIATIVE PUBLIQUE DE L’ANNÉE!</h2>
-        <br>
-        Le site du Ministère de l’Enseignement supérieur et de la Recherche,
-        <a href='http://businessdecision.us3.list-manage2.com/track/click?u=cf8b0e95565b3f0a524bea0a6&id=b321193023&e=3ec73c652f'>
-        http://www.france-universite-numerique.fr</a>, pour lequel Interakting a réalisé l’ensemble de l’intégration HTML,
-        a remporté le prix des meilleurs initiatives de l’année 2013 par le magazine Acteurs Publics.
-        Ces Victoires mettent en lumière celles et ceux qui, chaque jour, agissent pour assurer le meilleur du service au public.
-    </p>
+        <p>
+            Le site du Ministère de l’Enseignement supérieur et de la Recherche,
+            <a href='http://businessdecision.us3.list-manage2.com/track/click?u=cf8b0e95565b3f0a524bea0a6&id=b321193023&e=3ec73c652f'>
+            http://www.france-universite-numerique.fr</a>, pour lequel Interakting a réalisé l’ensemble de l’intégration HTML,
+            a remporté le prix des meilleurs initiatives de l’année 2013 par le magazine Acteurs Publics.
+            Ces Victoires mettent en lumière celles et ceux qui, chaque jour, agissent pour assurer le meilleur du service au public.
+        </p>
+    </article>
 </div>
 EOF
 ));
@@ -1161,13 +1163,14 @@ EOF
         $siteJoinUsBlock0->setAttributes(array(
             "htmlContent" => <<<EOF
 <div class='content2'>
-    <div id='annonce'>
+    <div class="annonce" id='annonce'>
         <h1>Nous rejoindre</h1>
         <p>Vous êtes un passionné d’Internet en général et du Web en particulier?</p>
         <p>Vous avez une expérience significative dans les domaines suivants:
-        Développement web le framwork Symfony 2 Votre profil est susceptible de nous intéresser
+        <strong>Développement&nbsp;web&nbsp;sur&nbsp;le&nbsp;framework&nbsp;Symfony&nbsp;2
+        <p>Votre profil est susceptible de nous intéresser.</p>
     </div>
-    <div id='form'>
+    <div class="contact annonce" id='form'>
         <table border='0'>
             <tbody>
                 <tr>
@@ -1189,7 +1192,7 @@ EOF
                 </tr>
                 <tr>
                     <td valign='top'>Message</td>
-                    <td><textarea  rows='10' cols='25' placeholder='Votre message' required></textarea></td>
+                    <td><textarea  rows='10' cols='40' placeholder='Votre message' required></textarea></td>
                 </tr>
                 <tr>
                     <td valign='top'>CV</td>
@@ -1303,8 +1306,13 @@ EOF
 <div class='content2'>
     <h1>Smart Eolas</h1>
     <p>
-Smart.eolas allie le meilleur du e-commerce et de la gestion de contenus. Jusqu’alors, il n’existait aucune plateforme sur le marché mêlant avec succès des fonctions avancées de gestion de contenus et de catalogue produits. Il y a plus de deux ans, Eolas s’est lancé dans ce vaste chantier : construire une nouvelle plateforme e-Commerce et de gestion de contenus innovante et à l’état de l’art.
-Smart.eolas est le fruit de 15 ans d’expérience, à la fois en tant que spécialiste du e-Commerce, du Digital Marketing et en tant qu’opérateur de solutions SaaS. Ce projet a ainsi fait appel aux compétences de toutes les équipes d’Eolas, notamment celles des experts en e-Tailing, issues du rachat du fonds de commerce de Proxi-Business, il y a un an.
+        Smart.eolas allie le meilleur du e-commerce et de la gestion de contenus.
+        Jusqu’alors, il n’existait aucune plateforme sur le marché mêlant avec succès des fonctions avancées de gestion de contenus et de catalogue produits.
+        Il y a plus de deux ans, Eolas s’est lancé dans ce vaste chantier : construire une nouvelle plateforme e-Commerce et de gestion de contenus innovante et à l’état de l’art.
+    </p>
+    <p>
+        Smart.eolas est le fruit de 15 ans d’expérience, à la fois en tant que spécialiste du e-Commerce, du Digital Marketing et en tant qu’opérateur de solutions SaaS.
+        Ce projet a ainsi fait appel aux compétences de toutes les équipes d’Eolas, notamment celles des experts en e-Tailing, issues du rachat du fonds de commerce de Proxi-Business, il y a un an.
     </p>
 </div>
 EOF
