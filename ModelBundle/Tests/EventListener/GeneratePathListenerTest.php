@@ -18,6 +18,7 @@ class GeneratePathListenerTest extends \PHPUnit_Framework_TestCase
     protected $nodeRepository;
     protected $lifecycleEventArgs;
     protected $documentManager;
+
     /**
      * setUp
      */
