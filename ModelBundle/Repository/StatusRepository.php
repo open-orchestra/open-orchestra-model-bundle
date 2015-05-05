@@ -40,6 +40,9 @@ class StatusRepository extends AbstractRepository implements StatusRepositoryInt
      */
     public function findOneByEditable()
     {
-        // TODO: Implement findOneByEditable() method.
+        $qb = $this->createQueryBuilder();
+        $qb->field('published')->equals(false);
+
+        return $qb->getQuery()->execute()->getSingleResult();
     }
 }
