@@ -34,19 +34,19 @@ class Role implements RoleInterface
     /**
      * @var StatusInterface
      *
-     * @ODM\ReferenceOne(targetDocument="OpenOrchestra\ModelBundle\Document\Status", inversedBy="fromRoles")
+     * @ODM\ReferenceOne(targetDocument="OpenOrchestra\ModelInterface\Model\StatusInterface", inversedBy="fromRoles")
      */
     protected $fromStatus;
 
     /**
      * @var StatusInterface
      *
-     * @ODM\ReferenceOne(targetDocument="OpenOrchestra\ModelBundle\Document\Status", inversedBy="toRoles")
+     * @ODM\ReferenceOne(targetDocument="OpenOrchestra\ModelInterface\Model\StatusInterface", inversedBy="toRoles")
      */
     protected $toStatus;
 
     /**
-     * @ODM\EmbedMany(targetDocument="TranslatedValue")
+     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\TranslatedValueInterface")
      */
     protected $descriptions;
 

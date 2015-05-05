@@ -34,4 +34,12 @@ class StatusRepository extends AbstractRepository implements StatusRepositoryInt
 
         return $qb->getQuery()->execute();
     }
+
+    /**
+     * @return StatusInterface
+     */
+    public function findOneByEditable()
+    {
+        // TODO: Implement findOneByEditable() method.
+    }
 }

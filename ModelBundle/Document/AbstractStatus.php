@@ -27,7 +27,7 @@ abstract class AbstractStatus implements StatusInterface
     protected $name;
 
     /**
-     * @ODM\EmbedMany(targetDocument="TranslatedValue")
+     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\TranslatedValueInterface")
      */
     protected $labels;
 
@@ -41,14 +41,14 @@ abstract class AbstractStatus implements StatusInterface
     /**
      * @var ArrayCollection
      *
-     * @ODM\ReferenceMany(targetDocument="OpenOrchestra\ModelBundle\Document\Role", mappedBy="fromStatus")
+     * @ODM\ReferenceMany(targetDocument="OpenOrchestra\ModelInterface\Model\RoleInterface", mappedBy="fromStatus")
      */
     protected $fromRoles;
 
     /**
      * @var string
      *
-     * @ODM\ReferenceMany(targetDocument="OpenOrchestra\ModelBundle\Document\Role", mappedBy="toStatus")
+     * @ODM\ReferenceMany(targetDocument="OpenOrchestra\ModelInterface\Model\RoleInterface", mappedBy="toStatus")
      */
     protected $toRoles;
 

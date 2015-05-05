@@ -7,12 +7,13 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Gedmo\Blameable\Traits\BlameableDocument;
 use Gedmo\Timestampable\Traits\TimestampableDocument;
 use OpenOrchestra\ModelInterface\Mapping\Annotations as ORCHESTRA;
-use OpenOrchestra\ModelBundle\MongoTrait\Statusable;
+use OpenOrchestra\ModelInterface\MongoTrait\Statusable;
 use OpenOrchestra\ModelInterface\Model\ContentAttributeInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Model\ReadContentAttributeInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use OpenOrchestra\ModelInterface\MongoTrait\Keywordable;
+use OpenOrchestra\ModelInterface\MongoTrait\Versionnable;
 
 /**
  * Description of Content
@@ -33,6 +34,7 @@ class Content implements ContentInterface
     use TimestampableDocument;
     use Keywordable;
     use Statusable;
+    use Versionnable;
 
     /**
      * @var string $id
@@ -63,13 +65,6 @@ class Content implements ContentInterface
     protected $name;
 
     /**
-     * @var int $version
-     *
-     * @ODM\Field(type="int")
-     */
-    protected $version = 1;
-
-    /**
      * @var int $contentTypeVersion
      *
      * @ODM\Field(type="int")
@@ -93,7 +88,7 @@ class Content implements ContentInterface
     /**
      * @var ArrayCollection
      *
-     * @ODM\EmbedMany(targetDocument="ContentAttribute")
+     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\ContentAttributeInterface")
      */
     protected $attributes;
 
@@ -247,22 +242,6 @@ class Content implements ContentInterface
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * @param int $version
-     */
-    public function setVersion($version)
-    {
-        $this->version = $version;
-    }
-
-    /**
-     * @return int
-     */
-    public function getVersion()
-    {
-        return $this->version;
     }
 
     /**

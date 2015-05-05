@@ -11,6 +11,7 @@ use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
 use OpenOrchestra\ModelInterface\ModelTrait\TranslatedValueFilter;
+use OpenOrchestra\ModelInterface\MongoTrait\Versionnable;
 
 /**
  * Description of ContentType
@@ -25,6 +26,7 @@ class ContentType implements ContentTypeInterface
     use BlameableDocument;
     use TimestampableDocument;
     use TranslatedValueFilter;
+    use Versionnable;
 
     /**
      * @var string $id
@@ -41,16 +43,9 @@ class ContentType implements ContentTypeInterface
     protected $contentTypeId;
 
     /**
-     * @ODM\EmbedMany(targetDocument="TranslatedValue")
+     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\TranslatedValueInterface")
      */
     protected $names;
-
-    /**
-     * @var int $version
-     *
-     * @ODM\Field(type="int")
-     */
-    protected $version = 1;
 
     /**
      * @var boolean $deleted
@@ -69,7 +64,7 @@ class ContentType implements ContentTypeInterface
     /**
      * @var ArrayCollection $fields
      *
-     * @ODM\EmbedMany(targetDocument="FieldType")
+     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\FieldTypeInterface")
      */
     protected $fields;
 
@@ -202,22 +197,6 @@ class ContentType implements ContentTypeInterface
     public function getNames()
     {
         return $this->names;
-    }
-
-    /**
-     * @param int $version
-     */
-    public function setVersion($version)
-    {
-        $this->version = $version;
-    }
-
-    /**
-     * @return int
-     */
-    public function getVersion()
-    {
-        return $this->version;
     }
 
     /**

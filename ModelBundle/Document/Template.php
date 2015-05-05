@@ -8,6 +8,7 @@ use OpenOrchestra\ModelInterface\Mapping\Annotations as ORCHESTRA;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\ModelInterface\Model\TemplateInterface;
+use OpenOrchestra\ModelInterface\MongoTrait\Versionnable;
 
 /**
  * Description of Template
@@ -25,6 +26,8 @@ use OpenOrchestra\ModelInterface\Model\TemplateInterface;
 
 class Template implements TemplateInterface
 {
+    use Versionnable;
+
     /**
      * @var string $id
      *
@@ -54,13 +57,6 @@ class Template implements TemplateInterface
     protected $name;
 
     /**
-     * @var int $version
-     *
-     * @ODM\Field(type="int")
-     */
-    protected $version;
-
-    /**
      * @var string
      *
      * @ODM\Field(type="string")
@@ -77,7 +73,7 @@ class Template implements TemplateInterface
     /**
      * @var AreaInterface
      *
-     * @ODM\EmbedMany(targetDocument="Area")
+     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\AreaInterface")
      */
     protected $areas;
 
@@ -91,7 +87,7 @@ class Template implements TemplateInterface
     /**
      * @var ArrayCollection
      *
-     * @ODM\EmbedMany(targetDocument="Block")
+     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\BlockInterface")
      */
     protected $blocks;
 
@@ -253,22 +249,6 @@ class Template implements TemplateInterface
     public function getTemplateId()
     {
         return $this->templateId;
-    }
-
-    /**
-     * @param int $version
-     */
-    public function setVersion($version)
-    {
-        $this->version = $version;
-    }
-
-    /**
-     * @return int
-     */
-    public function getVersion()
-    {
-        return $this->version;
     }
 
     /**

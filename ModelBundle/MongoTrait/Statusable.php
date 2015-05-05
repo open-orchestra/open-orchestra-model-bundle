@@ -7,13 +7,15 @@ use OpenOrchestra\ModelInterface\Model\StatusInterface;
 
 /**
  * Trait Statusable
+ *
+ * @deprecated Use Statusable from ModelInterface, will be removed in 0.2.2
  */
 trait Statusable
 {
     /**
      * @var StatusInterface $status
      *
-     * @ODM\EmbedOne(targetDocument="EmbedStatus")
+     * @ODM\EmbedOne(targetDocument="OpenOrchestra\ModelInterface\Model\EmbedStatusInterface")
      */
     protected $status;
 

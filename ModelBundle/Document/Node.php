@@ -8,7 +8,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\ModelInterface\Mapping\Annotations as ORCHESTRA;
 use Gedmo\Blameable\Traits\BlameableDocument;
 use Gedmo\Timestampable\Traits\TimestampableDocument;
-use OpenOrchestra\ModelBundle\MongoTrait\Statusable;
+use OpenOrchestra\ModelInterface\MongoTrait\Statusable;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
@@ -18,6 +18,7 @@ use OpenOrchestra\ModelInterface\MongoTrait\Cacheable;
 use OpenOrchestra\ModelInterface\MongoTrait\Metaable;
 use OpenOrchestra\ModelInterface\MongoTrait\Sitemapable;
 use OpenOrchestra\ModelInterface\MongoTrait\Schemeable;
+use OpenOrchestra\ModelInterface\MongoTrait\Versionnable;
 
 /**
  * Description of Node
@@ -37,13 +38,14 @@ use OpenOrchestra\ModelInterface\MongoTrait\Schemeable;
  */
 class Node implements NodeInterface
 {
-    use BlameableDocument;
     use TimestampableDocument;
-    use Metaable;
+    use BlameableDocument;
+    use Versionnable;
     use Sitemapable;
     use Schemeable;
-    use Cacheable;
     use Statusable;
+    use Cacheable;
+    use Metaable;
 
     /**
      * @var string $id
@@ -93,13 +95,6 @@ class Node implements NodeInterface
      * @ODM\Field(type="string")
      */
     protected $name;
-
-    /**
-     * @var int $version
-     *
-     * @ODM\Field(type="int")
-     */
-    protected $version = 1;
 
     /**
      * @var string $language
@@ -153,14 +148,14 @@ class Node implements NodeInterface
     /**
      * @var ArrayCollection
      *
-     * @ODM\EmbedMany(targetDocument="Area")
+     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\AreaInterface")
      */
     protected $areas;
 
     /**
      * @var BlockInterface
      *
-     * @ODM\EmbedMany(targetDocument="Block")
+     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\BlockInterface")
      */
     protected $blocks;
 
@@ -314,26 +309,6 @@ class Node implements NodeInterface
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set version
-     *
-     * @param int $version
-     */
-    public function setVersion($version)
-    {
-        $this->version = $version;
-    }
-
-    /**
-     * Get version
-     *
-     * @return int $version
-     */
-    public function getVersion()
-    {
-        return $this->version;
     }
 
     /**

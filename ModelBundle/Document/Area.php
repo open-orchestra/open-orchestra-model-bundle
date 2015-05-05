@@ -56,7 +56,7 @@ class Area implements AreaInterface
     /**
      * @var ArrayCollection
      *
-     * @ODM\EmbedMany(targetDocument="Area")
+     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\AreaInterface")
      */
     protected $subAreas;
 
