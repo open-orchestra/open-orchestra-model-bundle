@@ -26,7 +26,7 @@ class ContentType implements ContentTypeInterface
     use BlameableDocument;
     use TimestampableDocument;
     use TranslatedValueFilter;
-    use Versionnable
+    use Versionnable;
 
     /**
      * @var string $id
