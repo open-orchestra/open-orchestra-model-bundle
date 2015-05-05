@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\Container;
 class GeneratePathListener
 {
     protected $container;
-    protected $nodes;
+    public $nodes;
 
     /**
      * @param Container $container
