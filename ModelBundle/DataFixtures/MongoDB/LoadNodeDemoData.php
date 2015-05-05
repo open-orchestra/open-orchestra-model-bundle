@@ -229,7 +229,7 @@ EOF
         $nodeTransverse->setPath('-');
         $nodeTransverse->setVersion(1);
         $nodeTransverse->setLanguage($language);
-        $nodeTransverse->setStatus($this->getReference('status-published'));
+        $nodeTransverse->setStatus($this->getReference('status-draft'));
         $nodeTransverse->setDeleted(false);
         $nodeTransverse->setTemplateId('');
         $nodeTransverse->setTheme('');
