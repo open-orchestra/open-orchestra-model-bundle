@@ -40,7 +40,7 @@ class Node implements NodeInterface
 {
     use TimestampableDocument;
     use BlameableDocument;
-    use Versionnable
+    use Versionnable;
     use Sitemapable;
     use Schemeable;
     use Statusable;

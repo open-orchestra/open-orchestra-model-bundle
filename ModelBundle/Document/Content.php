@@ -34,7 +34,7 @@ class Content implements ContentInterface
     use TimestampableDocument;
     use Keywordable;
     use Statusable;
-    use Versionnable
+    use Versionnable;
 
     /**
      * @var string $id
