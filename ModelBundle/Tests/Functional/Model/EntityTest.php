@@ -53,6 +53,7 @@ class EntityTest extends \PHPUnit_Framework_TestCase
             array('Content',          'ReadContentInterface'),
             array('ContentType',      'ContentTypeInterface'),
             array('ContentType',      'FieldTypeContainerInterface'),
+            array('ContentType',      'VersionnableInterface'),
             array('FieldType',        'FieldTypeInterface'),
             array('FieldOption',      'FieldOptionInterface'),
             array('Site',             'SiteInterface'),
