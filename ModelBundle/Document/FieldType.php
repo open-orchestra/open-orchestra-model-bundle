@@ -29,7 +29,7 @@ class FieldType implements FieldTypeInterface
     /**
      * @var ArrayCollection $labels
      *
-     * @ODM\EmbedMany(targetDocument="TranslatedValue")
+     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\TranslatedValueInterface")
      */
     protected $labels;
 
@@ -64,7 +64,7 @@ class FieldType implements FieldTypeInterface
     /**
      * @var ArrayCollection $options
      *
-     * @ODM\EmbedMany(targetDocument="FieldOption")
+     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\FieldOptionInterface")
      */
     protected $options;
 

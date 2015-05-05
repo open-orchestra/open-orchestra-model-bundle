@@ -62,7 +62,7 @@ class Site implements SiteInterface
     /**
      * @var ThemeInterface $theme
      *
-     * @ODM\ReferenceOne(targetDocument="Theme")
+     * @ODM\ReferenceOne(targetDocument="OpenOrchestra\ModelInterface\Model\ThemeInterface")
      */
     protected $theme;
 
@@ -83,7 +83,7 @@ class Site implements SiteInterface
     /**
      * @var Collection
      *
-     * @ODM\EmbedMany(targetDocument="SiteAlias")
+     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\SiteAliasInterface")
      */
     protected $aliases;
 
