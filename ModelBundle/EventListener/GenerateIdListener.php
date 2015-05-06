@@ -40,7 +40,7 @@ class GenerateIdListener
             $getGenerated = $generateAnnotations->getGenerated($document);
             $setGenerated = $generateAnnotations->setGenerated($document);
             $testMethod = $generateAnnotations->getTestMethod();
-            if($testMethod === null && $repository instanceof FieldAutoGenerableRepositoryInterface){
+            if ($testMethod === null && $repository instanceof FieldAutoGenerableRepositoryInterface) {
                 $testMethod = 'testUnicityInContext';
             }
             if (is_null($document->$getGenerated())) {
@@ -53,7 +53,7 @@ class GenerateIdListener
                 $sourceField = rawurlencode($sourceField);
                 $generatedField = $sourceField;
                 $count = 1;
-                while($repository->$testMethod($generatedField)){
+                while ($repository->$testMethod($generatedField)) {
                     $generatedField = $sourceField . '_' . $count;
                     $count++;
                 }
