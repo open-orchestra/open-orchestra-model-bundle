@@ -54,7 +54,7 @@ class GenerateIdListener
                 $generatedField = $sourceField;
                 $count = 1;
                 while($repository->$testMethod($generatedField)){
-                    $generatedField = $sourceField . '_' . $count;
+                    $generatedField = $sourceField . '-' . $count;
                     $count++;
                 }
 
