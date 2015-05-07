@@ -152,15 +152,15 @@ EOF
 <div class='footer-infos'>
     <h4>Infos</h4>
     <ul>
-        <li><a href="/app_dev.php/node/fixture_page_about_us">Qui sommes nous ?</a></li>
-        <li><a href="/app_dev.php/node/fixture_page_contact">Contact</a></li>
+        <li><a href="/node/fixture_page_about_us">Qui sommes nous ?</a></li>
+        <li><a href="/node/fixture_page_contact">Contact</a></li>
     </ul>
 </div>
 <div class="footer-legal">
     <h4>Légal</h4>
     <ul>
         <li><a href="#">Mentions Légal</a></li>
-        <li><a href="/app_dev.php/node/fixture_page_networks">Plan du site</a></li>
+        <li><a href="/node/fixture_page_networks">Plan du site</a></li>
     </ul>
 </div>
 <div class='footer-networks'>
@@ -177,7 +177,7 @@ EOF
         <li>153 Rue de Courcelles</li>
         <li>75017 Paris France</li>
         <li>01 56 21 21 21</li>
-        <li><a href='/app_dev.php/node/fixture_page_contact'>contact@interakting.com</a></li>
+        <li><a href='/node/fixture_page_contact'>contact@interakting.com</a></li>
     </ul>
 </div>
 EOF
@@ -1408,10 +1408,10 @@ EOF
      */
     public function generateNodeSiteContact()
     {
-        $siteContactBlock1 = new Block();
-        $siteContactBlock1->setLabel('Wysiwyg 2');
-        $siteContactBlock1->setComponent(TinyMCEWysiwygStrategy::TINYMCEWYSIWYG);
-        $siteContactBlock1->setAttributes(array(
+        $siteContactBlock0 = new Block();
+        $siteContactBlock0->setLabel('Wysiwyg 1');
+        $siteContactBlock0->setComponent(TinyMCEWysiwygStrategy::TINYMCEWYSIWYG);
+        $siteContactBlock0->setAttributes(array(
             "htmlContent" => <<<EOF
 <div class="contact-information">
     <h3>Contactez-nous</h3>
@@ -1438,7 +1438,7 @@ EOF
 </div>
 EOF
         ));
-        $siteContactBlock1->addArea(array('nodeId' => 0, 'areaId' => 'moduleArea'));
+        $siteContactBlock0->addArea(array('nodeId' => 0, 'areaId' => 'moduleArea'));
 
         $siteContactArea1 = new Area();
         $siteContactArea1->setLabel('Logo');
@@ -1477,11 +1477,6 @@ EOF
         $siteContactArea6->setAreaId('moduleArea');
         $siteContactArea6->setHtmlClass('module-area-contact');
         $siteContactArea6->addBlock(array('nodeId' => 0, 'blockId' => 0));
-
-        $siteContactArea6 = new Area();
-        $siteContactArea6->setLabel('Module area');
-        $siteContactArea6->setAreaId('moduleArea');
-        $siteContactArea6->addBlock(array('nodeId' => 0, 'blockId' => 1));
 
         $siteContactArea4 = new Area();
         $siteContactArea4->setLabel('My main');
@@ -1523,7 +1518,7 @@ EOF
         $siteContact->addArea($siteContactArea0);
         $siteContact->addArea($siteContactArea4);
         $siteContact->addArea($siteContactArea7);
-        $siteContact->addBlock($siteContactBlock1);
+        $siteContact->addBlock($siteContactBlock0);
 
         return $siteContact;
     }
