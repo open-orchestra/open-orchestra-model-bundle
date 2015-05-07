@@ -65,7 +65,11 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      */
     public function findOneByNodeIdAndLanguageWithPublishedAndLastVersionAndSiteId($nodeId, $language = null, $siteId = null)
     {
-        $qb = $this->buildTreeRequest($language, $siteId);
+        $qb = $this->createQueryBuilderWithSiteIdAndLanguage($siteId, $language);
+        if ($nodeId !== NodeInterface::TRANSVERSE_NODE_ID) {
+            $qb->field('status.published')->equals(true);
+        }
+        $qb->field('deleted')->equals(false);
 
         $qb->field('nodeId')->equals($nodeId);
         $qb->sort('version', 'desc');
