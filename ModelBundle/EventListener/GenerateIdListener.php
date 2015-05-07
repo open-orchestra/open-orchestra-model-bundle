@@ -48,7 +48,7 @@ class GenerateIdListener
                 $accents = '/&([A-Za-z]{1,2})(grave|acute|circ|cedil|uml|lig|tilde);/';
                 $sourceField = htmlentities($sourceField, ENT_NOQUOTES, 'UTF-8');
                 $sourceField = preg_replace($accents, '$1', $sourceField);
-                $sourceField = preg_replace('/[[:^print:]]/', '_', $sourceField);
+                $sourceField = preg_replace('/[[:^alnum:]]/', '_', $sourceField);
                 $sourceField = strtolower($sourceField);
                 $sourceField = rawurlencode($sourceField);
                 $generatedField = $sourceField;
