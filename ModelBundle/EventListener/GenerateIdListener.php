@@ -44,17 +44,17 @@ class GenerateIdListener
                 $testMethod = 'testUnicityInContext';
             }
             if (is_null($document->$getGenerated())) {
-                $sourceField = $document->$getSource();
                 $accents = '/&([A-Za-z]{1,2})(grave|acute|circ|cedil|uml|lig|tilde);/';
+                $sourceField = $document->$getSource();
                 $sourceField = htmlentities($sourceField, ENT_NOQUOTES, 'UTF-8');
                 $sourceField = preg_replace($accents, '$1', $sourceField);
-                $sourceField = preg_replace('/[[:^print:]]/', '_', $sourceField);
+                $sourceField = preg_replace('/[[:^alnum:]]+/', '-', $sourceField);
+                $sourceField = trim($sourceField, '-');
                 $sourceField = strtolower($sourceField);
-                $sourceField = rawurlencode($sourceField);
                 $generatedField = $sourceField;
                 $count = 1;
                 while ($repository->$testMethod($generatedField)) {
-                    $generatedField = $sourceField . '_' . $count;
+                    $generatedField = $sourceField . '-' . $count;
                     $count++;
                 }
 
