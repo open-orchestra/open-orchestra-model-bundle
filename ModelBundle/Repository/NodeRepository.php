@@ -221,13 +221,14 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
     }
 
     /**
-     * @param string $path
+     * @param string      $path
+     * @param string|null $siteId
      *
-     * @return Cursor
+     * @return mixed
      */
-    public function findChildsByPath($path)
+    public function findChildsByPath($path, $siteId = null)
     {
-        $qb = $this->buildTreeRequest();
+        $qb = $this->buildTreeRequest(null, $siteId);
         $qb->field('path')->equals(new \MongoRegex('/'.preg_quote($path).'.+/'));
 
         return $qb->getQuery()->execute();

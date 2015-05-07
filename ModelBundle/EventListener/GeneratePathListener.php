@@ -63,9 +63,13 @@ class GeneratePathListener
         if ($document instanceof NodeInterface) {
             $nodeRepository = $this->container->get('open_orchestra_model.repository.node');
             $nodeId = $document->getNodeId();
-            $documentManager = $eventArgs->getDocumentManager();
+            $siteId = $document->getSiteId();
             $path = '';
-            $parentNode = $nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($document->getParentId(), $document->getLanguage());
+            $parentNode = $nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(
+                $document->getParentId(),
+                $document->getLanguage(),
+                $siteId
+            );
             if ($parentNode instanceof NodeInterface) {
                 $path = $parentNode->getPath() . '/';
             }
@@ -73,7 +77,7 @@ class GeneratePathListener
             if ($path != $document->getPath()) {
                 $document->setPath($path);
                 $this->nodes[] = $document;
-                $childNodes = $nodeRepository->findChildsByPath($document->getPath());
+                $childNodes = $nodeRepository->findChildsByPath($document->getPath(), $siteId);
                 foreach($childNodes as $childNode){
                     $this->nodes[] = $childNode;
                     $childNode->setPath(preg_replace('/'.preg_quote($document->getPath(), '/').'(.*)/', $path.'$1', $childNode->getPath()));
