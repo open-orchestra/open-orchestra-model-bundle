@@ -130,7 +130,7 @@ class GenerateIdListenerTest extends \PHPUnit_Framework_TestCase
 
         return array(
             array($repository0, $annotations0, $document0, 'fakename'),
-            array($repository1, $annotations1, $document1, 'aaaaaceeeeiiiinooooouuuuyyaaaaaceeeeiiiinooooouuuuy%20%5C'),
+            array($repository1, $annotations1, $document1, 'aaaaaceeeeiiiinooooouuuuyyaaaaaceeeeiiiinooooouuuuy__'),
             array($repository2, $annotations2, $document2, 'fakename_1'),
             array($repository3, $annotations3, $document3, 'fakename'),
         );
