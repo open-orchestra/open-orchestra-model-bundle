@@ -76,7 +76,7 @@ class GenerateIdListenerTest extends \PHPUnit_Framework_TestCase
         Phake::when($document0)->getNodeId()->thenReturn(null);
 
         $document1 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        Phake::when($document1)->getName()->thenReturn('àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ \\');
+        Phake::when($document1)->getName()->thenReturn('àáâãäçèéêëìíîïñòóôõö??ùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ \\');
         Phake::when($document1)->getNodeId()->thenReturn(null);
 
         $document2 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
@@ -130,7 +130,7 @@ class GenerateIdListenerTest extends \PHPUnit_Framework_TestCase
 
         return array(
             array($repository0, $annotations0, $document0, 'fakename'),
-            array($repository1, $annotations1, $document1, 'aaaaaceeeeiiiinooooouuuuyyaaaaaceeeeiiiinooooouuuuy__'),
+            array($repository1, $annotations1, $document1, 'aaaaaceeeeiiiinooooo-uuuuyyaaaaaceeeeiiiinooooouuuuy'),
             array($repository2, $annotations2, $document2, 'fakename_1'),
             array($repository3, $annotations3, $document3, 'fakename'),
         );
