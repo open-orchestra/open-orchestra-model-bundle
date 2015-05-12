@@ -20,9 +20,9 @@ class ContentAttribute implements ContentAttributeInterface
     protected $name;
 
     /**
-     * @var string $value
+     * @var mixed $value
      *
-     * @ODM\Field(type="string")
+     * @ODM\Field(type="raw")
      */
     protected $value;
 
@@ -43,7 +43,7 @@ class ContentAttribute implements ContentAttributeInterface
     }
 
     /**
-     * @param string $value
+     * @param mixed $value
      */
     public function setValue($value)
     {
@@ -51,7 +51,7 @@ class ContentAttribute implements ContentAttributeInterface
     }
 
     /**
-     * @return string
+     * @return mixed
      */
     public function getValue()
     {
@@ -61,8 +61,18 @@ class ContentAttribute implements ContentAttributeInterface
     /**
      * @return string
      */
-    public function __toString()
-    {
-        return $this->getValue();
+    public function render(){
+        if(is_array($this->value) || is_object($this->value))
+        {
+            return "Complex Object (no displayable)";
+        }
+        return (string) $this->value;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(){
+        return $this->render();
     }
 }
