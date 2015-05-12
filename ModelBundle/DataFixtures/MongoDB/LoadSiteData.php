@@ -61,7 +61,9 @@ class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface
         $site2 = new Site();
         $site2->setSiteId('2');
         $site2->setName('Demo site');
-        $site2->addAlias($this->generateSiteAlias('demo.openorchestra.inte', 'fr', true));
+        $site2->addAlias($this->generateSiteAlias('demo.open-orchestra.com', 'fr', true));
+        $site2->addAlias($this->generateSiteAlias('demo.open-orchestra.com', 'en'));
+        $site2->addAlias($this->generateSiteAlias('demo.openorchestra.inte', 'fr'));
         $site2->addAlias($this->generateSiteAlias('demo.openorchestra.inte', 'en'));
         $site2->addAlias($this->generateSiteAlias('demo.openorchestra.dev', 'fr'));
         $site2->addAlias($this->generateSiteAlias('demo.openorchestra.dev', 'en'));
