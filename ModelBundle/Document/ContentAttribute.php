@@ -61,7 +61,7 @@ class ContentAttribute implements ContentAttributeInterface
     /**
      * @return string
      */
-    public function render(){
+    public function renderValue(){
         if(is_array($this->value) || is_object($this->value))
         {
             return "Complex Object (no displayable)";
@@ -73,6 +73,6 @@ class ContentAttribute implements ContentAttributeInterface
      * @return string
      */
     public function __toString(){
-        return $this->render();
+        return $this->renderValue();
     }
 }
