@@ -13,7 +13,7 @@ use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Model\ReadContentAttributeInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use OpenOrchestra\ModelInterface\MongoTrait\Keywordable;
-use OpenOrchestra\ModelInterface\MongoTrait\Versionnable;
+use OpenOrchestra\ModelInterface\MongoTrait\Versionable;
 
 /**
  * Description of Content
@@ -34,7 +34,7 @@ class Content implements ContentInterface
     use TimestampableDocument;
     use Keywordable;
     use Statusable;
-    use Versionnable;
+    use Versionable;
 
     /**
      * @var string $id

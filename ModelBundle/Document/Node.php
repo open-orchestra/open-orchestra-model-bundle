@@ -18,7 +18,7 @@ use OpenOrchestra\ModelInterface\MongoTrait\Cacheable;
 use OpenOrchestra\ModelInterface\MongoTrait\Metaable;
 use OpenOrchestra\ModelInterface\MongoTrait\Sitemapable;
 use OpenOrchestra\ModelInterface\MongoTrait\Schemeable;
-use OpenOrchestra\ModelInterface\MongoTrait\Versionnable;
+use OpenOrchestra\ModelInterface\MongoTrait\Versionable;
 
 /**
  * Description of Node
@@ -40,7 +40,7 @@ class Node implements NodeInterface
 {
     use TimestampableDocument;
     use BlameableDocument;
-    use Versionnable;
+    use Versionable;
     use Sitemapable;
     use Schemeable;
     use Statusable;

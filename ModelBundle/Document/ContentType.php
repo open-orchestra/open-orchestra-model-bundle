@@ -11,7 +11,7 @@ use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
 use OpenOrchestra\ModelInterface\ModelTrait\TranslatedValueFilter;
-use OpenOrchestra\ModelInterface\MongoTrait\Versionnable;
+use OpenOrchestra\ModelInterface\MongoTrait\Versionable;
 
 /**
  * Description of ContentType
@@ -26,7 +26,7 @@ class ContentType implements ContentTypeInterface
     use BlameableDocument;
     use TimestampableDocument;
     use TranslatedValueFilter;
-    use Versionnable;
+    use Versionable;
 
     /**
      * @var string $id

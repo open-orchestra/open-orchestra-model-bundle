@@ -8,7 +8,7 @@ use OpenOrchestra\ModelInterface\Mapping\Annotations as ORCHESTRA;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\ModelInterface\Model\TemplateInterface;
-use OpenOrchestra\ModelInterface\MongoTrait\Versionnable;
+use OpenOrchestra\ModelInterface\MongoTrait\Versionable;
 
 /**
  * Description of Template
@@ -26,7 +26,7 @@ use OpenOrchestra\ModelInterface\MongoTrait\Versionnable;
 
 class Template implements TemplateInterface
 {
-    use Versionnable;
+    use Versionable;
 
     /**
      * @var string $id
