@@ -131,7 +131,7 @@ class ContentRepositoryTest extends KernelTestCase
     public function testFindByContentTypeAndChoiceTypeAndKeywords($contentType = '', $choiceType, $keywords = null, $count)
     {
         $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
-        $elements = $this->repository->findByContentTypeAndChoiceTypeAndKeywords($language, $contentType, $choiceType, $keywords);
+        $elements = $this->repository->findByContentTypeAndChoiceTypeAndKeywordsAndLanguage($language, $contentType, $choiceType, $keywords);
 
         $this->assertCount($count, $elements);
     }

@@ -66,6 +66,8 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
     }
 
     /**
+     * @deprecated use findByContentTypeAndChoiceTypeAndKeywordsAndLanguage
+     *
      * @param string $language
      * @param string $contentType
      * @param string $choiceType
@@ -73,9 +75,28 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      *
      * @return array
      */
-    public function findByContentTypeAndChoiceTypeAndKeywords($language, $contentType = '', $choiceType = self::CHOICE_AND, $keywords = null)
+    public function findByContentTypeAndChoiceTypeAndKeywords($language = null, $contentType = '', $choiceType = self::CHOICE_AND, $keywords = null)
     {
-        $qb = $this->createQueryFindByContentTypeAndChoiceTypeAndKeywords($language, $contentType, $choiceType, $keywords);
+        if (null === $language) {
+            $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
+        }
+
+        $qb = $this->createQueryFindByContentTypeAndChoiceTypeAndKeywordsAndLanguage($language, $contentType, $choiceType, $keywords);
+
+        return $this->findLastVersion($qb);
+    }
+
+    /**
+     * @param string $language
+     * @param string $contentType
+     * @param string $choiceType
+     * @param string $keywords
+     *
+     * @return array
+     */
+    public function findByContentTypeAndChoiceTypeAndKeywordsAndLanguage($language, $contentType = '', $choiceType = self::CHOICE_AND, $keywords = null)
+    {
+        $qb = $this->createQueryFindByContentTypeAndChoiceTypeAndKeywordsAndLanguage($language, $contentType, $choiceType, $keywords);
 
         return $this->findLastVersion($qb);
     }
@@ -228,7 +249,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      *
      * @return Builder
      */
-    protected function createQueryFindByContentTypeAndChoiceTypeAndKeywords($language, $contentType, $choiceType, $keywords)
+    protected function createQueryFindByContentTypeAndChoiceTypeAndKeywordsAndLanguage($language, $contentType, $choiceType, $keywords)
     {
         $qb = $this->createQueryWithLanguageAndPublished($language);
 
