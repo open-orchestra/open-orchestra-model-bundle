@@ -93,13 +93,18 @@ class ContentRepositoryTest extends KernelTestCase
     }
 
     /**
-     * @param string $contentId
+     * @param $contentId
+     * @param $version
+     * @param string|null $language
      *
      * @dataProvider providefindLastPublishedVersionByContentIdAndLanguage
      */
     public function testFindLastPublishedVersionByContentIdAndLanguage($contentId, $version, $language = null)
     {
-        $content = $this->repository->findOneByContentId($contentId);
+        if (null === $language) {
+            $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
+        }
+        $content = $this->repository->findOneByContentId($contentId, $language);
         $this->assertSameContent($language, $version, null, $contentId, $content);
         $this->assertEquals($contentId, $content->getContentId());
     }
@@ -125,7 +130,8 @@ class ContentRepositoryTest extends KernelTestCase
      */
     public function testFindByContentTypeAndChoiceTypeAndKeywords($contentType = '', $choiceType, $keywords = null, $count)
     {
-        $elements = $this->repository->findByContentTypeAndChoiceTypeAndKeywords($contentType, $choiceType, $keywords);
+        $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
+        $elements = $this->repository->findByContentTypeAndChoiceTypeAndKeywords($language, $contentType, $choiceType, $keywords);
 
         $this->assertCount($count, $elements);
     }
@@ -201,7 +207,7 @@ class ContentRepositoryTest extends KernelTestCase
      *
      * @dataProvider provideFindByContentIdAndLanguage
      */
-    public function testFindByContentIdAndLanguage($contentId, $language = null)
+    public function testFindByContentIdAndLanguage($contentId, $language)
     {
         $contents = $this->repository->findByContentIdAndLanguage($contentId, $language);
 
