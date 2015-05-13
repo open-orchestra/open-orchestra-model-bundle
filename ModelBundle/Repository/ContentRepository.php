@@ -102,7 +102,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
     }
 
     /**
-     * @param string      $contentId
+     * @param string $contentId
      * @param string $language
      *
      * @return ContentInterface|null
@@ -113,7 +113,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
     }
 
     /**
-     * @param string      $contentId
+     * @param string $contentId
      * @param string $language
      *
      * @return array
@@ -127,7 +127,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
 
     /**
      * @param string      $contentId
-     * @param string $language
+     * @param string      $language
      * @param int|null    $version
      *
      * @return ContentInterface|null
@@ -186,7 +186,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
 
     /**
      * @param string      $contentId
-     * @param string $language
+     * @param string      $language
      * @param int|null    $version
      *
      * @return Builder
