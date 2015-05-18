@@ -13,7 +13,7 @@ use Solution\MongoAggregationBundle\AggregateQuery\AggregationQueryBuilder;
 abstract class AbstractRepository extends DocumentRepository
 {
     /**
-     * @deprecated This will be removed in the 0.2.3 version
+     * @deprecated This will be removed in the 0.2.4 version
      *
      * @var CurrentSiteIdInterface
      */
@@ -25,7 +25,7 @@ abstract class AbstractRepository extends DocumentRepository
     private $aggregationQueryBuilder;
 
     /**
-     * @deprecated This will be removed in the 0.2.3 version
+     * @deprecated This will be removed in the 0.2.4 version
      *
      * @param CurrentSiteIdInterface $currentSiteManager
      */
