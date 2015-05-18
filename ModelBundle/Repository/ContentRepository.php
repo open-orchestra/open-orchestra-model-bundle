@@ -68,19 +68,15 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
     /**
      * @deprecated use findByContentTypeAndChoiceTypeAndKeywordsAndLanguage
      *
-     * @param string $language
      * @param string $contentType
      * @param string $choiceType
      * @param string $keywords
      *
      * @return array
      */
-    public function findByContentTypeAndChoiceTypeAndKeywords($language = null, $contentType = '', $choiceType = self::CHOICE_AND, $keywords = null)
+    public function findByContentTypeAndChoiceTypeAndKeywords($contentType = '', $choiceType = self::CHOICE_AND, $keywords = null)
     {
-        if (null === $language) {
-            $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
-        }
-
+        $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
         $qb = $this->createQueryFindByContentTypeAndChoiceTypeAndKeywordsAndLanguage($language, $contentType, $choiceType, $keywords);
 
         return $this->findLastVersion($qb);
