@@ -126,7 +126,7 @@ class GenerateIdListenerTest extends \PHPUnit_Framework_TestCase
         Phake::when($repository2)->fakeMethod('fakename_1')->thenReturn(false);
 
         $repository3 = Phake::mock('OpenOrchestra\ModelBundle\Repository\NodeRepository');
-        Phake::when($repository3)->testUnicityInContext('fakename','fakeSiteId')->thenReturn(false);
+        Phake::when($repository3)->testUnicityInContext('fakename')->thenReturn(false);
 
         return array(
             array($repository0, $annotations0, $document0, 'fakename'),
