@@ -93,13 +93,15 @@ class ContentRepositoryTest extends KernelTestCase
     }
 
     /**
-     * @param string $contentId
+     * @param $contentId
+     * @param $version
+     * @param string|null $language
      *
      * @dataProvider providefindLastPublishedVersionByContentIdAndLanguage
      */
-    public function testFindLastPublishedVersionByContentIdAndLanguage($contentId, $version, $language = null)
+    public function testFindLastPublishedVersionByContentIdAndLanguage($contentId, $version, $language)
     {
-        $content = $this->repository->findOneByContentId($contentId);
+        $content = $this->repository->findOneByContentId($contentId, $language);
         $this->assertSameContent($language, $version, null, $contentId, $content);
         $this->assertEquals($contentId, $content->getContentId());
     }
@@ -111,7 +113,7 @@ class ContentRepositoryTest extends KernelTestCase
     {
         return array(
             array('notre_vision', 1, 'fr'),
-            array('bien_vivre_en_france', 1),
+            array('bien_vivre_en_france', 1, 'fr'),
         );
     }
 
@@ -125,7 +127,8 @@ class ContentRepositoryTest extends KernelTestCase
      */
     public function testFindByContentTypeAndChoiceTypeAndKeywords($contentType = '', $choiceType, $keywords = null, $count)
     {
-        $elements = $this->repository->findByContentTypeAndChoiceTypeAndKeywords($contentType, $choiceType, $keywords);
+        $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
+        $elements = $this->repository->findByContentTypeAndChoiceTypeAndKeywordsAndLanguage($language, $contentType, $choiceType, $keywords);
 
         $this->assertCount($count, $elements);
     }
@@ -201,7 +204,7 @@ class ContentRepositoryTest extends KernelTestCase
      *
      * @dataProvider provideFindByContentIdAndLanguage
      */
-    public function testFindByContentIdAndLanguage($contentId, $language = null)
+    public function testFindByContentIdAndLanguage($contentId, $language)
     {
         $contents = $this->repository->findByContentIdAndLanguage($contentId, $language);
 

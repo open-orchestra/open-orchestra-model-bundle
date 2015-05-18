@@ -51,11 +51,11 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
 
     /**
      * @param string $contentId
-     * @param string|null $language
+     * @param string $language
      *
      * @return ContentInterface
      */
-    public function findLastPublishedVersionByContentIdAndLanguage($contentId, $language = null)
+    public function findLastPublishedVersionByContentIdAndLanguage($contentId, $language)
     {
         $qb = $this->createQueryWithLanguageAndPublished($language);
 
@@ -66,6 +66,8 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
     }
 
     /**
+     * @deprecated use findByContentTypeAndChoiceTypeAndKeywordsAndLanguage
+     *
      * @param string $contentType
      * @param string $choiceType
      * @param string $keywords
@@ -74,45 +76,61 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      */
     public function findByContentTypeAndChoiceTypeAndKeywords($contentType = '', $choiceType = self::CHOICE_AND, $keywords = null)
     {
-        $qb = $this->createQueryFindByContentTypeAndChoiceTypeAndKeywords($contentType, $choiceType, $keywords);
+        $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
+        $qb = $this->createQueryFindByContentTypeAndChoiceTypeAndKeywordsAndLanguage($language, $contentType, $choiceType, $keywords);
 
         return $this->findLastVersion($qb);
     }
 
     /**
-     * @param string      $contentId
-     * @param string|null $language
+     * @param string $language
+     * @param string $contentType
+     * @param string $choiceType
+     * @param string $keywords
+     *
+     * @return array
+     */
+    public function findByContentTypeAndChoiceTypeAndKeywordsAndLanguage($language, $contentType = '', $choiceType = self::CHOICE_AND, $keywords = null)
+    {
+        $qb = $this->createQueryFindByContentTypeAndChoiceTypeAndKeywordsAndLanguage($language, $contentType, $choiceType, $keywords);
+
+        return $this->findLastVersion($qb);
+    }
+
+    /**
+     * @param string $contentId
+     * @param string $language
      *
      * @return ContentInterface|null
      */
-    public function findOneByContentIdAndLanguage($contentId, $language = null)
+    public function findOneByContentIdAndLanguage($contentId, $language)
     {
         return $this->findOneByContentIdAndLanguageAndVersion($contentId, $language, null);
     }
 
     /**
-     * @param string      $contentId
-     * @param string|null $language
+     * @param string $contentId
+     * @param string $language
      *
      * @return array
      */
-    public function findByContentIdAndLanguage($contentId, $language = null)
+    public function findByContentIdAndLanguage($contentId, $language)
     {
-        $qb = $this->createQueryWithDefaultCriteria($contentId, $language, null);
+        $qb = $this->createQueryWithContentIdAndLanguageAndVersion($contentId, $language, null);
 
         return $qb->getQuery()->execute();
     }
 
     /**
      * @param string      $contentId
-     * @param string|null $language
+     * @param string      $language
      * @param int|null    $version
      *
      * @return ContentInterface|null
      */
-    public function findOneByContentIdAndLanguageAndVersion($contentId, $language = null, $version = null)
+    public function findOneByContentIdAndLanguageAndVersion($contentId, $language, $version = null)
     {
-        $qb = $this->createQueryWithDefaultCriteria($contentId, $language, $version);
+        $qb = $this->createQueryWithContentIdAndLanguageAndVersion($contentId, $language, $version);
 
         return $qb->getQuery()->getSingleResult();
     }
@@ -150,18 +168,13 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
     }
 
     /**
-     * @param string|null $language
+     * @param string $language
      *
      * @return Builder
      */
-    protected function createQueryWithLanguage($language = null)
+    protected function createQueryWithLanguage($language)
     {
         $qb = $this->createQueryBuilder('c');
-
-        if (is_null($language)) {
-            $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
-        }
-
         $qb->field('language')->equals($language);
 
         return $qb;
@@ -169,12 +182,12 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
 
     /**
      * @param string      $contentId
-     * @param string|null $language
+     * @param string      $language
      * @param int|null    $version
      *
      * @return Builder
      */
-    protected function createQueryWithDefaultCriteria($contentId, $language = null, $version = null)
+    protected function createQueryWithContentIdAndLanguageAndVersion($contentId, $language, $version = null)
     {
         $qb = $this->createQueryWithLanguage($language);
 
@@ -191,11 +204,11 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
     }
 
     /**
-     * @param string|null $language
+     * @param string $language
      *
      * @return Builder
      */
-    protected function createQueryWithLanguageAndPublished($language = null)
+    protected function createQueryWithLanguageAndPublished($language)
     {
         $qb = $this->createQueryWithLanguage($language);
 
@@ -225,15 +238,16 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
     }
 
     /**
+     * @param string $language
      * @param string $contentType
      * @param string $choiceType
      * @param string $keywords
      *
      * @return Builder
      */
-    protected function createQueryFindByContentTypeAndChoiceTypeAndKeywords($contentType, $choiceType, $keywords)
+    protected function createQueryFindByContentTypeAndChoiceTypeAndKeywordsAndLanguage($language, $contentType, $choiceType, $keywords)
     {
-        $qb = $this->createQueryWithLanguageAndPublished();
+        $qb = $this->createQueryWithLanguageAndPublished($language);
 
         $addMethod = 'addAnd';
         if ($choiceType == self::CHOICE_OR) {
