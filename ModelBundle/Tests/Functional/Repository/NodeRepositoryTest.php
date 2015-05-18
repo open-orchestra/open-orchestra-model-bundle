@@ -32,7 +32,6 @@ class NodeRepositoryTest extends KernelTestCase
 
         static::bootKernel();
         $this->repository = static::$kernel->getContainer()->get('open_orchestra_model.repository.node');
-        $this->repository->setCurrentSiteManager($this->currentSiteManager);
     }
 
     /**
@@ -44,9 +43,7 @@ class NodeRepositoryTest extends KernelTestCase
      */
     public function testFindOneByNodeIdAndLanguageWithPublishedAndLastVersionAndSiteId($language, $version, $siteId)
     {
-        Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn($siteId);
-
-        $node = $this->repository->findOneByNodeIdAndLanguageWithPublishedAndLastVersionAndSiteId(NodeInterface::ROOT_NODE_ID, $language);
+        $node = $this->repository->findOneByNodeIdAndLanguageWithPublishedAndLastVersionAndSiteId(NodeInterface::ROOT_NODE_ID, $language, $siteId);
 
         $this->assertSameNode($language, $version, $siteId, $node);
     }
@@ -72,9 +69,7 @@ class NodeRepositoryTest extends KernelTestCase
      */
     public function testFindOneByNodeIdAndLanguageAndVersionAndSiteIdWithPublishedDataSet($language, $version, $siteId)
     {
-        Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn($siteId);
-
-        $node = $this->repository->findOneByNodeIdAndLanguageAndVersionAndSiteId(NodeInterface::ROOT_NODE_ID, $language, $version);
+        $node = $this->repository->findOneByNodeIdAndLanguageAndVersionAndSiteId(NodeInterface::ROOT_NODE_ID, $language, $siteId, $version);
 
         $this->assertSameNode($language, $version, $siteId, $node);
     }
@@ -89,9 +84,7 @@ class NodeRepositoryTest extends KernelTestCase
      */
     public function testFindOneByNodeIdAndLanguageAndVersionAndSiteIdWithNotPublishedDataSet($language, $version = null, $siteId, $versionExpected)
     {
-        Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn($siteId);
-
-        $node = $this->repository->findOneByNodeIdAndLanguageAndVersionAndSiteId(NodeInterface::ROOT_NODE_ID, $language, $version);
+        $node = $this->repository->findOneByNodeIdAndLanguageAndVersionAndSiteId(NodeInterface::ROOT_NODE_ID, $language, $siteId, $version);
 
         $this->assertSameNode($language, $versionExpected, $siteId, $node);
         $this->assertSame('draft', $node->getStatus()->getName());
@@ -118,9 +111,7 @@ class NodeRepositoryTest extends KernelTestCase
      */
     public function testFindOneByNodeIdAndLanguageAndSiteIdAndLastVersion($language, $version = null, $siteId, $versionExpected)
     {
-        Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn($siteId);
-
-        $node = $this->repository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::ROOT_NODE_ID, $language);
+        $node = $this->repository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::ROOT_NODE_ID, $language, $siteId);
 
         $this->assertSameNode($language, $versionExpected, $siteId, $node);
     }
@@ -130,7 +121,8 @@ class NodeRepositoryTest extends KernelTestCase
      */
     public function testFindOneByNodeIdAndSiteIdAndLastVersion()
     {
-        $node = $this->repository->findOneByNodeIdAndSiteIdAndLastVersion(NodeInterface::ROOT_NODE_ID);
+        $siteId = $this->currentSiteManager->getCurrentSiteId();
+        $node = $this->repository->findOneByNodeIdAndSiteIdAndLastVersion(NodeInterface::ROOT_NODE_ID, $siteId);
 
         $this->assertSameNode('fr', 3, '1', $node);
     }
@@ -144,9 +136,7 @@ class NodeRepositoryTest extends KernelTestCase
      */
     public function testFindByNodeIdAndLanguageAndSiteId(array $versions, $language, $siteId)
     {
-        Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn($siteId);
-
-        $nodes = $this->repository->findByNodeIdAndLanguageAndSiteId(NodeInterface::ROOT_NODE_ID, $language);
+        $nodes = $this->repository->findByNodeIdAndLanguageAndSiteId(NodeInterface::ROOT_NODE_ID, $language, $siteId);
 
         $this->assertCount(count($versions), $nodes);
         foreach ($nodes as $node) {
@@ -175,10 +165,7 @@ class NodeRepositoryTest extends KernelTestCase
      */
     public function testFindByNodeIdAndSiteId($nodeId, $siteId, $count)
     {
-        Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn($siteId);
-
-        $nodes = $this->repository->findByNodeIdAndSiteId($nodeId);
-
+        $nodes = $this->repository->findByNodeIdAndSiteId($nodeId, $siteId);
         $this->assertCount($count, $nodes);
     }
 
@@ -205,9 +192,7 @@ class NodeRepositoryTest extends KernelTestCase
      */
     public function testFindByParentIdAndSiteId($parentId, $siteId, $count)
     {
-        Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn($siteId);
-
-        $nodes = $this->repository->findByParentIdAndSiteId($parentId);
+        $nodes = $this->repository->findByParentIdAndSiteId($parentId, $siteId);
 
         $this->assertGreaterThanOrEqual($count, $nodes->count());
     }
@@ -234,9 +219,7 @@ class NodeRepositoryTest extends KernelTestCase
      */
     public function testFindLastVersionBySiteId($siteId, $nodeNumber, $version)
     {
-        Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn($siteId);
-
-        $nodes = $this->repository->findLastVersionBySiteId();
+        $nodes = $this->repository->findLastVersionBySiteId($siteId);
 
         $this->assertCount($nodeNumber, $nodes);
         $this->assertSameNode('fr', $version, $siteId, $nodes[NodeInterface::ROOT_NODE_ID]);
@@ -280,10 +263,7 @@ class NodeRepositoryTest extends KernelTestCase
      */
     public function testGetFooterTree($siteId, $nodeNumber, $version, $language = 'fr', $nodeId = null)
     {
-        Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn($siteId);
-        Phake::when($this->currentSiteManager)->getCurrentSiteDefaultLanguage()->thenReturn($language);
-
-        $nodes = $this->repository->getFooterTree($language);
+        $nodes = $this->repository->getFooterTreeByLanguageAndSiteId($language, $siteId);
 
         $this->assertCount($nodeNumber, $nodes);
         if ($nodeId) {
@@ -314,10 +294,7 @@ class NodeRepositoryTest extends KernelTestCase
      */
     public function testGetMenuTree($siteId, $nodeNumber, $version, $language = 'fr')
     {
-        Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn($siteId);
-        Phake::when($this->currentSiteManager)->getCurrentSiteDefaultLanguage()->thenReturn($language);
-
-        $nodes = $this->repository->getMenuTree($language);
+        $nodes = $this->repository->getMenuTreeByLanguageAndSiteId($language, $siteId);
 
         $this->assertCount($nodeNumber, $nodes);
         $this->assertSameNode($language, $version, $siteId, $nodes[NodeInterface::ROOT_NODE_ID]);
@@ -348,15 +325,12 @@ class NodeRepositoryTest extends KernelTestCase
      */
     public function testGetSubMenu($nodeId, $nbLevel, $nodeNumber, $version, $siteId, $local = null)
     {
-        Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn($siteId);
-
-        $nodes = $this->repository->getSubMenu($nodeId, $nbLevel, $local);
+        if (is_null($local)) {
+            $local = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
+        }
+        $nodes = $this->repository->getSubMenuByNodeIdAndNbLevelAndLanguageAndSiteId($nodeId, $nbLevel, $local, $siteId);
 
         $this->assertCount($nodeNumber, $nodes);
-
-        if (is_null($local)) {
-            $local = 'fr';
-        }
         $this->assertSameNode($local, $version, $siteId, $nodes[0], $nodeId);
 
         $this->assertSame('published', $nodes[0]->getStatus()->getName());
@@ -388,9 +362,7 @@ class NodeRepositoryTest extends KernelTestCase
      */
     public function testFindLastVersionByDeletedAndSiteId($siteId, $count)
     {
-        Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn($siteId);
-
-        $this->assertCount($count, $this->repository->findLastVersionByDeletedAndSiteId());
+        $this->assertCount($count, $this->repository->findLastVersionByDeletedAndSiteId($siteId));
     }
 
     /**

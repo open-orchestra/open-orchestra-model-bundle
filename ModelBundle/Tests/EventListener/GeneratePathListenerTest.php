@@ -30,8 +30,9 @@ class GeneratePathListenerTest extends \PHPUnit_Framework_TestCase
         $this->container = Phake::mock('Symfony\Component\DependencyInjection\Container');
         Phake::when($this->container)->get(Phake::anyParameters())->thenReturn($this->nodeRepository);
         $this->documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
+        $currentSiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
 
-        $this->listener = new GeneratePathListener($this->container);
+        $this->listener = new GeneratePathListener($this->container, $currentSiteManager);
     }
 
     /**
@@ -79,7 +80,7 @@ class GeneratePathListenerTest extends \PHPUnit_Framework_TestCase
         Phake::when($documentManager)->getUnitOfWork()->thenReturn($unitOfWork);
         Phake::when($this->lifecycleEventArgs)->getDocument()->thenReturn($node);
         Phake::when($this->lifecycleEventArgs)->getDocumentManager()->thenReturn($documentManager);
-        Phake::when($this->nodeRepository)->findChildsByPath(Phake::anyParameters())->thenReturn($childs);
+        Phake::when($this->nodeRepository)->findChildsByPathAndSiteIdAndLanguage(Phake::anyParameters())->thenReturn($childs);
 
         $this->listener->$method($this->lifecycleEventArgs);
 

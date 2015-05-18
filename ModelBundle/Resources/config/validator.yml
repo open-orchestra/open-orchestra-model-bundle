@@ -34,6 +34,7 @@ services:
         arguments:
             - @translator
             - @open_orchestra_model.repository.node
+            - @open_orchestra_display.manager.site
         tags:
             - { name: validator.constraint_validator, alias: check_route_pattern}
     open_orchestra_model.validator.unique_main_alias:

@@ -13,6 +13,8 @@ use Solution\MongoAggregationBundle\AggregateQuery\AggregationQueryBuilder;
 abstract class AbstractRepository extends DocumentRepository
 {
     /**
+     * @deprecated This will be removed in the 0.2.3 version
+     *
      * @var CurrentSiteIdInterface
      */
     protected $currentSiteManager;
@@ -23,6 +25,8 @@ abstract class AbstractRepository extends DocumentRepository
     private $aggregationQueryBuilder;
 
     /**
+     * @deprecated This will be removed in the 0.2.3 version
+     *
      * @param CurrentSiteIdInterface $currentSiteManager
      */
     public function setCurrentSiteManager(CurrentSiteIdInterface $currentSiteManager)
