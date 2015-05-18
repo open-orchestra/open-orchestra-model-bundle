@@ -119,9 +119,9 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
     }
 
     /**
-     * @param string      $nodeId
-     * @param string      $language
-     * @param string      $siteId
+     * @param string $nodeId
+     * @param string $language
+     * @param string $siteId
      *
      * @return mixed
      */
@@ -162,9 +162,9 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
     }
 
     /**
-     * @param string      $nodeId
-     * @param string      $language
-     * @param string      $siteId
+     * @param string $nodeId
+     * @param string $language
+     * @param string $siteId
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
@@ -179,9 +179,9 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
     }
 
     /**
-     * @param string      $nodeId
-     * @param string      $language
-     * @param string      $siteId
+     * @param string $nodeId
+     * @param string $language
+     * @param string $siteId
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
@@ -250,9 +250,9 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
     }
 
     /**
-     * @param string      $nodeId
-     * @param string      $language
-     * @param string      $siteId
+     * @param string $nodeId
+     * @param string $language
+     * @param string $siteId
      *
      * @return mixed
      */
@@ -312,9 +312,9 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
     }
 
     /**
-     * @param string      $path
-     * @param string      $siteId
-     * @param string      $language
+     * @param string $path
+     * @param string $siteId
+     * @param string $language
      *
      * @return mixed
      */
@@ -505,9 +505,9 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
     }
 
     /**
-     * @param string      $language
-     * @param string      $field
-     * @param string      $siteId
+     * @param string $language
+     * @param string $field
+     * @param string $siteId
      *
      * @return array
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
