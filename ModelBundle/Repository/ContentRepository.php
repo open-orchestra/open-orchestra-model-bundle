@@ -116,7 +116,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      */
     public function findByContentIdAndLanguage($contentId, $language)
     {
-        $qb = $this->createQueryWithDefaultCriteria($contentId, $language, null);
+        $qb = $this->createQueryWithContentIdAndLanguageAndVersion($contentId, $language, null);
 
         return $qb->getQuery()->execute();
     }
@@ -130,7 +130,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      */
     public function findOneByContentIdAndLanguageAndVersion($contentId, $language, $version = null)
     {
-        $qb = $this->createQueryWithDefaultCriteria($contentId, $language, $version);
+        $qb = $this->createQueryWithContentIdAndLanguageAndVersion($contentId, $language, $version);
 
         return $qb->getQuery()->getSingleResult();
     }
@@ -187,7 +187,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      *
      * @return Builder
      */
-    protected function createQueryWithDefaultCriteria($contentId, $language, $version = null)
+    protected function createQueryWithContentIdAndLanguageAndVersion($contentId, $language, $version = null)
     {
         $qb = $this->createQueryWithLanguage($language);
 
