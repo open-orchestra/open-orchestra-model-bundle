@@ -24,6 +24,7 @@ class LoadRoleData extends AbstractFixture implements OrderedFixtureInterface
         $admin->addDescription($this->generateTranslatedValue('fr', 'Role pour les administrateurs'));
         $admin->addDescription($this->generateTranslatedValue('de', 'Rollen für Administratoren'));
         $admin->addDescription($this->generateTranslatedValue('es', 'Funciones para administradores'));
+        $this->addReference('role-admin', $admin);
         $manager->persist($admin);
 
         $user = new Role();
@@ -32,6 +33,7 @@ class LoadRoleData extends AbstractFixture implements OrderedFixtureInterface
         $user->addDescription($this->generateTranslatedValue('fr', 'Role pour tous les utilisateurs'));
         $user->addDescription($this->generateTranslatedValue('de', 'Rollen für Leute'));
         $user->addDescription($this->generateTranslatedValue('es', 'Papeles para todos los usuarios'));
+        $this->addReference('role-user', $user);
         $manager->persist($user);
 
         $draft = new Role();
@@ -42,6 +44,7 @@ class LoadRoleData extends AbstractFixture implements OrderedFixtureInterface
         $draft->addDescription($this->generateTranslatedValue('es', 'Cambiar el estado de proyecto pendiente'));
         $draft->setFromStatus($this->getReference('status-draft'));
         $draft->setToStatus($this->getReference('status-pending'));
+        $this->addReference('role-draft', $draft);
         $manager->persist($draft);
 
         $pending = new Role();
@@ -52,6 +55,7 @@ class LoadRoleData extends AbstractFixture implements OrderedFixtureInterface
         $pending->addDescription($this->generateTranslatedValue('es', 'Cambiar el estado de pendiente de publicación'));
         $pending->setFromStatus($this->getReference('status-pending'));
         $pending->setToStatus($this->getReference('status-published'));
+        $this->addReference('role-pending', $pending);
         $manager->persist($pending);
 
         $published = new Role();
@@ -62,6 +66,7 @@ class LoadRoleData extends AbstractFixture implements OrderedFixtureInterface
         $published->addDescription($this->generateTranslatedValue('es', 'Cambiar el estado de borrador publicado'));
         $published->setFromStatus($this->getReference('status-published'));
         $published->setToStatus($this->getReference('status-draft'));
+        $this->addReference('role-published', $published);
         $manager->persist($published);
 
         $manager->flush();
