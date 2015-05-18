@@ -140,10 +140,10 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
     }
 
     /**
-     * @param string      $nodeId
-     * @param string      $language
-     * @param string      $siteId
-     * @param int|null    $version
+     * @param string   $nodeId
+     * @param string   $language
+     * @param string   $siteId
+     * @param int|null $version
      *
      * @return mixed
      */
