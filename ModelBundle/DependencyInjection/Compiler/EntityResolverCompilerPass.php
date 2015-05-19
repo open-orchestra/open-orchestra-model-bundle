@@ -25,9 +25,6 @@ class EntityResolverCompilerPass implements  CompilerPassInterface
                 $definition->addMethodCall('addResolveTargetDocument', array($interface, $class, array()));
             }
         }
-        if (!$definition->hasTag('doctrine_mongodb.odm.event_listener')) {
-            $definition->addTag('doctrine_mongodb.odm.event_listener', array('event' => 'preLoad'));
-        }
     }
 
     /**
@@ -38,7 +35,8 @@ class EntityResolverCompilerPass implements  CompilerPassInterface
      *
      * @return bool
      */
-    protected function resolverExist($methodCalls, $interface) {
+    protected function resolverExist($methodCalls, $interface)
+    {
         foreach ($methodCalls as $call) {
             if ($call[0] === 'addResolveTargetDocument' && $call[1][0] === $interface) {
                 return true;
