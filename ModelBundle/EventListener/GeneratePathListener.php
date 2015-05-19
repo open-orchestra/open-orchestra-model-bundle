@@ -4,6 +4,7 @@ namespace OpenOrchestra\ModelBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
 use Doctrine\ODM\MongoDB\Event\PostFlushEventArgs;
+use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Symfony\Component\DependencyInjection\Container;
 
@@ -13,14 +14,17 @@ use Symfony\Component\DependencyInjection\Container;
 class GeneratePathListener
 {
     protected $container;
+    protected $currentSiteManager;
     public $nodes;
 
     /**
      * @param Container $container
+     * @param CurrentSiteIdInterface $currentSiteManager
      */
-    public function __construct(Container $container)
+    public function __construct(Container $container, CurrentSiteIdInterface $currentSiteManager)
     {
         $this->container = $container;
+        $this->currentSiteManager = $currentSiteManager;
     }
 
     /**
@@ -77,7 +81,8 @@ class GeneratePathListener
             if ($path != $document->getPath()) {
                 $document->setPath($path);
                 $this->nodes[] = $document;
-                $childNodes = $nodeRepository->findChildsByPath($document->getPath(), $siteId);
+                $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
+                $childNodes = $nodeRepository->findChildsByPathAndSiteIdAndLanguage($document->getPath(), $siteId, $language);
                 foreach($childNodes as $childNode){
                     $this->nodes[] = $childNode;
                     $childNode->setPath(preg_replace('/'.preg_quote($document->getPath(), '/').'(.*)/', $path.'$1', $childNode->getPath()));

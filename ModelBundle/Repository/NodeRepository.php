@@ -19,26 +19,64 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
     use AreaFinderTrait;
 
     /**
+     * @deprecated use getFooterTreeByLanguageAndSiteId
+     *
      * @param string $language
      *
      * @return array
      */
     public function getFooterTree($language = null)
     {
-        return $this->getTreeByLanguageAndField($language, 'inFooter');
+        if (is_null($language)) {
+            $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
+        }
+        $siteId = $this->currentSiteManager->getCurrentSiteId();
+
+        return $this->getTreeByLanguageAndFieldAndSiteId($language, 'inFooter', $siteId);
     }
 
     /**
+     * @param string $language
+     * @param string $siteId
+     *
+     * @return array
+     */
+    public function getFooterTreeByLanguageAndSiteId($language, $siteId)
+    {
+        return $this->getTreeByLanguageAndFieldAndSiteId($language, 'inFooter', $siteId);
+    }
+
+    /**
+     * @deprecated use getMenuTreeByLanguageAndSiteId
+     *
      * @param string $language
      *
      * @return array
      */
     public function getMenuTree($language = null)
     {
-        return $this->getTreeByLanguageAndField($language, 'inMenu');
+        if (is_null($language)) {
+            $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
+        }
+        $siteId = $this->currentSiteManager->getCurrentSiteId();
+
+        return $this->getTreeByLanguageAndFieldAndSiteId($language, 'inMenu', $siteId);
     }
 
     /**
+     * @param string $language
+     * @param string $siteId
+     *
+     * @return array
+     */
+    public function getMenuTreeByLanguageAndSiteId($language, $siteId)
+    {
+        return $this->getTreeByLanguageAndFieldAndSiteId($language, 'inMenu', $siteId);
+    }
+
+    /**
+     * @deprecated use getSubMenuByNodeIdAndNbLevelAndLanguageAndSiteId
+     *
      * @param string $nodeId
      * @param int    $nbLevel
      * @param string $language
@@ -47,23 +85,47 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      */
     public function getSubMenu($nodeId, $nbLevel, $language = null)
     {
-        $node = $this->findOneByNodeIdAndLanguageWithPublishedAndLastVersionAndSiteId($nodeId, $language);
+        if (is_null($language)) {
+            $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
+        }
+        $siteId = $this->currentSiteManager->getCurrentSiteId();
+
+        $node = $this->findOneByNodeIdAndLanguageWithPublishedAndLastVersionAndSiteId($nodeId, $language, $siteId);
 
         $list = array();
         $list[] = $node;
-        $list = array_merge($list, $this->getTreeParentIdLevelAndLanguage($node->getNodeId(), $nbLevel, $language));
+        $list = array_merge($list, $this->getTreeParentIdLevelAndLanguage($node->getNodeId(), $nbLevel, $language, $siteId));
 
         return $list;
     }
 
     /**
-     * @param string      $nodeId
-     * @param string|null $language
-     * @param string|null $siteId
+     * @param string $nodeId
+     * @param int    $nbLevel
+     * @param string $language
+     * @param string $siteId
+     *
+     * @return array
+     */
+    public function getSubMenuByNodeIdAndNbLevelAndLanguageAndSiteId($nodeId, $nbLevel, $language, $siteId)
+    {
+        $node = $this->findOneByNodeIdAndLanguageWithPublishedAndLastVersionAndSiteId($nodeId, $language, $siteId);
+
+        $list = array();
+        $list[] = $node;
+        $list = array_merge($list, $this->getTreeParentIdLevelAndLanguage($node->getNodeId(), $nbLevel, $language, $siteId));
+
+        return $list;
+    }
+
+    /**
+     * @param string $nodeId
+     * @param string $language
+     * @param string $siteId
      *
      * @return mixed
      */
-    public function findOneByNodeIdAndLanguageWithPublishedAndLastVersionAndSiteId($nodeId, $language = null, $siteId = null)
+    public function findOneByNodeIdAndLanguageWithPublishedAndLastVersionAndSiteId($nodeId, $language, $siteId)
     {
         $qb = $this->createQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         if ($nodeId !== NodeInterface::TRANSVERSE_NODE_ID) {
@@ -78,16 +140,17 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
     }
 
     /**
-     * @param string      $nodeId
-     * @param string|null $language
-     * @param int|null    $version
+     * @param string   $nodeId
+     * @param string   $language
+     * @param string   $siteId
+     * @param int|null $version
      *
      * @return mixed
      */
-    public function findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $language = null, $version = null)
+    public function findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $language, $siteId, $version = null)
     {
         if (!is_null($version)) {
-            $qb = $this->createQueryBuilderWithSiteIdAndLanguage(null, $language);
+            $qb = $this->createQueryBuilderWithSiteIdAndLanguage($siteId, $language);
             $qb->field('nodeId')->equals($nodeId);
             $qb->field('deleted')->equals(false);
             $qb->field('version')->equals((int) $version);
@@ -95,19 +158,19 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
             return $qb->getQuery()->getSingleResult();
         }
 
-        return $this->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($nodeId, $language);
+        return $this->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($nodeId, $language, $siteId);
     }
 
     /**
-     * @param string      $nodeId
-     * @param string|null $language
-     * @param string|null $siteId
+     * @param string $nodeId
+     * @param string $language
+     * @param string $siteId
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
      * @return mixed
      */
-    public function findByNodeIdAndLanguageAndSiteId($nodeId, $language = null, $siteId = null)
+    public function findByNodeIdAndLanguageAndSiteId($nodeId, $language, $siteId)
     {
         $qb = $this->createQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         $qb->field('nodeId')->equals($nodeId);
@@ -116,15 +179,15 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
     }
 
     /**
-     * @param string      $nodeId
-     * @param string|null $language
-     * @param string|null $siteId
+     * @param string $nodeId
+     * @param string $language
+     * @param string $siteId
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
      * @return mixed
      */
-    public function findByNodeIdAndLanguageAndSiteIdAndPublishedOrderedByVersion($nodeId, $language = null, $siteId = null)
+    public function findByNodeIdAndLanguageAndSiteIdAndPublishedOrderedByVersion($nodeId, $language, $siteId)
     {
         $qb = $this->createQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         $qb->field('nodeId')->equals($nodeId);
@@ -136,14 +199,15 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
 
     /**
      * @param string $nodeId
+     * @param string $siteId
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
      * @return mixed
      */
-    public function findByNodeIdAndSiteId($nodeId)
+    public function findByNodeIdAndSiteId($nodeId, $siteId)
     {
-        $qb = $this->createQueryBuilderWithSiteId();
+        $qb = $this->createQueryBuilderWithSiteId($siteId);
         $qb->field('nodeId')->equals($nodeId);
 
         return $qb->getQuery()->execute();
@@ -151,14 +215,15 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
 
     /**
      * @param string $parentId
+     * @param string $siteId
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
      * @return mixed
      */
-    public function findByParentIdAndSiteId($parentId)
+    public function findByParentIdAndSiteId($parentId, $siteId)
     {
-        $qb = $this->createQueryBuilderWithSiteId();
+        $qb = $this->createQueryBuilderWithSiteId($siteId);
         $qb->field('parentId')->equals($parentId);
 
         return $qb->getQuery()->execute();
@@ -166,14 +231,15 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
 
     /**
      * @param string $nodeId
+     * @param string $siteId
      *
      * @deprecated This method is not precise
      *
      * @return mixed
      */
-    public function findOneByNodeIdAndSiteIdAndLastVersion($nodeId)
+    public function findOneByNodeIdAndSiteIdAndLastVersion($nodeId, $siteId)
     {
-        $qb = $this->createQueryBuilderWithSiteId();
+        $qb = $this->createQueryBuilderWithSiteId($siteId);
         $qb->field('nodeId')->equals($nodeId);
         $qb->field('deleted')->equals(false);
         $qb->sort('version', 'desc');
@@ -184,13 +250,13 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
     }
 
     /**
-     * @param string      $nodeId
-     * @param string|null $language
-     * @param string|null $siteId
+     * @param string $nodeId
+     * @param string $language
+     * @param string $siteId
      *
      * @return mixed
      */
-    public function findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($nodeId, $language = null, $siteId = null)
+    public function findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($nodeId, $language, $siteId)
     {
         $qb = $this->createQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         $qb->field('nodeId')->equals($nodeId);
@@ -204,27 +270,30 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
     }
 
     /**
-     * @param string $type
      * @param string $siteId
+     * @param string $type
      *
      * @return array
      */
-    public function findLastVersionBySiteId($type = NodeInterface::TYPE_DEFAULT, $siteId = null)
+    public function findLastVersionBySiteId($siteId, $type = NodeInterface::TYPE_DEFAULT)
     {
         return $this->prepareFindLastVersion($type, $siteId, false);
     }
 
     /**
+     * @param string $siteId
      * @param string $type
      *
      * @return array
      */
-    public function findLastVersionByDeletedAndSiteId($type = NodeInterface::TYPE_DEFAULT)
+    public function findLastVersionByDeletedAndSiteId($siteId, $type = NodeInterface::TYPE_DEFAULT)
     {
-        return $this->prepareFindLastVersion($type, null, true);
+        return $this->prepareFindLastVersion($type, $siteId, true);
     }
 
     /**
+     * @deprecated use findChildsByPathAndSiteIdAndLanguage
+     *
      * @param string      $path
      * @param string|null $siteId
      *
@@ -232,7 +301,26 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      */
     public function findChildsByPath($path, $siteId = null)
     {
-        $qb = $this->buildTreeRequest(null, $siteId);
+        if (is_null($siteId)) {
+            $siteId = $this->currentSiteManager->getCurrentSiteId();
+        }
+        $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
+        $qb = $this->buildTreeRequest($language, $siteId);
+        $qb->field('path')->equals(new \MongoRegex('/'.preg_quote($path).'.+/'));
+
+        return $qb->getQuery()->execute();
+    }
+
+    /**
+     * @param string $path
+     * @param string $siteId
+     * @param string $language
+     *
+     * @return mixed
+     */
+    public function findChildsByPathAndSiteIdAndLanguage($path, $siteId, $language)
+    {
+        $qb = $this->buildTreeRequest($language, $siteId);
         $qb->field('path')->equals(new \MongoRegex('/'.preg_quote($path).'.+/'));
 
         return $qb->getQuery()->execute();
@@ -242,15 +330,16 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      * @param string $parentId
      * @param int    $nbLevel
      * @param string $language
+     * @param string $siteId
      *
      * @return array
      */
-    protected function getTreeParentIdLevelAndLanguage($parentId, $nbLevel, $language = null)
+    protected function getTreeParentIdLevelAndLanguage($parentId, $nbLevel, $language, $siteId)
     {
         $result = array();
 
         if ($nbLevel >= 0) {
-            $qb = $this->buildTreeRequest($language);
+            $qb = $this->buildTreeRequest($language, $siteId);
             $qb->field('parentId')->equals($parentId);
 
             $nodes = $qb->getQuery()->execute();
@@ -258,7 +347,7 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
 
             if (is_array($nodes->toArray())) {
                 foreach ($nodes as $node) {
-                    $temp = $this->getTreeParentIdLevelAndLanguage($node->getNodeId(), $nbLevel-1, $language);
+                    $temp = $this->getTreeParentIdLevelAndLanguage($node->getNodeId(), $nbLevel-1, $language, $siteId);
                     $result = array_merge($result, $temp);
                 }
             }
@@ -268,7 +357,7 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
     }
 
     /**
-     * @param array $list
+     * @param Builder $qb
      *
      * @return array
      */
@@ -295,7 +384,7 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      */
     public function testUnicityInContext($name)
     {
-        $qb = $this->createQueryBuilderWithSiteId();
+        $qb = $this->createQueryBuilder('n');
         $qb->field('name')->equals($name);
 
         return count($qb->getQuery()->execute()) > 0;
@@ -357,15 +446,12 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
     }
 
     /**
-     * @param string|null $siteId
+     * @param string $siteId
      *
      * @return \Doctrine\ODM\MongoDB\Query\Builder
      */
-    protected function createQueryBuilderWithSiteId($siteId = null)
+    protected function createQueryBuilderWithSiteId($siteId)
     {
-        if (is_null($siteId)) {
-            $siteId = $this->currentSiteManager->getCurrentSiteId();
-        }
         $qb = $this->createQueryBuilder('n');
         $qb->field('siteId')->equals($siteId);
 
@@ -373,12 +459,12 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
     }
 
     /**
-     * @param string|null $language
-     * @param string|null $siteId
+     * @param string $language
+     * @param string $siteId
      *
      * @return \Doctrine\ODM\MongoDB\Query\Builder
      */
-    protected function buildTreeRequest($language = null, $siteId = null)
+    protected function buildTreeRequest($language, $siteId)
     {
         $qb = $this->createQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         $qb->field('status.published')->equals(true);
@@ -388,17 +474,14 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
     }
 
     /**
-     * @param string|null $siteId
-     * @param string|null $language
+     * @param string $siteId
+     * @param string $language
      *
      * @return \Doctrine\ODM\MongoDB\Query\Builder
      */
-    protected function createQueryBuilderWithSiteIdAndLanguage($siteId = null, $language = null)
+    protected function createQueryBuilderWithSiteIdAndLanguage($siteId, $language)
     {
         $qb = $this->createQueryBuilderWithSiteId($siteId);
-        if (is_null($language)) {
-            $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
-        }
         $qb->field('language')->equals($language);
 
         return $qb;
@@ -412,7 +495,7 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      * @return array
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    protected function prepareFindLastVersion($type, $siteId = null, $deleted)
+    protected function prepareFindLastVersion($type, $siteId, $deleted)
     {
         $qb = $this->createQueryBuilderWithSiteId($siteId);
         $qb->field('deleted')->equals($deleted);
@@ -422,21 +505,24 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
     }
 
     /**
-     * @param string|null $language
-     * @param string      $field
+     * @param string $language
+     * @param string $field
+     * @param string $siteId
      *
      * @return array
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    protected function getTreeByLanguageAndField($language = null, $field)
+    protected function getTreeByLanguageAndFieldAndSiteId($language, $field, $siteId)
     {
-        $qb = $this->buildTreeRequest($language);
+        $qb = $this->buildTreeRequest($language, $siteId);
         $qb->field($field)->equals(true);
 
         return $this->findLastVersion($qb);
     }
 
     /**
+     * @deprecated use findByParentIdAndRoutePatternAndNotNodeIdAndSiteId
+     *
      * @param string $parentId
      * @param string $routePattern
      * @param string $nodeId
@@ -445,7 +531,27 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      */
     public function findByParentIdAndRoutePatternAndNotNodeId($parentId, $routePattern, $nodeId)
     {
-        $qb = $this->createQueryBuilderWithSiteId();
+        $siteId = $this->currentSiteManager->getCurrentSiteId();
+
+        $qb = $this->createQueryBuilderWithSiteId($siteId);
+        $qb->field('parentId')->equals($parentId);
+        $qb->field('routePattern')->equals($routePattern);
+        $qb->field('nodeId')->notEqual($nodeId);
+
+        return $qb->getQuery()->execute();
+    }
+
+    /**
+     * @param string $parentId
+     * @param string $routePattern
+     * @param string $nodeId
+     * @param string $siteId
+     *
+     * @return array
+     */
+    public function findByParentIdAndRoutePatternAndNotNodeIdAndSiteId($parentId, $routePattern, $nodeId, $siteId)
+    {
+        $qb = $this->createQueryBuilderWithSiteId($siteId);
         $qb->field('parentId')->equals($parentId);
         $qb->field('routePattern')->equals($routePattern);
         $qb->field('nodeId')->notEqual($nodeId);
