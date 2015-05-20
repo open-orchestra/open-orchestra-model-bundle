@@ -125,7 +125,7 @@ class LoadNodeData extends AbstractFixture implements OrderedFixtureInterface
         $nodeTransverse = new Node();
         $nodeTransverse->setNodeId(NodeInterface::TRANSVERSE_NODE_ID);
         $nodeTransverse->setMaxAge(1000);
-        $nodeTransverse->setNodeType(NodeInterface::TYPE_GENERAL);
+        $nodeTransverse->setNodeType(NodeInterface::TYPE_TRANSVERSE);
         $nodeTransverse->setName(NodeInterface::TRANSVERSE_NODE_ID);
         $nodeTransverse->setSiteId('1');
         $nodeTransverse->setParentId('-');
