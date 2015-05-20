@@ -13,23 +13,6 @@ use Doctrine\ODM\MongoDB\Query\Builder;
 class ContentRepository extends AbstractRepository implements FieldAutoGenerableRepositoryInterface, ContentRepositoryInterface
 {
     /**
-     * Get all content if the contentType is "news"
-     *
-     * @deprecated This will be removed in the 0.2.1 version
-     *
-     * @return array list of news
-     */
-    public function findAllNews()
-    {
-        $criteria = array(
-            'contentType'=> "news",
-            'status'=> "published"
-        );
-
-        return $this->findBy($criteria);
-    }
-
-    /**
      * @param string $contentId
      *
      * @return boolean
@@ -63,23 +46,6 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
         $qb->sort('version', 'desc');
 
         return $qb->getQuery()->getSingleResult();
-    }
-
-    /**
-     * @deprecated use findByContentTypeAndChoiceTypeAndKeywordsAndLanguage
-     *
-     * @param string $contentType
-     * @param string $choiceType
-     * @param string $keywords
-     *
-     * @return array
-     */
-    public function findByContentTypeAndChoiceTypeAndKeywords($contentType = '', $choiceType = self::CHOICE_AND, $keywords = null)
-    {
-        $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
-        $qb = $this->createQueryFindByContentTypeAndChoiceTypeAndKeywordsAndLanguage($language, $contentType, $choiceType, $keywords);
-
-        return $this->findLastVersion($qb);
     }
 
     /**
