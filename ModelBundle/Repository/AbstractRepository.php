@@ -3,7 +3,6 @@
 namespace OpenOrchestra\ModelBundle\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
-use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use Solution\MongoAggregation\Pipeline\Stage;
 use Solution\MongoAggregationBundle\AggregateQuery\AggregationQueryBuilder;
 

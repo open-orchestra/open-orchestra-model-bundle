@@ -31,17 +31,6 @@ class ContentRepositoryTest extends KernelTestCase
 
         static::bootKernel();
         $this->repository = static::$kernel->getContainer()->get('open_orchestra_model.repository.content');
-        $this->repository->setCurrentSiteManager($this->currentSiteManager);
-    }
-
-    /**
-     * Test find all news
-     */
-    public function testFindAllNews()
-    {
-        $elements = $this->repository->findAllNews();
-
-        $this->assertCount(0, $elements);
     }
 
     /**

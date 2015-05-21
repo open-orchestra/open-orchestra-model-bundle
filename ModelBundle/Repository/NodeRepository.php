@@ -172,6 +172,24 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
 
     /**
      * @param string $nodeId
+     * @param string $siteId
+     *
+     * @deprecated This method is not precise
+     *
+     * @return mixed
+     */
+    public function findOneByNodeIdAndSiteIdAndLastVersion($nodeId, $siteId)
+    {
+        $qb = $this->createQueryBuilderWithSiteId($siteId);
+        $qb->field('nodeId')->equals($nodeId);
+        $qb->field('deleted')->equals(false);
+        $qb->sort('version', 'desc');
+        $node = $qb->getQuery()->getSingleResult();
+        return $node;
+    }
+
+    /**
+     * @param string $nodeId
      * @param string $language
      * @param string $siteId
      *
