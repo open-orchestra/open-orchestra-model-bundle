@@ -262,5 +262,6 @@ class FieldType implements FieldTypeInterface
     public function __clone()
     {
         $this->labels = new ArrayCollection();
+        $this->options = new ArrayCollection();
     }
 }
