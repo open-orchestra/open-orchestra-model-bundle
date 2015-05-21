@@ -73,9 +73,9 @@ class FieldType implements FieldTypeInterface
      */
     public function __construct()
     {
-        $this->options = new ArrayCollection();
-        $this->labels = new ArrayCollection();
+        $this->initializeCollection();
     }
+
     /**
      * Set FieldId
      *
@@ -261,6 +261,16 @@ class FieldType implements FieldTypeInterface
      */
     public function __clone()
     {
-        $this->labels = new ArrayCollection();
+        $this->initializeCollection();
     }
+
+    /**
+     * Initialize collection
+     */
+    protected function initializeCollection()
+    {
+        $this->labels = new ArrayCollection();
+        $this->options = new ArrayCollection();
+    }
+
 }
