@@ -3,7 +3,6 @@
 namespace OpenOrchestra\ModelBundle\Repository;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
-use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
 use Solution\MongoAggregation\Pipeline\Stage;
 use Solution\MongoAggregationBundle\AggregateQuery\AggregationQueryBuilder;
 
@@ -13,26 +12,9 @@ use Solution\MongoAggregationBundle\AggregateQuery\AggregationQueryBuilder;
 abstract class AbstractRepository extends DocumentRepository
 {
     /**
-     * @deprecated This will be removed in the 0.2.4 version
-     *
-     * @var CurrentSiteIdInterface
-     */
-    protected $currentSiteManager;
-
-    /**
      * @var AggregationQueryBuilder
      */
     private $aggregationQueryBuilder;
-
-    /**
-     * @deprecated This will be removed in the 0.2.4 version
-     *
-     * @param CurrentSiteIdInterface $currentSiteManager
-     */
-    public function setCurrentSiteManager(CurrentSiteIdInterface $currentSiteManager)
-    {
-        $this->currentSiteManager = $currentSiteManager;
-    }
 
     /**
      * @param AggregationQueryBuilder $aggregationQueryBuilder

@@ -117,17 +117,6 @@ class NodeRepositoryTest extends KernelTestCase
     }
 
     /**
-     * Test last version
-     */
-    public function testFindOneByNodeIdAndSiteIdAndLastVersion()
-    {
-        $siteId = $this->currentSiteManager->getCurrentSiteId();
-        $node = $this->repository->findOneByNodeIdAndSiteIdAndLastVersion(NodeInterface::ROOT_NODE_ID, $siteId);
-
-        $this->assertSameNode('fr', 3, '1', $node);
-    }
-
-    /**
      * @param array  $versions
      * @param string $language
      * @param string $siteId
