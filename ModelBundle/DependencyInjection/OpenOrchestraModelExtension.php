@@ -27,21 +27,13 @@ class OpenOrchestraModelExtension extends Extension
             if (is_array($content)) {
                 $container->setParameter('open_orchestra_model.document.' . $class . '.class', $content['class']);
                 if (array_key_exists('repository', $content)) {
-                    if (array_key_exists('current_site', $content) && $content['current_site']) {
-                        $container->register('open_orchestra_model.repository.' . $class, $content['repository'])
-                            ->setFactoryService('doctrine.odm.mongodb.document_manager')
-                            ->setFactoryMethod('getRepository')
-                            ->addArgument($content['class'])
-                            ->addMethodCall('setAggregationQueryBuilder', array(
-                                new Reference('doctrine_mongodb.odm.default_aggregation_query')
-                            ))
-                        ;
-                    } else {
-                        $container->register('open_orchestra_model.repository.' . $class, $content['repository'])
-                            ->setFactoryService('doctrine.odm.mongodb.document_manager')
-                            ->setFactoryMethod('getRepository')
-                            ->addArgument($content['class']);
-                    }
+                    $container->register('open_orchestra_model.repository.' . $class, $content['repository'])
+                        ->setFactoryService('doctrine.odm.mongodb.document_manager')
+                        ->setFactoryMethod('getRepository')
+                        ->addArgument($content['class'])
+                        ->addMethodCall('setAggregationQueryBuilder', array(
+                            new Reference('doctrine_mongodb.odm.default_aggregation_query')
+                        ));
                 }
             }
         }
