@@ -30,9 +30,8 @@ class GeneratePathListenerTest extends \PHPUnit_Framework_TestCase
         $this->container = Phake::mock('Symfony\Component\DependencyInjection\Container');
         Phake::when($this->container)->get(Phake::anyParameters())->thenReturn($this->nodeRepository);
         $this->documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
-        $currentSiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
 
-        $this->listener = new GeneratePathListener($this->container, $currentSiteManager);
+        $this->listener = new GeneratePathListener($this->container);
     }
 
     /**

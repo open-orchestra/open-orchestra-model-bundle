@@ -16,18 +16,15 @@ class CheckRoutePatternValidator extends ConstraintValidator
 {
     protected $translator;
     protected $nodeRepository;
-    protected $currentSiteManager;
 
     /**
      * @param TranslatorInterface     $translator
      * @param NodeRepositoryInterface $nodeRepository
-     * @param CurrentSiteIdInterface  $currentSiteManager
      */
-    public function __construct(TranslatorInterface $translator, NodeRepositoryInterface $nodeRepository, CurrentSiteIdInterface $currentSiteManager)
+    public function __construct(TranslatorInterface $translator, NodeRepositoryInterface $nodeRepository)
     {
         $this->translator = $translator;
         $this->nodeRepository = $nodeRepository;
-        $this->currentSiteManager = $currentSiteManager;
     }
 
     /**
@@ -38,8 +35,12 @@ class CheckRoutePatternValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        $siteId = $this->currentSiteManager->getCurrentSiteId();
-        if (0 < count($this->nodeRepository->findByParentIdAndRoutePatternAndNotNodeIdAndSiteId($value->getParentId(), $value->getRoutePattern(), $value->getNodeId(), $siteId))) {
+        if (0 < count($this->nodeRepository->findByParentIdAndRoutePatternAndNotNodeIdAndSiteId(
+                $value->getParentId(),
+                $value->getRoutePattern(),
+                $value->getNodeId(),
+                $value->getSiteId()
+            ))) {
             $this->context->addViolationAt('routePattern', $this->translator->trans($constraint->message));
         }
     }

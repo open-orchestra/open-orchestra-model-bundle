@@ -20,7 +20,6 @@ services:
         class: %open_orchestra_model.doctrine_listener.generate_path.class%
         arguments:
             - @service_container
-            - @open_orchestra_display.manager.site
         tags:
             -  { name: doctrine_mongodb.odm.event_listener, event: prePersist }
             -  { name: doctrine_mongodb.odm.event_listener, event: preUpdate }
