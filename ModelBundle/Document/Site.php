@@ -275,7 +275,7 @@ class Site implements SiteInterface
     }
 
     /**
-     * Return one of the defailt site language
+     * Return one of the default site language
      *
      * @return string
      */
