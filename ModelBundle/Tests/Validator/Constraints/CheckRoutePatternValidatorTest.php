@@ -39,9 +39,8 @@ class CheckRoutePatternValidatorTest extends \PHPUnit_Framework_TestCase
 
         $this->node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($this->node)->getAreas()->thenReturn($this->areas);
-        $currentSiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
 
-        $this->validator = new CheckRoutePatternValidator($this->translator, $this->nodeRepository, $currentSiteManager);
+        $this->validator = new CheckRoutePatternValidator($this->translator, $this->nodeRepository);
         $this->validator->initialize($this->context);
     }
 
