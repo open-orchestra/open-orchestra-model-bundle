@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\Validator\Constraints;
 
-use OpenOrchestra\ModelBundle\Repository\ContentTypeRepository;
+use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
@@ -15,9 +15,9 @@ class UniqueContentTypeIdValidator extends ConstraintValidator
     protected $repository;
 
     /**
-     * @param ContentTypeRepository $repository
+     * @param ContentTypeRepositoryInterface $repository
      */
-    public function __construct(ContentTypeRepository $repository)
+    public function __construct(ContentTypeRepositoryInterface $repository)
     {
         $this->repository = $repository;
     }
@@ -28,9 +28,9 @@ class UniqueContentTypeIdValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        $result = $this->repository->findOneByContentTypeId($value->getContentTypeId());
+        $result = $this->repository->findOneByContentTypeIdInLastVersion($value->getContentTypeId());
 
-        if (null !== $result && $result->getId() !== $value->getId()) {
+        if (null !== $result && $value->getVersion() <= 1) {
             $this->context->buildViolation($constraint->message)
                 ->atPath('contentTypeId')
                 ->addViolation();
