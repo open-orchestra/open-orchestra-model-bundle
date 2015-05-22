@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\Validator\Constraints;
 
-use OpenOrchestra\ModelBundle\Validator\Constraints\UniqueFieldIdContentType;
 use OpenOrchestra\ModelBundle\Validator\Constraints\UniqueFieldIdContentTypeValidator;
 use Phake;
 
@@ -11,7 +10,6 @@ use Phake;
  */
 class UniqueFieldIdContentTypeValidatorTest extends \PHPUnit_Framework_TestCase
 {
-
     protected $constraint;
     protected $context;
     protected $validator;
@@ -82,5 +80,4 @@ class UniqueFieldIdContentTypeValidatorTest extends \PHPUnit_Framework_TestCase
             array('fakeId','fakeId', 2),
         );
     }
-
 }
