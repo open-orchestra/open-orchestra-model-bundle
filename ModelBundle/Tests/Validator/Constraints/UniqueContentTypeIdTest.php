@@ -10,7 +10,6 @@ use Symfony\Component\Validator\Constraint;
  */
 class UniqueContentTypeIdTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @var UniqueContentTypeId
      */
