@@ -72,14 +72,16 @@ class UniqueContentTypeIdValidatorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param string               $contentTypeId
-     * @param ContentTypeInterface $contentType2
+     * @param string               $version
+     * @param ContentTypeInterface $contentType
      *
-     * @dataProvider generateNoViolation
+     * @dataProvider provideContentTypeIdAndContentTypeWithNoViolation
      */
-    public function testValidationNoViolation($contentTypeId, $contentType2)
+    public function testValidationNoViolation($contentTypeId, $version, $contentType)
     {
         Phake::when($this->contentType2)->getId()->thenReturn($contentTypeId);
-        Phake::when($this->repository)->findOneByContentTypeIdInLastVersion($contentTypeId)->thenReturn($contentType2);
+        Phake::when($this->contentType2)->getVersion()->thenReturn($version);
+        Phake::when($this->repository)->findOneByContentTypeIdInLastVersion(Phake::anyParameters())->thenReturn($contentType);
 
         $this->validator->validate($this->contentType2, $this->constraint);
 
@@ -89,11 +91,11 @@ class UniqueContentTypeIdValidatorTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array
      */
-    public function generateNoViolation()
+    public function provideContentTypeIdAndContentTypeWithNoViolation()
     {
         return array(
-            array('newFakeId', null),
-            array($this->contentTypeId, $this->contentType2)
+            array('newFakeId', 1, null),
+            array($this->contentTypeId, 2, Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface')),
         );
     }
 }
