@@ -95,7 +95,7 @@ class UniqueContentTypeIdValidatorTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array('newFakeId', 1, null),
-            array($this->contentTypeId, 2, Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface')),
+            array('contentTypeId', 2, Phake::mock('OpenOrchestra\ModelInterface\Model\ContentTypeInterface')),
         );
     }
 }
