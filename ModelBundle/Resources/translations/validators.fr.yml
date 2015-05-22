@@ -4,3 +4,4 @@ open_orchestra_model_validators:
     document:
         content_type:
             unique_field_id: Les identifiants des champs doivent être unique
+            unique_content_type_id: L'identifiant du type de contenu doit être unique

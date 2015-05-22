@@ -10,8 +10,13 @@ OpenOrchestra\ModelBundle\Document\Site:
         - OpenOrchestra\ModelBundle\Validator\Constraints\UniqueSiteId: ~
 OpenOrchestra\ModelBundle\Document\ContentType:
     constraints:
+        - OpenOrchestra\ModelBundle\Validator\Constraints\UniqueContentTypeId: ~
         - OpenOrchestra\ModelBundle\Validator\Constraints\UniqueFieldIdContentType: ~
     properties:
+        contentTypeId:
+          - Regex:
+              pattern: '/^[a-zA-Z0-9_][a-zA-Z0-9_\-:]*$/D'
+              message: 'open_orchestra_model_validators.field.special_character'
         fields:
           - Valid: ~
 OpenOrchestra\ModelBundle\Document\FieldType:

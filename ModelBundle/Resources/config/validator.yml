@@ -5,6 +5,7 @@ parameters:
     open_orchestra_model.validator.check_route_pattern.class: OpenOrchestra\ModelBundle\Validator\Constraints\CheckRoutePatternValidator
     open_orchestra_model.validator.unique_main_alias.class: OpenOrchestra\ModelBundle\Validator\Constraints\UniqueMainAliasValidator
     open_orchestra_model.validator.unique_site_id.class: OpenOrchestra\ModelBundle\Validator\Constraints\UniqueSiteIdValidator
+    open_orchestra_model.validator.unique_content_type_id.class: OpenOrchestra\ModelBundle\Validator\Constraints\UniqueContentTypeIdValidator
 
 services:
     open_orchestra_model.validator.prevent_prohibited_status_change:
@@ -49,3 +50,9 @@ services:
             - @open_orchestra_model.repository.site
         tags:
             - { name: validator.constraint_validator, alias: unique_site_id}
+    open_orchestra_model.validator.unique_content_type_id:
+        class: %open_orchestra_model.validator.unique_content_type_id.class%
+        arguments:
+            - @open_orchestra_model.repository.content_type
+        tags:
+            - { name: validator.constraint_validator, alias: unique_content_type_id}
