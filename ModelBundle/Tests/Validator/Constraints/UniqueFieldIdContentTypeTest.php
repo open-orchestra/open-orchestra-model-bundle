@@ -15,6 +15,9 @@ class UniqueFieldIdContentTypeTest extends \PHPUnit_Framework_TestCase
      */
     protected $constraint;
 
+    /**
+     * Set up the test
+     */
     protected function setUp()
     {
         $this->constraint = new UniqueFieldIdContentType();

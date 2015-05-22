@@ -10,14 +10,21 @@ use Phake;
  */
 class UniqueFieldIdContentTypeValidatorTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var UniqueFieldIdContentTypeValidator
+     */
+    protected $validator;
+
     protected $constraint;
     protected $context;
-    protected $validator;
     protected $field2;
     protected $field3;
     protected $contentType;
     protected $fieldId = 'fakeId';
 
+    /**
+     * Set up the test
+     */
     public function setUp()
     {
         $this->constraint = Phake::mock('Symfony\Component\Validator\Constraint');
