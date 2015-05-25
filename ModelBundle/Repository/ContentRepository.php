@@ -70,8 +70,6 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
             $qa->match($filter1);
         } elseif ($filter2) {
             $qa->match($filter2);
-        } else {
-            return array();
         }
 
         $elementName = 'content';
