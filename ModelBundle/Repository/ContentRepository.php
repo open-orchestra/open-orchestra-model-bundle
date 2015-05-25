@@ -58,9 +58,107 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      */
     public function findByContentTypeAndChoiceTypeAndKeywordsAndLanguage($language, $contentType = '', $choiceType = self::CHOICE_AND, $keywords = null)
     {
-        $qb = $this->createQueryFindByContentTypeAndChoiceTypeAndKeywordsAndLanguage($language, $contentType, $choiceType, $keywords);
+        $qa = $this->createAggregationQuery();
+        $qa->match($this->generateFilterPublishedNotDeletedOnLanguage($language));
 
-        return $this->findLastVersion($qb);
+        $filter1 = $this->generateContentTypeFilter($contentType);
+        $filter2 = $this->generateKeywordsFilter($keywords);
+
+        if ($filter1 && $filter2) {
+            $qa->match($this->appendFilters($filter1, $filter2, $choiceType));
+        } elseif ($filter1) {
+            $qa->match($filter1);
+        } elseif ($filter2) {
+            $qa->match($filter2);
+        } else {
+            return array();
+        }
+
+        $elementName = 'content';
+        $qa->group(array(
+            '_id' => array('contentId' => '$contentId'),
+            'version' => array('$max' => '$version'),
+            $elementName => array('$last' => '$$ROOT')
+        ));
+
+        return $this->hydrateAggregateQuery($qa, $elementName);
+    }
+
+    /**
+     * Generate filter on visible published contents in $language
+     * 
+     * @param string $language
+     * 
+     * @return array
+     */
+    protected function generateFilterPublishedNotDeletedOnLanguage($language)
+    {
+        return array(
+            'language' => $language,
+            'deleted' => false,
+            'status.published' => true
+        );
+    }
+
+    /**
+     * Generate Content Type filter
+     * 
+     * @param string|null $contentType
+     * 
+     * @return array|null
+     */
+    protected function generateContentTypeFilter($contentType)
+    {
+        $filter = null;
+
+        if (!is_null($contentType)) {
+            $filter = array('contentType' => $contentType);
+        }
+
+        return $filter;
+    }
+
+    /**
+     * Generate keywords filter
+     * 
+     * @param string $keywords
+     * 
+     * @return array|null
+     */
+    protected function generateKeywordsFilter($keywords)
+    {
+        $filter = null;
+
+        if ('' !== $keywords) {
+            $keywordFilters = array();
+
+            $keywords = explode(',', $keywords);
+            foreach ($keywords as $keyword) {
+                $keywordFilters[] = array('keywords.label' => $keyword);
+            }
+
+            $filter = array('$and' => $keywordFilters);
+        }
+
+        return $filter;
+    }
+
+    /**
+     * Append two filters according to $choiceType operator
+     * 
+     * @param array  $filter1
+     * @param array  $filter2
+     * @param string $choiceType
+     * 
+     * @return array
+     */
+    protected function appendFilters($filter1, $filter2, $choiceType)
+    {
+        if (self::CHOICE_OR == $choiceType) {
+            return array('$or' => array($filter1, $filter2));
+        } else {
+            return array('$and' => array($filter1, $filter2));
+        }
     }
 
     /**
@@ -180,53 +278,6 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
 
         $qb->field('deleted')->equals(false);
         $qb->field('status.published')->equals(true);
-
-        return $qb;
-    }
-
-    /**
-     * @return array
-     */
-    protected function findLastVersion(Builder $qb)
-    {
-        $qb->sort('version', 'desc');
-        $list = $qb->getQuery()->execute();
-
-        $contents = array();
-
-        foreach ($list as $content) {
-            if (empty($contents[$content->getContentId()])) {
-                $contents[$content->getContentId()] = $content;
-            }
-        }
-
-        return $contents;
-    }
-
-    /**
-     * @param string $language
-     * @param string $contentType
-     * @param string $choiceType
-     * @param string $keywords
-     *
-     * @return Builder
-     */
-    protected function createQueryFindByContentTypeAndChoiceTypeAndKeywordsAndLanguage($language, $contentType, $choiceType, $keywords)
-    {
-        $qb = $this->createQueryWithLanguageAndPublished($language);
-
-        $addMethod = 'addAnd';
-        if ($choiceType == self::CHOICE_OR) {
-            $addMethod = 'addOr';
-        }
-
-        if (!empty($keywords)) {
-            $qb->$addMethod($qb->expr()->field('keywords.label')->in(explode(',', $keywords)));
-        }
-        if ('' !== $contentType) {
-            $qb->$addMethod($qb->expr()->field('contentType')->equals($contentType));
-            return $qb;
-        }
 
         return $qb;
     }
