@@ -58,23 +58,14 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      */
     public function findByContentTypeAndChoiceTypeAndKeywordsAndLanguage($language, $contentType = '', $choiceType = self::CHOICE_AND, $keywords = null)
     {
-//        $contentType = 'car';
-//        $choiceType = self::CHOICE_AND;
-//        $keywords = 'Lorem';
+        $qa = $this->createAggregationQuery();
+        $this->filterPublishedNotDeletedOnLanguage($language);
 
         $filter1 = $this->generateContentTypeFilter($contentType);
         $filter2 = $this->generateKeywordsFilter($keywords);
 
-        $qa = $this->createAggregationQuery();
-
-        $qa->match(array(
-            'language' => $language,
-            'deleted' => false,
-            'status.published' => true
-        ));
-
         if ($filter1 && $filter2) {
-            $this->appendFilters($filter1, $filter2, $choiceType);
+            $qa->match($this->appendFilters($filter1, $filter2, $choiceType));
         } elseif ($filter1) {
             $qa->match($filter1);
         } elseif ($filter2) {
@@ -91,6 +82,20 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
         ));
 
         return $this->hydrateAggregateQuery($qa, $elementName);
+    }
+
+    /**
+     * Filter visible published contents on $language
+     * 
+     * @param string $language
+     */
+    protected function filterPublishedNotDeletedOnLanguage($language)
+    {
+        $qa->match(array(
+            'language' => $language,
+            'deleted' => false,
+            'status.published' => true
+        ));
     }
 
     /**
@@ -142,17 +147,15 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      * @param array  $filter1
      * @param array  $filter2
      * @param string $choiceType
+     * 
+     * @return array
      */
     protected function appendFilters($filter1, $filter2, $choiceType)
     {
         if (self::CHOICE_OR == $choiceType) {
-            $qa->match(array(
-                '$or' => array($filter1, $filter2)
-            ));
+            return array('$or' => array($filter1, $filter2));
         } else {
-            $qa->match(array(
-                '$and' => array($filter1, $filter2)
-            ));
+            return array('$and' => array($filter1, $filter2));
         }
     }
 
