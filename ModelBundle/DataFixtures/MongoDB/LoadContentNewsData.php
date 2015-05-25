@@ -135,6 +135,7 @@ class LoadContentNewsData extends AbstractFixture implements OrderedFixtureInter
         $end = $this->generateContentAttribute('publish_end', '2014-12-19');
         $vision = $this->generateContent('news', 'notre_vision', 'Notre vision', 'fr');
         $vision->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-sit')));
+        $vision->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-lorem')));
 
         return $this->addNewsAttributes($vision, $title, $start, $end, $image, $intro, $text);
     }

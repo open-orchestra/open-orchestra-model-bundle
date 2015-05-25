@@ -21,6 +21,8 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
     {
         $objectManager->persist($this->generateCarR5('fr'));
         $objectManager->persist($this->generateCarR5('en'));
+        $objectManager->persist($this->generateCar206('fr'));
+        $objectManager->persist($this->generateCar206('en'));
 
         $objectManager->persist($this->generateCustomerConvenant('fr'));
         $objectManager->persist($this->generateCustomerConvenant('en'));
@@ -75,6 +77,35 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
         $content->setStatus($this->getReference('status-published'));
         $content->setVersion(2);
         $content->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-lorem')));
+
+        $content->addAttribute($attribute1);
+        $content->addAttribute($attribute2);
+        $content->addAttribute($attribute3);
+
+        return $content;
+    }
+
+    /**
+     * @return Content
+     */
+    public function generateCar206($language)
+    {
+        $content = new Content();
+
+        $attribute1 = $this->generateContentAttribute('car_name', '206');
+        $attribute2 = $this->generateContentAttribute('image', '206.png');
+        $attribute3 = $this->generateContentAttribute('description', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean non feugiat sem. Aliquam a mauris tellus. In hac habitasse platea dictumst. Nunc eget interdum ante, id mollis diam. Suspendisse sed magna lectus. Aenean fringilla elementum lorem id suscipit. Phasellus feugiat tellus sapien, id tempus nisi ultrices ut.');
+
+        $content->setContentId("206_3_portes");
+        $content->setContentType("car");
+        $content->setContentTypeVersion(1);
+        $content->setDeleted(false);
+        $content->setName("206 3 portes " . $language);
+        $content->setLanguage($language);
+        $content->setStatus($this->getReference('status-published'));
+        $content->setVersion(2);
+        $content->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-lorem')));
+        $content->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-sit')));
 
         $content->addAttribute($attribute1);
         $content->addAttribute($attribute2);
