@@ -111,7 +111,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
     {
         $filter = null;
 
-        if (!is_null($contentType)) {
+        if (!is_null($contentType) && '' != $contentType) {
             $filter = array('contentType' => $contentType);
         }
 
@@ -129,7 +129,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
     {
         $filter = null;
 
-        if ('' !== $keywords) {
+        if (!is_null($keywords) && '' !== $keywords) {
             $keywordFilters = array();
 
             $keywords = explode(',', $keywords);
