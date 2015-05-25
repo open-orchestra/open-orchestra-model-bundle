@@ -59,7 +59,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
     public function findByContentTypeAndChoiceTypeAndKeywordsAndLanguage($language, $contentType = '', $choiceType = self::CHOICE_AND, $keywords = null)
     {
         $qa = $this->createAggregationQuery();
-        $this->filterPublishedNotDeletedOnLanguage($language);
+        $qa->match($this->generateFilterPublishedNotDeletedOnLanguage($language));
 
         $filter1 = $this->generateContentTypeFilter($contentType);
         $filter2 = $this->generateKeywordsFilter($keywords);
@@ -85,17 +85,19 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
     }
 
     /**
-     * Filter visible published contents on $language
+     * Generate filter on visible published contents in $language
      * 
      * @param string $language
+     * 
+     * @return array
      */
-    protected function filterPublishedNotDeletedOnLanguage($language)
+    protected function generateFilterPublishedNotDeletedOnLanguage($language)
     {
-        $qa->match(array(
+        return array(
             'language' => $language,
             'deleted' => false,
             'status.published' => true
-        ));
+        );
     }
 
     /**
