@@ -10,6 +10,7 @@ use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\FieldAutoGenerableRepositoryInterface;
 use Doctrine\ODM\MongoDB\Query\Builder;
+use Solution\MongoAggregation\Pipeline\Stage;
 
 /**
  * Class NodeRepository
@@ -279,6 +280,23 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
     }
 
     /**
+     * @param Stage $qa
+     *
+     * @return array
+     */
+    protected function findLastVersionAggregate(Stage $qa)
+    {
+        $elementName = 'node';
+        $qa->group(array(
+            '_id' => array('nodeId' => '$nodeId'),
+            'version' => array('$max' => '$version'),
+            $elementName => array('$last' => '$$ROOT')
+        ));
+
+        return $this->hydrateAggregateQuery($qa, $elementName);
+    }
+
+    /**
      * @param string $name
      *
      * @return boolean
@@ -415,10 +433,20 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      */
     protected function getTreeByLanguageAndFieldAndSiteId($language, $field, $siteId)
     {
-        $qb = $this->buildTreeRequest($language, $siteId);
-        $qb->field($field)->equals(true);
+//        $qb = $this->buildTreeRequest($language, $siteId);
 
-        return $this->findLastVersion($qb);
+        $qa = $this->createAggregationQuery();
+        $qa->match(
+            array(
+                'siteId' => $siteId,
+                'language' => $language,
+                'status.published' => true,
+                'deleted' => false
+            )
+        );
+        $qa->match(array($field => true));
+
+        return $this->findLastVersionAggregate($qa);
     }
 
     /**
