@@ -13,16 +13,13 @@ use Symfony\Component\Validator\ConstraintValidator;
  */
 class UniqueSiteIdValidator extends ConstraintValidator
 {
-    protected $translator;
     protected $repository;
 
     /**
-     * @param TranslatorInterface $translator
      * @param SiteRepositoryInterface $repository
      */
-    public function __construct(TranslatorInterface $translator, SiteRepositoryInterface $repository)
+    public function __construct(SiteRepositoryInterface $repository)
     {
-        $this->translator = $translator;
         $this->repository = $repository;
     }
 
@@ -39,7 +36,7 @@ class UniqueSiteIdValidator extends ConstraintValidator
         $result = $this->repository->findOneBySiteId($value->getSiteId());
 
         if (null !== $result && $result->getId() !== $value->getId()) {
-            $this->context->addViolationAt('siteId', $this->translator->trans($constraint->message));
+            $this->context->addViolationAt('siteId', $constraint->message);
         }
     }
 }

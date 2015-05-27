@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraint;
  */
 class PreventProhibitedStatusChange extends Constraint
 {
-    public $message = 'open_orchestra_model.status.impossible_change';
+    public $message = 'open_orchestra_model_validators.document.status.impossible_change';
 
     /**
      * @return string|void

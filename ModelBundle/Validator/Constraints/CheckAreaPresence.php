@@ -9,15 +9,7 @@ use Symfony\Component\Validator\Constraint;
  */
 class CheckAreaPresence extends Constraint
 {
-    public $message = 'open_orchestra_model.area.presence_required';
-
-    /**
-     * @return string|void
-     */
-    public function validatedBy()
-    {
-        return 'check_area_presence';
-    }
+    public $message = 'open_orchestra_model_validators.document.area.presence_required';
 
     /**
      * @return array|string

@@ -33,14 +33,6 @@ class UniqueMainAliasTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test validateBy
-     */
-    public function testValidateBy()
-    {
-        $this->assertSame('unique_main_alias', $this->constraint->validatedBy());
-    }
-
-    /**
      * test target
      */
     public function testTarget()
@@ -53,6 +45,6 @@ class UniqueMainAliasTest extends \PHPUnit_Framework_TestCase
      */
     public function testMessages()
     {
-        $this->assertSame('open_orchestra_model.website.unique_main_alias', $this->constraint->message);
+        $this->assertSame('open_orchestra_model_validators.document.website.unique_main_alias', $this->constraint->message);
     }
 }

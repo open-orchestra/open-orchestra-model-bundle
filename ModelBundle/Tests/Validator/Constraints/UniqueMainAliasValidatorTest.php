@@ -19,17 +19,13 @@ class UniqueMainAliasValidatorTest extends \PHPUnit_Framework_TestCase
     protected $site;
     protected $context;
     protected $constraint;
-    protected $translator;
     protected $siteAliases;
-    protected $message = 'message';
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
-        Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn($this->message);
         $this->constraint = new UniqueMainAlias();
         $this->context = Phake::mock('Symfony\Component\Validator\Context\ExecutionContext');
         $this->areas = Phake::mock('Doctrine\Common\Collections\ArrayCollection');
@@ -40,7 +36,7 @@ class UniqueMainAliasValidatorTest extends \PHPUnit_Framework_TestCase
         $this->site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
         Phake::when($this->site)->getAliases()->thenReturn($this->siteAliases);
 
-        $this->validator = new UniqueMainAliasValidator($this->translator);
+        $this->validator = new UniqueMainAliasValidator();
         $this->validator->initialize($this->context);
     }
 
@@ -64,8 +60,7 @@ class UniqueMainAliasValidatorTest extends \PHPUnit_Framework_TestCase
 
         $this->validator->validate($this->site, $this->constraint);
 
-        Phake::verify($this->context, Phake::times($violationTimes))->addViolation($this->message);
-        Phake::verify($this->translator, Phake::times($violationTimes))->trans($this->constraint->message);
+        Phake::verify($this->context, Phake::times($violationTimes))->addViolation($this->constraint->message);
     }
 
     /**

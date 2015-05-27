@@ -9,15 +9,7 @@ use Symfony\Component\Validator\Constraint;
  */
 class UniqueMainAlias extends Constraint
 {
-    public $message = 'open_orchestra_model.website.unique_main_alias';
-
-    /**
-     * @return string|void
-     */
-    public function validatedBy()
-    {
-        return 'unique_main_alias';
-    }
+    public $message = 'open_orchestra_model_validators.document.website.unique_main_alias';
 
     /**
      * @return array|string

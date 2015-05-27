@@ -14,16 +14,13 @@ use Symfony\Component\Validator\ConstraintValidator;
  */
 class CheckRoutePatternValidator extends ConstraintValidator
 {
-    protected $translator;
     protected $nodeRepository;
 
     /**
-     * @param TranslatorInterface     $translator
      * @param NodeRepositoryInterface $nodeRepository
      */
-    public function __construct(TranslatorInterface $translator, NodeRepositoryInterface $nodeRepository)
+    public function __construct(NodeRepositoryInterface $nodeRepository)
     {
-        $this->translator = $translator;
         $this->nodeRepository = $nodeRepository;
     }
 
@@ -41,7 +38,7 @@ class CheckRoutePatternValidator extends ConstraintValidator
                 $value->getNodeId(),
                 $value->getSiteId()
             ))) {
-            $this->context->addViolationAt('routePattern', $this->translator->trans($constraint->message));
+            $this->context->addViolationAt('routePattern', $constraint->message);
         }
     }
 }

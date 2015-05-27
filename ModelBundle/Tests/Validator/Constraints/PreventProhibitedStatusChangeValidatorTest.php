@@ -16,12 +16,10 @@ class PreventProhibitedStatusChangeValidatorTest extends \PHPUnit_Framework_Test
      */
     protected $validator;
 
-    protected $message = 'message';
     protected $roleRepository;
     protected $securityContext;
     protected $documentManager;
     protected $oldRoleName;
-    protected $translator;
     protected $constraint;
     protected $unitOfWork;
     protected $oldStatus;
@@ -38,8 +36,6 @@ class PreventProhibitedStatusChangeValidatorTest extends \PHPUnit_Framework_Test
      */
     public function setUp()
     {
-        $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
-        Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn($this->message);
         $this->securityContext = Phake::mock('Symfony\Component\Security\Core\SecurityContextInterface');
         $this->constraint = new PreventProhibitedStatusChange();
         $this->context = Phake::mock('Symfony\Component\Validator\Context\ExecutionContext');
@@ -71,7 +67,6 @@ class PreventProhibitedStatusChangeValidatorTest extends \PHPUnit_Framework_Test
 
         $this->validator = new PreventProhibitedStatusChangeValidator(
             $this->securityContext,
-            $this->translator,
             $this->documentManager,
             $this->roleRepository
         );
@@ -93,8 +88,7 @@ class PreventProhibitedStatusChangeValidatorTest extends \PHPUnit_Framework_Test
         $this->validator->validate($this->node, $this->constraint);
 
         Phake::verify($this->securityContext, Phake::atMost(1))->isGranted($this->roleName);
-        Phake::verify($this->context, Phake::times($numberOfViolation))->addViolationAt('status', $this->message);
-        Phake::verify($this->translator, Phake::times($numberOfViolation))->trans($this->constraint->message);
+        Phake::verify($this->context, Phake::times($numberOfViolation))->addViolationAt('status', $this->constraint->message);
     }
 
     /**

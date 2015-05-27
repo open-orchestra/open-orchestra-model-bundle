@@ -20,9 +20,7 @@ class CheckRoutePatternValidatorTest extends \PHPUnit_Framework_TestCase
     protected $areas;
     protected $context;
     protected $constraint;
-    protected $translator;
     protected $nodeRepository;
-    protected $message = 'message';
 
     /**
      * Set up the test
@@ -30,8 +28,6 @@ class CheckRoutePatternValidatorTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
-        $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
-        Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn($this->message);
 
         $this->constraint = new CheckRoutePattern();
         $this->context = Phake::mock('Symfony\Component\Validator\Context\ExecutionContext');
@@ -40,7 +36,7 @@ class CheckRoutePatternValidatorTest extends \PHPUnit_Framework_TestCase
         $this->node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($this->node)->getAreas()->thenReturn($this->areas);
 
-        $this->validator = new CheckRoutePatternValidator($this->translator, $this->nodeRepository);
+        $this->validator = new CheckRoutePatternValidator($this->nodeRepository);
         $this->validator->initialize($this->context);
     }
 
@@ -64,8 +60,7 @@ class CheckRoutePatternValidatorTest extends \PHPUnit_Framework_TestCase
 
         $this->validator->validate($this->node, $this->constraint);
 
-        Phake::verify($this->context, Phake::times($violationTimes))->addViolationAt('routePattern', $this->message);
-        Phake::verify($this->translator, Phake::times($violationTimes))->trans($this->constraint->message);
+        Phake::verify($this->context, Phake::times($violationTimes))->addViolationAt('routePattern', $this->constraint->message);
     }
 
     /**

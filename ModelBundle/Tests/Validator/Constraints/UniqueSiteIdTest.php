@@ -52,6 +52,6 @@ class UniqueSiteIdTest extends \PHPUnit_Framework_TestCase
      */
     public function testMessages()
     {
-        $this->assertSame('open_orchestra_model.website.unique_site_id', $this->constraint->message);
+        $this->assertSame('open_orchestra_model_validators.document.website.unique_site_id', $this->constraint->message);
     }
 }
