@@ -424,11 +424,18 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      */
     protected function prepareFindLastVersion($type, $siteId, $deleted)
     {
-        $qb = $this->createQueryBuilderWithSiteId($siteId);
-        $qb->field('deleted')->equals($deleted);
-        $qb->field('nodeType')->equals($type);
+//        $qb = $this->createQueryBuilderWithSiteId($siteId);
 
-        return $this->findLastVersion($qb);
+        $qa = $this->createAggregationQuery();
+        $qa->match(
+            array(
+                'siteId' => $siteId,
+                'deleted' => $deleted
+            )
+        );
+        $qa->match(array('nodeType' => $type));
+
+        return $this->findLastVersionAggregate($qa);
     }
 
     /**
