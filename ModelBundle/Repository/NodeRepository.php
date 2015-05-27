@@ -357,11 +357,19 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      */
     public function findLastPublishedVersionByLanguageAndSiteId($language, $siteId)
     {
-        $qb = $this->createQueryBuilderWithSiteIdAndLanguage($siteId, $language);
-        $qb->field('status.published')->equals(true);
-        $qb->field('nodeType')->equals(NodeInterface::TYPE_DEFAULT);
+//        $qb = $this->createQueryBuilderWithSiteIdAndLanguage($siteId, $language);
 
-        return $this->findLastVersion($qb);
+        $qa = $this->createAggregationQuery();
+        $qa->match(
+            array(
+                'siteId'=> $siteId,
+                'language'=> $language,
+                'status.published' => true,
+            )
+        );
+        $qa->match(array('nodeType' => NodeInterface::TYPE_DEFAULT));
+
+        return $this->findLastVersionAggregate($qa);
     }
 
     /**
