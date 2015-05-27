@@ -32,14 +32,6 @@ class CheckAreaPresenceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test validateBy
-     */
-    public function testValidateBy()
-    {
-        $this->assertSame('check_area_presence', $this->constraint->validatedBy());
-    }
-
-    /**
      * test target
      */
     public function testTarget()
@@ -52,6 +44,6 @@ class CheckAreaPresenceTest extends \PHPUnit_Framework_TestCase
      */
     public function testMessages()
     {
-        $this->assertSame('open_orchestra_model.area.presence_required', $this->constraint->message);
+        $this->assertSame('open_orchestra_model_validators.document.area.presence_required', $this->constraint->message);
     }
 }

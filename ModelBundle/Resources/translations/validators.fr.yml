@@ -5,3 +5,12 @@ open_orchestra_model_validators:
         content_type:
             unique_field_id: Les identifiants des champs doivent être unique
             unique_content_type_id: Cet identifiant est déjà utilisé, choisissez en un autre s'il vous plait
+        area:
+            presence_required: Vous devez choisir l'un d'eux
+        node:
+            check_route_pattern: Le pattern de route est déjà utilisé sur ce site
+        status:
+            impossible_change: Vous n'avez pas les droits pour modifier le statut
+        website:
+            unique_main_alias: L'alias principal doit être unique
+            unique_site_id: L'identifiant du site doit être unique

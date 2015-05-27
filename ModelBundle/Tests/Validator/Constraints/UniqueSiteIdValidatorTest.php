@@ -22,19 +22,14 @@ class UniqueSiteIdValidatorTest extends \PHPUnit_Framework_TestCase
     protected $context;
     protected $id = 'id';
     protected $constraint;
-    protected $translator;
     protected $repository;
     protected $siteId = 'siteid';
-    protected $message = 'message';
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
-        Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn($this->message);
-
         $this->constraint = new UniqueSiteId();
         $this->context = Phake::mock('Symfony\Component\Validator\Context\ExecutionContext');
 
@@ -45,7 +40,7 @@ class UniqueSiteIdValidatorTest extends \PHPUnit_Framework_TestCase
 
         $this->repository = Phake::mock('OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface');
 
-        $this->validator = new UniqueSiteIdValidator($this->translator, $this->repository);
+        $this->validator = new UniqueSiteIdValidator($this->repository);
         $this->validator->initialize($this->context);
     }
 
@@ -67,8 +62,7 @@ class UniqueSiteIdValidatorTest extends \PHPUnit_Framework_TestCase
 
         $this->validator->validate($this->site, $this->constraint);
 
-        Phake::verify($this->context)->addViolationAt('siteId', $this->message);
-        Phake::verify($this->translator)->trans($this->constraint->message);
+        Phake::verify($this->context)->addViolationAt('siteId', $this->constraint->message);
     }
 
     /**
@@ -86,8 +80,7 @@ class UniqueSiteIdValidatorTest extends \PHPUnit_Framework_TestCase
 
         $this->validator->validate($this->site, $this->constraint);
 
-        Phake::verify($this->context, Phake::never())->addViolationAt('siteId', $this->message);
-        Phake::verify($this->translator, Phake::never())->trans($this->constraint->message);
+        Phake::verify($this->context, Phake::never())->addViolationAt('siteId', $this->constraint->message);
     }
 
     /**

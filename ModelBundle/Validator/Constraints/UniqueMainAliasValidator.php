@@ -13,15 +13,6 @@ use Symfony\Component\Validator\ConstraintValidator;
  */
 class UniqueMainAliasValidator extends ConstraintValidator
 {
-    protected $translator;
-
-    /**
-     * @param TranslatorInterface $translator
-     */
-    public function __construct(TranslatorInterface $translator)
-    {
-        $this->translator = $translator;
-    }
     /**
      * Checks if the passed value is valid.
      *
@@ -35,7 +26,7 @@ class UniqueMainAliasValidator extends ConstraintValidator
         if ($value->getAliases()->filter(function(SiteAliasInterface $alias) {
             return $alias->isMain();
         })->count() > 1) {
-            $this->context->addViolation($this->translator->trans($constraint->message));
+            $this->context->addViolation($constraint->message);
         }
     }
 

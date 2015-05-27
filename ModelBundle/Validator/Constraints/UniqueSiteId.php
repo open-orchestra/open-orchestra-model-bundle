@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraint;
  */
 class UniqueSiteId extends Constraint
 {
-    public $message = 'open_orchestra_model.website.unique_site_id';
+    public $message = 'open_orchestra_model_validators.document.website.unique_site_id';
 
     /**
      * @return string|void

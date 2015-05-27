@@ -52,6 +52,6 @@ class PreventProhibitedStatusChangeTest extends \PHPUnit_Framework_TestCase
      */
     public function testMessages()
     {
-        $this->assertSame('open_orchestra_model.status.impossible_change', $this->constraint->message);
+        $this->assertSame('open_orchestra_model_validators.document.status.impossible_change', $this->constraint->message);
     }
 }

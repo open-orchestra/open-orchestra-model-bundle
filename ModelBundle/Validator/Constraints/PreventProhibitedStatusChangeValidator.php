@@ -16,25 +16,21 @@ class PreventProhibitedStatusChangeValidator extends ConstraintValidator
 {
     protected $securityContext;
     protected $documentManager;
-    protected $translator;
     protected $roleRepository;
 
     /**
      * @param SecurityContextInterface $securityContext
-     * @param TranslatorInterface      $translator
      * @param DocumentManager          $documentManager
      * @param RoleRepository           $roleRepository
      */
     public function __construct(
         SecurityContextInterface $securityContext,
-        TranslatorInterface $translator,
         DocumentManager $documentManager,
         RoleRepository $roleRepository
     )
     {
         $this->securityContext = $securityContext;
         $this->documentManager = $documentManager;
-        $this->translator = $translator;
         $this->roleRepository = $roleRepository;
     }
 
@@ -59,7 +55,7 @@ class PreventProhibitedStatusChangeValidator extends ConstraintValidator
         }
 
         if (! $this->canSwitchStatus($oldStatus, $status)) {
-            $this->context->addViolationAt('status', $this->translator->trans($constraint->message));
+            $this->context->addViolationAt('status', $constraint->message);
         }
     }
 

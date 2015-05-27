@@ -20,16 +20,12 @@ class CheckAreaPresenceValidatorTest extends \PHPUnit_Framework_TestCase
     protected $areas;
     protected $context;
     protected $constraint;
-    protected $translator;
-    protected $message = 'message';
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->translator = Phake::mock('Symfony\Component\Translation\TranslatorInterface');
-        Phake::when($this->translator)->trans(Phake::anyParameters())->thenReturn($this->message);
         $this->constraint = new CheckAreaPresence();
         $this->context = Phake::mock('Symfony\Component\Validator\Context\ExecutionContext');
         $this->areas = Phake::mock('Doctrine\Common\Collections\ArrayCollection');
@@ -61,9 +57,8 @@ class CheckAreaPresenceValidatorTest extends \PHPUnit_Framework_TestCase
 
         $this->validator->validate($this->node, $this->constraint);
 
-        Phake::verify($this->context, Phake::times($violationTimes))->addViolationAt('nodeSource', $this->message);
-        Phake::verify($this->context, Phake::times($violationTimes))->addViolationAt('templateId', $this->message);
-        Phake::verify($this->translator, Phake::times($violationTimes * 2))->trans($this->constraint->message);
+        Phake::verify($this->context, Phake::times($violationTimes))->addViolationAt('nodeSource', $this->constraint->message);
+        Phake::verify($this->context, Phake::times($violationTimes))->addViolationAt('templateId', $this->constraint->message);
     }
 
     /**

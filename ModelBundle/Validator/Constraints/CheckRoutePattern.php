@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraint;
  */
 class CheckRoutePattern extends Constraint
 {
-    public $message = 'open_orchestra_model.node.check_route_pattern';
+    public $message = 'open_orchestra_model_validators.document.node.check_route_pattern';
 
     /**
      * @return string|void

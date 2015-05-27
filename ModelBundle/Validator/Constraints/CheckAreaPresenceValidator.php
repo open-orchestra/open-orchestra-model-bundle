@@ -12,16 +12,6 @@ use Symfony\Component\Validator\ConstraintValidator;
  */
 class CheckAreaPresenceValidator extends ConstraintValidator
 {
-    protected $translator;
-
-    /**
-     * @param TranslatorInterface $translator
-     */
-    public function __construct(TranslatorInterface $translator)
-    {
-        $this->translator = $translator;
-    }
-
     /**
      * Checks if the passed value is valid.
      *
@@ -31,8 +21,8 @@ class CheckAreaPresenceValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         if (0 === $value->getAreas()->count()) {
-            $this->context->addViolationAt('nodeSource', $this->translator->trans($constraint->message));
-            $this->context->addViolationAt('templateId', $this->translator->trans($constraint->message));
+            $this->context->addViolationAt('nodeSource', $constraint->message);
+            $this->context->addViolationAt('templateId', $constraint->message);
         }
     }
 }

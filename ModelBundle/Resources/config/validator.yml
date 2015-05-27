@@ -1,9 +1,7 @@
 parameters:
     open_orchestra_model.validator.prevent_prohibited_status_change.class: OpenOrchestra\ModelBundle\Validator\Constraints\PreventProhibitedStatusChangeValidator
     open_orchestra_model.validator.prevent_published_document_save.class: OpenOrchestra\ModelBundle\Validator\Constraints\PreventPublishedDocumentSaveValidator
-    open_orchestra_model.validator.check_area_presence.class: OpenOrchestra\ModelBundle\Validator\Constraints\CheckAreaPresenceValidator
     open_orchestra_model.validator.check_route_pattern.class: OpenOrchestra\ModelBundle\Validator\Constraints\CheckRoutePatternValidator
-    open_orchestra_model.validator.unique_main_alias.class: OpenOrchestra\ModelBundle\Validator\Constraints\UniqueMainAliasValidator
     open_orchestra_model.validator.unique_site_id.class: OpenOrchestra\ModelBundle\Validator\Constraints\UniqueSiteIdValidator
     open_orchestra_model.validator.unique_content_type_id.class: OpenOrchestra\ModelBundle\Validator\Constraints\UniqueContentTypeIdValidator
 
@@ -12,7 +10,6 @@ services:
         class: %open_orchestra_model.validator.prevent_prohibited_status_change.class%
         arguments:
             - @security.context
-            - @translator
             - @doctrine_mongodb.odm.default_document_manager
             - @open_orchestra_model.repository.role
         tags:
@@ -24,29 +21,15 @@ services:
             - @doctrine.odm.mongodb.document_manager
         tags:
             - { name: validator.constraint_validator, alias: prevent_published_document_save}
-    open_orchestra_model.validator.check_area_presence:
-        class: %open_orchestra_model.validator.check_area_presence.class%
-        arguments:
-            - @translator
-        tags:
-            - { name: validator.constraint_validator, alias: check_area_presence}
     open_orchestra_model.validator.check_route_pattern:
         class: %open_orchestra_model.validator.check_route_pattern.class%
         arguments:
-            - @translator
             - @open_orchestra_model.repository.node
         tags:
             - { name: validator.constraint_validator, alias: check_route_pattern}
-    open_orchestra_model.validator.unique_main_alias:
-        class: %open_orchestra_model.validator.unique_main_alias.class%
-        arguments:
-            - @translator
-        tags:
-            - { name: validator.constraint_validator, alias: unique_main_alias}
     open_orchestra_model.validator.unique_site_id:
         class: %open_orchestra_model.validator.unique_site_id.class%
         arguments:
-            - @translator
             - @open_orchestra_model.repository.site
         tags:
             - { name: validator.constraint_validator, alias: unique_site_id}

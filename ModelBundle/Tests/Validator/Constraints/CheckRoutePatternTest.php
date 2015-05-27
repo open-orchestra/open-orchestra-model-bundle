@@ -52,6 +52,6 @@ class CheckRoutePatternTest extends \PHPUnit_Framework_TestCase
      */
     public function testMessages()
     {
-        $this->assertSame('open_orchestra_model.node.check_route_pattern', $this->constraint->message);
+        $this->assertSame('open_orchestra_model_validators.document.node.check_route_pattern', $this->constraint->message);
     }
 }
