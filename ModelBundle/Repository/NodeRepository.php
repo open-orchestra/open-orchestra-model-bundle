@@ -259,32 +259,11 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
     }
 
     /**
-     * @param Builder $qb
-     *
-     * @return array
-     */
-    protected function findLastVersion(Builder $qb)
-    {
-        $qb->sort('version', 'desc');
-        $list = $qb->getQuery()->execute();
-
-        $nodes = array();
-
-        foreach ($list as $node) {
-            if (empty($nodes[$node->getNodeId()])) {
-                $nodes[$node->getNodeId()] = $node;
-            }
-        }
-
-        return $nodes;
-    }
-
-    /**
      * @param Stage $qa
      *
      * @return array
      */
-    protected function findLastVersionAggregate(Stage $qa)
+    protected function findLastVersion(Stage $qa)
     {
         $elementName = 'node';
         $qa->group(array(
@@ -357,19 +336,17 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      */
     public function findLastPublishedVersionByLanguageAndSiteId($language, $siteId)
     {
-//        $qb = $this->createQueryBuilderWithSiteIdAndLanguage($siteId, $language);
-
         $qa = $this->createAggregationQuery();
         $qa->match(
             array(
                 'siteId'=> $siteId,
                 'language'=> $language,
                 'status.published' => true,
+                'nodeType' => NodeInterface::TYPE_DEFAULT
             )
         );
-        $qa->match(array('nodeType' => NodeInterface::TYPE_DEFAULT));
 
-        return $this->findLastVersionAggregate($qa);
+        return $this->findLastVersion($qa);
     }
 
     /**
@@ -424,18 +401,16 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      */
     protected function prepareFindLastVersion($type, $siteId, $deleted)
     {
-//        $qb = $this->createQueryBuilderWithSiteId($siteId);
-
         $qa = $this->createAggregationQuery();
         $qa->match(
             array(
                 'siteId' => $siteId,
-                'deleted' => $deleted
+                'deleted' => $deleted,
+                'nodeType' => $type
             )
         );
-        $qa->match(array('nodeType' => $type));
 
-        return $this->findLastVersionAggregate($qa);
+        return $this->findLastVersion($qa);
     }
 
     /**
@@ -448,20 +423,18 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      */
     protected function getTreeByLanguageAndFieldAndSiteId($language, $field, $siteId)
     {
-//        $qb = $this->buildTreeRequest($language, $siteId);
-
         $qa = $this->createAggregationQuery();
         $qa->match(
             array(
                 'siteId' => $siteId,
                 'language' => $language,
                 'status.published' => true,
-                'deleted' => false
+                'deleted' => false,
+                $field => true
             )
         );
-        $qa->match(array($field => true));
 
-        return $this->findLastVersionAggregate($qa);
+        return $this->findLastVersion($qa);
     }
 
     /**
