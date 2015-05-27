@@ -272,7 +272,7 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
             $elementName => array('$last' => '$$ROOT')
         ));
 
-        return $this->hydrateAggregateQuery($qa, $elementName);
+        return $this->hydrateAggregateQuery($qa, $elementName, 'getNodeId');
     }
 
     /**
