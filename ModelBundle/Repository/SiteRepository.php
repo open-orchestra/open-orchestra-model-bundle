@@ -41,6 +41,25 @@ class SiteRepository extends AbstractRepository implements SiteRepositoryInterfa
         return $this->findBy(array('deleted' => $deleted));
     }
 
+
+    /**
+     * @param boolean     $deleted
+     * @param int|null    $length
+     * @param int|null    $start
+     * @param array|null  $columns
+     * @param array|null  $order
+     * @param string|null $search
+     *
+     * @return array
+     */
+    public function findByDeletedForPaginateAndSearch($deleted, $length = null, $start = null, $columns  = null, $order  = null, $search = null)
+    {
+        $qa = $this->createAggregationQueryForPaginateAndSearch($length, $start, $columns, $order, $search);
+        $qa->match(array('deleted' => $deleted));
+
+        return $this->hydrateAggregateQuery($qa);
+    }
+
     /**
      * @param string $domain
      *
