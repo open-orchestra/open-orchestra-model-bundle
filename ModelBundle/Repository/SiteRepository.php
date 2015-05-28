@@ -56,6 +56,7 @@ class SiteRepository extends AbstractRepository implements SiteRepositoryInterfa
     {
         $qa = $this->createAggregationQueryForPaginateAndSearch($length, $start, $columns, $order, $search);
         $qa->match(array('deleted' => $deleted));
+
         return $this->hydrateAggregateQuery($qa);
     }
 
