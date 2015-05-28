@@ -36,22 +36,28 @@ class ContentTypeRepository extends AbstractRepository implements ContentTypeRep
      */
     public function findAllByDeletedInLastVersion()
     {
-        $qb = $this->createQueryBuilder('c');
-        $qb->field('deleted')->equals(false)->sort('contentTypeId','asc');
-        $list = $qb->getQuery()->execute();
+        $qa = $this->createAggregationQuery();
 
-        $contentTypes = array();
+        $qa->match(
+            array(
+                'deleted' => false
+            )
+        );
 
-        foreach ($list as $contentType) {
-            if (empty($contentTypes[$contentType->getContentTypeId()])) {
-                $contentTypes[$contentType->getContentTypeId()] = $contentType;
-            }
-            if ($contentTypes[$contentType->getContentTypeId()]->getVersion() < $contentType->getVersion()) {
-                $contentTypes[$contentType->getContentTypeId()] = $contentType;
-            }
-        }
+        $qa->sort(
+            array(
+                'contentTypeId' => -1
+            )
+        );
 
-        return $contentTypes;
+        $elementName = 'contentType';
+        $qa->group(array(
+            '_id' => array('contentTypeId' => '$contentTypeId'),
+            'version' => array('$max' => '$version'),
+            $elementName => array('$last' => '$$ROOT')
+        ));
+
+        return $this->hydrateAggregateQuery($qa, $elementName, 'getContentTypeId');
     }
 
     /**
