@@ -63,6 +63,40 @@ abstract class AbstractRepository extends DocumentRepository
     }
 
     /**
+     * @param Stage $qa
+     *
+     * @return int
+     */
+    protected function countDocumentAggregateQuery(Stage $qa){
+        $qa->group(array(
+            '_id' => null,
+            'count' => array('$sum' => 1)
+        ));
+        $res = $qa->getQuery()->aggregate();
+
+        return $res[0]['count'];
+    }
+
+    /**
+     * @param array|null   $columns
+     * @param string|null  $search
+     *
+     * @return Stage
+     */
+    protected function createAggregationQueryForFilterSearch($columns = null, $search = null){
+        $qa = $this->createAggregationQuery();
+
+        if( null !== $columns) {
+            $filterSearch = $this->generateFilterSearch($columns, $search);
+            if (null !== $filterSearch) {
+                $qa->match($filterSearch);
+            }
+        }
+
+        return $qa;
+    }
+
+    /**
      * Create Query for paginate, order and filter by columns
      *
      * @param integer|null $limit
@@ -75,14 +109,7 @@ abstract class AbstractRepository extends DocumentRepository
      */
     protected function createAggregationQueryForPaginateAndSearch($limit = null, $skip = null, $columns = null, $order = null, $search = null)
     {
-        $qa = $this->createAggregationQuery();
-
-        if( null !== $columns) {
-            $filterSearch = $this->generateFilterSearch($columns, $search);
-            if (null !== $filterSearch) {
-                $qa->match($filterSearch);
-            }
-        }
+        $qa = $this->createAggregationQueryForFilterSearch($columns, $search);
 
         if (null !== $skip) {
             $qa->skip($skip);
