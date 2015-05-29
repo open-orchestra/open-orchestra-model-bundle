@@ -54,8 +54,8 @@ class SiteRepositoryTest extends KernelTestCase
             array(true, null, null, null, 0 ,2 , 1),
             array(false, $this->generateColumnsProvider('2'), 'demo', null, null, null, 1),
             array(false, $this->generateColumnsProvider('1'), 'demo', null, null, null, 0),
-            array(false, $this->generateColumnsProvider('1','demo'), null, null, null, null, 0),
-            array(false, $this->generateColumnsProvider('1','first'), null, null, null, null, 1),
+            array(false, $this->generateColumnsProvider('1', 'demo'), null, null, null, null, 0),
+            array(false, $this->generateColumnsProvider('1', 'first'), null, null, null, null, 1),
             array(false, $this->generateColumnsProvider(), 'fake search', null, null, null, 0)
         );
     }
@@ -135,8 +135,8 @@ class SiteRepositoryTest extends KernelTestCase
         return array(
             array(false, $this->generateColumnsProvider('2'), 'demo',1),
             array(false, $this->generateColumnsProvider('1'), 'demo',0),
-            array(false, $this->generateColumnsProvider('1','demo'), null, 0),
-            array(false, $this->generateColumnsProvider('1','first'), null, 1),
+            array(false, $this->generateColumnsProvider('1', 'demo'), null, 0),
+            array(false, $this->generateColumnsProvider('1', 'first'), null, 1),
             array(true, $this->generateColumnsProvider(), 'fake search',0)
         );
     }
@@ -152,8 +152,8 @@ class SiteRepositoryTest extends KernelTestCase
     protected function generateColumnsProvider($searchSiteId = '', $searchName = '')
     {
         return array(
-            array('name' => 'siteId', 'searchable' => true,'orderable' => true, 'search' => array('value' => $searchSiteId)),
-            array('name' => 'name', 'searchable' => true,'orderable' => true, 'search' => array('value' => $searchName)),
+            array('name' => 'siteId', 'searchable' => true, 'orderable' => true, 'search' => array('value' => $searchSiteId)),
+            array('name' => 'name', 'searchable' => true, 'orderable' => true, 'search' => array('value' => $searchName)),
         );
     }
 
@@ -164,7 +164,7 @@ class SiteRepositoryTest extends KernelTestCase
     protected function assertSameOrder($sites, $orderId)
     {
         foreach ($sites as $index => $site) {
-            $this->assertEquals($site->getSiteId(),$orderId[$index]);
+            $this->assertEquals($site->getSiteId(), $orderId[$index]);
         }
     }
 }

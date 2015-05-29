@@ -6,7 +6,6 @@ use Solution\MongoAggregation\Pipeline\Stage;
 
 trait PaginateAndSearchFilterTrait
 {
-
     /**
      * @param Stage $qa
      *
