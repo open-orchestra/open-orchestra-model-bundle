@@ -56,20 +56,57 @@ trait PaginateAndSearchFilterTrait
     protected function generateFilterForPaginateAndSearch($qa, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
     {
         $qa = $this->generateFilterForSearch($qa, $columns, $search);
+        $qa = $this->generateFilterSort($qa, $order, $columns);
+        $qa = $this->generateSkipFilter($qa, $skip);
+        $qa = $this->generateLimitFilter($qa, $limit);
 
+        return $qa;
+    }
+
+    /**
+     * @param Stage        $qa
+     * @param integer|null $limit
+     *
+     * @return Stage
+     */
+    protected function generateLimitFilter($qa, $limit)
+    {
+        if (null !== $limit) {
+            $qa->limit($limit);
+        }
+
+        return $qa;
+    }
+
+    /**
+     * @param Stage        $qa
+     * @param integer|null $skip
+     *
+     * @return Stage
+     */
+    protected function generateSkipFilter($qa, $skip)
+    {
+        if (null !== $skip && $skip > 0) {
+            $qa->skip($skip);
+        }
+
+        return $qa;
+    }
+
+    /**
+     * @param Stage      $qa
+     * @param array|null $order
+     * @param array|null $columns
+     *
+     * @return Stage
+     */
+    protected function generateFilterSort($qa, $order, $columns)
+    {
         if (null !== $order && null !== $columns) {
             $filterOrder = $this->generateOrderFilter($order, $columns);
             if (null !== $filterOrder) {
                 $qa->sort($filterOrder);
             }
-        }
-
-        if (null !== $skip && $skip > 0) {
-            $qa->skip($skip);
-        }
-
-        if (null !== $limit) {
-            $qa->limit($limit);
         }
 
         return $qa;
