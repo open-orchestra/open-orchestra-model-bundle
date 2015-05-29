@@ -48,6 +48,13 @@ class FieldType implements FieldTypeInterface
     protected $searchable;
 
     /**
+     * @var boolean $listable
+     *
+     * @ODM\Field(type="boolean")
+     */
+    protected $listable;
+
+    /**
      * @var string $type
      *
      * @ODM\Field(type="string")
@@ -158,6 +165,24 @@ class FieldType implements FieldTypeInterface
     public function setSearchable($searchable)
     {
         $this->searchable = $searchable;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getListable()
+    {
+        return $this->listable;
+    }
+
+    /**
+     * Set Searchable
+     *
+     * @param boolean $listable
+     */
+    public function setListable($listable)
+    {
+        $this->listable = $listable;
     }
 
     /**
