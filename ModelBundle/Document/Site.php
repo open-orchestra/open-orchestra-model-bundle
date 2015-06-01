@@ -298,4 +298,12 @@ class Site implements SiteInterface
 
         return $alias;
     }
+
+    /**
+     * return int
+     */
+    public function getMainAliasId()
+    {
+        return $this->aliases->indexOf($this->getMainAlias());
+    }
 }
