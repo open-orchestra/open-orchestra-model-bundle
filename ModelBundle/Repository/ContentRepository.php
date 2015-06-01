@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\Repository;
 
+use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\PaginateAndSearchFilterTrait;
 use OpenOrchestra\ModelInterface\Repository\FieldAutoGenerableRepositoryInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
@@ -12,6 +13,8 @@ use Doctrine\ODM\MongoDB\Query\Builder;
  */
 class ContentRepository extends AbstractRepository implements FieldAutoGenerableRepositoryInterface, ContentRepositoryInterface
 {
+    use PaginateAndSearchFilterTrait;
+
     /**
      * @param string $contentId
      *
@@ -221,6 +224,29 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
         return $this->hydrateAggregateQuery($qa, $elementName);
     }
 
+    public function findByContentTypeInLastVersionForPaginateAndSearch($contentType = null, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
+    {
+        $qa = $this->createAggregationQuery();
+
+        if ($contentType) {
+            $qa->match(array('contentType' => $contentType));
+        }
+        $qa = $this->generateFilterForSearch($qa, $columns, $search);
+
+        $qa = $this->generateFilterSort($qa, $order, $columns);
+
+        $elementName = 'content';
+        $qa->group(array(
+            '_id' => array('contentId' => '$contentId'),
+            'version' => array('$max' => '$version'),
+            $elementName => array('$last' => '$$ROOT')
+        ));
+
+        $qa = $this->generateSkipFilter($qa, $skip);
+        $qa = $this->generateLimitFilter($qa, $limit);
+
+        return $this->hydrateAggregateQuery($qa, $elementName);
+    }
     /**
      * @return array
      */
