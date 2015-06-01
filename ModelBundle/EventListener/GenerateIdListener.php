@@ -4,6 +4,7 @@ namespace OpenOrchestra\ModelBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
 use Doctrine\Common\Annotations\AnnotationReader;
+use OpenOrchestra\ModelBundle\Helper\GenerateIdHelper;
 use Symfony\Component\DependencyInjection\Container;
 use OpenOrchestra\ModelInterface\Repository\FieldAutoGenerableRepositoryInterface;
 
@@ -14,15 +15,18 @@ class GenerateIdListener
 {
     protected $container;
     protected $annotationReader;
+    protected $generateIdHelper;
 
     /**
      * @param Container        $container
      * @param AnnotationReader $annotationReader
+     * @param GenerateIdHelper $generateIdHelper
      */
-    public function __construct(Container $container, AnnotationReader $annotationReader)
+    public function __construct(Container $container, AnnotationReader $annotationReader, GenerateIdHelper $generateIdHelper)
     {
         $this->container = $container;
         $this->annotationReader = $annotationReader;
+        $this->generateIdHelper = $generateIdHelper;
     }
 
     /**
@@ -44,13 +48,7 @@ class GenerateIdListener
                 $testMethod = 'testUnicityInContext';
             }
             if (is_null($document->$getGenerated())) {
-                $accents = '/&([A-Za-z]{1,2})(grave|acute|circ|cedil|uml|lig|tilde);/';
-                $sourceField = $document->$getSource();
-                $sourceField = htmlentities($sourceField, ENT_NOQUOTES, 'UTF-8');
-                $sourceField = preg_replace($accents, '$1', $sourceField);
-                $sourceField = preg_replace('/[[:^alnum:]]+/', '-', $sourceField);
-                $sourceField = trim($sourceField, '-');
-                $sourceField = strtolower($sourceField);
+                $sourceField = $this->generateIdHelper->generate($document->$getSource());
                 $generatedField = $sourceField;
                 $count = 1;
                 while ($repository->$testMethod($generatedField)) {

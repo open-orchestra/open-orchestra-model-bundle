@@ -1,0 +1,6 @@
+parameters:
+    open_orchestra_model.helper.generate_id.class: OpenOrchestra\ModelBundle\Helper\GenerateIdHelper
+
+services:
+    open_orchestra_model.helper.generate_id:
+        class: %open_orchestra_model.helper.generate_id.class%
