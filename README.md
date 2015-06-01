@@ -1,5 +1,5 @@
 open-orchestra-model-bundle
-=========================
+===========================
 
 The Open Orchestra model bundle
 
