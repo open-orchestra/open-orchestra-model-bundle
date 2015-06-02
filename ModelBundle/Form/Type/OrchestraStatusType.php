@@ -4,23 +4,27 @@ namespace OpenOrchestra\ModelBundle\Form\Type;
 
 use OpenOrchestra\ModelBundle\Form\DataTransformer\EmbedStatusToStatusTransformer;
 use OpenOrchestra\ModelInterface\Form\Type\AbstractOrchestraStatusType;
+use OpenOrchestra\ModelInterface\Manager\TranslationChoiceManagerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class OrchestraStatusType
  */
 class OrchestraStatusType extends AbstractOrchestraStatusType
 {
+    protected $translationChoiceManager;
     protected $statusTransformer;
     protected $statusClass;
 
     /**
-     * @param EmbedStatusToStatusTransformer $statusTransformer
-     * @param string                         $statusClass
+     * @param EmbedStatusToStatusTransformer    $statusTransformer
+     * @param string                            $statusClass
+     * @param TranslationChoiceManagerInterface $translationChoiceManager
      */
-    public function __construct(EmbedStatusToStatusTransformer $statusTransformer, $statusClass)
+    public function __construct(EmbedStatusToStatusTransformer $statusTransformer, $statusClass, TranslationChoiceManagerInterface $translationChoiceManager)
     {
+        $this->translationChoiceManager = $translationChoiceManager;
         $this->statusTransformer = $statusTransformer;
         $this->statusClass = $statusClass;
     }
@@ -37,14 +41,17 @@ class OrchestraStatusType extends AbstractOrchestraStatusType
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
+        $translationChoiceManager = $this->translationChoiceManager;
         $resolver->setDefaults(array(
             'embedded' => true,
             'class' => $this->statusClass,
-            'property' => 'labels',
+            'choice_label' => function ($choice) use ($translationChoiceManager) {
+                return $translationChoiceManager->choose($choice->getLabels());
+            },
         ));
     }
 
