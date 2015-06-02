@@ -2,9 +2,9 @@
 
 namespace OpenOrchestra\ModelBundle\Form\Type;
 
-use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use OpenOrchestra\ModelBundle\Form\DataTransformer\EmbedStatusToStatusTransformer;
 use OpenOrchestra\ModelInterface\Form\Type\AbstractOrchestraStatusType;
+use OpenOrchestra\ModelInterface\Manager\TranslationChoiceManagerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,10 +18,11 @@ class OrchestraStatusType extends AbstractOrchestraStatusType
     protected $statusClass;
 
     /**
-     * @param EmbedStatusToStatusTransformer $statusTransformer
-     * @param string                         $statusClass
+     * @param EmbedStatusToStatusTransformer    $statusTransformer
+     * @param string                            $statusClass
+     * @param TranslationChoiceManagerInterface $translationChoiceManager
      */
-    public function __construct(EmbedStatusToStatusTransformer $statusTransformer, $statusClass, TranslationChoiceManager $translationChoiceManager)
+    public function __construct(EmbedStatusToStatusTransformer $statusTransformer, $statusClass, TranslationChoiceManagerInterface $translationChoiceManager)
     {
         $this->translationChoiceManager = $translationChoiceManager;
         $this->statusTransformer = $statusTransformer;

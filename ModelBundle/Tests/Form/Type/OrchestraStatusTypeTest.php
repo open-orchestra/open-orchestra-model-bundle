@@ -27,7 +27,7 @@ class OrchestraStatusTypeTest extends \PHPUnit_Framework_TestCase
     {
         $this->builder = Phake::mock('Symfony\Component\Form\FormBuilder');
         $this->transformer = Phake::mock('OpenOrchestra\ModelBundle\Form\DataTransformer\EmbedStatusToStatusTransformer');
-        $this->translationChoiceManager = Phake::mock('OpenOrchestra\Backoffice\Manager\TranslationChoiceManager');
+        $this->translationChoiceManager = Phake::mock('OpenOrchestra\ModelInterface\Manager\TranslationChoiceManagerInterface');
 
         $this->form = new OrchestraStatusType($this->transformer, $this->statusClass, $this->translationChoiceManager);
     }
