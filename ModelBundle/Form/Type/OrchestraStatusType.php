@@ -2,16 +2,18 @@
 
 namespace OpenOrchestra\ModelBundle\Form\Type;
 
+use OpenOrchestra\Backoffice\Manager\TranslationChoiceManager;
 use OpenOrchestra\ModelBundle\Form\DataTransformer\EmbedStatusToStatusTransformer;
 use OpenOrchestra\ModelInterface\Form\Type\AbstractOrchestraStatusType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class OrchestraStatusType
  */
 class OrchestraStatusType extends AbstractOrchestraStatusType
 {
+    protected $translationChoiceManager;
     protected $statusTransformer;
     protected $statusClass;
 
@@ -19,8 +21,9 @@ class OrchestraStatusType extends AbstractOrchestraStatusType
      * @param EmbedStatusToStatusTransformer $statusTransformer
      * @param string                         $statusClass
      */
-    public function __construct(EmbedStatusToStatusTransformer $statusTransformer, $statusClass)
+    public function __construct(EmbedStatusToStatusTransformer $statusTransformer, $statusClass, TranslationChoiceManager $translationChoiceManager)
     {
+        $this->translationChoiceManager = $translationChoiceManager;
         $this->statusTransformer = $statusTransformer;
         $this->statusClass = $statusClass;
     }
@@ -37,14 +40,17 @@ class OrchestraStatusType extends AbstractOrchestraStatusType
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
+        $translationChoiceManager = $this->translationChoiceManager;
         $resolver->setDefaults(array(
             'embedded' => true,
             'class' => $this->statusClass,
-            'property' => 'labels',
+            'choice_label' => function ($choice) use ($translationChoiceManager) {
+                return $translationChoiceManager->choose($choice->getLabels());
+            },
         ));
     }
 
