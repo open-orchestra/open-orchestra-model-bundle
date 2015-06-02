@@ -29,6 +29,7 @@ class SiteRepositoryTest extends KernelTestCase
     /**
      * @param boolean $deleted
      * @param array   $columns
+     * @param array   $ref
      * @param string  $search
      * @param array   $order
      * @param int     $skip
@@ -37,9 +38,9 @@ class SiteRepositoryTest extends KernelTestCase
      * 
      * @dataProvider provideDeletedAndPaginateAndSearch
      */
-    public function testFindByDeletedForPaginateAndSearch($deleted, $columns, $search, $order, $skip, $limit, $count)
+    public function testFindByDeletedForPaginateAndSearch($deleted, $ref, $columns, $search, $order, $skip, $limit, $count)
     {
-        $sites = $this->repository->findByDeletedForPaginateAndSearch($deleted, $columns, $search, $order, $skip, $limit);
+        $sites = $this->repository->findByDeletedForPaginateAndSearch($deleted, $ref, $columns, $search, $order, $skip, $limit);
         $this->assertCount($count, $sites);
     }
 
@@ -48,21 +49,24 @@ class SiteRepositoryTest extends KernelTestCase
      */
     public function provideDeletedAndPaginateAndSearch()
     {
+        $ref = $this->getReferenceColumnEntity();
+
         return array(
-            array(false, null, null, null, 0 ,2 , 2),
-            array(false, null, null, null, 0 ,1 , 1),
-            array(true, null, null, null, 0 ,2 , 1),
-            array(false, $this->generateColumnsProvider('2'), 'demo', null, null, null, 1),
-            array(false, $this->generateColumnsProvider('1'), 'demo', null, null, null, 0),
-            array(false, $this->generateColumnsProvider('1', 'demo'), null, null, null, null, 0),
-            array(false, $this->generateColumnsProvider('1', 'first'), null, null, null, null, 1),
-            array(false, $this->generateColumnsProvider(), 'fake search', null, null, null, 0)
+            array(false, null, null, null, null, 0 ,2 , 2),
+            array(false, null, null, null, null, 0 ,1 , 1),
+            array(true, null, null, null, null, 0 ,2 , 1),
+            array(false, $ref, $this->generateColumnsProvider('2'), 'demo', null, null, null, 1),
+            array(false, $ref, $this->generateColumnsProvider('1'), 'demo', null, null, null, 0),
+            array(false, $ref, $this->generateColumnsProvider('1', 'demo'), null, null, null, null, 0),
+            array(false, $ref, $this->generateColumnsProvider('1', 'first'), null, null, null, null, 1),
+            array(false, $ref, $this->generateColumnsProvider(), 'fake search', null, null, null, 0)
         );
     }
 
     /**
      * @param boolean $deleted
      * @param array   $columns
+     * @param array   $ref
      * @param string  $search
      * @param array   $order
      * @param int     $skip
@@ -71,9 +75,9 @@ class SiteRepositoryTest extends KernelTestCase
      *
      * @dataProvider provideOrderDeletedAndPaginateAndSearch
      */
-    public function testOrderFindByDeletedForPaginateAndSearch($deleted, $columns, $search, $order, $skip, $limit, $orderId)
+    public function testOrderFindByDeletedForPaginateAndSearch($deleted, $ref, $columns, $search, $order, $skip, $limit, $orderId)
     {
-        $sites = $this->repository->findByDeletedForPaginateAndSearch($deleted, $columns, $search, $order, $skip, $limit);
+        $sites = $this->repository->findByDeletedForPaginateAndSearch($deleted, $ref, $columns, $search, $order, $skip, $limit);
         $this->assertSameOrder($sites, $orderId);
     }
 
@@ -83,12 +87,13 @@ class SiteRepositoryTest extends KernelTestCase
     public function provideOrderDeletedAndPaginateAndSearch()
     {
         $columns = $this->generateColumnsProvider('', 'site');
+        $ref = $this->getReferenceColumnEntity();
 
         return array(
-            array(false, $columns, null, array(array('column' => 0,'dir' => 'desc')), null, null, array(2, 1)),
-            array(false, $columns, null, array(array('column' => 0,'dir' => 'asc')), null, null, array(1, 2)),
-            array(false, $columns, null, array(array('column' => 1,'dir' => 'asc')), null, null, array(2, 1)),
-            array(false, $columns, null, array(array('column' => 1,'dir' => 'desc')), null, null, array(1, 2)),
+            array(false, $ref, $columns, null, array(array('column' => 0,'dir' => 'desc')), null, null, array(2, 1)),
+            array(false, $ref, $columns, null, array(array('column' => 0,'dir' => 'asc')), null, null, array(1, 2)),
+            array(false, $ref, $columns, null, array(array('column' => 1,'dir' => 'asc')), null, null, array(2, 1)),
+            array(false, $ref, $columns, null, array(array('column' => 1,'dir' => 'desc')), null, null, array(1, 2)),
         );
     }
 
@@ -115,16 +120,17 @@ class SiteRepositoryTest extends KernelTestCase
     }
 
     /**
-     * @param $deleted
-     * @param $columns
-     * @param $search
-     * @param $count
+     * @param boolean $deleted
+     * @param array   $ref
+     * @param array   $columns
+     * @param string  $search
+     * @param int     $count
      *
      * @dataProvider provideColumnsAndSearchAndCount
      */
-    public function countByDeletedFilterSearch($deleted, $columns, $search, $count)
+    public function countByDeletedFilterSearch($deleted, $ref, $columns, $search, $count)
     {
-        $sites = $this->repository->countByDeletedFilterSearch($deleted, $columns, $search);
+        $sites = $this->repository->countByDeletedFilterSearch($deleted, $ref, $columns, $search);
         $this->assertEquals($count, $sites);
     }
 
@@ -132,12 +138,14 @@ class SiteRepositoryTest extends KernelTestCase
      * @return array
      */
     public function provideColumnsAndSearchAndCount(){
+        $ref = $this->getReferenceColumnEntity();
+
         return array(
-            array(false, $this->generateColumnsProvider('2'), 'demo',1),
-            array(false, $this->generateColumnsProvider('1'), 'demo',0),
-            array(false, $this->generateColumnsProvider('1', 'demo'), null, 0),
-            array(false, $this->generateColumnsProvider('1', 'first'), null, 1),
-            array(true, $this->generateColumnsProvider(), 'fake search',0)
+            array(false, $ref, $this->generateColumnsProvider('2'), 'demo',1),
+            array(false, $ref, $this->generateColumnsProvider('1'), 'demo',0),
+            array(false, $ref, $this->generateColumnsProvider('1', 'demo'), null, 0),
+            array(false, $ref, $this->generateColumnsProvider('1', 'first'), null, 1),
+            array(true, $ref, $this->generateColumnsProvider(), 'fake search',0)
         );
     }
 
@@ -152,8 +160,21 @@ class SiteRepositoryTest extends KernelTestCase
     protected function generateColumnsProvider($searchSiteId = '', $searchName = '')
     {
         return array(
-            array('name' => 'siteId', 'searchable' => true, 'orderable' => true, 'search' => array('value' => $searchSiteId)),
+            array('name' => 'site_id', 'searchable' => true, 'orderable' => true, 'search' => array('value' => $searchSiteId)),
             array('name' => 'name', 'searchable' => true, 'orderable' => true, 'search' => array('value' => $searchName)),
+        );
+    }
+
+    /**
+     * Generate relation between columns names and entities attributes
+     *
+     * @return array
+     */
+    protected function getReferenceColumnEntity()
+    {
+        return array(
+            'site_id' => 'siteId',
+            'name' => 'name'
         );
     }
 

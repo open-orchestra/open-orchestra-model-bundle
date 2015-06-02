@@ -48,6 +48,7 @@ class SiteRepository extends AbstractRepository implements SiteRepositoryInterfa
 
     /**
      * @param boolean     $deleted
+     * @param array|null  $reference
      * @param array|null  $columns
      * @param string|null $search
      * @param array|null  $order
@@ -56,11 +57,11 @@ class SiteRepository extends AbstractRepository implements SiteRepositoryInterfa
      *
      * @return array
      */
-    public function findByDeletedForPaginateAndSearch($deleted, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
+    public function findByDeletedForPaginateAndSearch($deleted, $reference = null, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
     {
         $qa = $this->createAggregationQuery();
         $qa->match(array('deleted' => $deleted));
-        $qa = $this->generateFilterForPaginateAndSearch($qa, $columns, $search, $order, $skip, $limit);
+        $qa = $this->generateFilterForPaginateAndSearch($qa, $reference, $columns, $search, $order, $skip, $limit);
 
         return $this->hydrateAggregateQuery($qa);
     }
@@ -81,16 +82,17 @@ class SiteRepository extends AbstractRepository implements SiteRepositoryInterfa
     /**
      * @param boolean      $deleted
      * @param array|null   $columns
+     * @param array|null   $reference
      * @param array|null   $search
      *
      * @return int
      */
-    public function countByDeletedFilterSearch($deleted, $columns = null, $search = null)
+    public function countByDeletedFilterSearch($deleted, $reference, $columns = null, $search = null)
     {
         $qa = $this->createAggregationQuery();
         $qa->match(array('deleted' => $deleted));
 
-        $qa = $this->generateFilterForSearch($qa, $columns, $search);
+        $qa = $this->generateFilterForSearch($qa, $reference, $columns, $search);
 
         return $this->countDocumentAggregateQuery($qa);
     }
