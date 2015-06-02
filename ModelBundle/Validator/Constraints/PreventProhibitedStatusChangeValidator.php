@@ -2,8 +2,8 @@
 
 namespace OpenOrchestra\ModelBundle\Validator\Constraints;
 
-use Symfony\Component\Security\Core\SecurityContextInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Doctrine\ODM\MongoDB\DocumentManager;
@@ -19,12 +19,12 @@ class PreventProhibitedStatusChangeValidator extends ConstraintValidator
     protected $roleRepository;
 
     /**
-     * @param SecurityContextInterface $securityContext
-     * @param DocumentManager          $documentManager
-     * @param RoleRepository           $roleRepository
+     * @param AuthorizationCheckerInterface $securityContext
+     * @param DocumentManager               $documentManager
+     * @param RoleRepository                $roleRepository
      */
     public function __construct(
-        SecurityContextInterface $securityContext,
+        AuthorizationCheckerInterface $securityContext,
         DocumentManager $documentManager,
         RoleRepository $roleRepository
     )
@@ -62,8 +62,8 @@ class PreventProhibitedStatusChangeValidator extends ConstraintValidator
     /**
      * Check if current user is allowed to change content/node from fromStatus to toStatus
      * 
-     * @param Status $fromStatus
-     * @param Status $toStatus
+     * @param StatusInterface $fromStatus
+     * @param StatusInterface $toStatus
      * 
      * @return boolean
      */
