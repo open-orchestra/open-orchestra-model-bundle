@@ -59,8 +59,7 @@ class SiteRepository extends AbstractRepository implements SiteRepositoryInterfa
      */
     public function findByDeletedForPaginateAndSearch($deleted, $reference = null, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
     {
-        $qa = $this->createAggregationQuery();
-        $qa->match(array('deleted' => $deleted));
+        $qa = $this->createAggregateQueryWithDeletedFilter($deleted);
         $qa = $this->generateFilterForPaginateAndSearch($qa, $reference, $columns, $search, $order, $skip, $limit);
 
         return $this->hydrateAggregateQuery($qa);
@@ -73,8 +72,7 @@ class SiteRepository extends AbstractRepository implements SiteRepositoryInterfa
      */
     public function countByDeleted($deleted)
     {
-        $qa = $this->createAggregationQuery();
-        $qa->match(array('deleted' => $deleted));
+        $qa = $this->createAggregateQueryWithDeletedFilter($deleted);
 
         return $this->countDocumentAggregateQuery($qa);
     }
@@ -87,11 +85,9 @@ class SiteRepository extends AbstractRepository implements SiteRepositoryInterfa
      *
      * @return int
      */
-    public function countByDeletedFilterSearch($deleted, $reference, $columns = null, $search = null)
+    public function countByDeletedWithSearchFilter($deleted, $reference = null, $columns = null, $search = null)
     {
-        $qa = $this->createAggregationQuery();
-        $qa->match(array('deleted' => $deleted));
-
+        $qa = $this->createAggregateQueryWithDeletedFilter($deleted);
         $qa = $this->generateFilterForSearch($qa, $reference, $columns, $search);
 
         return $this->countDocumentAggregateQuery($qa);
@@ -108,5 +104,18 @@ class SiteRepository extends AbstractRepository implements SiteRepositoryInterfa
         $qb->field('aliases.domain')->equals($domain);
 
         return $qb->getQuery()->getSingleResult();
+    }
+
+    /**
+     * @param $deleted
+     *
+     * @return \Solution\MongoAggregation\Pipeline\Stage
+     */
+    protected function createAggregateQueryWithDeletedFilter($deleted)
+    {
+        $qa = $this->createAggregationQuery();
+        $qa->match(array('deleted' => $deleted));
+
+        return $qa;
     }
 }

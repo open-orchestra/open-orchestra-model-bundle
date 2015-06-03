@@ -241,29 +241,6 @@ class ContentRepositoryTest extends KernelTestCase
     }
 
     /**
-     * @param string $contentType
-     * @param int    $count
-     *
-     * @dataProvider provideCountByContentType
-     */
-    public function testFindByContentTypeInLastVersion($contentType, $count)
-    {
-        $this->assertCount($count, $this->repository->findByContentTypeInLastVersion($contentType));
-    }
-
-    /**
-     * @return array
-     */
-    public function provideCountByContentType()
-    {
-        return array(
-            array('news', 254),
-            array('car', 2),
-            array('customer', 1),
-        );
-    }
-
-    /**
      * @param string  $contentType
      * @param array   $columns
      * @param array   $descriptionEntity
