@@ -18,11 +18,11 @@ class OrchestraStatusType extends AbstractOrchestraStatusType
     protected $statusClass;
 
     /**
-     * @param EmbedStatusToStatusTransformer    $statusTransformer
-     * @param string                            $statusClass
-     * @param TranslationChoiceManagerInterface $translationChoiceManager
+     * @param EmbedStatusToStatusTransformer         $statusTransformer
+     * @param string                                 $statusClass
+     * @param TranslationChoiceManagerInterface|null $translationChoiceManager
      */
-    public function __construct(EmbedStatusToStatusTransformer $statusTransformer, $statusClass, TranslationChoiceManagerInterface $translationChoiceManager)
+    public function __construct(EmbedStatusToStatusTransformer $statusTransformer, $statusClass, TranslationChoiceManagerInterface $translationChoiceManager = null)
     {
         $this->translationChoiceManager = $translationChoiceManager;
         $this->statusTransformer = $statusTransformer;
