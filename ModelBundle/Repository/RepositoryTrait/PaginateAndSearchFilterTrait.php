@@ -7,6 +7,52 @@ use Solution\MongoAggregation\Pipeline\Stage;
 trait PaginateAndSearchFilterTrait
 {
     /**
+     * @param array|null  $descriptionEntity
+     * @param array|null  $columns
+     * @param string|null $search
+     * @param array|null  $order
+     * @param int|null    $skip
+     * @param int|null    $limit
+     *
+     * @return array
+     */
+    public function findForPaginateAndSearch($descriptionEntity = null, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
+    {
+        $qa = $this->createAggregationQuery();
+        $qa = $this->generateFilterForPaginateAndSearch($qa, $descriptionEntity, $columns, $search, $order, $skip, $limit);
+
+        return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param array|null   $columns
+     * @param array|null   $descriptionEntity
+     * @param array|null   $search
+     *
+     * @return int
+     */
+    public function countFilterSearch($descriptionEntity = null, $columns = null, $search = null)
+    {
+        $qa = $this->createAggregationQuery();
+        $qa = $this->generateFilterForSearch($qa, $descriptionEntity, $columns, $search);
+
+        return $this->countDocumentAggregateQuery($qa);
+    }
+
+
+    /**
+     * Count all document
+     *
+     * @return int
+     */
+    public function count()
+    {
+        $qa = $this->createAggregationQuery();
+
+        return $this->countDocumentAggregateQuery($qa);
+    }
+
+    /**
      * @param Stage $qa
      *
      * @return int

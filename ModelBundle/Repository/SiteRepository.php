@@ -48,7 +48,7 @@ class SiteRepository extends AbstractRepository implements SiteRepositoryInterfa
 
     /**
      * @param boolean     $deleted
-     * @param array|null  $reference
+     * @param array|null  $descriptionEntity
      * @param array|null  $columns
      * @param string|null $search
      * @param array|null  $order
@@ -57,10 +57,10 @@ class SiteRepository extends AbstractRepository implements SiteRepositoryInterfa
      *
      * @return array
      */
-    public function findByDeletedForPaginateAndSearch($deleted, $reference = null, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
+    public function findByDeletedForPaginateAndSearch($deleted, $descriptionEntity = null, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
     {
         $qa = $this->createAggregateQueryWithDeletedFilter($deleted);
-        $qa = $this->generateFilterForPaginateAndSearch($qa, $reference, $columns, $search, $order, $skip, $limit);
+        $qa = $this->generateFilterForPaginateAndSearch($qa, $descriptionEntity, $columns, $search, $order, $skip, $limit);
 
         return $this->hydrateAggregateQuery($qa);
     }
@@ -80,15 +80,16 @@ class SiteRepository extends AbstractRepository implements SiteRepositoryInterfa
     /**
      * @param boolean      $deleted
      * @param array|null   $columns
-     * @param array|null   $reference
+     * @param array|null   $descriptionEntity
      * @param array|null   $search
      *
      * @return int
      */
-    public function countByDeletedWithSearchFilter($deleted, $reference = null, $columns = null, $search = null)
+
+    public function countByDeletedWithSearchFilter($deleted, $descriptionEntity = null, $columns = null, $search = null)
     {
         $qa = $this->createAggregateQueryWithDeletedFilter($deleted);
-        $qa = $this->generateFilterForSearch($qa, $reference, $columns, $search);
+        $qa = $this->generateFilterForSearch($qa, $descriptionEntity, $columns, $search);
 
         return $this->countDocumentAggregateQuery($qa);
     }

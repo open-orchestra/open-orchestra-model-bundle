@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\Repository;
 
+use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\PaginateAndSearchFilterTrait;
 use OpenOrchestra\ModelInterface\Model\KeywordInterface;
 use OpenOrchestra\ModelInterface\Repository\KeywordRepositoryInterface;
 
@@ -10,6 +11,8 @@ use OpenOrchestra\ModelInterface\Repository\KeywordRepositoryInterface;
  */
 class KeywordRepository extends AbstractRepository implements KeywordRepositoryInterface
 {
+    use PaginateAndSearchFilterTrait;
+
     /**
      * @param string $label
      *
