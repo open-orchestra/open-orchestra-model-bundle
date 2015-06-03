@@ -202,8 +202,11 @@ trait PaginateAndSearchFilterTrait
      */
     protected function generateFilterSearchField($name, $value, $type)
     {
-        if( $type == 'integer') {
+        if ($type == 'integer') {
             $filter = array($name => (int) $value);
+        } elseif ($type == 'boolean') {
+            $value = ($value === 'true' || $value === '1') ? true : false;
+            $filter = array($name => (boolean) $value);
         } else {
             $filter = array($name => new \MongoRegex('/.*'.$value.'.*/i'));
         }

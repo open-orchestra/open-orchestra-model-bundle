@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\Repository;
 
+use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\PaginateAndSearchFilterTrait;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
 
@@ -10,6 +11,8 @@ use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
  */
 class StatusRepository extends AbstractRepository implements StatusRepositoryInterface
 {
+    use PaginateAndSearchFilterTrait;
+
     /**
      * @return StatusInterface
      */
