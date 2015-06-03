@@ -24,16 +24,16 @@ trait PaginateAndSearchFilterTrait
 
     /**
      * @param Stage       $qa
-     * @param array|null  $reference
+     * @param array|null  $descriptionEntity
      * @param array|null  $columns
      * @param string|null $search
      *
      * @return Stage
      */
-    protected function generateFilterForSearch($qa, $reference = null, $columns = null, $search = null)
+    protected function generateFilterForSearch($qa, $descriptionEntity = null, $columns = null, $search = null)
     {
         if (null !== $columns) {
-            $filterSearch = $this->generateFilterSearch($reference, $columns, $search);
+            $filterSearch = $this->generateFilterSearch($descriptionEntity, $columns, $search);
             if (null !== $filterSearch) {
                 $qa->match($filterSearch);
             }
@@ -46,7 +46,7 @@ trait PaginateAndSearchFilterTrait
      * Create Query for paginate, order and filter by columns
      *
      * @param Stage       $qa
-     * @param array|null  $reference
+     * @param array|null  $descriptionEntity
      * @param array|null  $columns
      * @param string|null $search
      * @param array|null  $order
@@ -55,10 +55,10 @@ trait PaginateAndSearchFilterTrait
      *
      * @return Stage
      */
-    protected function generateFilterForPaginateAndSearch($qa, $reference = null, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
+    protected function generateFilterForPaginateAndSearch($qa, $descriptionEntity = null, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
     {
-        $qa = $this->generateFilterForSearch($qa, $reference, $columns, $search);
-        $qa = $this->generateFilterSort($qa, $order, $reference, $columns);
+        $qa = $this->generateFilterForSearch($qa, $descriptionEntity, $columns, $search);
+        $qa = $this->generateFilterSort($qa, $order, $descriptionEntity, $columns);
         $qa = $this->generateSkipFilter($qa, $skip);
         $qa = $this->generateLimitFilter($qa, $limit);
 
@@ -96,17 +96,18 @@ trait PaginateAndSearchFilterTrait
     }
 
     /**
-     * @param Stage      $qa
-     * @param array|null $order
-     * @param array|null $reference
-     * @param array|null $columns
+     * @param Stage       $qa
+     * @param array|null  $order
+     * @param array|null  $descriptionEntity
+     * @param array|null  $columns
+     * @param string|null $elementName
      *
      * @return Stage
      */
-    protected function generateFilterSort($qa, $order = null , $reference = null, $columns = null)
+    protected function generateFilterSort($qa, $order = null , $descriptionEntity = null, $columns = null, $elementName = null)
     {
         if (null !== $order && null !== $columns) {
-            $filterOrder = $this->generateOrderFilter($order, $reference, $columns);
+            $filterOrder = $this->generateOrderFilter($order, $descriptionEntity, $columns, $elementName);
             if (null !== $filterOrder) {
                 $qa->sort($filterOrder);
             }
@@ -116,13 +117,14 @@ trait PaginateAndSearchFilterTrait
     }
 
     /**
-     * @param array $order
-     * @param array $reference
-     * @param array $columns
+     * @param array  $order
+     * @param array  $descriptionEntity
+     * @param array  $columns
+     * @param string $elementName
      *
      * @return array|null
      */
-    protected function generateOrderFilter($order, $reference, $columns)
+    protected function generateOrderFilter($order, $descriptionEntity, $columns, $elementName)
     {
         $filter = array();
 
@@ -131,8 +133,8 @@ trait PaginateAndSearchFilterTrait
             if ($columns[$numberColumns]['orderable']) {
                 if (!empty($columns[$numberColumns]['name'])) {
                     $columnsName = $columns[$numberColumns]['name'];
-                    if (isset($reference[$columnsName])) {
-                        $name = $reference[$columnsName];
+                    if (isset($descriptionEntity[$columnsName]) && isset($descriptionEntity[$columnsName]['key'])) {
+                        $name = (null === $elementName)? $descriptionEntity[$columnsName]['key'] :  $elementName.'.'.$descriptionEntity[$columnsName]['key'];
                         $dir = ($orderColumn['dir'] == 'desc') ? -1 : 1;
                         $filter[$name] = $dir;
                     }
@@ -148,40 +150,48 @@ trait PaginateAndSearchFilterTrait
      *
      * @param string $name
      * @param string $value
+     * @param string $type
      *
      * @return array
      */
-    protected function generateFilterSearchField($name, $value)
+    protected function generateFilterSearchField($name, $value, $type)
     {
-        return array($name => new \MongoRegex('/.*'.$value.'.*/i'));
+        if( $type == 'integer') {
+            $filter = array($name => (int) $value);
+        } else {
+            $filter = array($name => new \MongoRegex('/.*'.$value.'.*/i'));
+        }
+        return $filter;
     }
 
     /**
      * Generate filter for search text in one or more fields
      *
      * @param array  $columns
-     * @param array  $reference
+     * @param array  $descriptionEntity
      * @param string $search global search
      *
      * @return array|null
      */
-    protected function generateFilterSearch($reference, $columns, $search)
+    protected function generateFilterSearch($descriptionEntity, $columns, $search)
     {
         $filter = null;
 
         $filtersAll = array();
         $filtersColumn = array();
-
         foreach ($columns as $column) {
             $columnsName = $column['name'];
-            if (isset($reference[$columnsName])) {
-                $name = $reference[$columnsName];
+            if (isset($descriptionEntity[$columnsName]) && isset($descriptionEntity[$columnsName]['key'])) {
+                $descriptionAttribute = $descriptionEntity[$columnsName];
+                $name = $descriptionAttribute['key'];
+                $type = isset($descriptionAttribute['type']) ? $descriptionAttribute['type'] : null;
                 if ($column['searchable'] && !empty($column['search']['value']) && !empty($name)) {
+
                     $value = $column['search']['value'];
-                    $filtersColumn[] = $this->generateFilterSearchField($name, $value);
+                    $filtersColumn[] = $this->generateFilterSearchField($name, $value, $type);
                 }
                 if (!empty($search) && $column['searchable'] && !empty($name)) {
-                    $filtersAll[] = $this->generateFilterSearchField($name, $search);
+                    $filtersAll[] = $this->generateFilterSearchField($name, $search, $type);
                 }
             }
         }

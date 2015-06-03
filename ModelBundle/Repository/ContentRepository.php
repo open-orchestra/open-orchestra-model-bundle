@@ -201,6 +201,8 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
     }
 
     /**
+     * @deprecated use findByContentTypeInLastVersionForPaginateAndSearch
+     *
      * @param string $contentType
      *
      * @return array
@@ -224,16 +226,24 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
         return $this->hydrateAggregateQuery($qa, $elementName);
     }
 
-    public function findByContentTypeInLastVersionForPaginateAndSearch($contentType = null, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
+    /**
+     * @param string|null $contentType
+     * @param array|null  $descriptionEntity
+     * @param array|null  $columns
+     * @param string|null $search
+     * @param array|null  $order
+     * @param int|null    $skip
+     * @param int|null    $limit
+     * @return array
+     */
+    public function findByContentTypeInLastVersionForPaginateAndSearch($contentType = null, $descriptionEntity = null, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
     {
         $qa = $this->createAggregationQuery();
 
         if ($contentType) {
             $qa->match(array('contentType' => $contentType));
         }
-        $qa = $this->generateFilterForSearch($qa, $columns, $search);
-
-        $qa = $this->generateFilterSort($qa, $order, $columns);
+        $qa = $this->generateFilterForSearch($qa, $descriptionEntity, $columns, $search);
 
         $elementName = 'content';
         $qa->group(array(
@@ -242,11 +252,77 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
             $elementName => array('$last' => '$$ROOT')
         ));
 
+        $qa = $this->generateFilterSort($qa, $order, $descriptionEntity, $columns, $elementName);
+
         $qa = $this->generateSkipFilter($qa, $skip);
         $qa = $this->generateLimitFilter($qa, $limit);
 
         return $this->hydrateAggregateQuery($qa, $elementName);
     }
+
+    /**
+     * @return array
+     */
+    public function provideDeletedAndPaginateAndSearch()
+    {
+        $descriptionEntity = $this->getDescriptionColumnEntity();
+
+        return array(
+            array(false, null, null, null, null, 0 ,2 , 2),
+            array(false, null, null, null, null, 0 ,1 , 1),
+            array(true, null, null, null, null, 0 ,2 , 1),
+            array(false, $descriptionEntity, $this->generateColumnsProvider('2'), 'demo', null, null, null, 1),
+            array(false, $descriptionEntity, $this->generateColumnsProvider('1'), 'demo', null, null, null, 0),
+            array(false, $descriptionEntity, $this->generateColumnsProvider('1', 'demo'), null, null, null, null, 0),
+            array(false, $descriptionEntity, $this->generateColumnsProvider('1', 'first'), null, null, null, null, 1),
+            array(false, $descriptionEntity, $this->generateColumnsProvider(), 'fake search', null, null, null, 0)
+        );
+    }
+
+    /**
+     * @param string|null $contentType
+     * @param array|null  $descriptionEntity
+     * @param array|null  $columns
+     * @param string|null $search
+     * @return array
+     */
+    public function countByContentTypeInLastVersionFilterSearch($contentType = null, $descriptionEntity = null, $columns = null, $search = null)
+    {
+        $qa = $this->createAggregationQuery();
+
+        if ($contentType) {
+            $qa->match(array('contentType' => $contentType));
+        }
+        $qa = $this->generateFilterForSearch($qa, $descriptionEntity, $columns, $search);
+
+        $elementName = 'content';
+        $qa->group(array(
+            '_id' => array('contentId' => '$contentId'),
+            'version' => array('$max' => '$version'),
+            $elementName => array('$last' => '$$ROOT')
+        ));
+
+        return $this->countDocumentAggregateQuery($qa, $elementName);
+    }
+
+    public function countByContentTypeInLastVersion($contentType = null)
+    {
+        $qa = $this->createAggregationQuery();
+
+        if ($contentType) {
+            $qa->match(array('contentType' => $contentType));
+        }
+
+        $elementName = 'content';
+        $qa->group(array(
+            '_id' => array('contentId' => '$contentId'),
+            'version' => array('$max' => '$version'),
+            $elementName => array('$last' => '$$ROOT')
+        ));
+
+        return $this->countDocumentAggregateQuery($qa);
+    }
+
     /**
      * @return array
      */

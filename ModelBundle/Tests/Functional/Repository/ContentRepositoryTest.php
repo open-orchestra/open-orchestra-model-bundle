@@ -241,29 +241,6 @@ class ContentRepositoryTest extends KernelTestCase
     }
 
     /**
-     * @param string        $language
-     * @param int           $version
-     * @param string        $siteId
-     * @param ContentInterface $content
-     * @param string        $contentId
-     */
-    protected function assertSameContent($language, $version, $siteId, $contentId, $content)
-    {
-        $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\ContentInterface', $content);
-        $this->assertSame($contentId, $content->getContentId());
-        if (!is_null($language)) {
-            $this->assertSame($language, $content->getLanguage());
-        }
-        if (!is_null($version)) {
-            $this->assertSame($version, $content->getVersion());
-        }
-        if (!is_null($siteId)) {
-            $this->assertSame($siteId, $content->getSiteId());
-        }
-        $this->assertSame(false, $content->getDeleted());
-    }
-
-    /**
      * @param string $contentType
      * @param int    $count
      *
@@ -284,5 +261,151 @@ class ContentRepositoryTest extends KernelTestCase
             array('car', 2),
             array('customer', 1),
         );
+    }
+
+    /**
+     * @param string  $contentType
+     * @param array   $columns
+     * @param array   $descriptionEntity
+     * @param string  $search
+     * @param array   $order
+     * @param int     $skip
+     * @param int     $limit
+     * @param integer $count
+     *
+     * @dataProvider provideContentTypeAndPaginateAndSearch
+     */
+    public function testFindByContentTypeInLastVersionForPaginateAndSearch($contentType, $descriptionEntity, $columns, $search, $order, $skip, $limit, $count)
+    {
+        $contents = $this->repository->findByContentTypeInLastVersionForPaginateAndSearch($contentType, $descriptionEntity, $columns, $search, $order, $skip, $limit);
+        $this->assertCount($count, $contents);
+    }
+
+    /**
+     * @return array
+     */
+    public function provideContentTypeAndPaginateAndSearch()
+    {
+        $descriptionEntity = $this->getDescriptionColumnEntity();
+
+        return array(
+            array('car', $descriptionEntity, $this->generateColumnsProvider(), null, null, 0 ,5 , 2),
+            array('car', $descriptionEntity, $this->generateColumnsProvider(), null, null, 0 ,1 , 1),
+            array('car', $descriptionEntity, $this->generateColumnsProvider('206'), null, null, 0 ,2 , 1),
+            array('car', $descriptionEntity, $this->generateColumnsProvider('', '', '2'), null, null, 0 ,2 , 2),
+            array('news', $descriptionEntity, $this->generateColumnsProvider(), null, null, 0 , 100, 100),
+            array('news', $descriptionEntity, $this->generateColumnsProvider(), null, null, 50 , 100, 100),
+            array('news', $descriptionEntity, $this->generateColumnsProvider('news'), null, null, 0 , null, 250),
+        );
+    }
+
+    /**
+     * @param string  $contentType
+     * @param integer $count
+     *
+     * @dataProvider provideContentTypeCount
+     */
+    public function testCountByContentTypeInLastVersion($contentType, $count)
+    {
+        $contents = $this->repository->countByContentTypeInLastVersion($contentType);
+        $this->assertEquals($count, $contents);
+    }
+
+    /**
+     * @return array
+     */
+    public function provideContentTypeCount()
+    {
+        return array(
+            array('car', 2),
+            array('customer', 1),
+            array('news', 254),
+        );
+    }
+
+    /**
+     * @param string  $contentType
+     * @param array   $descriptionEntity
+     * @param array   $columns
+     * @param string  $search
+     * @param int     $count
+     *
+     * @dataProvider provideColumnsAndSearchAndCount
+     */
+    public function testCountByContentTypeInLastVersionFilterSearch($contentType, $descriptionEntity, $columns, $search, $count)
+    {
+        $sites = $this->repository->countByContentTypeInLastVersionFilterSearch($contentType, $descriptionEntity, $columns, $search);
+        $this->assertEquals($count, $sites);
+    }
+
+    /**
+     * @return array
+     */
+    public function provideColumnsAndSearchAndCount(){
+        $descriptionEntity = $this->getDescriptionColumnEntity();
+
+        return array(
+            array('car', $descriptionEntity, $this->generateColumnsProvider('206'), null, 1),
+            array('car', $descriptionEntity, $this->generateColumnsProvider(), 'portes', 2),
+            array('news', $descriptionEntity, $this->generateColumnsProvider(), 'news', 250)
+        );
+    }
+
+    /**
+     * Generate columns of content with search value
+     *
+     * @param string $searchName
+     * @param string $searchStatus
+     * @param string $searchVersion
+     * @param string $searchLanguage
+     *
+     * @return array
+     */
+    protected function generateColumnsProvider($searchName = '', $searchStatus = '', $searchVersion = '', $searchLanguage = '')
+    {
+        return array(
+            array('name' => 'name', 'searchable' => true, 'orderable' => true, 'search' => array('value' => $searchName)),
+            array('name' => 'status_label', 'searchable' => true, 'orderable' => true, 'search' => array('value' => $searchStatus)),
+            array('name' => 'version', 'searchable' => true, 'orderable' => true, 'search' => array('value' => $searchVersion)),
+            array('name' => 'language', 'searchable' => true, 'orderable' => true, 'search' => array('value' => $searchLanguage)),
+        );
+    }
+
+    /**
+     * Generate relation between columns names and entities attributes
+     *
+     * @return array
+     */
+    protected function getDescriptionColumnEntity()
+    {
+        return array(
+            'name'         => array('key' => 'name'),
+            'status_label' => array('key' => 'status.name'),
+            'version'      => array('key' => 'version' , 'type' => 'integer'),
+            'language'     => array('key' => 'language'),
+        );
+    }
+
+    /**
+     * @param string           $language
+     * @param int              $version
+     * @param string           $siteId
+     * @param ContentInterface $content
+     * @param string           $contentId
+     */
+    protected function assertSameContent($language, $version, $siteId, $contentId, $content)
+    {
+        $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\ContentInterface', $content);
+        $this->assertSame($contentId, $content->getContentId());
+        if (!is_null($language)) {
+            $this->assertSame($language, $content->getLanguage());
+        }
+        if (!is_null($version)) {
+            $this->assertSame($version, $content->getVersion());
+        }
+        if (!is_null($siteId)) {
+            $this->assertSame($siteId, $content->getSiteId());
+        }
+        $this->assertSame(false, $content->getDeleted());
     }
 }
