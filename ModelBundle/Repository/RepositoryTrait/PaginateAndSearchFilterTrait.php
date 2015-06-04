@@ -31,7 +31,7 @@ trait PaginateAndSearchFilterTrait
      *
      * @return int
      */
-    public function countFilterSearch($descriptionEntity = null, $columns = null, $search = null)
+    public function countWithSearchFilter($descriptionEntity = null, $columns = null, $search = null)
     {
         $qa = $this->createAggregationQuery();
         $qa = $this->generateFilterForSearch($qa, $descriptionEntity, $columns, $search);

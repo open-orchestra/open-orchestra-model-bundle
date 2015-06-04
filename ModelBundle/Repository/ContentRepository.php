@@ -252,7 +252,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      *
      * @return int
      */
-    public function countByContentTypeInLastVersionFilterSearch($contentType = null, $descriptionEntity = null, $columns = null, $search = null)
+    public function countByContentTypeInLastVersionWithSearchFilter($contentType = null, $descriptionEntity = null, $columns = null, $search = null)
     {
         $qa = $this->createAggregateQueryWithContentTypeFiler($contentType);
         $qa = $this->generateFilterForSearch($qa, $descriptionEntity, $columns, $search);

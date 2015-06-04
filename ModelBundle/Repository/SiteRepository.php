@@ -85,7 +85,6 @@ class SiteRepository extends AbstractRepository implements SiteRepositoryInterfa
      *
      * @return int
      */
-
     public function countByDeletedWithSearchFilter($deleted, $descriptionEntity = null, $columns = null, $search = null)
     {
         $qa = $this->createAggregateQueryWithDeletedFilter($deleted);

@@ -128,9 +128,9 @@ class SiteRepositoryTest extends KernelTestCase
      *
      * @dataProvider provideColumnsAndSearchAndCount
      */
-    public function testCountByDeletedFilterSearch($deleted, $descriptionEntity, $columns, $search, $count)
+    public function testCountByDeletedWithSearchFilter($deleted, $descriptionEntity, $columns, $search, $count)
     {
-        $sites = $this->repository->countByDeletedFilterSearch($deleted, $descriptionEntity, $columns, $search);
+        $sites = $this->repository->countByDeletedWithSearchFilter($deleted, $descriptionEntity, $columns, $search);
         $this->assertEquals($count, $sites);
     }
 

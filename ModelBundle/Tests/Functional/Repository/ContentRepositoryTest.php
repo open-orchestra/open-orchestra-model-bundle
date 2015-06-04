@@ -309,9 +309,9 @@ class ContentRepositoryTest extends KernelTestCase
      *
      * @dataProvider provideColumnsAndSearchAndCount
      */
-    public function testCountByContentTypeInLastVersionFilterSearch($contentType, $descriptionEntity, $columns, $search, $count)
+    public function testCountByContentTypeInLastVersionWithSearchFilter($contentType, $descriptionEntity, $columns, $search, $count)
     {
-        $sites = $this->repository->countByContentTypeInLastVersionFilterSearch($contentType, $descriptionEntity, $columns, $search);
+        $sites = $this->repository->countByContentTypeInLastVersionWithSearchFilter($contentType, $descriptionEntity, $columns, $search);
         $this->assertEquals($count, $sites);
     }
 
