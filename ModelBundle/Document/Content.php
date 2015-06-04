@@ -88,7 +88,7 @@ class Content implements ContentInterface
     /**
      * @var ArrayCollection
      *
-     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\ContentAttributeInterface")
+     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\ContentAttributeInterface", strategy="set")
      */
     protected $attributes;
 
@@ -115,13 +115,7 @@ class Content implements ContentInterface
      */
     public function getAttributeByName($name)
     {
-        foreach ($this->attributes as $attribute) {
-            if ($name == $attribute->getName()) {
-                return $attribute;
-            }
-        }
-
-        return null;
+        return $this->attributes->get($name);
     }
 
     /**
@@ -129,7 +123,7 @@ class Content implements ContentInterface
      */
     public function addAttribute(ContentAttributeInterface $attribute)
     {
-        $this->attributes->add($attribute);
+        $this->attributes->set($attribute->getName(), $attribute);
     }
 
     /**
@@ -137,7 +131,7 @@ class Content implements ContentInterface
      */
     public function removeAttribute(ContentAttributeInterface $attribute)
     {
-        $this->attributes->removeElement($attribute);
+        $this->attributes->remove($attribute->getName());
     }
 
     /**
