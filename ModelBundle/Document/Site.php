@@ -189,9 +189,21 @@ class Site implements SiteInterface
      *
      * @return boolean $deleted
      */
-    public function getDeleted()
+    public function isDeleted()
     {
         return $this->deleted;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return boolean $deleted
+     *
+     * @deprecated use isDeleted instead, will be removed in 0.2.8
+     */
+    public function getDeleted()
+    {
+        return $this->isDeleted();
     }
 
     /**
