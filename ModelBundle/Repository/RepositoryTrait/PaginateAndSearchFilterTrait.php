@@ -206,10 +206,11 @@ trait PaginateAndSearchFilterTrait
             $filter = array($name => (int) $value);
         } elseif ($type == 'boolean') {
             $value = ($value === 'true' || $value === '1') ? true : false;
-            $filter = array($name => (boolean) $value);
+            $filter = array($name => $value);
         } else {
             $filter = array($name => new \MongoRegex('/.*'.$value.'.*/i'));
         }
+
         return $filter;
     }
 
