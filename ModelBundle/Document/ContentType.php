@@ -43,7 +43,7 @@ class ContentType implements ContentTypeInterface
     protected $contentTypeId;
 
     /**
-     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\TranslatedValueInterface")
+     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\TranslatedValueInterface", strategy="set")
      */
     protected $names;
 
@@ -170,7 +170,7 @@ class ContentType implements ContentTypeInterface
      */
     public function addName(TranslatedValueInterface $name)
     {
-        $this->names->add($name);
+        $this->names->set($name->getLanguage(), $name);
     }
 
     /**
@@ -178,7 +178,7 @@ class ContentType implements ContentTypeInterface
      */
     public function removeName(TranslatedValueInterface $name)
     {
-        $this->names->removeElement($name);
+        $this->names->remove($name->getLanguage());
     }
 
     /**
@@ -188,7 +188,7 @@ class ContentType implements ContentTypeInterface
      */
     public function getName($language = 'en')
     {
-        return $this->filterByLanguage($this->names, $language);
+        return $this->names->get($language)->getValue();
     }
 
     /**
