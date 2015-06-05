@@ -208,6 +208,7 @@ trait PaginateAndSearchFilterTrait
             $value = ($value === 'true' || $value === '1') ? true : false;
             $filter = array($name => $value);
         } else {
+            $value = preg_quote($value);
             $filter = array($name => new \MongoRegex('/.*'.$value.'.*/i'));
         }
 
