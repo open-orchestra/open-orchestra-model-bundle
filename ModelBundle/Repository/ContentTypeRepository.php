@@ -57,6 +57,7 @@ class ContentTypeRepository extends AbstractRepository implements ContentTypeRep
                 )
             );
         }
+
         return $this->hydrateAggregateQuery($qa, $elementName, 'getContentTypeId');
     }
 
