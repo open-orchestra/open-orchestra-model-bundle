@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\Repository;
 
+use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\PaginateAndSearchFilterTrait;
 use OpenOrchestra\ModelInterface\Repository\FieldAutoGenerableRepositoryInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
@@ -12,6 +13,8 @@ use Doctrine\ODM\MongoDB\Query\Builder;
  */
 class ContentRepository extends AbstractRepository implements FieldAutoGenerableRepositoryInterface, ContentRepositoryInterface
 {
+    use PaginateAndSearchFilterTrait;
+
     /**
      * @param string $contentId
      *
@@ -198,6 +201,8 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
     }
 
     /**
+     * @deprecated use findByContentTypeInLastVersionForPaginateAndSearch
+     *
      * @param string $contentType
      *
      * @return array
@@ -205,20 +210,71 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      */
     public function findByContentTypeInLastVersion($contentType = null)
     {
-        $qa = $this->createAggregationQuery();
-
-        if ($contentType) {
-            $qa->match(array('contentType' => $contentType));
-        }
-
+        $qa = $this->createAggregateQueryWithContentTypeFiler($contentType);
         $elementName = 'content';
-        $qa->group(array(
-            '_id' => array('contentId' => '$contentId'),
-            'version' => array('$max' => '$version'),
-            $elementName => array('$last' => '$$ROOT')
-        ));
+        $qa->group($this->generateLastVersionFilter($elementName));
 
         return $this->hydrateAggregateQuery($qa, $elementName);
+    }
+
+    /**
+     * @param string|null $contentType
+     * @param array|null  $descriptionEntity
+     * @param array|null  $columns
+     * @param string|null $search
+     * @param array|null  $order
+     * @param int|null    $skip
+     * @param int|null    $limit
+     *
+     * @return array
+     */
+    public function findByContentTypeInLastVersionForPaginateAndSearch($contentType = null, $descriptionEntity = null, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
+    {
+        $qa = $this->createAggregateQueryWithContentTypeFiler($contentType);
+        $qa = $this->generateFilterForSearch($qa, $descriptionEntity, $columns, $search);
+
+        $elementName = 'content';
+        $qa->group($this->generateLastVersionFilter($elementName));
+
+        $qa = $this->generateFilterSort($qa, $order, $descriptionEntity, $columns, $elementName);
+
+        $qa = $this->generateSkipFilter($qa, $skip);
+        $qa = $this->generateLimitFilter($qa, $limit);
+
+        return $this->hydrateAggregateQuery($qa, $elementName);
+    }
+
+    /**
+     * @param string|null $contentType
+     * @param array|null  $descriptionEntity
+     * @param array|null  $columns
+     * @param string|null $search
+     *
+     * @return int
+     */
+    public function countByContentTypeInLastVersionWithSearchFilter($contentType = null, $descriptionEntity = null, $columns = null, $search = null)
+    {
+        $qa = $this->createAggregateQueryWithContentTypeFiler($contentType);
+        $qa = $this->generateFilterForSearch($qa, $descriptionEntity, $columns, $search);
+
+        $elementName = 'content';
+        $qa->group($this->generateLastVersionFilter($elementName));
+
+        return $this->countDocumentAggregateQuery($qa, $elementName);
+    }
+
+    /**
+     * @param string|null $contentType
+     *
+     * @return int
+     */
+    public function countByContentTypeInLastVersion($contentType = null)
+    {
+        $qa = $this->createAggregateQueryWithContentTypeFiler($contentType);
+        $elementName = 'content';
+        $qa->group($this->generateLastVersionFilter($elementName));
+
+        return $this->countDocumentAggregateQuery($qa);
     }
 
     /**
@@ -227,6 +283,36 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
     public function findAllDeleted()
     {
         return parent::findBy(array('deleted' => true));
+    }
+
+    /**
+     * @param string $elementName
+     *
+     * @return array
+     */
+    protected function generateLastVersionFilter($elementName)
+    {
+        return array(
+            '_id' => array('contentId' => '$contentId'),
+            'version' => array('$max' => '$version'),
+            $elementName => array('$last' => '$$ROOT')
+        );
+    }
+
+    /**
+     * @param $contentType
+     *
+     * @return \Solution\MongoAggregation\Pipeline\Stage
+     */
+    protected function createAggregateQueryWithContentTypeFiler($contentType)
+    {
+        $qa = $this->createAggregationQuery();
+
+        if ($contentType) {
+            $qa->match(array('contentType' => $contentType));
+        }
+
+        return $qa;
     }
 
     /**

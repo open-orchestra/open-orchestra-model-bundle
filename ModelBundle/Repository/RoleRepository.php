@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\Repository;
 
+use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\PaginateAndSearchFilterTrait;
 use OpenOrchestra\ModelInterface\Model\RoleInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface;
@@ -11,6 +12,8 @@ use OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface;
  */
 class RoleRepository extends AbstractRepository implements RoleRepositoryInterface
 {
+    use PaginateAndSearchFilterTrait;
+
     /**
      * Find the role that connect fromStatus to toStatus
      * 

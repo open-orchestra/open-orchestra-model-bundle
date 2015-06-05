@@ -37,17 +37,21 @@ abstract class AbstractRepository extends DocumentRepository
     /**
      * @param Stage  $qa
      * @param string $elementName
+     * @param string $idSelector
      *
      * @return array
      */
-    protected function hydrateAggregateQuery(Stage $qa, $elementName, $idSelector = null)
+    protected function hydrateAggregateQuery(Stage $qa, $elementName = null, $idSelector = null)
     {
         $contents = $qa->getQuery()->aggregate();
-
         $contentCollection = array();
 
         foreach ($contents as $content) {
-            $content = $this->getDocumentManager()->getUnitOfWork()->getOrCreateDocument($this->getClassName(), $content[$elementName]);
+            if (null !== $elementName) {
+                $content = $content[$elementName];
+            }
+
+            $content = $this->getDocumentManager()->getUnitOfWork()->getOrCreateDocument($this->getClassName(), $content);
             if ($idSelector) {
                 $contentCollection[$content->$idSelector()] = $content;
             } else {
