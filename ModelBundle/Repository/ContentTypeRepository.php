@@ -32,9 +32,11 @@ class ContentTypeRepository extends AbstractRepository implements ContentTypeRep
     }
 
     /**
+     * @param $language
+     * 
      * @return array
      */
-    public function findAllByDeletedInLastVersion()
+    public function findAllByDeletedInLastVersion($language = null)
     {
         $qa = $this->createAggregationQuery();
 
@@ -44,18 +46,20 @@ class ContentTypeRepository extends AbstractRepository implements ContentTypeRep
             )
         );
 
-        $qa->sort(
-            array(
-                'contentTypeId' => -1
-            )
-        );
-
         $elementName = 'contentType';
         $qa->group(array(
             '_id' => array('contentTypeId' => '$contentTypeId'),
             'version' => array('$max' => '$version'),
             $elementName => array('$last' => '$$ROOT')
         ));
+
+        if ($language) {
+            $qa->sort(
+                array(
+                    $elementName . '.names.' . $language. '.value' => 1
+                )
+            );
+        }
 
         return $this->hydrateAggregateQuery($qa, $elementName, 'getContentTypeId');
     }
