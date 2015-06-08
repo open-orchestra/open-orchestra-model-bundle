@@ -2,27 +2,28 @@
 
 namespace OpenOrchestra\ModelBundle\Helper;
 
-use Doctrine\Common\Util\Inflector;
+use OpenOrchestra\ModelInterface\Helper\SuppressSpecialCharacterHelperInterface;
 
 /**
- * Class GenerateIdHelper
+ * Class SuppressSpecialCharacterHelper
  */
-class GenerateIdHelper
+class SuppressSpecialCharacterHelper implements SuppressSpecialCharacterHelperInterface
 {
     /**
      * @param string $input
+     * @param array  $authorizeSpecial
      *
      * @return string
      */
-    public function generate($input)
+    public function transform($input, $authorizeSpecial = array())
     {
         $element = trim($input);
-        $element = Inflector::tableize($element);
         $element = str_replace(' ', '_', $element);
         $element = htmlentities($element, ENT_NOQUOTES, 'UTF-8');
         $accents = '/&([A-Za-z]{1,2})(grave|acute|circ|cedil|uml|lig|tilde);/';
         $element = preg_replace($accents, '$1', $element);
-        $element = preg_replace('/[^-a-z_A-Z0-9-]+/', '', $element);
+        $authorizeSpecial = join('',$authorizeSpecial);
+        $element = preg_replace('/[^-a-z_A-Z0-9'.$authorizeSpecial.']+/', '', $element);
 
         return strtolower($element);
     }

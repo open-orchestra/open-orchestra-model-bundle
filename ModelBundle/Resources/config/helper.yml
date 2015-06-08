@@ -1,6 +1,5 @@
 parameters:
-    open_orchestra_model.helper.generate_id.class: OpenOrchestra\ModelBundle\Helper\GenerateIdHelper
-
+    open_orchestra_model.helper.suppress_special_character.class: OpenOrchestra\ModelBundle\Helper\SuppressSpecialCharacterHelper
 services:
-    open_orchestra_model.helper.generate_id:
-        class: %open_orchestra_model.helper.generate_id.class%
+    open_orchestra_model.helper.suppress_special_character:
+        class: %open_orchestra_model.helper.suppress_special_character.class%

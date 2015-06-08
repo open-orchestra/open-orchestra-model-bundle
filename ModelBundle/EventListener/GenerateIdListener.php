@@ -2,9 +2,11 @@
 
 namespace OpenOrchestra\ModelBundle\EventListener;
 
+use Doctrine\Common\Inflector\Inflector;
 use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
 use Doctrine\Common\Annotations\AnnotationReader;
 use OpenOrchestra\ModelBundle\Helper\GenerateIdHelper;
+use OpenOrchestra\ModelInterface\Helper\SuppressSpecialCharacterHelperInterface;
 use Symfony\Component\DependencyInjection\Container;
 use OpenOrchestra\ModelInterface\Repository\FieldAutoGenerableRepositoryInterface;
 
@@ -15,18 +17,18 @@ class GenerateIdListener
 {
     protected $container;
     protected $annotationReader;
-    protected $generateIdHelper;
+    protected $suppressSpecialCharacterHelper;
 
     /**
-     * @param Container        $container
-     * @param AnnotationReader $annotationReader
-     * @param GenerateIdHelper $generateIdHelper
+     * @param Container                               $container
+     * @param AnnotationReader                        $annotationReader
+     * @param SuppressSpecialCharacterHelperInterface $suppressSpecialCharacterHelper
      */
-    public function __construct(Container $container, AnnotationReader $annotationReader, GenerateIdHelper $generateIdHelper)
+    public function __construct(Container $container, AnnotationReader $annotationReader, SuppressSpecialCharacterHelperInterface $suppressSpecialCharacterHelper)
     {
         $this->container = $container;
         $this->annotationReader = $annotationReader;
-        $this->generateIdHelper = $generateIdHelper;
+        $this->suppressSpecialCharacterHelper = $suppressSpecialCharacterHelper;
     }
 
     /**
@@ -48,7 +50,9 @@ class GenerateIdListener
                 $testMethod = 'testUnicityInContext';
             }
             if (is_null($document->$getGenerated())) {
-                $sourceField = $this->generateIdHelper->generate($document->$getSource());
+                $source = $document->$getSource();
+                $source = Inflector::tableize($source);
+                $sourceField = $this->suppressSpecialCharacterHelper->transform($source);
                 $generatedField = $sourceField;
                 $count = 1;
                 while ($repository->$testMethod($generatedField)) {
