@@ -2,16 +2,16 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\Helper;
 
-use OpenOrchestra\ModelBundle\Helper\GenerateIdHelper;
+use OpenOrchestra\ModelBundle\Helper\SuppressSpecialCharacterHelper;
 use Phake;
 
 /**
- * Test GenerateIdHelperTest
+ * Class SuppressSpecialCharacterHelperTest
  */
-class GenerateIdHelperTest extends \PHPUnit_Framework_TestCase
+class SuppressSpecialCharacterHelperTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var GenerateIdHelper
+     * @var SuppressSpecialCharacterHelper
      */
     protected $helper;
 
@@ -20,18 +20,19 @@ class GenerateIdHelperTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->helper = new GenerateIdHelper();
+        $this->helper = new SuppressSpecialCharacterHelper();
     }
 
     /**
      * @param string $input
      * @param string $output
+     * @param array  $authorizeCharacter
      *
      * @dataProvider provideInputAndOutput
      */
-    public function testGenerate($input, $output)
+    public function testTransform($input, $output, $authorizeCharacter = array())
     {
-        $this->assertSame($output, $this->helper->generate($input));
+        $this->assertSame($output, $this->helper->transform($input, $authorizeCharacter));
     }
 
     /**
@@ -41,7 +42,6 @@ class GenerateIdHelperTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array('foo', 'foo'),
-            array('fooBar', 'foo_bar'),
             array('foo bar', 'foo_bar'),
             array('àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ', 'aaaaaceeeeiiiinooooouuuuyyaaaaaceeeeiiiinooooouuuuy'),
             array('f%oo/\\b?a!r', 'foobar'),
@@ -49,6 +49,9 @@ class GenerateIdHelperTest extends \PHPUnit_Framework_TestCase
             array('   foo', 'foo'),
             array('f\'oo', 'foo'),
             array('f"oo', 'foo'),
+            array('test_test', 'test_test', array('_')),
+            array('test.test_a', 'test.test_a', array('_', '.')),
+            array('foo bar.téçst', 'foo_bar.tecst', array('_', '.')),
         );
     }
 }

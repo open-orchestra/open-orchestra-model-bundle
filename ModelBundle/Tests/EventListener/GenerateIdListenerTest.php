@@ -18,7 +18,7 @@ class GenerateIdListenerTest extends \PHPUnit_Framework_TestCase
     protected $container;
     protected $annotations;
     protected $documentManager;
-    protected $generateIdHelper;
+    protected $suppressSpecialCharacterHelper;
     protected $annotationReader;
     protected $documentRepository;
 
@@ -27,7 +27,7 @@ class GenerateIdListenerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->generateIdHelper = Phake::mock('OpenOrchestra\ModelBundle\Helper\GenerateIdHelper');
+        $this->suppressSpecialCharacterHelper = Phake::mock('OpenOrchestra\ModelInterface\Helper\SuppressSpecialCharacterHelperInterface');
 
         $this->container = Phake::mock('Symfony\Component\DependencyInjection\Container');
         $this->annotationReader = Phake::mock('Doctrine\Common\Annotations\AnnotationReader');
@@ -35,7 +35,7 @@ class GenerateIdListenerTest extends \PHPUnit_Framework_TestCase
         $this->event = Phake::mock('Doctrine\ODM\MongoDB\Event\LifecycleEventArgs');
         Phake::when($this->event)->getDocumentManager()->thenReturn($this->documentManager);
 
-        $this->listener = new GenerateIdListener($this->container, $this->annotationReader, $this->generateIdHelper);
+        $this->listener = new GenerateIdListener($this->container, $this->annotationReader, $this->suppressSpecialCharacterHelper);
     }
 
     /**
@@ -59,7 +59,7 @@ class GenerateIdListenerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->annotationReader)->getClassAnnotation(Phake::anyParameters())->thenReturn($generateAnnotations);
         Phake::when($this->event)->getDocument()->thenReturn($node);
         Phake::when($this->container)->get(Phake::anyParameters())->thenReturn($repository);
-        Phake::when($this->generateIdHelper)->generate(Phake::anyParameters())->thenReturn($expectedId);
+        Phake::when($this->suppressSpecialCharacterHelper)->transform(Phake::anyParameters())->thenReturn($expectedId);
 
         $this->listener->prePersist($this->event);
 
