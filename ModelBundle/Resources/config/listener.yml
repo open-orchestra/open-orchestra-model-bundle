@@ -29,7 +29,7 @@ services:
         arguments:
             - @service_container
             - @open_orchestra_model.annotation_reader
-            - @open_orchestra_model.helper.supress_special_character
+            - @open_orchestra_model.helper.suppress_special_character
         tags:
             - { name: doctrine_mongodb.odm.event_listener, event: prePersist }
     open_orchestra_model.doctrine_listener.save_published_document:
