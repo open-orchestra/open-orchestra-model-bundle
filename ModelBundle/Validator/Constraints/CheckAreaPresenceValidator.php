@@ -3,7 +3,6 @@
 namespace OpenOrchestra\ModelBundle\Validator\Constraints;
 
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
-use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 

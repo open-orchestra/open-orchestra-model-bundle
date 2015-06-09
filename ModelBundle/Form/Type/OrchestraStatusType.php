@@ -5,6 +5,7 @@ namespace OpenOrchestra\ModelBundle\Form\Type;
 use OpenOrchestra\ModelBundle\Form\DataTransformer\EmbedStatusToStatusTransformer;
 use OpenOrchestra\ModelInterface\Form\Type\AbstractOrchestraStatusType;
 use OpenOrchestra\ModelInterface\Manager\TranslationChoiceManagerInterface;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -49,7 +50,7 @@ class OrchestraStatusType extends AbstractOrchestraStatusType
         $resolver->setDefaults(array(
             'embedded' => true,
             'class' => $this->statusClass,
-            'choice_label' => function ($choice) use ($translationChoiceManager) {
+            'choice_label' => function (StatusInterface $choice) use ($translationChoiceManager) {
                 return $translationChoiceManager->choose($choice->getLabels());
             },
         ));

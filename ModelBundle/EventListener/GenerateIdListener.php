@@ -5,7 +5,6 @@ namespace OpenOrchestra\ModelBundle\EventListener;
 use Doctrine\Common\Inflector\Inflector;
 use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
 use Doctrine\Common\Annotations\AnnotationReader;
-use OpenOrchestra\ModelBundle\Helper\GenerateIdHelper;
 use OpenOrchestra\ModelInterface\Helper\SuppressSpecialCharacterHelperInterface;
 use Symfony\Component\DependencyInjection\Container;
 use OpenOrchestra\ModelInterface\Repository\FieldAutoGenerableRepositoryInterface;
