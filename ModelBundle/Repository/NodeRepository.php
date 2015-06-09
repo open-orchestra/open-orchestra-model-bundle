@@ -282,7 +282,7 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      */
     public function testUnicityInContext($name)
     {
-        $qb = $this->createQueryBuilder('n');
+        $qb = $this->createQueryBuilder();
         $qb->field('name')->equals($name);
 
         return count($qb->getQuery()->execute()) > 0;
@@ -356,7 +356,7 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      */
     protected function createQueryBuilderWithSiteId($siteId)
     {
-        $qb = $this->createQueryBuilder('n');
+        $qb = $this->createQueryBuilder();
         $qb->field('siteId')->equals($siteId);
 
         return $qb;
