@@ -87,9 +87,9 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
 
     /**
      * Generate filter on visible published contents in $language
-     * 
+     *
      * @param string $language
-     * 
+     *
      * @return array
      */
     protected function generateFilterPublishedNotDeletedOnLanguage($language)
@@ -103,9 +103,9 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
 
     /**
      * Generate Content Type filter
-     * 
+     *
      * @param string|null $contentType
-     * 
+     *
      * @return array|null
      */
     protected function generateContentTypeFilter($contentType)
@@ -121,9 +121,9 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
 
     /**
      * Generate keywords filter
-     * 
+     *
      * @param string $keywords
-     * 
+     *
      * @return array|null
      */
     protected function generateKeywordsFilter($keywords)
@@ -146,11 +146,11 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
 
     /**
      * Append two filters according to $choiceType operator
-     * 
+     *
      * @param array  $filter1
      * @param array  $filter2
      * @param string $choiceType
-     * 
+     *
      * @return array
      */
     protected function appendFilters($filter1, $filter2, $choiceType)
@@ -322,7 +322,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      */
     protected function createQueryWithLanguage($language)
     {
-        $qb = $this->createQueryBuilder('c');
+        $qb = $this->createQueryBuilder();
         $qb->field('language')->equals($language);
 
         return $qb;

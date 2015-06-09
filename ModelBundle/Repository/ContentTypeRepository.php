@@ -15,15 +15,15 @@ class ContentTypeRepository extends AbstractRepository implements ContentTypeRep
 
     /**
      * @deprecated use findOneByContentTypeIdInLastVersion to get the last version
-     * 
+     *
      * @param string   $contentType
      * @param int|null $version
-     * 
+     *
      * @return array|null|object
      */
     public function findOneByContentTypeIdAndVersion($contentType, $version = null)
     {
-        $qb = $this->createQueryBuilder('n');
+        $qb = $this->createQueryBuilder();
         $qb->field('contentTypeId')->equals($contentType);
 
         $qb->sort('version', 'desc');
@@ -125,7 +125,7 @@ class ContentTypeRepository extends AbstractRepository implements ContentTypeRep
      */
     public function findOneByContentTypeIdInLastVersion($contentType)
     {
-        $qb = $this->createQueryBuilder('n');
+        $qb = $this->createQueryBuilder();
 
         $qb->field('contentTypeId')->equals($contentType);
         $qb->sort('version', 'desc');

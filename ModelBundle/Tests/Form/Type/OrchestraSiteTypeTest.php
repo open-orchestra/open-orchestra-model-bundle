@@ -51,7 +51,7 @@ class OrchestraSiteTypeTest extends \PHPUnit_Framework_TestCase
             'class' => $this->siteClass,
             'property' => 'name',
             'query_builder' => function (DocumentRepository $dr) {
-                return $dr->createQueryBuilder('s')->field('deleted')->equals(false);
+                return $dr->createQueryBuilder()->field('deleted')->equals(false);
             },
         ));
     }

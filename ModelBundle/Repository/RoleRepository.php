@@ -16,7 +16,7 @@ class RoleRepository extends AbstractRepository implements RoleRepositoryInterfa
 
     /**
      * Find the role that connect fromStatus to toStatus
-     * 
+     *
      * @param StatusInterface $fromStatus
      * @param StatusInterface $toStatus
      *
@@ -24,7 +24,7 @@ class RoleRepository extends AbstractRepository implements RoleRepositoryInterfa
      */
     public function findOneByFromStatusAndToStatus(StatusInterface $fromStatus, StatusInterface $toStatus)
     {
-        $qb = $this->createQueryBuilder('n');
+        $qb = $this->createQueryBuilder();
         $qb->field('fromStatus.id')->equals($fromStatus->getId());
         $qb->field('toStatus.id')->equals($toStatus->getId());
 
