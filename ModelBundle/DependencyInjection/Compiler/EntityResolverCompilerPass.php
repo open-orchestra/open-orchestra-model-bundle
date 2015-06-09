@@ -16,7 +16,20 @@ class EntityResolverCompilerPass implements  CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $defaultResolveDocument = Yaml::parse(file_get_contents(__DIR__.'/../../Resources/config/resolve_document.yml'))['resolve_target_documents'];
+        $resourcePath = '.';
+        foreach ($container->getResources() as $resource) {
+            $resourcePath = $resource->getResource();
+            if (is_string($resourcePath)) {
+                if (strpos($resourcePath, 'model-bundle')
+                    && strpos($resourcePath, 'config')
+                    && strpos($resourcePath, 'yml') === false
+                ) {
+                    break;
+                }
+            }
+        }
+
+        $defaultResolveDocument = Yaml::parse(file_get_contents($resourcePath . '/resolve_document.yml'))['resolve_target_documents'];
 
         $definition = $container->findDefinition('doctrine_mongodb.odm.listeners.resolve_target_document');
         $definitionCalls = $definition->getMethodCalls();

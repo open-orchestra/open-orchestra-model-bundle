@@ -76,7 +76,7 @@ trait PaginateAndSearchFilterTrait
      *
      * @return Stage
      */
-    protected function generateFilterForSearch($qa, $descriptionEntity = null, $columns = null, $search = null)
+    protected function generateFilterForSearch(Stage $qa, $descriptionEntity = null, $columns = null, $search = null)
     {
         if (null !== $columns) {
             $filterSearch = $this->generateFilterSearch($descriptionEntity, $columns, $search);
@@ -101,7 +101,7 @@ trait PaginateAndSearchFilterTrait
      *
      * @return Stage
      */
-    protected function generateFilterForPaginateAndSearch($qa, $descriptionEntity = null, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
+    protected function generateFilterForPaginateAndSearch(Stage $qa, $descriptionEntity = null, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
     {
         $qa = $this->generateFilterForSearch($qa, $descriptionEntity, $columns, $search);
         $qa = $this->generateFilterSort($qa, $order, $descriptionEntity, $columns);
@@ -117,7 +117,7 @@ trait PaginateAndSearchFilterTrait
      *
      * @return Stage
      */
-    protected function generateLimitFilter($qa, $limit = null)
+    protected function generateLimitFilter(Stage $qa, $limit = null)
     {
         if (null !== $limit) {
             $qa->limit($limit);
@@ -132,7 +132,7 @@ trait PaginateAndSearchFilterTrait
      *
      * @return Stage
      */
-    protected function generateSkipFilter($qa, $skip = null)
+    protected function generateSkipFilter(Stage $qa, $skip = null)
     {
         if (null !== $skip && $skip > 0) {
             $qa->skip($skip);
@@ -150,7 +150,7 @@ trait PaginateAndSearchFilterTrait
      *
      * @return Stage
      */
-    protected function generateFilterSort($qa, $order = null , $descriptionEntity = null, $columns = null, $elementName = null)
+    protected function generateFilterSort(Stage $qa, $order = null , $descriptionEntity = null, $columns = null, $elementName = null)
     {
         if (null !== $order && null !== $columns) {
             $filterOrder = $this->generateOrderFilter($order, $descriptionEntity, $columns, $elementName);
