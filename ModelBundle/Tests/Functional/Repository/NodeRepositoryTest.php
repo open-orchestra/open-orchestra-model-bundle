@@ -183,7 +183,7 @@ class NodeRepositoryTest extends KernelTestCase
     {
         $nodes = $this->repository->findByParentIdAndSiteId($parentId, $siteId);
 
-        $this->assertGreaterThanOrEqual($count, $nodes->count());
+        $this->assertGreaterThanOrEqual($count, count($nodes));
     }
 
     /**

@@ -63,6 +63,22 @@ abstract class AbstractRepository extends DocumentRepository
     }
 
     /**
+     * @param Stage $qa
+     *
+     * @return int
+     */
+    protected function countDocumentAggregateQuery(Stage $qa)
+    {
+        $qa->group(array(
+            '_id' => null,
+            'count' => array('$sum' => 1)
+        ));
+        $res = $qa->getQuery()->aggregate();
+
+        return (null !== $res[0]['count']) ? $res[0]['count'] : 0;
+    }
+
+    /**
      * @param Stage  $qa
      *
      * @return mixed
