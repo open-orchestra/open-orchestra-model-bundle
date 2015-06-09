@@ -100,10 +100,10 @@ class SiteRepository extends AbstractRepository implements SiteRepositoryInterfa
      */
     public function findByAliasDomain($domain)
     {
-        $qb = $this->createQueryBuilder();
-        $qb->field('aliases.domain')->equals($domain);
+        $qa = $this->createAggregationQuery();
+        $qa->match(array('aliases.domain' => $domain));
 
-        return $qb->getQuery()->getSingleResult();
+        return $this->singleHydrateAggregateQuery($qa);
     }
 
     /**
