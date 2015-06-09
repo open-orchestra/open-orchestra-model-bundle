@@ -61,4 +61,16 @@ abstract class AbstractRepository extends DocumentRepository
 
         return $contentCollection;
     }
+
+    /**
+     * @param Stage  $qa
+     *
+     * @return mixed
+     */
+    protected function singleHydrateAggregateQuery(Stage $qa)
+    {
+        $aggregateCollection = $this->hydrateAggregateQuery($qa);
+
+        return (null !== $aggregateCollection && isset($aggregateCollection[0])) ? $aggregateCollection[0] : null;
+    }
 }
