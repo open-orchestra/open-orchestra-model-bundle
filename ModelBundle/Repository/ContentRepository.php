@@ -210,7 +210,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      */
     public function findByContentTypeInLastVersion($contentType = null)
     {
-        $qa = $this->createAggregateQueryWithContentTypeFiler($contentType);
+        $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
         $elementName = 'content';
         $qa->group($this->generateLastVersionFilter($elementName));
 
@@ -230,7 +230,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      */
     public function findByContentTypeInLastVersionForPaginateAndSearch($contentType = null, $descriptionEntity = null, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
     {
-        $qa = $this->createAggregateQueryWithContentTypeFiler($contentType);
+        $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
         $qa = $this->generateFilterForSearch($qa, $descriptionEntity, $columns, $search);
 
         $elementName = 'content';
@@ -254,7 +254,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      */
     public function countByContentTypeInLastVersionWithSearchFilter($contentType = null, $descriptionEntity = null, $columns = null, $search = null)
     {
-        $qa = $this->createAggregateQueryWithContentTypeFiler($contentType);
+        $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
         $qa = $this->generateFilterForSearch($qa, $descriptionEntity, $columns, $search);
 
         $elementName = 'content';
@@ -270,7 +270,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      */
     public function countByContentTypeInLastVersion($contentType = null)
     {
-        $qa = $this->createAggregateQueryWithContentTypeFiler($contentType);
+        $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
         $elementName = 'content';
         $qa->group($this->generateLastVersionFilter($elementName));
 
@@ -304,7 +304,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      *
      * @return \Solution\MongoAggregation\Pipeline\Stage
      */
-    protected function createAggregateQueryWithContentTypeFiler($contentType)
+    protected function createAggregateQueryWithContentTypeFilter($contentType)
     {
         $qa = $this->createAggregationQuery();
 

@@ -27,7 +27,8 @@ class SetInitialStatusListenerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->container)->get(Phake::anyParameters())->thenReturn($this->statusRepository);
         $this->lifecycleEventArgs = Phake::mock('Doctrine\ODM\MongoDB\Event\LifecycleEventArgs');
 
-        $this->listener = new SetInitialStatusListener($this->container);
+        $this->listener = new SetInitialStatusListener();
+        $this->listener->setContainer($this->container);
     }
 
     /**

@@ -28,7 +28,8 @@ class InitialStatusListenerTest extends \PHPUnit_Framework_TestCase
         $this->lifecycleEventArgs = Phake::mock('Doctrine\ODM\MongoDB\Event\LifecycleEventArgs');
         $this->postFlushEventArgs = Phake::mock('Doctrine\ODM\MongoDB\Event\PostFlushEventArgs');
 
-        $this->listener = new InitialStatusListener($this->container);
+        $this->listener = new InitialStatusListener();
+        $this->listener->setContainer($this->container);
     }
 
     /**
