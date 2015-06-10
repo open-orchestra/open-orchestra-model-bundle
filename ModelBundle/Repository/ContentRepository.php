@@ -43,7 +43,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      */
     public function findLastPublishedVersionByContentIdAndLanguage($contentId, $language)
     {
-        $qa = $this->createQueryWithLanguageAndPublished($language);
+        $qa = $this->createAggregationQueryWithLanguageAndPublished($language);
 
         $qa->match(array('contentId' => $contentId));
         $qa->sort(array('version' => -1));
@@ -181,7 +181,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      */
     public function findByContentIdAndLanguage($contentId, $language)
     {
-        $qa = $this->createQueryWithContentIdAndLanguageAndVersion($contentId, $language, null);
+        $qa = $this->createAggregationQueryWithContentIdAndLanguageAndVersion($contentId, $language, null);
 
         return $this->hydrateAggregateQuery($qa);
     }
@@ -195,7 +195,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      */
     public function findOneByContentIdAndLanguageAndVersion($contentId, $language, $version = null)
     {
-        $qa = $this->createQueryWithContentIdAndLanguageAndVersion($contentId, $language, $version);
+        $qa = $this->createAggregationQueryWithContentIdAndLanguageAndVersion($contentId, $language, $version);
 
         return $this->singleHydrateAggregateQuery($qa);
     }
@@ -320,7 +320,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      *
      * @return Stage
      */
-    protected function createQueryWithLanguage($language)
+    protected function createAggregationQueryWithLanguage($language)
     {
         $qa = $this->createAggregationQuery();
         $qa->match(array('language' => $language));
@@ -335,9 +335,9 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      *
      * @return Stage
      */
-    protected function createQueryWithContentIdAndLanguageAndVersion($contentId, $language, $version = null)
+    protected function createAggregationQueryWithContentIdAndLanguageAndVersion($contentId, $language, $version = null)
     {
-        $qa = $this->createQueryWithLanguage($language);
+        $qa = $this->createAggregationQueryWithLanguage($language);
         $qa->match(
             array(
                 'contentId' => $contentId,
@@ -358,9 +358,9 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      *
      * @return Stage
      */
-    protected function createQueryWithLanguageAndPublished($language)
+    protected function createAggregationQueryWithLanguageAndPublished($language)
     {
-        $qa = $this->createQueryWithLanguage($language);
+        $qa = $this->createAggregationQueryWithLanguage($language);
         $qa->match(
             array(
                 'deleted'          => false,

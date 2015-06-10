@@ -24,10 +24,13 @@ class RoleRepository extends AbstractRepository implements RoleRepositoryInterfa
      */
     public function findOneByFromStatusAndToStatus(StatusInterface $fromStatus, StatusInterface $toStatus)
     {
-        $qb = $this->createQueryBuilder();
-        $qb->field('fromStatus.id')->equals($fromStatus->getId());
-        $qb->field('toStatus.id')->equals($toStatus->getId());
-
-        return $qb->getQuery()->getSingleResult();
+        $qa = $this->createAggregationQuery();
+        $qa->match(
+            array(
+                'fromStatus.$id' => new \MongoId($fromStatus->getId()),
+                'toStatus.$id'   => new \MongoId($toStatus->getId()),
+            )
+        );
+        return $this->singleHydrateAggregateQuery($qa);
     }
 }
