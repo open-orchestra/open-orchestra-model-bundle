@@ -20,7 +20,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      *
      * @return boolean
      */
-    public function testUnicityInContext($contentId)
+    public function testUniquenessInContext($contentId)
     {
         return $this->findOneByContentId($contentId) !== null;
     }

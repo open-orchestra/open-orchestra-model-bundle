@@ -287,7 +287,7 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      *
      * @return boolean
      */
-    public function testUnicityInContext($name)
+    public function testUniquenessInContext($name)
     {
         $qa = $this->createAggregationQuery();
         $qa->match(array('name' => $name));

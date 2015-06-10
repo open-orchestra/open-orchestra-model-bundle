@@ -53,7 +53,7 @@ class TemplateRepository extends AbstractRepository implements FieldAutoGenerabl
      *
      * @return boolean
      */
-    public function testUnicityInContext($name)
+    public function testUniquenessInContext($name)
     {
         return $this->findOneByName($name) !== null;
     }
