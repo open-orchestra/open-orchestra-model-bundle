@@ -23,15 +23,16 @@ class ContentTypeRepository extends AbstractRepository implements ContentTypeRep
      */
     public function findOneByContentTypeIdAndVersion($contentType, $version = null)
     {
-        $qb = $this->createQueryBuilder();
-        $qb->field('contentTypeId')->equals($contentType);
-
-        $qb->sort('version', 'desc');
+        $qa = $this->createAggregationQuery();
+        $filter = array();
+        $filter['contentTypeId'] = $contentType;
         if ($version) {
-            $qb->field('version')->equals($version);
+            $filter['version'] = $version;
         }
+        $qa->match($filter);
+        $qa->sort(array('version' => -1));
 
-        return $qb->getQuery()->getSingleResult();
+        return $this->singleHydrateAggregateQuery($qa);
     }
 
     /**
@@ -125,12 +126,11 @@ class ContentTypeRepository extends AbstractRepository implements ContentTypeRep
      */
     public function findOneByContentTypeIdInLastVersion($contentType)
     {
-        $qb = $this->createQueryBuilder();
+        $qa = $this->createAggregationQuery();
+        $qa->match(array('contentTypeId' => $contentType));
+        $qa->sort(array('version' => -1));
 
-        $qb->field('contentTypeId')->equals($contentType);
-        $qb->sort('version', 'desc');
-
-        return $qb->getQuery()->getSingleResult();
+        return $this->singleHydrateAggregateQuery($qa);
     }
 
     /**

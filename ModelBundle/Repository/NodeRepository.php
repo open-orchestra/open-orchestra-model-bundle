@@ -2,14 +2,12 @@
 
 namespace OpenOrchestra\ModelBundle\Repository;
 
-use Doctrine\ODM\MongoDB\Cursor;
 use Doctrine\ODM\MongoDB\Mapping;
 use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\AreaFinderTrait;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\FieldAutoGenerableRepositoryInterface;
-use Doctrine\ODM\MongoDB\Query\Builder;
 use Solution\MongoAggregation\Pipeline\Stage;
 
 /**
@@ -69,7 +67,7 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      */
     public function findOneByNodeIdAndLanguageWithPublishedAndLastVersionAndSiteId($nodeId, $language, $siteId)
     {
-        $qa = $this->createQueryBuilderWithSiteIdAndLanguage($siteId, $language);
+        $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         $filter = array();
         if ($nodeId !== NodeInterface::TRANSVERSE_NODE_ID) {
             $filter['status.published'] = true;
@@ -93,7 +91,7 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
     public function findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $language, $siteId, $version = null)
     {
         if (!is_null($version)) {
-            $qa = $this->createQueryBuilderWithSiteIdAndLanguage($siteId, $language);
+            $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
             $qa->match(
                 array(
                     'nodeId'  => $nodeId,
@@ -118,7 +116,7 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      */
     public function findByNodeIdAndLanguageAndSiteId($nodeId, $language, $siteId)
     {
-        $qa = $this->createQueryBuilderWithSiteIdAndLanguage($siteId, $language);
+        $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         $qa->match(array('nodeId' => $nodeId));
 
         return $this->hydrateAggregateQuery($qa);
@@ -135,7 +133,7 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      */
     public function findByNodeIdAndLanguageAndSiteIdAndPublishedOrderedByVersion($nodeId, $language, $siteId)
     {
-        $qa = $this->createQueryBuilderWithSiteIdAndLanguage($siteId, $language);
+        $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         $qa->match(
             array(
                 'nodeId'  => $nodeId,
@@ -157,7 +155,7 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      */
     public function findByNodeIdAndSiteId($nodeId, $siteId)
     {
-        $qa = $this->createQueryBuilderWithSiteId($siteId);
+        $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
         $qa->match(array('nodeId' => $nodeId));
 
         return $this->hydrateAggregateQuery($qa);
@@ -173,7 +171,7 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      */
     public function findByParentIdAndSiteId($parentId, $siteId)
     {
-        $qa = $this->createQueryBuilderWithSiteId($siteId);
+        $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
         $qa->match(array('parentId' => $parentId));
 
         return $this->hydrateAggregateQuery($qa);
@@ -188,7 +186,7 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      */
     public function findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($nodeId, $language, $siteId)
     {
-        $qa = $this->createQueryBuilderWithSiteIdAndLanguage($siteId, $language);
+        $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         $qa->match(
             array(
                 'nodeId'  => $nodeId,
@@ -363,7 +361,7 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      *
      * @return Stage
      */
-    protected function createQueryBuilderWithSiteId($siteId)
+    protected function createAggregationQueryBuilderWithSiteId($siteId)
     {
         $qa = $this->createAggregationQuery();
         $qa->match(array('siteId' => $siteId));
@@ -379,7 +377,7 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      */
     protected function buildTreeRequest($language, $siteId)
     {
-        $qa = $this->createQueryBuilderWithSiteIdAndLanguage($siteId, $language);
+        $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         $qa->match(
             array(
                 'status.published' => true,
@@ -396,9 +394,9 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      *
      * @return Stage
      */
-    protected function createQueryBuilderWithSiteIdAndLanguage($siteId, $language)
+    protected function createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language)
     {
-        $qa = $this->createQueryBuilderWithSiteId($siteId);
+        $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
         $qa->match(array('language' => $language));
 
         return $qa;
@@ -460,7 +458,7 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      */
     public function findByParentIdAndRoutePatternAndNotNodeIdAndSiteId($parentId, $routePattern, $nodeId, $siteId)
     {
-        $qa = $this->createQueryBuilderWithSiteId($siteId);
+        $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
         $qa->match(
             array(
                 'parentId'     => $parentId,
