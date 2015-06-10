@@ -32,8 +32,12 @@ class StatusRepository extends AbstractRepository implements StatusRepositoryInt
     public function findOtherByInitial($name)
     {
         $qa = $this->createAggregationQuery();
-        $qa->match(array('name' => array('$ne' => $name)));
-        $qa->match(array('initial' => true));
+        $qa->match(
+            array(
+                'name'    => array('$ne' => $name),
+                'initial' => true,
+            )
+        );
 
         return $this->hydrateAggregateQuery($qa);
     }
