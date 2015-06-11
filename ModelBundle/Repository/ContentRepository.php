@@ -210,7 +210,9 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      */
     public function findByContentTypeInLastVersion($contentType = null)
     {
-        $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
+
+        $qa = $this->createAggregateQueryWithContentTypeFiler($contentType);
+        $qa->match($this->generateDeletedFilter());
         $elementName = 'content';
         $qa->group($this->generateLastVersionFilter($elementName));
 
@@ -232,7 +234,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
     {
         $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
         $qa = $this->generateFilterForSearch($qa, $descriptionEntity, $columns, $search);
-
+        $qa->match($this->generateDeletedFilter());
         $elementName = 'content';
         $qa->group($this->generateLastVersionFilter($elementName));
 
@@ -256,7 +258,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
     {
         $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
         $qa = $this->generateFilterForSearch($qa, $descriptionEntity, $columns, $search);
-
+        $qa->match($this->generateDeletedFilter());
         $elementName = 'content';
         $qa->group($this->generateLastVersionFilter($elementName));
 
@@ -270,7 +272,8 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      */
     public function countByContentTypeInLastVersion($contentType = null)
     {
-        $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
+        $qa = $this->createAggregateQueryWithContentTypeFiler($contentType);
+        $qa->match($this->generateDeletedFilter());
         $elementName = 'content';
         $qa->group($this->generateLastVersionFilter($elementName));
 
@@ -283,6 +286,14 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
     public function findAllDeleted()
     {
         return parent::findBy(array('deleted' => true));
+    }
+
+    /**
+     * @return array
+     */
+    protected function generateDeletedFilter()
+    {
+        return array('deleted' => false);
     }
 
     /**
