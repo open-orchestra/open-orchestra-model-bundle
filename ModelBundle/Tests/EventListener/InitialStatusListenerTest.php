@@ -14,16 +14,22 @@ class InitialStatusListenerTest extends \PHPUnit_Framework_TestCase
     protected $listener;
     protected $lifecycleEventArgs;
     protected $postFlushEventArgs;
+    protected $statusRepository;
+    protected $container;
 
     /**
      * setUp
      */
     public function setUp()
     {
+        $this->statusRepository = Phake::mock('OpenOrchestra\ModelBundle\Repository\StatusRepository');
+        $this->container = Phake::mock('Symfony\Component\DependencyInjection\Container');
+        Phake::when($this->container)->get(Phake::anyParameters())->thenReturn($this->statusRepository);
         $this->lifecycleEventArgs = Phake::mock('Doctrine\ODM\MongoDB\Event\LifecycleEventArgs');
         $this->postFlushEventArgs = Phake::mock('Doctrine\ODM\MongoDB\Event\PostFlushEventArgs');
 
         $this->listener = new InitialStatusListener();
+        $this->listener->setContainer($this->container);
     }
 
     /**
@@ -43,17 +49,8 @@ class InitialStatusListenerTest extends \PHPUnit_Framework_TestCase
      */
     public function testPreUpdate(Status $status, $documents)
     {
-        $documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
-        $queryBuilder = Phake::mock('Doctrine\ODM\MongoDB\Query\Builder');
-        $query = Phake::mock('Doctrine\ODM\MongoDB\Query\Query');
-        $statusRepository = Phake::mock('OpenOrchestra\ModelBundle\Repository\StatusRepository');
-
-        Phake::when($statusRepository)->findOtherByInitial(Phake::anyParameters())->thenReturn($documents);
-        Phake::when($query)->execute()->thenReturn($documents);
-        Phake::when($documentManager)->getRepository('OpenOrchestraModelBundle:Status')->thenReturn($statusRepository);
-        Phake::when($statusRepository)->createQueryBuilder()->thenReturn($queryBuilder);
+        Phake::when($this->statusRepository)->findOtherByInitial(Phake::anyParameters())->thenReturn($documents);
         Phake::when($this->lifecycleEventArgs)->getDocument()->thenReturn($status);
-        Phake::when($this->lifecycleEventArgs)->getDocumentManager()->thenReturn($documentManager);
 
         $this->listener->preUpdate($this->lifecycleEventArgs);
 

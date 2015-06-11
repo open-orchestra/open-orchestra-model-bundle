@@ -6,7 +6,7 @@ use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\PaginateAndSearchFilter
 use OpenOrchestra\ModelInterface\Repository\FieldAutoGenerableRepositoryInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
-use Doctrine\ODM\MongoDB\Query\Builder;
+use Solution\MongoAggregation\Pipeline\Stage;
 
 /**
  * Class ContentRepository
@@ -43,12 +43,12 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      */
     public function findLastPublishedVersionByContentIdAndLanguage($contentId, $language)
     {
-        $qb = $this->createQueryWithLanguageAndPublished($language);
+        $qa = $this->createAggregationQueryWithLanguageAndPublished($language);
 
-        $qb->field('contentId')->equals($contentId);
-        $qb->sort('version', 'desc');
+        $qa->match(array('contentId' => $contentId));
+        $qa->sort(array('version' => -1));
 
-        return $qb->getQuery()->getSingleResult();
+        return $this->singleHydrateAggregateQuery($qa);
     }
 
     /**
@@ -181,9 +181,9 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      */
     public function findByContentIdAndLanguage($contentId, $language)
     {
-        $qb = $this->createQueryWithContentIdAndLanguageAndVersion($contentId, $language, null);
+        $qa = $this->createAggregationQueryWithContentIdAndLanguageAndVersion($contentId, $language, null);
 
-        return $qb->getQuery()->execute();
+        return $this->hydrateAggregateQuery($qa);
     }
 
     /**
@@ -195,9 +195,9 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      */
     public function findOneByContentIdAndLanguageAndVersion($contentId, $language, $version = null)
     {
-        $qb = $this->createQueryWithContentIdAndLanguageAndVersion($contentId, $language, $version);
+        $qa = $this->createAggregationQueryWithContentIdAndLanguageAndVersion($contentId, $language, $version);
 
-        return $qb->getQuery()->getSingleResult();
+        return $this->singleHydrateAggregateQuery($qa);
     }
 
     /**
@@ -210,7 +210,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      */
     public function findByContentTypeInLastVersion($contentType = null)
     {
-        $qa = $this->createAggregateQueryWithContentTypeFiler($contentType);
+        $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
         $elementName = 'content';
         $qa->group($this->generateLastVersionFilter($elementName));
 
@@ -230,7 +230,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      */
     public function findByContentTypeInLastVersionForPaginateAndSearch($contentType = null, $descriptionEntity = null, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
     {
-        $qa = $this->createAggregateQueryWithContentTypeFiler($contentType);
+        $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
         $qa = $this->generateFilterForSearch($qa, $descriptionEntity, $columns, $search);
 
         $elementName = 'content';
@@ -254,7 +254,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      */
     public function countByContentTypeInLastVersionWithSearchFilter($contentType = null, $descriptionEntity = null, $columns = null, $search = null)
     {
-        $qa = $this->createAggregateQueryWithContentTypeFiler($contentType);
+        $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
         $qa = $this->generateFilterForSearch($qa, $descriptionEntity, $columns, $search);
 
         $elementName = 'content';
@@ -270,7 +270,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      */
     public function countByContentTypeInLastVersion($contentType = null)
     {
-        $qa = $this->createAggregateQueryWithContentTypeFiler($contentType);
+        $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
         $elementName = 'content';
         $qa->group($this->generateLastVersionFilter($elementName));
 
@@ -304,7 +304,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      *
      * @return \Solution\MongoAggregation\Pipeline\Stage
      */
-    protected function createAggregateQueryWithContentTypeFiler($contentType)
+    protected function createAggregateQueryWithContentTypeFilter($contentType)
     {
         $qa = $this->createAggregationQuery();
 
@@ -318,14 +318,14 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
     /**
      * @param string $language
      *
-     * @return Builder
+     * @return Stage
      */
-    protected function createQueryWithLanguage($language)
+    protected function createAggregationQueryWithLanguage($language)
     {
-        $qb = $this->createQueryBuilder();
-        $qb->field('language')->equals($language);
+        $qa = $this->createAggregationQuery();
+        $qa->match(array('language' => $language));
 
-        return $qb;
+        return $qa;
     }
 
     /**
@@ -333,36 +333,41 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      * @param string      $language
      * @param int|null    $version
      *
-     * @return Builder
+     * @return Stage
      */
-    protected function createQueryWithContentIdAndLanguageAndVersion($contentId, $language, $version = null)
+    protected function createAggregationQueryWithContentIdAndLanguageAndVersion($contentId, $language, $version = null)
     {
-        $qb = $this->createQueryWithLanguage($language);
-
-        $qb->field('contentId')->equals($contentId);
-        $qb->field('deleted')->equals(false);
-
+        $qa = $this->createAggregationQueryWithLanguage($language);
+        $qa->match(
+            array(
+                'contentId' => $contentId,
+                'deleted'   => false,
+            )
+        );
         if (is_null($version)) {
-            $qb->sort('version', 'desc');
+            $qa->sort(array('version' => -1));
         } else {
-            $qb->field('version')->equals((int) $version);
+            $qa->match(array('version' => (int) $version));
         }
 
-        return $qb;
+        return $qa;
     }
 
     /**
      * @param string $language
      *
-     * @return Builder
+     * @return Stage
      */
-    protected function createQueryWithLanguageAndPublished($language)
+    protected function createAggregationQueryWithLanguageAndPublished($language)
     {
-        $qb = $this->createQueryWithLanguage($language);
+        $qa = $this->createAggregationQueryWithLanguage($language);
+        $qa->match(
+            array(
+                'deleted'          => false,
+                'status.published' => true,
+            )
+        );
 
-        $qb->field('deleted')->equals(false);
-        $qb->field('status.published')->equals(true);
-
-        return $qb;
+        return $qa;
     }
 }

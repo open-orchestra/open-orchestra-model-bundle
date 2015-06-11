@@ -18,10 +18,10 @@ class StatusRepository extends AbstractRepository implements StatusRepositoryInt
      */
     public function findOneByInitial()
     {
-        $qb = $this->createQueryBuilder();
-        $qb->field('initial')->equals(true);
+        $qa = $this->createAggregationQuery();
+        $qa->match(array('initial' => true));
 
-        return $qb->getQuery()->execute()->getSingleResult();
+        return $this->singleHydrateAggregateQuery($qa);
     }
 
     /**
@@ -31,11 +31,15 @@ class StatusRepository extends AbstractRepository implements StatusRepositoryInt
      */
     public function findOtherByInitial($name)
     {
-        $qb = $this->createQueryBuilder();
-        $qb->field('name')->notEqual($name);
-        $qb->field('initial')->equals(true);
+        $qa = $this->createAggregationQuery();
+        $qa->match(
+            array(
+                'name'    => array('$ne' => $name),
+                'initial' => true,
+            )
+        );
 
-        return $qb->getQuery()->execute();
+        return $this->hydrateAggregateQuery($qa);
     }
 
     /**
@@ -43,9 +47,9 @@ class StatusRepository extends AbstractRepository implements StatusRepositoryInt
      */
     public function findOneByEditable()
     {
-        $qb = $this->createQueryBuilder();
-        $qb->field('published')->equals(false);
+        $qa = $this->createAggregationQuery();
+        $qa->match(array('published' => false));
 
-        return $qb->getQuery()->execute()->getSingleResult();
+        return $this->singleHydrateAggregateQuery($qa);
     }
 }

@@ -5,11 +5,12 @@ namespace OpenOrchestra\ModelBundle\EventListener;
 use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
 use Doctrine\ODM\MongoDB\Event\PostFlushEventArgs;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
+use Symfony\Component\DependencyInjection\ContainerAware;
 
 /**
  * Class InitialStatusListener
  */
-class InitialStatusListener
+class InitialStatusListener extends ContainerAware
 {
     protected $statuses = array();
 
@@ -20,8 +21,7 @@ class InitialStatusListener
     {
         $document = $eventArgs->getDocument();
         if ($document instanceof StatusInterface && $document->isPublished() && $document->isInitial()) {
-            $documentManager = $eventArgs->getDocumentManager();
-            $statuses = $documentManager->getRepository('OpenOrchestraModelBundle:Status')->findOtherByInitial($document->getName());
+            $statuses = $this->container->get('open_orchestra_model.repository.status')->findOtherByInitial($document->getName());
             foreach ($statuses as $status) {
                 $status->setInitial(false);
                 $this->statuses[] = $status;

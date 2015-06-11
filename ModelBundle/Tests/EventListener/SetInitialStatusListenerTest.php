@@ -14,15 +14,21 @@ class SetInitialStatusListenerTest extends \PHPUnit_Framework_TestCase
 {
     protected $listener;
     protected $lifecycleEventArgs;
+    protected $container;
+    protected $statusRepository;
 
     /**
      * setUp
      */
     public function setUp()
     {
+        $this->statusRepository = Phake::mock('OpenOrchestra\ModelBundle\Repository\StatusRepository');
+        $this->container = Phake::mock('Symfony\Component\DependencyInjection\Container');
+        Phake::when($this->container)->get(Phake::anyParameters())->thenReturn($this->statusRepository);
         $this->lifecycleEventArgs = Phake::mock('Doctrine\ODM\MongoDB\Event\LifecycleEventArgs');
 
         $this->listener = new SetInitialStatusListener();
+        $this->listener->setContainer($this->container);
     }
 
     /**
@@ -44,12 +50,8 @@ class SetInitialStatusListenerTest extends \PHPUnit_Framework_TestCase
      */
     public function testprePersist(Node $node, Status $status)
     {
-        $documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
-        $statusRepository = Phake::mock('OpenOrchestra\ModelBundle\Repository\StatusRepository');
-        Phake::when($statusRepository)->findOneByInitial()->thenReturn($status);
-        Phake::when($documentManager)->getRepository('OpenOrchestraModelBundle:Status')->thenReturn($statusRepository);
+        Phake::when($this->statusRepository)->findOneByInitial()->thenReturn($status);
         Phake::when($this->lifecycleEventArgs)->getDocument()->thenReturn($node);
-        Phake::when($this->lifecycleEventArgs)->getDocumentManager()->thenReturn($documentManager);
 
         $this->listener->prePersist($this->lifecycleEventArgs);
 
