@@ -211,7 +211,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
     public function findByContentTypeInLastVersion($contentType = null)
     {
 
-        $qa = $this->createAggregateQueryWithContentTypeFiler($contentType);
+        $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
         $qa->match($this->generateDeletedFilter());
         $elementName = 'content';
         $qa->group($this->generateLastVersionFilter($elementName));
@@ -272,7 +272,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      */
     public function countByContentTypeInLastVersion($contentType = null)
     {
-        $qa = $this->createAggregateQueryWithContentTypeFiler($contentType);
+        $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
         $qa->match($this->generateDeletedFilter());
         $elementName = 'content';
         $qa->group($this->generateLastVersionFilter($elementName));
