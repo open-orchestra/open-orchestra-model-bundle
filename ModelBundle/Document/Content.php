@@ -7,6 +7,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Gedmo\Blameable\Traits\BlameableDocument;
 use Gedmo\Timestampable\Traits\TimestampableDocument;
 use OpenOrchestra\ModelInterface\Mapping\Annotations as ORCHESTRA;
+use OpenOrchestra\ModelInterface\MongoTrait\SiteLinkable;
 use OpenOrchestra\ModelInterface\MongoTrait\Statusable;
 use OpenOrchestra\ModelInterface\Model\ContentAttributeInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
@@ -35,6 +36,7 @@ class Content implements ContentInterface
     use Keywordable;
     use Statusable;
     use Versionable;
+    use SiteLinkable;
 
     /**
      * @var string $id
@@ -91,6 +93,13 @@ class Content implements ContentInterface
      * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\ContentAttributeInterface", strategy="set")
      */
     protected $attributes;
+
+    /**
+     * @var string $siteId
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $siteId;
 
     /**
      * Constructor
@@ -236,6 +245,22 @@ class Content implements ContentInterface
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSiteId()
+    {
+        return $this->siteId;
+    }
+
+    /**
+     * @param string $siteId
+     */
+    public function setSiteId($siteId)
+    {
+        $this->siteId = $siteId;
     }
 
     /**

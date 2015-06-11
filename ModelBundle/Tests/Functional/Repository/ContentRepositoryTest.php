@@ -128,7 +128,7 @@ class ContentRepositoryTest extends KernelTestCase
     public function provideContentTypeKeywordAndCount()
     {
         return array(
-            array('car', ContentRepositoryInterface::CHOICE_AND, 'Lorem', 2),
+            array('car', ContentRepositoryInterface::CHOICE_AND, 'Lorem', 3),
             array('car', ContentRepositoryInterface::CHOICE_AND, 'Sit', 1),
             array('car', ContentRepositoryInterface::CHOICE_AND, 'Dolor', 0),
             array('car', ContentRepositoryInterface::CHOICE_AND, 'Lorem,Sit', 1),
@@ -137,29 +137,29 @@ class ContentRepositoryTest extends KernelTestCase
             array('news', ContentRepositoryInterface::CHOICE_AND, 'Dolor', 0),
             array('news', ContentRepositoryInterface::CHOICE_AND, 'Lorem,Sit', 1),
             array('news', ContentRepositoryInterface::CHOICE_AND, '', 254),
-            array('car', ContentRepositoryInterface::CHOICE_AND, '', 2),
-            array('', ContentRepositoryInterface::CHOICE_AND, null, 257),
-            array('', ContentRepositoryInterface::CHOICE_AND, '', 257),
-            array('', ContentRepositoryInterface::CHOICE_AND, 'Lorem', 4),
-            array('', ContentRepositoryInterface::CHOICE_AND, 'Sit', 4),
+            array('car', ContentRepositoryInterface::CHOICE_AND, '', 3),
+            array('', ContentRepositoryInterface::CHOICE_AND, null, 258),
+            array('', ContentRepositoryInterface::CHOICE_AND, '', 258),
+            array('', ContentRepositoryInterface::CHOICE_AND, 'Lorem', 5),
+            array('', ContentRepositoryInterface::CHOICE_AND, 'Sit', 3),
             array('', ContentRepositoryInterface::CHOICE_AND, 'Dolor', 0),
-            array('', ContentRepositoryInterface::CHOICE_AND, 'Lorem,Sit', 3),
-            array('car', ContentRepositoryInterface::CHOICE_OR, 'Lorem', 4),
+            array('', ContentRepositoryInterface::CHOICE_AND, 'Lorem,Sit', 2),
+            array('car', ContentRepositoryInterface::CHOICE_OR, 'Lorem', 5),
             array('car', ContentRepositoryInterface::CHOICE_OR, 'Sit', 5),
-            array('car', ContentRepositoryInterface::CHOICE_OR, 'Dolor', 2),
+            array('car', ContentRepositoryInterface::CHOICE_OR, 'Dolor', 3),
             array('car', ContentRepositoryInterface::CHOICE_OR, 'Lorem,Sit', 4),
-            array('news', ContentRepositoryInterface::CHOICE_OR, 'Lorem', 257),
-            array('news', ContentRepositoryInterface::CHOICE_OR, 'Sit', 256),
+            array('news', ContentRepositoryInterface::CHOICE_OR, 'Lorem', 258),
+            array('news', ContentRepositoryInterface::CHOICE_OR, 'Sit', 255),
             array('news', ContentRepositoryInterface::CHOICE_OR, 'Dolor', 254),
-            array('news', ContentRepositoryInterface::CHOICE_OR, 'Lorem,Sit', 256),
+            array('news', ContentRepositoryInterface::CHOICE_OR, 'Lorem,Sit', 255),
             array('news', ContentRepositoryInterface::CHOICE_OR, '', 254),
-            array('car', ContentRepositoryInterface::CHOICE_OR, null, 2),
-            array('', ContentRepositoryInterface::CHOICE_OR, null, 257),
-            array('', ContentRepositoryInterface::CHOICE_OR, 'Lorem', 4),
-            array('', ContentRepositoryInterface::CHOICE_OR, 'Sit', 4),
+            array('car', ContentRepositoryInterface::CHOICE_OR, null, 3),
+            array('', ContentRepositoryInterface::CHOICE_OR, null, 258),
+            array('', ContentRepositoryInterface::CHOICE_OR, 'Lorem', 5),
+            array('', ContentRepositoryInterface::CHOICE_OR, 'Sit', 3),
             array('', ContentRepositoryInterface::CHOICE_OR, 'Dolor', 0),
-            array('', ContentRepositoryInterface::CHOICE_OR, 'Lorem,Sit', 3),
-            array('', ContentRepositoryInterface::CHOICE_OR, '', 257),
+            array('', ContentRepositoryInterface::CHOICE_OR, 'Lorem,Sit', 2),
+            array('', ContentRepositoryInterface::CHOICE_OR, '', 258),
         );
     }
 
@@ -244,17 +244,15 @@ class ContentRepositoryTest extends KernelTestCase
      * @param string  $contentType
      * @param array   $columns
      * @param array   $descriptionEntity
-     * @param string  $search
-     * @param array   $order
      * @param int     $skip
      * @param int     $limit
      * @param integer $count
      *
      * @dataProvider provideContentTypeAndPaginateAndSearch
      */
-    public function testFindByContentTypeInLastVersionForPaginateAndSearch($contentType, $descriptionEntity, $columns, $search, $order, $skip, $limit, $count)
+    public function testFindByContentTypeInLastVersionForPaginateAndSearch($contentType, $descriptionEntity, $columns, $skip, $limit, $count)
     {
-        $contents = $this->repository->findByContentTypeInLastVersionForPaginateAndSearch($contentType, $descriptionEntity, $columns, $search, $order, $skip, $limit);
+        $contents = $this->repository->findByContentTypeInLastVersionForPaginateAndSearch($contentType, $descriptionEntity, $columns, null, null, $skip, $limit);
         $this->assertCount($count, $contents);
     }
 
@@ -266,13 +264,50 @@ class ContentRepositoryTest extends KernelTestCase
         $descriptionEntity = $this->getDescriptionColumnEntity();
 
         return array(
-            array('car', $descriptionEntity, $this->generateColumnsProvider(), null, null, 0 ,5 , 2),
-            array('car', $descriptionEntity, $this->generateColumnsProvider(), null, null, 0 ,1 , 1),
-            array('car', $descriptionEntity, $this->generateColumnsProvider('206'), null, null, 0 ,2 , 1),
-            array('car', $descriptionEntity, $this->generateColumnsProvider('', '', '2'), null, null, 0 ,2 , 2),
-            array('news', $descriptionEntity, $this->generateColumnsProvider(), null, null, 0 , 100, 100),
-            array('news', $descriptionEntity, $this->generateColumnsProvider(), null, null, 50 , 100, 100),
-            array('news', $descriptionEntity, $this->generateColumnsProvider('news'), null, null, 0 , null, 250),
+            array('car', $descriptionEntity, $this->generateColumnsProvider(), 0 ,5 , 3),
+            array('car', $descriptionEntity, $this->generateColumnsProvider(), 0 ,1 , 1),
+            array('car', $descriptionEntity, $this->generateColumnsProvider('206'), 0 ,2 , 1),
+            array('car', $descriptionEntity, $this->generateColumnsProvider('', '', '2'), 0 ,2 , 2),
+            array('news', $descriptionEntity, $this->generateColumnsProvider(), 0 , 100, 100),
+            array('news', $descriptionEntity, $this->generateColumnsProvider(), 50 , 100, 100),
+            array('news', $descriptionEntity, $this->generateColumnsProvider('news'), 0 , null, 250),
+        );
+    }
+
+    /**
+     * @param string      $contentType
+     * @param array       $descriptionEntity
+     * @param array       $columns
+     * @param string|null $siteId
+     * @param int         $skip
+     * @param int         $limit
+     * @param integer     $count
+     *
+     * @dataProvider provideContentTypeAndPaginateAndSearchAndSiteId
+     */
+    public function testFindByContentTypeInLastVersionForPaginateAndSearchAndSiteId($contentType, $descriptionEntity, $columns, $siteId, $skip, $limit, $count)
+    {
+        $contents = $this->repository->findByContentTypeInLastVersionForPaginateAndSearchAndSiteId($contentType, $descriptionEntity, $columns, null, $siteId, null, $skip, $limit);
+        $this->assertCount($count, $contents);
+    }
+
+    /**
+     * @return array
+     */
+    public function provideContentTypeAndPaginateAndSearchAndSiteId()
+    {
+        $descriptionEntity = $this->getDescriptionColumnEntity();
+
+        return array(
+            array('car', $descriptionEntity, $this->generateColumnsProvider(), null, 0 ,5 , 3),
+            array('car', $descriptionEntity, $this->generateColumnsProvider(), null, 0 ,1 , 1),
+            array('car', $descriptionEntity, $this->generateColumnsProvider('206'), null, 0 ,2 , 1),
+            array('car', $descriptionEntity, $this->generateColumnsProvider('', '', '2'), null, 0 ,2 , 2),
+            array('news', $descriptionEntity, $this->generateColumnsProvider(), null, 0 , 100, 100),
+            array('news', $descriptionEntity, $this->generateColumnsProvider(), null, 50 , 100, 100),
+            array('news', $descriptionEntity, $this->generateColumnsProvider('news'), null, 0 , null, 250),
+            array('car', $descriptionEntity, $this->generateColumnsProvider(), '1', 0 ,5 , 2),
+            array('car', $descriptionEntity, $this->generateColumnsProvider(), '2', 0 ,5 , 3),
         );
     }
 
@@ -294,7 +329,7 @@ class ContentRepositoryTest extends KernelTestCase
     public function provideContentTypeCount()
     {
         return array(
-            array('car', 2),
+            array('car', 3),
             array('customer', 1),
             array('news', 254),
         );

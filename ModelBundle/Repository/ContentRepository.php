@@ -228,13 +228,44 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      * @param int|null    $skip
      * @param int|null    $limit
      *
+     * @deprecated, use findByContentTypeInLastVersionForPaginateAndSearchAndSiteId instead
+     *
      * @return array
      */
     public function findByContentTypeInLastVersionForPaginateAndSearch($contentType = null, $descriptionEntity = null, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
     {
+        return $this->findByContentTypeInLastVersionForPaginateAndSearchAndSiteId(
+            $contentType,
+            $descriptionEntity,
+            $columns,
+            $search,
+            null,
+            $order,
+            $skip,
+            $limit
+        );
+    }
+
+    /**
+     * @param string|null $contentType
+     * @param array|null $descriptionEntity
+     * @param array|null $columns
+     * @param string|null $search
+     * @param string|null $siteId
+     * @param array|null $order
+     * @param int|null $skip
+     * @param int|null $limit
+     *
+     * @return array
+     */
+    public function findByContentTypeInLastVersionForPaginateAndSearchAndSiteId($contentType = null, $descriptionEntity = null, $columns = null, $search = null, $siteId = null, $order = null, $skip = null, $limit = null)
+    {
         $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
         $qa = $this->generateFilterForSearch($qa, $descriptionEntity, $columns, $search);
-        $qa->match($this->generateDeletedFilter());
+        if (!is_null($siteId)) {
+            $qa->match(array('$or' => array(array('siteId' => $siteId), array('siteLinked' => false))));
+        }
+
         $elementName = 'content';
         $qa->group($this->generateLastVersionFilter($elementName));
 
