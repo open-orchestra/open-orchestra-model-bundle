@@ -46,7 +46,7 @@ class GenerateIdListener
             $setGenerated = $generateAnnotations->setGenerated($document);
             $testMethod = $generateAnnotations->getTestMethod();
             if ($testMethod === null && $repository instanceof FieldAutoGenerableRepositoryInterface) {
-                $testMethod = 'testUnicityInContext';
+                $testMethod = 'testUniquenessInContext';
             }
             if (is_null($document->$getGenerated())) {
                 $source = $document->$getSource();

@@ -37,11 +37,11 @@ class ContentRepositoryTest extends KernelTestCase
      * @param string  $name
      * @param boolean $exists
      *
-     * @dataProvider provideTestUnicityInContext
+     * @dataProvider provideTestUniquenessInContext
      */
-    public function testTestUnicityInContext($name, $exists)
+    public function testTestUniquenessInContext($name, $exists)
     {
-        $test = $this->repository->testUnicityInContext($name);
+        $test = $this->repository->testUniquenessInContext($name);
 
         $this->assertEquals($exists, $test);
 
@@ -50,7 +50,7 @@ class ContentRepositoryTest extends KernelTestCase
     /**
      * @return array
      */
-    public function provideTestUnicityInContext()
+    public function provideTestUniquenessInContext()
     {
         return array(
             array('welcome', true),
