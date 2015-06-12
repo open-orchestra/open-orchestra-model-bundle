@@ -264,7 +264,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
         $qa = $this->generateFilterForSearch($qa, $descriptionEntity, $columns, $search);
         $qa->match($this->generateDeletedFilter());
         if (!is_null($siteId)) {
-            $qa->match(array('$or' => array(array('siteId' => $siteId), array('siteLinked' => false))));
+            $qa->match(array('$or' => array(array('siteId' => $siteId), array('linkedToSite' => false))));
         }
 
         $elementName = 'content';

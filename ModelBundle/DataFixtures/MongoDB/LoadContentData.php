@@ -79,7 +79,7 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
         $content->setStatus($this->getReference('status-published'));
         $content->setVersion(2);
         $content->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-lorem')));
-        $content->setSiteLinked(false);
+        $content->setLinkedToSite(false);
         $content->setSiteId('2');
 
         $content->addAttribute($attribute1);
@@ -109,7 +109,7 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
         $content->setStatus($this->getReference('status-published'));
         $content->setVersion(1);
         $content->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-lorem')));
-        $content->setSiteLinked(true);
+        $content->setLinkedToSite(true);
         $content->setSiteId('2');
 
         $content->addAttribute($attribute1);
@@ -140,7 +140,7 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
         $content->setVersion(2);
         $content->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-lorem')));
         $content->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-sit')));
-        $content->setSiteLinked(false);
+        $content->setLinkedToSite(false);
         $content->setSiteId('1');
 
         $content->addAttribute($attribute1);
@@ -171,7 +171,7 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
         $content->setVersion(2);
         $content->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-lorem')));
         $content->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-sit')));
-        $content->setSiteLinked(false);
+        $content->setLinkedToSite(false);
         $content->setSiteId('2');
 
         $content->addAttribute($attribute1);
