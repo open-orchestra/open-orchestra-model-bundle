@@ -48,6 +48,11 @@ class FieldType implements FieldTypeInterface
     protected $searchable;
 
     /**
+     * @ODM\Field(type="boolean")
+     */
+    protected $translatable = true;
+
+    /**
      * @var boolean $listable
      *
      * @ODM\Field(type="boolean")
@@ -298,4 +303,19 @@ class FieldType implements FieldTypeInterface
         $this->options = new ArrayCollection();
     }
 
+    /**
+     * @return boolean
+     */
+    public function isTranslatable()
+    {
+        return $this->translatable;
+    }
+
+    /**
+     * @param boolean $translatable
+     */
+    public function setTranslatable($translatable)
+    {
+        $this->translatable = $translatable;
+    }
 }

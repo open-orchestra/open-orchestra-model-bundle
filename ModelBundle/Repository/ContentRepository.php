@@ -187,6 +187,16 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
     }
 
     /**
+     * @param string $contentId
+     *
+     * @return array
+     */
+    public function findByContentId($contentId)
+    {
+        return $this->findBy(array('contentId' => $contentId));
+    }
+
+    /**
      * @param string      $contentId
      * @param string      $language
      * @param int|null    $version
