@@ -5,6 +5,7 @@ parameters:
     open_orchestra_model.doctrine_listener.set_initial_status.class: OpenOrchestra\ModelBundle\EventListener\SetInitialStatusListener
     open_orchestra_model.doctrine_listener.save_published_document.class: OpenOrchestra\ModelBundle\EventListener\SavePublishedDocumentListener
     open_orchestra_model.doctrine_listener.transversal_node_creator.class: OpenOrchestra\ModelBundle\EventListener\TransversalNodeCreatorListener
+    open_orchestra_model.doctrine_listener.update_non_translatable_content_field.class: OpenOrchestra\ModelBundle\EventListener\UpdateNonTranslatableContentFieldsListener
 
 services:
     open_orchestra_model.doctrine_listener.initial_status:
@@ -49,3 +50,10 @@ services:
             -  { name: doctrine_mongodb.odm.event_listener, event: prePersist }
             -  { name: doctrine_mongodb.odm.event_listener, event: preUpdate }
             -  { name: doctrine_mongodb.odm.event_listener, event: postFlush }
+    open_orchestra_model.doctrine_listener.update_non_translatable_content_field:
+        class: %open_orchestra_model.doctrine_listener.update_non_translatable_content_field.class%
+        arguments:
+            - %open_orchestra_model.document.content_attribute.class%
+            - %open_orchestra_model.content.immutable_properties%
+        tags:
+            -  { name: doctrine_mongodb.odm.event_listener, event: preUpdate }

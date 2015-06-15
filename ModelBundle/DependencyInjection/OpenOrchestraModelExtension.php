@@ -23,7 +23,9 @@ class OpenOrchestraModelExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        foreach ($config as $class => $content) {
+        $immutableProperties = array_merge($config['content_immutable_properties'], array('linkedToSite'));
+        $container->setParameter('open_orchestra_model.content.immutable_properties', $immutableProperties);
+        foreach ($config['document'] as $class => $content) {
             if (is_array($content)) {
                 $container->setParameter('open_orchestra_model.document.' . $class . '.class', $content['class']);
                 if (array_key_exists('repository', $content)) {
