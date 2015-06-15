@@ -55,5 +55,7 @@ services:
         arguments:
             - %open_orchestra_model.document.content_attribute.class%
             - %open_orchestra_model.content.immutable_properties%
+        calls:
+            - [setContainer, ['@service_container']]
         tags:
             -  { name: doctrine_mongodb.odm.event_listener, event: preUpdate }
