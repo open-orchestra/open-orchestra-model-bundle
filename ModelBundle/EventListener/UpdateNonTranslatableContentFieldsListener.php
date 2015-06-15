@@ -15,6 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerAware;
  */
 class UpdateNonTranslatableContentFieldsListener extends ContainerAware
 {
+    protected $contentManaged = array();
     protected $contentAttributeClass;
     protected $immutableData;
 
@@ -33,9 +34,11 @@ class UpdateNonTranslatableContentFieldsListener extends ContainerAware
      */
     public function preUpdate(LifecycleEventArgs $event)
     {
-        if (!($object = $event->getDocument()) instanceof ContentInterface) {
+        if (!($object = $event->getDocument()) instanceof ContentInterface || in_array($object->getContentId(), $this->contentManaged)) {
             return;
         }
+
+        $this->contentManaged[] = $object->getContentId();
 
         $contents = $this->getContentRepository()->findByContentId($object->getContentId());
         $contentType = $this->getContentTypeRepository()->findOneByContentTypeIdInLastVersion($object->getContentType());

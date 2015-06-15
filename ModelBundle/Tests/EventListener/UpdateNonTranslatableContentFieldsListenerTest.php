@@ -93,6 +93,7 @@ class UpdateNonTranslatableContentFieldsListenerTest extends \PHPUnit_Framework_
         Phake::when($this->event)->getDocument()->thenReturn($content);
 
         $this->listener->preUpdate($this->event);
+        $this->listener->preUpdate($this->event);
 
         Phake::verify($this->content, Phake::times(2))->setLinkedToSite($isLinkedToSite);
         Phake::verify($attribute, Phake::times(2))->setValue($value);
