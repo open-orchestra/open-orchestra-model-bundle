@@ -8,6 +8,7 @@ services:
         class: %open_orchestra_model.type.orchestra_site.class%
         arguments:
             - %open_orchestra_model.document.site.class%
+            - @open_orchestra_model.transformer.embed_site_to_site
         tags:
             - { name: form.type, alias: orchestra_site }
     open_orchestra_model.type.orchestra_status:
