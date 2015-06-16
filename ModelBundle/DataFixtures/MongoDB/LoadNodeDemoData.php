@@ -121,22 +121,6 @@ class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterfac
         ));
         $siteHomeBlock0->addArea(array('nodeId' => 0, 'areaId' => 'main'));
 
-        $siteHomeBlock1 = new Block();
-        $siteHomeBlock1->setLabel('Wysiwyg 2');
-        $siteHomeBlock1->setComponent(TinyMCEWysiwygStrategy::TINYMCEWYSIWYG);
-        $siteHomeBlock1->setAttributes(array(
-            "htmlContent" => <<<EOF
-<ul id="mySubMenu">
-    <li><a href="/page-about-us">A PROPOS</a></li>
-    <li><a href="/page-our-team">NOTRE EQUIPE</a></li>
-    <li><a href="/page-our-news">NOTRE ACTU</a></li>
-    <li><a href="/page-nous-rejoindre">NOUS REJOINDRE</a></li>
-    <li><a href="/page-networks">NETWORKS</a></li>
-</ul>
-EOF
-        ));
-        $siteHomeBlock1->addArea(array('nodeId' => 0, 'areaId' => 'main'));
-
         $siteHomeBlockMenu = new Block();
         $siteHomeBlockMenu->setLabel('Menu');
         $siteHomeBlockMenu->setComponent('menu');
@@ -144,10 +128,10 @@ EOF
         $siteHomeBlockMenu->setClass('my-main-menu');
         $siteHomeBlockMenu->addArea(array('nodeId' => 0, 'areaId' => 'main'));
 
-        $siteHomeBlock5 = new Block();
-        $siteHomeBlock5->setLabel('Wysiwyg 2');
-        $siteHomeBlock5->setComponent(TinyMCEWysiwygStrategy::TINYMCEWYSIWYG);
-        $siteHomeBlock5->setAttributes(array(
+        $siteHomeBlock4 = new Block();
+        $siteHomeBlock4->setLabel('Wysiwyg 2');
+        $siteHomeBlock4->setComponent(TinyMCEWysiwygStrategy::TINYMCEWYSIWYG);
+        $siteHomeBlock4->setAttributes(array(
             "htmlContent" => <<<EOF
 <div class='footer-infos'>
     <h4>Infos</h4>
@@ -182,12 +166,12 @@ EOF
 </div>
 EOF
         ));
-        $siteHomeBlock5->addArea(array('nodeId' => 0, 'areaId' => 'main'));
+        $siteHomeBlock4->addArea(array('nodeId' => 0, 'areaId' => 'main'));
 
-        $siteWhatBlock6 = new Block();
-        $siteWhatBlock6->setLabel('What block');
-        $siteWhatBlock6->setComponent(TinyMCEWysiwygStrategy::TINYMCEWYSIWYG);
-        $siteWhatBlock6->setAttributes(array(
+        $siteWhatBlock5 = new Block();
+        $siteWhatBlock5->setLabel('What block');
+        $siteWhatBlock5->setComponent(TinyMCEWysiwygStrategy::TINYMCEWYSIWYG);
+        $siteWhatBlock5->setAttributes(array(
             "htmlContent" => <<<EOF
 <div class="news">
     <h3 class="bloc-title">
@@ -199,14 +183,14 @@ EOF
 </div>
 EOF
         ));
-        $siteWhatBlock6->addArea(array('nodeId' => 0, 'areaId' => 'main'));
+        $siteWhatBlock5->addArea(array('nodeId' => 0, 'areaId' => 'main'));
 
-        $siteWhatBlock7 = new Block();
-        $siteWhatBlock7->setLabel('Contact');
-        $siteWhatBlock7->setComponent('contact');
-        $siteWhatBlock7->setId('myFormContact');
-        $siteWhatBlock7->setClass('my-form-contact');
-        $siteWhatBlock7->addArea(array('nodeId' => 0, 'areaId' => 'main'));
+        $siteWhatBlock6 = new Block();
+        $siteWhatBlock6->setLabel('Contact');
+        $siteWhatBlock6->setComponent('contact');
+        $siteWhatBlock6->setId('myFormContact');
+        $siteWhatBlock6->setClass('my-form-contact');
+        $siteWhatBlock6->addArea(array('nodeId' => 0, 'areaId' => 'main'));
 
         $mainArea = new Area();
         $mainArea->setLabel('main');
@@ -237,11 +221,10 @@ EOF
         $nodeTransverse->setInMenu(false);
         $nodeTransverse->addArea($mainArea);
         $nodeTransverse->addBlock($siteHomeBlock0);
-        $nodeTransverse->addBlock($siteHomeBlock1);
         $nodeTransverse->addBlock($siteHomeBlockMenu);
-        $nodeTransverse->addBlock($siteHomeBlock5);
+        $nodeTransverse->addBlock($siteHomeBlock4);
+        $nodeTransverse->addBlock($siteWhatBlock5);
         $nodeTransverse->addBlock($siteWhatBlock6);
-        $nodeTransverse->addBlock($siteWhatBlock7);
 
         return $nodeTransverse;
     }
@@ -251,26 +234,10 @@ EOF
      */
     public function generateNodeSiteHome()
     {
-        $siteHomeCarrousel = new Block();
-        $siteHomeCarrousel->setLabel('Carrousel');
-        $siteHomeCarrousel->setComponent('carrousel');
-        $siteHomeCarrousel->setAttributes(array(
-            'pictures' => array(
-                array('src' => "/bundles/fakeapptheme/themes/themePresentation/img/carroussel/02.jpg"),
-                array('src' => "/bundles/fakeapptheme/themes/themePresentation/img/carroussel/03.jpg"),
-                array('src' => "/bundles/fakeapptheme/themes/themePresentation/img/carroussel/04.jpg"),
-                array('src' => "/bundles/fakeapptheme/themes/themePresentation/img/carroussel/05.jpg"),
-            ),
-            'width' => "600px",
-            'height' => "300px",
-            "carrousel_id" => 'slider1_container'
-        ));
-        $siteHomeCarrousel->addArea(array('nodeId' => 0, 'areaId' => 'mainContentCarrousel'));
-
-        $siteHomeBlock4 = new Block();
-        $siteHomeBlock4->setLabel('Wysiwyg 1');
-        $siteHomeBlock4->setComponent(TinyMCEWysiwygStrategy::TINYMCEWYSIWYG);
-        $siteHomeBlock4->setAttributes(array(
+        $siteHomeBlock1 = new Block();
+        $siteHomeBlock1->setLabel('Wysiwyg 1');
+        $siteHomeBlock1->setComponent(TinyMCEWysiwygStrategy::TINYMCEWYSIWYG);
+        $siteHomeBlock1->setAttributes(array(
             "htmlContent" => <<<EOF
 <div class='content'>
     <p>
@@ -281,7 +248,7 @@ EOF
 </div>
 EOF
         ));
-        $siteHomeBlock4->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea2'));
+        $siteHomeBlock1->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea2'));
 
         $siteHomeArea1 = new Area();
         $siteHomeArea1->setLabel('Logo');
@@ -290,16 +257,10 @@ EOF
         $siteHomeArea1->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 0));
 
         $siteHomeArea2 = new Area();
-        $siteHomeArea2->setLabel('Sub menu');
-        $siteHomeArea2->setAreaId('subMenu');
-        $siteHomeArea2->setHtmlClass('sub-menu');
+        $siteHomeArea2->setLabel('Main menu');
+        $siteHomeArea2->setAreaId('mainMenu');
+        $siteHomeArea2->setHtmlClass('main-menu');
         $siteHomeArea2->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 1));
-
-        $siteHomeArea3 = new Area();
-        $siteHomeArea3->setLabel('Main menu');
-        $siteHomeArea3->setAreaId('mainMenu');
-        $siteHomeArea3->setHtmlClass('main-menu');
-        $siteHomeArea3->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 2));
 
         $siteHomeArea0 = new Area();
         $siteHomeArea0->setLabel('Header');
@@ -307,31 +268,23 @@ EOF
         $siteHomeArea0->setHtmlClass('header');
         $siteHomeArea0->addArea($siteHomeArea1);
         $siteHomeArea0->addArea($siteHomeArea2);
-        $siteHomeArea0->addArea($siteHomeArea3);
-
-        $siteHomeArea5 = new Area();
-        $siteHomeArea5->setLabel('Main content carrousel');
-        $siteHomeArea5->setAreaId('mainContentCarrousel');
-        $siteHomeArea5->setHtmlClass('main-content-carrousel');
-        $siteHomeArea5->addBlock(array('nodeId' => 0, 'blockId' => 0));
-
-        $siteHomeArea6 = new Area();
-        $siteHomeArea6->setLabel('Main content area 2');
-        $siteHomeArea6->setAreaId('mainContentArea2');
-        $siteHomeArea6->setHtmlClass('main-content-area2');
-        $siteHomeArea6->addBlock(array('nodeId' => 0, 'blockId' => 1));
 
         $siteHomeArea4 = new Area();
-        $siteHomeArea4->setLabel('My main');
-        $siteHomeArea4->setAreaId('myMain');
-        $siteHomeArea4->addArea($siteHomeArea5);
-        $siteHomeArea4->addArea($siteHomeArea6);
+        $siteHomeArea4->setLabel('Main content area 2');
+        $siteHomeArea4->setAreaId('mainContentArea2');
+        $siteHomeArea4->setHtmlClass('main-content-area2');
+        $siteHomeArea4->addBlock(array('nodeId' => 0, 'blockId' => 0));
+
+        $siteHomeArea3 = new Area();
+        $siteHomeArea3->setLabel('My main');
+        $siteHomeArea3->setAreaId('myMain');
+        $siteHomeArea3->addArea($siteHomeArea4);
 
         $siteHomeFooter = new Area();
         $siteHomeFooter->setLabel('Containe footer');
         $siteHomeFooter->setAreaId('containeFooter');
         $siteHomeFooter->setHtmlClass('containe-footer');
-        $siteHomeFooter->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3));
+        $siteHomeFooter->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 2));
 
         $siteHomeContainerFooter = new Area();
         $siteHomeContainerFooter->setLabel('Footer');
@@ -357,10 +310,9 @@ EOF
         $siteHome->setInFooter(false);
         $siteHome->setInMenu(true);
         $siteHome->addArea($siteHomeArea0);
-        $siteHome->addArea($siteHomeArea4);
+        $siteHome->addArea($siteHomeArea3);
         $siteHome->addArea($siteHomeContainerFooter);
-        $siteHome->addBlock($siteHomeCarrousel);
-        $siteHome->addBlock($siteHomeBlock4);
+        $siteHome->addBlock($siteHomeBlock1);
 
         $siteHome->setSitemapChangefreq('always');
         $siteHome->setSitemapPriority('0.75');
@@ -413,16 +365,10 @@ EOF
         $siteWhatArea1->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 0));
 
         $siteWhatArea2 = new Area();
-        $siteWhatArea2->setLabel('Sub menu');
-        $siteWhatArea2->setAreaId('subMenu');
-        $siteWhatArea2->setHtmlClass('sub-menu');
+        $siteWhatArea2->setLabel('Main menu');
+        $siteWhatArea2->setAreaId('mainMenu');
+        $siteWhatArea2->setHtmlClass('main-menu');
         $siteWhatArea2->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 1));
-
-        $siteWhatArea3 = new Area();
-        $siteWhatArea3->setLabel('Main menu');
-        $siteWhatArea3->setAreaId('mainMenu');
-        $siteWhatArea3->setHtmlClass('main-menu');
-        $siteWhatArea3->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 2));
 
         $siteWhatArea0 = new Area();
         $siteWhatArea0->setLabel('Header');
@@ -430,39 +376,38 @@ EOF
         $siteWhatArea0->setHtmlClass('header');
         $siteWhatArea0->addArea($siteWhatArea1);
         $siteWhatArea0->addArea($siteWhatArea2);
-        $siteWhatArea0->addArea($siteWhatArea3);
-
-        $siteWhatArea5 = new Area();
-        $siteWhatArea5->setLabel('Main content area 1');
-        $siteWhatArea5->setAreaId('mainContentArea1');
-        $siteWhatArea5->setHtmlClass('main-content-area1');
-        $siteWhatArea5->addBlock(array('nodeId' => 0, 'blockId' => 0));
-
-        $siteWhatArea6 = new Area();
-        $siteWhatArea6->setLabel('Module area');
-        $siteWhatArea6->setAreaId('moduleArea');
-        $siteWhatArea6->setHtmlClass('module-area');
-        $siteWhatArea6->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 4));
-        $siteWhatArea6->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 5));
 
         $siteWhatArea4 = new Area();
-        $siteWhatArea4->setLabel('My main');
-        $siteWhatArea4->setAreaId('myMain');
-        $siteWhatArea4->setHtmlClass('my-main');
-        $siteWhatArea4->addArea($siteWhatArea5);
-        $siteWhatArea4->addArea($siteWhatArea6);
+        $siteWhatArea4->setLabel('Main content area 1');
+        $siteWhatArea4->setAreaId('mainContentArea1');
+        $siteWhatArea4->setHtmlClass('main-content-area1');
+        $siteWhatArea4->addBlock(array('nodeId' => 0, 'blockId' => 0));
 
-        $siteWhatArea8 = new Area();
-        $siteWhatArea8->setLabel('Containe footer');
-        $siteWhatArea8->setAreaId('containeFooter');
-        $siteWhatArea8->setHtmlClass('containe-footer');
-        $siteWhatArea8->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3));
+        $siteWhatArea5 = new Area();
+        $siteWhatArea5->setLabel('Module area');
+        $siteWhatArea5->setAreaId('moduleArea');
+        $siteWhatArea5->setHtmlClass('module-area');
+        $siteWhatArea5->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 2));
+        $siteWhatArea5->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3));
+
+        $siteWhatArea3 = new Area();
+        $siteWhatArea3->setLabel('My main');
+        $siteWhatArea3->setAreaId('myMain');
+        $siteWhatArea3->setHtmlClass('my-main');
+        $siteWhatArea3->addArea($siteWhatArea4);
+        $siteWhatArea3->addArea($siteWhatArea5);
 
         $siteWhatArea7 = new Area();
-        $siteWhatArea7->setLabel('Footer');
-        $siteWhatArea7->setAreaId('footer');
-        $siteWhatArea7->setHtmlClass("footer");
-        $siteWhatArea7->addArea($siteWhatArea8);
+        $siteWhatArea7->setLabel('Containe footer');
+        $siteWhatArea7->setAreaId('containeFooter');
+        $siteWhatArea7->setHtmlClass('containe-footer');
+        $siteWhatArea7->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 1));
+
+        $siteWhatArea6 = new Area();
+        $siteWhatArea6->setLabel('Footer');
+        $siteWhatArea6->setAreaId('footer');
+        $siteWhatArea6->setHtmlClass("footer");
+        $siteWhatArea6->addArea($siteWhatArea7);
 
         $siteWhat = new Node();
         $siteWhat->setNodeId('fixture_page_what_is_orchestra');
@@ -483,8 +428,8 @@ EOF
         $siteWhat->setInFooter(false);
         $siteWhat->setInMenu(true);
         $siteWhat->addArea($siteWhatArea0);
-        $siteWhat->addArea($siteWhatArea4);
-        $siteWhat->addArea($siteWhatArea7);
+        $siteWhat->addArea($siteWhatArea3);
+        $siteWhat->addArea($siteWhatArea6);
         $siteWhat->addBlock($siteWhatBlock0);
 
         $siteWhat->setSitemapChangefreq('hourly');
@@ -522,16 +467,10 @@ EOF
         $siteStartArea1->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 0));
 
         $siteStartArea2 = new Area();
-        $siteStartArea2->setLabel('Sub menu');
-        $siteStartArea2->setAreaId('subMenu');
-        $siteStartArea2->setHtmlClass('sub-menu');
+        $siteStartArea2->setLabel('Main menu');
+        $siteStartArea2->setAreaId('mainMenu');
+        $siteStartArea2->setHtmlClass('main-menu');
         $siteStartArea2->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 1));
-
-        $siteStartArea3 = new Area();
-        $siteStartArea3->setLabel('Main menu');
-        $siteStartArea3->setAreaId('mainMenu');
-        $siteStartArea3->setHtmlClass('main-menu');
-        $siteStartArea3->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 2));
 
         $siteStartArea0 = new Area();
         $siteStartArea0->setLabel('Header');
@@ -539,39 +478,38 @@ EOF
         $siteStartArea0->setHtmlClass('header');
         $siteStartArea0->addArea($siteStartArea1);
         $siteStartArea0->addArea($siteStartArea2);
-        $siteStartArea0->addArea($siteStartArea3);
-
-        $siteStartArea5 = new Area();
-        $siteStartArea5->setLabel('Main content area 1');
-        $siteStartArea5->setAreaId('mainContentArea1');
-        $siteStartArea5->setHtmlClass('main-content-area1');
-        $siteStartArea5->addBlock(array('nodeId' => 0, 'blockId' => 0));
-
-        $siteStartArea6 = new Area();
-        $siteStartArea6->setLabel('Module area');
-        $siteStartArea6->setAreaId('moduleArea');
-        $siteStartArea6->setHtmlClass('module-area');
-        $siteStartArea6->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 4));
-        $siteStartArea6->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 5));
 
         $siteStartArea4 = new Area();
-        $siteStartArea4->setLabel('My main');
-        $siteStartArea4->setAreaId('myMain');
-        $siteStartArea4->setHtmlClass('my-main');
-        $siteStartArea4->addArea($siteStartArea5);
-        $siteStartArea4->addArea($siteStartArea6);
+        $siteStartArea4->setLabel('Main content area 1');
+        $siteStartArea4->setAreaId('mainContentArea1');
+        $siteStartArea4->setHtmlClass('main-content-area1');
+        $siteStartArea4->addBlock(array('nodeId' => 0, 'blockId' => 0));
 
-        $siteStartArea8 = new Area();
-        $siteStartArea8->setLabel('Containe footer');
-        $siteStartArea8->setAreaId('containeFooter');
-        $siteStartArea8->setHtmlClass('containe-footer');
-        $siteStartArea8->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3));
+        $siteStartArea5 = new Area();
+        $siteStartArea5->setLabel('Module area');
+        $siteStartArea5->setAreaId('moduleArea');
+        $siteStartArea5->setHtmlClass('module-area');
+        $siteStartArea5->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3));
+        $siteStartArea5->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 4));
+
+        $siteStartArea3 = new Area();
+        $siteStartArea3->setLabel('My main');
+        $siteStartArea3->setAreaId('myMain');
+        $siteStartArea3->setHtmlClass('my-main');
+        $siteStartArea3->addArea($siteStartArea4);
+        $siteStartArea3->addArea($siteStartArea5);
 
         $siteStartArea7 = new Area();
-        $siteStartArea7->setLabel('Footer');
-        $siteStartArea7->setAreaId('footer');
-        $siteStartArea7->setHtmlClass('footer');
-        $siteStartArea7->addArea($siteStartArea8);
+        $siteStartArea7->setLabel('Containe footer');
+        $siteStartArea7->setAreaId('containeFooter');
+        $siteStartArea7->setHtmlClass('containe-footer');
+        $siteStartArea7->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3));
+
+        $siteStartArea6 = new Area();
+        $siteStartArea6->setLabel('Footer');
+        $siteStartArea6->setAreaId('footer');
+        $siteStartArea6->setHtmlClass('footer');
+        $siteStartArea6->addArea($siteStartArea7);
 
         $siteStart = new Node();
         $siteStart->setNodeId('fixture_page_start_orchestra');
@@ -592,8 +530,8 @@ EOF
         $siteStart->setInFooter(false);
         $siteStart->setInMenu(true);
         $siteStart->addArea($siteStartArea0);
-        $siteStart->addArea($siteStartArea4);
-        $siteStart->addArea($siteStartArea7);
+        $siteStart->addArea($siteStartArea3);
+        $siteStart->addArea($siteStartArea6);
         $siteStart->addBlock($siteStartBlock0);
 
         $siteStart->setSitemapChangefreq('monthly');
@@ -632,16 +570,10 @@ EOF
         $siteDocArea1->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 0));
 
         $siteDocArea2 = new Area();
-        $siteDocArea2->setLabel('Sub menu');
-        $siteDocArea2->setAreaId('subMenu');
-        $siteDocArea2->setHtmlClass('sub-menu');
+        $siteDocArea2->setLabel('Main menu');
+        $siteDocArea2->setAreaId('mainMenu');
+        $siteDocArea2->setHtmlClass('main-menu');
         $siteDocArea2->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 1));
-
-        $siteDocArea3 = new Area();
-        $siteDocArea3->setLabel('Main menu');
-        $siteDocArea3->setAreaId('mainMenu');
-        $siteDocArea3->setHtmlClass('main-menu');
-        $siteDocArea3->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 2));
 
         $siteDocArea0 = new Area();
         $siteDocArea0->setLabel('Header');
@@ -649,39 +581,38 @@ EOF
         $siteDocArea0->setHtmlClass('header');
         $siteDocArea0->addArea($siteDocArea1);
         $siteDocArea0->addArea($siteDocArea2);
-        $siteDocArea0->addArea($siteDocArea3);
-
-        $siteDocArea5 = new Area();
-        $siteDocArea5->setLabel('Main content area 1');
-        $siteDocArea5->setAreaId('mainContentArea1');
-        $siteDocArea5->setHtmlClass('main-content-area1');
-        $siteDocArea5->addBlock(array('nodeId' => 0, 'blockId' => 0));
-
-        $siteDocArea6 = new Area();
-        $siteDocArea6->setLabel('Module area');
-        $siteDocArea6->setAreaId('moduleArea');
-        $siteDocArea6->setHtmlClass('module-area');
-        $siteDocArea6->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 4));
-        $siteDocArea6->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 5));
 
         $siteDocArea4 = new Area();
-        $siteDocArea4->setLabel('My main');
-        $siteDocArea4->setAreaId('myMain');
-        $siteDocArea4->setHtmlClass('my-main');
-        $siteDocArea4->addArea($siteDocArea5);
-        $siteDocArea4->addArea($siteDocArea6);
+        $siteDocArea4->setLabel('Main content area 1');
+        $siteDocArea4->setAreaId('mainContentArea1');
+        $siteDocArea4->setHtmlClass('main-content-area1');
+        $siteDocArea4->addBlock(array('nodeId' => 0, 'blockId' => 0));
 
-        $siteDocArea8 = new Area();
-        $siteDocArea8->setLabel('Containe footer');
-        $siteDocArea8->setAreaId('containeFooter');
-        $siteDocArea8->setHtmlClass('containe-footer');
-        $siteDocArea8->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3));
+        $siteDocArea5 = new Area();
+        $siteDocArea5->setLabel('Module area');
+        $siteDocArea5->setAreaId('moduleArea');
+        $siteDocArea5->setHtmlClass('module-area');
+        $siteDocArea5->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3));
+        $siteDocArea5->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 4));
+
+        $siteDocArea3 = new Area();
+        $siteDocArea3->setLabel('My main');
+        $siteDocArea3->setAreaId('myMain');
+        $siteDocArea3->setHtmlClass('my-main');
+        $siteDocArea3->addArea($siteDocArea4);
+        $siteDocArea3->addArea($siteDocArea5);
 
         $siteDocArea7 = new Area();
-        $siteDocArea7->setLabel('Footer');
-        $siteDocArea7->setAreaId('footer');
-        $siteDocArea7->setHtmlClass('footer');
-        $siteDocArea7->addArea($siteDocArea8);
+        $siteDocArea7->setLabel('Containe footer');
+        $siteDocArea7->setAreaId('containeFooter');
+        $siteDocArea7->setHtmlClass('containe-footer');
+        $siteDocArea7->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 2));
+
+        $siteDocArea6 = new Area();
+        $siteDocArea6->setLabel('Footer');
+        $siteDocArea6->setAreaId('footer');
+        $siteDocArea6->setHtmlClass('footer');
+        $siteDocArea6->addArea($siteDocArea7);
 
         $siteDoc = new Node();
         $siteDoc->setNodeId('fixture_page_documentation');
@@ -702,8 +633,8 @@ EOF
         $siteDoc->setInFooter(false);
         $siteDoc->setInMenu(true);
         $siteDoc->addArea($siteDocArea0);
-        $siteDoc->addArea($siteDocArea4);
-        $siteDoc->addArea($siteDocArea7);
+        $siteDoc->addArea($siteDocArea3);
+        $siteDoc->addArea($siteDocArea6);
         $siteDoc->addBlock($siteDocBlock0);
 
         return $siteDoc;
@@ -744,16 +675,10 @@ EOF
         $siteComArea1->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 0));
 
         $siteComArea2 = new Area();
-        $siteComArea2->setLabel('Sub menu');
-        $siteComArea2->setAreaId('subMenu');
-        $siteComArea2->setHtmlClass('sub-menu');
+        $siteComArea2->setLabel('Main menu');
+        $siteComArea2->setAreaId('mainMenu');
+        $siteComArea2->setHtmlClass('main-menu');
         $siteComArea2->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 1));
-
-        $siteComArea3 = new Area();
-        $siteComArea3->setLabel('Main menu');
-        $siteComArea3->setAreaId('mainMenu');
-        $siteComArea3->setHtmlClass('main-menu');
-        $siteComArea3->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 2));
 
         $siteComArea0 = new Area();
         $siteComArea0->setLabel('Header');
@@ -761,39 +686,38 @@ EOF
         $siteComArea0->setHtmlClass('header');
         $siteComArea0->addArea($siteComArea1);
         $siteComArea0->addArea($siteComArea2);
-        $siteComArea0->addArea($siteComArea3);
-
-        $siteComArea5 = new Area();
-        $siteComArea5->setLabel('Main content area 1');
-        $siteComArea5->setAreaId('mainContentArea1');
-        $siteComArea5->setHtmlClass('main-content-area1');
-        $siteComArea5->addBlock(array('nodeId' => 0, 'blockId' => 0));
-
-        $siteComArea6 = new Area();
-        $siteComArea6->setLabel('module area');
-        $siteComArea6->setAreaId('moduleArea');
-        $siteComArea6->setHtmlClass('module-area');
-        $siteComArea6->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 4));
-        $siteComArea6->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 5));
 
         $siteComArea4 = new Area();
-        $siteComArea4->setLabel('My main');
-        $siteComArea4->setAreaId('myMain');
-        $siteComArea4->setHtmlClass('my-main');
-        $siteComArea4->addArea($siteComArea5);
-        $siteComArea4->addArea($siteComArea6);
+        $siteComArea4->setLabel('Main content area 1');
+        $siteComArea4->setAreaId('mainContentArea1');
+        $siteComArea4->setHtmlClass('main-content-area1');
+        $siteComArea4->addBlock(array('nodeId' => 0, 'blockId' => 0));
 
-        $siteComArea8 = new Area();
-        $siteComArea8->setLabel('Containe footer');
-        $siteComArea8->setAreaId('containeFooter');
-        $siteComArea8->setHtmlClass('containe-footer');
-        $siteComArea8->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3));
+        $siteComArea5 = new Area();
+        $siteComArea5->setLabel('module area');
+        $siteComArea5->setAreaId('moduleArea');
+        $siteComArea5->setHtmlClass('module-area');
+        $siteComArea5->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3));
+        $siteComArea5->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 4));
+
+        $siteComArea3 = new Area();
+        $siteComArea3->setLabel('My main');
+        $siteComArea3->setAreaId('myMain');
+        $siteComArea3->setHtmlClass('my-main');
+        $siteComArea3->addArea($siteComArea4);
+        $siteComArea3->addArea($siteComArea5);
 
         $siteComArea7 = new Area();
-        $siteComArea7->setLabel('Footer');
-        $siteComArea7->setAreaId('footer');
-        $siteComArea7->setHtmlClass('footer');
-        $siteComArea7->addArea($siteComArea8);
+        $siteComArea7->setLabel('Containe footer');
+        $siteComArea7->setAreaId('containeFooter');
+        $siteComArea7->setHtmlClass('containe-footer');
+        $siteComArea7->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 2));
+
+        $siteComArea6 = new Area();
+        $siteComArea6->setLabel('Footer');
+        $siteComArea6->setAreaId('footer');
+        $siteComArea6->setHtmlClass('footer');
+        $siteComArea6->addArea($siteComArea7);
 
         $siteCom = new Node();
         $siteCom->setNodeId('fixture_page_community');
@@ -814,8 +738,8 @@ EOF
         $siteCom->setInFooter(false);
         $siteCom->setInMenu(true);
         $siteCom->addArea($siteComArea0);
-        $siteCom->addArea($siteComArea4);
-        $siteCom->addArea($siteComArea7);
+        $siteCom->addArea($siteComArea3);
+        $siteCom->addArea($siteComArea6);
         $siteCom->addBlock($siteComBlock0);
 
         return $siteCom;
@@ -850,16 +774,10 @@ EOF
         $siteAboutUsArea1->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 0));
 
         $siteAboutUsArea2 = new Area();
-        $siteAboutUsArea2->setLabel('Sub menu');
-        $siteAboutUsArea2->setAreaId('subMenu');
-        $siteAboutUsArea2->setHtmlClass('sub-menu');
+        $siteAboutUsArea2->setLabel('Main menu');
+        $siteAboutUsArea2->setAreaId('mainMenu');
+        $siteAboutUsArea2->setHtmlClass('main-menu');
         $siteAboutUsArea2->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 1));
-
-        $siteAboutUsArea3 = new Area();
-        $siteAboutUsArea3->setLabel('Main menu');
-        $siteAboutUsArea3->setAreaId('mainMenu');
-        $siteAboutUsArea3->setHtmlClass('main-menu');
-        $siteAboutUsArea3->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 2));
 
         $siteAboutUsArea0 = new Area();
         $siteAboutUsArea0->setLabel('Header');
@@ -867,39 +785,38 @@ EOF
         $siteAboutUsArea0->setHtmlClass('header');
         $siteAboutUsArea0->addArea($siteAboutUsArea1);
         $siteAboutUsArea0->addArea($siteAboutUsArea2);
-        $siteAboutUsArea0->addArea($siteAboutUsArea3);
-
-        $siteAboutUsArea5 = new Area();
-        $siteAboutUsArea5->setLabel('Main content area 1');
-        $siteAboutUsArea5->setAreaId('mainContentArea1');
-        $siteAboutUsArea5->setHtmlClass('main-content-area1');
-        $siteAboutUsArea5->addBlock(array('nodeId' => 0, 'blockId' => 0));
-
-        $siteAboutUsArea6 = new Area();
-        $siteAboutUsArea6->setLabel('Module area');
-        $siteAboutUsArea6->setAreaId('moduleArea');
-        $siteAboutUsArea6->setHtmlClass('module-area');
-        $siteAboutUsArea6->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 4));
-        $siteAboutUsArea6->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 5));
 
         $siteAboutUsArea4 = new Area();
-        $siteAboutUsArea4->setLabel('My main');
-        $siteAboutUsArea4->setAreaId('myMain');
-        $siteAboutUsArea4->setHtmlClass('my-main');
-        $siteAboutUsArea4->addArea($siteAboutUsArea5);
-        $siteAboutUsArea4->addArea($siteAboutUsArea6);
+        $siteAboutUsArea4->setLabel('Main content area 1');
+        $siteAboutUsArea4->setAreaId('mainContentArea1');
+        $siteAboutUsArea4->setHtmlClass('main-content-area1');
+        $siteAboutUsArea4->addBlock(array('nodeId' => 0, 'blockId' => 0));
 
-        $siteAboutUsArea8 = new Area();
-        $siteAboutUsArea8->setLabel('Containe footer');
-        $siteAboutUsArea8->setAreaId('containeFooter');
-        $siteAboutUsArea8->setHtmlClass('containe-footer');
-        $siteAboutUsArea8->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3));
+        $siteAboutUsArea5 = new Area();
+        $siteAboutUsArea5->setLabel('Module area');
+        $siteAboutUsArea5->setAreaId('moduleArea');
+        $siteAboutUsArea5->setHtmlClass('module-area');
+        $siteAboutUsArea5->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3));
+        $siteAboutUsArea5->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 4));
+
+        $siteAboutUsArea3 = new Area();
+        $siteAboutUsArea3->setLabel('My main');
+        $siteAboutUsArea3->setAreaId('myMain');
+        $siteAboutUsArea3->setHtmlClass('my-main');
+        $siteAboutUsArea3->addArea($siteAboutUsArea4);
+        $siteAboutUsArea3->addArea($siteAboutUsArea5);
 
         $siteAboutUsArea7 = new Area();
-        $siteAboutUsArea7->setLabel('Footer');
-        $siteAboutUsArea7->setAreaId('footer');
-        $siteAboutUsArea7->setHtmlClass('footer');
-        $siteAboutUsArea7->addArea($siteAboutUsArea8);
+        $siteAboutUsArea7->setLabel('Containe footer');
+        $siteAboutUsArea7->setAreaId('containeFooter');
+        $siteAboutUsArea7->setHtmlClass('containe-footer');
+        $siteAboutUsArea7->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3));
+
+        $siteAboutUsArea6 = new Area();
+        $siteAboutUsArea6->setLabel('Footer');
+        $siteAboutUsArea6->setAreaId('footer');
+        $siteAboutUsArea6->setHtmlClass('footer');
+        $siteAboutUsArea6->addArea($siteAboutUsArea7);
 
         $siteAboutUs = new Node();
         $siteAboutUs->setNodeId('fixture_page_about_us');
@@ -920,8 +837,8 @@ EOF
         $siteAboutUs->setInFooter(false);
         $siteAboutUs->setInMenu(false);
         $siteAboutUs->addArea($siteAboutUsArea0);
-        $siteAboutUs->addArea($siteAboutUsArea4);
-        $siteAboutUs->addArea($siteAboutUsArea7);
+        $siteAboutUs->addArea($siteAboutUsArea3);
+        $siteAboutUs->addArea($siteAboutUsArea6);
         $siteAboutUs->addBlock($siteAboutUsBlock0);
 
         return $siteAboutUs;
@@ -957,16 +874,10 @@ EOF
         $siteOurTeamArea1->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 0));
 
         $siteOurTeamArea2 = new Area();
-        $siteOurTeamArea2->setLabel('Sub menu');
-        $siteOurTeamArea2->setAreaId('subMenu');
-        $siteOurTeamArea2->setHtmlClass('sub-menu');
+        $siteOurTeamArea2->setLabel('Main menu');
+        $siteOurTeamArea2->setAreaId('mainMenu');
+        $siteOurTeamArea2->setHtmlClass('main-menu');
         $siteOurTeamArea2->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 1));
-
-        $siteOurTeamArea3 = new Area();
-        $siteOurTeamArea3->setLabel('Main menu');
-        $siteOurTeamArea3->setAreaId('mainMenu');
-        $siteOurTeamArea3->setHtmlClass('main-menu');
-        $siteOurTeamArea3->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 2));
 
         $siteOurTeamArea0 = new Area();
         $siteOurTeamArea0->setLabel('Header');
@@ -974,39 +885,38 @@ EOF
         $siteOurTeamArea0->setHtmlClass('header');
         $siteOurTeamArea0->addArea($siteOurTeamArea1);
         $siteOurTeamArea0->addArea($siteOurTeamArea2);
-        $siteOurTeamArea0->addArea($siteOurTeamArea3);
-
-        $siteOurTeamArea5 = new Area();
-        $siteOurTeamArea5->setLabel('Main content area 1');
-        $siteOurTeamArea5->setAreaId('mainContentArea1');
-        $siteOurTeamArea5->setHtmlClass('main-content-area1');
-        $siteOurTeamArea5->addBlock(array('nodeId' => 0, 'blockId' => 0));
-
-        $siteOurTeamArea6 = new Area();
-        $siteOurTeamArea6->setLabel('Module area');
-        $siteOurTeamArea6->setAreaId('moduleArea');
-        $siteOurTeamArea6->setHtmlClass('module-area');
-        $siteOurTeamArea6->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 4));
-        $siteOurTeamArea6->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 5));
 
         $siteOurTeamArea4 = new Area();
-        $siteOurTeamArea4->setLabel('My main');
-        $siteOurTeamArea4->setAreaId('myMain');
-        $siteOurTeamArea4->setHtmlClass('my-main');
-        $siteOurTeamArea4->addArea($siteOurTeamArea5);
-        $siteOurTeamArea4->addArea($siteOurTeamArea6);
+        $siteOurTeamArea4->setLabel('Main content area 1');
+        $siteOurTeamArea4->setAreaId('mainContentArea1');
+        $siteOurTeamArea4->setHtmlClass('main-content-area1');
+        $siteOurTeamArea4->addBlock(array('nodeId' => 0, 'blockId' => 0));
 
-        $siteOurTeamArea8 = new Area();
-        $siteOurTeamArea8->setLabel('Containe footer');
-        $siteOurTeamArea8->setAreaId('containeFooter');
-        $siteOurTeamArea8->setHtmlClass('containe-footer');
-        $siteOurTeamArea8->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3));
+        $siteOurTeamArea5 = new Area();
+        $siteOurTeamArea5->setLabel('Module area');
+        $siteOurTeamArea5->setAreaId('moduleArea');
+        $siteOurTeamArea5->setHtmlClass('module-area');
+        $siteOurTeamArea5->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3));
+        $siteOurTeamArea5->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 4));
+
+        $siteOurTeamArea3 = new Area();
+        $siteOurTeamArea3->setLabel('My main');
+        $siteOurTeamArea3->setAreaId('myMain');
+        $siteOurTeamArea3->setHtmlClass('my-main');
+        $siteOurTeamArea3->addArea($siteOurTeamArea4);
+        $siteOurTeamArea3->addArea($siteOurTeamArea5);
 
         $siteOurTeamArea7 = new Area();
-        $siteOurTeamArea7->setLabel('Footer');
-        $siteOurTeamArea7->setAreaId('footer');
-        $siteOurTeamArea7->setHtmlClass('footer');
-        $siteOurTeamArea7->addArea($siteOurTeamArea8);
+        $siteOurTeamArea7->setLabel('Containe footer');
+        $siteOurTeamArea7->setAreaId('containeFooter');
+        $siteOurTeamArea7->setHtmlClass('containe-footer');
+        $siteOurTeamArea7->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 2));
+
+        $siteOurTeamArea6 = new Area();
+        $siteOurTeamArea6->setLabel('Footer');
+        $siteOurTeamArea6->setAreaId('footer');
+        $siteOurTeamArea6->setHtmlClass('footer');
+        $siteOurTeamArea6->addArea($siteOurTeamArea7);
 
         $siteOurTeam = new Node();
         $siteOurTeam->setNodeId('fixture_page_our_team');
@@ -1027,8 +937,8 @@ EOF
         $siteOurTeam->setInFooter(false);
         $siteOurTeam->setInMenu(false);
         $siteOurTeam->addArea($siteOurTeamArea0);
-        $siteOurTeam->addArea($siteOurTeamArea4);
-        $siteOurTeam->addArea($siteOurTeamArea7);
+        $siteOurTeam->addArea($siteOurTeamArea3);
+        $siteOurTeam->addArea($siteOurTeamArea6);
         $siteOurTeam->addBlock($siteOurTeamBlock0);
 
         return $siteOurTeam;
@@ -1075,16 +985,10 @@ EOF
         $siteNewsArea1->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 0));
 
         $siteNewsArea2 = new Area();
-        $siteNewsArea2->setLabel('Sub menu');
-        $siteNewsArea2->setAreaId('subMenu');
-        $siteNewsArea2->setHtmlClass('sub-menu');
+        $siteNewsArea2->setLabel('Main menu');
+        $siteNewsArea2->setAreaId('mainMenu');
+        $siteNewsArea2->setHtmlClass('main-menu');
         $siteNewsArea2->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 1));
-
-        $siteNewsArea3 = new Area();
-        $siteNewsArea3->setLabel('Main menu');
-        $siteNewsArea3->setAreaId('mainMenu');
-        $siteNewsArea3->setHtmlClass('main-menu');
-        $siteNewsArea3->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 2));
 
         $siteNewsArea0 = new Area();
         $siteNewsArea0->setLabel('Header');
@@ -1092,39 +996,38 @@ EOF
         $siteNewsArea0->setHtmlClass('header');
         $siteNewsArea0->addArea($siteNewsArea1);
         $siteNewsArea0->addArea($siteNewsArea2);
-        $siteNewsArea0->addArea($siteNewsArea3);
-
-        $siteNewsArea5 = new Area();
-        $siteNewsArea5->setLabel('Main content area 1');
-        $siteNewsArea5->setAreaId('mainContentArea1');
-        $siteNewsArea5->setHtmlClass('main-content-area1');
-        $siteNewsArea5->addBlock(array('nodeId' => 0, 'blockId' => 0));
-
-        $siteNewsArea6 = new Area();
-        $siteNewsArea6->setLabel('Module area');
-        $siteNewsArea6->setAreaId('moduleArea');
-        $siteNewsArea6->setHtmlClass('module-area');
-        $siteNewsArea6->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 4));
-        $siteNewsArea6->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 5));
 
         $siteNewsArea4 = new Area();
-        $siteNewsArea4->setLabel('My main');
-        $siteNewsArea4->setAreaId('myMain');
-        $siteNewsArea4->setHtmlClass('my-main');
-        $siteNewsArea4->addArea($siteNewsArea5);
-        $siteNewsArea4->addArea($siteNewsArea6);
+        $siteNewsArea4->setLabel('Main content area 1');
+        $siteNewsArea4->setAreaId('mainContentArea1');
+        $siteNewsArea4->setHtmlClass('main-content-area1');
+        $siteNewsArea4->addBlock(array('nodeId' => 0, 'blockId' => 0));
 
-        $siteNewsArea8 = new Area();
-        $siteNewsArea8->setLabel('Containe footer');
-        $siteNewsArea8->setAreaId('containeFooter');
-        $siteNewsArea8->setHtmlClass("containe-footer");
-        $siteNewsArea8->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3));
+        $siteNewsArea5 = new Area();
+        $siteNewsArea5->setLabel('Module area');
+        $siteNewsArea5->setAreaId('moduleArea');
+        $siteNewsArea5->setHtmlClass('module-area');
+        $siteNewsArea5->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3));
+        $siteNewsArea5->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 4));
+
+        $siteNewsArea3 = new Area();
+        $siteNewsArea3->setLabel('My main');
+        $siteNewsArea3->setAreaId('myMain');
+        $siteNewsArea3->setHtmlClass('my-main');
+        $siteNewsArea3->addArea($siteNewsArea4);
+        $siteNewsArea3->addArea($siteNewsArea5);
 
         $siteNewsArea7 = new Area();
-        $siteNewsArea7->setLabel('Footer');
-        $siteNewsArea7->setAreaId('footer');
-        $siteNewsArea7->setHtmlClass('footer');
-        $siteNewsArea7->addArea($siteNewsArea8);
+        $siteNewsArea7->setLabel('Containe footer');
+        $siteNewsArea7->setAreaId('containeFooter');
+        $siteNewsArea7->setHtmlClass("containe-footer");
+        $siteNewsArea7->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 2));
+
+        $siteNewsArea6 = new Area();
+        $siteNewsArea6->setLabel('Footer');
+        $siteNewsArea6->setAreaId('footer');
+        $siteNewsArea6->setHtmlClass('footer');
+        $siteNewsArea6->addArea($siteNewsArea7);
 
         $siteNews = new Node();
         $siteNews->setNodeId('fixture_page_news');
@@ -1145,8 +1048,8 @@ EOF
         $siteNews->setInFooter(false);
         $siteNews->setInMenu(false);
         $siteNews->addArea($siteNewsArea0);
-        $siteNews->addArea($siteNewsArea4);
-        $siteNews->addArea($siteNewsArea7);
+        $siteNews->addArea($siteNewsArea3);
+        $siteNews->addArea($siteNewsArea6);
         $siteNews->addBlock($siteNewsBlock0);
 
         return $siteNews;
@@ -1216,16 +1119,10 @@ EOF
         $siteJoinUsArea1->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 0));
 
         $siteJoinUsArea2 = new Area();
-        $siteJoinUsArea2->setLabel('Sub menu');
-        $siteJoinUsArea2->setAreaId('subMenu');
-        $siteJoinUsArea2->setHtmlClass('sub-menu');
+        $siteJoinUsArea2->setLabel('Main menu');
+        $siteJoinUsArea2->setAreaId('mainMenu');
+        $siteJoinUsArea2->setHtmlClass('main-menu');
         $siteJoinUsArea2->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 1));
-
-        $siteJoinUsArea3 = new Area();
-        $siteJoinUsArea3->setLabel('Main menu');
-        $siteJoinUsArea3->setAreaId('mainMenu');
-        $siteJoinUsArea3->setHtmlClass('main-menu');
-        $siteJoinUsArea3->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 2));
 
         $siteJoinUsArea0 = new Area();
         $siteJoinUsArea0->setLabel('Header');
@@ -1233,39 +1130,38 @@ EOF
         $siteJoinUsArea0->setHtmlClass('header');
         $siteJoinUsArea0->addArea($siteJoinUsArea1);
         $siteJoinUsArea0->addArea($siteJoinUsArea2);
-        $siteJoinUsArea0->addArea($siteJoinUsArea3);
-
-        $siteJoinUsArea5 = new Area();
-        $siteJoinUsArea5->setLabel('Main content area 1');
-        $siteJoinUsArea5->setAreaId('mainContentArea1');
-        $siteJoinUsArea5->setHtmlClass('main-content-area1');
-        $siteJoinUsArea5->addBlock(array('nodeId' => 0, 'blockId' => 0));
-
-        $siteJoinUsArea6 = new Area();
-        $siteJoinUsArea6->setLabel('Module area');
-        $siteJoinUsArea6->setAreaId('moduleArea');
-        $siteJoinUsArea6->setHtmlClass('module-area');
-        $siteJoinUsArea6->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 4));
-        $siteJoinUsArea6->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 5));
 
         $siteJoinUsArea4 = new Area();
-        $siteJoinUsArea4->setLabel('My main');
-        $siteJoinUsArea4->setAreaId('myMain');
-        $siteJoinUsArea4->setHtmlClass('my-main');
-        $siteJoinUsArea4->addArea($siteJoinUsArea5);
-        $siteJoinUsArea4->addArea($siteJoinUsArea6);
+        $siteJoinUsArea4->setLabel('Main content area 1');
+        $siteJoinUsArea4->setAreaId('mainContentArea1');
+        $siteJoinUsArea4->setHtmlClass('main-content-area1');
+        $siteJoinUsArea4->addBlock(array('nodeId' => 0, 'blockId' => 0));
 
-        $siteJoinUsArea8 = new Area();
-        $siteJoinUsArea8->setLabel('Containe footer');
-        $siteJoinUsArea8->setAreaId('containeFooter');
-        $siteJoinUsArea8->setHtmlClass('containe-footer');
-        $siteJoinUsArea8->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3));
+        $siteJoinUsArea5 = new Area();
+        $siteJoinUsArea5->setLabel('Module area');
+        $siteJoinUsArea5->setAreaId('moduleArea');
+        $siteJoinUsArea5->setHtmlClass('module-area');
+        $siteJoinUsArea5->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 2));
+        $siteJoinUsArea5->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3));
+
+        $siteJoinUsArea3 = new Area();
+        $siteJoinUsArea3->setLabel('My main');
+        $siteJoinUsArea3->setAreaId('myMain');
+        $siteJoinUsArea3->setHtmlClass('my-main');
+        $siteJoinUsArea3->addArea($siteJoinUsArea4);
+        $siteJoinUsArea3->addArea($siteJoinUsArea5);
 
         $siteJoinUsArea7 = new Area();
-        $siteJoinUsArea7->setLabel('Footer');
-        $siteJoinUsArea7->setAreaId('footer');
-        $siteJoinUsArea7->setHtmlClass('footer');
-        $siteJoinUsArea7->addArea($siteJoinUsArea8);
+        $siteJoinUsArea7->setLabel('Containe footer');
+        $siteJoinUsArea7->setAreaId('containeFooter');
+        $siteJoinUsArea7->setHtmlClass('containe-footer');
+        $siteJoinUsArea7->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 2));
+
+        $siteJoinUsArea6 = new Area();
+        $siteJoinUsArea6->setLabel('Footer');
+        $siteJoinUsArea6->setAreaId('footer');
+        $siteJoinUsArea6->setHtmlClass('footer');
+        $siteJoinUsArea6->addArea($siteJoinUsArea7);
 
         $siteJoinUs = new Node();
         $siteJoinUs->setNodeId('fixture_page_join_us');
@@ -1286,8 +1182,8 @@ EOF
         $siteJoinUs->setInFooter(false);
         $siteJoinUs->setInMenu(false);
         $siteJoinUs->addArea($siteJoinUsArea0);
-        $siteJoinUs->addArea($siteJoinUsArea4);
-        $siteJoinUs->addArea($siteJoinUsArea7);
+        $siteJoinUs->addArea($siteJoinUsArea3);
+        $siteJoinUs->addArea($siteJoinUsArea6);
         $siteJoinUs->addBlock($siteJoinUsBlock0);
 
         return $siteJoinUs;
@@ -1326,16 +1222,10 @@ EOF
         $siteNetworkArea1->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 0));
 
         $siteNetworkArea2 = new Area();
-        $siteNetworkArea2->setLabel('Sub menu');
-        $siteNetworkArea2->setAreaId('subMenu');
-        $siteNetworkArea2->setHtmlClass('sub-menu');
+        $siteNetworkArea2->setLabel('Main menu');
+        $siteNetworkArea2->setAreaId('mainMenu');
+        $siteNetworkArea2->setHtmlClass('main-menu');
         $siteNetworkArea2->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 1));
-
-        $siteNetworkArea3 = new Area();
-        $siteNetworkArea3->setLabel('Main menu');
-        $siteNetworkArea3->setAreaId('mainMenu');
-        $siteNetworkArea3->setHtmlClass('main-menu');
-        $siteNetworkArea3->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 2));
 
         $siteNetworkArea0 = new Area();
         $siteNetworkArea0->setLabel('Header');
@@ -1343,39 +1233,38 @@ EOF
         $siteNetworkArea0->setHtmlClass('header');
         $siteNetworkArea0->addArea($siteNetworkArea1);
         $siteNetworkArea0->addArea($siteNetworkArea2);
-        $siteNetworkArea0->addArea($siteNetworkArea3);
-
-        $siteNetworkArea5 = new Area();
-        $siteNetworkArea5->setLabel('Main content area 1');
-        $siteNetworkArea5->setAreaId('mainContentArea1');
-        $siteNetworkArea5->setHtmlClass('main-content-area1');
-        $siteNetworkArea5->addBlock(array('nodeId' => 0, 'blockId' => 0));
-
-        $siteNetworkArea6 = new Area();
-        $siteNetworkArea6->setLabel('Module area');
-        $siteNetworkArea6->setAreaId('moduleArea');
-        $siteNetworkArea6->setHtmlClass('module-area');
-        $siteNetworkArea6->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 4));
-        $siteNetworkArea6->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 5));
 
         $siteNetworkArea4 = new Area();
-        $siteNetworkArea4->setLabel('My main');
-        $siteNetworkArea4->setAreaId('myMain');
-        $siteNetworkArea4->setHtmlClass('my-main');
-        $siteNetworkArea4->addArea($siteNetworkArea5);
-        $siteNetworkArea4->addArea($siteNetworkArea6);
+        $siteNetworkArea4->setLabel('Main content area 1');
+        $siteNetworkArea4->setAreaId('mainContentArea1');
+        $siteNetworkArea4->setHtmlClass('main-content-area1');
+        $siteNetworkArea4->addBlock(array('nodeId' => 0, 'blockId' => 0));
 
-        $siteNetworkArea8 = new Area();
-        $siteNetworkArea8->setLabel('Containe footer');
-        $siteNetworkArea8->setAreaId('containeFooter');
-        $siteNetworkArea8->setHtmlClass('containe-footer');
-        $siteNetworkArea8->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3));
+        $siteNetworkArea5 = new Area();
+        $siteNetworkArea5->setLabel('Module area');
+        $siteNetworkArea5->setAreaId('moduleArea');
+        $siteNetworkArea5->setHtmlClass('module-area');
+        $siteNetworkArea5->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3));
+        $siteNetworkArea5->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 4));
+
+        $siteNetworkArea3 = new Area();
+        $siteNetworkArea3->setLabel('My main');
+        $siteNetworkArea3->setAreaId('myMain');
+        $siteNetworkArea3->setHtmlClass('my-main');
+        $siteNetworkArea3->addArea($siteNetworkArea4);
+        $siteNetworkArea3->addArea($siteNetworkArea5);
 
         $siteNetworkArea7 = new Area();
-        $siteNetworkArea7->setLabel('Footer');
-        $siteNetworkArea7->setAreaId('footer');
-        $siteNetworkArea7->setHtmlClass('footer');
-        $siteNetworkArea7->addArea($siteNetworkArea8);
+        $siteNetworkArea7->setLabel('Containe footer');
+        $siteNetworkArea7->setAreaId('containeFooter');
+        $siteNetworkArea7->setHtmlClass('containe-footer');
+        $siteNetworkArea7->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 2));
+
+        $siteNetworkArea6 = new Area();
+        $siteNetworkArea6->setLabel('Footer');
+        $siteNetworkArea6->setAreaId('footer');
+        $siteNetworkArea6->setHtmlClass('footer');
+        $siteNetworkArea6->addArea($siteNetworkArea7);
 
         $siteNetwork = new Node();
         $siteNetwork->setNodeId('fixture_page_networks');
@@ -1396,8 +1285,8 @@ EOF
         $siteNetwork->setInFooter(false);
         $siteNetwork->setInMenu(false);
         $siteNetwork->addArea($siteNetworkArea0);
-        $siteNetwork->addArea($siteNetworkArea4);
-        $siteNetwork->addArea($siteNetworkArea7);
+        $siteNetwork->addArea($siteNetworkArea3);
+        $siteNetwork->addArea($siteNetworkArea6);
         $siteNetwork->addBlock($siteNetworkBlock0);
 
         return $siteNetwork;
@@ -1447,16 +1336,10 @@ EOF
         $siteContactArea1->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 0));
 
         $siteContactArea2 = new Area();
-        $siteContactArea2->setLabel('Sub menu');
-        $siteContactArea2->setAreaId('subMenu');
-        $siteContactArea2->setHtmlClass('sub-menu');
+        $siteContactArea2->setLabel('Main menu');
+        $siteContactArea2->setAreaId('mainMenu');
+        $siteContactArea2->setHtmlClass('main-menu');
         $siteContactArea2->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 1));
-
-        $siteContactArea3 = new Area();
-        $siteContactArea3->setLabel('Main menu');
-        $siteContactArea3->setAreaId('mainMenu');
-        $siteContactArea3->setHtmlClass('main-menu');
-        $siteContactArea3->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 2));
 
         $siteContactArea0 = new Area();
         $siteContactArea0->setLabel('Header');
@@ -1464,38 +1347,37 @@ EOF
         $siteContactArea0->setHtmlClass('header');
         $siteContactArea0->addArea($siteContactArea1);
         $siteContactArea0->addArea($siteContactArea2);
-        $siteContactArea0->addArea($siteContactArea3);
-
-        $siteContactArea5 = new Area();
-        $siteContactArea5->setLabel('Main content area 1');
-        $siteContactArea5->setAreaId('mainContentArea1');
-        $siteContactArea5->setHtmlClass('main-content-contact');
-        $siteContactArea5->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 5));
-
-        $siteContactArea6 = new Area();
-        $siteContactArea6->setLabel('Module area');
-        $siteContactArea6->setAreaId('moduleArea');
-        $siteContactArea6->setHtmlClass('module-area-contact');
-        $siteContactArea6->addBlock(array('nodeId' => 0, 'blockId' => 0));
 
         $siteContactArea4 = new Area();
-        $siteContactArea4->setLabel('My main');
-        $siteContactArea4->setAreaId('myMain');
-        $siteContactArea4->setHtmlClass('my-main');
-        $siteContactArea4->addArea($siteContactArea5);
-        $siteContactArea4->addArea($siteContactArea6);
+        $siteContactArea4->setLabel('Main content area 1');
+        $siteContactArea4->setAreaId('mainContentArea1');
+        $siteContactArea4->setHtmlClass('main-content-contact');
+        $siteContactArea4->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 4));
 
-        $siteContactArea8 = new Area();
-        $siteContactArea8->setLabel('Containe footer');
-        $siteContactArea8->setAreaId('containeFooter');
-        $siteContactArea8->setHtmlClass('containe-footer');
-        $siteContactArea8->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3));
+        $siteContactArea5 = new Area();
+        $siteContactArea5->setLabel('Module area');
+        $siteContactArea5->setAreaId('moduleArea');
+        $siteContactArea5->setHtmlClass('module-area-contact');
+        $siteContactArea5->addBlock(array('nodeId' => 0, 'blockId' => 0));
+
+        $siteContactArea3 = new Area();
+        $siteContactArea3->setLabel('My main');
+        $siteContactArea3->setAreaId('myMain');
+        $siteContactArea3->setHtmlClass('my-main');
+        $siteContactArea3->addArea($siteContactArea4);
+        $siteContactArea3->addArea($siteContactArea5);
 
         $siteContactArea7 = new Area();
-        $siteContactArea7->setLAbel('Footer');
-        $siteContactArea7->setAreaId('footer');
-        $siteContactArea7->setHtmlClass('footer');
-        $siteContactArea7->addArea($siteContactArea8);
+        $siteContactArea7->setLabel('Containe footer');
+        $siteContactArea7->setAreaId('containeFooter');
+        $siteContactArea7->setHtmlClass('containe-footer');
+        $siteContactArea7->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 2));
+
+        $siteContactArea6 = new Area();
+        $siteContactArea6->setLAbel('Footer');
+        $siteContactArea6->setAreaId('footer');
+        $siteContactArea6->setHtmlClass('footer');
+        $siteContactArea6->addArea($siteContactArea7);
 
         $siteContact = new Node();
         $siteContact->setNodeId('fixture_page_contact');
@@ -1516,8 +1398,8 @@ EOF
         $siteContact->setInFooter(false);
         $siteContact->setInMenu(true);
         $siteContact->addArea($siteContactArea0);
-        $siteContact->addArea($siteContactArea4);
-        $siteContact->addArea($siteContactArea7);
+        $siteContact->addArea($siteContactArea3);
+        $siteContact->addArea($siteContactArea6);
         $siteContact->addBlock($siteContactBlock0);
 
         return $siteContact;
@@ -1593,16 +1475,10 @@ EOF
         $siteLegalArea1->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 0));
 
         $siteLegalArea2 = new Area();
-        $siteLegalArea2->setLabel('Sub menu');
-        $siteLegalArea2->setAreaId('subMenu');
-        $siteLegalArea2->setHtmlClass('sub-menu');
+        $siteLegalArea2->setLabel('Main menu');
+        $siteLegalArea2->setAreaId('mainMenu');
+        $siteLegalArea2->setHtmlClass('main-menu');
         $siteLegalArea2->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 1));
-
-        $siteLegalArea3 = new Area();
-        $siteLegalArea3->setLabel('Main menu');
-        $siteLegalArea3->setAreaId('mainMenu');
-        $siteLegalArea3->setHtmlClass('main-menu');
-        $siteLegalArea3->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 2));
 
         $siteLegalArea0 = new Area();
         $siteLegalArea0->setLabel('Header');
@@ -1610,38 +1486,37 @@ EOF
         $siteLegalArea0->setHtmlClass('header');
         $siteLegalArea0->addArea($siteLegalArea1);
         $siteLegalArea0->addArea($siteLegalArea2);
-        $siteLegalArea0->addArea($siteLegalArea3);
-
-        $siteLegalArea5 = new Area();
-        $siteLegalArea5->setLabel('Main content area 1');
-        $siteLegalArea5->setAreaId('mainContentArea1');
-        $siteLegalArea5->setHtmlClass('main-content-area1');
-        $siteLegalArea5->addBlock(array('nodeId' => 0, 'blockId' => 0));
-
-        $siteLegalArea6 = new Area();
-        $siteLegalArea6->setLabel('Module area');
-        $siteLegalArea6->setAreaId('moduleArea');
-        $siteLegalArea6->setHtmlClass('module-area');
-        $siteLegalArea6->addBlock(array('nodeId' => 0, 'blockId' => 1));
 
         $siteLegalArea4 = new Area();
-        $siteLegalArea4->setLabel('My main');
-        $siteLegalArea4->setAreaId('myMain');
-        $siteLegalArea4->setHtmlClass('my-main');
-        $siteLegalArea4->addArea($siteLegalArea5);
-        $siteLegalArea4->addArea($siteLegalArea6);
+        $siteLegalArea4->setLabel('Main content area 1');
+        $siteLegalArea4->setAreaId('mainContentArea1');
+        $siteLegalArea4->setHtmlClass('main-content-area1');
+        $siteLegalArea4->addBlock(array('nodeId' => 0, 'blockId' => 0));
 
-        $siteLegalArea8 = new Area();
-        $siteLegalArea8->setLabel('Containe footer');
-        $siteLegalArea8->setAreaId('containeFooter');
-        $siteLegalArea8->setHtmlClass('containe-footer');
-        $siteLegalArea8->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3));
+        $siteLegalArea5 = new Area();
+        $siteLegalArea5->setLabel('Module area');
+        $siteLegalArea5->setAreaId('moduleArea');
+        $siteLegalArea5->setHtmlClass('module-area');
+        $siteLegalArea5->addBlock(array('nodeId' => 0, 'blockId' => 1));
+
+        $siteLegalArea3 = new Area();
+        $siteLegalArea3->setLabel('My main');
+        $siteLegalArea3->setAreaId('myMain');
+        $siteLegalArea3->setHtmlClass('my-main');
+        $siteLegalArea3->addArea($siteLegalArea4);
+        $siteLegalArea3->addArea($siteLegalArea5);
 
         $siteLegalArea7 = new Area();
-        $siteLegalArea7->setLabel('Footer');
-        $siteLegalArea7->setAreaId('footer');
-        $siteLegalArea7->setHtmlClass('footer');
-        $siteLegalArea7->addArea($siteLegalArea8);
+        $siteLegalArea7->setLabel('Containe footer');
+        $siteLegalArea7->setAreaId('containeFooter');
+        $siteLegalArea7->setHtmlClass('containe-footer');
+        $siteLegalArea7->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3));
+
+        $siteLegalArea6 = new Area();
+        $siteLegalArea6->setLabel('Footer');
+        $siteLegalArea6->setAreaId('footer');
+        $siteLegalArea6->setHtmlClass('footer');
+        $siteLegalArea6->addArea($siteLegalArea7);
 
         $siteLegal = new Node();
         $siteLegal->setNodeId('fixture_page_legal_mentions');
@@ -1662,8 +1537,8 @@ EOF
         $siteLegal->setInFooter(false);
         $siteLegal->setInMenu(false);
         $siteLegal->addArea($siteLegalArea0);
-        $siteLegal->addArea($siteLegalArea4);
-        $siteLegal->addArea($siteLegalArea7);
+        $siteLegal->addArea($siteLegalArea3);
+        $siteLegal->addArea($siteLegalArea6);
         $siteLegal->addBlock($siteLegalBlock0);
         $siteLegal->addBlock($siteLegalBlock1);
 
