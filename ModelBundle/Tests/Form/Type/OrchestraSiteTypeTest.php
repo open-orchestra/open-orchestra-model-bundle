@@ -11,7 +11,12 @@ use OpenOrchestra\ModelBundle\Form\Type\OrchestraSiteType;
  */
 class OrchestraSiteTypeTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var OrchestraSiteType
+     */
     protected $form;
+
+    protected $transformer;
     protected $siteClass = 'SiteClass';
 
     /**
@@ -19,7 +24,9 @@ class OrchestraSiteTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->form = new OrchestraSiteType($this->siteClass);
+        $this->transformer = Phake::mock('OpenOrchestra\ModelBundle\Form\DataTransformer\EmbedSiteToSiteTransformer');
+
+        $this->form = new OrchestraSiteType($this->siteClass, $this->transformer);
     }
 
     /**
@@ -41,11 +48,11 @@ class OrchestraSiteTypeTest extends \PHPUnit_Framework_TestCase
     /**
      * Test the default options
      */
-    public function testSetDefaultOptions()
+    public function testConfigureOptions()
     {
-        $resolverMock = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolverInterface');
+        $resolverMock = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
 
-        $this->form->setDefaultOptions($resolverMock);
+        $this->form->configureOptions($resolverMock);
 
         Phake::verify($resolverMock)->setDefaults(array(
             'class' => $this->siteClass,
@@ -53,6 +60,33 @@ class OrchestraSiteTypeTest extends \PHPUnit_Framework_TestCase
             'query_builder' => function (DocumentRepository $dr) {
                 return $dr->createQueryBuilder()->field('deleted')->equals(false);
             },
+            'embed' => false,
         ));
+    }
+
+    /**
+     * @param bool $embed
+     * @param int  $transfomerTime
+     *
+     * @dataProvider provideEmbedAndTransformationTime
+     */
+    public function testBuildForm($embed, $transfomerTime)
+    {
+        $builder = Phake::mock('Symfony\Component\Form\FormBuilderInterface');
+
+        $this->form->buildForm($builder, array('embed' => $embed));
+
+        Phake::verify($builder, Phake::times($transfomerTime))->addModelTransformer($this->transformer);
+    }
+
+    /**
+     * @return array
+     */
+    public function provideEmbedAndTransformationTime()
+    {
+        return array(
+            array(true, 1),
+            array(false, 0),
+        );
     }
 }
