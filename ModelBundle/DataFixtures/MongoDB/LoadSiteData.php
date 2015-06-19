@@ -42,10 +42,10 @@ class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface
         $site1 = new Site();
         $site1->setSiteId('1');
         $site1->setName('First site');
-        $site1->addAlias($this->generateSiteAlias('front.openorchestra.dev', 'fr'));
-        $site1->addAlias($this->generateSiteAlias('front.openorchestra.dev', 'en'));
-        $site1->addAlias($this->generateSiteAlias('front.openorchestra.inte', 'fr', true));
-        $site1->addAlias($this->generateSiteAlias('front.openorchestra.inte', 'en'));
+        $this->addSitesAliases(
+            array('front.openorchestra.inte', 'front.openorchestra.dev'),
+            array('fr', 'en'),
+            $site1);
         $site1->setDeleted(false);
         $site1->setTheme($this->getReference('themePresentation'));
         $site1->addBlock('menu');
@@ -61,12 +61,10 @@ class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface
         $site2 = new Site();
         $site2->setSiteId('2');
         $site2->setName('Demo site');
-        $site2->addAlias($this->generateSiteAlias('demo.open-orchestra.com', 'fr', true));
-        $site2->addAlias($this->generateSiteAlias('demo.open-orchestra.com', 'en'));
-        $site2->addAlias($this->generateSiteAlias('demo.openorchestra.inte', 'fr'));
-        $site2->addAlias($this->generateSiteAlias('demo.openorchestra.inte', 'en'));
-        $site2->addAlias($this->generateSiteAlias('demo.openorchestra.dev', 'fr'));
-        $site2->addAlias($this->generateSiteAlias('demo.openorchestra.dev', 'en'));
+        $this->addSitesAliases(
+            array('demo.open-orchestra.com', 'demo.openorchestra.inte', 'demo.openorchestra.dev'),
+            array('fr', 'en'),
+            $site2);
         $site2->setDeleted(false);
         $site2->setTheme($this->getReference('themePresentation'));
         $site2->addBlock('carrousel');
@@ -96,10 +94,10 @@ class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface
         $site3 = new Site();
         $site3->setSiteId('3');
         $site3->setName('Empty site');
-        $site3->addAlias($this->generateSiteAlias('empty.openorchestra.inte', 'fr', true));
-        $site3->addAlias($this->generateSiteAlias('empty.openorchestra.inte', 'en'));
-        $site3->addAlias($this->generateSiteAlias('empty.openorchestra.dev', 'fr'));
-        $site3->addAlias($this->generateSiteAlias('empty.openorchestra.dev', 'en'));
+        $this->addSitesAliases(
+            array('empty.openorchestra.inte', 'empty.openorchestra.dev'),
+            array("fr", "en"),
+            $site3);
         $site3->setDeleted(true);
         $site3->setTheme($this->getReference('themePresentation'));
         $site3->addBlock('sample');
@@ -135,5 +133,21 @@ class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface
         $siteAlias->setScheme(SchemeableInterface::SCHEME_HTTP);
 
         return $siteAlias;
+    }
+
+    /**
+     * @param array $sitesNames
+     * @param array $sitesLanguages
+     * @param $site
+     */
+    protected function addSitesAliases(array $sitesNames, array $sitesLanguages, $site)
+    {
+        $master = TRUE;
+        foreach($sitesNames as $siteName ) {
+            foreach($sitesLanguages as $siteLanguage){
+                $site->addAlias($this->generateSiteAlias($siteName, $siteLanguage, $master));
+                $master = FALSE;
+            }
+        }
     }
 }

@@ -14,20 +14,19 @@ use OpenOrchestra\ModelBundle\Document\EmbedKeyword;
  */
 class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
 {
+    protected $objectManager;
+
     /**
      * @param ObjectManager $objectManager
      */
     public function load(ObjectManager $objectManager)
     {
-        $objectManager->persist($this->generateCarR5('fr'));
-        $objectManager->persist($this->generateCarR5('en'));
-        $objectManager->persist($this->generateCar206('fr'));
-        $objectManager->persist($this->generateCar206('en'));
-        $objectManager->persist($this->generateCarDs3('fr'));
-        $objectManager->persist($this->generateCarDs3('en'));
-
-        $objectManager->persist($this->generateCustomerConvenant('fr'));
-        $objectManager->persist($this->generateCustomerConvenant('en'));
+        $this->objectManager = $objectManager;
+        $languages = array('fr', "en");
+        $this->persistMultiLanguageContent("generateCarR5", $languages);
+        $this->persistMultiLanguageContent("generateCar206", $languages);
+        $this->persistMultiLanguageContent("generateCarDs3", $languages);
+        $this->persistMultiLanguageContent("generateCustomerConvenant", $languages);
 
         $objectManager->flush();
     }
@@ -40,6 +39,16 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
     public function getOrder()
     {
         return 510;
+    }
+
+    /**
+     * @param string $methodName
+     * @param array  $languages
+     */
+    protected  function persistMultiLanguageContent($methodName, array $languages)
+    {
+        foreach($languages as $language)
+            $this->objectManager->persist($this->$methodName($language));
     }
 
     /**
@@ -60,6 +69,8 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
     }
 
     /**
+     * @param string $language
+     *
      * @return Content
      */
     public function generateCarR5($language)
@@ -90,27 +101,24 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
     }
 
     /**
+     * @param string $language
+     *
      * @return Content
      */
     public function generateCarDs3($language)
     {
-        $content = new Content();
-
-        $attribute1 = $this->generateContentAttribute('car_name', 'Ds3');
-        $attribute2 = $this->generateContentAttribute('image', 'ds3.png');
-        $attribute3 = $this->generateContentAttribute('description', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean non feugiat sem. Aliquam a mauris tellus. In hac habitasse platea dictumst. Nunc eget interdum ante, id mollis diam. Suspendisse sed magna lectus. Aenean fringilla elementum lorem id suscipit. Phasellus feugiat tellus sapien, id tempus nisi ultrices ut.');
-
-        $content->setContentId("ds_3");
-        $content->setContentType("car");
-        $content->setContentTypeVersion(1);
+        $content = $this->addBaseContent("ds_3", "car", 1);
         $content->setDeleted(false);
         $content->setName("DS 3 " . $language);
         $content->setLanguage($language);
-        $content->setStatus($this->getReference('status-published'));
         $content->setVersion(1);
         $content->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-lorem')));
         $content->setLinkedToSite(true);
         $content->setSiteId('2');
+
+        $attribute1 = $this->generateContentAttribute('car_name', 'Ds3');
+        $attribute2 = $this->generateContentAttribute('image', 'ds3.png');
+        $attribute3 = $this->generateContentAttribute('description', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean non feugiat sem. Aliquam a mauris tellus. In hac habitasse platea dictumst. Nunc eget interdum ante, id mollis diam. Suspendisse sed magna lectus. Aenean fringilla elementum lorem id suscipit. Phasellus feugiat tellus sapien, id tempus nisi ultrices ut.');
 
         $content->addAttribute($attribute1);
         $content->addAttribute($attribute2);
@@ -120,29 +128,25 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
     }
 
     /**
+     * @param string $language
+     *
      * @return Content
      */
     public function generateCar206($language)
     {
-        $content = new Content();
-
-        $attribute1 = $this->generateContentAttribute('car_name', '206');
-        $attribute2 = $this->generateContentAttribute('image', '206.png');
-        $attribute3 = $this->generateContentAttribute('description', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean non feugiat sem. Aliquam a mauris tellus. In hac habitasse platea dictumst. Nunc eget interdum ante, id mollis diam. Suspendisse sed magna lectus. Aenean fringilla elementum lorem id suscipit. Phasellus feugiat tellus sapien, id tempus nisi ultrices ut.');
-
-        $content->setContentId("206_3_portes");
-        $content->setContentType("car");
-        $content->setContentTypeVersion(1);
-        $content->setDeleted(false);
+        $content = $this->addBaseContent("206_3_portes", "car", 1);
         $content->setName("206 3 portes " . $language);
         $content->setLanguage($language);
-        $content->setStatus($this->getReference('status-published'));
         $content->setVersion(2);
         $content->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-lorem')));
         $content->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-sit')));
         $content->setLinkedToSite(false);
         $content->setSiteId('1');
 
+        $attribute1 = $this->generateContentAttribute('car_name', '206');
+        $attribute2 = $this->generateContentAttribute('image', '206.png');
+        $attribute3 = $this->generateContentAttribute('description', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean non feugiat sem. Aliquam a mauris tellus. In hac habitasse platea dictumst. Nunc eget interdum ante, id mollis diam. Suspendisse sed magna lectus. Aenean fringilla elementum lorem id suscipit. Phasellus feugiat tellus sapien, id tempus nisi ultrices ut.');
+
         $content->addAttribute($attribute1);
         $content->addAttribute($attribute2);
         $content->addAttribute($attribute3);
@@ -151,32 +155,47 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
     }
 
     /**
+     * @param string $language
+     *
      * @return Content
      */
     public function generateCustomerConvenant($language)
     {
-        $content = new Content();
-
-        $attribute1 = $this->generateContentAttribute('firstname', 'Jean-Claude');
-        $attribute2 = $this->generateContentAttribute('lastname', 'Convenant');
-        $attribute3 = $this->generateContentAttribute('identifier', 28);
-
-        $content->setContentId("jean_paul");
-        $content->setContentType("customer");
-        $content->setContentTypeVersion(1);
-        $content->setDeleted(false);
+        $content = $this->addBaseContent("jean_paul", 'customer', 1);
         $content->setName("Jean-Paul");
         $content->setLanguage($language);
-        $content->setStatus($this->getReference('status-published'));
         $content->setVersion(2);
         $content->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-lorem')));
         $content->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-sit')));
         $content->setLinkedToSite(false);
         $content->setSiteId('2');
 
+        $attribute1 = $this->generateContentAttribute('firstname', 'Jean-Claude');
+        $attribute2 = $this->generateContentAttribute('lastname', 'Convenant');
+        $attribute3 = $this->generateContentAttribute('identifier', 28);
+
         $content->addAttribute($attribute1);
         $content->addAttribute($attribute2);
         $content->addAttribute($attribute3);
+
+        return $content;
+    }
+
+    /**
+     * @param string $id
+     * @param string $type
+     * @param int    $typeVersion
+     *
+     * @return Content
+     */
+    protected function addBaseContent($id, $type, $typeVersion)
+    {
+        $content = new Content();
+        $content->setContentId($id);
+        $content->setContentType($type);
+        $content->setContentTypeVersion($typeVersion);
+        $content->setDeleted(false);
+        $content->setStatus($this->getReference('status-published'));
 
         return $content;
     }
