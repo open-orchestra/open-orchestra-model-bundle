@@ -90,7 +90,7 @@ class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterfac
         $siteBlockLogo->setLabel('Wysiwyg logo');
         $siteBlockLogo->setComponent(TinyMCEWysiwygStrategy::TINYMCEWYSIWYG);
         $siteBlockLogo->setAttributes(array(
-            "htmlContent" => '<a href="#" id="myLogo"> <img src="http://open-orchestra.com/media/open-orchestra-logo.png" /> </a>',
+            "htmlContent" => '<a href="/" id="myLogo"> <img src="http://open-orchestra.com/media/open-orchestra-logo.png" /> </a>',
         ));
         $siteBlockLogo->addArea(array('nodeId' => 0, 'areaId' => 'main'));
 
@@ -221,9 +221,9 @@ EOF
         $siteHomeArea6 = $this->createFooterContainer($siteHomeArea7);
 
         $siteHome = $this->createBaseNode();
-        $siteHome->setNodeId('fixture_page_what_is_orchestra');
+        $siteHome->setNodeId(NodeInterface::ROOT_NODE_ID);
         $siteHome->setName('Orchestra ?');
-        $siteHome->setParentId(NodeInterface::ROOT_NODE_ID);
+        $siteHome->setParentId('-');
         $siteHome->setOrder(0);
         $siteHome->setRoutePattern('/');
         $siteHome->setInFooter(false);
@@ -573,8 +573,7 @@ EOF
         $node->setDeleted(false);
         $node->setTemplateId('');
         $node->setTheme('themePresentation');
+
         return $node;
-
     }
-
 }
