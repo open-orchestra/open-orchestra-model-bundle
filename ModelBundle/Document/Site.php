@@ -318,4 +318,23 @@ class Site implements SiteInterface
     {
         return $this->aliases->indexOf($this->getMainAlias());
     }
+
+    /**
+     * Return alias id for given language
+     *
+     * @param string $language
+     *
+     * @return int
+     */
+    public function getAliasIdForLanguage($language)
+    {
+        /** @var ReadSiteAliasInterface $alias */
+        foreach ($this->aliases as $key => $alias) {
+            if ($alias->getLanguage() == $language) {
+                return $key;
+            }
+        }
+
+        return null;
+    }
 }
