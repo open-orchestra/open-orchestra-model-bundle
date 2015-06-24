@@ -43,7 +43,7 @@ class NodeRepositoryTest extends KernelTestCase
      */
     public function testFindOneByNodeIdAndLanguageWithPublishedAndLastVersionAndSiteId($language, $version, $siteId)
     {
-        $node = $this->repository->findOneByNodeIdAndLanguageWithPublishedAndLastVersionAndSiteId(NodeInterface::ROOT_NODE_ID, $language, $siteId);
+        $node = $this->repository->findOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion(NodeInterface::ROOT_NODE_ID, $language, $siteId);
 
         $this->assertSameNode($language, $version, $siteId, $node);
     }
@@ -69,7 +69,7 @@ class NodeRepositoryTest extends KernelTestCase
      */
     public function testFindOneByNodeIdAndLanguageAndVersionAndSiteIdWithPublishedDataSet($language, $version, $siteId)
     {
-        $node = $this->repository->findOneByNodeIdAndLanguageAndVersionAndSiteId(NodeInterface::ROOT_NODE_ID, $language, $siteId, $version);
+        $node = $this->repository->findOneByNodeIdAndLanguageAndSiteIdAndVersion(NodeInterface::ROOT_NODE_ID, $language, $siteId, $version);
 
         $this->assertSameNode($language, $version, $siteId, $node);
     }
@@ -84,7 +84,7 @@ class NodeRepositoryTest extends KernelTestCase
      */
     public function testFindOneByNodeIdAndLanguageAndVersionAndSiteIdWithNotPublishedDataSet($language, $version = null, $siteId, $versionExpected)
     {
-        $node = $this->repository->findOneByNodeIdAndLanguageAndVersionAndSiteId(NodeInterface::ROOT_NODE_ID, $language, $siteId, $version);
+        $node = $this->repository->findOneByNodeIdAndLanguageAndSiteIdAndVersion(NodeInterface::ROOT_NODE_ID, $language, $siteId, $version);
 
         $this->assertSameNode($language, $versionExpected, $siteId, $node);
         $this->assertSame('draft', $node->getStatus()->getName());
@@ -111,7 +111,7 @@ class NodeRepositoryTest extends KernelTestCase
      */
     public function testFindOneByNodeIdAndLanguageAndSiteIdAndLastVersion($language, $version = null, $siteId, $versionExpected)
     {
-        $node = $this->repository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::ROOT_NODE_ID, $language, $siteId);
+        $node = $this->repository->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(NodeInterface::ROOT_NODE_ID, $language, $siteId);
 
         $this->assertSameNode($language, $versionExpected, $siteId, $node);
     }
@@ -351,7 +351,7 @@ class NodeRepositoryTest extends KernelTestCase
      */
     public function testFindLastVersionByDeletedAndSiteId($siteId, $count)
     {
-        $this->assertCount($count, $this->repository->findLastVersionByDeletedAndSiteId($siteId));
+        $this->assertCount($count, $this->repository->findDeletedInLastVersionBySiteId($siteId));
     }
 
     /**

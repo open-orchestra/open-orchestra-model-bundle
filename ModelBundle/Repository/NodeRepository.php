@@ -49,7 +49,7 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      */
     public function getSubMenuByNodeIdAndNbLevelAndLanguageAndSiteId($nodeId, $nbLevel, $language, $siteId)
     {
-        $node = $this->findOneByNodeIdAndLanguageWithPublishedAndLastVersionAndSiteId($nodeId, $language, $siteId);
+        $node = $this->findOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion($nodeId, $language, $siteId);
 
         $list = array();
         $list[] = $node;
@@ -63,9 +63,33 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      * @param string $language
      * @param string $siteId
      *
+     * @deprecated will be removed in 0.3.0, use findOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion instead
+     *
      * @return mixed
      */
     public function findOneByNodeIdAndLanguageWithPublishedAndLastVersionAndSiteId($nodeId, $language, $siteId)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
+        $filter = array();
+        if ($nodeId !== NodeInterface::TRANSVERSE_NODE_ID) {
+            $filter['status.published'] = true;
+        }
+        $filter['deleted'] = false;
+        $filter['nodeId'] = $nodeId;
+        $qa->match($filter);
+        $qa->sort(array('version' => -1));
+
+        return $this->singleHydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param string $nodeId
+     * @param string $language
+     * @param string $siteId
+     *
+     * @return mixed
+     */
+    public function findOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion($nodeId, $language, $siteId)
     {
         $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         $filter = array();
@@ -86,7 +110,9 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      * @param string   $siteId
      * @param int|null $version
      *
-     * @return mixed
+     * @deprecated will be removed in 0.3.0, use findOneByNodeIdAndLanguageAndSiteIdAndVersion instead
+     *
+     * @return array
      */
     public function findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $language, $siteId, $version = null)
     {
@@ -102,7 +128,32 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
             return $this->singleHydrateAggregateQuery($qa);
         }
 
-        return $this->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($nodeId, $language, $siteId);
+        return $this->findOneByNodeIdAndLanguageAndSiteIdInLastVersion($nodeId, $language, $siteId);
+    }
+
+    /**
+     * @param string   $nodeId
+     * @param string   $language
+     * @param string   $siteId
+     * @param int|null $version
+     *
+     * @return array
+     */
+    public function findOneByNodeIdAndLanguageAndSiteIdAndVersion($nodeId, $language, $siteId, $version = null)
+    {
+        if (!is_null($version)) {
+            $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
+            $qa->match(
+                array(
+                    'nodeId'  => $nodeId,
+                    'deleted' => false,
+                    'version' => (int) $version,
+                )
+            );
+            return $this->singleHydrateAggregateQuery($qa);
+        }
+
+        return $this->findOneByNodeIdAndLanguageAndSiteIdInLastVersion($nodeId, $language, $siteId);
     }
 
     /**
@@ -182,9 +233,31 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      * @param string $language
      * @param string $siteId
      *
+     * @deprecated will be removed in 0.3.0, use findOneByNodeIdAndLanguageAndSiteIdInLastVersion instead
      * @return mixed
      */
     public function findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($nodeId, $language, $siteId)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
+        $qa->match(
+            array(
+                'nodeId'  => $nodeId,
+                'deleted' => false,
+            )
+        );
+        $qa->sort(array('version' => -1));
+
+        return $this->singleHydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param string $nodeId
+     * @param string $language
+     * @param string $siteId
+     *
+     * @return mixed
+     */
+    public function findOneByNodeIdAndLanguageAndSiteIdInLastVersion($nodeId, $language, $siteId)
     {
         $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         $qa->match(
@@ -213,9 +286,22 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      * @param string $siteId
      * @param string $type
      *
+     * @deprecated will be removed in 0.3.0, use findDeletedInLastVersionBySiteId instead
+     *
      * @return array
      */
     public function findLastVersionByDeletedAndSiteId($siteId, $type = NodeInterface::TYPE_DEFAULT)
+    {
+        return $this->prepareFindLastVersion($type, $siteId, true);
+    }
+
+    /**
+     * @param string $siteId
+     * @param string $type
+     *
+     * @return array
+     */
+    public function findDeletedInLastVersionBySiteId($siteId, $type = NodeInterface::TYPE_DEFAULT)
     {
         return $this->prepareFindLastVersion($type, $siteId, true);
     }
@@ -225,9 +311,26 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      * @param string $siteId
      * @param string $language
      *
+     * @deprecated will be removed in 0.3.0, use findChildByPathAndSiteIdAndLanguage instead
+     *
      * @return mixed
      */
     public function findChildsByPathAndSiteIdAndLanguage($path, $siteId, $language)
+    {
+        $qa = $this->buildTreeRequest($language, $siteId);
+        $qa->match(array('path' => new \MongoRegex('/'.preg_quote($path).'.+/')));
+
+        return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param string $path
+     * @param string $siteId
+     * @param string $language
+     *
+     * @return mixed
+     */
+    public function findChildrenByPathAndSiteIdAndLanguage($path, $siteId, $language)
     {
         $qa = $this->buildTreeRequest($language, $siteId);
         $qa->match(array('path' => new \MongoRegex('/'.preg_quote($path).'.+/')));
@@ -293,24 +396,6 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
         $qa->match(array('name' => $name));
 
         return $this->countDocumentAggregateQuery($qa) > 0;
-    }
-
-    /**
-     * @param string $parentId
-     * @param string $routePattern
-     * @param string $siteId
-     *
-     * @deprecated Used in dynamic routing only
-     *
-     * @return mixed
-     */
-    public function findOneByParendIdAndRoutePatternAndSiteId($parentId, $routePattern, $siteId)
-    {
-        return $this->findOneBy(array(
-            'parentId' => $parentId,
-            'routePattern' => $routePattern,
-            'siteId' => $siteId
-        ));
     }
 
     /**
@@ -454,9 +539,33 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      * @param string $nodeId
      * @param string $siteId
      *
+     * @will be removed in 0.3.0, use findByParentIdAndRoutePatternAndNodeIdAndSiteId instead
+     *
      * @return array
      */
     public function findByParentIdAndRoutePatternAndNotNodeIdAndSiteId($parentId, $routePattern, $nodeId, $siteId)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
+        $qa->match(
+            array(
+                'parentId'     => $parentId,
+                'routePattern' => $routePattern,
+                'nodeId'       => array('$ne' => $nodeId),
+            )
+        );
+
+        return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param string $parentId
+     * @param string $routePattern
+     * @param string $nodeId
+     * @param string $siteId
+     *
+     * @return array
+     */
+    public function findByParentIdAndRoutePatternAndNodeIdAndSiteId($parentId, $routePattern, $nodeId, $siteId)
     {
         $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
         $qa->match(
