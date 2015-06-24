@@ -18,13 +18,13 @@ services:
     open_orchestra_model.doctrine_listener.set_initial_status:
         class: %open_orchestra_model.doctrine_listener.set_initial_status.class%
         calls:
-            - [setContainer, ['@service_container']]
+            - [ setContainer, [ @service_container ] ]
         tags:
             -  { name: doctrine_mongodb.odm.event_listener, event: prePersist }
     open_orchestra_model.doctrine_listener.generate_path:
         class: %open_orchestra_model.doctrine_listener.generate_path.class%
-        arguments:
-            - @service_container
+        calls:
+            - [setContainer, ['@service_container']]
         tags:
             -  { name: doctrine_mongodb.odm.event_listener, event: prePersist }
             -  { name: doctrine_mongodb.odm.event_listener, event: preUpdate }
@@ -32,9 +32,10 @@ services:
     open_orchestra_model.doctrine_listener.generate_id:
         class: %open_orchestra_model.doctrine_listener.generate_id.class%
         arguments:
-            - @service_container
             - @open_orchestra_model.annotation_reader
             - @open_orchestra_model.helper.suppress_special_character
+        calls:
+            - [setContainer, ['@service_container']]
         tags:
             - { name: doctrine_mongodb.odm.event_listener, event: prePersist }
     open_orchestra_model.doctrine_listener.save_published_document:
@@ -44,8 +45,9 @@ services:
     open_orchestra_model.doctrine_listener.transversal_node_creator:
         class: %open_orchestra_model.doctrine_listener.transversal_node_creator.class%
         arguments:
-            - @service_container
             - @open_orchestra_model.manager.node
+        calls:
+            - [setContainer, ['@service_container']]
         tags:
             -  { name: doctrine_mongodb.odm.event_listener, event: prePersist }
             -  { name: doctrine_mongodb.odm.event_listener, event: preUpdate }

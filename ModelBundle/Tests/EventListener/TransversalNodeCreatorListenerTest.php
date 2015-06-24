@@ -59,7 +59,8 @@ class TransversalNodeCreatorListenerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->event)->getDocument()->thenReturn($this->site);
         Phake::when($this->event)->getDocumentManager()->thenReturn($this->documentManager);
 
-        $this->listener = new TransversalNodeCreatorListener($this->container, $this->nodeManager);
+        $this->listener = new TransversalNodeCreatorListener($this->nodeManager);
+        $this->listener->setContainer($this->container);
     }
 
     /**

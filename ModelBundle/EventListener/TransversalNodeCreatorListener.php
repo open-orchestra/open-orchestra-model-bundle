@@ -8,25 +8,22 @@ use OpenOrchestra\ModelBundle\Manager\NodeManager;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\ModelBundle\Repository\NodeRepository;
-use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerAware;
 
 /**
  * Class TransversalNodeCreatorListener
  */
-class TransversalNodeCreatorListener
+class TransversalNodeCreatorListener extends ContainerAware
 {
-    protected $container;
     protected $nodeManager;
 
     public $nodes;
 
     /**
-     * @param Container   $container
      * @param NodeManager $nodeManager
      */
-    public function __construct(Container $container, NodeManager $nodeManager)
+    public function __construct(NodeManager $nodeManager)
     {
-        $this->container = $container;
         $this->nodeManager = $nodeManager;
         $this->nodes = array();
     }

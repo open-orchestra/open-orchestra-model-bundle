@@ -31,7 +31,8 @@ class GeneratePathListenerTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->container)->get(Phake::anyParameters())->thenReturn($this->nodeRepository);
         $this->documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
 
-        $this->listener = new GeneratePathListener($this->container);
+        $this->listener = new GeneratePathListener();
+        $this->listener->setContainer($this->container);
     }
 
     /**
@@ -63,12 +64,12 @@ class GeneratePathListenerTest extends \PHPUnit_Framework_TestCase
      * @param string          $method
      * @param Node            $node
      * @param Node            $parentNode
-     * @param ArrayCollection $childs
+     * @param ArrayCollection $children
      * @param array           $expectedPath
      *
      * @dataProvider provideNodeForRecord
      */
-    public function testRecord($method, Node $node, Node $parentNode, ArrayCollection $childs, $expectedPath)
+    public function testRecord($method, Node $node, Node $parentNode, ArrayCollection $children, $expectedPath)
     {
         $documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
         $unitOfWork = Phake::mock('Doctrine\ODM\MongoDB\UnitOfWork');
@@ -79,7 +80,7 @@ class GeneratePathListenerTest extends \PHPUnit_Framework_TestCase
         Phake::when($documentManager)->getUnitOfWork()->thenReturn($unitOfWork);
         Phake::when($this->lifecycleEventArgs)->getDocument()->thenReturn($node);
         Phake::when($this->lifecycleEventArgs)->getDocumentManager()->thenReturn($documentManager);
-        Phake::when($this->nodeRepository)->findChildsByPathAndSiteIdAndLanguage(Phake::anyParameters())->thenReturn($childs);
+        Phake::when($this->nodeRepository)->findChildsByPathAndSiteIdAndLanguage(Phake::anyParameters())->thenReturn($children);
 
         $this->listener->$method($this->lifecycleEventArgs);
 
@@ -87,7 +88,7 @@ class GeneratePathListenerTest extends \PHPUnit_Framework_TestCase
         Phake::verify($node)->setPath($expectedPath[0]);
         Phake::verify($documentManager, Phake::never())->getRepository(Phake::anyParameters());
         $count = 1;
-        foreach ($childs as $child) {
+        foreach ($children as $child) {
             Phake::verify($child)->setPath($expectedPath[$count]);
             $count ++;
         }
@@ -110,8 +111,8 @@ class GeneratePathListenerTest extends \PHPUnit_Framework_TestCase
         $child0_0 = Phake::mock('OpenOrchestra\ModelBundle\Document\Node');
         Phake::when($child0_0)->getPath()->thenReturn('fakeParentPath/fakePastId/fakeChild0Id');
 
-        $childs0 = new ArrayCollection();
-        $childs0->add($child0_0);
+        $children0 = new ArrayCollection();
+        $children0->add($child0_0);
 
         $node1 = Phake::mock('OpenOrchestra\ModelBundle\Document\Node');
         Phake::when($node1)->getNodeId()->thenReturn('fakeId');
@@ -124,13 +125,13 @@ class GeneratePathListenerTest extends \PHPUnit_Framework_TestCase
         $child1_0 = Phake::mock('OpenOrchestra\ModelBundle\Document\Node');
         Phake::when($child1_0)->getPath()->thenReturn('fakeParentPath/fakePastId/fakeChild0Id');
 
-        $childs1 = new ArrayCollection();
-        $childs1->add($child1_0);
+        $children1 = new ArrayCollection();
+        $children1->add($child1_0);
 
 
         return array(
-            array('prePersist', $node0, $parentNode0, $childs0, array('fakeParentPath/fakeId', 'fakeParentPath/fakeId/fakeChild0Id')),
-            array('preUpdate', $node1, $parentNode1, $childs1, array('fakeParentPath/fakeId', 'fakeParentPath/fakeId/fakeChild0Id'))
+            array('prePersist', $node0, $parentNode0, $children0, array('fakeParentPath/fakeId', 'fakeParentPath/fakeId/fakeChild0Id')),
+            array('preUpdate', $node1, $parentNode1, $children1, array('fakeParentPath/fakeId', 'fakeParentPath/fakeId/fakeChild0Id'))
         );
     }
 
