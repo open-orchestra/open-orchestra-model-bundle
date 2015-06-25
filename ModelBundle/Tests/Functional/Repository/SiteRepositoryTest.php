@@ -32,21 +32,19 @@ class SiteRepositoryTest extends KernelTestCase
      * @param array   $columns
      * @param array   $descriptionEntity
      * @param string  $search
-     * @param array   $order
      * @param int     $skip
      * @param int     $limit
      * @param integer $count
      * 
      * @dataProvider provideDeletedAndPaginateAndSearch
      */
-    public function testFindByDeletedForPaginateAndSearch($deleted, $descriptionEntity, $columns, $search, $order, $skip, $limit, $count)
+    public function testFindByDeletedForPaginateAndSearch($deleted, $descriptionEntity, $columns, $search, $skip, $limit, $count)
     {
         $configuration = new PaginateFinderConfiguration();
         $configuration->setColumns($columns);
         $configuration->setSearch($search);
         $configuration->setDescriptionEntity($descriptionEntity);
         $configuration->setLimit($limit);
-        $configuration->setOrder($order);
         $configuration->setSkip($skip);
 
         $sites = $this->repository->findByDeletedForPaginate($deleted, $configuration);
@@ -61,14 +59,14 @@ class SiteRepositoryTest extends KernelTestCase
         $descriptionEntity = $this->getDescriptionColumnEntity();
 
         return array(
-            array(false, null, null, null, null, 0 ,2 , 2),
-            array(false, null, null, null, null, 0 ,1 , 1),
-            array(true, null, null, null, null, 0 ,2 , 1),
-            array(false, $descriptionEntity, $this->generateColumnsProvider('2'), 'demo', null, null, null, 1),
-            array(false, $descriptionEntity, $this->generateColumnsProvider('1'), 'demo', null, null, null, 0),
-            array(false, $descriptionEntity, $this->generateColumnsProvider('1', 'demo'), null, null, null, null, 0),
-            array(false, $descriptionEntity, $this->generateColumnsProvider('1', 'first'), null, null, null, null, 1),
-            array(false, $descriptionEntity, $this->generateColumnsProvider(), 'fake search', null, null, null, 0)
+            array(false, array(), array(), null, 0 ,2 , 2),
+            array(false, array(), array(), null, 0 ,1 , 1),
+            array(true, array(), array(), null, 0 ,2 , 1),
+            array(false, $descriptionEntity, $this->generateColumnsProvider('2'), 'demo', null, null, 1),
+            array(false, $descriptionEntity, $this->generateColumnsProvider('1'), 'demo', null, null, 0),
+            array(false, $descriptionEntity, $this->generateColumnsProvider('1', 'demo'), null, null, null, 0),
+            array(false, $descriptionEntity, $this->generateColumnsProvider('1', 'first'), null, null, null, 1),
+            array(false, $descriptionEntity, $this->generateColumnsProvider(), 'fake search', null, null, 0)
         );
     }
 
