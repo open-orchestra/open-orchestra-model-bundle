@@ -3,6 +3,7 @@
 namespace OpenOrchestra\ModelBundle\Tests\Functional\Repository;
 
 use OpenOrchestra\ModelBundle\Repository\SiteRepository;
+use OpenOrchestra\ModelInterface\Repository\Configuration\PaginateFinderConfiguration;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
@@ -40,7 +41,15 @@ class SiteRepositoryTest extends KernelTestCase
      */
     public function testFindByDeletedForPaginateAndSearch($deleted, $descriptionEntity, $columns, $search, $order, $skip, $limit, $count)
     {
-        $sites = $this->repository->findByDeletedForPaginateAndSearch($deleted, $descriptionEntity, $columns, $search, $order, $skip, $limit);
+        $configuration = new PaginateFinderConfiguration();
+        $configuration->setColumns($columns);
+        $configuration->setSearch($search);
+        $configuration->setDescriptionEntity($descriptionEntity);
+        $configuration->setLimit($limit);
+        $configuration->setOrder($order);
+        $configuration->setSkip($skip);
+
+        $sites = $this->repository->findByDeletedForPaginate($deleted, $configuration);
         $this->assertCount($count, $sites);
     }
 
@@ -77,7 +86,15 @@ class SiteRepositoryTest extends KernelTestCase
      */
     public function testOrderFindByDeletedForPaginateAndSearch($deleted, $descriptionEntity, $columns, $search, $order, $skip, $limit, $orderId)
     {
-        $sites = $this->repository->findByDeletedForPaginateAndSearch($deleted, $descriptionEntity, $columns, $search, $order, $skip, $limit);
+        $configuration = new PaginateFinderConfiguration();
+        $configuration->setColumns($columns);
+        $configuration->setSearch($search);
+        $configuration->setDescriptionEntity($descriptionEntity);
+        $configuration->setLimit($limit);
+        $configuration->setOrder($order);
+        $configuration->setSkip($skip);
+
+        $sites = $this->repository->findByDeletedForPaginate($deleted, $configuration);
         $this->assertSameOrder($sites, $orderId);
     }
 

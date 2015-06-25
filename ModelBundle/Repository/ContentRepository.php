@@ -3,6 +3,8 @@
 namespace OpenOrchestra\ModelBundle\Repository;
 
 use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\PaginateAndSearchFilterTrait;
+use OpenOrchestra\ModelInterface\Repository\Configuration\FinderConfiguration;
+use OpenOrchestra\ModelInterface\Repository\Configuration\PaginateFinderConfiguration;
 use OpenOrchestra\ModelInterface\Repository\FieldAutoGenerableRepositoryInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
@@ -215,8 +217,9 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      *
      * @param string $contentType
      *
-     * @return array
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     *
+     * @return array
      */
     public function findByContentTypeInLastVersion($contentType = null)
     {
@@ -258,13 +261,14 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
 
     /**
      * @param string|null $contentType
-     * @param array|null $descriptionEntity
-     * @param array|null $columns
+     * @param array|null  $descriptionEntity
+     * @param array|null  $columns
      * @param string|null $search
      * @param string|null $siteId
-     * @param array|null $order
-     * @param int|null $skip
-     * @param int|null $limit
+     * @param array|null  $order
+     * @param int|null    $skip
+     * @param int|null    $limit
+     *
      *
      * @return array
      */
@@ -289,10 +293,44 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
     }
 
     /**
+     * @param string|null                 $contentType
+     * @param PaginateFinderConfiguration $configuration
+     * @param int|null                    $siteId
+     *
+     * @return array
+     */
+    public function findByContentTypeAndSiteIdInLastVersionForPaginate($contentType = null, PaginateFinderConfiguration $configuration = null, $siteId = null)
+    {
+        $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
+        $qa = $this->generateFilter($qa, $configuration->getFinderConfiguration());
+        $qa->match($this->generateDeletedFilter());
+        if (!is_null($siteId)) {
+            $qa->match(array('$or' => array(array('siteId' => $siteId), array('linkedToSite' => false))));
+        }
+
+        $elementName = 'content';
+        $qa->group($this->generateLastVersionFilter($elementName));
+
+        $qa = $this->generateFilterSort(
+            $qa,
+            $configuration->getOrder(),
+            $configuration->getDescriptionEntity(),
+            $configuration->getColumns(),
+            $elementName);
+
+        $qa = $this->generateSkipFilter($qa, $configuration->getSkip());
+        $qa = $this->generateLimitFilter($qa, $configuration->getLimit());
+
+        return $this->hydrateAggregateQuery($qa, $elementName);
+    }
+
+    /**
      * @param string|null $contentType
      * @param array|null  $descriptionEntity
      * @param array|null  $columns
      * @param string|null $search
+     *
+     * @deprecated will be remove in 0.3.0, use countWithSearchFilterByContentTypeInLastVersion instead
      *
      * @return int
      */
@@ -300,6 +338,23 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
     {
         $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
         $qa = $this->generateFilterForSearch($qa, $descriptionEntity, $columns, $search);
+        $qa->match($this->generateDeletedFilter());
+        $elementName = 'content';
+        $qa->group($this->generateLastVersionFilter($elementName));
+
+        return $this->countDocumentAggregateQuery($qa, $elementName);
+    }
+
+    /**
+     * @param null                $contentType
+     * @param FinderConfiguration $configuration
+     *
+     * @return int
+     */
+    public function countByContentTypeInLastVersionWithFilter($contentType = null, FinderConfiguration $configuration = null)
+    {
+        $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
+        $qa = $this->generateFilter($qa, $configuration);
         $qa->match($this->generateDeletedFilter());
         $elementName = 'content';
         $qa->group($this->generateLastVersionFilter($elementName));

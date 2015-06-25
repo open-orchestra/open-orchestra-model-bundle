@@ -16,7 +16,7 @@ trait PaginateAndSearchFilterTrait
      * @param int|null    $skip
      * @param int|null    $limit
      *
-     * @deprecated will be removed in 2.11, use findForPaginate instead
+     * @deprecated will be removed in 0.3.0, use findForPaginate instead
      *
      * @return array
      */
@@ -40,16 +40,16 @@ trait PaginateAndSearchFilterTrait
 
         return $this->hydrateAggregateQuery($qa);
     }
+
     /**
      * @param array|null   $columns
      * @param array|null   $descriptionEntity
      * @param array|null   $search
      *
-     * @deprecated will be removed in 2.11, use countWithFilter instead;
+     * @deprecated will be removed in 0.3.0, use countWithFilter instead;
      *
      * @return int
      */
-
     public function countWithSearchFilter($descriptionEntity = null, $columns = null, $search = null)
     {
         $qa = $this->createAggregationQuery();
@@ -71,7 +71,6 @@ trait PaginateAndSearchFilterTrait
         return $this->countDocumentAggregateQuery($qa);
     }
 
-
     /**
      * Count all document
      *
@@ -90,7 +89,7 @@ trait PaginateAndSearchFilterTrait
      * @param array|null  $columns
      * @param string|null $search
      *
-     * @deprecated will be remove in 2.11, use generateFilter instead
+     * @deprecated will be remove in 0.3.0, use generateFilter instead
      *
      * @return Stage
      */
@@ -107,7 +106,7 @@ trait PaginateAndSearchFilterTrait
     }
 
     /**
-     * @param Stage       $qa
+     * @param Stage               $qa
      * @param FinderConfiguration $configuration
      *
      * @return Stage
@@ -135,7 +134,7 @@ trait PaginateAndSearchFilterTrait
      * @param int|null    $skip
      * @param int|null    $limit
      *
-     * @deprecated will be remove in 2.11, use generateFilterForPaginate instead
+     * @deprecated will be remove in 0.3.0, use generateFilterForPaginate instead
      *
      * @return Stage
      */
@@ -150,7 +149,7 @@ trait PaginateAndSearchFilterTrait
     }
 
     /**
-     * @param Stage $qa
+     * @param Stage                       $qa
      * @param PaginateFinderConfiguration $configuration
      *
      * @return Stage
@@ -276,7 +275,7 @@ trait PaginateAndSearchFilterTrait
      * @param array  $descriptionEntity
      * @param string $search global search
      *
-     * @deprecated will be removed in 2.11, use generateSearchFilter instead
+     * @deprecated will be removed in 0.3.0, use generateSearchFilter instead
      *
      * @return array|null
      */
