@@ -3,12 +3,17 @@
 namespace OpenOrchestra\ModelBundle\Tests\Document;
 
 use OpenOrchestra\ModelBundle\Document\Site;
+use OpenOrchestra\ModelInterface\Model\SiteInterface;
+use Phake;
 
 /**
  * Class SiteTest
  */
 class SiteTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var SiteInterface
+     */
     protected $site;
 
     /**
@@ -61,4 +66,33 @@ class SiteTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @param int    $aliasId
+     * @param string $language
+     *
+     * @dataProvider provideAliasIdAndLanguage
+     */
+    public function testGetAliasIdForLanguage($aliasId, $language)
+    {
+        $alias1 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteAliasInterface');
+        Phake::when($alias1)->getLanguage()->thenReturn('fr');
+        $alias2 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteAliasInterface');
+        Phake::when($alias2)->getLanguage()->thenReturn('en');
+
+        $this->site->addAlias($alias1);
+        $this->site->addAlias($alias2);
+
+        $this->assertSame($aliasId, $this->site->getAliasIdForLanguage($language));
+    }
+
+    /**
+     * @return array
+     */
+    public function provideAliasIdAndLanguage()
+    {
+        return array(
+            array(0, 'fr'),
+            array(1, 'en'),
+        );
+    }
 }

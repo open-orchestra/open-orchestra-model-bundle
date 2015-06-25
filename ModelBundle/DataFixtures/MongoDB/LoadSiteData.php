@@ -8,6 +8,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\ModelBundle\Document\Site;
 use OpenOrchestra\ModelBundle\Document\SiteAlias;
 use OpenOrchestra\ModelInterface\Model\SchemeableInterface;
+use OpenOrchestra\ModelInterface\Model\SiteInterface;
 
 /**
  * Class LoadSiteData
@@ -64,7 +65,8 @@ class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface
         $this->addSitesAliases(
             array('demo.open-orchestra.com', 'demo.openorchestra.inte', 'demo.openorchestra.dev'),
             array('fr', 'en'),
-            $site2);
+            $site2,
+            array('en' => 'en'));
         $site2->setDeleted(false);
         $site2->setTheme($this->getReference('themePresentation'));
         $site2->addBlock('carrousel');
@@ -136,17 +138,19 @@ class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface
     }
 
     /**
-     * @param array $sitesNames
-     * @param array $sitesLanguages
-     * @param $site
+     * @param array         $sitesNames
+     * @param array         $sitesLanguages
+     * @param SiteInterface $site
+     * @param array         $prefixes
      */
-    protected function addSitesAliases(array $sitesNames, array $sitesLanguages, $site)
+    protected function addSitesAliases(array $sitesNames, array $sitesLanguages, $site, array $prefixes = array())
     {
-        $master = TRUE;
+        $master = true;
         foreach($sitesNames as $siteName ) {
             foreach($sitesLanguages as $siteLanguage){
-                $site->addAlias($this->generateSiteAlias($siteName, $siteLanguage, $master));
-                $master = FALSE;
+                $prefix = (isset ($prefixes[$siteLanguage]))?$prefixes[$siteLanguage]:null;
+                $site->addAlias($this->generateSiteAlias($siteName, $siteLanguage, $master, $prefix));
+                $master = false;
             }
         }
     }

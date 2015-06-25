@@ -388,7 +388,7 @@ class NodeRepositoryTest extends KernelTestCase
     public function provideLanguageSiteIdAndCount()
     {
         return array(
-            array('en', '2', 0),
+            array('en', '2', 1),
             array('fr', '2', 5),
         );
     }
