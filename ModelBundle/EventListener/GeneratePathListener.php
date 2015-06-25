@@ -5,23 +5,14 @@ namespace OpenOrchestra\ModelBundle\EventListener;
 use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
 use Doctrine\ODM\MongoDB\Event\PostFlushEventArgs;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
-use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerAware;
 
 /**
  * Class GeneratePathListener
  */
-class GeneratePathListener
+class GeneratePathListener extends ContainerAware
 {
-    protected $container;
     public $nodes;
-
-    /**
-     * @param Container $container
-     */
-    public function __construct(Container $container)
-    {
-        $this->container = $container;
-    }
 
     /**
      * @param LifecycleEventArgs $event

@@ -6,26 +6,23 @@ use Doctrine\Common\Inflector\Inflector;
 use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
 use Doctrine\Common\Annotations\AnnotationReader;
 use OpenOrchestra\ModelInterface\Helper\SuppressSpecialCharacterHelperInterface;
-use Symfony\Component\DependencyInjection\Container;
 use OpenOrchestra\ModelInterface\Repository\FieldAutoGenerableRepositoryInterface;
+use Symfony\Component\DependencyInjection\ContainerAware;
 
 /**
  * Class GenerateIdListener
  */
-class GenerateIdListener
+class GenerateIdListener extends ContainerAware
 {
-    protected $container;
     protected $annotationReader;
     protected $suppressSpecialCharacterHelper;
 
     /**
-     * @param Container                               $container
      * @param AnnotationReader                        $annotationReader
      * @param SuppressSpecialCharacterHelperInterface $suppressSpecialCharacterHelper
      */
-    public function __construct(Container $container, AnnotationReader $annotationReader, SuppressSpecialCharacterHelperInterface $suppressSpecialCharacterHelper)
+    public function __construct(AnnotationReader $annotationReader, SuppressSpecialCharacterHelperInterface $suppressSpecialCharacterHelper)
     {
-        $this->container = $container;
         $this->annotationReader = $annotationReader;
         $this->suppressSpecialCharacterHelper = $suppressSpecialCharacterHelper;
     }
