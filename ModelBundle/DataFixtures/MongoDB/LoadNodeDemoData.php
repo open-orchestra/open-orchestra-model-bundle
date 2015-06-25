@@ -5,6 +5,7 @@ namespace OpenOrchestra\ModelBundle\DataFixtures\MongoDB;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\LanguageListStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\TinyMCEWysiwygStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\FooterStrategy;
 use OpenOrchestra\ModelBundle\Document\Area;
@@ -26,7 +27,8 @@ class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterfac
     {
         $transverseFr = $this->generateNodeTransverse('fr');
         $manager->persist($transverseFr);
-        $manager->persist($this->generateNodeTransverse('en'));
+        $transverseEn = $this->generateNodeTransverse('en');
+        $manager->persist($transverseEn);
 
         $siteHome = $this->generateNodeSiteHome($transverseFr->getId());
         $this->addAreaRef($transverseFr, $siteHome);
@@ -40,9 +42,13 @@ class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterfac
         $this->addAreaRef($transverseFr, $siteLegalMention);
         $manager->persist($siteLegalMention);
 
-        $siteCommunity = $this->generateNodeSiteCommunity($transverseFr->getId());
-        $this->addAreaRef($transverseFr, $siteCommunity);
-        $manager->persist($siteCommunity);
+        $siteCommunityFr = $this->generateNodeSiteCommunityFr();
+        $this->addAreaRef($transverseFr, $siteCommunityFr);
+        $manager->persist($siteCommunityFr);
+
+        $siteCommunityEn = $this->generateNodeSiteCommunityEn();
+        $this->addAreaRef($transverseEn, $siteCommunityEn);
+        $manager->persist($siteCommunityEn);
 
         $siteNews = $this->generateNodeSiteNews($transverseFr->getId());
         $this->addAreaRef($transverseFr, $siteNews);
@@ -241,7 +247,7 @@ EOF
     /**
      * @return Node
      */
-    public function generateNodeSiteCommunity()
+    public function generateNodeSiteCommunityFr()
     {
         $siteComBlock0 = new Block();
         $siteComBlock0->setLabel('Wysiwyg 1');
@@ -262,10 +268,16 @@ EOF
         ));
         $siteComBlock0->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));
 
+        $siteComBlock1 = new Block();
+        $siteComBlock1->setLabel('Language list');
+        $siteComBlock1->setComponent(LanguageListStrategy::LANGUAGE_LIST);
+        $siteComBlock1->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));
+
         $siteComArea1 = $this->createLogo();
         $siteComArea2 = $this->createMainMenu();
         $siteComArea0 = $this->createHeader(array($siteComArea1,$siteComArea2));
         $siteComArea4 = $this->createArea('Main content area 1', 'mainContentArea1', 'main-content-area1');
+        $siteComArea4->addBlock(array('nodeId' => 0, 'blockId' => 1));
         $siteComArea4->addBlock(array('nodeId' => 0, 'blockId' => 0));
         $siteComArea5 = $this->createModuleArea();
         $siteComArea3 = $this->createMain(array($siteComArea4, $siteComArea5));
@@ -277,7 +289,7 @@ EOF
         $siteCom->setName('Communauté');
         $siteCom->setParentId(NodeInterface::ROOT_NODE_ID);
         $siteCom->setOrder(3);
-        $siteCom->setRoutePattern('/page-community');
+        $siteCom->setRoutePattern('page-communaute');
         $siteCom->setTheme('themePresentation');
         $siteCom->setInFooter(false);
         $siteCom->setInMenu(true);
@@ -285,6 +297,66 @@ EOF
         $siteCom->addArea($siteComArea3);
         $siteCom->addArea($siteComArea6);
         $siteCom->addBlock($siteComBlock0);
+        $siteCom->addBlock($siteComBlock1);
+
+        return $siteCom;
+    }
+
+    /**
+     * @return Node
+     */
+    public function generateNodeSiteCommunityEn()
+    {
+        $siteComBlock0 = new Block();
+        $siteComBlock0->setLabel('Wysiwyg 1');
+        $siteComBlock0->setComponent(TinyMCEWysiwygStrategy::TINYMCEWYSIWYG);
+        $siteComBlock0->setAttributes(array(
+            "htmlContent" => <<<EOF
+<div class='content2'>
+    <h1>Community</h1>
+    <p>We encourage you to follow the Open Orchestra community through our different communication way : </p>
+    <ul>
+        <li>To contribute and follow our modifications : <a href="https://github.com/open-orchestra/"><strong>Github</strong></a></li>
+        <li>To ask technical questions : <a href="https://groups.google.com/forum/#!forum/open-orchestra"><strong>Google group</strong></a></li>
+        <li>To follow the platform news : <a href="https://twitter.com/open_orchestra"><strong>Twitter</strong></a></li>
+        <li>For more information : <a href="http://open-orchestra.com/"><strong>Site officiel</strong></a></li>
+    </ul>
+</div>
+EOF
+        ));
+        $siteComBlock0->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));
+
+        $siteComBlock1 = new Block();
+        $siteComBlock1->setLabel('Language list');
+        $siteComBlock1->setComponent(LanguageListStrategy::LANGUAGE_LIST);
+        $siteComBlock1->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));
+
+        $siteComArea1 = $this->createLogo();
+        $siteComArea2 = $this->createMainMenu();
+        $siteComArea0 = $this->createHeader(array($siteComArea1,$siteComArea2));
+        $siteComArea4 = $this->createArea('Main content area 1', 'mainContentArea1', 'main-content-area1');
+        $siteComArea4->addBlock(array('nodeId' => 0, 'blockId' => 1));
+        $siteComArea4->addBlock(array('nodeId' => 0, 'blockId' => 0));
+        $siteComArea5 = $this->createModuleArea();
+        $siteComArea3 = $this->createMain(array($siteComArea4, $siteComArea5));
+        $siteComArea7 = $this->createFooter();
+        $siteComArea6 = $this->createFooterContainer($siteComArea7);
+
+        $siteCom = $this->createBaseNode();
+        $siteCom->setLanguage('en');
+        $siteCom->setNodeId('fixture_page_community');
+        $siteCom->setName('Communauté');
+        $siteCom->setParentId(NodeInterface::ROOT_NODE_ID);
+        $siteCom->setOrder(3);
+        $siteCom->setRoutePattern('page-community');
+        $siteCom->setTheme('themePresentation');
+        $siteCom->setInFooter(false);
+        $siteCom->setInMenu(true);
+        $siteCom->addArea($siteComArea0);
+        $siteCom->addArea($siteComArea3);
+        $siteCom->addArea($siteComArea6);
+        $siteCom->addBlock($siteComBlock0);
+        $siteCom->addBlock($siteComBlock1);
 
         return $siteCom;
     }
@@ -335,7 +407,7 @@ EOF
         $siteNews->setName('Actualité');
         $siteNews->setParentId(NodeInterface::ROOT_NODE_ID);
         $siteNews->setOrder(6);
-        $siteNews->setRoutePattern('/page-our-news');
+        $siteNews->setRoutePattern('page-nos-actualites');
         $siteNews->setInFooter(false);
         $siteNews->setInMenu(true);
         $siteNews->addArea($siteNewsArea0);
@@ -400,7 +472,7 @@ EOF
         $siteContact->setName('Contact');
         $siteContact->setParentId(NodeInterface::ROOT_NODE_ID);
         $siteContact->setOrder(9);
-        $siteContact->setRoutePattern('/page-contact');
+        $siteContact->setRoutePattern('page-contact');
         $siteContact->setInFooter(false);
         $siteContact->setInMenu(true);
         $siteContact->addArea($siteContactArea0);
@@ -450,7 +522,7 @@ EOF
         $siteLegal->setName('mentions légales');
         $siteLegal->setParentId(NodeInterface::ROOT_NODE_ID);
         $siteLegal->setOrder(10);
-        $siteLegal->setRoutePattern('/page-legal-mentions');
+        $siteLegal->setRoutePattern('page-mentions-legal');
         $siteLegal->setInFooter(true);
         $siteLegal->setInMenu(false);
         $siteLegal->addArea($siteLegalArea0);
