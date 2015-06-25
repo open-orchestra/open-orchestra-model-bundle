@@ -71,28 +71,20 @@ class SiteRepositoryTest extends KernelTestCase
     }
 
     /**
-     * @param boolean $deleted
-     * @param array   $columns
-     * @param array   $descriptionEntity
-     * @param string  $search
      * @param array   $order
-     * @param int     $skip
-     * @param int     $limit
      * @param array   $orderId
      *
      * @dataProvider provideOrderDeletedAndPaginateAndSearch
      */
-    public function testOrderFindByDeletedForPaginateAndSearch($deleted, $descriptionEntity, $columns, $search, $order, $skip, $limit, $orderId)
+    public function testOrderFindByDeletedForPaginateAndSearch($order, $orderId)
     {
         $configuration = new PaginateFinderConfiguration();
-        $configuration->setColumns($columns);
-        $configuration->setSearch($search);
-        $configuration->setDescriptionEntity($descriptionEntity);
-        $configuration->setLimit($limit);
+        $configuration->setColumns($this->generateColumnsProvider('', 'site'));
+        $configuration->setDescriptionEntity($this->getDescriptionColumnEntity());
         $configuration->setOrder($order);
-        $configuration->setSkip($skip);
 
-        $sites = $this->repository->findByDeletedForPaginate($deleted, $configuration);
+        $sites = $this->repository->findByDeletedForPaginate(false, $configuration);
+
         $this->assertSameOrder($sites, $orderId);
     }
 
@@ -101,14 +93,11 @@ class SiteRepositoryTest extends KernelTestCase
      */
     public function provideOrderDeletedAndPaginateAndSearch()
     {
-        $columns = $this->generateColumnsProvider('', 'site');
-        $descriptionEntity = $this->getDescriptionColumnEntity();
-
         return array(
-            array(false, $descriptionEntity, $columns, null, array(array('column' => 0,'dir' => 'desc')), null, null, array(2, 1)),
-            array(false, $descriptionEntity, $columns, null, array(array('column' => 0,'dir' => 'asc')), null, null, array(1, 2)),
-            array(false, $descriptionEntity, $columns, null, array(array('column' => 1,'dir' => 'asc')), null, null, array(2, 1)),
-            array(false, $descriptionEntity, $columns, null, array(array('column' => 1,'dir' => 'desc')), null, null, array(1, 2)),
+            array(array(array('column' => 0,'dir' => 'desc')), array(2, 1)),
+            array(array(array('column' => 0,'dir' => 'asc')), array(1, 2)),
+            array(array(array('column' => 1,'dir' => 'asc')), array(2, 1)),
+            array(array(array('column' => 1,'dir' => 'desc')), array(1, 2)),
         );
     }
 
