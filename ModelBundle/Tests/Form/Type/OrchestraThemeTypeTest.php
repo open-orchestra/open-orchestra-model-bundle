@@ -49,9 +49,9 @@ class OrchestraThemeTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetDefaultOptions()
     {
-        $resolverMock = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolverInterface');
+        $resolverMock = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
 
-        $this->form->setDefaultOptions($resolverMock);
+        $this->form->configureOptions($resolverMock);
 
         Phake::verify($resolverMock)->setDefaults(array(
             'class' => $this->themeClass,

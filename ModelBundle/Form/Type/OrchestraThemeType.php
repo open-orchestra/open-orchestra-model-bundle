@@ -3,7 +3,7 @@
 namespace OpenOrchestra\ModelBundle\Form\Type;
 
 use OpenOrchestra\ModelInterface\Form\Type\AbstractOrchestraThemeType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class OrchestraThemeType
@@ -21,9 +21,9 @@ class OrchestraThemeType extends AbstractOrchestraThemeType
     }
 
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             array(
