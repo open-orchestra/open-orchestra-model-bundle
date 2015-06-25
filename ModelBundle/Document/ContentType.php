@@ -10,7 +10,6 @@ use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
-use OpenOrchestra\ModelInterface\ModelTrait\TranslatedValueFilter;
 use OpenOrchestra\ModelInterface\MongoTrait\SiteLinkable;
 use OpenOrchestra\ModelInterface\MongoTrait\Versionable;
 
@@ -26,7 +25,6 @@ class ContentType implements ContentTypeInterface
 {
     use BlameableDocument;
     use TimestampableDocument;
-    use TranslatedValueFilter;
     use Versionable;
     use SiteLinkable;
 
