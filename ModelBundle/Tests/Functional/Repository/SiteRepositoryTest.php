@@ -65,7 +65,7 @@ class SiteRepositoryTest extends KernelTestCase
             array(false, $descriptionEntity, $this->generateColumnsProvider('2'), 'demo', null, null, 1),
             array(false, $descriptionEntity, $this->generateColumnsProvider('1'), 'demo', null, null, 0),
             array(false, $descriptionEntity, $this->generateColumnsProvider('1', 'demo'), null, null, null, 0),
-            array(false, $descriptionEntity, $this->generateColumnsProvider('1', 'first'), null, null, null, 1),
+            array(false, $descriptionEntity, $this->generateColumnsProvider('1', 'front'), null, null, null, 1),
             array(false, $descriptionEntity, $this->generateColumnsProvider(), 'fake search', null, null, 0)
         );
     }
