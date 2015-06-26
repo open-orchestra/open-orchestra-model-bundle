@@ -6,6 +6,7 @@ use Symfony\Component\Validator\Constraint;
 
 /**
  * Class PreventPublishedDocumentSave
+ * @Annotation
  */
 class PreventPublishedDocumentSave extends Constraint
 {

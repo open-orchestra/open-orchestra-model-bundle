@@ -5,6 +5,7 @@ namespace OpenOrchestra\ModelBundle\Document;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Description of BaseArea
@@ -23,6 +24,7 @@ class Area implements AreaInterface
     /**
      * @var string $areaId
      *
+     * @Assert\NotBlank()
      * @ODM\Field(type="string")
      */
     protected $areaId;

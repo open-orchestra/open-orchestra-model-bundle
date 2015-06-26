@@ -12,6 +12,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
 use OpenOrchestra\ModelInterface\MongoTrait\SiteLinkable;
 use OpenOrchestra\ModelInterface\MongoTrait\Versionable;
+use Symfony\Component\Validator\Constraints as Assert;
+use OpenOrchestra\ModelBundle\Validator\Constraints as AssertOrchestra;
 
 /**
  * Description of ContentType
@@ -20,6 +22,9 @@ use OpenOrchestra\ModelInterface\MongoTrait\Versionable;
  *   collection="content_type",
  *   repositoryClass="OpenOrchestra\ModelBundle\Repository\ContentTypeRepository"
  * )
+ *
+ * @AssertOrchestra\UniqueContentTypeId
+ * @AssertOrchestra\UniqueFieldIdContentType
  */
 class ContentType implements ContentTypeInterface
 {
@@ -38,7 +43,13 @@ class ContentType implements ContentTypeInterface
     /**
      * @var string $contentTypeId
      *
+     * @Assert\NotBlank()
+     * @Assert\Regex(
+     *     pattern="/^[a-zA-Z0-9_][a-zA-Z0-9_\-:]*$/D",
+     *     message="open_orchestra_model_validators.field.special_character"
+     * )
      * @ODM\Field(type="string")
+     *
      */
     protected $contentTypeId;
 
@@ -50,6 +61,7 @@ class ContentType implements ContentTypeInterface
     /**
      * @var boolean $deleted
      *
+     * @Assert\Type(type="bool")
      * @ODM\Field(type="boolean")
      */
     protected $deleted = false;
@@ -64,6 +76,7 @@ class ContentType implements ContentTypeInterface
     /**
      * @var ArrayCollection $fields
      *
+     * @Assert\Valid
      * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\FieldTypeInterface")
      */
     protected $fields;

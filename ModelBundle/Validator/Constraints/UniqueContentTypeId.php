@@ -6,6 +6,7 @@ use Symfony\Component\Validator\Constraint;
 
 /**
  * Class UniqueContentTypeId
+ * @Annotation
  */
 class UniqueContentTypeId extends Constraint
 {

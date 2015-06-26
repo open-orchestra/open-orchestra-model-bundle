@@ -6,6 +6,7 @@ use Symfony\Component\Validator\Constraint;
 
 /**
  * Class PreventProhibitedStatusChange
+ * @Annotation
  */
 class PreventProhibitedStatusChange extends Constraint
 {

@@ -6,6 +6,7 @@ use Symfony\Component\Validator\Constraint;
 
 /**
  * Class CheckRoutePattern
+ * @Annotation
  */
 class CheckRoutePattern extends Constraint
 {

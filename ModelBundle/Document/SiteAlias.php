@@ -5,6 +5,7 @@ namespace OpenOrchestra\ModelBundle\Document;
 use OpenOrchestra\ModelInterface\Model\SiteAliasInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\ModelInterface\MongoTrait\Schemeable;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class SiteAlias
@@ -18,6 +19,7 @@ class SiteAlias implements SiteAliasInterface
     /**
      * @var string $domain
      *
+     * @Assert\NotBlank()
      * @ODM\Field(type="string")
      */
     protected $domain;
@@ -25,6 +27,7 @@ class SiteAlias implements SiteAliasInterface
     /**
      * @var string $language
      *
+     * @Assert\NotBlank()
      * @ODM\Field(type="string")
      */
     protected $language;
@@ -39,6 +42,7 @@ class SiteAlias implements SiteAliasInterface
     /**
      * @var boolean $main
      *
+     * @Assert\Type(type="bool")
      * @ODM\Field(type="boolean")
      */
     protected $main;

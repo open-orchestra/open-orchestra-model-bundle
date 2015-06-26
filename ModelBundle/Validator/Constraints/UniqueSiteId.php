@@ -6,6 +6,7 @@ use Symfony\Component\Validator\Constraint;
 
 /**
  * Class UniqueSiteId
+ * @Annotation
  */
 class UniqueSiteId extends Constraint
 {

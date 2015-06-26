@@ -4,6 +4,7 @@ namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\ModelInterface\Model\ContentAttributeInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Description of ContentAttribute
@@ -15,6 +16,7 @@ class ContentAttribute implements ContentAttributeInterface
     /**
      * @var string $name
      *
+     * @Assert\NotBlank()
      * @ODM\Field(type="string")
      */
     protected $name;

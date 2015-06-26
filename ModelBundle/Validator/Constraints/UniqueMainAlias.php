@@ -6,6 +6,7 @@ use Symfony\Component\Validator\Constraint;
 
 /**
  * Class UniqueMainAlias
+ * @Annotation
  */
 class UniqueMainAlias extends Constraint
 {

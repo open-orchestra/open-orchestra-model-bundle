@@ -9,6 +9,7 @@ use OpenOrchestra\ModelInterface\Model\FieldOptionInterface;
 use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
 use OpenOrchestra\ModelInterface\ModelTrait\TranslatedValueFilter;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Description of Base FieldType
@@ -22,6 +23,11 @@ class FieldType implements FieldTypeInterface
     /**
      * @var string $fieldId
      *
+     * @Assert\Regex(
+     *     pattern="/^[a-zA-Z0-9_][a-zA-Z0-9_\-:]*$/D",
+     *     message="open_orchestra_model_validators.field.special_character"
+     * )
+     * @Assert\NotBlank()
      * @ODM\Field(type="string")
      */
     protected $fieldId;
@@ -43,11 +49,15 @@ class FieldType implements FieldTypeInterface
     /**
      * @var boolean $searchable
      *
+     * @Assert\Type(type="bool")
      * @ODM\Field(type="boolean")
      */
     protected $searchable;
 
     /**
+     * @var boolean $translatable
+     *
+     * @Assert\Type(type="bool")
      * @ODM\Field(type="boolean")
      */
     protected $translatable = true;
@@ -55,6 +65,7 @@ class FieldType implements FieldTypeInterface
     /**
      * @var boolean $listable
      *
+     * @Assert\Type(type="bool")
      * @ODM\Field(type="boolean")
      */
     protected $listable;
@@ -69,6 +80,7 @@ class FieldType implements FieldTypeInterface
     /**
      * @var string $symfonyType
      *
+     * @Assert\NotBlank()
      * @ODM\Field(type="string")
      */
     protected $symfonyType;
@@ -76,6 +88,7 @@ class FieldType implements FieldTypeInterface
     /**
      * @var ArrayCollection $options
      *
+     * @Assert\Valid
      * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\FieldOptionInterface")
      */
     protected $options;

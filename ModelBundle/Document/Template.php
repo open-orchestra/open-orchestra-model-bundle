@@ -9,6 +9,7 @@ use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\ModelInterface\Model\TemplateInterface;
 use OpenOrchestra\ModelInterface\MongoTrait\Versionable;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Description of Template
@@ -52,6 +53,7 @@ class Template implements TemplateInterface
     /**
      * @var string $name
      *
+     * @Assert\NotBlank()
      * @ODM\Field(type="string")
      */
     protected $name;
@@ -59,6 +61,7 @@ class Template implements TemplateInterface
     /**
      * @var string
      *
+     * @Assert\NotBlank()
      * @ODM\Field(type="string")
      */
     protected $language;
@@ -66,6 +69,7 @@ class Template implements TemplateInterface
     /**
      * @var boolean
      *
+     * @Assert\Type(type="bool")
      * @ODM\Field(type="boolean")
      */
     protected $deleted = false;
@@ -73,6 +77,7 @@ class Template implements TemplateInterface
     /**
      * @var AreaInterface
      *
+     * @Assert\Valid
      * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\AreaInterface")
      */
     protected $areas;
@@ -80,6 +85,7 @@ class Template implements TemplateInterface
     /**
      * @var string $boDirection
      *
+     * @Assert\NotBlank()
      * @ODM\Field(type="string")
      */
     protected $boDirection;

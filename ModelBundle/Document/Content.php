@@ -15,6 +15,7 @@ use OpenOrchestra\ModelInterface\Model\ReadContentAttributeInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use OpenOrchestra\ModelInterface\MongoTrait\Keywordable;
 use OpenOrchestra\ModelInterface\MongoTrait\Versionable;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Description of Content
@@ -55,6 +56,7 @@ class Content implements ContentInterface
     /**
      * @var string $contentType
      *
+     * @Assert\NotBlank()
      * @ODM\Field(type="string")
      */
     protected $contentType;
@@ -62,6 +64,7 @@ class Content implements ContentInterface
     /**
      * @var string $name
      *
+     * @Assert\NotBlank()
      * @ODM\Field(type="string")
      */
     protected $name;
@@ -69,6 +72,7 @@ class Content implements ContentInterface
     /**
      * @var int $contentTypeVersion
      *
+     * @Assert\Type(type="integer")
      * @ODM\Field(type="int")
      */
     protected $contentTypeVersion;
@@ -76,6 +80,7 @@ class Content implements ContentInterface
     /**
      * @var string $language
      *
+     * @Assert\NotBlank()
      * @ODM\Field(type="string")
      */
     protected $language;
@@ -83,6 +88,7 @@ class Content implements ContentInterface
     /**
      * @var boolean
      *
+     * @Assert\Type(type="bool")
      * @ODM\Field(type="boolean")
      */
     protected $deleted = false;
@@ -90,6 +96,7 @@ class Content implements ContentInterface
     /**
      * @var ArrayCollection
      *
+     * @Assert\Valid
      * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\ContentAttributeInterface", strategy="set")
      */
     protected $attributes;
@@ -97,6 +104,7 @@ class Content implements ContentInterface
     /**
      * @var string $siteId
      *
+     * @Assert\NotBlank()
      * @ODM\Field(type="string")
      */
     protected $siteId;

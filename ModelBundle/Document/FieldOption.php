@@ -4,6 +4,7 @@ namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\ModelInterface\Model\FieldOptionInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Description of FieldOption
@@ -15,6 +16,7 @@ class FieldOption implements FieldOptionInterface
     /**
      * @var string
      *
+     * @Assert\NotBlank()
      * @ODM\Field(type="string")
      */
     protected $key;
@@ -22,6 +24,7 @@ class FieldOption implements FieldOptionInterface
     /**
      * @var string
      *
+     * @Assert\NotBlank()
      * @ODM\Field(type="string")
      */
     protected $value;

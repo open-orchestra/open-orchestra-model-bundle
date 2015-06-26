@@ -6,6 +6,7 @@ use Symfony\Component\Validator\Constraint;
 
 /**
  * Class CheckAreaPresence
+ * @Annotation
  */
 class CheckAreaPresence extends Constraint
 {
