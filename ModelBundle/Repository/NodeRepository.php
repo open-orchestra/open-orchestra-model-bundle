@@ -234,6 +234,7 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      * @param string $siteId
      *
      * @deprecated will be removed in 0.3.0, use findOneByNodeIdAndLanguageAndSiteIdInLastVersion instead
+     *
      * @return mixed
      */
     public function findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($nodeId, $language, $siteId)
@@ -301,7 +302,7 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      *
      * @return array
      */
-    public function findNotDeletedInLastVersionBySiteId($siteId, $type = NodeInterface::TYPE_DEFAULT)
+    public function findDeletedInLastVersionBySiteId($siteId, $type = NodeInterface::TYPE_DEFAULT)
     {
         return $this->prepareFindLastVersion($type, $siteId, true);
     }
