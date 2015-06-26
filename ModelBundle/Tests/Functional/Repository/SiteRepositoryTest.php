@@ -3,6 +3,7 @@
 namespace OpenOrchestra\ModelBundle\Tests\Functional\Repository;
 
 use OpenOrchestra\ModelBundle\Repository\SiteRepository;
+use OpenOrchestra\ModelInterface\Repository\Configuration\PaginateFinderConfiguration;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
@@ -31,16 +32,22 @@ class SiteRepositoryTest extends KernelTestCase
      * @param array   $columns
      * @param array   $descriptionEntity
      * @param string  $search
-     * @param array   $order
      * @param int     $skip
      * @param int     $limit
      * @param integer $count
      * 
      * @dataProvider provideDeletedAndPaginateAndSearch
      */
-    public function testFindByDeletedForPaginateAndSearch($deleted, $descriptionEntity, $columns, $search, $order, $skip, $limit, $count)
+    public function testFindByDeletedForPaginateAndSearch($deleted, $descriptionEntity, $columns, $search, $skip, $limit, $count)
     {
-        $sites = $this->repository->findByDeletedForPaginateAndSearch($deleted, $descriptionEntity, $columns, $search, $order, $skip, $limit);
+        $configuration = new PaginateFinderConfiguration();
+        $configuration->setColumns($columns);
+        $configuration->setSearch($search);
+        $configuration->setDescriptionEntity($descriptionEntity);
+        $configuration->setLimit($limit);
+        $configuration->setSkip($skip);
+
+        $sites = $this->repository->findByDeletedForPaginate($deleted, $configuration);
         $this->assertCount($count, $sites);
     }
 
@@ -52,32 +59,32 @@ class SiteRepositoryTest extends KernelTestCase
         $descriptionEntity = $this->getDescriptionColumnEntity();
 
         return array(
-            array(false, null, null, null, null, 0 ,2 , 2),
-            array(false, null, null, null, null, 0 ,1 , 1),
-            array(true, null, null, null, null, 0 ,2 , 1),
-            array(false, $descriptionEntity, $this->generateColumnsProvider('2'), 'demo', null, null, null, 1),
-            array(false, $descriptionEntity, $this->generateColumnsProvider('1'), 'demo', null, null, null, 0),
-            array(false, $descriptionEntity, $this->generateColumnsProvider('1', 'demo'), null, null, null, null, 0),
-            array(false, $descriptionEntity, $this->generateColumnsProvider('1', 'first'), null, null, null, null, 1),
-            array(false, $descriptionEntity, $this->generateColumnsProvider(), 'fake search', null, null, null, 0)
+            array(false, array(), array(), null, 0 ,2 , 2),
+            array(false, array(), array(), null, 0 ,1 , 1),
+            array(true, array(), array(), null, 0 ,2 , 1),
+            array(false, $descriptionEntity, $this->generateColumnsProvider('2'), 'demo', null, null, 1),
+            array(false, $descriptionEntity, $this->generateColumnsProvider('1'), 'demo', null, null, 0),
+            array(false, $descriptionEntity, $this->generateColumnsProvider('1', 'demo'), null, null, null, 0),
+            array(false, $descriptionEntity, $this->generateColumnsProvider('1', 'first'), null, null, null, 1),
+            array(false, $descriptionEntity, $this->generateColumnsProvider(), 'fake search', null, null, 0)
         );
     }
 
     /**
-     * @param boolean $deleted
-     * @param array   $columns
-     * @param array   $descriptionEntity
-     * @param string  $search
      * @param array   $order
-     * @param int     $skip
-     * @param int     $limit
      * @param array   $orderId
      *
      * @dataProvider provideOrderDeletedAndPaginateAndSearch
      */
-    public function testOrderFindByDeletedForPaginateAndSearch($deleted, $descriptionEntity, $columns, $search, $order, $skip, $limit, $orderId)
+    public function testOrderFindByDeletedForPaginateAndSearch($order, $orderId)
     {
-        $sites = $this->repository->findByDeletedForPaginateAndSearch($deleted, $descriptionEntity, $columns, $search, $order, $skip, $limit);
+        $configuration = new PaginateFinderConfiguration();
+        $configuration->setColumns($this->generateColumnsProvider('', 'site'));
+        $configuration->setDescriptionEntity($this->getDescriptionColumnEntity());
+        $configuration->setOrder($order);
+
+        $sites = $this->repository->findByDeletedForPaginate(false, $configuration);
+
         $this->assertSameOrder($sites, $orderId);
     }
 
@@ -86,14 +93,11 @@ class SiteRepositoryTest extends KernelTestCase
      */
     public function provideOrderDeletedAndPaginateAndSearch()
     {
-        $columns = $this->generateColumnsProvider('', 'site');
-        $descriptionEntity = $this->getDescriptionColumnEntity();
-
         return array(
-            array(false, $descriptionEntity, $columns, null, array(array('column' => 0,'dir' => 'desc')), null, null, array(2, 1)),
-            array(false, $descriptionEntity, $columns, null, array(array('column' => 0,'dir' => 'asc')), null, null, array(1, 2)),
-            array(false, $descriptionEntity, $columns, null, array(array('column' => 1,'dir' => 'asc')), null, null, array(2, 1)),
-            array(false, $descriptionEntity, $columns, null, array(array('column' => 1,'dir' => 'desc')), null, null, array(1, 2)),
+            array(array(array('column' => 0,'dir' => 'desc')), array(2, 1)),
+            array(array(array('column' => 0,'dir' => 'asc')), array(1, 2)),
+            array(array(array('column' => 1,'dir' => 'asc')), array(2, 1)),
+            array(array(array('column' => 1,'dir' => 'desc')), array(1, 2)),
         );
     }
 

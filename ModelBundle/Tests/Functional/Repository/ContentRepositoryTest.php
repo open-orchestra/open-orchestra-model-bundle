@@ -2,6 +2,8 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\Functional\Repository;
 
+use OpenOrchestra\ModelInterface\Repository\Configuration\FinderConfiguration;
+use OpenOrchestra\ModelInterface\Repository\Configuration\PaginateFinderConfiguration;
 use Phake;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -287,7 +289,13 @@ class ContentRepositoryTest extends KernelTestCase
      */
     public function testFindByContentTypeInLastVersionForPaginateAndSearchAndSiteId($contentType, $descriptionEntity, $columns, $siteId, $skip, $limit, $count)
     {
-        $contents = $this->repository->findByContentTypeInLastVersionForPaginateAndSearchAndSiteId($contentType, $descriptionEntity, $columns, null, $siteId, null, $skip, $limit);
+        $pageConfiguration = new PaginateFinderConfiguration();
+        $pageConfiguration->setDescriptionEntity($descriptionEntity);
+        $pageConfiguration->setColumns($columns);
+        $pageConfiguration->setSkip($skip);
+        $pageConfiguration->setLimit($limit);
+
+        $contents = $this->repository->findByContentTypeAndSiteIdInLastVersionForPaginate($contentType, $pageConfiguration, $siteId);
         $this->assertCount($count, $contents);
     }
 
@@ -346,7 +354,12 @@ class ContentRepositoryTest extends KernelTestCase
      */
     public function testCountByContentTypeInLastVersionWithSearchFilter($contentType, $descriptionEntity, $columns, $search, $count)
     {
-        $sites = $this->repository->countByContentTypeInLastVersionWithSearchFilter($contentType, $descriptionEntity, $columns, $search);
+        $configuration = new FinderConfiguration();
+        $configuration->setColumns($columns);
+        $configuration->setSearch($search);
+        $configuration->setDescriptionEntity($descriptionEntity);
+
+        $sites = $this->repository->countByContentTypeInLastVersionWithFilter($contentType, $configuration);
         $this->assertEquals($count, $sites);
     }
 

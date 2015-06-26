@@ -2,6 +2,8 @@
 
 namespace OpenOrchestra\ModelBundle\Repository\RepositoryTrait;
 
+use OpenOrchestra\ModelInterface\Repository\Configuration\FinderConfiguration;
+use OpenOrchestra\ModelInterface\Repository\Configuration\PaginateFinderConfiguration;
 use Solution\MongoAggregation\Pipeline\Stage;
 
 trait PaginateAndSearchFilterTrait
@@ -14,6 +16,8 @@ trait PaginateAndSearchFilterTrait
      * @param int|null    $skip
      * @param int|null    $limit
      *
+     * @deprecated will be removed in 0.3.0, use findForPaginate instead
+     *
      * @return array
      */
     public function findForPaginateAndSearch($descriptionEntity = null, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
@@ -25,9 +29,24 @@ trait PaginateAndSearchFilterTrait
     }
 
     /**
+     * @param PaginateFinderConfiguration $configuration
+     *
+     * @return array
+     */
+    public function findForPaginate(PaginateFinderConfiguration $configuration)
+    {
+        $qa = $this->createAggregationQuery();
+        $qa = $this->generateFilterForPaginate($qa,$configuration);
+
+        return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
      * @param array|null   $columns
      * @param array|null   $descriptionEntity
      * @param array|null   $search
+     *
+     * @deprecated will be removed in 0.3.0, use countWithFilter instead;
      *
      * @return int
      */
@@ -39,6 +58,18 @@ trait PaginateAndSearchFilterTrait
         return $this->countDocumentAggregateQuery($qa);
     }
 
+    /**
+     * @param FinderConfiguration $configuration
+     *
+     * @return int
+     */
+    public function countWithFilter(FinderConfiguration $configuration)
+    {
+        $qa = $this->createAggregationQuery();
+        $qa = $this->generateFilter($qa, $configuration);
+
+        return $this->countDocumentAggregateQuery($qa);
+    }
 
     /**
      * Count all document
@@ -58,12 +89,32 @@ trait PaginateAndSearchFilterTrait
      * @param array|null  $columns
      * @param string|null $search
      *
+     * @deprecated will be remove in 0.3.0, use generateFilter instead
+     *
      * @return Stage
      */
     protected function generateFilterForSearch(Stage $qa, $descriptionEntity = null, $columns = null, $search = null)
     {
         if (null !== $columns) {
             $filterSearch = $this->generateFilterSearch($descriptionEntity, $columns, $search);
+            if (null !== $filterSearch) {
+                $qa->match($filterSearch);
+            }
+        }
+
+        return $qa;
+    }
+
+    /**
+     * @param Stage               $qa
+     * @param FinderConfiguration $configuration
+     *
+     * @return Stage
+     */
+    protected function generateFilter(Stage $qa, FinderConfiguration $configuration)
+    {
+        if (null !== $configuration->getColumns()) {
+            $filterSearch = $this->generateSearchFilter($configuration);
             if (null !== $filterSearch) {
                 $qa->match($filterSearch);
             }
@@ -83,6 +134,8 @@ trait PaginateAndSearchFilterTrait
      * @param int|null    $skip
      * @param int|null    $limit
      *
+     * @deprecated will be remove in 0.3.0, use generateFilterForPaginate instead
+     *
      * @return Stage
      */
     protected function generateFilterForPaginateAndSearch(Stage $qa, $descriptionEntity = null, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
@@ -91,6 +144,22 @@ trait PaginateAndSearchFilterTrait
         $qa = $this->generateFilterSort($qa, $order, $descriptionEntity, $columns);
         $qa = $this->generateSkipFilter($qa, $skip);
         $qa = $this->generateLimitFilter($qa, $limit);
+
+        return $qa;
+    }
+
+    /**
+     * @param Stage                       $qa
+     * @param PaginateFinderConfiguration $configuration
+     *
+     * @return Stage
+     */
+    protected function generateFilterForPaginate(Stage $qa, PaginateFinderConfiguration $configuration)
+    {
+        $qa = $this->generateFilter($qa, $configuration->getFinderConfiguration());
+        $qa = $this->generateFilterSort($qa, $configuration->getOrder(), $configuration->getDescriptionEntity(), $configuration->getColumns());
+        $qa = $this->generateSkipFilter($qa, $configuration->getSkip());
+        $qa = $this->generateLimitFilter($qa, $configuration->getLimit());
 
         return $qa;
     }
@@ -206,6 +275,8 @@ trait PaginateAndSearchFilterTrait
      * @param array  $descriptionEntity
      * @param string $search global search
      *
+     * @deprecated will be removed in 0.3.0, use generateSearchFilter instead
+     *
      * @return array|null
      */
     protected function generateFilterSearch($descriptionEntity, $columns, $search)
@@ -225,6 +296,50 @@ trait PaginateAndSearchFilterTrait
                     $value = $column['search']['value'];
                     $filtersColumn[] = $this->generateFilterSearchField($name, $value, $type);
                 }
+                if (!empty($search) && $column['searchable'] && !empty($name)) {
+                    $filtersAll[] = $this->generateFilterSearchField($name, $search, $type);
+                }
+            }
+        }
+
+        if (!empty($filtersAll) || !empty($filtersColumn)) {
+            $filter = array('$and' => $filtersColumn);
+            if (!empty($filtersAll) && empty($filtersColumn)) {
+                $filter = array('$or' => $filtersAll);
+            } elseif (!empty($filtersAll) && !empty($filtersColumn)) {
+                $filter = array('$and'=>array(
+                    array('$and' => $filtersColumn),
+                    array('$or' => $filtersAll),
+                ));
+            }
+        }
+
+        return $filter;
+    }
+
+    /**
+     * @param FinderConfiguration $configuration
+     *
+     * @return array|null
+     */
+    protected function generateSearchFilter(FinderConfiguration $configuration)
+    {
+        $filter = null;
+
+        $filtersAll = array();
+        $filtersColumn = array();
+        foreach ($configuration->getColumns() as $column) {
+            $columnsName = $column['name'];
+            $descriptionEntity = $configuration->getDescriptionEntity();
+            if (isset($descriptionEntity[$columnsName]) && isset($descriptionEntity[$columnsName]['key'])) {
+                $descriptionAttribute = $descriptionEntity[$columnsName];
+                $name = $descriptionAttribute['key'];
+                $type = isset($descriptionAttribute['type']) ? $descriptionAttribute['type'] : null;
+                if ($column['searchable'] && !empty($column['search']['value']) && !empty($name)) {
+                    $value = $column['search']['value'];
+                    $filtersColumn[] = $this->generateFilterSearchField($name, $value, $type);
+                }
+                $search = $configuration->getSearch();
                 if (!empty($search) && $column['searchable'] && !empty($name)) {
                     $filtersAll[] = $this->generateFilterSearchField($name, $search, $type);
                 }

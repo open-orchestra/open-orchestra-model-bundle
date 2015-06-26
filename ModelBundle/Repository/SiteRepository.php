@@ -5,6 +5,8 @@ namespace OpenOrchestra\ModelBundle\Repository;
 use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\PaginateAndSearchFilterTrait;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
+use OpenOrchestra\ModelInterface\Repository\Configuration\FinderConfiguration;
+use OpenOrchestra\ModelInterface\Repository\Configuration\PaginateFinderConfiguration;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 
 /**
@@ -55,12 +57,28 @@ class SiteRepository extends AbstractRepository implements SiteRepositoryInterfa
      * @param int|null    $skip
      * @param int|null    $limit
      *
+     * @deprecated will be removed in 0.3.0, use findByDeletedForPaginate instead
+     *
      * @return array
      */
     public function findByDeletedForPaginateAndSearch($deleted, $descriptionEntity = null, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
     {
         $qa = $this->createAggregateQueryWithDeletedFilter($deleted);
         $qa = $this->generateFilterForPaginateAndSearch($qa, $descriptionEntity, $columns, $search, $order, $skip, $limit);
+
+        return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param boolean                     $deleted
+     * @param PaginateFinderConfiguration $configuration
+     *
+     * @return array
+     */
+    public function findByDeletedForPaginate($deleted, PaginateFinderConfiguration $configuration)
+    {
+        $qa = $this->createAggregateQueryWithDeletedFilter($deleted);
+        $qa = $this->generateFilterForPaginate($qa, $configuration);
 
         return $this->hydrateAggregateQuery($qa);
     }
@@ -93,6 +111,19 @@ class SiteRepository extends AbstractRepository implements SiteRepositoryInterfa
         return $this->countDocumentAggregateQuery($qa);
     }
 
+    /**
+     * @param boolean             $deleted
+     * @param FinderConfiguration $configuration
+     *
+     * @return int
+     */
+    public function countWithSearchFilterByDeleted($deleted, FinderConfiguration $configuration)
+    {
+        $qa = $this->createAggregateQueryWithDeletedFilter($deleted);
+        $qa = $this->generateFilter($qa, $configuration);
+
+        return $this->countDocumentAggregateQuery($qa);
+    }
     /**
      * @param string $domain
      *

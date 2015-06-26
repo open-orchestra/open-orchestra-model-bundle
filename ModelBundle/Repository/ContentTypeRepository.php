@@ -4,6 +4,8 @@ namespace OpenOrchestra\ModelBundle\Repository;
 
 use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\PaginateAndSearchFilterTrait;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
+use OpenOrchestra\ModelInterface\Repository\Configuration\FinderConfiguration;
+use OpenOrchestra\ModelInterface\Repository\Configuration\PaginateFinderConfiguration;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 
 /**
@@ -12,28 +14,6 @@ use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 class ContentTypeRepository extends AbstractRepository implements ContentTypeRepositoryInterface
 {
     use PaginateAndSearchFilterTrait;
-
-    /**
-     * @deprecated use findOneByContentTypeIdInLastVersion to get the last version
-     *
-     * @param string   $contentType
-     * @param int|null $version
-     *
-     * @return array|null|object
-     */
-    public function findOneByContentTypeIdAndVersion($contentType, $version = null)
-    {
-        $qa = $this->createAggregationQuery();
-        $filter = array();
-        $filter['contentTypeId'] = $contentType;
-        if ($version) {
-            $filter['version'] = $version;
-        }
-        $qa->match($filter);
-        $qa->sort(array('version' => -1));
-
-        return $this->singleHydrateAggregateQuery($qa);
-    }
 
     /**
      * @param $language
@@ -70,6 +50,8 @@ class ContentTypeRepository extends AbstractRepository implements ContentTypeRep
      * @param int|null    $skip
      * @param int|null    $limit
      *
+     * @deprecated will be removed in 0.3.0, use findAllDeletedInLastVersionForPaginate instead
+     *
      * @return array
      */
     public function findAllByDeletedInLastVersionForPaginateAndSearch($descriptionEntity = null, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
@@ -90,9 +72,37 @@ class ContentTypeRepository extends AbstractRepository implements ContentTypeRep
     }
 
     /**
+     * @param PaginateFinderConfiguration $configuration
+     *
+     * @return array
+     */
+    public function findAllDeletedInLastVersionForPaginate(PaginateFinderConfiguration $configuration)
+    {
+        $qa = $this->createAggregateQueryByDeletedAndLastVersion();
+
+        $qa = $this->generateFilter($qa, $configuration->getFinderConfiguration());
+
+        $elementName = 'contentType';
+        $qa->group($this->generateLastVersionFilter($elementName));
+
+        $qa = $this->generateFilterSort(
+            $qa,
+            $configuration->getOrder(),
+            $configuration->getDescriptionEntity(),
+            $configuration->getColumns(), $elementName);
+
+        $qa = $this->generateSkipFilter($qa, $configuration->getSkip());
+        $qa = $this->generateLimitFilter($qa, $configuration->getLimit());
+
+        return $this->hydrateAggregateQuery($qa, $elementName, 'getContentTypeId');
+    }
+
+    /**
      * @param array|null  $descriptionEntity
      * @param array|null  $columns
      * @param string|null $search
+     *
+     * @deprecated will be removed in 0.3.0, use countDeletedInLastVersionWithSearchFilter instead
      *
      * @return int
      */
@@ -100,6 +110,22 @@ class ContentTypeRepository extends AbstractRepository implements ContentTypeRep
     {
         $qa = $this->createAggregateQueryByDeletedAndLastVersion();
         $qa = $this->generateFilterForSearch($qa, $descriptionEntity, $columns, $search);
+
+        $elementName = 'contentType';
+        $qa->group($this->generateLastVersionFilter($elementName));
+
+        return $this->countDocumentAggregateQuery($qa, $elementName);
+    }
+
+    /**
+     * @param FinderConfiguration $configuration
+     *
+     * @return int
+     */
+    public function countDeletedInLastVersionWithSearchFilter(FinderConfiguration $configuration)
+    {
+        $qa = $this->createAggregateQueryByDeletedAndLastVersion();
+        $qa = $this->generateFilter($qa, $configuration);
 
         $elementName = 'contentType';
         $qa->group($this->generateLastVersionFilter($elementName));
