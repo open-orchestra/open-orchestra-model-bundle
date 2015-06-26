@@ -301,7 +301,7 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      *
      * @return array
      */
-    public function findDeletedInLastVersionBySiteId($siteId, $type = NodeInterface::TYPE_DEFAULT)
+    public function findNotDeletedInLastVersionBySiteId($siteId, $type = NodeInterface::TYPE_DEFAULT)
     {
         return $this->prepareFindLastVersion($type, $siteId, true);
     }
