@@ -19,7 +19,7 @@ class ContentTypeRepository extends AbstractRepository implements ContentTypeRep
     /**
      * @param $language
      *
-     * @deprecated will be removed in 0.3.0, use findAllDeletedInLastVersion instead
+     * @deprecated will be removed in 0.3.0, use findAllNotDeletedInLastVersion instead
      *
      * @return array
      */
@@ -33,7 +33,7 @@ class ContentTypeRepository extends AbstractRepository implements ContentTypeRep
      *
      * @return array
      */
-    public function findAllDeletedInLastVersion($language = null)
+    public function findAllNotDeletedInLastVersion($language = null)
     {
         $qa = $this->createAggregationQuery();
         $qa->match(
@@ -63,7 +63,7 @@ class ContentTypeRepository extends AbstractRepository implements ContentTypeRep
      * @param int|null    $skip
      * @param int|null    $limit
      *
-     * @deprecated will be removed in 0.3.0, use findAllDeletedInLastVersionForPaginate instead
+     * @deprecated will be removed in 0.3.0, use findAllNotDeletedInLastVersionForPaginate instead
      *
      * @return array
      */
@@ -89,9 +89,9 @@ class ContentTypeRepository extends AbstractRepository implements ContentTypeRep
      *
      * @return array
      */
-    public function findAllDeletedInLastVersionForPaginate(PaginateFinderConfiguration $configuration)
+    public function findAllNotDeletedInLastVersionForPaginate(PaginateFinderConfiguration $configuration)
     {
-        $qa = $this->createAggregateQueryByDeletedAndLastVersion();
+        $qa = $this->createAggregateQueryNotDeletedInLastVersion();
 
         $qa = $this->generateFilter($qa, $configuration->getFinderConfiguration());
 
@@ -115,7 +115,7 @@ class ContentTypeRepository extends AbstractRepository implements ContentTypeRep
      * @param array|null  $columns
      * @param string|null $search
      *
-     * @deprecated will be removed in 0.3.0, use countDeletedInLastVersionWithSearchFilter instead
+     * @deprecated will be removed in 0.3.0, use countNotDeletedInLastVersionWithSearchFilter instead
      *
      * @return int
      */
@@ -135,9 +135,9 @@ class ContentTypeRepository extends AbstractRepository implements ContentTypeRep
      *
      * @return int
      */
-    public function countDeletedInLastVersionWithSearchFilter(FinderConfiguration $configuration)
+    public function countNotDeletedInLastVersionWithSearchFilter(FinderConfiguration $configuration)
     {
-        $qa = $this->createAggregateQueryByDeletedAndLastVersion();
+        $qa = $this->createAggregateQueryNotDeletedInLastVersion();
         $qa = $this->generateFilter($qa, $configuration);
 
         $elementName = 'contentType';
@@ -151,7 +151,7 @@ class ContentTypeRepository extends AbstractRepository implements ContentTypeRep
      */
     public function countByContentTypeInLastVersion()
     {
-        $qa = $this->createAggregateQueryByDeletedAndLastVersion();
+        $qa = $this->createAggregateQueryNotDeletedInLastVersion();
         $elementName = 'content';
         $qa->group($this->generateLastVersionFilter($elementName));
 
@@ -187,9 +187,19 @@ class ContentTypeRepository extends AbstractRepository implements ContentTypeRep
     }
 
     /**
+     * @deprecated will be removed in 0.3.0, use createAggregateQueryNotDeletedInLastVersion instead
+     *
      * @return \Solution\MongoAggregation\Pipeline\Stage
      */
     protected function createAggregateQueryByDeletedAndLastVersion()
+    {
+        return $this->createAggregateQueryNotDeletedInLastVersion();
+    }
+
+    /**
+     * @return \Solution\MongoAggregation\Pipeline\Stage
+     */
+    protected function createAggregateQueryNotDeletedInLastVersion()
     {
         $qa = $this->createAggregationQuery();
         $qa->match(array('deleted' => false));
