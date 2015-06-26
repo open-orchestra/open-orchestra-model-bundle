@@ -25,7 +25,7 @@ class ContentTypeRepository extends AbstractRepository implements ContentTypeRep
      */
     public function findAllByDeletedInLastVersion($language = null)
     {
-        return $this->findAllDeletedInLastVersion($language);
+        return $this->findAllNotDeletedInLastVersion($language);
     }
 
     /**
