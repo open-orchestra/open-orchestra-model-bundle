@@ -42,11 +42,12 @@ class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface
     {
         $site1 = new Site();
         $site1->setSiteId('1');
-        $site1->setName('First site');
+        $site1->setName('Front site');
         $this->addSitesAliases(
-            array('front.openorchestra.inte', 'front.openorchestra.dev'),
+            array('front.openorchestra.dev', 'front.openorchestra.inte'),
             array('fr', 'en'),
             $site1);
+        $site1->setSitemapPriority(0.5);
         $site1->setDeleted(false);
         $site1->setTheme($this->getReference('themePresentation'));
         $site1->addBlock('menu');
@@ -63,10 +64,11 @@ class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface
         $site2->setSiteId('2');
         $site2->setName('Demo site');
         $this->addSitesAliases(
-            array('demo.open-orchestra.com', 'demo.openorchestra.inte', 'demo.openorchestra.dev'),
+            array('demo.openorchestra.dev', 'demo.openorchestra.inte', 'demo.open-orchestra.com'),
             array('fr', 'en'),
             $site2,
             array('en' => 'en'));
+        $site2->setSitemapPriority(0.5);
         $site2->setDeleted(false);
         $site2->setTheme($this->getReference('themePresentation'));
         $site2->addBlock('carrousel');
@@ -125,13 +127,18 @@ class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface
      *
      * @return SiteAlias
      */
-    protected function generateSiteAlias($domainName, $language, $main = false, $prefix = null)
+    protected function generateSiteAlias($domainName, $language, $main = false)
     {
+        $prefixes = array(
+            'fr' => null,
+            'en' => 'en',
+            'de' => 'de'
+        );
         $siteAlias = new SiteAlias();
         $siteAlias->setDomain($domainName);
         $siteAlias->setLanguage($language);
         $siteAlias->setMain($main);
-        $siteAlias->setPrefix($prefix);
+        $siteAlias->setPrefix($prefixes[$language]);
         $siteAlias->setScheme(SchemeableInterface::SCHEME_HTTP);
 
         return $siteAlias;
