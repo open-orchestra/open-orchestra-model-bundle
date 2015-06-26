@@ -15,12 +15,25 @@ class ContentTypeRepository extends AbstractRepository implements ContentTypeRep
 {
     use PaginateAndSearchFilterTrait;
 
+
+    /**
+     * @param $language
+     *
+     * @deprecated will be removed in 0.3.0, use findAllDeletedInLastVersion instead
+     *
+     * @return array
+     */
+    public function findAllByDeletedInLastVersion($language = null)
+    {
+        return $this->findAllDeletedInLastVersion($language);
+    }
+
     /**
      * @param $language
      *
      * @return array
      */
-    public function findAllByDeletedInLastVersion($language = null)
+    public function findAllDeletedInLastVersion($language = null)
     {
         $qa = $this->createAggregationQuery();
         $qa->match(
