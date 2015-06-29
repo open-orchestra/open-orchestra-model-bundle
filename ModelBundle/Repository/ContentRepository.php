@@ -241,22 +241,21 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      * @param int|null    $skip
      * @param int|null    $limit
      *
-     * @deprecated, use findByContentTypeInLastVersionForPaginateAndSearchAndSiteId instead
+     * @deprecated, will be removed in 0.3.0, use findByContentTypeAndSiteIdInLastVersionForPaginate instead
      *
      * @return array
      */
     public function findByContentTypeInLastVersionForPaginateAndSearch($contentType = null, $descriptionEntity = null, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
     {
-        return $this->findByContentTypeInLastVersionForPaginateAndSearchAndSiteId(
-            $contentType,
-            $descriptionEntity,
-            $columns,
-            $search,
-            null,
-            $order,
-            $skip,
-            $limit
-        );
+        $configuration = new PaginateFinderConfiguration();
+        $configuration->setDescriptionEntity($descriptionEntity);
+        $configuration->setOrder($order);
+        $configuration->setSkip($skip);
+        $configuration->setLimit($limit);
+        $configuration->setSearch($search);
+        $configuration->setColumns($columns);
+
+        return $this->findByContentTypeAndSiteIdInLastVersionForPaginate($contentType, $configuration);
     }
 
     /**
@@ -269,6 +268,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      * @param int|null    $skip
      * @param int|null    $limit
      *
+     * @deprecated, will be removed in 0.3.0, use findByContentTypeAndSiteIdInLastVersionForPaginate instead
      *
      * @return array
      */

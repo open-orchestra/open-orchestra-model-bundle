@@ -285,9 +285,9 @@ class ContentRepositoryTest extends KernelTestCase
      * @param int         $limit
      * @param integer     $count
      *
-     * @dataProvider provideContentTypeAndPaginateAndSearchAndSiteId
+     * @dataProvider provideContentTypeAndPaginate
      */
-    public function testFindByContentTypeInLastVersionForPaginateAndSearchAndSiteId($contentType, $descriptionEntity, $columns, $siteId, $skip, $limit, $count)
+    public function testFindByContentTypeAndSiteIdInLastVersionForPaginate($contentType, $descriptionEntity, $columns, $siteId, $skip, $limit, $count)
     {
         $pageConfiguration = new PaginateFinderConfiguration();
         $pageConfiguration->setDescriptionEntity($descriptionEntity);
@@ -302,7 +302,7 @@ class ContentRepositoryTest extends KernelTestCase
     /**
      * @return array
      */
-    public function provideContentTypeAndPaginateAndSearchAndSiteId()
+    public function provideContentTypeAndPaginate()
     {
         $descriptionEntity = $this->getDescriptionColumnEntity();
 
