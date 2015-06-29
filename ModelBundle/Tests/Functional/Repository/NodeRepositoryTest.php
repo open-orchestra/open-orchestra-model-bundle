@@ -351,7 +351,7 @@ class NodeRepositoryTest extends KernelTestCase
      */
     public function testFindLastVersionByDeletedAndSiteId($siteId, $count)
     {
-        $this->assertCount($count, $this->repository->findNotDeletedInLastVersionBySiteId($siteId));
+        $this->assertCount($count, $this->repository->findDeletedInLastVersionBySiteId($siteId));
     }
 
     /**
