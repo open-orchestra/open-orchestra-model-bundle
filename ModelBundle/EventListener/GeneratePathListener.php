@@ -57,7 +57,7 @@ class GeneratePathListener extends ContainerAware
             $siteId = $document->getSiteId();
             $language = $document->getLanguage();
             $path = '';
-            $parentNode = $nodeRepository->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(
+            $parentNode = $nodeRepository->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(
                 $document->getParentId(),
                 $document->getLanguage(),
                 $siteId
@@ -69,7 +69,7 @@ class GeneratePathListener extends ContainerAware
             if ($path != $document->getPath()) {
                 $document->setPath($path);
                 $this->nodes[] = $document;
-                $childNodes = $nodeRepository->findChildsByPathAndSiteIdAndLanguage($document->getPath(), $siteId, $language);
+                $childNodes = $nodeRepository->findChildrenByPathAndSiteIdAndLanguage($document->getPath(), $siteId, $language);
                 foreach($childNodes as $childNode){
                     $this->nodes[] = $childNode;
                     $childNode->setPath(preg_replace('/'.preg_quote($document->getPath(), '/').'(.*)/', $path.'$1', $childNode->getPath()));

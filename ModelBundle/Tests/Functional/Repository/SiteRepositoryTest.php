@@ -36,9 +36,9 @@ class SiteRepositoryTest extends KernelTestCase
      * @param int     $limit
      * @param integer $count
      * 
-     * @dataProvider provideDeletedAndPaginateAndSearch
+     * @dataProvider provideDeletedAndPaginate
      */
-    public function testFindByDeletedForPaginateAndSearch($deleted, $descriptionEntity, $columns, $search, $skip, $limit, $count)
+    public function testFindByDeletedForPaginate($deleted, $descriptionEntity, $columns, $search, $skip, $limit, $count)
     {
         $configuration = new PaginateFinderConfiguration();
         $configuration->setColumns($columns);
@@ -54,7 +54,7 @@ class SiteRepositoryTest extends KernelTestCase
     /**
      * @return array
      */
-    public function provideDeletedAndPaginateAndSearch()
+    public function provideDeletedAndPaginate()
     {
         $descriptionEntity = $this->getDescriptionColumnEntity();
 
@@ -74,9 +74,9 @@ class SiteRepositoryTest extends KernelTestCase
      * @param array   $order
      * @param array   $orderId
      *
-     * @dataProvider provideOrderDeletedAndPaginateAndSearch
+     * @dataProvider provideOrderDeletedAndPaginate
      */
-    public function testOrderFindByDeletedForPaginateAndSearch($order, $orderId)
+    public function testOrderFindByDeletedForPaginate($order, $orderId)
     {
         $configuration = new PaginateFinderConfiguration();
         $configuration->setColumns($this->generateColumnsProvider('', 'site'));
@@ -91,7 +91,7 @@ class SiteRepositoryTest extends KernelTestCase
     /**
      * @return array
      */
-    public function provideOrderDeletedAndPaginateAndSearch()
+    public function provideOrderDeletedAndPaginate()
     {
         return array(
             array(array(array('column' => 0,'dir' => 'desc')), array(2, 1)),

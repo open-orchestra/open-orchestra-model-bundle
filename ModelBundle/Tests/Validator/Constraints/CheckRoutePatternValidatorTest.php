@@ -56,7 +56,7 @@ class CheckRoutePatternValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddViolationOrNot($nodes, $violationTimes)
     {
-        Phake::when($this->nodeRepository)->findByParentIdAndRoutePatternAndNotNodeIdAndSiteId(Phake::anyParameters())->thenReturn($nodes);
+        Phake::when($this->nodeRepository)->findByParentIdAndRoutePatternAndNodeIdAndSiteId(Phake::anyParameters())->thenReturn($nodes);
 
         $this->validator->validate($this->node, $this->constraint);
 

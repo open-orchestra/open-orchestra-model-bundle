@@ -268,7 +268,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      * @param int|null    $skip
      * @param int|null    $limit
      *
-     * @deprecated, will be removed in 0.3.0, use findByContentTypeAndSiteIdInLastVersionForPaginate instead
+     * @deprecated will be removed in 0.3.0, use findByContentTypeAndSiteIdInLastVersionForPaginate instead
      *
      * @return array
      */

@@ -352,7 +352,7 @@ class ContentRepositoryTest extends KernelTestCase
      *
      * @dataProvider provideColumnsAndSearchAndCount
      */
-    public function testCountByContentTypeInLastVersionWithSearchFilter($contentType, $descriptionEntity, $columns, $search, $count)
+    public function testCountByContentTypeInLastVersionWithFilter($contentType, $descriptionEntity, $columns, $search, $count)
     {
         $configuration = new FinderConfiguration();
         $configuration->setColumns($columns);

@@ -74,13 +74,13 @@ class GeneratePathListenerTest extends \PHPUnit_Framework_TestCase
         $documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
         $unitOfWork = Phake::mock('Doctrine\ODM\MongoDB\UnitOfWork');
 
-        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(Phake::anyParameters())->thenReturn($parentNode);
+        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(Phake::anyParameters())->thenReturn($parentNode);
         Phake::when($unitOfWork)->recomputeSingleDocumentChangeSet(Phake::anyParameters())->thenReturn('test');
         Phake::when($documentManager)->getClassMetadata(Phake::anyParameters())->thenReturn(new ClassMetadata('OpenOrchestra\ModelBundle\Document\Node'));
         Phake::when($documentManager)->getUnitOfWork()->thenReturn($unitOfWork);
         Phake::when($this->lifecycleEventArgs)->getDocument()->thenReturn($node);
         Phake::when($this->lifecycleEventArgs)->getDocumentManager()->thenReturn($documentManager);
-        Phake::when($this->nodeRepository)->findChildsByPathAndSiteIdAndLanguage(Phake::anyParameters())->thenReturn($children);
+        Phake::when($this->nodeRepository)->findChildrenByPathAndSiteIdAndLanguage(Phake::anyParameters())->thenReturn($children);
 
         $this->listener->$method($this->lifecycleEventArgs);
 

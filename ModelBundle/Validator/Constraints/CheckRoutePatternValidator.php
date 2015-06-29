@@ -30,7 +30,7 @@ class CheckRoutePatternValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        if (0 < count($this->nodeRepository->findByParentIdAndRoutePatternAndNotNodeIdAndSiteId(
+        if (0 < count($this->nodeRepository->findByParentIdAndRoutePatternAndNodeIdAndSiteId(
                 $value->getParentId(),
                 $value->getRoutePattern(),
                 $value->getNodeId(),

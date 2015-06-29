@@ -109,7 +109,7 @@ class NodeRepositoryTest extends KernelTestCase
      *
      * @dataProvider provideLanguageLastVersionAndSiteIdNotPublished
      */
-    public function testFindOneByNodeIdAndLanguageAndSiteIdAndLastVersion($language, $version = null, $siteId, $versionExpected)
+    public function testFindOneByNodeIdAndLanguageAndSiteIdInLastVersion($language, $version = null, $siteId, $versionExpected)
     {
         $node = $this->repository->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(NodeInterface::ROOT_NODE_ID, $language, $siteId);
 
