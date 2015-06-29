@@ -20,6 +20,7 @@ class CheckRoutePatternValidatorTest extends \PHPUnit_Framework_TestCase
     protected $areas;
     protected $context;
     protected $constraint;
+    protected $constraintViolationBuilder;
     protected $nodeRepository;
 
     /**
@@ -30,7 +31,12 @@ class CheckRoutePatternValidatorTest extends \PHPUnit_Framework_TestCase
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface');
 
         $this->constraint = new CheckRoutePattern();
-        $this->context = Phake::mock('Symfony\Component\Validator\Context\ExecutionContext');
+        $this->context = Phake::mock('Symfony\Component\Validator\Context\ExecutionContextInterface');
+        $this->constraintViolationBuilder = Phake::mock('Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface');
+
+        Phake::when($this->context)->buildViolation(Phake::anyParameters())->thenReturn($this->constraintViolationBuilder);
+        Phake::when($this->constraintViolationBuilder)->atPath(Phake::anyParameters())->thenReturn($this->constraintViolationBuilder);
+
         $this->areas = Phake::mock('Doctrine\Common\Collections\ArrayCollection');
 
         $this->node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
@@ -60,7 +66,8 @@ class CheckRoutePatternValidatorTest extends \PHPUnit_Framework_TestCase
 
         $this->validator->validate($this->node, $this->constraint);
 
-        Phake::verify($this->context, Phake::times($violationTimes))->addViolationAt('routePattern', $this->constraint->message);
+        Phake::verify($this->context, Phake::times($violationTimes))->buildViolation($this->constraint->message);
+        Phake::verify($this->constraintViolationBuilder, Phake::times($violationTimes))->atPath('routePattern');
     }
 
     /**

@@ -4,6 +4,7 @@ namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class TranslatedValue
@@ -22,6 +23,7 @@ class TranslatedValue implements TranslatedValueInterface
     /**
      * @var string
      *
+     * @Assert\NotBlank()
      * @ODM\Field(type="string")
      */
     protected $value;

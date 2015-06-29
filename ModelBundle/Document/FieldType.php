@@ -35,6 +35,7 @@ class FieldType implements FieldTypeInterface
     /**
      * @var ArrayCollection $labels
      *
+     * @Assert\Valid
      * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\TranslatedValueInterface")
      */
     protected $labels;
@@ -80,7 +81,6 @@ class FieldType implements FieldTypeInterface
     /**
      * @var string $symfonyType
      *
-     * @Assert\NotBlank()
      * @ODM\Field(type="string")
      */
     protected $symfonyType;

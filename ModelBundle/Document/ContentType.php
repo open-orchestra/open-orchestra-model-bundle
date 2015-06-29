@@ -54,6 +54,7 @@ class ContentType implements ContentTypeInterface
     protected $contentTypeId;
 
     /**
+     * @Assert\Valid
      * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\TranslatedValueInterface", strategy="set")
      */
     protected $names;

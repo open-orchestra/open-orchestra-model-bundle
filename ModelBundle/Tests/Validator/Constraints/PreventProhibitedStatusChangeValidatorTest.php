@@ -21,6 +21,7 @@ class PreventProhibitedStatusChangeValidatorTest extends \PHPUnit_Framework_Test
     protected $documentManager;
     protected $oldRoleName;
     protected $constraint;
+    protected $constraintViolationBuilder;
     protected $unitOfWork;
     protected $oldStatus;
     protected $roleName;
@@ -38,7 +39,11 @@ class PreventProhibitedStatusChangeValidatorTest extends \PHPUnit_Framework_Test
     {
         $this->securityContext = Phake::mock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         $this->constraint = new PreventProhibitedStatusChange();
-        $this->context = Phake::mock('Symfony\Component\Validator\Context\ExecutionContext');
+        $this->context = Phake::mock('Symfony\Component\Validator\Context\ExecutionContextInterface');
+        $this->constraintViolationBuilder = Phake::mock('Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface');
+
+        Phake::when($this->context)->buildViolation(Phake::anyParameters())->thenReturn($this->constraintViolationBuilder);
+        Phake::when($this->constraintViolationBuilder)->atPath(Phake::anyParameters())->thenReturn($this->constraintViolationBuilder);
 
         $this->roleName = 'ROLE';
         $this->role = Phake::mock('OpenOrchestra\ModelBundle\Document\Role');
@@ -88,7 +93,9 @@ class PreventProhibitedStatusChangeValidatorTest extends \PHPUnit_Framework_Test
         $this->validator->validate($this->node, $this->constraint);
 
         Phake::verify($this->securityContext, Phake::atMost(1))->isGranted($this->roleName);
-        Phake::verify($this->context, Phake::times($numberOfViolation))->addViolationAt('status', $this->constraint->message);
+        Phake::verify($this->context, Phake::times($numberOfViolation))->buildViolation($this->constraint->message);
+
+        Phake::verify($this->constraintViolationBuilder, Phake::times($numberOfViolation))->atPath('status');
     }
 
     /**
@@ -111,7 +118,7 @@ class PreventProhibitedStatusChangeValidatorTest extends \PHPUnit_Framework_Test
 
         $this->validator->validate($this->node, $this->constraint);
 
-        Phake::verify($this->context, Phake::never())->addViolationAt(Phake::anyParameters());
+        Phake::verify($this->context, Phake::never())->buildViolation(Phake::anyParameters());
     }
 
     /**
@@ -124,7 +131,7 @@ class PreventProhibitedStatusChangeValidatorTest extends \PHPUnit_Framework_Test
 
         $this->validator->validate($this->node, $this->constraint);
 
-        Phake::verify($this->context, Phake::never())->addViolationAt(Phake::anyParameters());
+        Phake::verify($this->context, Phake::never())->buildViolation(Phake::anyParameters());
     }
 
     /**
