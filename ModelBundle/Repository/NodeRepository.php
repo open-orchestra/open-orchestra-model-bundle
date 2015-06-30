@@ -18,6 +18,16 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
     use AreaFinderTrait;
 
     /**
+     * @param string $mongoId
+     * 
+     * @return OpenOrchestra\ModelInterface\Model\NodeInterface
+     */
+    public function findOneById($mongoId)
+    {
+        return $this->find(new \MongoId($mongoId));
+    }
+
+    /**
      * @param string $language
      * @param string $siteId
      *
