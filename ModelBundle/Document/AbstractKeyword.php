@@ -4,7 +4,6 @@ namespace OpenOrchestra\ModelBundle\Document;
 
 use OpenOrchestra\ModelInterface\Model\KeywordInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class AbstractKeyword
@@ -17,7 +16,6 @@ abstract class AbstractKeyword implements KeywordInterface
     protected $id;
 
     /**
-     * @Assert\NotBlank()
      * @ODM\Field(type="string")
      */
     protected $label;

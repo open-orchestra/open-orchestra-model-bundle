@@ -8,7 +8,6 @@ use OpenOrchestra\ModelInterface\Model\RoleInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
 use OpenOrchestra\ModelInterface\ModelTrait\TranslatedValueFilter;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Role
@@ -28,7 +27,6 @@ class Role implements RoleInterface
     protected $id;
 
     /**
-     * @Assert\NotBlank()
      * @ODM\Field(type="string")
      */
     protected $name;
@@ -36,7 +34,6 @@ class Role implements RoleInterface
     /**
      * @var StatusInterface
      *
-     * @Assert\Valid
      * @ODM\ReferenceOne(targetDocument="OpenOrchestra\ModelInterface\Model\StatusInterface", inversedBy="fromRoles")
      */
     protected $fromStatus;
@@ -44,13 +41,11 @@ class Role implements RoleInterface
     /**
      * @var StatusInterface
      *
-     * @Assert\Valid
      * @ODM\ReferenceOne(targetDocument="OpenOrchestra\ModelInterface\Model\StatusInterface", inversedBy="toRoles")
      */
     protected $toStatus;
 
     /**
-     * @Assert\Valid
      * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\TranslatedValueInterface")
      */
     protected $descriptions;

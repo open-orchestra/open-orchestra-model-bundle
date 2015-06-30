@@ -6,7 +6,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class AbstractStatus
@@ -23,13 +22,11 @@ abstract class AbstractStatus implements StatusInterface
     /**
      * @var string $name
      *
-     * @Assert\NotBlank()
      * @ODM\Field(type="string")
      */
     protected $name;
 
     /**
-     * @Assert\Valid
      * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\TranslatedValueInterface")
      */
     protected $labels;
@@ -37,7 +34,6 @@ abstract class AbstractStatus implements StatusInterface
     /**
      * @var bool
      *
-     * @Assert\Type(type="bool")
      * @ODM\Field(type="boolean")
      */
     protected $published = false;
@@ -52,13 +48,11 @@ abstract class AbstractStatus implements StatusInterface
     /**
      * @var string
      *
-     * @Assert\Valid
      * @ODM\ReferenceMany(targetDocument="OpenOrchestra\ModelInterface\Model\RoleInterface", mappedBy="toStatus")
      */
     protected $toRoles;
 
     /**
-     * @Assert\Type(type="bool")
      * @ODM\Field(type="boolean")
      */
     protected $initial = false;
@@ -66,7 +60,6 @@ abstract class AbstractStatus implements StatusInterface
     /**
      * @var string
      *
-     * @Assert\NotBlank()
      * @ODM\Field(type="string")
      */
     protected $displayColor;

@@ -1,0 +1,6 @@
+OpenOrchestra\ModelBundle\Document\FieldOption:
+    properties:
+        key:
+            - NotBlank: ~
+        value:
+            - NotBlank: ~

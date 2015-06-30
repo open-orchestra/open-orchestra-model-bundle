@@ -2,8 +2,6 @@
 
 namespace OpenOrchestra\ModelBundle\Document;
 
-use Symfony\Component\Validator\Constraints as Assert;
-use OpenOrchestra\ModelBundle\Validator\Constraints as AssertOrchestra;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
@@ -37,11 +35,6 @@ use OpenOrchestra\ModelInterface\MongoTrait\Versionable;
  *   sourceField="name",
  *   serviceName="open_orchestra_model.repository.node",
  * )
- *
- * @AssertOrchestra\PreventPublishedDocumentSave
- * @AssertOrchestra\PreventProhibitedStatusChange
- * @AssertOrchestra\CheckAreaPresence
- * @AssertOrchestra\CheckRoutePattern
  */
 class Node implements NodeInterface
 {
@@ -71,7 +64,6 @@ class Node implements NodeInterface
     /**
      * @var string $nodeType
      *
-     * @Assert\NotBlank()
      * @ODM\Field(type="string")
      */
     protected $nodeType = NodeInterface::TYPE_DEFAULT;
@@ -79,7 +71,6 @@ class Node implements NodeInterface
     /**
      * @var string $siteId
      *
-     * @Assert\NotBlank()
      * @ODM\Field(type="string")
      */
     protected $siteId;
@@ -87,7 +78,6 @@ class Node implements NodeInterface
     /**
      * @var string $parentId
      *
-     * @Assert\NotBlank()
      * @ODM\Field(type="string")
      */
     protected $parentId;
@@ -102,7 +92,6 @@ class Node implements NodeInterface
     /**
      * @var string $name
      *
-     * @Assert\NotBlank()
      * @ODM\Field(type="string")
      */
     protected $name;
@@ -110,7 +99,6 @@ class Node implements NodeInterface
     /**
      * @var string $language
      *
-     * @Assert\NotBlank()
      * @ODM\Field(type="string")
      */
     protected $language;
@@ -118,7 +106,6 @@ class Node implements NodeInterface
     /**
      * @var boolean
      *
-     * @Assert\Type(type="bool")
      * @ODM\Field(type="boolean")
      */
     protected $deleted = false;
@@ -140,7 +127,6 @@ class Node implements NodeInterface
     /**
      * @var boolean
      *
-     * @Assert\Type(type="bool")
      * @ODM\Field(type="boolean")
      */
     protected $inMenu;
@@ -148,7 +134,6 @@ class Node implements NodeInterface
     /**
      * @var boolean
      *
-     * @Assert\Type(type="bool")
      * @ODM\Field(type="boolean")
      */
     protected $inFooter;
@@ -177,7 +162,6 @@ class Node implements NodeInterface
     /**
      * @var int
      *
-     * @Assert\Type(type="integer")
      * @ODM\Field(type="int")
      */
     protected $order = 0;
@@ -185,7 +169,6 @@ class Node implements NodeInterface
     /**
      * @var string
      *
-     * @Assert\NotBlank()
      * @ODM\Field(type="string")
      */
     protected $routePattern;

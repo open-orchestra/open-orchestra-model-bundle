@@ -1,0 +1,4 @@
+OpenOrchestra\ModelBundle\Document\Keyword:
+    properties:
+        label:
+            - NotBlank: ~

@@ -1,0 +1,31 @@
+OpenOrchestra\ModelBundle\Document\Node:
+    constraints:
+        - OpenOrchestra\ModelBundle\Validator\Constraints\PreventPublishedDocumentSave: ~
+        - OpenOrchestra\ModelBundle\Validator\Constraints\PreventProhibitedStatusChange: ~
+        - OpenOrchestra\ModelBundle\Validator\Constraints\CheckAreaPresence: ~
+        - OpenOrchestra\ModelBundle\Validator\Constraints\CheckRoutePattern: ~
+    properties:
+        nodeType:
+            - NotBlank: ~
+        siteId:
+            - NotBlank: ~
+        parentId:
+            - NotBlank: ~
+        name:
+            - NotBlank: ~
+        language:
+            - NotBlank: ~
+        routePattern:
+            - NotBlank: ~
+        deleted:
+            - Type:
+                type: bool
+        inMenu:
+            - Type:
+                type: bool
+        inFooter:
+            - Type:
+                type: bool
+        order:
+            - Type:
+                type: integer

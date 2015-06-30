@@ -12,8 +12,6 @@ use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\ModelInterface\Model\ThemeInterface;
 use OpenOrchestra\ModelInterface\MongoTrait\Metaable;
 use OpenOrchestra\ModelInterface\MongoTrait\Sitemapable;
-use Symfony\Component\Validator\Constraints as Assert;
-use OpenOrchestra\ModelBundle\Validator\Constraints as AssertOrchestra;
 
 /**
  * Description of Site
@@ -27,9 +25,6 @@ use OpenOrchestra\ModelBundle\Validator\Constraints as AssertOrchestra;
  *   sourceField="name",
  *   serviceName="open_orchestra_model.repository.site",
  * )
- *
- * @AssertOrchestra\UniqueMainAlias
- * @AssertOrchestra\UniqueSiteId
  */
 class Site implements SiteInterface
 {
@@ -46,7 +41,6 @@ class Site implements SiteInterface
     /**
      * @var string $siteId
      *
-     * @Assert\NotBlank()
      * @ODM\Field(type="string")
      */
     protected $siteId;
@@ -54,7 +48,6 @@ class Site implements SiteInterface
     /**
      * @var boolean
      *
-     * @Assert\Type(type="bool")
      * @ODM\Field(type="boolean")
      */
     protected $deleted = false;
@@ -69,7 +62,6 @@ class Site implements SiteInterface
     /**
      * @var ThemeInterface $theme
      *
-     * @Assert\Valid
      * @ODM\ReferenceOne(targetDocument="OpenOrchestra\ModelInterface\Model\ThemeInterface")
      */
     protected $theme;
@@ -84,7 +76,6 @@ class Site implements SiteInterface
     /**
      * @var string $name
      *
-     * @Assert\NotBlank()
      * @ODM\Field(type="string")
      */
     protected $name;
@@ -92,7 +83,6 @@ class Site implements SiteInterface
     /**
      * @var Collection
      *
-     * @Assert\Valid
      * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\SiteAliasInterface")
      */
     protected $aliases;

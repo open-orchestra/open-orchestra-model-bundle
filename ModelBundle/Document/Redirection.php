@@ -4,7 +4,6 @@ namespace OpenOrchestra\ModelBundle\Document;
 
 use OpenOrchestra\ModelInterface\Model\RedirectionInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Redirection
@@ -26,7 +25,6 @@ class Redirection implements RedirectionInterface
     /**
      * @var string
      *
-     * @Assert\NotBlank()
      * @ODM\Field(type="string")
      */
     protected $siteId;
@@ -34,7 +32,6 @@ class Redirection implements RedirectionInterface
     /**
      * @var string
      *
-     * @Assert\NotBlank()
      * @ODM\Field(type="string")
      */
     protected $locale;
@@ -42,7 +39,6 @@ class Redirection implements RedirectionInterface
     /**
      * @var string
      *
-     * @Assert\NotBlank()
      * @ODM\Field(type="string")
      */
     protected $siteName;
@@ -50,7 +46,6 @@ class Redirection implements RedirectionInterface
     /**
      * @var string
      *
-     * @Assert\NotBlank()
      * @ODM\Field(type="string")
      */
     protected $routePattern;
@@ -72,7 +67,6 @@ class Redirection implements RedirectionInterface
     /**
      * @var boolean
      *
-     * @Assert\Type(type="bool")
      * @ODM\Field(type="boolean")
      */
     protected $permanent;

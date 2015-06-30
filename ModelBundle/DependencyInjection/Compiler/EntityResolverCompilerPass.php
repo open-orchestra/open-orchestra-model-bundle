@@ -23,6 +23,7 @@ class EntityResolverCompilerPass implements  CompilerPassInterface
                 if (strpos($resourcePath, 'model-bundle')
                     && strpos($resourcePath, 'config')
                     && strpos($resourcePath, 'yml') === false
+                    && strpos($resourcePath, 'validation') === false
                 ) {
                     break;
                 }
