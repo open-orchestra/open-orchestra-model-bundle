@@ -55,7 +55,9 @@ class PreventProhibitedStatusChangeValidator extends ConstraintValidator
         }
 
         if (! $this->canSwitchStatus($oldStatus, $status)) {
-            $this->context->addViolationAt('status', $constraint->message);
+            $this->context->buildViolation($constraint->message)
+                ->atPath('status')
+                ->addViolation();
         }
     }
 

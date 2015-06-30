@@ -1,0 +1,16 @@
+OpenOrchestra\ModelBundle\Document\Site:
+    constraints:
+        - OpenOrchestra\ModelBundle\Validator\Constraints\UniqueMainAlias: ~
+        - OpenOrchestra\ModelBundle\Validator\Constraints\UniqueSiteId: ~
+    properties:
+        siteId:
+            - NotBlank: ~
+        name:
+            - NotBlank: ~
+        deleted:
+            - Type:
+                type: bool
+        theme:
+            - Valid: ~
+        aliases:
+            - Valid: ~

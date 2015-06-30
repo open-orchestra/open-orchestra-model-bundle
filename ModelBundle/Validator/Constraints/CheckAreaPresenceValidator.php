@@ -20,8 +20,12 @@ class CheckAreaPresenceValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         if (0 === $value->getAreas()->count()) {
-            $this->context->addViolationAt('nodeSource', $constraint->message);
-            $this->context->addViolationAt('templateId', $constraint->message);
+            $this->context->buildViolation($constraint->message)
+                          ->atPath('nodeSource')
+                          ->addViolation();
+            $this->context->buildViolation($constraint->message)
+                          ->atPath('templateId')
+                          ->addViolation();
         }
     }
 }

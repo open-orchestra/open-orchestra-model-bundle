@@ -36,7 +36,9 @@ class CheckRoutePatternValidator extends ConstraintValidator
                 $value->getNodeId(),
                 $value->getSiteId()
             ))) {
-            $this->context->addViolationAt('routePattern', $constraint->message);
+            $this->context->buildViolation($constraint->message)
+                ->atPath('routePattern')
+                ->addViolation();
         }
     }
 }

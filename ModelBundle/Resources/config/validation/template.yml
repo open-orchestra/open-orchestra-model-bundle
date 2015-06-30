@@ -1,0 +1,13 @@
+OpenOrchestra\ModelBundle\Document\Template:
+    properties:
+        name:
+            - NotBlank: ~
+        language:
+            - NotBlank: ~
+        boDirection:
+            - NotBlank: ~
+        deleted:
+            - Type:
+                type: bool
+        areas:
+            - Valid: ~

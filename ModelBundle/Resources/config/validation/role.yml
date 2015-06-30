@@ -1,0 +1,10 @@
+OpenOrchestra\ModelBundle\Document\Role:
+    properties:
+        name:
+            - NotBlank: ~
+        fromStatus:
+            - Valid: ~
+        toStatus:
+            - Valid: ~
+        descriptions:
+            - Valid: ~

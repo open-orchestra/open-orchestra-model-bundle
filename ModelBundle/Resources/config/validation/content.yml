@@ -1,0 +1,18 @@
+OpenOrchestra\ModelBundle\Document\Content:
+    properties:
+        name:
+            - NotBlank: ~
+        siteId:
+            - NotBlank: ~
+        contentType:
+            - NotBlank: ~
+        language:
+            - NotBlank: ~
+        contentTypeVersion:
+            - Type:
+                type: integer
+        deleted:
+            - Type:
+                type: bool
+        attributes:
+            - Valid: ~

@@ -1,0 +1,18 @@
+OpenOrchestra\ModelBundle\Document\Status:
+    properties:
+        name:
+            - NotBlank: ~
+        displayColor:
+            - NotBlank: ~
+        labels:
+            - Valid: ~
+        toRoles:
+            - Valid: ~
+        fromRoles:
+            - Valid: ~
+        published:
+            - Type:
+                type: bool
+        initial :
+            - Type:
+                type: bool

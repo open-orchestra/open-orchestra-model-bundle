@@ -1,0 +1,4 @@
+OpenOrchestra\ModelBundle\Document\ContentAttribute:
+    properties:
+        name:
+            - NotBlank: ~

@@ -20,20 +20,26 @@ class CheckAreaPresenceValidatorTest extends \PHPUnit_Framework_TestCase
     protected $areas;
     protected $context;
     protected $constraint;
+    protected $constraintViolationBuilder;
 
     /**
      * Set up the test
      */
     public function setUp()
     {
-        $this->constraint = new CheckAreaPresence();
-        $this->context = Phake::mock('Symfony\Component\Validator\Context\ExecutionContext');
+        $this->constraint = Phake::mock('Symfony\Component\Validator\Constraint');
+        $this->context = Phake::mock('Symfony\Component\Validator\Context\ExecutionContextInterface');
+        $this->constraintViolationBuilder = Phake::mock('Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface');
+
+        Phake::when($this->context)->buildViolation(Phake::anyParameters())->thenReturn($this->constraintViolationBuilder);
+        Phake::when($this->constraintViolationBuilder)->atPath(Phake::anyParameters())->thenReturn($this->constraintViolationBuilder);
+
         $this->areas = Phake::mock('Doctrine\Common\Collections\ArrayCollection');
 
         $this->node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($this->node)->getAreas()->thenReturn($this->areas);
 
-        $this->validator = new CheckAreaPresenceValidator($this->translator);
+        $this->validator = new CheckAreaPresenceValidator();
         $this->validator->initialize($this->context);
     }
 
@@ -57,8 +63,8 @@ class CheckAreaPresenceValidatorTest extends \PHPUnit_Framework_TestCase
 
         $this->validator->validate($this->node, $this->constraint);
 
-        Phake::verify($this->context, Phake::times($violationTimes))->addViolationAt('nodeSource', $this->constraint->message);
-        Phake::verify($this->context, Phake::times($violationTimes))->addViolationAt('templateId', $this->constraint->message);
+        Phake::verify($this->constraintViolationBuilder, Phake::times($violationTimes))->atPath('nodeSource');
+        Phake::verify($this->constraintViolationBuilder, Phake::times($violationTimes))->atPath('templateId');
     }
 
     /**

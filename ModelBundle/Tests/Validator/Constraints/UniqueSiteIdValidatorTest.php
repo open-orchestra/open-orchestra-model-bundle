@@ -22,6 +22,7 @@ class UniqueSiteIdValidatorTest extends \PHPUnit_Framework_TestCase
     protected $context;
     protected $id = 'id';
     protected $constraint;
+    protected $constraintViolationBuilder;
     protected $repository;
     protected $siteId = 'siteid';
 
@@ -31,7 +32,11 @@ class UniqueSiteIdValidatorTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->constraint = new UniqueSiteId();
-        $this->context = Phake::mock('Symfony\Component\Validator\Context\ExecutionContext');
+        $this->context = Phake::mock('Symfony\Component\Validator\Context\ExecutionContextInterface');
+        $this->constraintViolationBuilder = Phake::mock('Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface');
+
+        Phake::when($this->context)->buildViolation(Phake::anyParameters())->thenReturn($this->constraintViolationBuilder);
+        Phake::when($this->constraintViolationBuilder)->atPath(Phake::anyParameters())->thenReturn($this->constraintViolationBuilder);
 
         $this->site = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
         $this->site2 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteInterface');
@@ -62,7 +67,8 @@ class UniqueSiteIdValidatorTest extends \PHPUnit_Framework_TestCase
 
         $this->validator->validate($this->site, $this->constraint);
 
-        Phake::verify($this->context)->addViolationAt('siteId', $this->constraint->message);
+        Phake::verify($this->context)->buildViolation($this->constraint->message);
+        Phake::verify($this->constraintViolationBuilder)->atPath('siteId');
     }
 
     /**
@@ -80,7 +86,8 @@ class UniqueSiteIdValidatorTest extends \PHPUnit_Framework_TestCase
 
         $this->validator->validate($this->site, $this->constraint);
 
-        Phake::verify($this->context, Phake::never())->addViolationAt('siteId', $this->constraint->message);
+        Phake::verify($this->context, Phake::never())->buildViolation($this->constraint->message);
+        Phake::verify($this->constraintViolationBuilder, Phake::never())->atPath('siteId');
     }
 
     /**

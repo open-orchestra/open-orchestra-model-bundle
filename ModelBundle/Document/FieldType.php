@@ -48,6 +48,8 @@ class FieldType implements FieldTypeInterface
     protected $searchable;
 
     /**
+     * @var boolean $translatable
+     *
      * @ODM\Field(type="boolean")
      */
     protected $translatable = true;

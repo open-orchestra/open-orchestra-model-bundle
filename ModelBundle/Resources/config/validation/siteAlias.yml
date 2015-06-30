@@ -1,0 +1,9 @@
+OpenOrchestra\ModelBundle\Document\SiteAlias:
+    properties:
+        domain:
+            - NotBlank: ~
+        language:
+            - NotBlank: ~
+        main:
+            - Type:
+                type: bool
