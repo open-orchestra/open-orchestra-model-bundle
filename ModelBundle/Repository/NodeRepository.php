@@ -595,15 +595,11 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      */
     public function findLastPublished()
     {
-        $qa = $this->createAggregationQuery();
-        $qa->match(
-            array(
-                'status.published' => true,
-                'deleted' => false,
-            )
-        );
-        $qa->sort(array('updateAt' => -1));
+        $qb = $this->createQueryBuilder();
+        $qb->field('status.published')->equals(true);
+        $qb->field('deleted')->equals(false);
+        $qb->sort('updatedAt', 'desc');
 
-        return $this->singleHydrateAggregateQuery($qa);
+        return $qb->getQuery()->getSingleResult();
     }
 }
