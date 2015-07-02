@@ -94,6 +94,7 @@ class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterfac
     {
         $siteBlockLogo = new Block();
         $siteBlockLogo->setLabel('Wysiwyg logo');
+        $siteBlockLogo->setClass('logo');
         $siteBlockLogo->setComponent(TinyMCEWysiwygStrategy::TINYMCEWYSIWYG);
         $siteBlockLogo->setAttributes(array(
             "htmlContent" => '<a href="/" id="myLogo"> <img src="http://open-orchestra.com/media/open-orchestra-logo.png" /> </a>',
@@ -216,15 +217,12 @@ EOF
         ));
         $siteHomeBlock0->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));
 
-        $siteHomeArea1 = $this->createLogo();
-        $siteHomeArea2 = $this->createMainMenu();
-        $siteHomeArea0 = $this->createHeader(array($siteHomeArea1, $siteHomeArea2));
+        $siteHomeArea0 = $this->createHeader();
         $siteHomeArea4 = $this->createArea('Main content area 1', 'mainContentArea1', 'main-content-area1');
         $siteHomeArea4->addBlock(array('nodeId' => 0, 'blockId' => 0));
         $siteHomeArea5 = $this->createModuleArea();
         $siteHomeArea3 = $this->createMain(array($siteHomeArea4, $siteHomeArea5));
-        $siteHomeArea7 = $this->createFooter();
-        $siteHomeArea6 = $this->createFooterContainer($siteHomeArea7);
+        $siteHomeArea6 = $this->createFooter();
 
         $siteHome = $this->createBaseNode();
         $siteHome->setNodeId(NodeInterface::ROOT_NODE_ID);
@@ -273,16 +271,13 @@ EOF
         $siteComBlock1->setComponent(LanguageListStrategy::LANGUAGE_LIST);
         $siteComBlock1->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));
 
-        $siteComArea1 = $this->createLogo();
-        $siteComArea2 = $this->createMainMenu();
-        $siteComArea0 = $this->createHeader(array($siteComArea1,$siteComArea2));
+        $siteComArea0 = $this->createHeader();
         $siteComArea4 = $this->createArea('Main content area 1', 'mainContentArea1', 'main-content-area1');
         $siteComArea4->addBlock(array('nodeId' => 0, 'blockId' => 1));
         $siteComArea4->addBlock(array('nodeId' => 0, 'blockId' => 0));
         $siteComArea5 = $this->createModuleArea();
         $siteComArea3 = $this->createMain(array($siteComArea4, $siteComArea5));
-        $siteComArea7 = $this->createFooter();
-        $siteComArea6 = $this->createFooterContainer($siteComArea7);
+        $siteComArea6 = $this->createFooter();
 
         $siteCom = $this->createBaseNode();
         $siteCom->setNodeId('fixture_page_community');
@@ -331,16 +326,13 @@ EOF
         $siteComBlock1->setComponent(LanguageListStrategy::LANGUAGE_LIST);
         $siteComBlock1->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));
 
-        $siteComArea1 = $this->createLogo();
-        $siteComArea2 = $this->createMainMenu();
-        $siteComArea0 = $this->createHeader(array($siteComArea1,$siteComArea2));
+        $siteComArea0 = $this->createHeader();
         $siteComArea4 = $this->createArea('Main content area 1', 'mainContentArea1', 'main-content-area1');
         $siteComArea4->addBlock(array('nodeId' => 0, 'blockId' => 1));
         $siteComArea4->addBlock(array('nodeId' => 0, 'blockId' => 0));
         $siteComArea5 = $this->createModuleArea();
         $siteComArea3 = $this->createMain(array($siteComArea4, $siteComArea5));
-        $siteComArea7 = $this->createFooter();
-        $siteComArea6 = $this->createFooterContainer($siteComArea7);
+        $siteComArea6 = $this->createFooter();
 
         $siteCom = $this->createBaseNode();
         $siteCom->setLanguage('en');
@@ -392,15 +384,12 @@ EOF
 ));
         $siteNewsBlock0->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));
 
-        $siteNewsArea1 = $this->createLogo();
-        $siteNewsArea2 = $this->createMainMenu();
-        $siteNewsArea0 = $this->createHeader(array($siteNewsArea1, $siteNewsArea2));
+        $siteNewsArea0 = $this->createHeader();
         $siteNewsArea4 = $this->createArea('Main content area 1', 'mainContentArea1', 'main-content-area1');
         $siteNewsArea4->addBlock(array('nodeId' => 0, 'blockId' => 0));
         $siteNewsArea5 = $this->createModuleArea();
         $siteNewsArea3 = $this->createMain(array($siteNewsArea4, $siteNewsArea5));
-        $siteNewsArea7 = $this->createFooter();
-        $siteNewsArea6 = $this->createFooterContainer($siteNewsArea7);
+        $siteNewsArea6 = $this->createFooter();
 
         $siteNews = $this->createBaseNode();
         $siteNews->setNodeId('fixture_page_news');
@@ -456,16 +445,13 @@ EOF
         ));
         $siteContactBlock0->addArea(array('nodeId' => 0, 'areaId' => 'moduleArea'));
 
-        $siteContactArea1 = $this->createLogo();
-        $siteContactArea2 = $this->createMainMenu();
-        $siteContactArea0 = $this->createHeader(array($siteContactArea1, $siteContactArea2));
+        $siteContactArea0 = $this->createHeader();
         $siteContactArea4 = $this->createArea('Main content area 1', 'mainContentArea1', 'main-content-contact');
         $siteContactArea4->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 4));
         $siteContactArea5 = $this->createModuleArea(false, "module-area-contact");
         $siteContactArea5->addBlock(array('nodeId' => 0, 'blockId' => 0));
         $siteContactArea3 = $this->createMain(array($siteContactArea4, $siteContactArea5));
-        $siteContactArea7 = $this->createFooter();
-        $siteContactArea6 = $this->createFooterContainer($siteContactArea7);
+        $siteContactArea6 = $this->createFooter();
 
         $siteContact = $this->createBaseNode();
         $siteContact->setNodeId('fixture_page_contact');
@@ -508,14 +494,11 @@ EOF
         ));
         $siteLegalBlock0->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));
 
-        $siteLegalArea1 = $this->createLogo();
-        $siteLegalArea2 =$this->createMainMenu();
-        $siteLegalArea0 = $this->createHeader(array($siteLegalArea1, $siteLegalArea2));
+        $siteLegalArea0 = $this->createHeader();
         $siteLegalArea4 = $this->createArea('Main content area 1', 'mainContentArea1', 'main-content-area1' );
         $siteLegalArea4->addBlock(array('nodeId' => 0, 'blockId' => 0));
         $siteLegalArea3 = $this->createMain(array($siteLegalArea4));
-        $siteLegalArea6 = $this->createFooter();
-        $siteLegalArea5 = $this->createFooterContainer($siteLegalArea6);
+        $siteLegalArea5 = $this->createFooter();
 
         $siteLegal = $this->createBaseNode();
         $siteLegal->setNodeId('fixture_page_legal_mentions');
@@ -552,29 +535,11 @@ EOF
     /**
      * @return Area
      */
-    private function createLogo(){
-        $area = $this->createArea('Logo', 'logo', 'logo');
-        $area->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 0));
-        return $area;
-    }
-
-    /**
-     * @return Area
-     */
-    private function createMainMenu(){
-        $area = $this->createArea('Main menu', 'mainMenu', 'main-menu');
-        $area->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 1));
-        return $area;
-    }
-
-    /**
-     * @param array $areas
-     * @return Area
-     */
-    private function createHeader(array $areas){
+    private function createHeader(){
         $header = $this->createArea('Header','header','header');
-        foreach($areas as $area)
-            $header->addArea($area);
+        $header->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 0));
+        $header->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 1));
+
         return $header;
     }
 
@@ -582,19 +547,9 @@ EOF
      * @return Area
      */
     private function createFooter(){
-        $area = $this->createArea('Containe footer','containeFooter','containe-footer');
+        $area = $this->createArea('Footer','footer','footer');
         $area->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3));
         $area->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 2));
-        return $area;
-    }
-
-    /**
-     * @param $footer
-     * @return Area
-     */
-    private function createFooterContainer($footer){
-        $area = $this->createArea('Footer','footer','footer');
-        $area->addArea($footer);
         return $area;
     }
 
@@ -623,6 +578,7 @@ EOF
         $main = new Area();
         $main->setLabel('My main');
         $main->setAreaId('myMain');
+        $main->setBoDirection('h');
         if($haveClass)
             $main->setHtmlClass('my-main');
         foreach($areas as $area)
