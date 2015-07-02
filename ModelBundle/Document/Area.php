@@ -42,13 +42,6 @@ class Area implements AreaInterface
     protected $boDirection;
 
     /**
-     * @var float $boPercent
-     *
-     * @ODM\Field(type="float")
-     */
-    protected $boPercent;
-
-    /**
      * @ODM\Field(type="collection")
      */
     protected $classes = array();
@@ -151,26 +144,6 @@ class Area implements AreaInterface
     public function getBoDirection()
     {
         return $this->boDirection;
-    }
-
-    /**
-     * Set boPercent
-     *
-     * @param float $boPercent
-     */
-    public function setBoPercent($boPercent)
-    {
-        $this->boPercent = $boPercent;
-    }
-
-    /**
-     * Get boPercent
-     *
-     * @return float $boPercent
-     */
-    public function getBoPercent()
-    {
-        return $this->boPercent;
     }
 
     /**
