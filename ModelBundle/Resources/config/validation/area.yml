@@ -2,8 +2,5 @@ OpenOrchestra\ModelBundle\Document\Area:
     properties:
         areaId:
             - NotBlank: ~
-        boPercent:
-            - Type:
-                type: float
         subAreas:
             - Valid: ~
