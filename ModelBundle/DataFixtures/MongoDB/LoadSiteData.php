@@ -66,8 +66,7 @@ class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface
         $this->addSitesAliases(
             array('demo.openorchestra.dev', 'demo.openorchestra.inte', 'demo.open-orchestra.com'),
             array('fr', 'en'),
-            $site2,
-            array('en' => 'en'));
+            $site2);
         $site2->setSitemapPriority(0.5);
         $site2->setDeleted(false);
         $site2->setTheme($this->getReference('themePresentation'));
@@ -127,18 +126,13 @@ class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface
      *
      * @return SiteAlias
      */
-    protected function generateSiteAlias($domainName, $language, $main = false)
+    protected function generateSiteAlias($domainName, $language, $main = false, $prefix = null)
     {
-        $prefixes = array(
-            'fr' => null,
-            'en' => 'en',
-            'de' => 'de'
-        );
         $siteAlias = new SiteAlias();
         $siteAlias->setDomain($domainName);
         $siteAlias->setLanguage($language);
         $siteAlias->setMain($main);
-        $siteAlias->setPrefix($prefixes[$language]);
+        $siteAlias->setPrefix($prefix);
         $siteAlias->setScheme(SchemeableInterface::SCHEME_HTTP);
 
         return $siteAlias;
