@@ -7,7 +7,6 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\ModelInterface\Model\RoleInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
-use OpenOrchestra\ModelInterface\ModelTrait\TranslatedValueFilter;
 
 /**
  * Class Role
@@ -19,8 +18,6 @@ use OpenOrchestra\ModelInterface\ModelTrait\TranslatedValueFilter;
  */
 class Role implements RoleInterface
 {
-    use TranslatedValueFilter;
-
     /**
      * @ODM\Id()
      */
@@ -46,7 +43,7 @@ class Role implements RoleInterface
     protected $toStatus;
 
     /**
-     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\TranslatedValueInterface")
+     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\TranslatedValueInterface", strategy="set")
      */
     protected $descriptions;
 
@@ -129,7 +126,7 @@ class Role implements RoleInterface
      */
     public function addDescription(TranslatedValueInterface $description)
     {
-        $this->descriptions->add($description);
+        $this->descriptions->set($description->getLanguage(), $description);
     }
 
     /**
@@ -137,7 +134,7 @@ class Role implements RoleInterface
      */
     public function removeDescription(TranslatedValueInterface $description)
     {
-        $this->descriptions->removeElement($description);
+        $this->descriptions->remove($description->getLanguage());
     }
 
     /**
@@ -147,7 +144,7 @@ class Role implements RoleInterface
      */
     public function getDescription($language = 'en')
     {
-        return $this->filterByLanguage($this->descriptions, $language);
+        return $this->descriptions->get($language)->getValue();
     }
 
     /**
