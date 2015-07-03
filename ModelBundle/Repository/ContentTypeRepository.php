@@ -4,8 +4,8 @@ namespace OpenOrchestra\ModelBundle\Repository;
 
 use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\PaginateAndSearchFilterTrait;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
-use OpenOrchestra\ModelInterface\Repository\Configuration\FinderConfiguration;
-use OpenOrchestra\ModelInterface\Repository\Configuration\PaginateFinderConfiguration;
+use OpenOrchestra\Pagination\Configuration\FinderConfiguration;
+use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 
 /**
@@ -93,7 +93,7 @@ class ContentTypeRepository extends AbstractRepository implements ContentTypeRep
     {
         $qa = $this->createAggregateQueryNotDeletedInLastVersion();
 
-        $qa = $this->generateFilter($qa, $configuration->getFinderConfiguration());
+        $qa = $this->generateFilter($qa, $configuration);
 
         $elementName = 'contentType';
         $qa->group($this->generateLastVersionFilter($elementName));

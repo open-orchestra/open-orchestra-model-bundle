@@ -8,17 +8,17 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\ModelInterface\Mapping\Annotations as ORCHESTRA;
 use Gedmo\Blameable\Traits\BlameableDocument;
 use Gedmo\Timestampable\Traits\TimestampableDocument;
-use OpenOrchestra\ModelInterface\MongoTrait\Statusable;
+use OpenOrchestra\MongoTrait\Statusable;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
-use OpenOrchestra\ModelInterface\MongoTrait\Cacheable;
-use OpenOrchestra\ModelInterface\MongoTrait\Metaable;
-use OpenOrchestra\ModelInterface\MongoTrait\Sitemapable;
-use OpenOrchestra\ModelInterface\MongoTrait\Schemeable;
-use OpenOrchestra\ModelInterface\MongoTrait\Versionable;
+use OpenOrchestra\MongoTrait\Cacheable;
+use OpenOrchestra\MongoTrait\Metaable;
+use OpenOrchestra\MongoTrait\Sitemapable;
+use OpenOrchestra\MongoTrait\Schemeable;
+use OpenOrchestra\MongoTrait\Versionable;
 
 /**
  * Description of Node

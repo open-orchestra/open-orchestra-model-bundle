@@ -2,8 +2,8 @@
 
 namespace OpenOrchestra\ModelBundle\Repository\RepositoryTrait;
 
-use OpenOrchestra\ModelInterface\Repository\Configuration\FinderConfiguration;
-use OpenOrchestra\ModelInterface\Repository\Configuration\PaginateFinderConfiguration;
+use OpenOrchestra\Pagination\Configuration\FinderConfiguration;
+use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use Solution\MongoAggregation\Pipeline\Stage;
 
 trait PaginateAndSearchFilterTrait
@@ -156,7 +156,7 @@ trait PaginateAndSearchFilterTrait
      */
     protected function generateFilterForPaginate(Stage $qa, PaginateFinderConfiguration $configuration)
     {
-        $qa = $this->generateFilter($qa, $configuration->getFinderConfiguration());
+        $qa = $this->generateFilter($qa, $configuration);
         $qa = $this->generateFilterSort($qa, $configuration->getOrder(), $configuration->getDescriptionEntity(), $configuration->getColumns());
         $qa = $this->generateSkipFilter($qa, $configuration->getSkip());
         $qa = $this->generateLimitFilter($qa, $configuration->getLimit());

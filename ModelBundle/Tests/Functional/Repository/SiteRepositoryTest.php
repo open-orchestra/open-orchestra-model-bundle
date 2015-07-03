@@ -3,7 +3,7 @@
 namespace OpenOrchestra\ModelBundle\Tests\Functional\Repository;
 
 use OpenOrchestra\ModelBundle\Repository\SiteRepository;
-use OpenOrchestra\ModelInterface\Repository\Configuration\PaginateFinderConfiguration;
+use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**

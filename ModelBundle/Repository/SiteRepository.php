@@ -5,8 +5,8 @@ namespace OpenOrchestra\ModelBundle\Repository;
 use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\PaginateAndSearchFilterTrait;
 use OpenOrchestra\ModelInterface\Model\ReadSiteInterface;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
-use OpenOrchestra\ModelInterface\Repository\Configuration\FinderConfiguration;
-use OpenOrchestra\ModelInterface\Repository\Configuration\PaginateFinderConfiguration;
+use OpenOrchestra\Pagination\Configuration\FinderConfiguration;
+use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
 
 /**
