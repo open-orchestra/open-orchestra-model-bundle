@@ -25,7 +25,7 @@ class IdAuthorizedCharacterValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->constraint = new IdAuthorizedCharacter();
+        $this->constraint = Phake::mock('OpenOrchestra\ModelBundle\Validator\Constraints\IdAuthorizedCharacter');
         $this->context = Phake::mock('Symfony\Component\Validator\Context\ExecutionContextInterface');
         $this->constraintViolationBuilder = Phake::mock('Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface');
 
