@@ -3,8 +3,8 @@
 namespace OpenOrchestra\ModelBundle\Repository;
 
 use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\PaginateAndSearchFilterTrait;
-use OpenOrchestra\ModelInterface\Repository\Configuration\FinderConfiguration;
-use OpenOrchestra\ModelInterface\Repository\Configuration\PaginateFinderConfiguration;
+use OpenOrchestra\Pagination\Configuration\FinderConfiguration;
+use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use OpenOrchestra\ModelInterface\Repository\FieldAutoGenerableRepositoryInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
@@ -302,7 +302,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
     public function findByContentTypeAndSiteIdInLastVersionForPaginate($contentType = null, PaginateFinderConfiguration $configuration = null, $siteId = null)
     {
         $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
-        $qa = $this->generateFilter($qa, $configuration->getFinderConfiguration());
+        $qa = $this->generateFilter($qa, $configuration);
         $qa->match($this->generateDeletedFilter());
         if (!is_null($siteId)) {
             $qa->match(array('$or' => array(array('siteId' => $siteId), array('linkedToSite' => false))));

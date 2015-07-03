@@ -10,8 +10,8 @@ use OpenOrchestra\ModelInterface\Model\SiteAliasInterface;
 use OpenOrchestra\ModelInterface\Mapping\Annotations as ORCHESTRA;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\ModelInterface\Model\ThemeInterface;
-use OpenOrchestra\ModelInterface\MongoTrait\Metaable;
-use OpenOrchestra\ModelInterface\MongoTrait\Sitemapable;
+use OpenOrchestra\MongoTrait\Metaable;
+use OpenOrchestra\MongoTrait\Sitemapable;
 
 /**
  * Description of Site

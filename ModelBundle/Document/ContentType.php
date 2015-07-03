@@ -10,8 +10,8 @@ use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
-use OpenOrchestra\ModelInterface\MongoTrait\SiteLinkable;
-use OpenOrchestra\ModelInterface\MongoTrait\Versionable;
+use OpenOrchestra\MongoTrait\SiteLinkable;
+use OpenOrchestra\MongoTrait\Versionable;
 
 /**
  * Description of ContentType

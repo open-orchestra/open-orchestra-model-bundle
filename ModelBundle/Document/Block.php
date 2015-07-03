@@ -4,7 +4,7 @@ namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
-use OpenOrchestra\ModelInterface\MongoTrait\Cacheable;
+use OpenOrchestra\MongoTrait\Cacheable;
 
 /**
  * Description of BaseBlock

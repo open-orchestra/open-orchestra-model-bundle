@@ -7,14 +7,14 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Gedmo\Blameable\Traits\BlameableDocument;
 use Gedmo\Timestampable\Traits\TimestampableDocument;
 use OpenOrchestra\ModelInterface\Mapping\Annotations as ORCHESTRA;
-use OpenOrchestra\ModelInterface\MongoTrait\SiteLinkable;
-use OpenOrchestra\ModelInterface\MongoTrait\Statusable;
+use OpenOrchestra\MongoTrait\SiteLinkable;
+use OpenOrchestra\MongoTrait\Statusable;
 use OpenOrchestra\ModelInterface\Model\ContentAttributeInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Model\ReadContentAttributeInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
-use OpenOrchestra\ModelInterface\MongoTrait\Keywordable;
-use OpenOrchestra\ModelInterface\MongoTrait\Versionable;
+use OpenOrchestra\MongoTrait\Keywordable;
+use OpenOrchestra\MongoTrait\Versionable;
 
 /**
  * Description of Content

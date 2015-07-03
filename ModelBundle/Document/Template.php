@@ -8,7 +8,7 @@ use OpenOrchestra\ModelInterface\Mapping\Annotations as ORCHESTRA;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\ModelInterface\Model\TemplateInterface;
-use OpenOrchestra\ModelInterface\MongoTrait\Versionable;
+use OpenOrchestra\MongoTrait\Versionable;
 
 /**
  * Description of Template
