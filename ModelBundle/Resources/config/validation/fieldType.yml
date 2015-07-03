@@ -10,9 +10,7 @@ OpenOrchestra\ModelBundle\Document\FieldType:
             - Type:
                 type: bool
         fieldId:
-            - Regex:
-                pattern: '/^[a-zA-Z0-9_][a-zA-Z0-9_\-:]*$/D'
-                message: 'open_orchestra_model_validators.field.special_character'
+            - OpenOrchestra\ModelBundle\Validator\Constraints\IdAuthorizedCharacter: ~
         labels:
             - Valid: ~
         options:
