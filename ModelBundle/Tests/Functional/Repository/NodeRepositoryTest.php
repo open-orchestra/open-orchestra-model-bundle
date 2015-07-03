@@ -211,7 +211,7 @@ class NodeRepositoryTest extends KernelTestCase
         $nodes = $this->repository->findLastVersionBySiteId($siteId);
 
         $this->assertCount($nodeNumber, $nodes);
-        $this->assertSameNode('fr', $version, $siteId, $nodes[NodeInterface::ROOT_NODE_ID]);
+        $this->assertSameNode('en', $version, $siteId, $nodes[NodeInterface::ROOT_NODE_ID]);
     }
 
     /**
@@ -388,7 +388,7 @@ class NodeRepositoryTest extends KernelTestCase
     public function provideLanguageSiteIdAndCount()
     {
         return array(
-            array('en', '2', 1),
+            array('en', '2', 2),
             array('fr', '2', 5),
         );
     }
