@@ -247,10 +247,10 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      */
     public function findByContentTypeInLastVersionForPaginateAndSearch($contentType = null, $descriptionEntity = null, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
     {
-        $configuration = FinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
-        $paginateConfiguration = PaginateFinderConfiguration::generatePaginateFromVariable($configuration, $order, $skip, $limit);
+        $configuration = PaginateFinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
+        $configuration->setPaginateConfiguration($order, $skip, $limit);
 
-        return $this->findByContentTypeAndSiteIdInLastVersionForPaginate($contentType, $paginateConfiguration);
+        return $this->findByContentTypeAndSiteIdInLastVersionForPaginate($contentType, $configuration);
     }
 
     /**
@@ -269,10 +269,10 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      */
     public function findByContentTypeInLastVersionForPaginateAndSearchAndSiteId($contentType = null, $descriptionEntity = null, $columns = null, $search = null, $siteId = null, $order = null, $skip = null, $limit = null)
     {
-        $configuration = FinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
-        $paginateConfiguration = PaginateFinderConfiguration::generatePaginateFromVariable($configuration, $order, $skip, $limit);
+        $configuration = PaginateFinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
+        $configuration->setPaginateConfiguration($order, $skip, $limit);
 
-        return $this->findByContentTypeAndSiteIdInLastVersionForPaginate($contentType, $paginateConfiguration);
+        return $this->findByContentTypeAndSiteIdInLastVersionForPaginate($contentType, $configuration);
     }
 
     /**

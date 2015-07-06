@@ -69,10 +69,10 @@ class ContentTypeRepository extends AbstractRepository implements ContentTypeRep
      */
     public function findAllByDeletedInLastVersionForPaginateAndSearch($descriptionEntity = null, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
     {
-        $configuration = FinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
-        $paginateConfiguration = PaginateFinderConfiguration::generatePaginateFromVariable($configuration, $columns, $skip, $limit);
+        $configuration = PaginateFinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
+        $configuration->setPaginateConfiguration($order, $skip, $limit);
 
-        return $this->findAllNotDeletedInLastVersionForPaginate($paginateConfiguration);
+        return $this->findAllNotDeletedInLastVersionForPaginate($configuration);
     }
 
     /**

@@ -63,10 +63,10 @@ class SiteRepository extends AbstractRepository implements SiteRepositoryInterfa
      */
     public function findByDeletedForPaginateAndSearch($deleted, $descriptionEntity = null, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
     {
-        $configuration = FinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
-        $paginateConfiguration = PaginateFinderConfiguration::generatePaginateFromVariable($configuration, $order, $skip, $limit);
+        $configuration = PaginateFinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
+        $configuration->setPaginateConfiguration($order, $skip, $limit);
 
-        return $this->findByDeletedForPaginate($deleted, $paginateConfiguration);
+        return $this->findByDeletedForPaginate($deleted, $configuration);
     }
 
     /**

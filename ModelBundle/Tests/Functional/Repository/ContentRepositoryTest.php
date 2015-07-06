@@ -290,9 +290,9 @@ class ContentRepositoryTest extends KernelTestCase
     public function testFindByContentTypeInLastVersionForPaginateAndSearchAndSiteId($contentType, $descriptionEntity, $columns, $siteId, $skip, $limit, $count)
     {
         $configuration = PaginateFinderConfiguration::generateFromVariable($descriptionEntity, $columns);
-        $paginateConfiguration = PaginateFinderConfiguration::generatePaginateFromVariable($configuration, null, $skip, $limit);
+        $configuration->setPaginateConfiguration(null, $skip, $limit);
 
-        $contents = $this->repository->findByContentTypeAndSiteIdInLastVersionForPaginate($contentType, $paginateConfiguration, $siteId);
+        $contents = $this->repository->findByContentTypeAndSiteIdInLastVersionForPaginate($contentType, $configuration, $siteId);
         $this->assertCount($count, $contents);
     }
 

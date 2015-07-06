@@ -22,10 +22,10 @@ trait PaginateAndSearchFilterTrait
      */
     public function findForPaginateAndSearch($descriptionEntity = null, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
     {
-        $configuration = FinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
-        $paginateConfiguration = PaginateFinderConfiguration::generatePaginateFromVariable($configuration, $order, $skip, $limit);
+        $configuration = PaginateFinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
+        $configuration->setPaginateConfiguration($order, $skip, $limit);
 
-        return $this->findForPaginate($paginateConfiguration);
+        return $this->findForPaginate($configuration);
     }
 
     /**
@@ -134,10 +134,10 @@ trait PaginateAndSearchFilterTrait
      */
     protected function generateFilterForPaginateAndSearch(Stage $qa, $descriptionEntity = null, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
     {
-        $configuration = FinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
-        $paginateConfiguration = PaginateFinderConfiguration::generatePaginateFromVariable($configuration, $order, $skip, $limit);
+        $configuration = PaginateFinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
+        $configuration->setPaginateConfiguration($order, $skip, $limit);
 
-        return $this->generateFilterForPaginate($qa, $paginateConfiguration);
+        return $this->generateFilterForPaginate($qa, $configuration);
     }
 
     /**
