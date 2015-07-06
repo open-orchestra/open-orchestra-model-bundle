@@ -69,19 +69,10 @@ class ContentTypeRepository extends AbstractRepository implements ContentTypeRep
      */
     public function findAllByDeletedInLastVersionForPaginateAndSearch($descriptionEntity = null, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
     {
-        $qa = $this->createAggregateQueryByDeletedAndLastVersion();
+        $configuration = FinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
+        $paginateConfiguration = PaginateFinderConfiguration::generatePaginateFromVariable($configuration, $columns, $skip, $limit);
 
-        $qa = $this->generateFilterForSearch($qa, $descriptionEntity, $columns, $search);
-
-        $elementName = 'contentType';
-        $qa->group($this->generateLastVersionFilter($elementName));
-
-        $qa = $this->generateFilterSort($qa, $order, $descriptionEntity, $columns, $elementName);
-
-        $qa = $this->generateSkipFilter($qa, $skip);
-        $qa = $this->generateLimitFilter($qa, $limit);
-
-        return $this->hydrateAggregateQuery($qa, $elementName, 'getContentTypeId');
+        return $this->findAllNotDeletedInLastVersionForPaginate($paginateConfiguration);
     }
 
     /**
@@ -121,13 +112,9 @@ class ContentTypeRepository extends AbstractRepository implements ContentTypeRep
      */
     public function countByDeletedInLastVersionWithSearchFilter($descriptionEntity = null, $columns = null, $search = null)
     {
-        $qa = $this->createAggregateQueryByDeletedAndLastVersion();
-        $qa = $this->generateFilterForSearch($qa, $descriptionEntity, $columns, $search);
+        $configuration = FinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
 
-        $elementName = 'contentType';
-        $qa->group($this->generateLastVersionFilter($elementName));
-
-        return $this->countDocumentAggregateQuery($qa, $elementName);
+        return $this->countNotDeletedInLastVersionWithSearchFilter($configuration);
     }
 
     /**

@@ -20,7 +20,7 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
     /**
      * @param string $mongoId
      * 
-     * @return OpenOrchestra\ModelInterface\Model\NodeInterface
+     * @return \OpenOrchestra\ModelInterface\Model\NodeInterface
      */
     public function findOneById($mongoId)
     {
@@ -79,17 +79,7 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      */
     public function findOneByNodeIdAndLanguageWithPublishedAndLastVersionAndSiteId($nodeId, $language, $siteId)
     {
-        $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
-        $filter = array();
-        if ($nodeId !== NodeInterface::TRANSVERSE_NODE_ID) {
-            $filter['status.published'] = true;
-        }
-        $filter['deleted'] = false;
-        $filter['nodeId'] = $nodeId;
-        $qa->match($filter);
-        $qa->sort(array('version' => -1));
-
-        return $this->singleHydrateAggregateQuery($qa);
+        return $this->findOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion($nodeId, $language, $siteId);
     }
 
     /**
@@ -126,19 +116,7 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      */
     public function findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $language, $siteId, $version = null)
     {
-        if (!is_null($version)) {
-            $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
-            $qa->match(
-                array(
-                    'nodeId'  => $nodeId,
-                    'deleted' => false,
-                    'version' => (int) $version,
-                )
-            );
-            return $this->singleHydrateAggregateQuery($qa);
-        }
-
-        return $this->findOneByNodeIdAndLanguageAndSiteIdInLastVersion($nodeId, $language, $siteId);
+        return $this->findOneByNodeIdAndLanguageAndSiteIdAndVersion($nodeId, $language, $siteId, $version);
     }
 
     /**
@@ -249,16 +227,7 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      */
     public function findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($nodeId, $language, $siteId)
     {
-        $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
-        $qa->match(
-            array(
-                'nodeId'  => $nodeId,
-                'deleted' => false,
-            )
-        );
-        $qa->sort(array('version' => -1));
-
-        return $this->singleHydrateAggregateQuery($qa);
+        return $this->findOneByNodeIdAndLanguageAndSiteIdInLastVersion($nodeId, $language, $siteId);
     }
 
     /**
@@ -303,7 +272,7 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      */
     public function findLastVersionByDeletedAndSiteId($siteId, $type = NodeInterface::TYPE_DEFAULT)
     {
-        return $this->prepareFindLastVersion($type, $siteId, true);
+        return $this->findDeletedInLastVersionBySiteId($siteId, $type);
     }
 
     /**
@@ -328,10 +297,7 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      */
     public function findChildsByPathAndSiteIdAndLanguage($path, $siteId, $language)
     {
-        $qa = $this->buildTreeRequest($language, $siteId);
-        $qa->match(array('path' => new \MongoRegex('/'.preg_quote($path).'.+/')));
-
-        return $this->hydrateAggregateQuery($qa);
+        return $this->findChildrenByPathAndSiteIdAndLanguage($path, $siteId, $language);
     }
 
     /**
@@ -556,16 +522,7 @@ class NodeRepository extends AbstractRepository implements FieldAutoGenerableRep
      */
     public function findByParentIdAndRoutePatternAndNotNodeIdAndSiteId($parentId, $routePattern, $nodeId, $siteId)
     {
-        $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
-        $qa->match(
-            array(
-                'parentId'     => $parentId,
-                'routePattern' => $routePattern,
-                'nodeId'       => array('$ne' => $nodeId),
-            )
-        );
-
-        return $this->hydrateAggregateQuery($qa);
+        return $this->findByParentIdAndRoutePatternAndNodeIdAndSiteId($parentId, $routePattern, $nodeId, $siteId);
     }
 
     /**

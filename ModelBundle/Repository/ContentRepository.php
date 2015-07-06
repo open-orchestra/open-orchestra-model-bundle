@@ -241,22 +241,16 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      * @param int|null    $skip
      * @param int|null    $limit
      *
-     * @deprecated, use findByContentTypeInLastVersionForPaginateAndSearchAndSiteId instead
+     * @deprecated will be removed in 0.3.0, use findByContentTypeAndSiteIdInLastVersionForPaginate instead
      *
      * @return array
      */
     public function findByContentTypeInLastVersionForPaginateAndSearch($contentType = null, $descriptionEntity = null, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
     {
-        return $this->findByContentTypeInLastVersionForPaginateAndSearchAndSiteId(
-            $contentType,
-            $descriptionEntity,
-            $columns,
-            $search,
-            null,
-            $order,
-            $skip,
-            $limit
-        );
+        $configuration = FinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
+        $paginateConfiguration = PaginateFinderConfiguration::generatePaginateFromVariable($configuration, $order, $skip, $limit);
+
+        return $this->findByContentTypeAndSiteIdInLastVersionForPaginate($contentType, $paginateConfiguration);
     }
 
     /**
@@ -269,27 +263,16 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      * @param int|null    $skip
      * @param int|null    $limit
      *
+     * @deprecated, will be removed in 0.3.0, use findByContentTypeAndSiteIdInLastVersionForPaginate instead
      *
      * @return array
      */
     public function findByContentTypeInLastVersionForPaginateAndSearchAndSiteId($contentType = null, $descriptionEntity = null, $columns = null, $search = null, $siteId = null, $order = null, $skip = null, $limit = null)
     {
-        $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
-        $qa = $this->generateFilterForSearch($qa, $descriptionEntity, $columns, $search);
-        $qa->match($this->generateDeletedFilter());
-        if (!is_null($siteId)) {
-            $qa->match(array('$or' => array(array('siteId' => $siteId), array('linkedToSite' => false))));
-        }
+        $configuration = FinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
+        $paginateConfiguration = PaginateFinderConfiguration::generatePaginateFromVariable($configuration, $order, $skip, $limit);
 
-        $elementName = 'content';
-        $qa->group($this->generateLastVersionFilter($elementName));
-
-        $qa = $this->generateFilterSort($qa, $order, $descriptionEntity, $columns, $elementName);
-
-        $qa = $this->generateSkipFilter($qa, $skip);
-        $qa = $this->generateLimitFilter($qa, $limit);
-
-        return $this->hydrateAggregateQuery($qa, $elementName);
+        return $this->findByContentTypeAndSiteIdInLastVersionForPaginate($contentType, $paginateConfiguration);
     }
 
     /**
@@ -336,13 +319,9 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
      */
     public function countByContentTypeInLastVersionWithSearchFilter($contentType = null, $descriptionEntity = null, $columns = null, $search = null)
     {
-        $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
-        $qa = $this->generateFilterForSearch($qa, $descriptionEntity, $columns, $search);
-        $qa->match($this->generateDeletedFilter());
-        $elementName = 'content';
-        $qa->group($this->generateLastVersionFilter($elementName));
+        $configuration = FinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
 
-        return $this->countDocumentAggregateQuery($qa, $elementName);
+        return $this->countByContentTypeInLastVersionWithFilter($contentType, $configuration);
     }
 
     /**

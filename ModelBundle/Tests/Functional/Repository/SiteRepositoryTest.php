@@ -40,14 +40,9 @@ class SiteRepositoryTest extends KernelTestCase
      */
     public function testFindByDeletedForPaginateAndSearch($deleted, $descriptionEntity, $columns, $search, $skip, $limit, $count)
     {
-        $configuration = new PaginateFinderConfiguration();
-        $configuration->setColumns($columns);
-        $configuration->setSearch($search);
-        $configuration->setDescriptionEntity($descriptionEntity);
-        $configuration->setLimit($limit);
-        $configuration->setSkip($skip);
-
-        $sites = $this->repository->findByDeletedForPaginate($deleted, $configuration);
+        $configuration = PaginateFinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
+        $paginateConfiguration = PaginateFinderConfiguration::generatePaginateFromVariable($configuration, null, $skip, $limit);
+        $sites = $this->repository->findByDeletedForPaginate($deleted, $paginateConfiguration);
         $this->assertCount($count, $sites);
     }
 
@@ -78,12 +73,12 @@ class SiteRepositoryTest extends KernelTestCase
      */
     public function testOrderFindByDeletedForPaginateAndSearch($order, $orderId)
     {
-        $configuration = new PaginateFinderConfiguration();
-        $configuration->setColumns($this->generateColumnsProvider('', 'site'));
-        $configuration->setDescriptionEntity($this->getDescriptionColumnEntity());
-        $configuration->setOrder($order);
+        $configuration = PaginateFinderConfiguration::generateFromVariable(
+            $this->getDescriptionColumnEntity(),
+            $this->generateColumnsProvider('', 'site'));
+        $paginateConfiguration = PaginateFinderConfiguration::generatePaginateFromVariable($configuration, $order);
 
-        $sites = $this->repository->findByDeletedForPaginate(false, $configuration);
+        $sites = $this->repository->findByDeletedForPaginate(false, $paginateConfiguration);
 
         $this->assertSameOrder($sites, $orderId);
     }
