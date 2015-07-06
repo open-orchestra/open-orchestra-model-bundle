@@ -289,13 +289,10 @@ class ContentRepositoryTest extends KernelTestCase
      */
     public function testFindByContentTypeInLastVersionForPaginateAndSearchAndSiteId($contentType, $descriptionEntity, $columns, $siteId, $skip, $limit, $count)
     {
-        $pageConfiguration = new PaginateFinderConfiguration();
-        $pageConfiguration->setDescriptionEntity($descriptionEntity);
-        $pageConfiguration->setColumns($columns);
-        $pageConfiguration->setSkip($skip);
-        $pageConfiguration->setLimit($limit);
+        $configuration = PaginateFinderConfiguration::generateFromVariable($descriptionEntity, $columns);
+        $configuration->setPaginateConfiguration(null, $skip, $limit);
 
-        $contents = $this->repository->findByContentTypeAndSiteIdInLastVersionForPaginate($contentType, $pageConfiguration, $siteId);
+        $contents = $this->repository->findByContentTypeAndSiteIdInLastVersionForPaginate($contentType, $configuration, $siteId);
         $this->assertCount($count, $contents);
     }
 
@@ -354,10 +351,7 @@ class ContentRepositoryTest extends KernelTestCase
      */
     public function testCountByContentTypeInLastVersionWithSearchFilter($contentType, $descriptionEntity, $columns, $search, $count)
     {
-        $configuration = new FinderConfiguration();
-        $configuration->setColumns($columns);
-        $configuration->setSearch($search);
-        $configuration->setDescriptionEntity($descriptionEntity);
+        $configuration = FinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
 
         $sites = $this->repository->countByContentTypeInLastVersionWithFilter($contentType, $configuration);
         $this->assertEquals($count, $sites);
@@ -412,11 +406,11 @@ class ContentRepositoryTest extends KernelTestCase
     }
 
     /**
-     * @param string           $language
-     * @param int              $version
-     * @param string           $siteId
-     * @param ContentInterface $content
-     * @param string           $contentId
+     * @param string                                               $language
+     * @param int                                                  $version
+     * @param string                                               $siteId
+     * @param \OpenOrchestra\ModelInterface\Model\ContentInterface $content
+     * @param string                                               $contentId
      */
     protected function assertSameContent($language, $version, $siteId, $contentId, $content)
     {

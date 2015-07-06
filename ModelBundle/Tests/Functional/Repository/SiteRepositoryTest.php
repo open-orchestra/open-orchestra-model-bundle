@@ -3,6 +3,7 @@
 namespace OpenOrchestra\ModelBundle\Tests\Functional\Repository;
 
 use OpenOrchestra\ModelBundle\Repository\SiteRepository;
+use OpenOrchestra\Pagination\Configuration\FinderConfiguration;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -40,13 +41,8 @@ class SiteRepositoryTest extends KernelTestCase
      */
     public function testFindByDeletedForPaginateAndSearch($deleted, $descriptionEntity, $columns, $search, $skip, $limit, $count)
     {
-        $configuration = new PaginateFinderConfiguration();
-        $configuration->setColumns($columns);
-        $configuration->setSearch($search);
-        $configuration->setDescriptionEntity($descriptionEntity);
-        $configuration->setLimit($limit);
-        $configuration->setSkip($skip);
-
+        $configuration = PaginateFinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
+        $configuration->setPaginateConfiguration(null, $skip, $limit);
         $sites = $this->repository->findByDeletedForPaginate($deleted, $configuration);
         $this->assertCount($count, $sites);
     }
@@ -78,11 +74,10 @@ class SiteRepositoryTest extends KernelTestCase
      */
     public function testOrderFindByDeletedForPaginateAndSearch($order, $orderId)
     {
-        $configuration = new PaginateFinderConfiguration();
-        $configuration->setColumns($this->generateColumnsProvider('', 'site'));
-        $configuration->setDescriptionEntity($this->getDescriptionColumnEntity());
-        $configuration->setOrder($order);
-
+        $configuration = PaginateFinderConfiguration::generateFromVariable(
+            $this->getDescriptionColumnEntity(),
+            $this->generateColumnsProvider('', 'site'));
+        $configuration->setPaginateConfiguration($order);
         $sites = $this->repository->findByDeletedForPaginate(false, $configuration);
 
         $this->assertSameOrder($sites, $orderId);
@@ -134,7 +129,8 @@ class SiteRepositoryTest extends KernelTestCase
      */
     public function testCountByDeletedWithSearchFilter($deleted, $descriptionEntity, $columns, $search, $count)
     {
-        $sites = $this->repository->countByDeletedWithSearchFilter($deleted, $descriptionEntity, $columns, $search);
+        $configuration = FinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
+        $sites = $this->repository->countWithSearchFilterByDeleted($deleted, $configuration);
         $this->assertEquals($count, $sites);
     }
 

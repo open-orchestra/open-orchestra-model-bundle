@@ -31,6 +31,7 @@ class RoleRepository extends AbstractRepository implements RoleRepositoryInterfa
                 'toStatus.$id'   => new \MongoId($toStatus->getId()),
             )
         );
+
         return $this->singleHydrateAggregateQuery($qa);
     }
 }

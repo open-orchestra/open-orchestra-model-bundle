@@ -22,10 +22,10 @@ trait PaginateAndSearchFilterTrait
      */
     public function findForPaginateAndSearch($descriptionEntity = null, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
     {
-        $qa = $this->createAggregationQuery();
-        $qa = $this->generateFilterForPaginateAndSearch($qa, $descriptionEntity, $columns, $search, $order, $skip, $limit);
+        $configuration = PaginateFinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
+        $configuration->setPaginateConfiguration($order, $skip, $limit);
 
-        return $this->hydrateAggregateQuery($qa);
+        return $this->findForPaginate($configuration);
     }
 
     /**
@@ -52,10 +52,9 @@ trait PaginateAndSearchFilterTrait
      */
     public function countWithSearchFilter($descriptionEntity = null, $columns = null, $search = null)
     {
-        $qa = $this->createAggregationQuery();
-        $qa = $this->generateFilterForSearch($qa, $descriptionEntity, $columns, $search);
+        $configuration = FinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
 
-        return $this->countDocumentAggregateQuery($qa);
+        return $this->countWithFilter($configuration);
     }
 
     /**
@@ -95,14 +94,9 @@ trait PaginateAndSearchFilterTrait
      */
     protected function generateFilterForSearch(Stage $qa, $descriptionEntity = null, $columns = null, $search = null)
     {
-        if (null !== $columns) {
-            $filterSearch = $this->generateFilterSearch($descriptionEntity, $columns, $search);
-            if (null !== $filterSearch) {
-                $qa->match($filterSearch);
-            }
-        }
+        $configuration = FinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
 
-        return $qa;
+        return $this->generateFilter($qa, $configuration);
     }
 
     /**
@@ -140,12 +134,10 @@ trait PaginateAndSearchFilterTrait
      */
     protected function generateFilterForPaginateAndSearch(Stage $qa, $descriptionEntity = null, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
     {
-        $qa = $this->generateFilterForSearch($qa, $descriptionEntity, $columns, $search);
-        $qa = $this->generateFilterSort($qa, $order, $descriptionEntity, $columns);
-        $qa = $this->generateSkipFilter($qa, $skip);
-        $qa = $this->generateLimitFilter($qa, $limit);
+        $configuration = PaginateFinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
+        $configuration->setPaginateConfiguration($order, $skip, $limit);
 
-        return $qa;
+        return $this->generateFilterForPaginate($qa, $configuration);
     }
 
     /**
@@ -281,40 +273,9 @@ trait PaginateAndSearchFilterTrait
      */
     protected function generateFilterSearch($descriptionEntity, $columns, $search)
     {
-        $filter = null;
+        $configuration = FinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
 
-        $filtersAll = array();
-        $filtersColumn = array();
-        foreach ($columns as $column) {
-            $columnsName = $column['name'];
-            if (isset($descriptionEntity[$columnsName]) && isset($descriptionEntity[$columnsName]['key'])) {
-                $descriptionAttribute = $descriptionEntity[$columnsName];
-                $name = $descriptionAttribute['key'];
-                $type = isset($descriptionAttribute['type']) ? $descriptionAttribute['type'] : null;
-                if ($column['searchable'] && !empty($column['search']['value']) && !empty($name)) {
-
-                    $value = $column['search']['value'];
-                    $filtersColumn[] = $this->generateFilterSearchField($name, $value, $type);
-                }
-                if (!empty($search) && $column['searchable'] && !empty($name)) {
-                    $filtersAll[] = $this->generateFilterSearchField($name, $search, $type);
-                }
-            }
-        }
-
-        if (!empty($filtersAll) || !empty($filtersColumn)) {
-            $filter = array('$and' => $filtersColumn);
-            if (!empty($filtersAll) && empty($filtersColumn)) {
-                $filter = array('$or' => $filtersAll);
-            } elseif (!empty($filtersAll) && !empty($filtersColumn)) {
-                $filter = array('$and'=>array(
-                    array('$and' => $filtersColumn),
-                    array('$or' => $filtersAll),
-                ));
-            }
-        }
-
-        return $filter;
+        return $this->generateSearchFilter($configuration);
     }
 
     /**

@@ -63,10 +63,10 @@ class SiteRepository extends AbstractRepository implements SiteRepositoryInterfa
      */
     public function findByDeletedForPaginateAndSearch($deleted, $descriptionEntity = null, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
     {
-        $qa = $this->createAggregateQueryWithDeletedFilter($deleted);
-        $qa = $this->generateFilterForPaginateAndSearch($qa, $descriptionEntity, $columns, $search, $order, $skip, $limit);
+        $configuration = PaginateFinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
+        $configuration->setPaginateConfiguration($order, $skip, $limit);
 
-        return $this->hydrateAggregateQuery($qa);
+        return $this->findByDeletedForPaginate($deleted, $configuration);
     }
 
     /**
@@ -101,14 +101,15 @@ class SiteRepository extends AbstractRepository implements SiteRepositoryInterfa
      * @param array|null   $descriptionEntity
      * @param array|null   $search
      *
+     * @deprecated will be removed in 0.3.0, use countWithSearchFilterByDeleted instead
+     *
      * @return int
      */
     public function countByDeletedWithSearchFilter($deleted, $descriptionEntity = null, $columns = null, $search = null)
     {
-        $qa = $this->createAggregateQueryWithDeletedFilter($deleted);
-        $qa = $this->generateFilterForSearch($qa, $descriptionEntity, $columns, $search);
+        $configuration = FinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
 
-        return $this->countDocumentAggregateQuery($qa);
+        return $this->countWithSearchFilterByDeleted($deleted, $configuration);
     }
 
     /**
