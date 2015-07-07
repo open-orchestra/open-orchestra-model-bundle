@@ -8,6 +8,8 @@ use Solution\MongoAggregationBundle\AggregateQuery\AggregationQueryBuilder;
 
 /**
  * Class AbstractRepository
+ *
+ * @depracted will be removed in 0.3.0 use AbstractAggregateRepository
  */
 abstract class AbstractRepository extends DocumentRepository
 {

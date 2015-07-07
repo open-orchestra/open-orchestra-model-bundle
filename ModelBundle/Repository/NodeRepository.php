@@ -9,11 +9,12 @@ use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\FieldAutoGenerableRepositoryInterface;
 use Solution\MongoAggregation\Pipeline\Stage;
+use OpenOrchestra\Repository\AbstractAggregateRepository;
 
 /**
  * Class NodeRepository
  */
-class NodeRepository extends AbstractRepository implements FieldAutoGenerableRepositoryInterface, NodeRepositoryInterface
+class NodeRepository extends AbstractAggregateRepository implements FieldAutoGenerableRepositoryInterface, NodeRepositoryInterface
 {
     use AreaFinderTrait;
 

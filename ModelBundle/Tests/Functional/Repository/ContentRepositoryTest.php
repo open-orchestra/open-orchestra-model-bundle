@@ -243,18 +243,21 @@ class ContentRepositoryTest extends KernelTestCase
     }
 
     /**
-     * @param string  $contentType
-     * @param array   $columns
-     * @param array   $descriptionEntity
-     * @param int     $skip
-     * @param int     $limit
-     * @param integer $count
+     * @param string   $contentType
+     * @param array    $descriptionEntity
+     * @param array    $search
+     * @param string   $siteId
+     * @param int      $skip
+     * @param int      $limit
+     * @param integer  $count
      *
      * @dataProvider provideContentTypeAndPaginateAndSearch
      */
-    public function testFindByContentTypeInLastVersionForPaginateAndSearch($contentType, $descriptionEntity, $columns, $skip, $limit, $count)
+    public function testFindByContentTypeAndSiteIdInLastVersionForPaginate($contentType, $descriptionEntity, $search, $siteId, $skip, $limit, $count)
     {
-        $contents = $this->repository->findByContentTypeInLastVersionForPaginateAndSearch($contentType, $descriptionEntity, $columns, null, null, $skip, $limit);
+        $configuration = PaginateFinderConfiguration::generateFromVariable($descriptionEntity, $search);
+        $configuration->setPaginateConfiguration(null, $skip, $limit);
+        $contents = $this->repository->findByContentTypeAndSiteIdInLastVersionForPaginate($contentType, $configuration, $siteId);
         $this->assertCount($count, $contents);
     }
 
@@ -266,53 +269,15 @@ class ContentRepositoryTest extends KernelTestCase
         $descriptionEntity = $this->getDescriptionColumnEntity();
 
         return array(
-            array('car', $descriptionEntity, $this->generateColumnsProvider(), 0 ,5 , 3),
-            array('car', $descriptionEntity, $this->generateColumnsProvider(), 0 ,1 , 1),
-            array('car', $descriptionEntity, $this->generateColumnsProvider('206'), 0 ,2 , 1),
-            array('car', $descriptionEntity, $this->generateColumnsProvider('', '', '2'), 0 ,2 , 2),
-            array('news', $descriptionEntity, $this->generateColumnsProvider(), 0 , 100, 100),
-            array('news', $descriptionEntity, $this->generateColumnsProvider(), 50 , 100, 100),
-            array('news', $descriptionEntity, $this->generateColumnsProvider('news'), 0 , null, 250),
-        );
-    }
-
-    /**
-     * @param string      $contentType
-     * @param array       $descriptionEntity
-     * @param array       $columns
-     * @param string|null $siteId
-     * @param int         $skip
-     * @param int         $limit
-     * @param integer     $count
-     *
-     * @dataProvider provideContentTypeAndPaginateAndSearchAndSiteId
-     */
-    public function testFindByContentTypeInLastVersionForPaginateAndSearchAndSiteId($contentType, $descriptionEntity, $columns, $siteId, $skip, $limit, $count)
-    {
-        $configuration = PaginateFinderConfiguration::generateFromVariable($descriptionEntity, $columns);
-        $configuration->setPaginateConfiguration(null, $skip, $limit);
-
-        $contents = $this->repository->findByContentTypeAndSiteIdInLastVersionForPaginate($contentType, $configuration, $siteId);
-        $this->assertCount($count, $contents);
-    }
-
-    /**
-     * @return array
-     */
-    public function provideContentTypeAndPaginateAndSearchAndSiteId()
-    {
-        $descriptionEntity = $this->getDescriptionColumnEntity();
-
-        return array(
-            array('car', $descriptionEntity, $this->generateColumnsProvider(), null, 0 ,5 , 3),
-            array('car', $descriptionEntity, $this->generateColumnsProvider(), null, 0 ,1 , 1),
-            array('car', $descriptionEntity, $this->generateColumnsProvider('206'), null, 0 ,2 , 1),
-            array('car', $descriptionEntity, $this->generateColumnsProvider('', '', '2'), null, 0 ,2 , 2),
-            array('news', $descriptionEntity, $this->generateColumnsProvider(), null, 0 , 100, 100),
-            array('news', $descriptionEntity, $this->generateColumnsProvider(), null, 50 , 100, 100),
-            array('news', $descriptionEntity, $this->generateColumnsProvider('news'), null, 0 , null, 250),
-            array('car', $descriptionEntity, $this->generateColumnsProvider(), '1', 0 ,5 , 2),
-            array('car', $descriptionEntity, $this->generateColumnsProvider(), '2', 0 ,5 , 3),
+            array('car', $descriptionEntity, null, null, 0 ,5 , 3),
+            array('car', $descriptionEntity, null, null, 0 ,1 , 1),
+            array('car', $descriptionEntity, $this->generateColumnsProvider(array('name' => '206')), null, 0 ,2 , 1),
+            array('car', $descriptionEntity, $this->generateColumnsProvider(array('version' => '2')), null, 0 ,2 , 2),
+            array('news', $descriptionEntity, null, null, 0 , 100, 100),
+            array('news', $descriptionEntity, null, null, 50 , 100, 100),
+            array('news', $descriptionEntity, $this->generateColumnsProvider(array('name' => 'news')), null, 0 , null, 250),
+            array('car', $descriptionEntity, null, '1', 0 ,5 , 2),
+            array('car', $descriptionEntity, null, '2', 0 ,5 , 3),
         );
     }
 
@@ -343,15 +308,14 @@ class ContentRepositoryTest extends KernelTestCase
     /**
      * @param string  $contentType
      * @param array   $descriptionEntity
-     * @param array   $columns
      * @param string  $search
      * @param int     $count
      *
      * @dataProvider provideColumnsAndSearchAndCount
      */
-    public function testCountByContentTypeInLastVersionWithSearchFilter($contentType, $descriptionEntity, $columns, $search, $count)
+    public function testCountByContentTypeInLastVersionWithSearchFilter($contentType, $descriptionEntity, $search, $count)
     {
-        $configuration = FinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
+        $configuration = FinderConfiguration::generateFromVariable($descriptionEntity, $search);
 
         $sites = $this->repository->countByContentTypeInLastVersionWithFilter($contentType, $configuration);
         $this->assertEquals($count, $sites);
@@ -364,30 +328,36 @@ class ContentRepositoryTest extends KernelTestCase
         $descriptionEntity = $this->getDescriptionColumnEntity();
 
         return array(
-            array('car', $descriptionEntity, $this->generateColumnsProvider('206'), null, 1),
-            array('car', $descriptionEntity, $this->generateColumnsProvider(), 'portes', 2),
-            array('news', $descriptionEntity, $this->generateColumnsProvider(), 'news', 250)
+            array('car', $descriptionEntity, $this->generateColumnsProvider(array('name' => '206')), 1),
+            array('car', $descriptionEntity, $this->generateColumnsProvider(null, 'portes'), 2),
+            array('news', $descriptionEntity, $this->generateColumnsProvider(null, 'news'), 250)
         );
     }
 
     /**
      * Generate columns of content with search value
      *
-     * @param string $searchName
-     * @param string $searchStatus
-     * @param string $searchVersion
-     * @param string $searchLanguage
+     * @param array|null $searchColumns
+     * @param string     $globalSearch
      *
      * @return array
      */
-    protected function generateColumnsProvider($searchName = '', $searchStatus = '', $searchVersion = '', $searchLanguage = '')
+    protected function generateColumnsProvider($searchColumns = null, $globalSearch = '')
     {
-        return array(
-            array('name' => 'name', 'searchable' => true, 'orderable' => true, 'search' => array('value' => $searchName)),
-            array('name' => 'status_label', 'searchable' => true, 'orderable' => true, 'search' => array('value' => $searchStatus)),
-            array('name' => 'version', 'searchable' => true, 'orderable' => true, 'search' => array('value' => $searchVersion)),
-            array('name' => 'language', 'searchable' => true, 'orderable' => true, 'search' => array('value' => $searchLanguage)),
-        );
+        $search = array();
+        if( null !== $searchColumns) {
+            $columns = array();
+            foreach ($searchColumns as $name => $value) {
+                $columns[$name] = $value;
+            }
+            $search['columns'] = $columns;
+        }
+
+        if (!empty($globalSearch)) {
+            $search['global'] = $globalSearch;
+        }
+
+        return $search;
     }
 
     /**

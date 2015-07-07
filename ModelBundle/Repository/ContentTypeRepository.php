@@ -2,19 +2,19 @@
 
 namespace OpenOrchestra\ModelBundle\Repository;
 
-use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\PaginateAndSearchFilterTrait;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use OpenOrchestra\Pagination\Configuration\FinderConfiguration;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
+use OpenOrchestra\Pagination\MongoTrait\PaginationTrait;
+use OpenOrchestra\Repository\AbstractAggregateRepository;
 
 /**
  * Class ContentTypeRepository
  */
-class ContentTypeRepository extends AbstractRepository implements ContentTypeRepositoryInterface
+class ContentTypeRepository extends AbstractAggregateRepository implements ContentTypeRepositoryInterface
 {
-    use PaginateAndSearchFilterTrait;
-
+    use PaginationTrait;
 
     /**
      * @param $language
@@ -92,8 +92,8 @@ class ContentTypeRepository extends AbstractRepository implements ContentTypeRep
         $qa = $this->generateFilterSort(
             $qa,
             $configuration->getOrder(),
-            $configuration->getDescriptionEntity(),
-            $configuration->getColumns(), $elementName);
+            $configuration->getDescriptionEntity()
+        );
 
         $qa = $this->generateSkipFilter($qa, $configuration->getSkip());
         $qa = $this->generateLimitFilter($qa, $configuration->getLimit());

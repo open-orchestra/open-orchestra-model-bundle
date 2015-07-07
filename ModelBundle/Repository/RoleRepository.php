@@ -2,17 +2,18 @@
 
 namespace OpenOrchestra\ModelBundle\Repository;
 
-use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\PaginateAndSearchFilterTrait;
 use OpenOrchestra\ModelInterface\Model\RoleInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface;
+use OpenOrchestra\Pagination\MongoTrait\PaginationTrait;
+use OpenOrchestra\Repository\AbstractAggregateRepository;
 
 /**
  * Class RoleRepository
  */
-class RoleRepository extends AbstractRepository implements RoleRepositoryInterface
+class RoleRepository extends AbstractAggregateRepository implements RoleRepositoryInterface
 {
-    use PaginateAndSearchFilterTrait;
+    use PaginationTrait;
 
     /**
      * Find the role that connect fromStatus to toStatus

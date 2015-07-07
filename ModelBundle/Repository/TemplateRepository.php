@@ -7,11 +7,12 @@ use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\TemplateInterface;
 use OpenOrchestra\ModelInterface\Repository\FieldAutoGenerableRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\TemplateRepositoryInterface;
+use OpenOrchestra\Repository\AbstractAggregateRepository;
 
 /**
  * Class TemplateRepository
  */
-class TemplateRepository extends AbstractRepository implements FieldAutoGenerableRepositoryInterface, TemplateRepositoryInterface
+class TemplateRepository extends AbstractAggregateRepository implements FieldAutoGenerableRepositoryInterface, TemplateRepositoryInterface
 {
     use AreaFinderTrait;
 
