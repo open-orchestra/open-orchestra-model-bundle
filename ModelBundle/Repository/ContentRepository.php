@@ -246,7 +246,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         $qa = $this->generateFilter($qa, $configuration);
         $qa->match($this->generateDeletedFilter());
         if (!is_null($siteId)) {
-            $qa->match($this->generateSiteIdAndNotLinkekFilter($siteId));
+            $qa->match($this->generateSiteIdAndNotLinkedFilter($siteId));
         }
 
         $elementName = 'content';
@@ -277,7 +277,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         $qa = $this->generateFilter($qa, $configuration);
         $qa->match($this->generateDeletedFilter());
         if (!is_null($siteId)) {
-            $qa->match($this->generateSiteIdAndNotLinkekFilter($siteId));
+            $qa->match($this->generateSiteIdAndNotLinkedFilter($siteId));
         }
         $elementName = 'content';
         $qa->group($this->generateLastVersionFilter($elementName));
@@ -308,7 +308,12 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         return parent::findBy(array('deleted' => true));
     }
 
-    protected function generateSiteIdAndNotLinkekFilter($siteId)
+    /**
+     * @param string $siteId
+     *
+     * @return array
+     */
+    protected function generateSiteIdAndNotLinkedFilter($siteId)
     {
         return array(
             '$or' => array(

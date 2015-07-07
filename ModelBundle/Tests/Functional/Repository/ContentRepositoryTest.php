@@ -251,7 +251,7 @@ class ContentRepositoryTest extends KernelTestCase
      * @param int      $limit
      * @param integer  $count
      *
-     * @dataProvider provideContentTypeAndPaginateAndSearch
+     * @dataProvider provideContentTypeAndPaginateAndSearchAndSiteId
      */
     public function testFindByContentTypeAndSiteIdInLastVersionForPaginate($contentType, $descriptionEntity, $search, $siteId, $skip, $limit, $count)
     {
@@ -264,7 +264,7 @@ class ContentRepositoryTest extends KernelTestCase
     /**
      * @return array
      */
-    public function provideContentTypeAndPaginateAndSearch()
+    public function provideContentTypeAndPaginateAndSearchAndSiteId()
     {
         $descriptionEntity = $this->getDescriptionColumnEntity();
 
@@ -345,7 +345,7 @@ class ContentRepositoryTest extends KernelTestCase
     protected function generateColumnsProvider($searchColumns = null, $globalSearch = '')
     {
         $search = array();
-        if( null !== $searchColumns) {
+        if (null !== $searchColumns) {
             $columns = array();
             foreach ($searchColumns as $name => $value) {
                 $columns[$name] = $value;
