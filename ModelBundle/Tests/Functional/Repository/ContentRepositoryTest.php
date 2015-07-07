@@ -199,7 +199,7 @@ class ContentRepositoryTest extends KernelTestCase
     {
         $contents = $this->repository->findByContentIdAndLanguage($contentId, $language);
 
-        foreach($contents as $content){
+        foreach ($contents as $content) {
             $this->assertSameContent($language, null, null, $contentId, $content);
         }
 

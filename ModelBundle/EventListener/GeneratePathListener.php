@@ -70,7 +70,7 @@ class GeneratePathListener extends ContainerAware
                 $document->setPath($path);
                 $this->nodes[] = $document;
                 $childNodes = $nodeRepository->findChildsByPathAndSiteIdAndLanguage($document->getPath(), $siteId, $language);
-                foreach($childNodes as $childNode){
+                foreach ($childNodes as $childNode) {
                     $this->nodes[] = $childNode;
                     $childNode->setPath(preg_replace('/'.preg_quote($document->getPath(), '/').'(.*)/', $path.'$1', $childNode->getPath()));
                 }
