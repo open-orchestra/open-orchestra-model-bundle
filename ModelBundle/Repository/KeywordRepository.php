@@ -2,16 +2,17 @@
 
 namespace OpenOrchestra\ModelBundle\Repository;
 
-use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\PaginateAndSearchFilterTrait;
 use OpenOrchestra\ModelInterface\Model\KeywordInterface;
 use OpenOrchestra\ModelInterface\Repository\KeywordRepositoryInterface;
+use OpenOrchestra\Pagination\MongoTrait\PaginationTrait;
+use OpenOrchestra\Repository\AbstractAggregateRepository;
 
 /**
  * Class KeywordRepository
  */
-class KeywordRepository extends AbstractRepository implements KeywordRepositoryInterface
+class KeywordRepository extends AbstractAggregateRepository implements KeywordRepositoryInterface
 {
-    use PaginateAndSearchFilterTrait;
+    use PaginationTrait;
 
     /**
      * @param string $label

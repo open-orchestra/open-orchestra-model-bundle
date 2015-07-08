@@ -2,16 +2,17 @@
 
 namespace OpenOrchestra\ModelBundle\Repository;
 
-use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\PaginateAndSearchFilterTrait;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Repository\StatusRepositoryInterface;
+use OpenOrchestra\Pagination\MongoTrait\PaginationTrait;
+use OpenOrchestra\Repository\AbstractAggregateRepository;
 
 /**
  * Class StatusRepository
  */
-class StatusRepository extends AbstractRepository implements StatusRepositoryInterface
+class StatusRepository extends AbstractAggregateRepository implements StatusRepositoryInterface
 {
-    use PaginateAndSearchFilterTrait;
+    use PaginationTrait;
 
     /**
      * @return StatusInterface

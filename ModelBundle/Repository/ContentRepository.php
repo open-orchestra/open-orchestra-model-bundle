@@ -2,20 +2,21 @@
 
 namespace OpenOrchestra\ModelBundle\Repository;
 
-use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\PaginateAndSearchFilterTrait;
 use OpenOrchestra\Pagination\Configuration\FinderConfiguration;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use OpenOrchestra\ModelInterface\Repository\FieldAutoGenerableRepositoryInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
+use OpenOrchestra\Pagination\MongoTrait\PaginationTrait;
+use OpenOrchestra\Repository\AbstractAggregateRepository;
 use Solution\MongoAggregation\Pipeline\Stage;
 
 /**
  * Class ContentRepository
  */
-class ContentRepository extends AbstractRepository implements FieldAutoGenerableRepositoryInterface, ContentRepositoryInterface
+class ContentRepository extends AbstractAggregateRepository implements FieldAutoGenerableRepositoryInterface, ContentRepositoryInterface
 {
-    use PaginateAndSearchFilterTrait;
+    use PaginationTrait;
 
     /**
      * @param string $contentId
@@ -233,49 +234,6 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
     }
 
     /**
-     * @param string|null $contentType
-     * @param array|null  $descriptionEntity
-     * @param array|null  $columns
-     * @param string|null $search
-     * @param array|null  $order
-     * @param int|null    $skip
-     * @param int|null    $limit
-     *
-     * @deprecated will be removed in 0.3.0, use findByContentTypeAndSiteIdInLastVersionForPaginate instead
-     *
-     * @return array
-     */
-    public function findByContentTypeInLastVersionForPaginateAndSearch($contentType = null, $descriptionEntity = null, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
-    {
-        $configuration = PaginateFinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
-        $configuration->setPaginateConfiguration($order, $skip, $limit);
-
-        return $this->findByContentTypeAndSiteIdInLastVersionForPaginate($contentType, $configuration);
-    }
-
-    /**
-     * @param string|null $contentType
-     * @param array|null  $descriptionEntity
-     * @param array|null  $columns
-     * @param string|null $search
-     * @param string|null $siteId
-     * @param array|null  $order
-     * @param int|null    $skip
-     * @param int|null    $limit
-     *
-     * @deprecated, will be removed in 0.3.0, use findByContentTypeAndSiteIdInLastVersionForPaginate instead
-     *
-     * @return array
-     */
-    public function findByContentTypeInLastVersionForPaginateAndSearchAndSiteId($contentType = null, $descriptionEntity = null, $columns = null, $search = null, $siteId = null, $order = null, $skip = null, $limit = null)
-    {
-        $configuration = PaginateFinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
-        $configuration->setPaginateConfiguration($order, $skip, $limit);
-
-        return $this->findByContentTypeAndSiteIdInLastVersionForPaginate($contentType, $configuration);
-    }
-
-    /**
      * @param string|null                 $contentType
      * @param PaginateFinderConfiguration $configuration
      * @param int|null                    $siteId
@@ -288,7 +246,7 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
         $qa = $this->generateFilter($qa, $configuration);
         $qa->match($this->generateDeletedFilter());
         if (!is_null($siteId)) {
-            $qa->match(array('$or' => array(array('siteId' => $siteId), array('linkedToSite' => false))));
+            $qa->match($this->generateSiteIdAndNotLinkedFilter($siteId));
         }
 
         $elementName = 'content';
@@ -298,7 +256,6 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
             $qa,
             $configuration->getOrder(),
             $configuration->getDescriptionEntity(),
-            $configuration->getColumns(),
             $elementName);
 
         $qa = $this->generateSkipFilter($qa, $configuration->getSkip());
@@ -308,33 +265,20 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
     }
 
     /**
-     * @param string|null $contentType
-     * @param array|null  $descriptionEntity
-     * @param array|null  $columns
-     * @param string|null $search
-     *
-     * @deprecated will be remove in 0.3.0, use countWithSearchFilterByContentTypeInLastVersion instead
-     *
-     * @return int
-     */
-    public function countByContentTypeInLastVersionWithSearchFilter($contentType = null, $descriptionEntity = null, $columns = null, $search = null)
-    {
-        $configuration = FinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
-
-        return $this->countByContentTypeInLastVersionWithFilter($contentType, $configuration);
-    }
-
-    /**
      * @param null                $contentType
      * @param FinderConfiguration $configuration
+     * @param int|null            $siteId
      *
      * @return int
      */
-    public function countByContentTypeInLastVersionWithFilter($contentType = null, FinderConfiguration $configuration = null)
+    public function countByContentTypeInLastVersionWithFilter($contentType = null, FinderConfiguration $configuration = null, $siteId = null)
     {
         $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
         $qa = $this->generateFilter($qa, $configuration);
         $qa->match($this->generateDeletedFilter());
+        if (!is_null($siteId)) {
+            $qa->match($this->generateSiteIdAndNotLinkedFilter($siteId));
+        }
         $elementName = 'content';
         $qa->group($this->generateLastVersionFilter($elementName));
 
@@ -362,6 +306,21 @@ class ContentRepository extends AbstractRepository implements FieldAutoGenerable
     public function findAllDeleted()
     {
         return parent::findBy(array('deleted' => true));
+    }
+
+    /**
+     * @param string $siteId
+     *
+     * @return array
+     */
+    protected function generateSiteIdAndNotLinkedFilter($siteId)
+    {
+        return array(
+            '$or' => array(
+                array('siteId' => $siteId),
+                array('linkedToSite' => false)
+            )
+        );
     }
 
     /**

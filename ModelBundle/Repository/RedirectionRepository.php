@@ -2,13 +2,14 @@
 
 namespace OpenOrchestra\ModelBundle\Repository;
 
-use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\PaginateAndSearchFilterTrait;
 use OpenOrchestra\ModelInterface\Repository\RedirectionRepositoryInterface;
+use OpenOrchestra\Pagination\MongoTrait\PaginationTrait;
+use OpenOrchestra\Repository\AbstractAggregateRepository;
 
 /**
  * Class RedirectionRepository
  */
-class RedirectionRepository extends AbstractRepository implements RedirectionRepositoryInterface
+class RedirectionRepository extends AbstractAggregateRepository implements RedirectionRepositoryInterface
 {
-    use PaginateAndSearchFilterTrait;
+    use PaginationTrait;
 }
