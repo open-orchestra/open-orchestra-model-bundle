@@ -57,13 +57,6 @@ class Template implements TemplateInterface
     protected $name;
 
     /**
-     * @var string
-     *
-     * @ODM\Field(type="string")
-     */
-    protected $language;
-
-    /**
      * @var boolean
      *
      * @ODM\Field(type="boolean")
@@ -249,22 +242,6 @@ class Template implements TemplateInterface
     public function getTemplateId()
     {
         return $this->templateId;
-    }
-
-    /**
-     * @param string $language
-     */
-    public function setLanguage($language)
-    {
-        $this->language = $language;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLanguage()
-    {
-        return $this->language;
     }
 
     /**
