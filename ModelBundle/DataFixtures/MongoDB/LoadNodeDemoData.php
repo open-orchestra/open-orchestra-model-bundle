@@ -101,7 +101,7 @@ class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterfac
         $siteBlockLogo->setClass('logo');
         $siteBlockLogo->setComponent(TinyMCEWysiwygStrategy::TINYMCEWYSIWYG);
         $siteBlockLogo->setAttributes(array(
-            "htmlContent" => '<a href="/" id="myLogo"> <img src="http://open-orchestra.com/media/open-orchestra-logo.png" /> </a>',
+            "htmlContent" => '<a href="/" id="myLogo"> <img class="tinymce-media" src="../media/open-orchestra-logo.png" /> </a>',
         ));
         $siteBlockLogo->addArea(array('nodeId' => 0, 'areaId' => 'main'));
 
