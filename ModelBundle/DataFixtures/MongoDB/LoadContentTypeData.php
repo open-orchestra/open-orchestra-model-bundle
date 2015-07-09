@@ -45,6 +45,20 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
     }
 
     /**
+     * @return array
+     */
+    protected function genereteDefaultListable()
+    {
+        return array(
+            'name'           => true,
+            'status_label'   => true,
+            'version'        => true,
+            'language'       => true,
+            'linked_to_site' => true,
+        );
+    }
+
+    /**
      * Generate a translatedValue
      *
      * @param string $language
@@ -174,6 +188,7 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $news->addName($frLabel);
         $news->setDeleted(false);
         $news->setVersion(1);
+        $news->setDefaultListable($this->genereteDefaultListable());
 
         $news->addFieldType($newsTitle);
         $news->addFieldType($newBeginning);
@@ -243,6 +258,7 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $car->addName($fr);
         $car->setDeleted(false);
         $car->setVersion(2);
+        $car->setDefaultListable($this->genereteDefaultListable());
 
         $car->addFieldType($carName);
         $car->addFieldType($carDescription);
@@ -323,6 +339,7 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $customer->addName($fr);
         $customer->setDeleted(false);
         $customer->setVersion(1);
+        $customer->setDefaultListable($this->genereteDefaultListable());
 
         $customer->addFieldType($customerFirstName);
         $customer->addFieldType($customerLastName);

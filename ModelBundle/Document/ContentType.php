@@ -55,8 +55,15 @@ class ContentType implements ContentTypeInterface
     protected $deleted = false;
 
     /**
+     * @var ArrayCollection $defaultListable
+     *
+     * @ODM\Field(type="hash")
+     */
+    protected $defaultListable;
+
+    /**
      * @var string $template
-     * 
+     *
      * @ODM\Field(type="string")
      */
     protected $template;
@@ -75,6 +82,7 @@ class ContentType implements ContentTypeInterface
     {
         $this->fields = new ArrayCollection();
         $this->names = new ArrayCollection();
+        $this->defaultListable = array();
     }
 
     /**
@@ -179,6 +187,39 @@ class ContentType implements ContentTypeInterface
     public function removeName(TranslatedValueInterface $name)
     {
         $this->names->remove($name->getLanguage());
+    }
+
+    /**
+     * @return array
+     */
+    public function getDefaultListable()
+    {
+        return $this->defaultListable;
+    }
+
+    /**
+     * @param string  $name
+     * @param boolean $value
+     */
+    public function addDefaultListable($name, $value)
+    {
+        $this->defaultListable[$name] = $value;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function removeDefaultListable($name)
+    {
+        $this->defaultListable->removeElement($name);
+    }
+
+    /**
+     * @param array $defaultListable
+     */
+    public function setDefaultListable(array $defaultListable)
+    {
+        $this->defaultListable = $defaultListable;
     }
 
     /**
