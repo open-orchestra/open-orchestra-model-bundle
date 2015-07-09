@@ -147,8 +147,8 @@ class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface
     protected function addSitesAliases(array $sitesNames, array $sitesLanguages, $site, array $prefixes = array())
     {
         $master = true;
-        foreach($sitesNames as $siteName ) {
-            foreach($sitesLanguages as $siteLanguage){
+        foreach ($sitesNames as $siteName ) {
+            foreach ($sitesLanguages as $siteLanguage) {
                 $prefix = (isset ($prefixes[$siteLanguage]))?$prefixes[$siteLanguage]:null;
                 $site->addAlias($this->generateSiteAlias($siteName, $siteLanguage, $master, $prefix));
                 $master = false;

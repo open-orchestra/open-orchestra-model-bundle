@@ -34,7 +34,7 @@ class EntityResolverCompilerPass implements  CompilerPassInterface
 
         $definition = $container->findDefinition('doctrine_mongodb.odm.listeners.resolve_target_document');
         $definitionCalls = $definition->getMethodCalls();
-        foreach($defaultResolveDocument as $interface => $class) {
+        foreach ($defaultResolveDocument as $interface => $class) {
             if (! $this->resolverExist($definitionCalls, $interface)) {
                 $definition->addMethodCall('addResolveTargetDocument', array($interface, $class, array()));
             }

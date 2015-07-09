@@ -47,8 +47,9 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
      */
     protected  function persistMultiLanguageContent($methodName, array $languages)
     {
-        foreach($languages as $language)
+        foreach ($languages as $language) {
             $this->objectManager->persist($this->$methodName($language));
+        }
     }
 
     /**
