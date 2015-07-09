@@ -50,14 +50,17 @@ class LoadContentThousand extends AbstractFixture implements OrderedFixtureInter
     /**
      * @param string $name
      * @param string $value
-     * 
+     * @param string $type
+     *
      * @return ContentAttribute
      */
-    public function generateAttributes($name, $value)
+    public function generateContentAttribute($name, $value, $type = 'text')
     {
         $attribute = new ContentAttribute();
         $attribute->setName($name);
         $attribute->setValue($value);
+        $attribute->setStringValue($value);
+        $attribute->setType($type);
 
         return $attribute;
     }
@@ -111,9 +114,9 @@ class LoadContentThousand extends AbstractFixture implements OrderedFixtureInter
     protected function addNewsAttributes($news, $title, $intro, $text)
     {
         $news->addAttribute($title);
-        $news->addAttribute($this->generateAttributes('publish_start', '2014-08-26'));
-        $news->addAttribute($this->generateAttributes('publish_end', '2014-12-19'));
-        $news->addAttribute($this->generateAttributes('image', ''));
+        $news->addAttribute($this->generateContentAttribute('publish_start', '2014-08-26', 'date'));
+        $news->addAttribute($this->generateContentAttribute('publish_end', '2014-12-19', 'date'));
+        $news->addAttribute($this->generateContentAttribute('image', '', 'orchestra_media'));
         $news->addAttribute($intro);
         $news->addAttribute($text);
 
@@ -130,9 +133,9 @@ class LoadContentThousand extends AbstractFixture implements OrderedFixtureInter
      */
     public function generateNews($index, $version, $language, $deleted = false)
     {
-        $title = $this->generateAttributes('title', 'New number' . $index . 'in language ' . $language);
-        $intro = $this->generateAttributes('intro', 'This is the introduction for the news number ' . $index .'.');
-        $text = $this->generateAttributes('text', 'Donec bibendum at nibh eget imperdiet. Mauris eget justo augue. Fusce fermentum iaculis erat, sollicitudin elementum enim sodales eu. Donec a ante tortor. Suspendisse a.');
+        $title = $this->generateContentAttribute('title', 'New number' . $index . 'in language ' . $language);
+        $intro = $this->generateContentAttribute('intro', 'This is the introduction for the news number ' . $index .'.');
+        $text = $this->generateContentAttribute('text', 'Donec bibendum at nibh eget imperdiet. Mauris eget justo augue. Fusce fermentum iaculis erat, sollicitudin elementum enim sodales eu. Donec a ante tortor. Suspendisse a.', 'wysiwyg');
         $news = $this->generateContent('news', 'news-' . $index, 'News ' . $index, $language, $version, $deleted);
 
         return $this->addNewsAttributes($news, $title, $intro, $text);

@@ -27,6 +27,20 @@ class ContentAttribute implements ContentAttributeInterface
     protected $value;
 
     /**
+     * @var string $stringValue
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $stringValue;
+
+    /**
+     * @var string $type
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $type;
+
+    /**
      * @param string $name
      */
     public function setName($name)
@@ -59,15 +73,35 @@ class ContentAttribute implements ContentAttributeInterface
     }
 
     /**
+     * @param string $stringValue
+     */
+    public function setStringValue($stringValue)
+    {
+        $this->stringValue = $stringValue;
+    }
+
+    /**
      * @return string
      */
-    public function renderValue()
+    public function getStringValue()
     {
-        if (is_array($this->value) || is_object($this->value)) {
-            return "Complex Object (no displayable)";
-        }
+        return  (string)  $this->stringValue;
+    }
 
-        return (string) $this->value;
+    /**
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return  $this->type;
     }
 
     /**
@@ -75,6 +109,6 @@ class ContentAttribute implements ContentAttributeInterface
      */
     public function __toString()
     {
-        return $this->renderValue();
+        return $this->getStringValue();
     }
 }
