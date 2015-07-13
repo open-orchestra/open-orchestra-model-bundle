@@ -124,6 +124,7 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $required = $this->generateOption('required', true);
         $dateWidgetOption = $this->generateOption('widget', 'single_text');
         $dateInputOption = $this->generateOption('input', 'string');
+        $formatOption = $this->generateOption('format', 'yyyy-MM-dd');
 
         /* TITLE */
 
@@ -136,23 +137,25 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
 
         /* BEGINING DATE */
 
-        $enLabel = $this->generateTranslatedValue('en', 'Publicated from (YYYY-MM-DD)');
-        $frLabel = $this->generateTranslatedValue('fr', 'Publié du (AAAA-MM-JJ)');
+        $enLabel = $this->generateTranslatedValue('en', 'Publicated from (yyyy-MM-dd)');
+        $frLabel = $this->generateTranslatedValue('fr', 'Publié du (aaaa-MM-jj)');
 
         $newBeginning = $this->generateField('date', 'publish_start', array($enLabel, $frLabel));
         $newBeginning->addOption($required);
         $newBeginning->addOption($dateWidgetOption);
         $newBeginning->addOption($dateInputOption);
+        $newBeginning->addOption($formatOption);
 
         /* ENDING DATE */
 
-        $enLabel = $this->generateTranslatedValue('en', 'till (YYYY-MM-DD)');
-        $frLabel = $this->generateTranslatedValue('fr', 'au (AAAA-MM-JJ)');
+        $enLabel = $this->generateTranslatedValue('en', 'till (yyyy-MM-dd)');
+        $frLabel = $this->generateTranslatedValue('fr', 'au (aaaa-MM-jj)');
 
         $newEnding = $this->generateField('date', 'publish_end', array($enLabel, $frLabel));
         $newEnding->addOption($required);
         $newEnding->addOption($dateWidgetOption);
         $newEnding->addOption($dateInputOption);
+        $newEnding->addOption($formatOption);
 
         /* IMAGE */
 
