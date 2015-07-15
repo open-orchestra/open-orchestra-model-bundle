@@ -81,7 +81,7 @@ EOF;
 
         $siteLegalArea0 = $this->createHeader();
         $siteLegalArea4 = $this->createArea('Main content area 1', 'mainContentArea1', 'main-content-area1' );
-        $siteLegalArea4->addBlock(array('nodeId' => 0, 'blockId' => 0));
+        $siteLegalArea4->addBlock(array('nodeId' => 0, 'blockId' => 1));
         $siteLegalArea3 = $this->createMain(array($siteLegalArea4));
         $siteLegalArea5 = $this->createFooter();
 

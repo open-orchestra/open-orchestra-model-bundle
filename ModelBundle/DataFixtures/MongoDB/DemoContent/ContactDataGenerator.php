@@ -108,7 +108,7 @@ EOF;
         $siteContactArea4 = $this->createArea('Main content area 1', 'mainContentArea1', 'main-content-contact');
         $siteContactArea4->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 4));
         $siteContactArea5 = $this->createModuleArea(false, "module-area-contact");
-        $siteContactArea5->addBlock(array('nodeId' => 0, 'blockId' => 0));
+        $siteContactArea5->addBlock(array('nodeId' => 0, 'blockId' => 1));
         $siteContactArea3 = $this->createMain(array($siteContactArea4, $siteContactArea5));
         $siteContactArea6 = $this->createFooter();
 

@@ -2,7 +2,9 @@
 
 namespace OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent;
 
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\LanguageListStrategy;
 use OpenOrchestra\ModelBundle\Document\Area;
+use OpenOrchestra\ModelBundle\Document\Block;
 use OpenOrchestra\ModelBundle\Document\Node;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 
@@ -38,6 +40,16 @@ abstract class AbstractDataGenerator
     }
 
     /**
+     * @return Node
+     */
+    abstract protected function generateNodeFr();
+
+    /**
+     * @return Node
+     */
+    abstract protected function generateNodeEn();
+
+    /**
      * @param string $label
      * @param string $areaId
      * @param string $htmlClass
@@ -64,7 +76,7 @@ abstract class AbstractDataGenerator
         $header = $this->createArea('Header','header','header');
         $header->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 0));
         $header->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 1));
-        $header->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 5));
+        $header->addBlock(array('nodeId' => 0, 'blockId' => 0));
 
         return $header;
     }
@@ -127,6 +139,10 @@ abstract class AbstractDataGenerator
      */
     protected function createBaseNode()
     {
+        $siteBlockLanguage = new Block();
+        $siteBlockLanguage->setLabel('Language list');
+        $siteBlockLanguage->setComponent(LanguageListStrategy::LANGUAGE_LIST);
+
         $node = new Node();
         $node->setMaxAge(1000);
         $node->setNodeType('page');
@@ -137,6 +153,7 @@ abstract class AbstractDataGenerator
         $node->setDeleted(false);
         $node->setTemplateId('');
         $node->setTheme('themePresentation');
+        $node->addBlock($siteBlockLanguage);
 
         return $node;
     }
