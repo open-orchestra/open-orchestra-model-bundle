@@ -18,9 +18,9 @@ class LoadStatusData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-        $manager->persist($this->loadStatus('Draft', 'Brouillon', 'draft', 'green'));
+        $manager->persist($this->loadStatus('Draft', 'Brouillon', 'draft', 'green', false, true));
         $manager->persist($this->loadStatus('Pending', 'En attente', 'pending', 'orange'));
-        $manager->persist($this->loadStatus('Published', 'Publié', 'published', 'red'));
+        $manager->persist($this->loadStatus('Published', 'Publié', 'published', 'red', true));
 
         $manager->flush();
     }
@@ -41,14 +41,16 @@ class LoadStatusData extends AbstractFixture implements OrderedFixtureInterface
      * @param string $name
      * @param string $color
      * @param bool   $published
+     * @param bool   $initial
      *
      * @return Status
      */
-    protected function loadStatus($enName, $frName, $name, $color, $published = false)
+    protected function loadStatus($enName, $frName, $name, $color, $published = false, $initial = false)
     {
         $value = new Status();
         $value->setName($name);
         $value->setPublished($published);
+        $value->setInitial($initial);
         $value->addLabel($this->generateTranslatedValue('en', $enName));
         $value->addLabel($this->generateTranslatedValue('fr', $frName));
         $value->setDisplayColor($color);
