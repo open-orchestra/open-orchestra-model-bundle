@@ -8,13 +8,8 @@ use Symfony\Component\Validator\Constraint;
 /**
  * Class CheckRoutePatternTest
  */
-class CheckRoutePatternTest extends \PHPUnit_Framework_TestCase
+class CheckRoutePatternTest extends AbstractConstraintTest
 {
-    /**
-     * @var CheckRoutePattern
-     */
-    protected $constraint;
-
     /**
      * Set up the test
      */
@@ -24,34 +19,15 @@ class CheckRoutePatternTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test instance
+     * Test Constraint
      */
-    public function testInstance()
+    public function testConstraint()
     {
-        $this->assertInstanceOf('Symfony\Component\Validator\Constraint', $this->constraint);
-    }
-
-    /**
-     * Test validateBy
-     */
-    public function testValidateBy()
-    {
-        $this->assertSame('check_route_pattern', $this->constraint->validatedBy());
-    }
-
-    /**
-     * test target
-     */
-    public function testTarget()
-    {
-        $this->assertSame(Constraint::CLASS_CONSTRAINT, $this->constraint->getTargets());
-    }
-
-    /**
-     * test message
-     */
-    public function testMessages()
-    {
-        $this->assertSame('open_orchestra_model_validators.document.node.check_route_pattern', $this->constraint->message);
+        $this->assertConstraint(
+            $this->constraint,
+            'check_route_pattern',
+            Constraint::CLASS_CONSTRAINT,
+            'open_orchestra_model_validators.document.node.check_route_pattern'
+        );
     }
 }

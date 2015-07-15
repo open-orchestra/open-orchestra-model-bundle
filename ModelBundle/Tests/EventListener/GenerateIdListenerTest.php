@@ -13,8 +13,12 @@ use Doctrine\ODM\MongoDB\DocumentRepository;
  */
 class GenerateIdListenerTest extends \PHPUnit_Framework_TestCase
 {
-    protected $event;
+    /**
+     * @var GenerateIdListener
+     */
     protected $listener;
+
+    protected $event;
     protected $container;
     protected $annotations;
     protected $documentManager;

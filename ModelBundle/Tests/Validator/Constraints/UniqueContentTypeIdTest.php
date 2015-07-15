@@ -8,13 +8,8 @@ use Symfony\Component\Validator\Constraint;
 /**
  * Test UniqueContentTypeIdTest
  */
-class UniqueContentTypeIdTest extends \PHPUnit_Framework_TestCase
+class UniqueContentTypeIdTest extends AbstractConstraintTest
 {
-    /**
-     * @var UniqueContentTypeId
-     */
-    protected $constraint;
-
     /**
      * Set up the test
      */
@@ -24,34 +19,15 @@ class UniqueContentTypeIdTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test instance
+     * Test Constraint
      */
-    public function testInstance()
+    public function testConstraint()
     {
-        $this->assertInstanceOf('Symfony\Component\Validator\Constraint', $this->constraint);
-    }
-
-    /**
-     * Test validateBy
-     */
-    public function testValidateBy()
-    {
-        $this->assertSame('unique_content_type_id', $this->constraint->validatedBy());
-    }
-
-    /**
-     * test target
-     */
-    public function testTarget()
-    {
-        $this->assertSame(Constraint::CLASS_CONSTRAINT, $this->constraint->getTargets());
-    }
-
-    /**
-     * test message
-     */
-    public function testMessages()
-    {
-        $this->assertSame('open_orchestra_model_validators.document.content_type.unique_content_type_id', $this->constraint->message);
+        $this->assertConstraint(
+            $this->constraint,
+            'unique_content_type_id',
+            Constraint::CLASS_CONSTRAINT,
+            'open_orchestra_model_validators.document.content_type.unique_content_type_id'
+        );
     }
 }

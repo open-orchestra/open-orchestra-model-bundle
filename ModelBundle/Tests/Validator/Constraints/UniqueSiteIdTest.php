@@ -8,13 +8,8 @@ use Symfony\Component\Validator\Constraint;
 /**
  * Class UniqueSiteIdTest
  */
-class UniqueSiteIdTest extends \PHPUnit_Framework_TestCase
+class UniqueSiteIdTest extends AbstractConstraintTest
 {
-    /**
-     * @var UniqueSiteId
-     */
-    protected $constraint;
-
     /**
      * Set up the test
      */
@@ -24,34 +19,15 @@ class UniqueSiteIdTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test instance
+     * Test Constraint
      */
-    public function testInstance()
+    public function testConstraint()
     {
-        $this->assertInstanceOf('Symfony\Component\Validator\Constraint', $this->constraint);
-    }
-
-    /**
-     * Test validateBy
-     */
-    public function testValidateBy()
-    {
-        $this->assertSame('unique_site_id', $this->constraint->validatedBy());
-    }
-
-    /**
-     * test target
-     */
-    public function testTarget()
-    {
-        $this->assertSame(Constraint::CLASS_CONSTRAINT, $this->constraint->getTargets());
-    }
-
-    /**
-     * test message
-     */
-    public function testMessages()
-    {
-        $this->assertSame('open_orchestra_model_validators.document.website.unique_site_id', $this->constraint->message);
+        $this->assertConstraint(
+            $this->constraint,
+            'unique_site_id',
+            Constraint::CLASS_CONSTRAINT,
+            'open_orchestra_model_validators.document.website.unique_site_id'
+        );
     }
 }

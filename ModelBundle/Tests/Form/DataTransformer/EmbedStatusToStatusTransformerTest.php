@@ -63,6 +63,16 @@ class EmbedStatusToStatusTransformerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test transform with no status
+     */
+    public function testTransformWithNoStatus()
+    {
+        $noStatus = new \StdClass();
+
+        $this->assertSame('', $this->transformer->transform($noStatus));
+    }
+
+    /**
      * Test reverse transform
      */
     public function testReverseTransform()
