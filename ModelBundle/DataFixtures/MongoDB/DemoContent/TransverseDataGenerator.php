@@ -3,7 +3,6 @@
 namespace OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent;
 
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\FooterStrategy;
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\LanguageListStrategy;
 use OpenOrchestra\ModelBundle\Document\Block;
 use OpenOrchestra\ModelBundle\Document\Node;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\TinyMCEWysiwygStrategy;
@@ -91,11 +90,6 @@ EOF
         $siteBlockContact->setClass('my-form-contact');
         $siteBlockContact->addArea(array('nodeId' => 0, 'areaId' => 'main'));
 
-        $siteBlockLanguage = new Block();
-        $siteBlockLanguage->setLabel('Language list');
-        $siteBlockLanguage->setComponent(LanguageListStrategy::LANGUAGE_LIST);
-        $siteBlockLanguage->addArea(array('nodeId' => 0, 'areaId' => 'main'));
-
         $mainArea = $this->createArea('main','main','main');
         $mainArea->addBlock(array('nodeId' => 0, 'blockId' => 0));
         $mainArea->addBlock(array('nodeId' => 0, 'blockId' => 1));
@@ -124,7 +118,6 @@ EOF
         $nodeTransverse->addBlock($siteBlockFooter);
         $nodeTransverse->addBlock($siteBlockFooterMenu);
         $nodeTransverse->addBlock($siteBlockContact);
-        $nodeTransverse->addBlock($siteBlockLanguage);
 
         return $nodeTransverse;
     }

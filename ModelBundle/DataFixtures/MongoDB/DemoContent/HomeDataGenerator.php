@@ -100,7 +100,7 @@ EOF;
 
         $siteHomeArea0 = $this->createHeader();
         $siteHomeArea4 = $this->createArea('Main content area 1', 'mainContentArea1', 'main-content-area1');
-        $siteHomeArea4->addBlock(array('nodeId' => 0, 'blockId' => 0));
+        $siteHomeArea4->addBlock(array('nodeId' => 0, 'blockId' => 1));
         $siteHomeArea5 = $this->createModuleArea();
         $siteHomeArea3 = $this->createMain(array($siteHomeArea4, $siteHomeArea5));
         $siteHomeArea6 = $this->createFooter();

@@ -78,7 +78,7 @@ EOF;
 
         $siteComArea0 = $this->createHeader();
         $siteComArea4 = $this->createArea('Main content area 1', 'mainContentArea1', 'main-content-area1');
-        $siteComArea4->addBlock(array('nodeId' => 0, 'blockId' => 0));
+        $siteComArea4->addBlock(array('nodeId' => 0, 'blockId' => 1));
         $siteComArea5 = $this->createModuleArea();
         $siteComArea3 = $this->createMain(array($siteComArea4, $siteComArea5));
         $siteComArea6 = $this->createFooter();
