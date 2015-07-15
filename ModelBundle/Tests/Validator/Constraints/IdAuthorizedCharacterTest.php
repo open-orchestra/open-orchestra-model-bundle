@@ -8,13 +8,8 @@ use Symfony\Component\Validator\Constraint;
 /**
  * Class IdAuthorizedCharacterTest
  */
-class IdAuthorizedCharacterTest extends \PHPUnit_Framework_TestCase
+class IdAuthorizedCharacterTest extends AbstractConstraintTest
 {
-    /**
-     * @var IdAuthorizedCharacter
-     */
-    protected $constraint;
-
     /**
      * Set up the test
      */
@@ -24,34 +19,15 @@ class IdAuthorizedCharacterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test instance
+     * Test Constraint
      */
-    public function testInstance()
+    public function testConstraint()
     {
-        $this->assertInstanceOf('Symfony\Component\Validator\Constraint', $this->constraint);
-    }
-
-    /**
-     * Test validateBy
-     */
-    public function testValidateBy()
-    {
-        $this->assertSame('id_authorized_character', $this->constraint->validatedBy());
-    }
-
-    /**
-     * test target
-     */
-    public function testTarget()
-    {
-        $this->assertSame(Constraint::PROPERTY_CONSTRAINT, $this->constraint->getTargets());
-    }
-
-    /**
-     * test message
-     */
-    public function testMessages()
-    {
-        $this->assertSame('open_orchestra_model_validators.field.special_character', $this->constraint->message);
+        $this->assertConstraint(
+            $this->constraint,
+            'id_authorized_character',
+            Constraint::PROPERTY_CONSTRAINT,
+            'open_orchestra_model_validators.field.special_character'
+        );
     }
 }

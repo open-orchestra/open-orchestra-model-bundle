@@ -8,13 +8,8 @@ use Symfony\Component\Validator\Constraint;
 /**
  * Class UniqueFieldIdContentTypeTest
  */
-class UniqueFieldIdContentTypeTest extends \PHPUnit_Framework_TestCase
+class UniqueFieldIdContentTypeTest extends AbstractConstraintTest
 {
-    /**
-     * @var UniqueFieldIdContentType
-     */
-    protected $constraint;
-
     /**
      * Set up the test
      */
@@ -24,26 +19,15 @@ class UniqueFieldIdContentTypeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test instance
+     * Test Constraint
      */
-    public function testInstance()
+    public function testConstraint()
     {
-        $this->assertInstanceOf('Symfony\Component\Validator\Constraint', $this->constraint);
-    }
-
-    /**
-     * test target
-     */
-    public function testTarget()
-    {
-        $this->assertSame(Constraint::CLASS_CONSTRAINT, $this->constraint->getTargets());
-    }
-
-    /**
-     * test message
-     */
-    public function testMessages()
-    {
-        $this->assertSame('open_orchestra_model_validators.document.content_type.unique_field_id', $this->constraint->message);
+        $this->assertConstraint(
+            $this->constraint,
+            'OpenOrchestra\ModelBundle\Validator\Constraints\UniqueFieldIdContentTypeValidator',
+            Constraint::CLASS_CONSTRAINT,
+            'open_orchestra_model_validators.document.content_type.unique_field_id'
+        );
     }
 }

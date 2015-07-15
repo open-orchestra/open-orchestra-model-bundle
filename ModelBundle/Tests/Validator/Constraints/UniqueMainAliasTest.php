@@ -8,14 +8,8 @@ use Symfony\Component\Validator\Constraint;
 /**
  * Test UniqueMainAliasTest
  */
-class UniqueMainAliasTest extends \PHPUnit_Framework_TestCase
+class UniqueMainAliasTest extends AbstractConstraintTest
 {
-
-    /**
-     * @var UniqueMainAlias
-     */
-    protected $constraint;
-
     /**
      * Set up the test
      */
@@ -25,26 +19,15 @@ class UniqueMainAliasTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test instance
+     * Test Constraint
      */
-    public function testInstance()
+    public function testConstraint()
     {
-        $this->assertInstanceOf('Symfony\Component\Validator\Constraint', $this->constraint);
-    }
-
-    /**
-     * test target
-     */
-    public function testTarget()
-    {
-        $this->assertSame(Constraint::CLASS_CONSTRAINT, $this->constraint->getTargets());
-    }
-
-    /**
-     * test message
-     */
-    public function testMessages()
-    {
-        $this->assertSame('open_orchestra_model_validators.document.website.unique_main_alias', $this->constraint->message);
+        $this->assertConstraint(
+            $this->constraint,
+            'OpenOrchestra\ModelBundle\Validator\Constraints\UniqueMainAliasValidator',
+            Constraint::CLASS_CONSTRAINT,
+            'open_orchestra_model_validators.document.website.unique_main_alias'
+        );
     }
 }
