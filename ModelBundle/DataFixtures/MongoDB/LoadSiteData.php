@@ -70,7 +70,7 @@ class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface
         $site2->setSitemapPriority(0.5);
         $site2->setDeleted(false);
         $site2->setTheme($this->getReference('themePresentation'));
-        $site2->addBlock('carrousel');
+        $site2->addBlock('slideshow');
         $site2->addBlock('gallery');
         $site2->addBlock('footer');
         $site2->addBlock('menu');
