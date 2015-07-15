@@ -11,7 +11,11 @@ use OpenOrchestra\ModelBundle\Document\Status;
  */
 class InitialStatusListenerTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var InitialStatusListener
+     */
     protected $listener;
+
     protected $lifecycleEventArgs;
     protected $postFlushEventArgs;
     protected $statusRepository;
@@ -57,6 +61,17 @@ class InitialStatusListenerTest extends \PHPUnit_Framework_TestCase
         foreach ($documents as $document) {
             Phake::verify($document)->setInitial(false);
         }
+
+        $documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
+        $postFlushEvent = Phake::mock('Doctrine\ODM\MongoDB\Event\PostFlushEventArgs');
+        Phake::when($postFlushEvent)->getDocumentManager()->thenReturn($documentManager);
+
+        $this->listener->postFlush($postFlushEvent);
+
+        foreach ($documents as $document) {
+            Phake::verify($documentManager)->persist($document);
+        }
+        Phake::verify($documentManager, Phake::times(count($documents)))->flush();
     }
 
     /**
@@ -72,7 +87,8 @@ class InitialStatusListenerTest extends \PHPUnit_Framework_TestCase
         Phake::when($document0)->isInitial()->thenReturn(true);
 
         return array(
-            array($status, array($document0))
+            array($status, array($document0)),
+            array($status, array()),
         );
     }
 }
