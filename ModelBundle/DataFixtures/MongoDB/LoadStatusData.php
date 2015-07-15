@@ -66,10 +66,10 @@ class LoadStatusData extends AbstractFixture implements OrderedFixtureInterface
      */
     protected function generateTranslatedValue($language, $value)
     {
-        $draftEn = new TranslatedValue();
-        $draftEn->setLanguage($language);
-        $draftEn->setValue($value);
+        $translatedValue = new TranslatedValue();
+        $translatedValue->setLanguage($language);
+        $translatedValue->setValue($value);
 
-        return $draftEn;
+        return $translatedValue;
     }
 }
