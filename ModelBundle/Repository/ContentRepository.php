@@ -214,7 +214,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     }
 
     /**
-     * @deprecated use findByContentTypeInLastVersionForPaginateAndSearch
+     * @deprecated use findByContentTypeInLastVersionForPaginate
      *
      * @param string $contentType
      *
