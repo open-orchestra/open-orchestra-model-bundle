@@ -20,10 +20,6 @@ class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-        $site1 = $this->getSite1();
-        $manager->persist($site1);
-        $this->addReference('site1', $site1);
-
         $site2 = $this->getSite2();
         $manager->persist($site2);
         $this->addReference('site2', $site2);
@@ -33,26 +29,6 @@ class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface
         $this->addReference('site3', $site3);
 
         $manager->flush();
-    }
-
-    /**
-     * @return Site
-     */
-    protected function getSite1()
-    {
-        $site1 = new Site();
-        $site1->setSiteId('1');
-        $site1->setName('Front site');
-        $this->addSitesAliases(
-            array('front.openorchestra.dev', 'front.openorchestra.inte'),
-            array('fr', 'en'),
-            $site1);
-        $site1->setSitemapPriority(0.5);
-        $site1->setDeleted(false);
-        $site1->setTheme($this->getReference('themePresentation'));
-        $site1->addBlock('menu');
-
-        return $site1;
     }
 
     /**

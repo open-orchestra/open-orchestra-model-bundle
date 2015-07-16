@@ -28,7 +28,7 @@ class ContentRepositoryTest extends KernelTestCase
         parent::setUp();
 
         $this->currentSiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
-        Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn('1');
+        Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn('2');
         Phake::when($this->currentSiteManager)->getCurrentSiteDefaultLanguage()->thenReturn('fr');
 
         static::bootKernel();
@@ -276,7 +276,6 @@ class ContentRepositoryTest extends KernelTestCase
             array('news', $descriptionEntity, null, null, 0 , 100, 100),
             array('news', $descriptionEntity, null, null, 50 , 100, 100),
             array('news', $descriptionEntity, $this->generateColumnsProvider(array('name' => 'news')), null, 0 , null, 250),
-            array('car', $descriptionEntity, null, '1', 0 ,5 , 2),
             array('car', $descriptionEntity, null, '2', 0 ,5 , 3),
         );
     }

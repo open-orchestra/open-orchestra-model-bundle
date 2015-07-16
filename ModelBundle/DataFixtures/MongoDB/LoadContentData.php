@@ -149,7 +149,7 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
         $content->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-lorem')));
         $content->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-sit')));
         $content->setLinkedToSite(false);
-        $content->setSiteId('1');
+        $content->setSiteId('2');
 
         $attribute1 = $this->generateContentAttribute('car_name', '206');
         $attribute2 = $this->generateContentAttribute('description',

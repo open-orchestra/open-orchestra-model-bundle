@@ -54,8 +54,7 @@ class NodeRepositoryTest extends KernelTestCase
     public function provideLanguageLastVersionAndSiteId()
     {
         return array(
-            array('en', 1, '1'),
-            array('fr', 2, '1'),
+            array('en', 1, '2'),
             array('fr', 1, '2'),
         );
     }
@@ -96,8 +95,8 @@ class NodeRepositoryTest extends KernelTestCase
     public function provideLanguageLastVersionAndSiteIdNotPublished()
     {
         return array(
-            array('fr', 3, '1', 3),
-            array('fr', null, '1', 3),
+            array('fr', 2, '2', 2),
+            array('fr', null, '2', 2),
         );
     }
 
@@ -117,19 +116,19 @@ class NodeRepositoryTest extends KernelTestCase
     }
 
     /**
-     * @param array  $versions
+     * @param int    $countVersions
      * @param string $language
      * @param string $siteId
      *
      * @dataProvider provideLanguageAndVersionListAndSiteId
      */
-    public function testFindByNodeIdAndLanguageAndSiteId(array $versions, $language, $siteId)
+    public function testFindByNodeIdAndLanguageAndSiteId($countVersions, $language, $siteId)
     {
         $nodes = $this->repository->findByNodeIdAndLanguageAndSiteId(NodeInterface::ROOT_NODE_ID, $language, $siteId);
 
-        $this->assertCount(count($versions), $nodes);
-        foreach ($nodes as $node) {
-            $this->assertSameNode($language, array_shift($versions), $siteId, $node);
+        $this->assertCount($countVersions, $nodes);
+        foreach ($nodes as $node) {;
+            $this->assertSameNode($language, $node->getVersion(), $siteId, $node);
         }
     }
 
@@ -139,9 +138,8 @@ class NodeRepositoryTest extends KernelTestCase
     public function provideLanguageAndVersionListAndSiteId()
     {
         return array(
-            array(array(1), 'en', '1'),
-            array(array(1, 2, 3), 'fr', '1'),
-            array(array(1), 'fr', '2'),
+            array(1, 'en', '2'),
+            array(2, 'fr', '2'),
         );
     }
 
@@ -164,7 +162,7 @@ class NodeRepositoryTest extends KernelTestCase
     public function provideNodeIdSiteIdAndCount()
     {
         return array(
-            array(NodeInterface::ROOT_NODE_ID, '1', 4),
+            array(NodeInterface::ROOT_NODE_ID, '2', 3),
             array(NodeInterface::TRANSVERSE_NODE_ID, '2', 2),
             array('fixture_page_what_is_orchestra', '2', 0),
         );
@@ -192,8 +190,8 @@ class NodeRepositoryTest extends KernelTestCase
     public function provideParentIdSiteIdAndCount()
     {
         return array(
-            array(NodeInterface::ROOT_NODE_ID, '1', 7),
-            array('fixture_about_us', '1', 2),
+            array(NodeInterface::ROOT_NODE_ID, '2', 5),
+            array('fixture_page_community', '2', 0),
             array(NodeInterface::TRANSVERSE_NODE_ID, '2', 0),
             array('fixture_page_what_is_orchestra', '2', 0),
         );
@@ -220,7 +218,7 @@ class NodeRepositoryTest extends KernelTestCase
     public function provideSiteIdAndNumberOfNode()
     {
         return array(
-            array('2', 5, 1),
+            array('2', 4, 2),
         );
     }
 
@@ -253,7 +251,6 @@ class NodeRepositoryTest extends KernelTestCase
     public function testGetFooterTree($siteId, $nodeNumber, $version, $language = 'fr', $nodeId = null)
     {
         $nodes = $this->repository->getFooterTreeByLanguageAndSiteId($language, $siteId);
-
         $this->assertCount($nodeNumber, $nodes);
         if ($nodeId) {
             $this->assertSameNode($language, $version, $siteId, $nodes[$nodeId], $nodeId);
@@ -267,8 +264,8 @@ class NodeRepositoryTest extends KernelTestCase
     public function provideForGetFooter()
     {
         return array(
-            array('1', 6, 1, 'fr', 'fixture_about_us'),
-            array('1', 0, 1, 'en'),
+            array('2', 1, 1, 'fr', 'fixture_page_legal_mentions'),
+            array('2', 1, 1, 'en'),
             array('2', 1, 1),
         );
     }
@@ -296,9 +293,8 @@ class NodeRepositoryTest extends KernelTestCase
     public function provideForGetMenu()
     {
         return array(
-            array('1', 8, 2, 'fr'),
-            array('1', 1, 1, 'en'),
-            array('2', 4, 1, 'fr'),
+            array('2', 3, 1, 'fr'),
+            array('2', 3, 1, 'en'),
         );
     }
 
@@ -331,17 +327,10 @@ class NodeRepositoryTest extends KernelTestCase
     public function provideForGetSubMenu()
     {
         return array(
-            array('fixture_about_us', 1, 3, 1, '1', 'fr'),
-            array(NodeInterface::ROOT_NODE_ID, 1, 8, 2, '1', 'fr'),
-            array(NodeInterface::ROOT_NODE_ID, 0, 6, 2, '1', 'fr'),
-            array(NodeInterface::ROOT_NODE_ID, 1, 1, 1, '1', 'en'),
-            array(NodeInterface::ROOT_NODE_ID, 0, 6, 2, '1'),
-            array(NodeInterface::ROOT_NODE_ID, 1, 5, 1, '2', 'fr'),
-            array(NodeInterface::ROOT_NODE_ID, 1, 5, 1, '2'),
+            array(NodeInterface::ROOT_NODE_ID, 1, 4, 1, '2', 'fr'),
+            array(NodeInterface::ROOT_NODE_ID, 1, 4, 1, '2'),
         );
     }
-
-
 
     /**
      * @param string $siteId
@@ -360,8 +349,7 @@ class NodeRepositoryTest extends KernelTestCase
     public function provideSiteIdAndDeletedCount()
     {
         return array(
-            array('1', 3),
-            array('2', 0),
+            array('3', 0),
         );
     }
 

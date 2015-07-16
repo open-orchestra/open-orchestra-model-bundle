@@ -31,7 +31,7 @@ class TransversalNodeCreatorListenerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->siteId = '1';
+        $this->siteId = 'fakeSiteId';
         $this->nodes = new ArrayCollection();
 
         $this->newNode = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
