@@ -218,7 +218,7 @@ class NodeRepositoryTest extends KernelTestCase
     public function provideSiteIdAndNumberOfNode()
     {
         return array(
-            array('2', 4, 2),
+            array('2', 5, 2),
         );
     }
 
@@ -293,8 +293,8 @@ class NodeRepositoryTest extends KernelTestCase
     public function provideForGetMenu()
     {
         return array(
-            array('2', 3, 1, 'fr'),
-            array('2', 3, 1, 'en'),
+            array('2', 4, 1, 'fr'),
+            array('2', 4, 1, 'en'),
         );
     }
 
@@ -327,8 +327,8 @@ class NodeRepositoryTest extends KernelTestCase
     public function provideForGetSubMenu()
     {
         return array(
-            array(NodeInterface::ROOT_NODE_ID, 1, 4, 1, '2', 'fr'),
-            array(NodeInterface::ROOT_NODE_ID, 1, 4, 1, '2'),
+            array(NodeInterface::ROOT_NODE_ID, 1, 5, 1, '2', 'fr'),
+            array(NodeInterface::ROOT_NODE_ID, 1, 5, 1, '2'),
         );
     }
 
