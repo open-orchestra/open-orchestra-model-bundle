@@ -127,7 +127,7 @@ class NodeRepositoryTest extends KernelTestCase
         $nodes = $this->repository->findByNodeIdAndLanguageAndSiteId(NodeInterface::ROOT_NODE_ID, $language, $siteId);
 
         $this->assertCount($countVersions, $nodes);
-        foreach ($nodes as $node) {;
+        foreach ($nodes as $node) {
             $this->assertSameNode($language, $node->getVersion(), $siteId, $node);
         }
     }
