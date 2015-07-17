@@ -14,15 +14,21 @@ use OpenOrchestra\ModelInterface\Model\NodeInterface;
 abstract class AbstractDataGenerator
 {
     protected $references;
+    protected $version;
+    protected $status;
 
     /**
      * Constructor
      *
-     * @param array $references
+     * @param array  $references
+     * @param int    $version
+     * @param string $status
      */
-    public function __construct(array $references)
+    public function __construct(array $references, $version = 1, $status = 'status-published')
     {
         $this->references = $references;
+        $this->version = $version;
+        $this->status = $status;
     }
 
     /**
@@ -148,8 +154,8 @@ abstract class AbstractDataGenerator
         $node->setNodeType('page');
         $node->setSiteId('2');
         $node->setPath('-');
-        $node->setVersion(1);
-        $node->setStatus($this->references['status-published']);
+        $node->setVersion($this->version);
+        $node->setStatus($this->references[$this->status]);
         $node->setDeleted(false);
         $node->setTemplateId('');
         $node->setTheme('themePresentation');

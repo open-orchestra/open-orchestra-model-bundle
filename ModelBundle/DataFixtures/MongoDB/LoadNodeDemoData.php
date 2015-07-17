@@ -39,6 +39,7 @@ class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterfac
         }
 
         $this->addNode($manager, new HomeDataGenerator($references), $transverseGenerator, $languages);
+        $this->addNode($manager, new HomeDataGenerator($references, 2, 'status-draft'), $transverseGenerator, array('fr'));
         $this->addNode($manager, new ContactDataGenerator($references), $transverseGenerator, $languages);
         $this->addNode($manager, new LegalDataGenerator($references), $transverseGenerator, $languages);
         $this->addNode($manager, new CommunityDataGenerator($references), $transverseGenerator, $languages);
