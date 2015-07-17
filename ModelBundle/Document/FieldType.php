@@ -33,7 +33,7 @@ class FieldType implements FieldTypeInterface
     /**
      * @var string $defaultValue
      *
-     * @ODM\Field(type="string")
+     * @ODM\Field(type="raw")
      */
     protected $defaultValue;
 
