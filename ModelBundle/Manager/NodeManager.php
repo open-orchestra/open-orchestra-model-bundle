@@ -15,7 +15,7 @@ class NodeManager  extends ContainerAware implements NodeManagerInterface
     protected $nodeClass;
 
     /**
-     * @param string     $nodeClass
+     * @param string $nodeClass
      */
     public function __construct($nodeClass)
     {
