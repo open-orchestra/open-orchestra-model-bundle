@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\Manager;
 
+use Phake;
 use OpenOrchestra\ModelBundle\Manager\NodeManager;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 
@@ -13,15 +14,30 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
     protected $manager;
 
     protected $nodeClass;
+    protected $areaClass;
+    protected $container;
 
     /**
      * set up the test
      */
     public function setUp()
     {
-        $this->nodeClass = 'OpenOrchestra\ModelBundle\Document\Node';
+        $container = Phake::mock('Symfony\Component\DependencyInjection\Container');
+        $documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
+        $database = Phake::mock('Doctrine\MongoDB\LoggableDatabase');
+        $connection = Phake::mock('Doctrine\MongoDB\Connection');
+        $hydratorFactory = Phake::mock('Doctrine\ODM\MongoDB\Hydrator\HydratorFactory');
 
-        $this->manager = new NodeManager($this->nodeClass);
+        Phake::when($database)->execute(Phake::anyParameters())->thenReturn(array('retval' => 'fakeRateVal'));
+        Phake::when($documentManager)->getDocumentDatabase(Phake::anyParameters())->thenReturn($database);
+        Phake::when($documentManager)->getConnection()->thenReturn($connection);
+        Phake::when($documentManager)->getHydratorFactory()->thenReturn($hydratorFactory);
+        Phake::when($container)->get(Phake::anyParameters())->thenReturn($documentManager);
+
+        $this->nodeClass = 'OpenOrchestra\ModelBundle\Document\Node';
+        $this->areaClass = 'OpenOrchestra\ModelBundle\Document\Area';
+        $this->manager = new NodeManager($this->nodeClass, $this->areaClass);
+        $this->manager->setContainer($container);
     }
 
     /**
@@ -58,5 +74,19 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
             array('fr', '2'),
             array('en', '2'),
         );
+    }
+
+    /**
+     * test duplicateNode
+     */
+    public function testduplicateNode()
+    {
+        $nodeId = 'fakeNodeId';
+        $siteId = 'fakeSiteId';
+        $language = 'fakeLanguage';
+
+        $node = $this->manager->duplicateNode($nodeId, $siteId, $language);
+
+        $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\NodeInterface', $node);
     }
 }

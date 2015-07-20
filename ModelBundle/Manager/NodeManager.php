@@ -16,10 +16,12 @@ class NodeManager  extends ContainerAware implements NodeManagerInterface
 
     /**
      * @param string $nodeClass
+     * @param string $areaClass
      */
-    public function __construct($nodeClass)
+    public function __construct($nodeClass, $areaClass)
     {
         $this->nodeClass = $nodeClass;
+        $this->areaClass = $areaClass;
     }
 
     /**
@@ -32,7 +34,7 @@ class NodeManager  extends ContainerAware implements NodeManagerInterface
      */
     public function createTransverseNode($language, $siteId)
     {
-        $area = new Area();
+        $area = new $this->areaClass();
         $area->setLabel('main');
         $area->setAreaId('main');
 
