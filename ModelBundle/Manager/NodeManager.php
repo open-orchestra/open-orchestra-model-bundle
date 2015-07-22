@@ -6,9 +6,8 @@ use OpenOrchestra\ModelBundle\Document\Area;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Manager\NodeManagerInterface;
+use OpenOrchestra\ModelInterface\Exceptions\StoredProcedureException;
 use Symfony\Component\DependencyInjection\ContainerAware;
-use AntiMattr\MongoDB\Migrations\Tools\Console\Command\StatusCommand;
-
 
 /**
  * Class NodeManager
@@ -62,23 +61,20 @@ class NodeManager  extends ContainerAware implements NodeManagerInterface
      * @param StatusInterface|null $language
      *
      * @return NodeInterface
+     *
+     * @throws StoredProcedureException
      */
-    public function duplicateNode($nodeId, $siteId, $language, $status)
+    public function duplicateNode($nodeId, $siteId, $language, $statusId)
     {
-        $status = new StatusCommand();
-        $input = new Symfony\Component\Console\Input\InputInterface();
-        $output = new Symfony\Component\Console\Output\OutputInterface();
-
-        $configuration = $status->getMigrationConfiguration($input, $output);
-        $configMap = $configuration->getDetailsMap();
-
-        var_dump($configMap['current_version']);
-
-//        $this->getParameter('mongo_db_migrations.current_version') ==
         $documentManager = $this->container->get('doctrine.odm.mongodb.document_manager');
         $documentManager->getConnection()->initialize();
         $dataBase = $documentManager->getDocumentDatabase($this->nodeClass);
-        $return = $dataBase->execute('db.loadServerScripts();return duplicateNode({ nodeId: \''.$nodeId.'\', siteId: \''.$siteId.'\', language: \''.$language.'\' , status: '.json_encode($status).' });');
+        $parameter = '{ nodeId: \''.$nodeId.'\', siteId: \''.$siteId.'\', language: \''.$language.'\' , statusId: \''.$statusId.'\' }';
+        $return = $dataBase->execute('db.loadServerScripts();return duplicateNode(' . $parameter . ');');
+
+        if(!isset($return['ok'])  || $return['ok'] != 1 || !isset($return['retval']) || $return['retval'] == null) {
+            throw new StoredProcedureException('duplicateNode', $parameter);
+        }
 
         $newNode = new $this->nodeClass();
         $documentManager->getHydratorFactory()->hydrate($newNode, $return['retval']);
