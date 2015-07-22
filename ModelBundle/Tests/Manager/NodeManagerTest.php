@@ -28,7 +28,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $connection = Phake::mock('Doctrine\MongoDB\Connection');
         $hydratorFactory = Phake::mock('Doctrine\ODM\MongoDB\Hydrator\HydratorFactory');
 
-        Phake::when($database)->execute(Phake::anyParameters())->thenReturn(array('retval' => 'fakeRateVal'));
+        Phake::when($database)->execute(Phake::anyParameters())->thenReturn(array('retval' => 'fakeRateVal', 'ok' => 1));
         Phake::when($documentManager)->getDocumentDatabase(Phake::anyParameters())->thenReturn($database);
         Phake::when($documentManager)->getConnection()->thenReturn($connection);
         Phake::when($documentManager)->getHydratorFactory()->thenReturn($hydratorFactory);
@@ -84,9 +84,9 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $nodeId = 'fakeNodeId';
         $siteId = 'fakeSiteId';
         $language = 'fakeLanguage';
-        $status = null;
+        $statusId = 'fakeStatusId';
 
-        $node = $this->manager->duplicateNode($nodeId, $siteId, $language, $status);
+        $node = $this->manager->duplicateNode($nodeId, $siteId, $language, $statusId);
 
         $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\NodeInterface', $node);
     }
