@@ -15,22 +15,18 @@ class Version20150722104732 extends AbstractMigration
      */
     public function getDescription()
     {
-        return "";
+        return "create stored procedure to increase node version";
     }
 
     public function up(Database $db)
     {
-        // this up() migration is auto-generated, please modify it to your needs
+        $this->executeScript($db, 'create_duplicate_node_20150722104732.js');
 
     }
 
     public function down(Database $db)
     {
-        // this down() migration is auto-generated, please modify it to your needs
+        $this->executeScript($db, 'delete_duplicate_node_20150722104732.js');
 
-    }
-    public function postUp(Database $db)
-    {
-        $result = $this->executeScript($db, 'duplicate_node.js');
     }
 }

@@ -1,4 +1,4 @@
-db.node.createIndex( { nodeId: 1, siteId: 1, language: 1, version: 1 }, { unique: true } )
+db.node.createIndex( { nodeId: 1, siteId: 1, language: 1, version: 1 }, { unique: true } );
 db.system.js.save(
     {
         _id : 'duplicateNode' ,
