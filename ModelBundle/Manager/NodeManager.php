@@ -7,6 +7,8 @@ use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Manager\NodeManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerAware;
+use AntiMattr\MongoDB\Migrations\Tools\Console\Command\StatusCommand;
+
 
 /**
  * Class NodeManager
@@ -63,6 +65,16 @@ class NodeManager  extends ContainerAware implements NodeManagerInterface
      */
     public function duplicateNode($nodeId, $siteId, $language, $status)
     {
+        $status = new StatusCommand();
+        $input = new Symfony\Component\Console\Input\InputInterface();
+        $output = new Symfony\Component\Console\Output\OutputInterface();
+
+        $configuration = $status->getMigrationConfiguration($input, $output);
+        $configMap = $configuration->getDetailsMap();
+
+        var_dump($configMap['current_version']);
+
+//        $this->getParameter('mongo_db_migrations.current_version') ==
         $documentManager = $this->container->get('doctrine.odm.mongodb.document_manager');
         $documentManager->getConnection()->initialize();
         $dataBase = $documentManager->getDocumentDatabase($this->nodeClass);

@@ -19,7 +19,7 @@ db.system.js.save(
                 }
                 break;
             }
-            return {node: node, version: "1.0"};
+            return node;
         }
     }
 );
