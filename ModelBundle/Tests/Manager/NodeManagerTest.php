@@ -84,8 +84,9 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
         $nodeId = 'fakeNodeId';
         $siteId = 'fakeSiteId';
         $language = 'fakeLanguage';
+        $status = null;
 
-        $node = $this->manager->duplicateNode($nodeId, $siteId, $language);
+        $node = $this->manager->duplicateNode($nodeId, $siteId, $language, $status);
 
         $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\NodeInterface', $node);
     }

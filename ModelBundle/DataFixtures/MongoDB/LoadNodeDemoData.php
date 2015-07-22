@@ -41,6 +41,7 @@ db.system.js.save(
                 node = cursor.next()
                 delete node._id;
                 node.version = node.version + 1;
+                node.status = data.status;
                 var results = db.node.insert(node);
                 if( results.hasWriteError() ) {
                     if( results.getWriteError().code == 11000)

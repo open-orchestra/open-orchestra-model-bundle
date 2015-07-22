@@ -4,6 +4,7 @@ namespace OpenOrchestra\ModelBundle\Manager;
 
 use OpenOrchestra\ModelBundle\Document\Area;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Manager\NodeManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerAware;
 
@@ -53,18 +54,19 @@ class NodeManager  extends ContainerAware implements NodeManagerInterface
     /**
      * Duplicate a node
      *
-     * @param string $nodeId
-     * @param string $siteId
-     * @param string $language
+     * @param string               $nodeId
+     * @param string               $siteId
+     * @param string               $language
+     * @param StatusInterface|null $language
      *
      * @return NodeInterface
      */
-    public function duplicateNode($nodeId, $siteId, $language)
+    public function duplicateNode($nodeId, $siteId, $language, $status)
     {
         $documentManager = $this->container->get('doctrine.odm.mongodb.document_manager');
         $documentManager->getConnection()->initialize();
         $dataBase = $documentManager->getDocumentDatabase($this->nodeClass);
-        $return = $dataBase->execute('db.loadServerScripts();return duplicateNode({ nodeId: \''.$nodeId.'\', siteId: \''.$siteId.'\', language: \''.$language.'\' });');
+        $return = $dataBase->execute('db.loadServerScripts();return duplicateNode({ nodeId: \''.$nodeId.'\', siteId: \''.$siteId.'\', language: \''.$language.'\' , status: '.json_encode($status).' });');
 
         $newNode = new $this->nodeClass();
         $documentManager->getHydratorFactory()->hydrate($newNode, $return['retval']);
