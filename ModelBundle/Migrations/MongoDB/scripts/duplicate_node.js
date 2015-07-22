@@ -6,8 +6,9 @@ db.system.js.save(
             var node = null
             var statusCursor = db.status.find( { _id: ObjectId(data.statusId) });
             if (statusCursor.hasNext()) {
-	            var status = statusCursor.next()
-	            while (1) {
+	            var status = statusCursor.next();
+	            var count = 0;
+	            while (count < 10) {
 	                var nodeCursor = db.node.find( { nodeId: data.nodeId, siteId: data.siteId, language: data.language }).sort( { version: -1 } ).limit(1);
 	                node = nodeCursor.next()
 	                delete node._id;
@@ -15,8 +16,10 @@ db.system.js.save(
 	                node.status = status;
 	                var results = db.node.insert(node);
 	                if( results.hasWriteError() ) {
-	                    if( results.getWriteError().code == 11000)
+	                    if( results.getWriteError().code == 11000) {
+	                        count++;
 	                        continue;
+	                    }
 	                    else
 	                        print( 'unexpected error inserting data: ' + tojson( results ) );
 	                }
