@@ -16,28 +16,31 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
     protected $nodeClass;
     protected $areaClass;
     protected $container;
+    protected $documentManager;
+    protected $database;
+    protected $connection;
+    protected $hydratorFactory;
 
     /**
      * set up the test
      */
     public function setUp()
     {
-        $container = Phake::mock('Symfony\Component\DependencyInjection\Container');
-        $documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
-        $database = Phake::mock('Doctrine\MongoDB\LoggableDatabase');
-        $connection = Phake::mock('Doctrine\MongoDB\Connection');
-        $hydratorFactory = Phake::mock('Doctrine\ODM\MongoDB\Hydrator\HydratorFactory');
+        $this->container = Phake::mock('Symfony\Component\DependencyInjection\Container');
+        $this->documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
+        $this->database = Phake::mock('Doctrine\MongoDB\LoggableDatabase');
+        $this->connection = Phake::mock('Doctrine\MongoDB\Connection');
+        $this->hydratorFactory = Phake::mock('Doctrine\ODM\MongoDB\Hydrator\HydratorFactory');
 
-        Phake::when($database)->execute(Phake::anyParameters())->thenReturn(array('retval' => 'fakeRateVal', 'ok' => 1));
-        Phake::when($documentManager)->getDocumentDatabase(Phake::anyParameters())->thenReturn($database);
-        Phake::when($documentManager)->getConnection()->thenReturn($connection);
-        Phake::when($documentManager)->getHydratorFactory()->thenReturn($hydratorFactory);
-        Phake::when($container)->get(Phake::anyParameters())->thenReturn($documentManager);
+        Phake::when($this->documentManager)->getDocumentDatabase(Phake::anyParameters())->thenReturn($this->database);
+        Phake::when($this->documentManager)->getConnection()->thenReturn($this->connection);
+        Phake::when($this->documentManager)->getHydratorFactory()->thenReturn($this->hydratorFactory);
+        Phake::when($this->container)->get(Phake::anyParameters())->thenReturn($this->documentManager);
 
         $this->nodeClass = 'OpenOrchestra\ModelBundle\Document\Node';
         $this->areaClass = 'OpenOrchestra\ModelBundle\Document\Area';
         $this->manager = new NodeManager($this->nodeClass, $this->areaClass);
-        $this->manager->setContainer($container);
+        $this->manager->setContainer($this->container);
     }
 
     /**
@@ -81,6 +84,8 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testduplicateNode()
     {
+        Phake::when($this->database)->execute(Phake::anyParameters())->thenReturn(array('retval' => 'fakeRateVal', 'ok' => 1));
+
         $nodeId = 'fakeNodeId';
         $siteId = 'fakeSiteId';
         $language = 'fakeLanguage';
@@ -88,6 +93,31 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
 
         $node = $this->manager->duplicateNode($nodeId, $siteId, $language, $statusId);
 
+        Phake::verify($this->container)->get('doctrine.odm.mongodb.document_manager');
+        Phake::verify($this->documentManager)->getConnection();
+        Phake::verify($this->connection)->initialize();
+        Phake::verify($this->documentManager)->getDocumentDatabase($this->nodeClass);
+        Phake::verify($this->database)->execute('db.loadServerScripts();return duplicateNode({ nodeId: \''.$nodeId.'\', siteId: \''.$siteId.'\', language: \''.$language.'\' , statusId: \''.$statusId.'\' });');
+        Phake::verify($this->documentManager)->getHydratorFactory();
+        Phake::verify($this->hydratorFactory)->hydrate(Phake::anyParameters());
+
         $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\NodeInterface', $node);
+    }
+
+    /**
+     * test duplicateNode
+
+     * @expectedException OpenOrchestra\ModelInterface\Exceptions\StoredProcedureException
+     */
+    public function testduplicateNodeException()
+    {
+        Phake::when($this->database)->execute(Phake::anyParameters())->thenReturn(null);
+
+        $nodeId = 'fakeNodeId';
+        $siteId = 'fakeSiteId';
+        $language = 'fakeLanguage';
+        $statusId = 'fakeStatusId';
+
+        $this->manager->duplicateNode($nodeId, $siteId, $language, $statusId);
     }
 }
