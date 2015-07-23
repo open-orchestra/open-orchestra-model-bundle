@@ -89,7 +89,7 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $field = new FieldType();
         $field->setType($fieldType);
         $field->setFieldId($fieldId);
-        $field->setDefaultValue('');
+        $field->setDefaultValue(null);
         $field->setSearchable(true);
         foreach ($labels as $label) {
             $field->addLabel($label);
