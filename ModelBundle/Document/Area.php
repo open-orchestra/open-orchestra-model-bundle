@@ -3,6 +3,7 @@
 namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 
@@ -40,6 +41,34 @@ class Area implements AreaInterface
      * @ODM\Field(type="string")
      */
     protected $boDirection;
+
+    /**
+     * @var int $x
+     *
+     * @ODM\Field(type="int")
+     */
+    protected $x;
+
+    /**
+     * @var int $y
+     *
+     * @ODM\Field(type="int")
+     */
+    protected $y;
+
+    /**
+     * @var int $width
+     *
+     * @ODM\Field(type="int")
+     */
+    protected $width;
+
+    /**
+     * @var int $height
+     *
+     * @ODM\Field(type="int")
+     */
+    protected $height;
 
     /**
      * @ODM\Field(type="collection")
@@ -147,6 +176,86 @@ class Area implements AreaInterface
     }
 
     /**
+     * Set x
+     *
+     * @param int $x
+     */
+    public function setX($x)
+    {
+        $this->x = $x;
+    }
+
+    /**
+     * Get x
+     *
+     * @return int $x
+     */
+    public function getX()
+    {
+        return $this->x;
+    }
+
+    /**
+     * Set y
+     *
+     * @param int $y
+     */
+    public function setY($y)
+    {
+        $this->y = $y;
+    }
+
+    /**
+     * Get y
+     *
+     * @return int $y
+     */
+    public function getY()
+    {
+        return $this->y;
+    }
+
+    /**
+     * Set width
+     *
+     * @param int $width
+     */
+    public function setWidth($width)
+    {
+        $this->width = $width;
+    }
+
+    /**
+     * Get width
+     *
+     * @return int $width
+     */
+    public function getWidth()
+    {
+        return $this->width;
+    }
+
+    /**
+     * Set height
+     *
+     * @param int $height
+     */
+    public function setHeight($height)
+    {
+        $this->height = $height;
+    }
+
+    /**
+     * Get height
+     *
+     * @return int $height
+     */
+    public function getHeight()
+    {
+        return $this->height;
+    }
+
+    /**
      * Set classes
      *
      * @deprecated use setHtmlClass instead
@@ -202,6 +311,17 @@ class Area implements AreaInterface
                 $this->getAreas()->remove($key);
                 break;
             }
+        }
+    }
+
+    /**
+     * @param Collection $areas
+     */
+    public function setAreas(Collection $areas)
+    {
+        $this->areas = new ArrayCollection();
+        foreach ($areas as $area) {
+            $this->areas->add($area);
         }
     }
 
