@@ -81,7 +81,7 @@ abstract class AbstractDataGenerator
     {
         $header = $this->createArea('Header','header','header');
         $header->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 0));
-        $header->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 1));
+        $header->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 1, 'blockParameter' => array('request.aliasId')));
         $header->addBlock(array('nodeId' => 0, 'blockId' => 0));
 
         return $header;
@@ -93,7 +93,7 @@ abstract class AbstractDataGenerator
     protected function createFooter()
     {
         $area = $this->createArea('Footer','footer','footer');
-        $area->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3));
+        $area->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3, 'blockParameter' => array('request.aliasId')));
         $area->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 2));
 
         return $area;
