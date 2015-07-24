@@ -88,6 +88,7 @@ class LoadContentThousand extends AbstractFixture implements OrderedFixtureInter
         $content->setName($name);
         $content->setLanguage($language);
         $content->setVersion($version);
+        $content->setSiteId('2');
 
         switch ($version) {
             case 2: $content->setStatus($this->getReference('status-pending'));
