@@ -560,4 +560,26 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
 
         return $qb->getQuery()->getSingleResult();
     }
+
+    /**
+     * @param string $nodeType
+     * @param string $siteId
+     * 
+     * @return array
+     */
+    public function findAllNodesOfTypeInLastPublishedVersionForSite($nodeType, $siteId)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
+        $qa->match(
+            array(
+                'nodeType' => $nodeType,
+                'status.published' => true,
+                'deleted' => false
+            )
+        );
+
+        $qa->sort(array('version' => 1));
+
+        return $this->hydrateAggregateQuery($qa);
+    }
 }
