@@ -59,14 +59,16 @@ abstract class AbstractDataGenerator
      * @param string $label
      * @param string $areaId
      * @param string $htmlClass
+     * @param string $boDirection
      *
      * @return Area
      */
-    protected function createArea($label, $areaId, $htmlClass = null)
+    protected function createArea($label, $areaId, $htmlClass = null, $boDirection = 'v')
     {
         $area = new Area();
         $area->setLabel($label);
         $area->setAreaId($areaId);
+        $area->setBoDirection($boDirection);
         if ($htmlClass !== null) {
             $area->setHtmlClass($htmlClass);
         }
@@ -79,7 +81,7 @@ abstract class AbstractDataGenerator
      */
     protected function createHeader()
     {
-        $header = $this->createArea('Header','header','header');
+        $header = $this->createArea('Header','header','header','h');
         $header->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 0));
         $header->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 1, 'blockParameter' => array('request.aliasId')));
         $header->addBlock(array('nodeId' => 0, 'blockId' => 0));
@@ -92,7 +94,7 @@ abstract class AbstractDataGenerator
      */
     protected function createFooter()
     {
-        $area = $this->createArea('Footer','footer','footer');
+        $area = $this->createArea('Footer','footer','footer','h');
         $area->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3, 'blockParameter' => array('request.aliasId')));
         $area->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 2));
 
