@@ -78,6 +78,7 @@ class LoadContentNewsData extends AbstractFixture implements OrderedFixtureInter
         $content->setLanguage($language);
         $content->setStatus($this->getReference('status-published'));
         $content->setVersion(1);
+        $content->setSiteId('2');
 
         return $content;
     }
