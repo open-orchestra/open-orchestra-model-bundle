@@ -2,9 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\Manager;
 
-use OpenOrchestra\ModelBundle\Document\Area;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
-use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Manager\NodeManagerInterface;
 use OpenOrchestra\ModelInterface\Exceptions\StoredProcedureException;
 use Symfony\Component\DependencyInjection\ContainerAware;
@@ -55,10 +53,10 @@ class NodeManager  extends ContainerAware implements NodeManagerInterface
     /**
      * Duplicate a node
      *
-     * @param string               $nodeId
-     * @param string               $siteId
-     * @param string               $language
-     * @param StatusInterface|null $language
+     * @param string $nodeId
+     * @param string $siteId
+     * @param string $language
+     * @param string $statusId
      *
      * @return NodeInterface
      *
@@ -72,7 +70,7 @@ class NodeManager  extends ContainerAware implements NodeManagerInterface
         $parameter = '{ nodeId: \''.$nodeId.'\', siteId: \''.$siteId.'\', language: \''.$language.'\' , statusId: \''.$statusId.'\' }';
         $return = $dataBase->execute('db.loadServerScripts();return duplicateNode(' . $parameter . ');');
 
-        if(!isset($return['ok'])  || $return['ok'] != 1 || !isset($return['retval']) || $return['retval'] == null) {
+        if(!isset($return['ok'])  || $return['ok'] != 1 || !isset($return['retval']) || $return['retval'] === null) {
             throw new StoredProcedureException('duplicateNode', $parameter);
         }
 
