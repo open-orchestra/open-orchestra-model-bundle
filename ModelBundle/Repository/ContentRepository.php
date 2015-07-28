@@ -214,26 +214,6 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     }
 
     /**
-     * @deprecated use findByContentTypeInLastVersionForPaginate
-     *
-     * @param string $contentType
-     *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     *
-     * @return array
-     */
-    public function findByContentTypeInLastVersion($contentType = null)
-    {
-
-        $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
-        $qa->match($this->generateDeletedFilter());
-        $elementName = 'content';
-        $qa->group($this->generateLastVersionFilter($elementName));
-
-        return $this->hydrateAggregateQuery($qa, $elementName);
-    }
-
-    /**
      * @param string|null                 $contentType
      * @param PaginateFinderConfiguration $configuration
      * @param int|null                    $siteId

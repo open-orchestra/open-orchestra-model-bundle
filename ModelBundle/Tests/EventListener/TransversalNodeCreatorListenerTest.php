@@ -42,10 +42,10 @@ class TransversalNodeCreatorListenerTest extends \PHPUnit_Framework_TestCase
 
         $this->nodeRepository = Phake::mock('OpenOrchestra\ModelBundle\Repository\NodeRepository');
         Phake::when($this->nodeRepository)
-            ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'fr', $this->siteId)
+            ->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'fr', $this->siteId)
             ->thenReturn($this->nodeFr);
         Phake::when($this->nodeRepository)
-            ->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'en', $this->siteId)
+            ->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'en', $this->siteId)
             ->thenReturn($this->nodeEn);
         $this->container = Phake::mock('Symfony\Component\DependencyInjection\Container');
         Phake::when($this->container)->get(Phake::anyParameters())->thenReturn($this->nodeRepository);
@@ -100,8 +100,8 @@ class TransversalNodeCreatorListenerTest extends \PHPUnit_Framework_TestCase
 
         $this->listener->$method($this->event);
 
-        Phake::verify($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'fr', $this->siteId);
-        Phake::verify($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'en', $this->siteId);
+        Phake::verify($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'fr', $this->siteId);
+        Phake::verify($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'en', $this->siteId);
         $this->assertEmpty($this->listener->nodes);
     }
 
@@ -115,12 +115,12 @@ class TransversalNodeCreatorListenerTest extends \PHPUnit_Framework_TestCase
     public function testWithNonExistingNodes($method)
     {
         Phake::when($this->site)->getLanguages()->thenReturn(array('fr', 'en'));
-        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(Phake::anyParameters())->thenReturn(null);
+        Phake::when($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(Phake::anyParameters())->thenReturn(null);
 
         $this->listener->$method($this->event);
 
-        Phake::verify($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'fr', $this->siteId);
-        Phake::verify($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdAndLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'en', $this->siteId);
+        Phake::verify($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'fr', $this->siteId);
+        Phake::verify($this->nodeRepository)->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(NodeInterface::TRANSVERSE_NODE_ID, 'en', $this->siteId);
         Phake::verify($this->nodeManager)->createTransverseNode('fr', $this->siteId);
         $this->assertCount(2, $this->listener->nodes);
         $this->assertSame($this->newNode, $this->listener->nodes[0]);

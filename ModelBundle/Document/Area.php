@@ -71,11 +71,6 @@ class Area implements AreaInterface
     protected $gridHeight;
 
     /**
-     * @ODM\Field(type="collection")
-     */
-    protected $classes = array();
-
-    /**
      * @var ArrayCollection
      *
      * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\AreaInterface")
@@ -253,30 +248,6 @@ class Area implements AreaInterface
     public function getGridHeight()
     {
         return $this->gridHeight;
-    }
-
-    /**
-     * Set classes
-     *
-     * @deprecated use setHtmlClass instead
-     *
-     * @param array $classes
-     */
-    public function setClasses(array $classes)
-    {
-        $this->classes = $classes;
-    }
-
-    /**
-     * Get classes
-     *
-     * @deprecated use getHtmlClass instead
-     *
-     * @return array $classes
-     */
-    public function getClasses()
-    {
-        return $this->classes;
     }
 
     /**
