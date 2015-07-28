@@ -476,7 +476,7 @@ class Node implements NodeInterface
      */
     public function setAreas(Collection $areas)
     {
-        $this->areas->clear();
+        $this->areas = new ArrayCollection();
         foreach ($areas as $area) {
             $this->areas->add($area);
         }

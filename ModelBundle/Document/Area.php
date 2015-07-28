@@ -3,6 +3,7 @@
 namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 
@@ -40,6 +41,34 @@ class Area implements AreaInterface
      * @ODM\Field(type="string")
      */
     protected $boDirection;
+
+    /**
+     * @var int $gridX
+     *
+     * @ODM\Field(type="int")
+     */
+    protected $gridX;
+
+    /**
+     * @var int $gridY
+     *
+     * @ODM\Field(type="int")
+     */
+    protected $gridY;
+
+    /**
+     * @var int $gridWidth
+     *
+     * @ODM\Field(type="int")
+     */
+    protected $gridWidth;
+
+    /**
+     * @var int $gridHeight
+     *
+     * @ODM\Field(type="int")
+     */
+    protected $gridHeight;
 
     /**
      * @ODM\Field(type="collection")
@@ -147,6 +176,86 @@ class Area implements AreaInterface
     }
 
     /**
+     * Set gridX
+     *
+     * @param int $gridX
+     */
+    public function setgridX($gridX)
+    {
+        $this->gridX = $gridX;
+    }
+
+    /**
+     * Get gridX
+     *
+     * @return int $gridX
+     */
+    public function getGridX()
+    {
+        return $this->gridX;
+    }
+
+    /**
+     * Set gridY
+     *
+     * @param int $gridY
+     */
+    public function setGridY($gridY)
+    {
+        $this->gridY = $gridY;
+    }
+
+    /**
+     * Get gridY
+     *
+     * @return int $gridY
+     */
+    public function getGridY()
+    {
+        return $this->gridY;
+    }
+
+    /**
+     * Set gridWidth
+     *
+     * @param int $gridWidth
+     */
+    public function setGridWidth($gridWidth)
+    {
+        $this->gridWidth = $gridWidth;
+    }
+
+    /**
+     * Get gridWidth
+     *
+     * @return int $gridWidth
+     */
+    public function getGridWidth()
+    {
+        return $this->gridWidth;
+    }
+
+    /**
+     * Set gridHeight
+     *
+     * @param int $gridHeight
+     */
+    public function setGridHeight($gridHeight)
+    {
+        $this->gridHeight = $gridHeight;
+    }
+
+    /**
+     * Get gridHeight
+     *
+     * @return int $gridHeight
+     */
+    public function getGridHeight()
+    {
+        return $this->gridHeight;
+    }
+
+    /**
      * Set classes
      *
      * @deprecated use setHtmlClass instead
@@ -202,6 +311,17 @@ class Area implements AreaInterface
                 $this->getAreas()->remove($key);
                 break;
             }
+        }
+    }
+
+    /**
+     * @param Collection $areas
+     */
+    public function setAreas(Collection $areas)
+    {
+        $this->areas = new ArrayCollection();
+        foreach ($areas as $area) {
+            $this->areas->add($area);
         }
     }
 
