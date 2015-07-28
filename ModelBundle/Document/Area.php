@@ -43,32 +43,32 @@ class Area implements AreaInterface
     protected $boDirection;
 
     /**
-     * @var int $x
+     * @var int $xInGrid
      *
      * @ODM\Field(type="int")
      */
-    protected $x;
+    protected $xInGrid;
 
     /**
-     * @var int $y
+     * @var int $yInGrid
      *
      * @ODM\Field(type="int")
      */
-    protected $y;
+    protected $yInGrid;
 
     /**
-     * @var int $width
+     * @var int $widthInGrid
      *
      * @ODM\Field(type="int")
      */
-    protected $width;
+    protected $widthInGrid;
 
     /**
-     * @var int $height
+     * @var int $heightInGrid
      *
      * @ODM\Field(type="int")
      */
-    protected $height;
+    protected $heightInGrid;
 
     /**
      * @ODM\Field(type="collection")
@@ -176,83 +176,83 @@ class Area implements AreaInterface
     }
 
     /**
-     * Set x
+     * Set xInGrid
      *
-     * @param int $x
+     * @param int $xInGrid
      */
-    public function setX($x)
+    public function setXInGrid($xInGrid)
     {
-        $this->x = $x;
+        $this->xInGrid = $xInGrid;
     }
 
     /**
-     * Get x
+     * Get xInGrid
      *
-     * @return int $x
+     * @return int $xInGrid
      */
-    public function getX()
+    public function getXInGrid()
     {
-        return $this->x;
+        return $this->xInGrid;
     }
 
     /**
-     * Set y
+     * Set yInGrid
      *
-     * @param int $y
+     * @param int $yInGrid
      */
-    public function setY($y)
+    public function setYInGrid($yInGrid)
     {
-        $this->y = $y;
+        $this->yInGrid = $yInGrid;
     }
 
     /**
-     * Get y
+     * Get yInGrid
      *
-     * @return int $y
+     * @return int $yInGrid
      */
-    public function getY()
+    public function getYInGrid()
     {
-        return $this->y;
+        return $this->yInGrid;
     }
 
     /**
-     * Set width
+     * Set widthInGrid
      *
-     * @param int $width
+     * @param int $widthInGrid
      */
-    public function setWidth($width)
+    public function setWidthInGrid($widthInGrid)
     {
-        $this->width = $width;
+        $this->widthInGrid = $widthInGrid;
     }
 
     /**
-     * Get width
+     * Get widthInGrid
      *
-     * @return int $width
+     * @return int $widthInGrid
      */
-    public function getWidth()
+    public function getWidthInGrid()
     {
-        return $this->width;
+        return $this->widthInGrid;
     }
 
     /**
-     * Set height
+     * Set heightInGrid
      *
-     * @param int $height
+     * @param int $heightInGrid
      */
-    public function setHeight($height)
+    public function setHeightInGrid($heightInGrid)
     {
-        $this->height = $height;
+        $this->heightInGrid = $heightInGrid;
     }
 
     /**
-     * Get height
+     * Get heightInGrid
      *
-     * @return int $height
+     * @return int $heightInGrid
      */
-    public function getHeight()
+    public function getHeightInGrid()
     {
-        return $this->height;
+        return $this->heightInGrid;
     }
 
     /**
