@@ -41,7 +41,7 @@ class NodeRepositoryTest extends KernelTestCase
      *
      * @dataProvider provideLanguageLastVersionAndSiteId
      */
-    public function testFindOneByNodeIdAndLanguageWithPublishedAndLastVersionAndSiteId($language, $version, $siteId)
+    public function testfindOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion($language, $version, $siteId)
     {
         $node = $this->repository->findOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion(NodeInterface::ROOT_NODE_ID, $language, $siteId);
 
@@ -108,7 +108,7 @@ class NodeRepositoryTest extends KernelTestCase
      *
      * @dataProvider provideLanguageLastVersionAndSiteIdNotPublished
      */
-    public function testFindOneByNodeIdAndLanguageAndSiteIdAndLastVersion($language, $version = null, $siteId, $versionExpected)
+    public function testFindOneByNodeIdAndLanguageAndSiteIdInLastVersion($language, $version = null, $siteId, $versionExpected)
     {
         $node = $this->repository->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(NodeInterface::ROOT_NODE_ID, $language, $siteId);
 

@@ -74,20 +74,6 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      * @param string $language
      * @param string $siteId
      *
-     * @deprecated will be removed in 0.3.0, use findOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion instead
-     *
-     * @return mixed
-     */
-    public function findOneByNodeIdAndLanguageWithPublishedAndLastVersionAndSiteId($nodeId, $language, $siteId)
-    {
-        return $this->findOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion($nodeId, $language, $siteId);
-    }
-
-    /**
-     * @param string $nodeId
-     * @param string $language
-     * @param string $siteId
-     *
      * @return mixed
      */
     public function findOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion($nodeId, $language, $siteId)
@@ -103,21 +89,6 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         $qa->sort(array('version' => -1));
 
         return $this->singleHydrateAggregateQuery($qa);
-    }
-
-    /**
-     * @param string   $nodeId
-     * @param string   $language
-     * @param string   $siteId
-     * @param int|null $version
-     *
-     * @deprecated will be removed in 0.3.0, use findOneByNodeIdAndLanguageAndSiteIdAndVersion instead
-     *
-     * @return array
-     */
-    public function findOneByNodeIdAndLanguageAndVersionAndSiteId($nodeId, $language, $siteId, $version = null)
-    {
-        return $this->findOneByNodeIdAndLanguageAndSiteIdAndVersion($nodeId, $language, $siteId, $version);
     }
 
     /**
@@ -222,20 +193,6 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      * @param string $language
      * @param string $siteId
      *
-     * @deprecated will be removed in 0.3.0, use findOneByNodeIdAndLanguageAndSiteIdInLastVersion instead
-     *
-     * @return mixed
-     */
-    public function findOneByNodeIdAndLanguageAndSiteIdAndLastVersion($nodeId, $language, $siteId)
-    {
-        return $this->findOneByNodeIdAndLanguageAndSiteIdInLastVersion($nodeId, $language, $siteId);
-    }
-
-    /**
-     * @param string $nodeId
-     * @param string $language
-     * @param string $siteId
-     *
      * @return mixed
      */
     public function findOneByNodeIdAndLanguageAndSiteIdInLastVersion($nodeId, $language, $siteId)
@@ -285,20 +242,6 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     public function findDeletedInLastVersionBySiteId($siteId, $type = NodeInterface::TYPE_DEFAULT)
     {
         return $this->prepareFindLastVersion($type, $siteId, true);
-    }
-
-    /**
-     * @param string $path
-     * @param string $siteId
-     * @param string $language
-     *
-     * @deprecated will be removed in 0.3.0, use findChildByPathAndSiteIdAndLanguage instead
-     *
-     * @return mixed
-     */
-    public function findChildsByPathAndSiteIdAndLanguage($path, $siteId, $language)
-    {
-        return $this->findChildrenByPathAndSiteIdAndLanguage($path, $siteId, $language);
     }
 
     /**

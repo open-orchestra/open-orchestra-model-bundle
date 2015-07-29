@@ -523,16 +523,6 @@ class Node implements NodeInterface
 
     /**
      * @return boolean
-     *
-     * @deprecated use isInFooter
-     */
-    public function getInFooter()
-    {
-        return $this->isInFooter();
-    }
-
-    /**
-     * @return boolean
      */
     public function isInFooter()
     {

@@ -195,18 +195,6 @@ class Site implements SiteInterface
     }
 
     /**
-     * Get deleted
-     *
-     * @return boolean $deleted
-     *
-     * @deprecated use isDeleted instead, will be removed in 0.2.8
-     */
-    public function getDeleted()
-    {
-        return $this->isDeleted();
-    }
-
-    /**
      * Set theme
      *
      * @param ThemeInterface $theme

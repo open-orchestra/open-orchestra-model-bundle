@@ -19,18 +19,6 @@ class ContentTypeRepository extends AbstractAggregateRepository implements Conte
     /**
      * @param $language
      *
-     * @deprecated will be removed in 0.3.0, use findAllNotDeletedInLastVersion instead
-     *
-     * @return array
-     */
-    public function findAllByDeletedInLastVersion($language = null)
-    {
-        return $this->findAllNotDeletedInLastVersion($language);
-    }
-
-    /**
-     * @param $language
-     *
      * @return array
      */
     public function findAllNotDeletedInLastVersion($language = null)
@@ -53,26 +41,6 @@ class ContentTypeRepository extends AbstractAggregateRepository implements Conte
         }
 
         return $this->hydrateAggregateQuery($qa, $elementName, 'getContentTypeId');
-    }
-
-    /**
-     * @param array|null  $descriptionEntity
-     * @param array|null  $columns
-     * @param string|null $search
-     * @param array|null  $order
-     * @param int|null    $skip
-     * @param int|null    $limit
-     *
-     * @deprecated will be removed in 0.3.0, use findAllNotDeletedInLastVersionForPaginate instead
-     *
-     * @return array
-     */
-    public function findAllByDeletedInLastVersionForPaginateAndSearch($descriptionEntity = null, $columns = null, $search = null, $order = null, $skip = null, $limit = null)
-    {
-        $configuration = PaginateFinderConfiguration::generateFromVariable($descriptionEntity, $columns, $search);
-        $configuration->setPaginateConfiguration($order, $skip, $limit);
-
-        return $this->findAllNotDeletedInLastVersionForPaginate($configuration);
     }
 
     /**
@@ -171,16 +139,6 @@ class ContentTypeRepository extends AbstractAggregateRepository implements Conte
             'version' => array('$max' => '$version'),
             $elementName => array('$last' => '$$ROOT')
         );
-    }
-
-    /**
-     * @deprecated will be removed in 0.3.0, use createAggregateQueryNotDeletedInLastVersion instead
-     *
-     * @return \Solution\MongoAggregation\Pipeline\Stage
-     */
-    protected function createAggregateQueryByDeletedAndLastVersion()
-    {
-        return $this->createAggregateQueryNotDeletedInLastVersion();
     }
 
     /**
