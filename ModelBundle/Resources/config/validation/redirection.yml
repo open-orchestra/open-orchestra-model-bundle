@@ -4,12 +4,8 @@ OpenOrchestra\ModelBundle\Document\Redirection:
             - NotBlank: ~
         locale:
             - NotBlank: ~
-        siteName:
-            - NotBlank: ~
         routePattern:
             - NotBlank: ~
         permanent:
             - Type:
                 type: bool
-        subAreas:
-            - Valid: ~
