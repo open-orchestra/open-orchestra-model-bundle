@@ -11,7 +11,7 @@ services:
         class: %open_orchestra_model.validator.prevent_prohibited_status_change.class%
         arguments:
             - @security.context
-            - @doctrine_mongodb.odm.default_document_manager
+            - @document_manager
             - @open_orchestra_model.repository.role
         tags:
             - { name: validator.constraint_validator, alias: prevent_prohibited_status_change}
@@ -19,7 +19,7 @@ services:
         class: %open_orchestra_model.validator.prevent_published_document_save.class%
         arguments:
             - @translator
-            - @doctrine.odm.mongodb.document_manager
+            - @document_manager
         tags:
             - { name: validator.constraint_validator, alias: prevent_published_document_save}
     open_orchestra_model.validator.check_route_pattern:

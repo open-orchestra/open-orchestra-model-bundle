@@ -93,7 +93,7 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
 
         $node = $this->manager->duplicateNode($nodeId, $siteId, $language, $statusId);
 
-        Phake::verify($this->container)->get('doctrine.odm.mongodb.document_manager');
+        Phake::verify($this->container)->get('document_manager');
         Phake::verify($this->documentManager)->getConnection();
         Phake::verify($this->connection)->initialize();
         Phake::verify($this->documentManager)->getDocumentDatabase($this->nodeClass);

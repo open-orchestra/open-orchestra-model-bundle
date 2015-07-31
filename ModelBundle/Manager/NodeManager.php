@@ -64,16 +64,14 @@ class NodeManager  extends ContainerAware implements NodeManagerInterface
      */
     public function duplicateNode($nodeId, $siteId, $language, $statusId)
     {
-        $documentManager = $this->container->get('doctrine.odm.mongodb.document_manager');
+        $documentManager = $this->container->get('document_manager');
         $documentManager->getConnection()->initialize();
         $dataBase = $documentManager->getDocumentDatabase($this->nodeClass);
         $parameter = '{ nodeId: \''.$nodeId.'\', siteId: \''.$siteId.'\', language: \''.$language.'\' , statusId: \''.$statusId.'\' }';
         $return = $dataBase->execute('db.loadServerScripts();return duplicateNode(' . $parameter . ');');
-
         if(!isset($return['ok'])  || $return['ok'] != 1 || !isset($return['retval']) || $return['retval'] === null) {
             throw new StoredProcedureException('duplicateNode', $parameter);
         }
-
         $newNode = new $this->nodeClass();
         $documentManager->getHydratorFactory()->hydrate($newNode, $return['retval']);
 

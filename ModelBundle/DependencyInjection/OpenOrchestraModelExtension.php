@@ -31,7 +31,7 @@ class OpenOrchestraModelExtension extends Extension
                 $container->setParameter('open_orchestra_model.document.' . $class . '.class', $content['class']);
                 if (array_key_exists('repository', $content)) {
                     $definition = new Definition($content['repository'], array($content['class']));
-                    $definition->setFactory(array(new Reference('doctrine.odm.mongodb.document_manager'), 'getRepository'));
+                    $definition->setFactory(array(new Reference('document_manager'), 'getRepository'));
                     $definition->addMethodCall('setAggregationQueryBuilder', array(
                         new Reference('doctrine_mongodb.odm.default_aggregation_query')
                     ));
