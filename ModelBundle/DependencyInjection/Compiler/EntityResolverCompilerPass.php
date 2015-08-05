@@ -17,10 +17,11 @@ class EntityResolverCompilerPass implements  CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         $resourcePath = '.';
+
         foreach ($container->getResources() as $resource) {
             $resourcePath = $resource->getResource();
             if (is_string($resourcePath)) {
-                if (strpos($resourcePath, 'model-bundle')
+                if (strpos($resourcePath, 'open-orchestra-model-bundle')
                     && strpos($resourcePath, 'config')
                     && strpos($resourcePath, 'yml') === false
                     && strpos($resourcePath, 'validation') === false
