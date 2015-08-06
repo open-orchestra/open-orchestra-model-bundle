@@ -1,4 +1,3 @@
-db.system.js.remove({_id : 'selectEnumeration'});
 db.system.js.save(
     {
         _id : 'selectEnumeration' ,
