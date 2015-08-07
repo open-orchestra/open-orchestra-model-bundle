@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+use OpenOrchestra\ModelInterface\Mapping\Annotations as ORCHESTRA;
 
 /**
  * Class AbstractStatus
@@ -28,6 +29,7 @@ abstract class AbstractStatus implements StatusInterface
 
     /**
      * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\TranslatedValueInterface")
+     * @ORCHESTRA\Search(key="label", type="translatedValue")
      */
     protected $labels;
 
@@ -35,6 +37,7 @@ abstract class AbstractStatus implements StatusInterface
      * @var bool
      *
      * @ODM\Field(type="boolean")
+     * @ORCHESTRA\Search(key="published", type="boolean")
      */
     protected $published = false;
 
@@ -54,6 +57,7 @@ abstract class AbstractStatus implements StatusInterface
 
     /**
      * @ODM\Field(type="boolean")
+     * @ORCHESTRA\Search(key="intial", type="boolean")
      */
     protected $initial = false;
 
@@ -61,6 +65,7 @@ abstract class AbstractStatus implements StatusInterface
      * @var string
      *
      * @ODM\Field(type="string")
+     * @ORCHESTRA\Search(key="display_color")
      */
     protected $displayColor;
 

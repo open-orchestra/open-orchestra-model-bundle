@@ -3,6 +3,7 @@
 namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+use OpenOrchestra\ModelInterface\Mapping\Annotations as ORCHESTRA;
 use Gedmo\Blameable\Traits\BlameableDocument;
 use Gedmo\Timestampable\Traits\TimestampableDocument;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -39,11 +40,13 @@ class ContentType implements ContentTypeInterface
      * @var string $contentTypeId
      *
      * @ODM\Field(type="string")
+     * @ORCHESTRA\Search(key="content_type_id")
      */
     protected $contentTypeId;
 
     /**
      * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\TranslatedValueInterface", strategy="set")
+     * @ORCHESTRA\Search(key="name", type="translatedValue")
      */
     protected $names;
 

@@ -63,6 +63,7 @@ class Content implements ContentInterface
      * @var string $name
      *
      * @ODM\Field(type="string")
+     * @ORCHESTRA\Search(key="name")
      */
     protected $name;
 
@@ -77,6 +78,7 @@ class Content implements ContentInterface
      * @var string $language
      *
      * @ODM\Field(type="string")
+     * @ORCHESTRA\Search(key="language")
      */
     protected $language;
 
