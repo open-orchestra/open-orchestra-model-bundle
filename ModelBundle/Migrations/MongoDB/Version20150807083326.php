@@ -23,7 +23,7 @@ class Version20150807083326 extends AbstractMigration
      */
     public function up(Database $db)
     {
-        $this->executeScript($db, 'create_select_enumeration_20150722104732.js');
+        $this->executeScript($db, 'create_select_enumeration_20150807083326.js');
     }
 
     /**
@@ -31,6 +31,6 @@ class Version20150807083326 extends AbstractMigration
      */
     public function down(Database $db)
     {
-        $this->executeScript($db, 'delete_select_enumeration_20150722104732.js');
+        $this->executeScript($db, 'delete_select_enumeration_20150807083326.js');
     }
 }
