@@ -40,7 +40,7 @@ db.system.js.save(
                }
                return criterias;
             }
-            return db[data.collection].find(parseCriteria(data.criteria));
+            return parseCriteria(data.criteria);
         }
     }
 );
