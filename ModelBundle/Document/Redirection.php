@@ -4,6 +4,7 @@ namespace OpenOrchestra\ModelBundle\Document;
 
 use OpenOrchestra\ModelInterface\Model\RedirectionInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 
 /**
  * Class Redirection
@@ -33,6 +34,7 @@ class Redirection implements RedirectionInterface
      * @var string
      *
      * @ODM\Field(type="string")
+     * @ORCHESTRA\Search(key="locale")
      */
     protected $locale;
 
@@ -40,6 +42,7 @@ class Redirection implements RedirectionInterface
      * @var string
      *
      * @ODM\Field(type="string")
+     * @ORCHESTRA\Search(key="site_name")
      */
     protected $siteName;
 
@@ -47,6 +50,7 @@ class Redirection implements RedirectionInterface
      * @var string
      *
      * @ODM\Field(type="string")
+     * @ORCHESTRA\Search(key="route_pattern")
      */
     protected $routePattern;
 
@@ -61,6 +65,7 @@ class Redirection implements RedirectionInterface
      * @var string
      *
      * @ODM\Field(type="string")
+     * @ORCHESTRA\Search(key="redirection")
      */
     protected $url;
 
@@ -68,6 +73,7 @@ class Redirection implements RedirectionInterface
      * @var boolean
      *
      * @ODM\Field(type="boolean")
+     * @ORCHESTRA\Search(key="permanent", type="boolean")
      */
     protected $permanent;
 

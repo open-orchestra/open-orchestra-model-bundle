@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\ModelInterface\Model\ReadSiteAliasInterface;
 use OpenOrchestra\ModelInterface\Model\SiteAliasInterface;
-use OpenOrchestra\ModelInterface\Mapping\Annotations as ORCHESTRA;
+use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\ModelInterface\Model\ThemeInterface;
 use OpenOrchestra\MongoTrait\Metaable;
@@ -42,6 +42,7 @@ class Site implements SiteInterface
      * @var string $siteId
      *
      * @ODM\Field(type="string")
+     * @ORCHESTRA\Search(key="site_id")
      */
     protected $siteId;
 
@@ -77,6 +78,7 @@ class Site implements SiteInterface
      * @var string $name
      *
      * @ODM\Field(type="string")
+     * @ORCHESTRA\Search(key="name")
      */
     protected $name;
 

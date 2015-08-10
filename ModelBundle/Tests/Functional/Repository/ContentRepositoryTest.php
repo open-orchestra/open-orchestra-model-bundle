@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\Functional\Repository;
 
+use OpenOrchestra\Mapping\Annotations\Search;
 use OpenOrchestra\Pagination\Configuration\FinderConfiguration;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use Phake;
@@ -367,10 +368,10 @@ class ContentRepositoryTest extends KernelTestCase
     protected function getDescriptionColumnEntity()
     {
         return array(
-            'name'         => array('key' => 'name'),
-            'status_label' => array('key' => 'status.name'),
-            'version'      => array('key' => 'version' , 'type' => 'integer'),
-            'language'     => array('key' => 'language'),
+            'name'         => new Search(array('key' => 'name', 'field' => 'name', 'type' => 'string')),
+            'status_label' => new Search(array('key' => 'status_label', 'field' => 'status.name', 'type' => 'string')),
+            'version'      => new Search(array('key' => 'version' , 'field' => 'version', 'type' => 'integer')),
+            'language'     => new Search(array('key' => 'language', 'field' => 'language', 'type' => 'string')),
         );
     }
 

@@ -4,6 +4,7 @@ namespace OpenOrchestra\ModelBundle\Document;
 
 use OpenOrchestra\ModelInterface\Model\KeywordInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 
 /**
  * Class AbstractKeyword
@@ -17,6 +18,7 @@ abstract class AbstractKeyword implements KeywordInterface
 
     /**
      * @ODM\Field(type="string")
+     * @ORCHESTRA\Search(key="label")
      */
     protected $label;
 

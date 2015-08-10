@@ -5,7 +5,7 @@ namespace OpenOrchestra\ModelBundle\Document;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use OpenOrchestra\ModelInterface\Mapping\Annotations as ORCHESTRA;
+use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\ModelInterface\Model\TemplateInterface;

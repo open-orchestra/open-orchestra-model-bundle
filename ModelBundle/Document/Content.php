@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Gedmo\Blameable\Traits\BlameableDocument;
 use Gedmo\Timestampable\Traits\TimestampableDocument;
-use OpenOrchestra\ModelInterface\Mapping\Annotations as ORCHESTRA;
+use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 use OpenOrchestra\MongoTrait\SiteLinkable;
 use OpenOrchestra\MongoTrait\Statusable;
 use OpenOrchestra\ModelInterface\Model\ContentAttributeInterface;
@@ -63,6 +63,7 @@ class Content implements ContentInterface
      * @var string $name
      *
      * @ODM\Field(type="string")
+     * @ORCHESTRA\Search(key="name")
      */
     protected $name;
 
@@ -77,6 +78,7 @@ class Content implements ContentInterface
      * @var string $language
      *
      * @ODM\Field(type="string")
+     * @ORCHESTRA\Search(key="language")
      */
     protected $language;
 

@@ -7,6 +7,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\ModelInterface\Model\RoleInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
+use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 
 /**
  * Class Role
@@ -25,6 +26,7 @@ class Role implements RoleInterface
 
     /**
      * @ODM\Field(type="string")
+     * @ORCHESTRA\Search(key="description")
      */
     protected $name;
 
