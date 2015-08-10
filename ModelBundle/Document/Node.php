@@ -30,6 +30,7 @@ use OpenOrchestra\MongoTrait\Versionable;
  * @ODM\Indexes({
  *  @ODM\Index(keys={"nodeId"="asc"})
  * })
+ * @ODM\UniqueIndex(keys={"nodeId"="asc", "siteId"="asc", "version"="asc", "language"="asc"})
  * @ORCHESTRA\Document(
  *   generatedField="nodeId",
  *   sourceField="name",

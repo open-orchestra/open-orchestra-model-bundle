@@ -2,15 +2,20 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\Manager;
 
+use OpenOrchestra\ModelInterface\Manager\NodeManagerInterface;
 use Phake;
 use OpenOrchestra\ModelBundle\Manager\NodeManager;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use Symfony\Component\Config\Definition\Exception\DuplicateKeyException;
 
 /**
  * Class NodeManagerTest
  */
 class NodeManagerTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var NodeManagerInterface
+     */
     protected $manager;
 
     protected $nodeClass;
@@ -82,42 +87,26 @@ class NodeManagerTest extends \PHPUnit_Framework_TestCase
     /**
      * test duplicateNode
      */
-    public function testduplicateNode()
+    public function testSaveDuplicatedNode()
     {
-        Phake::when($this->database)->execute(Phake::anyParameters())->thenReturn(array('retval' => 'fakeRateVal', 'ok' => 1));
+        $version = 1;
+        $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        Phake::when($node)->getVersion()->thenReturn($version);
 
-        $nodeId = 'fakeNodeId';
-        $siteId = 'fakeSiteId';
-        $language = 'fakeLanguage';
-        $statusId = 'fakeStatusId';
+        Phake::when($this->documentManager)->flush(Phake::anyParameters())
+            ->thenThrow(new DuplicateKeyException())
+            ->thenThrow(new DuplicateKeyException())
+            ->thenThrow(new DuplicateKeyException())
+            ->thenReturn(null);
 
-        $node = $this->manager->duplicateNode($nodeId, $siteId, $language, $statusId);
+        $newNode = $this->manager->saveDuplicatedNode($node);
 
+        $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\NodeInterface', $newNode);
         Phake::verify($this->container)->get('doctrine.odm.mongodb.document_manager');
-        Phake::verify($this->documentManager)->getConnection();
-        Phake::verify($this->connection)->initialize();
-        Phake::verify($this->documentManager)->getDocumentDatabase($this->nodeClass);
-        Phake::verify($this->database)->execute('db.loadServerScripts();return duplicateNode({ nodeId: \''.$nodeId.'\', siteId: \''.$siteId.'\', language: \''.$language.'\' , statusId: \''.$statusId.'\' });');
-        Phake::verify($this->documentManager)->getHydratorFactory();
-        Phake::verify($this->hydratorFactory)->hydrate(Phake::anyParameters());
-
-        $this->assertInstanceOf('OpenOrchestra\ModelInterface\Model\NodeInterface', $node);
-    }
-
-    /**
-     * test duplicateNode
-
-     * @expectedException OpenOrchestra\ModelInterface\Exceptions\StoredProcedureException
-     */
-    public function testduplicateNodeException()
-    {
-        Phake::when($this->database)->execute(Phake::anyParameters())->thenReturn(null);
-
-        $nodeId = 'fakeNodeId';
-        $siteId = 'fakeSiteId';
-        $language = 'fakeLanguage';
-        $statusId = 'fakeStatusId';
-
-        $this->manager->duplicateNode($nodeId, $siteId, $language, $statusId);
+        Phake::verify($node)->setVersion(2);
+        Phake::verify($node)->setVersion(3);
+        Phake::verify($node)->setVersion(4);
+        Phake::verify($node, Phake::never())->setVersion(5);
+        Phake::verify($this->documentManager, Phake::times(4))->flush(Phake::anyParameters());
     }
 }
