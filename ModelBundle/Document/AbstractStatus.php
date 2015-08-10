@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use OpenOrchestra\ModelInterface\Mapping\Annotations as ORCHESTRA;
+use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 
 /**
  * Class AbstractStatus

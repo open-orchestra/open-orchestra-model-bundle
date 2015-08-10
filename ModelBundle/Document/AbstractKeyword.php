@@ -4,7 +4,7 @@ namespace OpenOrchestra\ModelBundle\Document;
 
 use OpenOrchestra\ModelInterface\Model\KeywordInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use OpenOrchestra\ModelInterface\Mapping\Annotations as ORCHESTRA;
+use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 
 /**
  * Class AbstractKeyword

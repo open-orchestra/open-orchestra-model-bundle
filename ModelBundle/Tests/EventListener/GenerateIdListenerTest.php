@@ -4,7 +4,7 @@ namespace OpenOrchestra\ModelBundle\Tests\EventListener;
 
 use Phake;
 use OpenOrchestra\ModelBundle\EventListener\GenerateIdListener;
-use OpenOrchestra\ModelInterface\Mapping\Annotations\Document;
+use OpenOrchestra\Mapping\Annotations\Document;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Doctrine\ODM\MongoDB\DocumentRepository;
 
@@ -89,21 +89,21 @@ class GenerateIdListenerTest extends \PHPUnit_Framework_TestCase
         $document3 = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($document3)->getNodeId()->thenReturn(null);
 
-        $annotations0 = Phake::mock('OpenOrchestra\ModelInterface\Mapping\Annotations\Document');
+        $annotations0 = Phake::mock('OpenOrchestra\Mapping\Annotations\Document');
         Phake::when($annotations0)->getGeneratedField(Phake::anyParameters())->thenReturn('nodeId');
         Phake::when($annotations0)->getSource(Phake::anyParameters())->thenReturn('getName');
         Phake::when($annotations0)->getGenerated(Phake::anyParameters())->thenReturn('getNodeId');
         Phake::when($annotations0)->setGenerated(Phake::anyParameters())->thenReturn('setNodeId');
         Phake::when($annotations0)->getTestMethod()->thenReturn('fakeMethod');
 
-        $annotations2 = Phake::mock('OpenOrchestra\ModelInterface\Mapping\Annotations\Document');
+        $annotations2 = Phake::mock('OpenOrchestra\Mapping\Annotations\Document');
         Phake::when($annotations2)->getGeneratedField(Phake::anyParameters())->thenReturn('nodeId');
         Phake::when($annotations2)->getSource(Phake::anyParameters())->thenReturn('getName');
         Phake::when($annotations2)->getGenerated(Phake::anyParameters())->thenReturn('getNodeId');
         Phake::when($annotations2)->setGenerated(Phake::anyParameters())->thenReturn('setNodeId');
         Phake::when($annotations2)->getTestMethod()->thenReturn('fakeMethod');
 
-        $annotations3 = Phake::mock('OpenOrchestra\ModelInterface\Mapping\Annotations\Document');
+        $annotations3 = Phake::mock('OpenOrchestra\Mapping\Annotations\Document');
         Phake::when($annotations3)->getGeneratedField(Phake::anyParameters())->thenReturn('nodeId');
         Phake::when($annotations3)->getSource(Phake::anyParameters())->thenReturn('getName');
         Phake::when($annotations3)->getGenerated(Phake::anyParameters())->thenReturn('getNodeId');

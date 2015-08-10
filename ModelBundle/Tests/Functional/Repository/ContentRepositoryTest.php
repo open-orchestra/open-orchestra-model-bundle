@@ -2,7 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\Functional\Repository;
 
-use OpenOrchestra\ModelInterface\Mapping\Annotations\Search;
+use OpenOrchestra\Mapping\Annotations\Search;
 use OpenOrchestra\Pagination\Configuration\FinderConfiguration;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use Phake;
