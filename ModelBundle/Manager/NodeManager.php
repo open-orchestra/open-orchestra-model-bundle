@@ -4,7 +4,7 @@ namespace OpenOrchestra\ModelBundle\Manager;
 
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Manager\NodeManagerInterface;
-use OpenOrchestra\ModelInterface\Exceptions\StoredProcedureException;
+use Symfony\Component\Config\Definition\Exception\DuplicateKeyException;
 use Symfony\Component\DependencyInjection\ContainerAware;
 
 /**
@@ -53,30 +53,29 @@ class NodeManager  extends ContainerAware implements NodeManagerInterface
     /**
      * Duplicate a node
      *
-     * @param string $nodeId
-     * @param string $siteId
-     * @param string $language
-     * @param string $statusId
+     * @param NodeInterface   $node
      *
      * @return NodeInterface
-     *
-     * @throws StoredProcedureException
      */
-    public function duplicateNode($nodeId, $siteId, $language, $statusId)
+    public function saveDuplicatedNode(NodeInterface $node)
     {
+        $version = $node->getVersion();
         $documentManager = $this->container->get('doctrine.odm.mongodb.document_manager');
-        $documentManager->getConnection()->initialize();
-        $dataBase = $documentManager->getDocumentDatabase($this->nodeClass);
-        $parameter = '{ nodeId: \''.$nodeId.'\', siteId: \''.$siteId.'\', language: \''.$language.'\' , statusId: \''.$statusId.'\' }';
-        $return = $dataBase->execute('db.loadServerScripts();return duplicateNode(' . $parameter . ');');
+        $documentManager->persist($node);
 
-        if(!isset($return['ok'])  || $return['ok'] != 1 || !isset($return['retval']) || $return['retval'] === null) {
-            throw new StoredProcedureException('duplicateNode', $parameter);
+        $count = 0;
+
+        while ($count < 10) {
+            try {
+                $count ++;
+                $documentManager->flush($node);
+            } catch (DuplicateKeyException $e) {
+                $node->setVersion($version + $count);
+                continue;
+            }
+            break;
         }
 
-        $newNode = new $this->nodeClass();
-        $documentManager->getHydratorFactory()->hydrate($newNode, $return['retval']);
-
-        return $newNode;
+        return $node;
     }
 }
