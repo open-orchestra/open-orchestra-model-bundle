@@ -628,6 +628,8 @@ class Node implements NodeInterface
 
     /**
      * @return boolean
+     *
+     * @deprecated use the AuthorizeEditionManager
      */
     public function isEditable()
     {
