@@ -5,12 +5,13 @@ namespace OpenOrchestra\ModelBundle\DataFixtures\MongoDB;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use OpenOrchestra\ModelBundle\DataFixtures\Loader\OrchestraProductionFixturesInterface;
 use OpenOrchestra\ModelBundle\Document\Theme;
 
 /**
  * Class LoadThemeData
  */
-class LoadThemeData extends AbstractFixture implements OrderedFixtureInterface
+class LoadThemeData extends AbstractFixture implements OrderedFixtureInterface, OrchestraProductionFixturesInterface
 {
     /**
      * @param ObjectManager $manager
