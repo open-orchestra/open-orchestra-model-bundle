@@ -7,11 +7,12 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\ModelBundle\Document\Status;
 use OpenOrchestra\ModelBundle\Document\TranslatedValue;
+use OpenOrchestra\ModelInterface\DataFixtures\OrchestraProductionFixturesInterface;
 
 /**
  * Class LoadStatusData
  */
-class LoadStatusData extends AbstractFixture implements OrderedFixtureInterface
+class LoadStatusData extends AbstractFixture implements OrderedFixtureInterface, OrchestraProductionFixturesInterface
 {
     /**
      * @param ObjectManager $manager

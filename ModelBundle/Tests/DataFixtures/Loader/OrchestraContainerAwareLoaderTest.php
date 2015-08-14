@@ -5,7 +5,7 @@ namespace OpenOrchestra\ModelBundle\Tests\DataFixtures\Loader;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\ModelBundle\DataFixtures\Loader\OrchestraContainerAwareLoader;
-use OpenOrchestra\ModelBundle\DataFixtures\Loader\OrchestraProductionFixturesInterface;
+use OpenOrchestra\ModelInterface\DataFixtures\OrchestraProductionFixturesInterface;
 use Phake;
 
 /**
@@ -29,7 +29,7 @@ class OrchestraContainerAwareLoaderTest extends \PHPUnit_Framework_TestCase
         Phake::when($this->container)
             ->getParameter('open_orchestra_model.production_fixtures_interface')
             ->thenReturn(array(
-                    'OpenOrchestra\ModelBundle\DataFixtures\Loader\OrchestraProductionFixturesInterface',
+                    'OpenOrchestra\ModelInterface\DataFixtures\OrchestraProductionFixturesInterface',
                     'OpenOrchestra\ModelBundle\Tests\DataFixtures\Loader\FakeProductionInterface',
                 ));
 

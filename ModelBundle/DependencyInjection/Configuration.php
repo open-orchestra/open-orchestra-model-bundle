@@ -29,7 +29,7 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->arrayNode('production_fixtures_interface')
                 ->prototype('scalar')->end()
-                ->defaultValue(array('OpenOrchestra\ModelBundle\DataFixtures\Loader\OrchestraProductionFixturesInterface'))
+                ->defaultValue(array('OpenOrchestra\ModelInterface\DataFixtures\OrchestraProductionFixturesInterface'))
             ->end()
             ->arrayNode('document')
                 ->addDefaultsIfNotSet()

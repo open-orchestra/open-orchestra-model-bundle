@@ -5,8 +5,8 @@ namespace OpenOrchestra\ModelBundle\DataFixtures\MongoDB;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use OpenOrchestra\ModelBundle\DataFixtures\Loader\OrchestraProductionFixturesInterface;
 use OpenOrchestra\ModelBundle\Document\Theme;
+use OpenOrchestra\ModelInterface\DataFixtures\OrchestraProductionFixturesInterface;
 
 /**
  * Class LoadThemeData
