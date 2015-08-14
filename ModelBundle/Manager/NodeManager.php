@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 /**
  * Class NodeManager
  */
-class NodeManager  extends ContainerAware implements NodeManagerInterface
+class NodeManager implements NodeManagerInterface
 {
     protected $nodeClass;
 
@@ -46,35 +46,6 @@ class NodeManager  extends ContainerAware implements NodeManagerInterface
         $node->setNodeType(NodeInterface::TYPE_TRANSVERSE);
         $node->setSiteId($siteId);
         $node->addArea($area);
-
-        return $node;
-    }
-
-    /**
-     * Duplicate a node
-     *
-     * @param NodeInterface   $node
-     *
-     * @return NodeInterface
-     */
-    public function saveDuplicatedNode(NodeInterface $node)
-    {
-        $version = $node->getVersion();
-        $documentManager = $this->container->get('doctrine.odm.mongodb.document_manager');
-        $documentManager->persist($node);
-
-        $count = 0;
-
-        while ($count < 10) {
-            try {
-                $count ++;
-                $documentManager->flush($node);
-            } catch (DuplicateKeyException $e) {
-                $node->setVersion($version + $count);
-                continue;
-            }
-            break;
-        }
 
         return $node;
     }
