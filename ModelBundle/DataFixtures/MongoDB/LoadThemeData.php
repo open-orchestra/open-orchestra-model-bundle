@@ -6,11 +6,12 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\ModelBundle\Document\Theme;
+use OpenOrchestra\ModelInterface\DataFixtures\OrchestraProductionFixturesInterface;
 
 /**
  * Class LoadThemeData
  */
-class LoadThemeData extends AbstractFixture implements OrderedFixtureInterface
+class LoadThemeData extends AbstractFixture implements OrderedFixtureInterface, OrchestraProductionFixturesInterface
 {
     /**
      * @param ObjectManager $manager

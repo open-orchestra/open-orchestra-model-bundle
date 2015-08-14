@@ -7,13 +7,14 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\ModelBundle\Document\Site;
 use OpenOrchestra\ModelBundle\Document\SiteAlias;
+use OpenOrchestra\ModelInterface\DataFixtures\OrchestraProductionFixturesInterface;
 use OpenOrchestra\ModelInterface\Model\SchemeableInterface;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 
 /**
  * Class LoadSiteData
  */
-class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface
+class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface, OrchestraProductionFixturesInterface
 {
     /**
      * @param ObjectManager $manager
