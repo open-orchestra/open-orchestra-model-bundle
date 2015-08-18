@@ -1,6 +1,5 @@
 OpenOrchestra\ModelBundle\Document\Node:
     constraints:
-        - OpenOrchestra\ModelBundle\Validator\Constraints\PreventPublishedDocumentSave: ~
         - OpenOrchestra\ModelBundle\Validator\Constraints\PreventProhibitedStatusChange: ~
         - OpenOrchestra\ModelBundle\Validator\Constraints\CheckAreaPresence: ~
         - OpenOrchestra\ModelBundle\Validator\Constraints\CheckRoutePattern: ~

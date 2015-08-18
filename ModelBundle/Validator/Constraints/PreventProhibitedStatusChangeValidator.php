@@ -73,8 +73,9 @@ class PreventProhibitedStatusChangeValidator extends ConstraintValidator
     {
         $role = $this->roleRepository->findOneByFromStatusAndToStatus($fromStatus, $toStatus);
 
-        if ($role)
+        if ($role) {
             return $this->securityContext->isGranted($role->getName());
+        }
 
         return false;
     }

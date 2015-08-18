@@ -6,6 +6,8 @@ use Symfony\Component\Validator\Constraint;
 
 /**
  * Class PreventPublishedDocumentSave
+ *
+ * @deprecated use AuthorizeEdition constraint
  */
 class PreventPublishedDocumentSave extends Constraint
 {
