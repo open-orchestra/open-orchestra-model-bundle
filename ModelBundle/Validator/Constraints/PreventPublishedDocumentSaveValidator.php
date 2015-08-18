@@ -10,6 +10,8 @@ use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 
 /**
  * Class PreventPublishedDocumentSaveValidator
+ *
+ * @deprecated use AuthorizeEdition constraint
  */
 class PreventPublishedDocumentSaveValidator extends ConstraintValidator
 {
