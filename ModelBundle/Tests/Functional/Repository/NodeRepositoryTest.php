@@ -333,27 +333,6 @@ class NodeRepositoryTest extends KernelTestCase
     }
 
     /**
-     * @param string $siteId
-     * @param int    $count
-     *
-     * @dataProvider provideSiteIdAndDeletedCount
-     */
-    public function testFindLastVersionByDeletedAndSiteId($siteId, $count)
-    {
-        $this->assertCount($count, $this->repository->findDeletedInLastVersionBySiteId($siteId));
-    }
-
-    /**
-     * @return array
-     */
-    public function provideSiteIdAndDeletedCount()
-    {
-        return array(
-            array('3', 0),
-        );
-    }
-
-    /**
      * @param string $language
      * @param string $siteId
      * @param int    $count

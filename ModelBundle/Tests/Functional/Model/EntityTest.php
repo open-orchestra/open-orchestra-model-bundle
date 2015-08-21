@@ -34,6 +34,7 @@ class EntityTest extends \PHPUnit_Framework_TestCase
             array('Node',             'SchemeableInterface'),
             array('Node',             'ReadSchemeableInterface'),
             array('Node',             'VersionableInterface'),
+            array('Node',             'TrashCanableInterface'),
             array('Area',             'AreaContainerInterface'),
             array('Template',         'AreaContainerInterface'),
             array('Node',             'BlockContainerInterface'),
@@ -76,6 +77,7 @@ class EntityTest extends \PHPUnit_Framework_TestCase
             array('Content',          'KeywordableInterface'),
             array('Redirection',      'RedirectionInterface'),
             array('Redirection',      'ReadRedirectionInterface'),
+            array('TrashCan',         'TrashCanInterface'),
         );
     }
 }

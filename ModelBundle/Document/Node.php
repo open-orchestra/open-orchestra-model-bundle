@@ -18,6 +18,7 @@ use OpenOrchestra\MongoTrait\Cacheable;
 use OpenOrchestra\MongoTrait\Metaable;
 use OpenOrchestra\MongoTrait\Sitemapable;
 use OpenOrchestra\MongoTrait\Schemeable;
+use OpenOrchestra\MongoTrait\TrashCanable;
 use OpenOrchestra\MongoTrait\Versionable;
 
 /**
@@ -47,6 +48,7 @@ class Node implements NodeInterface
     use Statusable;
     use Cacheable;
     use Metaable;
+    use TrashCanable;
 
     /**
      * @var string $id
@@ -103,13 +105,6 @@ class Node implements NodeInterface
      * @ODM\Field(type="string")
      */
     protected $language;
-
-    /**
-     * @var boolean
-     *
-     * @ODM\Field(type="boolean")
-     */
-    protected $deleted = false;
 
     /**
      * @var string
@@ -333,26 +328,6 @@ class Node implements NodeInterface
     }
 
     /**
-     * Set deleted
-     *
-     * @param boolean $deleted
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-    }
-
-    /**
-     * Get deleted
-     *
-     * @return boolean $deleted
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
-    }
-
-    /**
      * Set templateId
      *
      * @param string $templateId
@@ -390,6 +365,14 @@ class Node implements NodeInterface
     public function getTheme()
     {
         return $this->theme;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTrashCanName()
+    {
+        return $this->name."-".$this->language."-v".$this->version;
     }
 
     /**

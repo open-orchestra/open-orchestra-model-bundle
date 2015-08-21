@@ -224,20 +224,8 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      * @param string $siteId
      * @param string $type
      *
-     * @deprecated will be removed in 0.3.0, use findDeletedInLastVersionBySiteId instead
-     *
      * @return array
-     */
-    public function findLastVersionByDeletedAndSiteId($siteId, $type = NodeInterface::TYPE_DEFAULT)
-    {
-        return $this->findDeletedInLastVersionBySiteId($siteId, $type);
-    }
-
-    /**
-     * @param string $siteId
-     * @param string $type
-     *
-     * @return array
+     * @deprecated will be removed in 0.3.5
      */
     public function findDeletedInLastVersionBySiteId($siteId, $type = NodeInterface::TYPE_DEFAULT)
     {

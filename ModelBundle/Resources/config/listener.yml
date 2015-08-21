@@ -6,6 +6,7 @@ parameters:
     open_orchestra_model.doctrine_listener.save_published_document.class: OpenOrchestra\ModelBundle\EventListener\SavePublishedDocumentListener
     open_orchestra_model.doctrine_listener.transversal_node_creator.class: OpenOrchestra\ModelBundle\EventListener\TransversalNodeCreatorListener
     open_orchestra_model.doctrine_listener.update_non_translatable_content_field.class: OpenOrchestra\ModelBundle\EventListener\UpdateNonTranslatableContentFieldsListener
+    open_orchestra_model.doctrine_listener.trash_can.class: OpenOrchestra\ModelBundle\EventListener\TrashCanListener
 
 services:
     open_orchestra_model.doctrine_listener.initial_status:
@@ -57,3 +58,10 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             -  { name: doctrine_mongodb.odm.event_listener, event: preUpdate }
+    open_orchestra_model.doctrine_listener.trash_can:
+        class: %open_orchestra_model.doctrine_listener.trash_can.class%
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            -  { name: doctrine_mongodb.odm.event_listener, event: preUpdate }
+            -  { name: doctrine_mongodb.odm.event_listener, event: postFlush }
