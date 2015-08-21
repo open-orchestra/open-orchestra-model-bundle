@@ -278,6 +278,11 @@ class ContentRepositoryTest extends KernelTestCase
             array('news', $descriptionEntity, null, null, 50 , 100, 100),
             array('news', $descriptionEntity, $this->generateColumnsProvider(array('name' => 'news')), null, 0 , null, 250),
             array('car', $descriptionEntity, null, '2', 0 ,5 , 3),
+            array('car', $descriptionEntity, $this->generateColumnsProvider(array('status_label' => 'publish')), null, null ,null , 3),
+            array('car', $descriptionEntity, $this->generateColumnsProvider(array('status_label' => 'publié')), null, null ,null , 3),
+            array('car', $descriptionEntity, $this->generateColumnsProvider(array('status_label' => 'draft')), null, null ,null , 0),
+            array('car', $descriptionEntity, $this->generateColumnsProvider(array('status_label' => 'brouillon')), null, null ,null , 0),
+
         );
     }
 
@@ -369,7 +374,7 @@ class ContentRepositoryTest extends KernelTestCase
     {
         return array(
             'name'         => new Search(array('key' => 'name', 'field' => 'name', 'type' => 'string')),
-            'status_label' => new Search(array('key' => 'status_label', 'field' => 'status.name', 'type' => 'string')),
+            'status_label' => new Search(array('key' => 'status_label', 'field' => 'status.labels', 'type' => 'translatedValue')),
             'version'      => new Search(array('key' => 'version' , 'field' => 'version', 'type' => 'integer')),
             'language'     => new Search(array('key' => 'language', 'field' => 'language', 'type' => 'string')),
         );
