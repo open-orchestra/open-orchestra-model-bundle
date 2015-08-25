@@ -15,7 +15,6 @@ class TrashCanLister extends \PHPUnit_Framework_TestCase
      * @var TrashCanListener
      */
     protected $listener;
-    protected $container;
     protected $documentManager;
 
     /**
@@ -23,13 +22,9 @@ class TrashCanLister extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->container = Phake::mock('Symfony\Component\DependencyInjection\Container');
-        $trashCanClass = 'OpenOrchestra\ModelBundle\Document\TrashCan';
-        Phake::when($this->container)->getParameter(Phake::anyParameters())->thenReturn($trashCanClass);
+        $trashCanClass = 'OpenOrchestra\ModelBundle\Document\TrashItem';
         $this->documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
-
-        $this->listener = new TrashCanListener();
-        $this->listener->setContainer($this->container);
+        $this->listener = new TrashCanListener($trashCanClass);
     }
 
     /**
@@ -97,23 +92,23 @@ class TrashCanLister extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param array $TrashCanEntities
+     * @param array $TrashItemEntities
      *
      * @dataProvider provideTrashCanEntities
      */
-    public function testPostFlush($TrashCanEntities)
+    public function testPostFlush($TrashItemEntities)
     {
         $event = Phake::mock('Doctrine\ODM\MongoDB\Event\PostFlushEventArgs');
         Phake::when($event)->getDocumentManager()->thenReturn($this->documentManager);
-        $this->listener->entities = $TrashCanEntities;
+        $this->listener->entities = $TrashItemEntities;
 
         $this->listener->postFlush($event);
 
-        foreach ($TrashCanEntities as $trashCanEntity) {
-            Phake::verify($this->documentManager, Phake::atLeast(1))->persist($trashCanEntity);
+        foreach ($TrashItemEntities as $trashItemEntity) {
+            Phake::verify($this->documentManager, Phake::atLeast(1))->persist($trashItemEntity);
+            Phake::verify($this->documentManager)->flush($trashItemEntity);
         }
 
-        Phake::verify($this->documentManager)->flush();
         $this->assertEmpty($this->listener->entities);
     }
 
@@ -122,9 +117,9 @@ class TrashCanLister extends \PHPUnit_Framework_TestCase
      */
     public function provideTrashCanEntities()
     {
-        $trashCan1 = Phake::mock('OpenOrchestra\ModelInterface\Model\TrashCanInterface');
-        $trashCan2 = Phake::mock('OpenOrchestra\ModelInterface\Model\TrashCanInterface');
-        $trashCan3 = Phake::mock('OpenOrchestra\ModelInterface\Model\TrashCanInterface');
+        $trashCan1 = Phake::mock('OpenOrchestra\ModelInterface\Model\TrashItemInterface');
+        $trashCan2 = Phake::mock('OpenOrchestra\ModelInterface\Model\TrashItemInterface');
+        $trashCan3 = Phake::mock('OpenOrchestra\ModelInterface\Model\TrashItemInterface');
 
         return array(
             array($trashCan1),

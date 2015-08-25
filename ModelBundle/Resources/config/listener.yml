@@ -60,8 +60,8 @@ services:
             -  { name: doctrine_mongodb.odm.event_listener, event: preUpdate }
     open_orchestra_model.doctrine_listener.trash_can:
         class: %open_orchestra_model.doctrine_listener.trash_can.class%
-        calls:
-            - [setContainer, ['@service_container']]
+        arguments:
+            - %open_orchestra_model.document.trash_item.class%
         tags:
             -  { name: doctrine_mongodb.odm.event_listener, event: preUpdate }
             -  { name: doctrine_mongodb.odm.event_listener, event: postFlush }

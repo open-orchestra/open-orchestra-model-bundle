@@ -12,6 +12,7 @@ use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\ModelInterface\Model\ThemeInterface;
 use OpenOrchestra\MongoTrait\Metaable;
 use OpenOrchestra\MongoTrait\Sitemapable;
+use OpenOrchestra\MongoTrait\SoftDeleteable;
 
 /**
  * Description of Site
@@ -30,6 +31,7 @@ class Site implements SiteInterface
 {
     use Metaable;
     use Sitemapable;
+    use SoftDeleteable;
 
     /**
      * @var string $id
@@ -45,13 +47,6 @@ class Site implements SiteInterface
      * @ORCHESTRA\Search(key="site_id")
      */
     protected $siteId;
-
-    /**
-     * @var boolean
-     *
-     * @ODM\Field(type="boolean")
-     */
-    protected $deleted = false;
 
     /**
      * @var ArrayCollection
@@ -174,26 +169,6 @@ class Site implements SiteInterface
     public function getSiteId()
     {
         return $this->siteId;
-    }
-
-    /**
-     * Set deleted
-     *
-     * @param boolean $deleted
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-    }
-
-    /**
-     * Get deleted
-     *
-     * @return boolean $deleted
-     */
-    public function isDeleted()
-    {
-        return $this->deleted;
     }
 
     /**

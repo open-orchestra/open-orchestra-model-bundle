@@ -4,17 +4,24 @@ namespace OpenOrchestra\ModelBundle\EventListener;
 
 use Doctrine\ODM\MongoDB\Event\PostFlushEventArgs;
 use Doctrine\ODM\MongoDB\Event\PreUpdateEventArgs;
-use OpenOrchestra\ModelBundle\Document\TrashCan;
-use OpenOrchestra\ModelInterface\Model\TrashCanableInterface;
-use Symfony\Component\DependencyInjection\ContainerAware;
-use DateTime;
+use OpenOrchestra\ModelBundle\Document\TrashItem;
+use OpenOrchestra\ModelInterface\Model\TrashCanDisplayableInterface;
 
 /**
  * Class TrashCanListener
  */
-class TrashCanListener extends ContainerAware
+class TrashCanListener
 {
     public $entities = array();
+    protected $trashItemClass;
+
+    /**
+     * @param string $trashItemClass
+     */
+    public function __construct($trashItemClass)
+    {
+        $this->trashItemClass = $trashItemClass;
+    }
 
     /**
      * @param PreUpdateEventArgs $event
@@ -22,17 +29,14 @@ class TrashCanListener extends ContainerAware
     public function preUpdate(PreUpdateEventArgs $event)
     {
         $document = $event->getDocument();
-        if ($document instanceof TrashCanableInterface) {
+        if ($document instanceof TrashCanDisplayableInterface) {
             if ($event->hasChangedField('deleted') && $event->getNewValue('deleted') === true && $event->getOldValue('deleted') === false) {
-                $trashCanClass = $this->container->getParameter('open_orchestra_model.document.trash_can.class');
                 /**
-                 * @var TrashCan $trashCan
+                 * @var TrashItem $trashItemClass
                  */
-                $trashCan = new $trashCanClass();
+                $trashCan = new $this->trashItemClass();
                 $trashCan->setEntity($document);
                 $trashCan->setName($document->getTrashCanName());
-                $date = new DateTime();
-                $trashCan->setDeleteAt($date->format('Y-m-d H:i:s'));
                 $this->entities[] = $trashCan;
 
             }
@@ -48,9 +52,9 @@ class TrashCanListener extends ContainerAware
             $documentManager = $event->getDocumentManager();
             foreach ($this->entities as $entity) {
                 $documentManager->persist($entity);
+                $documentManager->flush($entity);
             }
             $this->entities = array();
-            $documentManager->flush();
         }
     }
 }

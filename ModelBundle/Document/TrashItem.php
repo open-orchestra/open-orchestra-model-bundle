@@ -3,18 +3,19 @@
 namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use OpenOrchestra\ModelInterface\Model\TrashCanInterface;
+use OpenOrchestra\ModelInterface\Model\TrashItemInterface;
 use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
+use DateTime;
 
 /**
  * Class TrashCan
  *
  * @ODM\Document(
  *   collection="trashcan",
- *   repositoryClass="OpenOrchestra\ModelBundle\Repository\TrashCanRepository"
+ *   repositoryClass="OpenOrchestra\ModelBundle\Repository\TrashItemRepository"
  * )
  */
-class TrashCan implements TrashCanInterface
+class TrashItem implements TrashItemInterface
 {
     /**
      * @var string $id
@@ -43,6 +44,15 @@ class TrashCan implements TrashCanInterface
      * @ODM\ReferenceOne
      */
     private $entity;
+
+    /**
+     * Build new instance
+     */
+    public function __construct()
+    {
+        $date = new DateTime();
+        $this->deleteAt =  $date->format('Y-m-d H:i:s');
+    }
 
     /**
      * @return string

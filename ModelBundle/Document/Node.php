@@ -8,6 +8,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 use Gedmo\Blameable\Traits\BlameableDocument;
 use Gedmo\Timestampable\Traits\TimestampableDocument;
+use OpenOrchestra\MongoTrait\SoftDeleteable;
 use OpenOrchestra\MongoTrait\Statusable;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
@@ -48,7 +49,7 @@ class Node implements NodeInterface
     use Statusable;
     use Cacheable;
     use Metaable;
-    use TrashCanable;
+    use SoftDeleteable;
 
     /**
      * @var string $id

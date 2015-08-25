@@ -8,13 +8,13 @@ use Gedmo\Blameable\Traits\BlameableDocument;
 use Gedmo\Timestampable\Traits\TimestampableDocument;
 use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 use OpenOrchestra\MongoTrait\SiteLinkable;
+use OpenOrchestra\MongoTrait\SoftDeleteable;
 use OpenOrchestra\MongoTrait\Statusable;
 use OpenOrchestra\ModelInterface\Model\ContentAttributeInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Model\ReadContentAttributeInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use OpenOrchestra\MongoTrait\Keywordable;
-use OpenOrchestra\MongoTrait\TrashCanable;
 use OpenOrchestra\MongoTrait\Versionable;
 
 /**
@@ -38,7 +38,7 @@ class Content implements ContentInterface
     use Statusable;
     use Versionable;
     use SiteLinkable;
-    use TrashCanable;
+    use SoftDeleteable;
 
     /**
      * @var string $id
