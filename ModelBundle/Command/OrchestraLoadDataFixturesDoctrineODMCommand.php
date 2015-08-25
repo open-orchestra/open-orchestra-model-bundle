@@ -75,13 +75,6 @@ EOT
             );
         }
 
-        foreach ($fixtures as $fixture) {
-            if ($fixture instanceof ContainerAwareInterface) {
-                $fixture->setContainer($this->getContainer());
-            }
-        }
-
-
         $purger = new MongoDBPurger($dm);
         $executor = new MongoDBExecutor($dm, $purger);
         $executor->setLogger(function($message) use ($output) {
