@@ -41,7 +41,7 @@ class OrchestraContainerAwareLoaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testExtentds()
     {
-        $this->assertInstanceOf('Symfony\Bridge\Doctrine\DataFixtures\ContainerAwareLoader', $this->loader);
+        $this->assertInstanceOf('Doctrine\Common\DataFixtures\Loader', $this->loader);
     }
 
     /**

@@ -45,6 +45,9 @@ EOT
     /**
      * @param InputInterface  $input
      * @param OutputInterface $output
+     *
+     * @return mixed
+     * @throws \InvalidArgumentException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
