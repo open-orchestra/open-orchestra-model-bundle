@@ -38,10 +38,6 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: doctrine_mongodb.odm.event_listener, event: prePersist }
-    open_orchestra_model.doctrine_listener.save_published_document:
-        class: %open_orchestra_model.doctrine_listener.save_published_document.class%
-#        tags:
-#            -  { name: doctrine_mongodb.odm.event_listener, event: preUpdate }
     open_orchestra_model.doctrine_listener.transversal_node_creator:
         class: %open_orchestra_model.doctrine_listener.transversal_node_creator.class%
         arguments:
