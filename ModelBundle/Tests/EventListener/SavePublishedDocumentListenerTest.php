@@ -20,6 +20,7 @@ class SavePublishedDocumentListenerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        $this->markTestSkipped('The class is deprecated and will be removed');
         $this->unitOfWork = Phake::mock('Doctrine\ODM\MongoDB\UnitOfWork');
         Phake::when($this->unitOfWork)->getOriginalDocumentData(Phake::anyParameters())->thenReturn(array());
         $this->documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');

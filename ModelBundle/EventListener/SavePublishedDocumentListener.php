@@ -7,6 +7,8 @@ use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 
 /**
  * Class SavePublishedDocumentListener
+ *
+ * @deprecated will be removed in 0.3.4, use the AuthorizeEditionManager instead
  */
 class SavePublishedDocumentListener
 {
