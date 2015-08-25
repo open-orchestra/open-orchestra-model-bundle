@@ -1,6 +1,5 @@
 parameters:
     open_orchestra_model.validator.prevent_prohibited_status_change.class: OpenOrchestra\ModelBundle\Validator\Constraints\PreventProhibitedStatusChangeValidator
-    open_orchestra_model.validator.prevent_published_document_save.class: OpenOrchestra\ModelBundle\Validator\Constraints\PreventPublishedDocumentSaveValidator
     open_orchestra_model.validator.check_route_pattern.class: OpenOrchestra\ModelBundle\Validator\Constraints\CheckRoutePatternValidator
     open_orchestra_model.validator.unique_site_id.class: OpenOrchestra\ModelBundle\Validator\Constraints\UniqueSiteIdValidator
     open_orchestra_model.validator.unique_content_type_id.class: OpenOrchestra\ModelBundle\Validator\Constraints\UniqueContentTypeIdValidator
@@ -15,13 +14,6 @@ services:
             - @open_orchestra_model.repository.role
         tags:
             - { name: validator.constraint_validator, alias: prevent_prohibited_status_change}
-    open_orchestra_model.validator.prevent_published_document_save:
-        class: %open_orchestra_model.validator.prevent_published_document_save.class%
-        arguments:
-            - @translator
-            - @doctrine.odm.mongodb.document_manager
-        tags:
-            - { name: validator.constraint_validator, alias: prevent_published_document_save}
     open_orchestra_model.validator.check_route_pattern:
         class: %open_orchestra_model.validator.check_route_pattern.class%
         arguments:
