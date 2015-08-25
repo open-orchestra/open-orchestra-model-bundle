@@ -9,6 +9,7 @@ use OpenOrchestra\ModelBundle\DataFixtures\Loader\OrchestraContainerAwareLoader;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
 /**
  * Class OrchestraLoadDataFixturesDoctrineODMCommand
@@ -73,6 +74,13 @@ EOT
                 sprintf('Could not find any fixtures to load in: %s', "\n\n- ".implode("\n- ", $paths))
             );
         }
+
+        foreach ($fixtures as $fixture) {
+            if ($fixture instanceof ContainerAwareInterface) {
+                $fixture->setContainer($this->getContainer());
+            }
+        }
+
 
         $purger = new MongoDBPurger($dm);
         $executor = new MongoDBExecutor($dm, $purger);
