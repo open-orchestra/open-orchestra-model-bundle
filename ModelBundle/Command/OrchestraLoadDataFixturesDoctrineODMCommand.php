@@ -9,7 +9,6 @@ use OpenOrchestra\ModelBundle\DataFixtures\Loader\OrchestraContainerAwareLoader;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
 /**
  * Class OrchestraLoadDataFixturesDoctrineODMCommand
@@ -46,6 +45,9 @@ EOT
     /**
      * @param InputInterface  $input
      * @param OutputInterface $output
+     *
+     * @return mixed
+     * @throws \InvalidArgumentException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
