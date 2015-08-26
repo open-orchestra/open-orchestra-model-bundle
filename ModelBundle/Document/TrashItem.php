@@ -8,10 +8,10 @@ use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 use DateTime;
 
 /**
- * Class TrashCan
+ * Class TrashItem
  *
  * @ODM\Document(
- *   collection="trashcan",
+ *   collection="trash_item",
  *   repositoryClass="OpenOrchestra\ModelBundle\Repository\TrashItemRepository"
  * )
  */
@@ -36,9 +36,9 @@ class TrashItem implements TrashItemInterface
      * @var string
      *
      * @ODM\Field(type="string")
-     * @ORCHESTRA\Search(key="delete_at")
+     * @ORCHESTRA\Search(key="deleted_at")
      */
-    protected $deleteAt;
+    protected $deletedAt;
 
     /**
      * @ODM\ReferenceOne
@@ -51,7 +51,7 @@ class TrashItem implements TrashItemInterface
     public function __construct()
     {
         $date = new DateTime();
-        $this->deleteAt =  $date->format('Y-m-d H:i:s');
+        $this->deletedAt =  $date->format('Y-m-d H:i:s');
     }
 
     /**
@@ -73,17 +73,17 @@ class TrashItem implements TrashItemInterface
     /**
      * @return string
      */
-    public function getDeleteAt()
+    public function getDeletedAt()
     {
-        return $this->deleteAt;
+        return $this->deletedAt;
     }
 
     /**
-     * @param string $deleteAt
+     * @param string $deletedAt
      */
-    public function setDeleteAt($deleteAt)
+    public function setDeletedAt($deletedAt)
     {
-        $this->deleteAt = $deleteAt;
+        $this->deletedAt = $deletedAt;
     }
 
     /**

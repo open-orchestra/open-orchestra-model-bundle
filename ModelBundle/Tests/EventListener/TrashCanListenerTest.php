@@ -7,9 +7,9 @@ use OpenOrchestra\ModelBundle\Document\TrashCan;
 use Phake;
 
 /**
- * Class TrashCanLister
+ * Class TrashCanListerTest
  */
-class TrashCanLister extends \PHPUnit_Framework_TestCase
+class TrashCanListenerTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var TrashCanListener
@@ -63,9 +63,7 @@ class TrashCanLister extends \PHPUnit_Framework_TestCase
         $this->listener->preUpdate($event);
         if ($hasChangeField && $oldValueDeleted !== $newValueDelete) {
             $this->assertCount(1, $this->listener->entities);
-            /**
-             * @var TrashCan $entity
-             */
+            /** @var TrashItem $entity */
             $entity = $this->listener->entities[0];
             $this->assertSame($entity->getEntity(), $document);
             $this->assertSame($entity->getName(), $document->getTrashCanName());
@@ -94,7 +92,7 @@ class TrashCanLister extends \PHPUnit_Framework_TestCase
     /**
      * @param array $TrashItemEntities
      *
-     * @dataProvider provideTrashCanEntities
+     * @dataProvider provideTrashItemEntities
      */
     public function testPostFlush($TrashItemEntities)
     {
@@ -115,16 +113,16 @@ class TrashCanLister extends \PHPUnit_Framework_TestCase
     /**
      * @return array
      */
-    public function provideTrashCanEntities()
+    public function provideTrashItemEntities()
     {
-        $trashCan1 = Phake::mock('OpenOrchestra\ModelInterface\Model\TrashItemInterface');
-        $trashCan2 = Phake::mock('OpenOrchestra\ModelInterface\Model\TrashItemInterface');
-        $trashCan3 = Phake::mock('OpenOrchestra\ModelInterface\Model\TrashItemInterface');
+        $trashItem1 = Phake::mock('OpenOrchestra\ModelInterface\Model\TrashItemInterface');
+        $trashItem2 = Phake::mock('OpenOrchestra\ModelInterface\Model\TrashItemInterface');
+        $trashItem3 = Phake::mock('OpenOrchestra\ModelInterface\Model\TrashItemInterface');
 
         return array(
-            array($trashCan1),
-            array($trashCan1, $trashCan2),
-            array($trashCan1, $trashCan2, $trashCan3),
+            array($trashItem1),
+            array($trashItem1, $trashItem2),
+            array($trashItem1, $trashItem2, $trashItem3),
         );
     }
 }

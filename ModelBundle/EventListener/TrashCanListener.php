@@ -31,13 +31,11 @@ class TrashCanListener
         $document = $event->getDocument();
         if ($document instanceof TrashCanDisplayableInterface) {
             if ($event->hasChangedField('deleted') && $event->getNewValue('deleted') === true && $event->getOldValue('deleted') === false) {
-                /**
-                 * @var TrashItem $trashItemClass
-                 */
-                $trashCan = new $this->trashItemClass();
-                $trashCan->setEntity($document);
-                $trashCan->setName($document->getTrashCanName());
-                $this->entities[] = $trashCan;
+                /** @var TrashItem $trashItemClass*/
+                $trashItem = new $this->trashItemClass();
+                $trashItem->setEntity($document);
+                $trashItem->setName($document->getTrashCanName());
+                $this->entities[] = $trashItem;
 
             }
         }
