@@ -3,7 +3,7 @@
 namespace OpenOrchestra\ModelBundle\Tests\EventListener;
 
 use OpenOrchestra\ModelBundle\EventListener\TrashCanListener;
-use OpenOrchestra\ModelBundle\Document\TrashCan;
+use OpenOrchestra\ModelBundle\Document\TrashItem;
 use Phake;
 
 /**
@@ -42,7 +42,6 @@ class TrashCanListenerTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertTrue(method_exists($this->listener, 'postFlush'));
     }
-
 
     /**
      * @param $document
@@ -90,19 +89,19 @@ class TrashCanListenerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param array $TrashItemEntities
+     * @param array $trashItemEntities
      *
      * @dataProvider provideTrashItemEntities
      */
-    public function testPostFlush($TrashItemEntities)
+    public function testPostFlush($trashItemEntities)
     {
         $event = Phake::mock('Doctrine\ODM\MongoDB\Event\PostFlushEventArgs');
         Phake::when($event)->getDocumentManager()->thenReturn($this->documentManager);
-        $this->listener->entities = $TrashItemEntities;
+        $this->listener->entities = $trashItemEntities;
 
         $this->listener->postFlush($event);
 
-        foreach ($TrashItemEntities as $trashItemEntity) {
+        foreach ($trashItemEntities as $trashItemEntity) {
             Phake::verify($this->documentManager, Phake::atLeast(1))->persist($trashItemEntity);
             Phake::verify($this->documentManager)->flush($trashItemEntity);
         }

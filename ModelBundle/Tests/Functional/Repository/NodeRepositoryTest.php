@@ -236,7 +236,7 @@ class NodeRepositoryTest extends KernelTestCase
         $this->assertSame($language, $node->getLanguage());
         $this->assertSame($version, $node->getVersion());
         $this->assertSame($siteId, $node->getSiteId());
-        $this->assertSame(false, $node->getDeleted());
+        $this->assertSame(false, $node->isDeleted());
     }
 
     /**
