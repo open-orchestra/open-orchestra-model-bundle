@@ -158,6 +158,13 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('class')->defaultValue('OpenOrchestra\ModelBundle\Document\TranslatedValue')->end()
                         ->end()
                     ->end()
+                    ->arrayNode('trash_item')
+                        ->addDefaultsIfNotSet()
+                        ->children()
+                            ->scalarNode('class')->defaultValue('OpenOrchestra\ModelBundle\Document\TrashItem')->end()
+                            ->scalarNode('repository')->defaultValue('OpenOrchestra\ModelBundle\Repository\TrashItemRepository')->end()
+                        ->end()
+                    ->end()
                 ->end()
             ->end()
         ->end();

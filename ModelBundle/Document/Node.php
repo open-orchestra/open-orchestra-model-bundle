@@ -8,6 +8,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 use Gedmo\Blameable\Traits\BlameableDocument;
 use Gedmo\Timestampable\Traits\TimestampableDocument;
+use OpenOrchestra\MongoTrait\SoftDeleteable;
 use OpenOrchestra\MongoTrait\Statusable;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
@@ -18,6 +19,7 @@ use OpenOrchestra\MongoTrait\Cacheable;
 use OpenOrchestra\MongoTrait\Metaable;
 use OpenOrchestra\MongoTrait\Sitemapable;
 use OpenOrchestra\MongoTrait\Schemeable;
+use OpenOrchestra\MongoTrait\TrashCanable;
 use OpenOrchestra\MongoTrait\Versionable;
 
 /**
@@ -47,6 +49,7 @@ class Node implements NodeInterface
     use Statusable;
     use Cacheable;
     use Metaable;
+    use SoftDeleteable;
 
     /**
      * @var string $id
@@ -103,13 +106,6 @@ class Node implements NodeInterface
      * @ODM\Field(type="string")
      */
     protected $language;
-
-    /**
-     * @var boolean
-     *
-     * @ODM\Field(type="boolean")
-     */
-    protected $deleted = false;
 
     /**
      * @var string
@@ -333,26 +329,6 @@ class Node implements NodeInterface
     }
 
     /**
-     * Set deleted
-     *
-     * @param boolean $deleted
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-    }
-
-    /**
-     * Get deleted
-     *
-     * @return boolean $deleted
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
-    }
-
-    /**
      * Set templateId
      *
      * @param string $templateId
@@ -390,6 +366,14 @@ class Node implements NodeInterface
     public function getTheme()
     {
         return $this->theme;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTrashCanName()
+    {
+        return $this->name."-".$this->language."-v".$this->version;
     }
 
     /**

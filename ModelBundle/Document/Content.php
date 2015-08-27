@@ -8,6 +8,7 @@ use Gedmo\Blameable\Traits\BlameableDocument;
 use Gedmo\Timestampable\Traits\TimestampableDocument;
 use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 use OpenOrchestra\MongoTrait\SiteLinkable;
+use OpenOrchestra\MongoTrait\SoftDeleteable;
 use OpenOrchestra\MongoTrait\Statusable;
 use OpenOrchestra\ModelInterface\Model\ContentAttributeInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
@@ -37,6 +38,7 @@ class Content implements ContentInterface
     use Statusable;
     use Versionable;
     use SiteLinkable;
+    use SoftDeleteable;
 
     /**
      * @var string $id
@@ -81,13 +83,6 @@ class Content implements ContentInterface
      * @ORCHESTRA\Search(key="language")
      */
     protected $language;
-
-    /**
-     * @var boolean
-     *
-     * @ODM\Field(type="boolean")
-     */
-    protected $deleted = false;
 
     /**
      * @var ArrayCollection
@@ -194,22 +189,6 @@ class Content implements ContentInterface
     }
 
     /**
-     * @param boolean $deleted
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
-    }
-
-    /**
      * @return string
      */
     public function getId()
@@ -263,6 +242,14 @@ class Content implements ContentInterface
     public function setSiteId($siteId)
     {
         $this->siteId = $siteId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTrashCanName()
+    {
+        return $this->name."-".$this->language."-v".$this->version;
     }
 
     /**

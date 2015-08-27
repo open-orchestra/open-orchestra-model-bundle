@@ -3,6 +3,7 @@
 namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+use OpenOrchestra\MongoTrait\SoftDeleteable;
 use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 use Gedmo\Blameable\Traits\BlameableDocument;
 use Gedmo\Timestampable\Traits\TimestampableDocument;
@@ -28,6 +29,7 @@ class ContentType implements ContentTypeInterface
     use TimestampableDocument;
     use Versionable;
     use SiteLinkable;
+    use SoftDeleteable;
 
     /**
      * @var string $id
@@ -49,13 +51,6 @@ class ContentType implements ContentTypeInterface
      * @ORCHESTRA\Search(key="name", type="translatedValue")
      */
     protected $names;
-
-    /**
-     * @var boolean $deleted
-     *
-     * @ODM\Field(type="boolean")
-     */
-    protected $deleted = false;
 
     /**
      * @var ArrayCollection $defaultListable
@@ -102,22 +97,6 @@ class ContentType implements ContentTypeInterface
     public function getContentTypeId()
     {
         return $this->contentTypeId;
-    }
-
-    /**
-     * @param boolean $deleted
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
     }
 
     /**

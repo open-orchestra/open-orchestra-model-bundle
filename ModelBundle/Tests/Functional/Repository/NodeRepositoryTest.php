@@ -236,7 +236,7 @@ class NodeRepositoryTest extends KernelTestCase
         $this->assertSame($language, $node->getLanguage());
         $this->assertSame($version, $node->getVersion());
         $this->assertSame($siteId, $node->getSiteId());
-        $this->assertSame(false, $node->getDeleted());
+        $this->assertSame(false, $node->isDeleted());
     }
 
     /**
@@ -329,27 +329,6 @@ class NodeRepositoryTest extends KernelTestCase
         return array(
             array(NodeInterface::ROOT_NODE_ID, 1, 5, 1, '2', 'fr'),
             array(NodeInterface::ROOT_NODE_ID, 1, 5, 1, '2'),
-        );
-    }
-
-    /**
-     * @param string $siteId
-     * @param int    $count
-     *
-     * @dataProvider provideSiteIdAndDeletedCount
-     */
-    public function testFindLastVersionByDeletedAndSiteId($siteId, $count)
-    {
-        $this->assertCount($count, $this->repository->findDeletedInLastVersionBySiteId($siteId));
-    }
-
-    /**
-     * @return array
-     */
-    public function provideSiteIdAndDeletedCount()
-    {
-        return array(
-            array('3', 0),
         );
     }
 

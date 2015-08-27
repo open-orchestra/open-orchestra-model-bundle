@@ -9,6 +9,7 @@ use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\ModelInterface\Model\TemplateInterface;
+use OpenOrchestra\MongoTrait\SoftDeleteable;
 use OpenOrchestra\MongoTrait\Versionable;
 
 /**
@@ -28,6 +29,7 @@ use OpenOrchestra\MongoTrait\Versionable;
 class Template implements TemplateInterface
 {
     use Versionable;
+    use SoftDeleteable;
 
     /**
      * @var string $id
@@ -63,13 +65,6 @@ class Template implements TemplateInterface
      * @ODM\Field(type="string")
      */
     protected $language;
-
-    /**
-     * @var boolean
-     *
-     * @ODM\Field(type="boolean")
-     */
-    protected $deleted = false;
 
     /**
      * @var AreaInterface
@@ -189,22 +184,6 @@ class Template implements TemplateInterface
     public function getBoDirection()
     {
         return $this->boDirection;
-    }
-
-    /**
-     * @param boolean $deleted
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function getDeleted()
-    {
-        return $this->deleted;
     }
 
     /**

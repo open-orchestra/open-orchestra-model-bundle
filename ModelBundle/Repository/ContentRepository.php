@@ -282,6 +282,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
 
     /**
      * @return array
+     * @deprecated will be removed in 0.3.5
      */
     public function findAllDeleted()
     {

@@ -400,6 +400,6 @@ class ContentRepositoryTest extends KernelTestCase
         if (!is_null($siteId)) {
             $this->assertSame($siteId, $content->getSiteId());
         }
-        $this->assertSame(false, $content->getDeleted());
+        $this->assertSame(false, $content->isDeleted());
     }
 }
