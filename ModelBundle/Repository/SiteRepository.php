@@ -97,7 +97,7 @@ class SiteRepository extends AbstractAggregateRepository implements SiteReposito
         $qa = $this->createAggregationQuery();
         $qa->match(array('aliases.domain' => $domain));
 
-        return $this->singleHydrateAggregateQuery($qa);
+        return $this->hydrateAggregateQuery($qa);
     }
 
     /**
