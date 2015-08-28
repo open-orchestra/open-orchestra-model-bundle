@@ -34,14 +34,14 @@ class EntityTest extends \PHPUnit_Framework_TestCase
             array('Node',             'SchemeableInterface'),
             array('Node',             'ReadSchemeableInterface'),
             array('Node',             'VersionableInterface'),
-            array('Node',             'TrashCanDisplayableInterface'),
+            array('Node',             'SoftDeleteableInterface'),
             array('Area',             'AreaContainerInterface'),
             array('Template',         'AreaContainerInterface'),
             array('Node',             'BlockContainerInterface'),
             array('Template',         'BlockContainerInterface'),
             array('Node',             'StatusableInterface'),
             array('Content',          'StatusableInterface'),
-            array('Content',          'TrashCanDisplayableInterface'),
+            array('Content',          'SoftDeleteableInterface'),
             array('Content',          'VersionableInterface'),
             array('Content',          'SiteLinkableInterface'),
             array('ContentType',      'SiteLinkableInterface'),
@@ -81,7 +81,7 @@ class EntityTest extends \PHPUnit_Framework_TestCase
             array('Content',          'KeywordableInterface'),
             array('Redirection',      'RedirectionInterface'),
             array('Redirection',      'ReadRedirectionInterface'),
-            array('TrashItem',         'TrashItemInterface'),
+            array('TrashItem',        'TrashItemInterface'),
         );
     }
 }

@@ -369,14 +369,6 @@ class Node implements NodeInterface
     }
 
     /**
-     * @return string
-     */
-    public function getTrashCanName()
-    {
-        return $this->name."-".$this->language."-v".$this->version;
-    }
-
-    /**
      * Add block
      *
      * @param BlockInterface $block
