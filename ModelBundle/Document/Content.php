@@ -245,14 +245,6 @@ class Content implements ContentInterface
     }
 
     /**
-     * @return string
-     */
-    public function getTrashCanName()
-    {
-        return $this->name."-".$this->language."-v".$this->version;
-    }
-
-    /**
      * Clone method
      */
     public function __clone()
