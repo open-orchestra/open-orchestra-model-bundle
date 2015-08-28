@@ -2,15 +2,13 @@
 
 namespace OpenOrchestra\ModelBundle\DataFixtures\Loader;
 
-use Doctrine\Common\DataFixtures\FixtureInterface;
-use Doctrine\Common\DataFixtures\Loader;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Bridge\Doctrine\DataFixtures\ContainerAwareLoader;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class OrchestraContainerAwareLoader
  */
-class OrchestraContainerAwareLoader extends Loader
+class OrchestraContainerAwareLoader extends ContainerAwareLoader
 {
     /**
      * @var ContainerInterface
@@ -24,6 +22,7 @@ class OrchestraContainerAwareLoader extends Loader
      */
     public function __construct(ContainerInterface $container)
     {
+        parent::__construct($container);
         $this->container = $container;
     }
 
@@ -50,17 +49,5 @@ class OrchestraContainerAwareLoader extends Loader
         }
 
         return false;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function addFixture(FixtureInterface $fixture)
-    {
-        if ($fixture instanceof ContainerAwareInterface) {
-            $fixture->setContainer($this->container);
-        }
-
-        parent::addFixture($fixture);
     }
 }
