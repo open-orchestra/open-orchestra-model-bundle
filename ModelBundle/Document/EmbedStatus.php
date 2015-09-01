@@ -24,7 +24,11 @@ class EmbedStatus extends AbstractStatus implements EmbedStatusInterface
         $this->setPublished($status->isPublished());
         $this->setInitial($status->isInitial());
         $this->setDisplayColor($status->getDisplayColor());
-        $this->labels = $status->getLabels();
+
+        $this->labels = new ArrayCollection();
+        foreach ($status->getLabels() as $label){
+            $this->addLabel($label);
+        }
 
         $this->toRoles = new ArrayCollection();
         foreach ($status->getToRoles() as $toRole) {
