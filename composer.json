@@ -15,9 +15,7 @@
         "doctrine/mongodb-odm": "1.0.1",
         "doctrine/mongodb-odm-bundle" : "3.0.0",
         "solution/mongo-odm-aggregation-bundle": "*",
-        "stof/doctrine-extensions-bundle": "1.2.1",
-        "antimattr/mongodb-migrations": "~1.0@stable",
-        "antimattr/mongodb-migrations-bundle": "~1.0@stable"
+        "stof/doctrine-extensions-bundle": "1.2.1"
     },
     "require-dev": {
         "open-orchestra/open-orchestra-base-bundle": "dev-master",
