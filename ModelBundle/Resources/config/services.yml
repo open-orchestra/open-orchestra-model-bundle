@@ -1,6 +1,0 @@
-parameters:
-    open_orchestra_model.annotation_reader.class: Doctrine\Common\Annotations\AnnotationReader
-
-services:
-    open_orchestra_model.annotation_reader:
-        class: %open_orchestra_model.annotation_reader.class%
