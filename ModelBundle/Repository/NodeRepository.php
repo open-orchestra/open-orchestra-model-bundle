@@ -530,4 +530,30 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
 
         return $this->hydrateAggregateQuery($qa);
     }
+
+    /**
+     * @param string       $author
+     * @param boolean|null $published
+     * @param int|null     $limit
+     *
+     * @return array
+     */
+    public function findByAuthor($author, $published = null, $limit = null)
+    {
+        $qa = $this->createAggregationQuery();
+        $filter = array(
+            'nodeType' => NodeInterface::TYPE_DEFAULT,
+            'updatedBy' => $author
+        );
+        if (null !== $published) {
+            $filter['status.published'] = $published;
+        }
+        $qa->match($filter);
+
+        if (null !== $limit) {
+            $qa->limit($limit);
+        }
+
+        return $this->hydrateAggregateQuery($qa);
+    }
 }
