@@ -6,7 +6,6 @@ parameters:
     open_orchestra_model.doctrine_listener.save_published_document.class: OpenOrchestra\ModelBundle\EventListener\SavePublishedDocumentListener
     open_orchestra_model.doctrine_listener.transversal_node_creator.class: OpenOrchestra\ModelBundle\EventListener\TransversalNodeCreatorListener
     open_orchestra_model.doctrine_listener.update_non_translatable_content_field.class: OpenOrchestra\ModelBundle\EventListener\UpdateNonTranslatableContentFieldsListener
-    open_orchestra_model.doctrine_listener.trash_can.class: OpenOrchestra\ModelBundle\EventListener\TrashCanListener
 
 services:
     open_orchestra_model.doctrine_listener.initial_status:
@@ -33,7 +32,7 @@ services:
     open_orchestra_model.doctrine_listener.generate_id:
         class: %open_orchestra_model.doctrine_listener.generate_id.class%
         arguments:
-            - @open_orchestra_model.annotation_reader
+            - @open_orchestra.annotation_reader
             - @open_orchestra_model.helper.suppress_special_character
         calls:
             - [setContainer, ['@service_container']]
