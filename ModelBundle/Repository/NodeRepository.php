@@ -10,6 +10,7 @@ use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\FieldAutoGenerableRepositoryInterface;
 use Solution\MongoAggregation\Pipeline\Stage;
 use OpenOrchestra\Repository\AbstractAggregateRepository;
+use MongoRegex;
 
 /**
  * Class NodeRepository
@@ -184,6 +185,22 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     {
         $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
         $qa->match(array('parentId' => $parentId));
+
+        return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param string $path
+     * @param string $siteId
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     *
+     * @return mixed
+     */
+    public function findByIncludedPathAndSiteId($path, $siteId)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
+        $qa->match(array('path' => new MongoRegex('/'.$path.'.*/i')));
 
         return $this->hydrateAggregateQuery($qa);
     }
