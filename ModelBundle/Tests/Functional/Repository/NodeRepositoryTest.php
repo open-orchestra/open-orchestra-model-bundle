@@ -171,15 +171,15 @@ class NodeRepositoryTest extends KernelTestCase
 
 
     /**
-     * @param string $parentId
+     * @param string $path
      * @param string $siteId
      * @param int    $count
      *
      * @dataProvider provideParentIdSiteIdAndCount
      */
-    public function testFindByParentIdAndSiteId($parentId, $siteId, $count)
+    public function testFindByPathAndSiteId($path, $siteId, $count)
     {
-        $nodes = $this->repository->findByParentIdAndSiteId($parentId, $siteId);
+        $nodes = $this->repository->findByPathAndSiteId($path, $siteId);
 
         $this->assertGreaterThanOrEqual($count, count($nodes));
     }
@@ -190,10 +190,9 @@ class NodeRepositoryTest extends KernelTestCase
     public function provideParentIdSiteIdAndCount()
     {
         return array(
-            array(NodeInterface::ROOT_NODE_ID, '2', 5),
-            array('fixture_page_community', '2', 0),
-            array(NodeInterface::TRANSVERSE_NODE_ID, '2', 0),
-            array('fixture_page_what_is_orchestra', '2', 0),
+            array('root', '2', 5),
+            array('root/fixture_page_community', '2', 0),
+            array('transverse', '2', 0),
         );
     }
 
