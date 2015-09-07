@@ -203,9 +203,9 @@ class NodeRepositoryTest extends KernelTestCase
      *
      * @dataProvider providePathSiteIdAndCount
      */
-    public function testFindByIncludingPathAndSiteId($path, $siteId, $count)
+    public function testFindByIncludedPathAndSiteId($path, $siteId, $count)
     {
-        $nodes = $this->repository->findByIncludingPathAndSiteId($path, $siteId);
+        $nodes = $this->repository->findByIncludedPathAndSiteId($path, $siteId);
 
         $this->assertGreaterThanOrEqual($count, count($nodes));
     }
