@@ -168,6 +168,32 @@ class NodeRepositoryTest extends KernelTestCase
         );
     }
 
+    /**
+     * @param string $parentId
+     * @param string $siteId
+     * @param int    $count
+     *
+     * @dataProvider provideParentIdSiteIdAndCount
+     */
+    public function testFindByParentIdAndSiteId($parentId, $siteId, $count)
+    {
+        $nodes = $this->repository->findByParentIdAndSiteId($parentId, $siteId);
+
+        $this->assertGreaterThanOrEqual($count, count($nodes));
+    }
+
+    /**
+     * @return array
+     */
+    public function provideParentIdSiteIdAndCount()
+    {
+        return array(
+            array(NodeInterface::ROOT_NODE_ID, '2', 5),
+            array('fixture_page_community', '2', 0),
+            array(NodeInterface::TRANSVERSE_NODE_ID, '2', 0),
+            array('fixture_page_what_is_orchestra', '2', 0),
+        );
+    }
 
 
     /**
@@ -175,7 +201,7 @@ class NodeRepositoryTest extends KernelTestCase
      * @param string $siteId
      * @param int    $count
      *
-     * @dataProvider provideParentIdSiteIdAndCount
+     * @dataProvider providePathSiteIdAndCount
      */
     public function testFindByPathAndSiteId($path, $siteId, $count)
     {
@@ -187,7 +213,7 @@ class NodeRepositoryTest extends KernelTestCase
     /**
      * @return array
      */
-    public function provideParentIdSiteIdAndCount()
+    public function providePathSiteIdAndCount()
     {
         return array(
             array('root', '2', 5),
