@@ -18,16 +18,16 @@ class CommunityDataGenerator extends AbstractDataGenerator
     protected function generateNodeEn()
     {
         $htmlContent = <<<EOF
-<div class='content2'>
-    <h1>Community</h1>
-    <p>We invite you to follow the Open Orchestra community across these different way of communication :</p>
-    <ul>
-        <li>To contribute and follow our change : <a href="https://github.com/open-orchestra/"><strong>Github</strong></a></li>
-        <li>To ask technical questions : <a href="https://groups.google.com/forum/#!forum/open-orchestra"><strong>Google group</strong></a></li>
-        <li>To follows news about the product : <a href="https://twitter.com/open_orchestra"><strong>Twitter</strong></a></li>
-        <li>For more information : <a href="http://open-orchestra.com/"><strong>Official Website</strong></a></li>
-    </ul>
-</div>
+[div=content2]
+    [h=1]Community[/h]
+    [p]We invite you to follow the Open Orchestra community across these different way of communication :[/p]
+    [ul]
+        [li]To contribute and follow our change : [url=https://github.com/open-orchestra/][b]Github[/b][/url][/li]
+        [li]To ask technical questions : [url=https://groups.google.com/forum/#!forum/open-orchestra][b]Google group[/b][/url][/li]
+        [li]To follows news about the product : [url=https://twitter.com/open_orchestra][b]Twitter[/b][/url][/li]
+        [li]For more information : [url=http://open-orchestra.com/][b]Official Website[/b][/url][/li]
+    [/ul]
+[/div]
 EOF;
         $name = "Community";
         $language = "en";
@@ -42,16 +42,16 @@ EOF;
     protected function generateNodeFr()
     {
          $htmlContent = <<<EOF
-<div class='content2'>
-    <h1>Communauté</h1>
-    <p>Nous vous invitons à suivre la communauté Open Orchestra à travers nos différents canaux de communication: </p>
-    <ul>
-        <li>Pour contribuer et suivre nos modifications : <a href="https://github.com/open-orchestra/"><strong>Github</strong></a></li>
-        <li>Pour poser vos questions techniques : <a href="https://groups.google.com/forum/#!forum/open-orchestra"><strong>Google group</strong></a></li>
-        <li>Pour suivre l'actualité de la plateforme : <a href="https://twitter.com/open_orchestra"><strong>Twitter</strong></a></li>
-        <li>Pour plus de renseignements : <a href="http://open-orchestra.com/"><strong>Site officiel</strong></a></li>
-    </ul>
-</div>
+[div=content2]
+    [h=1]Communauté[/h]
+    [p]Nous vous invitons à suivre la communauté Open Orchestra à travers nos différents canaux de communication: [/p]
+    [ul]
+        [li]Pour contribuer et suivre nos modifications : [url=https://github.com/open-orchestra/][b]Github[/b][/url][/li]
+        [li]Pour poser vos questions techniques : [url=https://groups.google.com/forum/#!forum/open-orchestra][b]Google group[/b][/url][/li]
+        [li]Pour suivre l'actualité de la plateforme : [url=https://twitter.com/open_orchestra][b]Twitter[/b][/url][/li]
+        [li]Pour plus de renseignements : [url=http://open-orchestra.com/][b]Site officiel[/b][/url][/li]
+    [/ul]
+[/div]
 EOF;
         $name = "Communauté";
         $language = "fr";
