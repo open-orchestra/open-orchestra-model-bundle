@@ -109,6 +109,7 @@ EOF;
         $siteHome->setLanguage($language);
         $siteHome->setNodeId(NodeInterface::ROOT_NODE_ID);
         $siteHome->setName('Orchestra ?');
+        $siteHome->setUpdatedBy('fake_admin');
         $siteHome->setParentId('-');
         $siteHome->setOrder(0);
         $siteHome->setRoutePattern($routePattern);
