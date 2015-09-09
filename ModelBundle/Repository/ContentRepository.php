@@ -290,21 +290,22 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     }
 
     /**
-     * @param string       $author
+     * @param string       $contributor
      * @param boolean|null $published
      * @param int|null     $limit
      *
      * @return array
      */
-    public function findByAuthor($author, $published = null, $limit = null)
+    public function findByContributor($contributor, $published = null, $limit = null)
     {
         $qa = $this->createAggregationQuery();
         $filter = array(
-            'updatedBy' => $author
+            'updatedBy' => $contributor
         );
         if (null !== $published) {
             $filter['status.published'] = $published;
         }
+
         $qa->match($filter);
 
         if (null !== $limit) {

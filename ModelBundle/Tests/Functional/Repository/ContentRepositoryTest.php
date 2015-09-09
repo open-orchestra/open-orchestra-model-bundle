@@ -340,6 +340,33 @@ class ContentRepositoryTest extends KernelTestCase
     }
 
     /**
+     * @param string       $contributor
+     * @param boolean|null $published
+     * @param int          $count
+     *
+     * @dataProvider provideContributor
+     */
+    public function testFindByContributor($contributor, $published, $count)
+    {
+        $content = $this->repository->findByContributor($contributor, $published);
+        $this->assertCount($count, $content);
+    }
+
+    /**
+     * @return array
+     */
+    public function provideContributor()
+    {
+        return array(
+            array('admin', null, 6),
+            array('admin', false, 0),
+            array('admin', true, 6),
+            array('fakeContributor', false, 0),
+            array('fakeContributor', null, 0),
+        );
+    }
+
+    /**
      * Generate columns of content with search value
      *
      * @param array|null $searchColumns

@@ -384,4 +384,33 @@ class NodeRepositoryTest extends KernelTestCase
             array('fr', '2', 5),
         );
     }
+
+
+    /**
+     * @param string       $contributor
+     * @param boolean|null $published
+     * @param int          $count
+     *
+     * @dataProvider provideContributor
+     */
+    public function testFindByContributor($contributor, $published, $count)
+    {
+        $content = $this->repository->findByContributor($contributor, $published);
+        $this->assertCount($count, $content);
+    }
+
+    /**
+     * @return array
+     */
+    public function provideContributor()
+    {
+        return array(
+            array('fake_admin', null, 2),
+            array('fake_admin', false, 0),
+            array('fake_admin', true, 2),
+            array('fakeContributor', false, 0),
+            array('fakeContributor', null, 0),
+        );
+    }
+
 }
