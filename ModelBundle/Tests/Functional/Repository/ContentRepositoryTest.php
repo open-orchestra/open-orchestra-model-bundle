@@ -139,10 +139,10 @@ class ContentRepositoryTest extends KernelTestCase
             array('news', ContentRepositoryInterface::CHOICE_AND, 'Sit', 2),
             array('news', ContentRepositoryInterface::CHOICE_AND, 'Dolor', 0),
             array('news', ContentRepositoryInterface::CHOICE_AND, 'Lorem,Sit', 1),
-            array('news', ContentRepositoryInterface::CHOICE_AND, '', 254),
+            array('news', ContentRepositoryInterface::CHOICE_AND, '', 4),
             array('car', ContentRepositoryInterface::CHOICE_AND, '', 3),
-            array('', ContentRepositoryInterface::CHOICE_AND, null, 258),
-            array('', ContentRepositoryInterface::CHOICE_AND, '', 258),
+            array('', ContentRepositoryInterface::CHOICE_AND, null, 8),
+            array('', ContentRepositoryInterface::CHOICE_AND, '', 8),
             array('', ContentRepositoryInterface::CHOICE_AND, 'Lorem', 5),
             array('', ContentRepositoryInterface::CHOICE_AND, 'Sit', 4),
             array('', ContentRepositoryInterface::CHOICE_AND, 'Dolor', 0),
@@ -151,18 +151,18 @@ class ContentRepositoryTest extends KernelTestCase
             array('car', ContentRepositoryInterface::CHOICE_OR, 'Sit', 6),
             array('car', ContentRepositoryInterface::CHOICE_OR, 'Dolor', 3),
             array('car', ContentRepositoryInterface::CHOICE_OR, 'Lorem,Sit', 5),
-            array('news', ContentRepositoryInterface::CHOICE_OR, 'Lorem', 258),
-            array('news', ContentRepositoryInterface::CHOICE_OR, 'Sit', 256),
-            array('news', ContentRepositoryInterface::CHOICE_OR, 'Dolor', 254),
-            array('news', ContentRepositoryInterface::CHOICE_OR, 'Lorem,Sit', 256),
-            array('news', ContentRepositoryInterface::CHOICE_OR, '', 254),
+            array('news', ContentRepositoryInterface::CHOICE_OR, 'Lorem', 8),
+            array('news', ContentRepositoryInterface::CHOICE_OR, 'Sit', 6),
+            array('news', ContentRepositoryInterface::CHOICE_OR, 'Dolor', 4),
+            array('news', ContentRepositoryInterface::CHOICE_OR, 'Lorem,Sit', 6),
+            array('news', ContentRepositoryInterface::CHOICE_OR, '', 4),
             array('car', ContentRepositoryInterface::CHOICE_OR, null, 3),
-            array('', ContentRepositoryInterface::CHOICE_OR, null, 258),
+            array('', ContentRepositoryInterface::CHOICE_OR, null, 8),
             array('', ContentRepositoryInterface::CHOICE_OR, 'Lorem', 5),
             array('', ContentRepositoryInterface::CHOICE_OR, 'Sit', 4),
             array('', ContentRepositoryInterface::CHOICE_OR, 'Dolor', 0),
             array('', ContentRepositoryInterface::CHOICE_OR, 'Lorem,Sit', 3),
-            array('', ContentRepositoryInterface::CHOICE_OR, '', 258),
+            array('', ContentRepositoryInterface::CHOICE_OR, '', 8),
         );
     }
 
@@ -274,9 +274,9 @@ class ContentRepositoryTest extends KernelTestCase
             array('car', $descriptionEntity, null, null, 0 ,1 , 1),
             array('car', $descriptionEntity, $this->generateColumnsProvider(array('name' => '206')), null, 0 ,2 , 1),
             array('car', $descriptionEntity, $this->generateColumnsProvider(array('version' => '2')), null, 0 ,2 , 2),
-            array('news', $descriptionEntity, null, null, 0 , 100, 100),
-            array('news', $descriptionEntity, null, null, 50 , 100, 100),
-            array('news', $descriptionEntity, $this->generateColumnsProvider(array('name' => 'news')), null, 0 , null, 250),
+            array('news', $descriptionEntity, null, null, 0 , 100, 4),
+            array('news', $descriptionEntity, null, null, 50 , 100, 0),
+            array('news', $descriptionEntity, $this->generateColumnsProvider(array('name' => 'news')), null, 0 , null, 0),
             array('car', $descriptionEntity, null, '2', 0 ,5 , 3),
             array('car', $descriptionEntity, $this->generateColumnsProvider(array('status_label' => 'publish')), null, null ,null , 3),
             array('car', $descriptionEntity, $this->generateColumnsProvider(array('status_label' => 'publié')), null, null ,null , 3),
@@ -306,7 +306,7 @@ class ContentRepositoryTest extends KernelTestCase
         return array(
             array('car', 3),
             array('customer', 1),
-            array('news', 254),
+            array('news', 4),
         );
     }
 
@@ -335,7 +335,7 @@ class ContentRepositoryTest extends KernelTestCase
         return array(
             array('car', $descriptionEntity, $this->generateColumnsProvider(array('name' => '206')), 1),
             array('car', $descriptionEntity, $this->generateColumnsProvider(null, 'portes'), 2),
-            array('news', $descriptionEntity, $this->generateColumnsProvider(null, 'news'), 250)
+            array('news', $descriptionEntity, $this->generateColumnsProvider(null, 'news'), 0)
         );
     }
 
