@@ -406,8 +406,8 @@ class NodeRepositoryTest extends KernelTestCase
     {
         return array(
             array('fake_admin', null, 3),
-            array('fake_admin', false, 0),
-            array('fake_admin', true, 1),
+            array('fake_admin', false, 1),
+            array('fake_admin', true, 2),
             array('fakeContributor', false, 0),
             array('fakeContributor', null, 0),
         );
