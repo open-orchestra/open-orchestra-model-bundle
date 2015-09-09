@@ -532,18 +532,18 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     }
 
     /**
-     * @param string       $contributor
+     * @param string       $author
      * @param boolean|null $published
      * @param int|null     $limit
      *
      * @return array
      */
-    public function findByContributor($contributor, $published = null, $limit = null)
+    public function findByAuthor($author, $published = null, $limit = null)
     {
         $qa = $this->createAggregationQuery();
         $filter = array(
             'nodeType' => NodeInterface::TYPE_DEFAULT,
-            'updatedBy' => $contributor
+            'createdBy' => $author
         );
         if (null !== $published) {
             $filter['status.published'] = $published;

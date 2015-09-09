@@ -387,16 +387,16 @@ class NodeRepositoryTest extends KernelTestCase
 
 
     /**
-     * @param string       $contributor
+     * @param string       $author
      * @param boolean|null $published
      * @param int          $count
      *
      * @dataProvider provideContributor
      */
-    public function testFindByContributor($contributor, $published, $count)
+    public function testFindByAuthor($author, $published, $count)
     {
-        $content = $this->repository->findByContributor($contributor, $published);
-        $this->assertCount($count, $content);
+        $nodes = $this->repository->findByAuthor($author, $published);
+        $this->assertCount($count, $nodes);
     }
 
     /**
@@ -405,9 +405,9 @@ class NodeRepositoryTest extends KernelTestCase
     public function provideContributor()
     {
         return array(
-            array('fake_admin', null, 2),
+            array('fake_admin', null, 3),
             array('fake_admin', false, 0),
-            array('fake_admin', true, 2),
+            array('fake_admin', true, 1),
             array('fakeContributor', false, 0),
             array('fakeContributor', null, 0),
         );
