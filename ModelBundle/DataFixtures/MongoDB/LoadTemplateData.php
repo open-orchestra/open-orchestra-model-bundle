@@ -7,11 +7,12 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\ModelBundle\Document\Area;
 use OpenOrchestra\ModelBundle\Document\Template;
+use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
 
 /**
  * Class LoadTemplateData
  */
-class LoadTemplateData extends AbstractFixture implements OrderedFixtureInterface
+class LoadTemplateData extends AbstractFixture implements OrderedFixtureInterface, OrchestraFunctionalFixturesInterface
 {
     /**
      * @param ObjectManager $manager

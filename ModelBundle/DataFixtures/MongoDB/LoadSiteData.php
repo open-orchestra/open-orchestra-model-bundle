@@ -10,11 +10,12 @@ use OpenOrchestra\ModelBundle\Document\SiteAlias;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraProductionFixturesInterface;
 use OpenOrchestra\ModelInterface\Model\SchemeableInterface;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
+use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
 
 /**
  * Class LoadSiteData
  */
-class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface, OrchestraProductionFixturesInterface
+class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface, OrchestraProductionFixturesInterface, OrchestraFunctionalFixturesInterface
 {
     /**
      * @param ObjectManager $manager

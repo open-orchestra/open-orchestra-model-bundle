@@ -8,11 +8,12 @@ use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\ModelBundle\Document\Content;
 use OpenOrchestra\ModelBundle\Document\ContentAttribute;
 use OpenOrchestra\ModelBundle\Document\EmbedKeyword;
+use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
 
 /**
  * Class LoadContentData
  */
-class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
+class LoadContentData extends AbstractFixture implements OrderedFixtureInterface, OrchestraFunctionalFixturesInterface
 {
     protected $objectManager;
 

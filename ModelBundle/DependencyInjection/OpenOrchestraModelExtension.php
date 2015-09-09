@@ -27,6 +27,7 @@ class OpenOrchestraModelExtension extends Extension
         $immutableProperties = array_merge($config['content_immutable_properties'], array('linkedToSite', 'deleted'));
         $container->setParameter('open_orchestra_model.content.immutable_properties', $immutableProperties);
         $container->setParameter('open_orchestra_model.production_fixtures_interface', $config['production_fixtures_interface']);
+        $container->setParameter('open_orchestra_model.functional_fixtures_interface', $config['functional_fixtures_interface']);
         foreach ($config['document'] as $class => $content) {
             if (is_array($content)) {
                 $container->setParameter('open_orchestra_model.document.' . $class . '.class', $content['class']);

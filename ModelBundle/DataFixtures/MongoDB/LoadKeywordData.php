@@ -6,11 +6,12 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\ModelBundle\Document\Keyword;
+use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
 
 /**
  * Class LoadKeywordData
  */
-class LoadKeywordData extends AbstractFixture implements OrderedFixtureInterface
+class LoadKeywordData extends AbstractFixture implements OrderedFixtureInterface, OrchestraFunctionalFixturesInterface
 {
     /**
      * @param ObjectManager $manager
