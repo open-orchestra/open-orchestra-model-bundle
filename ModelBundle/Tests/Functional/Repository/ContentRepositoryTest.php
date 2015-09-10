@@ -340,16 +340,16 @@ class ContentRepositoryTest extends KernelTestCase
     }
 
     /**
-     * @param string       $contributor
+     * @param string       $author
      * @param boolean|null $published
      * @param int          $count
      *
      * @dataProvider provideContributor
      */
-    public function testFindByContributor($contributor, $published, $count)
+    public function testFindByContributor($author, $published, $count)
     {
-        $content = $this->repository->findByContributor($contributor, $published);
-        $this->assertCount($count, $content);
+        $contents = $this->repository->findByAuthor($author, $published);
+        $this->assertCount($count, $contents);
     }
 
     /**
