@@ -52,6 +52,8 @@ class OrchestraContainerAwareLoader extends ContainerAwareLoader
                     return true;
                 }
             }
+        } else {
+            return true;
         }
 
         return false;
