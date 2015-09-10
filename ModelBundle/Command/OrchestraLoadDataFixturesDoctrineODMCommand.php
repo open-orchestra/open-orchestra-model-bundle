@@ -39,6 +39,10 @@ You can also optionally specify the path to fixtures with the <info>--fixtures</
 If you want to append the fixtures instead of flushing the database first you can use the <info>--append</info> option:
 
   <info>./app/console doctrine:mongodb:fixtures:load --append</info>
+
+If you want to choose the type of loaded fixtures you can use the <info>--type</info> option:
+
+  <info>./app/console doctrine:mongodb:fixtures:load --type</info>
 EOT
             );
     }
