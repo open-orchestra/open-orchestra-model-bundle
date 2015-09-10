@@ -22,12 +22,13 @@ class OrchestraLoadDataFixturesDoctrineODMCommand extends LoadDataFixturesDoctri
     {
         $this
             ->setName('orchestra:mongodb:fixtures:load')
-            ->setDescription('Load production data fixtures to your database.')
+            ->setDescription('Load data fixtures to your database.')
             ->addOption('fixtures', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'The directory or file to load data fixtures from.')
             ->addOption('append', null, InputOption::VALUE_NONE, 'Append the data fixtures instead of flushing the database first.')
             ->addOption('dm', null, InputOption::VALUE_REQUIRED, 'The document manager to use for this command.')
+            ->addOption('type', null, InputOption::VALUE_NONE, 'Choose type of loaded fixtures.')
             ->setHelp(<<<EOT
-The <info>orchestra:mongodb:fixtures:load</info> command loads production data fixtures from your bundles:
+The <info>orchestra:mongodb:fixtures:load</info> command loads data fixtures from your bundles:
 
   <info>./app/console doctrine:mongodb:fixtures:load</info>
 
@@ -51,6 +52,15 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $type = 'functional';
+        if ($input->getOption('type')) {
+            $type = $this->getHelperSet()->get('dialog')->ask(
+                $output,
+                'Choose type in (' . implode(', ', $this->getContainer()->getParameter('open_orchestra_model.fixtures.command')) . ') : ',
+                'production'
+            );
+        }
+
         $dm = $this->getContainer()->get('doctrine_mongodb')->getManager($input->getOption('dm'));
         $dirOrFile = $input->getOption('fixtures');
         if ($dirOrFile) {
@@ -63,7 +73,7 @@ EOT
             }
         }
 
-        $loader = new OrchestraContainerAwareLoader($this->getContainer());
+        $loader = new OrchestraContainerAwareLoader($this->getContainer(), $type);
         foreach ($paths as $path) {
             if (is_dir($path)) {
                 $loader->loadFromDirectory($path);

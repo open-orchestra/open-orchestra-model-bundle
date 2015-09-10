@@ -15,15 +15,19 @@ class OrchestraContainerAwareLoader extends ContainerAwareLoader
      */
     private $container;
 
+    private $interfaceType;
+
     /**
      * Constructor.
      *
      * @param ContainerInterface $container A ContainerInterface instance
+     * @param string             $interfaceType
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(ContainerInterface $container, $interfaceType)
     {
         parent::__construct($container);
         $this->container = $container;
+        $this->interfaceType = $interfaceType;
     }
 
     /**
@@ -39,12 +43,14 @@ class OrchestraContainerAwareLoader extends ContainerAwareLoader
             return true;
         }
 
-        $orchestraProductionInterfaces = $this->container->getParameter('open_orchestra_model.production_fixtures_interface');
+        if ($this->container->hasParameter('open_orchestra_model.fixtures_interface.' . $this->interfaceType)) {
+            $orchestraFixturesInterfaces = $this->container->getParameter('open_orchestra_model.fixtures_interface.' . $this->interfaceType);
 
-        $interfaces = class_implements($className);
-        foreach ($orchestraProductionInterfaces as $interface) {
-            if (!in_array($interface, $interfaces)) {
-                return true;
+            $interfaces = class_implements($className);
+            foreach ($orchestraFixturesInterfaces as $interface) {
+                if (!in_array($interface, $interfaces)) {
+                    return true;
+                }
             }
         }
 
