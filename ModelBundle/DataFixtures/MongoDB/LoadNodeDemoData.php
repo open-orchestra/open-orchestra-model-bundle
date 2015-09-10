@@ -13,11 +13,12 @@ use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\LegalDataGenerato
 use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\NewsDataGenerator;
 use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\TransverseDataGenerator;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
 
 /**
  * Class LoadNodeData
  */
-class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterface
+class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterface, OrchestraFunctionalFixturesInterface
 {
     /**
      * Load data fixtures with the passed EntityManager

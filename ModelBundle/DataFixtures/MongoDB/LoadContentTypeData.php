@@ -9,11 +9,12 @@ use OpenOrchestra\ModelBundle\Document\ContentType;
 use OpenOrchestra\ModelBundle\Document\FieldType;
 use OpenOrchestra\ModelBundle\Document\FieldOption;
 use OpenOrchestra\ModelBundle\Document\TranslatedValue;
+use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
 
 /**
  * Class LoadContentTypeData
  */
-class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInterface
+class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInterface, OrchestraFunctionalFixturesInterface
 {
     /**
      * Load data fixtures with the passed EntityManager

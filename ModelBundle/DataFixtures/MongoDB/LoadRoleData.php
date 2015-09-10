@@ -8,11 +8,12 @@ use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\ModelBundle\Document\Role;
 use OpenOrchestra\ModelBundle\Document\TranslatedValue;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraProductionFixturesInterface;
+use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
 
 /**
  * Class LoadRoleData
  */
-class LoadRoleData extends AbstractFixture implements OrderedFixtureInterface, OrchestraProductionFixturesInterface
+class LoadRoleData extends AbstractFixture implements OrderedFixtureInterface, OrchestraProductionFixturesInterface, OrchestraFunctionalFixturesInterface
 {
     /**
      * @param ObjectManager $manager

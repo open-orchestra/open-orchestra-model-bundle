@@ -25,15 +25,20 @@ class OrchestraContainerAwareLoaderTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        $command = 'production';
+
         $this->container = Phake::mock('Symfony\Component\DependencyInjection\ContainerInterface');
         Phake::when($this->container)
-            ->getParameter('open_orchestra_model.production_fixtures_interface')
+            ->getParameter('open_orchestra_model.fixtures_interface.' . $command)
             ->thenReturn(array(
                     'OpenOrchestra\ModelInterface\DataFixtures\OrchestraProductionFixturesInterface',
                     'OpenOrchestra\ModelBundle\Tests\DataFixtures\Loader\FakeProductionInterface',
                 ));
+        Phake::when($this->container)
+            ->hasParameter('open_orchestra_model.fixtures_interface.' . $command)
+            ->thenReturn(true);
 
-        $this->loader = new OrchestraContainerAwareLoader($this->container);
+        $this->loader = new OrchestraContainerAwareLoader($this->container, $command);
     }
 
     /**
