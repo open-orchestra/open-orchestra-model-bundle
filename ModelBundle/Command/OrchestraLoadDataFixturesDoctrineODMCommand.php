@@ -94,7 +94,7 @@ EOT
         $fixtures = $loader->getFixtures();
         if (!$fixtures) {
             throw new \InvalidArgumentException(
-                sprintf('Could not find any fixtures of type %s to load in: %s', $type, "\n\n- ".implode("\n- ", $paths))
+                sprintf('Could not find any fixtures of %s type to load in: %s', $type, "\n\n- ".implode("\n- ", $paths))
             );
         }
 
