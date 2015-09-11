@@ -18,23 +18,23 @@ class NewsDataGenerator extends AbstractDataGenerator
     protected function generateNodeFr()
     {
         $htmlContent = <<<EOF
-[div=content2]
-    [h=1]Actualité[/h]
-    [article]
-        [h=2]Open Orchestra au SymfonyLive Paris 2015[/h]
-        [p]
+<div class="content2">
+    <h1>Actualité</h1>
+    <article>
+        <h2>Open Orchestra au SymfonyLive Paris 2015</h2>
+        <p>
             Le SymfonyLive est l'évènement incontournable de la communauté Symfony et Open-Source
             francophone. C'est pourquoi l'équipe Open Orchestra a décidé de soutenir l'événement en
             devenant sponsor Gold de cette édition. A cette occasion, Open Orchestra s'est dévoilé
             à la communauté à l'occasion des 10 ans de Symfony devant plus de 600 participants.
-        [/p]
-        [h=2]Open Orchestra sponsorise un sfPot[/h]
-        [p]
+        </p>
+        <h2>Open Orchestra sponsorise un sfPot</h2>
+        <p>
             Le 16 juin 2015, Open Orchestra à participé à l'organisation du SfPot Paris dans les
             locaux de la fondation Mozilla pour environ 100 développeurs Symfony.
-        [/p]
-    [/article]
-[/div]
+        </p>
+    </article>
+</div>
 EOF;
         $name = "Actualités";
         $language = "fr";
@@ -49,22 +49,22 @@ EOF;
     protected function generateNodeEn()
     {
         $htmlContent = <<<EOF
-[div=content2]
-    [h=1]News[/h]
-    [article]
-        [h=2]Open Orchestra at the SymfonyLive - Paris 2015[/h]
-        [p]
+<div class="content2">
+    <h1>News</h1>
+    <article>
+        <h2>Open Orchestra at the SymfonyLive - Paris 2015</h2>
+        <p>
             SymfonyLive is the most important of the French Symfony community.  For this reason, Open Orchestra 's team
             has decide to help the event and become a Gold Sponsor for the 2015 edition. It was the opportunity to reveal
             Open Orchestra to the community for the 10 years of Symfony in front of more than six hundred entrant.
-        [/p]
-        [h=2]Open Orchestra sponsors a sfPot[/h]
-        [p]
+        </p>
+        <h2>Open Orchestra sponsors a sfPot</h2>
+        <p>
             June 16th 2015, Open Orchestra participate to the Paris SfPot organisation in the
            Mozilla foundation office for about hundred hundred 100 Symfony developers.
-        [/p]
-    [/article]
-[/div]
+        </p>
+    </article>
+</div>
 EOF;
         $name = "News";
         $language = "en";
