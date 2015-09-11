@@ -40,9 +40,12 @@ class TransverseDataGenerator extends AbstractDataGenerator
         $siteBlockLogo->setLabel('Wysiwyg logo');
         $siteBlockLogo->setClass('logo');
         $siteBlockLogo->setComponent(TinyMCEWysiwygStrategy::TINYMCEWYSIWYG);
-        $siteBlockLogo->setAttributes(array(
-            "htmlContent" => '<a href="/" id="myLogo"> <img class="tinymce-media" src="../media/logo-orchestra.png" /> </a>',
-        ));
+        $siteBlockLogo->setAttributes(
+            array(
+                "htmlContent" =>
+                    '<a href="/" id="myLogo">[media=original]' . $this->references['logo-orchestra']->getId() . '[/media]',
+            )
+        );
         $siteBlockLogo->addArea(array('nodeId' => 0, 'areaId' => 'main'));
 
         $siteBlockMainMenu = new Block();

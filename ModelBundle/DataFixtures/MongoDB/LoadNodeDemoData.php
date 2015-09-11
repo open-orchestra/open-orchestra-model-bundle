@@ -30,6 +30,7 @@ class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterfac
         $references = array();
         $references["status-published"] = $this->getReference('status-published');
         $references["status-draft"] = $this->getReference('status-draft');
+        $references["logo-orchestra"] = $this->getReference('logo-orchestra');
 
         $languages = array("en", "fr");
 
