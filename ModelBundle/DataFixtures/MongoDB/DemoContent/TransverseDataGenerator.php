@@ -40,9 +40,12 @@ class TransverseDataGenerator extends AbstractDataGenerator
         $siteBlockLogo->setLabel('Wysiwyg logo');
         $siteBlockLogo->setClass('logo');
         $siteBlockLogo->setComponent(TinyMCEWysiwygStrategy::TINYMCEWYSIWYG);
-        $siteBlockLogo->setAttributes(array(
-            "htmlContent" => '[url=/][img class="tinymce-media"]../media/logo-orchestra.png[/img][/url]',
-        ));
+        $siteBlockLogo->setAttributes(
+            array(
+                "htmlContent" =>
+                    '<a href="/" id="myLogo">[media=original]' . $this->references['logo-orchestra']->getId() . '[/media]',
+            )
+        );
         $siteBlockLogo->addArea(array('nodeId' => 0, 'areaId' => 'main'));
 
         $siteBlockMainMenu = new Block();
@@ -57,23 +60,23 @@ class TransverseDataGenerator extends AbstractDataGenerator
         $siteBlockFooter->setComponent(TinyMCEWysiwygStrategy::TINYMCEWYSIWYG);
         $siteBlockFooter->setAttributes(array(
             "htmlContent" => <<<EOF
-[div=footer-networks]
-    [h=4]Networks[/h]
-    [ul]
-        [li][url]http://www.businessdecision.fr/[/url][/li]
-        [li][url]http://www.interakting.com/[/url][/li]
-    [/ul]
-[/div]
-[div=footer-contact]
-    [h=4]Contact[/h]
-    [ul]
-        [li]Interakting[/li]
-        [li]153 Rue de Courcelles[/li]
-        [li]75017 Paris France[/li]
-        [li]01 56 21 21 21[/li]
-        [li][url=/node/fixture_page_contact']contact@interakting.com[/url][/li]
-    [/ul]
-[/div]
+<div class='footer-networks'>
+    <h4>Networks</h4>
+    <ul>
+        <li><a href="http://www.businessdecision.fr/">http://www.businessdecision.fr/</a></li>
+        <li><a href="http://www.interakting.com/">http://www.interakting.com/</a></li>
+    </ul>
+</div>
+<div class="footer-contact">
+    <h4>Contact</h4>
+    <ul>
+        <li>Interakting</li>
+        <li>153 Rue de Courcelles</li>
+        <li>75017 Paris France</li>
+        <li>01 56 21 21 21</li>
+        <li><a href='/node/fixture_page_contact'>contact@interakting.com</a></li>
+    </ul>
+</div>
 EOF
         ));
         $siteBlockFooter->addArea(array('nodeId' => 0, 'areaId' => 'main'));
