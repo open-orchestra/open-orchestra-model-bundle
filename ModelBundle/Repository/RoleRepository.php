@@ -35,4 +35,44 @@ class RoleRepository extends AbstractAggregateRepository implements RoleReposito
 
         return $this->singleHydrateAggregateQuery($qa);
     }
+
+    /**
+     * Find the roles that don't contain fromStatus and toStatus
+     *
+     * @return array
+     */
+    public function findAccessRole()
+    {
+        $qa = $this->createAggregationQuery();
+        $qa->match(
+            array(
+                'fromStatus' => null,
+                'toStatus' => null,
+            )
+        );
+
+        return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
+     * Find the roles that don't contain fromStatus and toStatus
+     *
+     * @return array
+     */
+    public function findWorkflowRole()
+    {
+        $qa = $this->createAggregationQuery();
+        $qa->match(
+            array(
+                'fromStatus' => array(
+                    '$ne' => null
+                ),
+                'toStatus' => array(
+                    '$ne' => null
+                ),
+            )
+        );
+
+        return $this->hydrateAggregateQuery($qa);
+    }
 }
