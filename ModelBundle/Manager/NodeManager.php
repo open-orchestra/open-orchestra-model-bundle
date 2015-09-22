@@ -4,8 +4,6 @@ namespace OpenOrchestra\ModelBundle\Manager;
 
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Manager\NodeManagerInterface;
-use Symfony\Component\Config\Definition\Exception\DuplicateKeyException;
-use Symfony\Component\DependencyInjection\ContainerAware;
 
 /**
  * Class NodeManager
