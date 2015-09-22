@@ -43,7 +43,7 @@ class TransverseDataGenerator extends AbstractDataGenerator
         $siteBlockLogo->setAttributes(
             array(
                 "htmlContent" =>
-                    '<a href="/" id="myLogo">[media=original]' . $this->references['logo-orchestra']->getId() . '[/media]',
+                    '<a href="/" id="myLogo">[media=original]' . $this->references['logo-orchestra']->getId() . '[/media]</a>',
             )
         );
         $siteBlockLogo->addArea(array('nodeId' => 0, 'areaId' => 'main'));
