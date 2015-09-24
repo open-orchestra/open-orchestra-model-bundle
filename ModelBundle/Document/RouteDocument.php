@@ -241,7 +241,7 @@ class RouteDocument implements RouteDocumentInterface
     /**
      * @param array $defaults
      */
-    public function setDefaults($defaults)
+    public function setDefaults(array $defaults)
     {
         $this->defaults = $defaults;
     }
