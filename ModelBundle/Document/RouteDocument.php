@@ -34,6 +34,34 @@ class RouteDocument implements RouteDocumentInterface
      *
      * @ODM\Field(type="string")
      */
+    protected $nodeId;
+
+    /**
+     * @var string
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $language;
+
+    /**
+     * @var string
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $siteId;
+
+    /**
+     * @var string
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $aliasId;
+
+    /**
+     * @var string
+     *
+     * @ODM\Field(type="string")
+     */
     protected $pattern;
 
     /**
@@ -42,13 +70,6 @@ class RouteDocument implements RouteDocumentInterface
      * @ODM\Field(type="string")
      */
     protected $host;
-
-    /**
-     * @var array
-     *
-     * @ODM\Field(type="raw")
-     */
-    protected $defaults = array();
 
     /**
      * @var array
@@ -235,15 +256,12 @@ class RouteDocument implements RouteDocumentInterface
      */
     public function getDefaults()
     {
-        return $this->defaults;
-    }
-
-    /**
-     * @param array $defaults
-     */
-    public function setDefaults(array $defaults)
-    {
-        $this->defaults = $defaults;
+        return array(
+            '_locale' => $this->getLanguage(),
+            'nodeId' => $this->getNodeId(),
+            'siteId' => $this->getSiteId(),
+            'aliasId' => $this->getAliasId(),
+        );
     }
 
     /**
@@ -436,5 +454,69 @@ class RouteDocument implements RouteDocumentInterface
     public function getWeight()
     {
         return $this->weight;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNodeId()
+    {
+        return $this->nodeId;
+    }
+
+    /**
+     * @param string $nodeId
+     */
+    public function setNodeId($nodeId)
+    {
+        $this->nodeId = $nodeId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * @param string $language
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSiteId()
+    {
+        return $this->siteId;
+    }
+
+    /**
+     * @param string $siteId
+     */
+    public function setSiteId($siteId)
+    {
+        $this->siteId = $siteId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAliasId()
+    {
+        return $this->aliasId;
+    }
+
+    /**
+     * @param string $aliasId
+     */
+    public function setAliasId($aliasId)
+    {
+        $this->aliasId = $aliasId;
     }
 }
