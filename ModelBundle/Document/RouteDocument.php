@@ -76,6 +76,13 @@ class RouteDocument implements RouteDocumentInterface
      *
      * @ODM\Field(type="raw")
      */
+    protected $defaults;
+
+    /**
+     * @var array
+     *
+     * @ODM\Field(type="raw")
+     */
     protected $requirements = array();
 
     /**
@@ -256,12 +263,24 @@ class RouteDocument implements RouteDocumentInterface
      */
     public function getDefaults()
     {
-        return array(
-            '_locale' => $this->getLanguage(),
-            'nodeId' => $this->getNodeId(),
-            'siteId' => $this->getSiteId(),
-            'aliasId' => $this->getAliasId(),
-        );
+        if (null === $this->defaults) {
+            return array(
+                '_locale' => $this->getLanguage(),
+                'nodeId' => $this->getNodeId(),
+                'siteId' => $this->getSiteId(),
+                'aliasId' => $this->getAliasId(),
+            );
+        }
+
+        return $this->defaults;
+    }
+
+    /**
+     * @param array $defaults
+     */
+    public function setDefaults(array $defaults)
+    {
+        $this->defaults = $defaults;
     }
 
     /**
