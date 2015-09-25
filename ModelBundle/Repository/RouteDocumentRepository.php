@@ -49,4 +49,16 @@ class RouteDocumentRepository extends AbstractAggregateRepository implements Rou
 
         return $this->hydrateAggregateQuery($qa);
     }
+
+    /**
+     * @param string $nodeId
+     * @param string $siteId
+     * @param string $language
+     *
+     * @return Collection
+     */
+    public function findByNodeIdSiteIdAndLanguage($nodeId, $siteId, $language)
+    {
+        return $this->findBy(array('nodeId' => $nodeId, 'siteId' => $siteId, 'language' => $language));
+    }
 }

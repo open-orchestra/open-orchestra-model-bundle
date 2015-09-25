@@ -10,9 +10,9 @@ use OpenOrchestra\ModelBundle\Document\ContentAttribute;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 
 /**
- * Class LoadContentThousand
+ * Class LoadContentThousandData
  */
-class LoadContentThousand extends AbstractFixture implements OrderedFixtureInterface
+class LoadContentThousandData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
      * @param ObjectManager $objectManager
