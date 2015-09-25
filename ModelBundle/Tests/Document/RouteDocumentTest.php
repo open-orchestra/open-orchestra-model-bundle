@@ -30,7 +30,7 @@ class RouteDocumentTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider providePatternAndDecomposition
      */
-    public function testSetSetPattern($pattern, array $tokens, $weight)
+    public function testSetPattern($pattern, array $tokens, $weight)
     {
         $this->document->setPattern($pattern);
 
