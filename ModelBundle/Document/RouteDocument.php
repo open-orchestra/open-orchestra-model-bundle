@@ -106,7 +106,6 @@ class RouteDocument implements RouteDocumentInterface
      */
     protected $methods;
 
-
     /**
      * @var string
      *
