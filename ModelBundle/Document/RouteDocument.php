@@ -12,6 +12,20 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
  *   collection="route_document",
  *   repositoryClass="OpenOrchestra\ModelBundle\Repository\RouteDocumentRepository"
  * )
+ * @ODM\Indexes({
+ *  @ODM\Index(keys={"name"="asc"}),
+ *  @ODM\Index(keys={"token0"="asc"}),
+ *  @ODM\Index(keys={"token1"="asc"}),
+ *  @ODM\Index(keys={"token2"="asc"}),
+ *  @ODM\Index(keys={"token3"="asc"}),
+ *  @ODM\Index(keys={"token4"="asc"}),
+ *  @ODM\Index(keys={"token5"="asc"}),
+ *  @ODM\Index(keys={"token6"="asc"}),
+ *  @ODM\Index(keys={"token7"="asc"}),
+ *  @ODM\Index(keys={"token8"="asc"}),
+ *  @ODM\Index(keys={"token9"="asc"}),
+ *  @ODM\Index(keys={"token10"="asc"})
+ * })
  */
 class RouteDocument implements RouteDocumentInterface
 {
