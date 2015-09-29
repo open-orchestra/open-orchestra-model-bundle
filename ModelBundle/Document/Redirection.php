@@ -90,7 +90,7 @@ class Redirection implements RedirectionInterface
      */
     public function getSiteId()
     {
-        return $this->siteId;
+        return (string) $this->siteId;
     }
 
     /**

@@ -82,6 +82,7 @@ class EntityTest extends \PHPUnit_Framework_TestCase
             array('Redirection',      'RedirectionInterface'),
             array('Redirection',      'ReadRedirectionInterface'),
             array('TrashItem',        'TrashItemInterface'),
+            array('RouteDocument',    'RouteDocumentInterface'),
         );
     }
 }
