@@ -10,7 +10,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "open-orchestra/open-orchestra-model-interface": "*",
+        "open-orchestra/open-orchestra-model-interface": "~1.0.0",
         "doctrine/data-fixtures":"1.1.1",
         "doctrine/mongodb-odm": "1.0.2",
         "doctrine/mongodb-odm-bundle" : "3.0.1",
