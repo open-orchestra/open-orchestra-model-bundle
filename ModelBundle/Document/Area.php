@@ -87,7 +87,7 @@ class Area implements AreaInterface
      */
     public function __construct()
     {
-        $this->subAreas = new ArrayCollection();
+        $this->initializeCollections();
     }
 
     /**
@@ -332,5 +332,21 @@ class Area implements AreaInterface
     public function getBlocks()
     {
         return $this->blocks;
+    }
+
+    /**
+     * Initialize collections
+     */
+    protected function initializeCollections()
+    {
+        $this->subAreas = new ArrayCollection();
+    }
+
+    /**
+     * Initialize collections on clone
+     */
+    public function __clone()
+    {
+        $this->initializeCollections();
     }
 }
