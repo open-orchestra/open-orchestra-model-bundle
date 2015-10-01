@@ -26,8 +26,8 @@ class LoadRouteDocumentData implements FixtureInterface, OrchestraFunctionalFixt
             'baz/bar',
             'foo/{bar}/baz',
             'zero/one/two/three/four/five/six/{seven}/eight/nine/ten/eleven',
-            'zero/one/two/three/four/five/six/{seven}/eight/nine/ten/eleven/twelve',
             'zero/one/two/three/four/five/six/{seven}/eight/nine/ten/{eleven}/twelve',
+            'zero/one/two/three/four/five/six/{seven}/eight/nine/ten/eleven/twelve',
             'zero/one/two/three/four/five/six/{seven}/eight/nine/ten/eleven/{twelve}'
         );
 

@@ -266,7 +266,6 @@ class RouteDocument implements RouteDocumentInterface
         $restPattern = null;
         foreach (array_slice($workingPattern, 11, null, true) as $key => $element) {
             $restPattern[$key] = $element;
-            $this->weight +=  pow(10, $key);
             if (preg_match('/{.*}/', $element)) {
                 $restPattern[$key] = '*';
                 $this->weight += pow(10, $key);
