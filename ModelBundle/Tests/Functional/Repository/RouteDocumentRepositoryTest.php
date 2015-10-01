@@ -80,4 +80,67 @@ class RouteDocumentRepositoryTest extends KernelTestCase
             array('foo/bar', 'foo/bar', 'foo/{bar}'),
         );
     }
+
+    /**
+     * @param string $pathInfo
+     * @param int    $count
+     * @param string $name0
+     * @param string $name1
+     * @param string $name2
+     * @param string $name3
+     *
+     * @dataProvider provideLongUrlPattern
+     */
+    public function testFindByPathInfoWithLongUrl($pathInfo, $count, $name0, $name1, $name2, $name3)
+    {
+        $routes = $this->repository->findByPathInfo($pathInfo);
+
+        $this->assertCount($count, $routes);
+        $this->assertSame($name0, $routes[0]->getName());
+        $this->assertSame($name1, $routes[1]->getName());
+        $this->assertSame($name2, $routes[2]->getName());
+        $this->assertSame($name3, $routes[3]->getName());
+
+    }
+
+    /**
+     * @return array
+     */
+    public function provideLongUrlPattern()
+    {
+        return array(
+            array(
+                'zero/one/two/three/four/five/six/{seven}/eight/nine/ten/eleven',
+                4,
+                'zero/one/two/three/four/five/six/{seven}/eight/nine/ten/eleven',
+                'zero/one/two/three/four/five/six/{seven}/eight/nine/ten/eleven/twelve',
+                'zero/one/two/three/four/five/six/{seven}/eight/nine/ten/{eleven}/twelve',
+                'zero/one/two/three/four/five/six/{seven}/eight/nine/ten/eleven/{twelve}',
+            ),
+            array(
+                'zero/one/two/three/four/five/six/{seven}/eight/nine/ten/eleven/twelve',
+                4,
+                'zero/one/two/three/four/five/six/{seven}/eight/nine/ten/eleven',
+                'zero/one/two/three/four/five/six/{seven}/eight/nine/ten/eleven/twelve',
+                'zero/one/two/three/four/five/six/{seven}/eight/nine/ten/{eleven}/twelve',
+                'zero/one/two/three/four/five/six/{seven}/eight/nine/ten/eleven/{twelve}',
+            ),
+            array(
+                'zero/one/two/three/four/five/six/{seven}/eight/nine/ten/eleven/other',
+                4,
+                'zero/one/two/three/four/five/six/{seven}/eight/nine/ten/eleven',
+                'zero/one/two/three/four/five/six/{seven}/eight/nine/ten/eleven/twelve',
+                'zero/one/two/three/four/five/six/{seven}/eight/nine/ten/{eleven}/twelve',
+                'zero/one/two/three/four/five/six/{seven}/eight/nine/ten/eleven/{twelve}',
+            ),
+            array(
+                'zero/one/two/three/four/five/six/{seven}/eight/nine/ten/other/twelve',
+                4,
+                'zero/one/two/three/four/five/six/{seven}/eight/nine/ten/eleven',
+                'zero/one/two/three/four/five/six/{seven}/eight/nine/ten/eleven/twelve',
+                'zero/one/two/three/four/five/six/{seven}/eight/nine/ten/{eleven}/twelve',
+                'zero/one/two/three/four/five/six/{seven}/eight/nine/ten/eleven/{twelve}',
+            ),
+        );
+    }
 }

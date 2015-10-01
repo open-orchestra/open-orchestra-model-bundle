@@ -200,6 +200,13 @@ class RouteDocument implements RouteDocumentInterface
     /**
      * @var string
      *
+     * @ODM\Field(type="raw")
+     */
+    protected $token11;
+
+    /**
+     * @var string
+     *
      * @ODM\Field(type="string")
      */
     protected $condition;
@@ -252,9 +259,21 @@ class RouteDocument implements RouteDocumentInterface
 
         $workingPattern = explode('/', trim($pattern, '/'));
 
-        foreach ($workingPattern as $key => $value) {
+        foreach (array_slice($workingPattern, 0, 11) as $key => $value) {
             $this->setToken($key, $value);
         }
+
+        $restPattern = null;
+        foreach (array_slice($workingPattern, 11, null, true) as $key => $element) {
+            $restPattern[$key] = $element;
+            $this->weight +=  pow(10, $key);
+            if (preg_match('/{.*}/', $element)) {
+                $restPattern[$key] = '*';
+                $this->weight += pow(10, $key);
+            }
+        }
+
+        $this->token11 = $restPattern;
     }
 
     /**
@@ -478,6 +497,14 @@ class RouteDocument implements RouteDocumentInterface
     public function getToken10()
     {
         return $this->token10;
+    }
+
+    /**
+     * @return string
+     */
+    public function getToken11()
+    {
+        return $this->token11;
     }
 
     /**

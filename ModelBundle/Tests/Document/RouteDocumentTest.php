@@ -59,7 +59,11 @@ class RouteDocumentTest extends \PHPUnit_Framework_TestCase
             array('foo/{bar}/baz', array('foo', '*', 'baz'), 10),
             array('{foo}/{bar}/{baz}', array('*', '*', '*'), 111),
             array('zero/one/two/three/four/five/six/seven/eight/nine/ten', array('zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'), 0),
-            array('zero/one/two/three/four/five/six/{seven}/eight/nine/ten', array('zero', 'one', 'two', 'three', 'four', 'five', 'six', '*', 'eight', 'nine', 'ten'), 10000000),
+            array('zero/one/two/three/four/five/six/{seven}/eight/nine/ten', array('zero', 'one', 'two', 'three', 'four', 'five', 'six', '*', 'eight', 'nine', 'ten', null), 10000000),
+            array('zero/one/two/three/four/five/six/{seven}/eight/nine/ten/eleven', array('zero', 'one', 'two', 'three', 'four', 'five', 'six', '*', 'eight', 'nine', 'ten', array(11 => 'eleven')), 100010000000),
+            array('zero/one/two/three/four/five/six/{seven}/eight/nine/ten/eleven/twelve', array('zero', 'one', 'two', 'three', 'four', 'five', 'six', '*', 'eight', 'nine', 'ten', array(11 => 'eleven', 12 => 'twelve')), 1100010000000),
+            array('zero/one/two/three/four/five/six/{seven}/eight/nine/ten/{eleven}/twelve', array('zero', 'one', 'two', 'three', 'four', 'five', 'six', '*', 'eight', 'nine', 'ten', array(11 => '*', 12 => 'twelve')), 1200010000000),
+            array('zero/one/two/three/four/five/six/{seven}/eight/nine/ten/eleven/{twelve}', array('zero', 'one', 'two', 'three', 'four', 'five', 'six', '*', 'eight', 'nine', 'ten', array(11 => 'eleven', 12 => '*')), 2100010000000),
         );
     }
 }
