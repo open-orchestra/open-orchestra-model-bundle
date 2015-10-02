@@ -79,9 +79,9 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         }
 
         $elementName = 'content';
+        $qa->sort(array('version' => 1));
         $qa->group(array(
             '_id' => array('contentId' => '$contentId'),
-            'version' => array('$max' => '$version'),
             $elementName => array('$last' => '$$ROOT')
         ));
 
@@ -230,7 +230,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         }
 
         $elementName = 'content';
-        $qa->group($this->generateLastVersionFilter($elementName));
+        $this->generateLastVersionFilter($qa, $elementName);
 
         $qa = $this->generateFilterSort(
             $qa,
@@ -260,7 +260,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
             $qa->match($this->generateSiteIdAndNotLinkedFilter($siteId));
         }
         $elementName = 'content';
-        $qa->group($this->generateLastVersionFilter($elementName));
+        $this->generateLastVersionFilter($qa, $elementName);
 
         return $this->countDocumentAggregateQuery($qa, $elementName);
     }
@@ -275,7 +275,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
         $qa->match($this->generateDeletedFilter());
         $elementName = 'content';
-        $qa->group($this->generateLastVersionFilter($elementName));
+        $this->generateLastVersionFilter($qa, $elementName);
 
         return $this->countDocumentAggregateQuery($qa);
     }
@@ -339,17 +339,18 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     }
 
     /**
+     * @param Stage  $qa
      * @param string $elementName
      *
      * @return array
      */
-    protected function generateLastVersionFilter($elementName)
+    protected function generateLastVersionFilter(Stage $qa, $elementName)
     {
-        return array(
+        $qa->sort(array('version' => 1));
+        $qa->group(array(
             '_id' => array('contentId' => '$contentId'),
-            'version' => array('$max' => '$version'),
             $elementName => array('$last' => '$$ROOT')
-        );
+        ));
     }
 
     /**

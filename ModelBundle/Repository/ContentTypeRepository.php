@@ -8,6 +8,7 @@ use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
 use OpenOrchestra\Pagination\MongoTrait\PaginationTrait;
 use OpenOrchestra\Repository\AbstractAggregateRepository;
+use Solution\MongoAggregation\Pipeline\Stage;
 
 /**
  * Class ContentTypeRepository
@@ -30,7 +31,7 @@ class ContentTypeRepository extends AbstractAggregateRepository implements Conte
             )
         );
         $elementName = 'contentType';
-        $qa->group($this->generateLastVersionFilter($elementName));
+        $this->generateLastVersionFilter($qa, $elementName);
 
         if ($language) {
             $qa->sort(
@@ -55,7 +56,7 @@ class ContentTypeRepository extends AbstractAggregateRepository implements Conte
         $qa = $this->generateFilter($qa, $configuration);
 
         $elementName = 'contentType';
-        $qa->group($this->generateLastVersionFilter($elementName));
+        $this->generateLastVersionFilter($qa, $elementName);
 
         $qa = $this->generateFilterSort(
             $qa,
@@ -96,7 +97,7 @@ class ContentTypeRepository extends AbstractAggregateRepository implements Conte
         $qa = $this->generateFilter($qa, $configuration);
 
         $elementName = 'contentType';
-        $qa->group($this->generateLastVersionFilter($elementName));
+        $this->generateLastVersionFilter($qa, $elementName);
 
         return $this->countDocumentAggregateQuery($qa, $elementName);
     }
@@ -108,7 +109,7 @@ class ContentTypeRepository extends AbstractAggregateRepository implements Conte
     {
         $qa = $this->createAggregateQueryNotDeletedInLastVersion();
         $elementName = 'content';
-        $qa->group($this->generateLastVersionFilter($elementName));
+        $this->generateLastVersionFilter($qa, $elementName);
 
         return $this->countDocumentAggregateQuery($qa);
     }
@@ -128,17 +129,18 @@ class ContentTypeRepository extends AbstractAggregateRepository implements Conte
     }
 
     /**
-     * @param $elementName
+     * @param Stage  $qa
+     * @param string $elementName
      *
      * @return array
      */
-    protected function generateLastVersionFilter($elementName)
+    protected function generateLastVersionFilter(Stage $qa, $elementName)
     {
-        return array(
-            '_id' => array('contentTypeId' => '$contentTypeId'),
-            'version' => array('$max' => '$version'),
+        $qa->sort(array('version' => 1));
+        $qa->group(array(
+            '_id' => array('contentId' => '$contentId'),
             $elementName => array('$last' => '$$ROOT')
-        );
+        ));
     }
 
     /**
