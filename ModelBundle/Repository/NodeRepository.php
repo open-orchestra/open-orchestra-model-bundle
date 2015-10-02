@@ -21,7 +21,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
 
     /**
      * @param string $mongoId
-     * 
+     *
      * @return \OpenOrchestra\ModelInterface\Model\NodeInterface
      */
     public function findOneById($mongoId)
@@ -302,9 +302,9 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     protected function findLastVersion(Stage $qa)
     {
         $elementName = 'node';
+        $qa->sort(array('version' => 1));
         $qa->group(array(
             '_id' => array('nodeId' => '$nodeId'),
-            'version' => array('$max' => '$version'),
             $elementName => array('$last' => '$$ROOT')
         ));
 
@@ -512,7 +512,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     /**
      * @param string $nodeType
      * @param string $siteId
-     * 
+     *
      * @return array
      */
     public function findAllNodesOfTypeInLastPublishedVersionForSite($nodeType, $siteId)
