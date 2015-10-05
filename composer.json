@@ -30,9 +30,8 @@
         "bin-dir" : "bin"
     },
     "autoload": {
-        "psr-0": {
-            "OpenOrchestra\\ModelBundle": ""
+        "psr-4": {
+            "OpenOrchestra\\ModelBundle\\": "ModelBundle/"
         }
-    },
-    "target-dir": "OpenOrchestra"
+    }
 }
