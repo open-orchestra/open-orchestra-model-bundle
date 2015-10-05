@@ -24,7 +24,11 @@ class LoadRouteDocumentData implements FixtureInterface, OrchestraFunctionalFixt
             'foo/{bar}',
             'foo/bar',
             'baz/bar',
-            'foo/{bar}/baz'
+            'foo/{bar}/baz',
+            'zero/one/two/three/four/five/six/{seven}/eight/nine/ten/eleven',
+            'zero/one/two/three/four/five/six/{seven}/eight/nine/ten/{eleven}/twelve',
+            'zero/one/two/three/four/five/six/{seven}/eight/nine/ten/eleven/twelve',
+            'zero/one/two/three/four/five/six/{seven}/eight/nine/ten/eleven/{twelve}'
         );
 
         foreach ($patterns as $pattern) {
