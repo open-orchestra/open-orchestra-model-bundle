@@ -2,6 +2,7 @@ parameters:
     open_orchestra_model.type.orchestra_site.class: OpenOrchestra\ModelBundle\Form\Type\OrchestraSiteType
     open_orchestra_model.type.orchestra_status.class: OpenOrchestra\ModelBundle\Form\Type\OrchestraStatusType
     open_orchestra_model.type.orchestra_theme.class: OpenOrchestra\ModelBundle\Form\Type\OrchestraThemeType
+    open_orchestra_model.type.orchestra_role.class: OpenOrchestra\ModelBundle\Form\Type\OrchestraRoleType
 
 services:
     open_orchestra_model.type.orchestra_site:
@@ -25,3 +26,10 @@ services:
             - %open_orchestra_model.document.theme.class%
         tags:
             - { name: form.type, alias: orchestra_theme }
+    open_orchestra_model.type.orchestra_role:
+        class: %open_orchestra_model.type.orchestra_role.class%
+        arguments:
+            - %open_orchestra_model.document.role.class%
+            - @open_orchestra_model.repository.role
+        tags:
+            - { name: form.type, alias: orchestra_role}
