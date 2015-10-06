@@ -64,5 +64,4 @@ class OrchestraRoleTypeTest extends \PHPUnit_Framework_TestCase
             'choices' => $this->roles
         ));
     }
-
 }
