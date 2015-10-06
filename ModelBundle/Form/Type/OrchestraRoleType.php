@@ -54,14 +54,5 @@ class OrchestraRoleType extends AbstractOrchestraRoleType
     {
         return 'document';
     }
-
-    /**
-     *
-     * @return string The name of this type
-     */
-    public function getName()
-    {
-        return "orchestra_role";
-    }
 }
 
