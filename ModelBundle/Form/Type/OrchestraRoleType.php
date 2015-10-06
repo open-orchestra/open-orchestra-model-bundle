@@ -1,20 +1,22 @@
 <?php
+
 namespace OpenOrchestra\ModelBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface;
+use OpenOrchestra\ModelInterface\Form\Type\AbstractOrchestraRoleType;
 
 /**
  * class OrchestraRoleType
  */
-class OrchestraRoleType extends AbstractType
+class OrchestraRoleType extends AbstractOrchestraRoleType
 {
     protected $roleClass;
-        protected $roleRepositoryInterface;
+    protected $roleRepositoryInterface;
 
     /**
-     * @param string $workflowFunctionClass            
+     * @param string                  $roleClass            
      * @param RoleRepositoryInterface $roleRepositoryInterface            
      */
     public function __construct($roleClass, RoleRepositoryInterface $roleRepositoryInterface)
