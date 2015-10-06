@@ -33,4 +33,3 @@ services:
             - @open_orchestra_model.repository.role
         tags:
             - { name: form.type, alias: orchestra_role}
-            
