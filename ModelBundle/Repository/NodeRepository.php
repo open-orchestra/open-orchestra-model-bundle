@@ -20,13 +20,43 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     use AreaFinderTrait;
 
     /**
-     * @param string $mongoId
-     * 
-     * @return \OpenOrchestra\ModelInterface\Model\NodeInterface
+     * @param string $entityId
+     *
+     * @deprecated will be removed in 1.2.0, use findVersionBy instead
+     *
+     * @return NodeInterface
      */
-    public function findOneById($mongoId)
+    public function findOneById($entityId)
     {
-        return $this->find(new \MongoId($mongoId));
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.0 and will be removed in 1.2.0. Use the '.__CLASS__.'::findVersionByDocumentId method instead.', E_USER_DEPRECATED);
+
+        return $this->findVersionByDocumentId($entityId);
+    }
+
+
+    /**
+     * @param string $entityId
+     *
+     * @return NodeInterface
+     */
+    public function findVersionByDocumentId($entityId)
+    {
+        return $this->find(new \MongoId($entityId));
+    }
+
+    /**
+     * @param string $language
+     * @param string $siteId
+     *
+     * @deprecated will be removed in 1.2.0, use getFooterTree instead
+     *
+     * @return array
+     */
+    public function getFooterTreeByLanguageAndSiteId($language, $siteId)
+    {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.0 and will be removed in 1.2.0. Use the '.__CLASS__.'::getFooteTree method instead.', E_USER_DEPRECATED);
+
+        return $this->getFooterTree($language, $siteId);
     }
 
     /**
@@ -35,7 +65,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      *
      * @return array
      */
-    public function getFooterTreeByLanguageAndSiteId($language, $siteId)
+    public function getFooterTree($language, $siteId)
     {
         return $this->getTreeByLanguageAndFieldAndSiteId($language, 'inFooter', $siteId);
     }
@@ -44,9 +74,24 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      * @param string $language
      * @param string $siteId
      *
+     * @deprecated will be removed in 1.2.0, use getMenuTree instead
+     *
      * @return array
      */
     public function getMenuTreeByLanguageAndSiteId($language, $siteId)
+    {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.0 and will be removed in 1.2.0. Use the '.__CLASS__.'::getMenuTree method instead.', E_USER_DEPRECATED);
+
+        return $this->getMenuTree($language, $siteId);
+    }
+
+    /**
+     * @param string $language
+     * @param string $siteId
+     *
+     * @return array
+     */
+    public function getMenuTree($language, $siteId)
     {
         return $this->getTreeByLanguageAndFieldAndSiteId($language, 'inMenu', $siteId);
     }
@@ -57,11 +102,28 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      * @param string $language
      * @param string $siteId
      *
+     * @deprecated will be removed in 1.2.0, use getSubMenu instead
+     *
      * @return array
      */
     public function getSubMenuByNodeIdAndNbLevelAndLanguageAndSiteId($nodeId, $nbLevel, $language, $siteId)
     {
-        $node = $this->findOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion($nodeId, $language, $siteId);
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.0 and will be removed in 1.2.0. Use the '.__CLASS__.'::getSubMenu method instead.', E_USER_DEPRECATED);
+
+        return $this->getSubMenu($nodeId, $nbLevel, $language, $siteId);
+    }
+
+    /**
+     * @param string $nodeId
+     * @param int    $nbLevel
+     * @param string $language
+     * @param string $siteId
+     *
+     * @return array
+     */
+    public function getSubMenu($nodeId, $nbLevel, $language, $siteId)
+    {
+        $node = $this->findPublishedInLastVersion($nodeId, $language, $siteId);
 
         $list = array();
         $list[] = $node;
@@ -75,9 +137,25 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      * @param string $language
      * @param string $siteId
      *
+     * @deprecated will be removed in 1.2.0, use findPublishedInLastVersion instead
+     *
      * @return mixed
      */
     public function findOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion($nodeId, $language, $siteId)
+    {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.0 and will be removed in 1.2.0. Use the '.__CLASS__.'::findPpublishedInLastVersion method instead.', E_USER_DEPRECATED);
+
+        return $this->findPublishedInLastVersion($nodeId, $language, $siteId);
+    }
+
+    /**
+     * @param string $nodeId
+     * @param string $language
+     * @param string $siteId
+     *
+     * @return mixed
+     */
+    public function findPublishedInLastVersion($nodeId, $language, $siteId)
     {
         $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         $filter = array();
@@ -98,9 +176,26 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      * @param string   $siteId
      * @param int|null $version
      *
-     * @return array
+     * @deprecated will be removed in 1.2.0, use findVersion instead
+     *
+     * @return mixed
      */
     public function findOneByNodeIdAndLanguageAndSiteIdAndVersion($nodeId, $language, $siteId, $version = null)
+    {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.0 and will be removed in 1.2.0. Use the '.__CLASS__.'::findVersion method instead.', E_USER_DEPRECATED);
+
+        return $this->findVersion($nodeId, $language, $siteId, $version);
+    }
+
+    /**
+     * @param string   $nodeId
+     * @param string   $language
+     * @param string   $siteId
+     * @param int|null $version
+     *
+     * @return mixed
+     */
+    public function findVersion($nodeId, $language, $siteId, $version = null)
     {
         if (!is_null($version)) {
             $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
@@ -114,7 +209,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
             return $this->singleHydrateAggregateQuery($qa);
         }
 
-        return $this->findOneByNodeIdAndLanguageAndSiteIdInLastVersion($nodeId, $language, $siteId);
+        return $this->findInLastVersion($nodeId, $language, $siteId);
     }
 
     /**
@@ -122,11 +217,29 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      * @param string $language
      * @param string $siteId
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws \Exception
+     *
+     * @deprecated will be removed in 1.2.0, use findByNodeAndLanguageAndSite instead
      *
      * @return mixed
      */
     public function findByNodeIdAndLanguageAndSiteId($nodeId, $language, $siteId)
+    {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.0 and will be removed in 1.2.0. Use the '.__CLASS__.'::findByNodeAndLanguageAndSite method instead.', E_USER_DEPRECATED);
+
+        return $this->findByNodeAndLanguageAndSite($nodeId, $language, $siteId);
+    }
+
+    /**
+     * @param string $nodeId
+     * @param string $language
+     * @param string $siteId
+     *
+     * @throws \Exception
+     *
+     * @return mixed
+     */
+    public function findByNodeAndLanguageAndSite($nodeId, $language, $siteId)
     {
         $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         $qa->match(array('nodeId' => $nodeId));
@@ -139,11 +252,29 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      * @param string $language
      * @param string $siteId
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws \Exception
+     *
+     * @deprecated will be removed in 1.2.0, use findPublishedSortedByVersion instead
      *
      * @return mixed
      */
     public function findByNodeIdAndLanguageAndSiteIdAndPublishedOrderedByVersion($nodeId, $language, $siteId)
+    {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.0 and will be removed in 1.2.0. Use the '.__CLASS__.'::findPublishedSortedByVersion method instead.', E_USER_DEPRECATED);
+
+        return $this->findPublishedSortedByVersion($nodeId, $language, $siteId);
+    }
+
+    /**
+     * @param string $nodeId
+     * @param string $language
+     * @param string $siteId
+     *
+     * @throws \Exception
+     *
+     * @return mixed
+     */
+    public function findPublishedSortedByVersion($nodeId, $language, $siteId)
     {
         $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         $qa->match(
@@ -163,9 +294,26 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
+     * @deprecated will be removed in 1.2.0, use findByNodeAndSite instead
+     *
      * @return mixed
      */
     public function findByNodeIdAndSiteId($nodeId, $siteId)
+    {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.0 and will be removed in 1.2.0. Use the '.__CLASS__.'::findByNodeAndSite method instead.', E_USER_DEPRECATED);
+
+        return $this->findByNodeAndSite($nodeId, $siteId);
+    }
+
+    /**
+     * @param string $nodeId
+     * @param string $siteId
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     *
+     * @return mixed
+     */
+    public function findByNodeAndSite($nodeId, $siteId)
     {
         $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
         $qa->match(array('nodeId' => $nodeId));
@@ -177,11 +325,28 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      * @param string $parentId
      * @param string $siteId
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws \Exception
+     *
+     * @deprecated will be removed in 1.2.0, use findByParent instead
      *
      * @return mixed
      */
     public function findByParentIdAndSiteId($parentId, $siteId)
+    {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.0 and will be removed in 1.2.0. Use the '.__CLASS__.'::findByParent method instead.', E_USER_DEPRECATED);
+
+        return $this->findByParent($$parentId, $siteId);
+    }
+
+    /**
+     * @param string $parentId
+     * @param string $siteId
+     *
+     * @throws \Exception
+     *
+     * @return mixed
+     */
+    public function findByParent($parentId, $siteId)
     {
         $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
         $qa->match(array('parentId' => $parentId));
@@ -210,9 +375,25 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      * @param string $language
      * @param string $siteId
      *
+     * @deprecated will be removed in 1.2.0, use findInLastVersion instead
+     *
      * @return mixed
      */
     public function findOneByNodeIdAndLanguageAndSiteIdInLastVersion($nodeId, $language, $siteId)
+    {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.0 and will be removed in 1.2.0. Use the '.__CLASS__.'::findInLastVersion method instead.', E_USER_DEPRECATED);
+
+        return $this->findInLastVersion($nodeId, $language, $siteId);
+    }
+
+    /**
+     * @param string $nodeId
+     * @param string $language
+     * @param string $siteId
+     *
+     * @return mixed
+     */
+    public function findInLastVersion($nodeId, $language, $siteId)
     {
         $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         $qa->match(
@@ -230,11 +411,15 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      * @param string $siteId
      * @param string $type
      *
+     * @deprecated will be removed in 1.2.0, use findLastVersionByType instead
+     *
      * @return array
      */
     public function findLastVersionBySiteId($siteId, $type = NodeInterface::TYPE_DEFAULT)
     {
-        return $this->prepareFindLastVersion($type, $siteId, false);
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.0 and will be removed in 1.2.0. Use the '.__CLASS__.'::findLastVersionByType method instead.', E_USER_DEPRECATED);
+
+        return $this->findLastVersionByType($siteId, $type);
     }
 
     /**
@@ -242,11 +427,26 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      * @param string $type
      *
      * @return array
-     * @deprecated will be removed in 0.3.5
      */
-    public function findDeletedInLastVersionBySiteId($siteId, $type = NodeInterface::TYPE_DEFAULT)
+    public function findLastVersionByType($siteId, $type = NodeInterface::TYPE_DEFAULT)
     {
-        return $this->prepareFindLastVersion($type, $siteId, true);
+        return $this->prepareFindLastVersion($type, $siteId, false);
+    }
+
+    /**
+     * @param string $path
+     * @param string $siteId
+     * @param string $language
+     *
+     * @deprecated will be removed in 1.2.0, use findSubTreeByPath instead
+     *
+     * @return mixed
+     */
+    public function findChildrenByPathAndSiteIdAndLanguage($path, $siteId, $language)
+    {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.0 and will be removed in 1.2.0. Use the '.__CLASS__.'::findSubTreeByPath method instead.', E_USER_DEPRECATED);
+
+        return $this->findSubTreeByPath($path, $siteId, $language);
     }
 
     /**
@@ -256,7 +456,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      *
      * @return mixed
      */
-    public function findChildrenByPathAndSiteIdAndLanguage($path, $siteId, $language)
+    public function findSubTreeByPath($path, $siteId, $language)
     {
         $qa = $this->buildTreeRequest($language, $siteId);
         $qa->match(array('path' => new \MongoRegex('/'.preg_quote($path).'.+/')));
@@ -350,9 +550,24 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      * @param string $language
      * @param string $siteId
      *
-     * @return array
+     * @deprecated will be removed in 1.2.0, use findLastPublishedVersion instead
+     *
+     * @return ReadNodeInterface
      */
     public function findLastPublishedVersionByLanguageAndSiteId($language, $siteId)
+    {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.0 and will be removed in 1.2.0. Use the '.__CLASS__.'::findLastPublishedVersion method instead.', E_USER_DEPRECATED);
+
+        return $this->findLastPublishedVersion($language, $siteId);
+    }
+
+    /**
+     * @param string $language
+     * @param string $siteId
+     *
+     * @return ReadNodeInterface
+     */
+    public function findLastPublishedVersion($language, $siteId)
     {
         $qa = $this->createAggregationQuery();
         $qa->match(
@@ -465,13 +680,15 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      * @param string $nodeId
      * @param string $siteId
      *
-     * @will be removed in 0.3.0, use findByParentIdAndRoutePatternAndNodeIdAndSiteId instead
+     * @deprecated will be removed in 1.2.0, use findByParentAndRoutePattern instead
      *
      * @return array
      */
-    public function findByParentIdAndRoutePatternAndNotNodeIdAndSiteId($parentId, $routePattern, $nodeId, $siteId)
+    public function findByParentIdAndRoutePatternAndNodeIdAndSiteId($parentId, $routePattern, $nodeId, $siteId)
     {
-        return $this->findByParentIdAndRoutePatternAndNodeIdAndSiteId($parentId, $routePattern, $nodeId, $siteId);
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.0 and will be removed in 1.2.0. Use the '.__CLASS__.'::findByParentAndRoutePattern method instead.', E_USER_DEPRECATED);
+
+        return $this->findByParentAndRoutePattern($parentId, $routePattern, $nodeId, $siteId);
     }
 
     /**
@@ -482,7 +699,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      *
      * @return array
      */
-    public function findByParentIdAndRoutePatternAndNodeIdAndSiteId($parentId, $routePattern, $nodeId, $siteId)
+    public function findByParentAndRoutePattern($parentId, $routePattern, $nodeId, $siteId)
     {
         $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
         $qa->match(

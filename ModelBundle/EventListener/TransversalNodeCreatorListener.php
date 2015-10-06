@@ -69,7 +69,7 @@ class TransversalNodeCreatorListener extends ContainerAware
         if ($document instanceof SiteInterface) {
             foreach ($document->getLanguages() as $language) {
                 $node = $this->getNodeRepository()
-                    ->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(NodeInterface::TRANSVERSE_NODE_ID, $language, $document->getSiteId());
+                    ->findInLastVersion(NodeInterface::TRANSVERSE_NODE_ID, $language, $document->getSiteId());
                 if (!$node instanceof NodeInterface) {
                     $this->nodes[] = $this->nodeManager->createTransverseNode($language, $document->getSiteId());
                 }
