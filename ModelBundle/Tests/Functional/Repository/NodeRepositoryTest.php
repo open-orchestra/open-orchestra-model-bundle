@@ -43,7 +43,7 @@ class NodeRepositoryTest extends KernelTestCase
      */
     public function testfindOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion($language, $version, $siteId)
     {
-        $node = $this->repository->findOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion(NodeInterface::ROOT_NODE_ID, $language, $siteId);
+        $node = $this->repository->findPublishedInLastVersion(NodeInterface::ROOT_NODE_ID, $language, $siteId);
 
         $this->assertSameNode($language, $version, $siteId, $node);
     }
@@ -68,7 +68,7 @@ class NodeRepositoryTest extends KernelTestCase
      */
     public function testFindOneByNodeIdAndLanguageAndVersionAndSiteIdWithPublishedDataSet($language, $version, $siteId)
     {
-        $node = $this->repository->findOneByNodeIdAndLanguageAndSiteIdAndVersion(NodeInterface::ROOT_NODE_ID, $language, $siteId, $version);
+        $node = $this->repository->findVersion(NodeInterface::ROOT_NODE_ID, $language, $siteId, $version);
 
         $this->assertSameNode($language, $version, $siteId, $node);
     }
@@ -83,7 +83,7 @@ class NodeRepositoryTest extends KernelTestCase
      */
     public function testFindOneByNodeIdAndLanguageAndVersionAndSiteIdWithNotPublishedDataSet($language, $version = null, $siteId, $versionExpected)
     {
-        $node = $this->repository->findOneByNodeIdAndLanguageAndSiteIdAndVersion(NodeInterface::ROOT_NODE_ID, $language, $siteId, $version);
+        $node = $this->repository->findVersion(NodeInterface::ROOT_NODE_ID, $language, $siteId, $version);
 
         $this->assertSameNode($language, $versionExpected, $siteId, $node);
         $this->assertSame('draft', $node->getStatus()->getName());
@@ -108,9 +108,9 @@ class NodeRepositoryTest extends KernelTestCase
      *
      * @dataProvider provideLanguageLastVersionAndSiteIdNotPublished
      */
-    public function testFindOneByNodeIdAndLanguageAndSiteIdInLastVersion($language, $version = null, $siteId, $versionExpected)
+    public function testFindInLastVersion($language, $version = null, $siteId, $versionExpected)
     {
-        $node = $this->repository->findOneByNodeIdAndLanguageAndSiteIdInLastVersion(NodeInterface::ROOT_NODE_ID, $language, $siteId);
+        $node = $this->repository->findInLastVersion(NodeInterface::ROOT_NODE_ID, $language, $siteId);
 
         $this->assertSameNode($language, $versionExpected, $siteId, $node);
     }
@@ -122,9 +122,9 @@ class NodeRepositoryTest extends KernelTestCase
      *
      * @dataProvider provideLanguageAndVersionListAndSiteId
      */
-    public function testFindByNodeIdAndLanguageAndSiteId($countVersions, $language, $siteId)
+    public function testFindByNodeAndLanguageAndSite($countVersions, $language, $siteId)
     {
-        $nodes = $this->repository->findByNodeIdAndLanguageAndSiteId(NodeInterface::ROOT_NODE_ID, $language, $siteId);
+        $nodes = $this->repository->findByNodeAndLanguageAndSite(NodeInterface::ROOT_NODE_ID, $language, $siteId);
 
         $this->assertCount($countVersions, $nodes);
         foreach ($nodes as $node) {
@@ -175,9 +175,9 @@ class NodeRepositoryTest extends KernelTestCase
      *
      * @dataProvider provideParentIdSiteIdAndCount
      */
-    public function testFindByParentIdAndSiteId($parentId, $siteId, $count)
+    public function testFindByParent($parentId, $siteId, $count)
     {
-        $nodes = $this->repository->findByParentIdAndSiteId($parentId, $siteId);
+        $nodes = $this->repository->findByParent($parentId, $siteId);
 
         $this->assertGreaterThanOrEqual($count, count($nodes));
     }
@@ -229,9 +229,9 @@ class NodeRepositoryTest extends KernelTestCase
      *
      * @dataProvider provideSiteIdAndNumberOfNode
      */
-    public function testFindLastVersionBySiteId($siteId, $nodeNumber, $version)
+    public function testFindLastVersionByType($siteId, $nodeNumber, $version)
     {
-        $nodes = $this->repository->findLastVersionBySiteId($siteId);
+        $nodes = $this->repository->findLastVersionByType($siteId);
 
         $this->assertCount($nodeNumber, $nodes);
         $this->assertSameNode('fr', $version, $siteId, $nodes[NodeInterface::ROOT_NODE_ID]);
@@ -275,7 +275,7 @@ class NodeRepositoryTest extends KernelTestCase
      */
     public function testGetFooterTree($siteId, $nodeNumber, $version, $language = 'fr', $nodeId = null)
     {
-        $nodes = $this->repository->getFooterTreeByLanguageAndSiteId($language, $siteId);
+        $nodes = $this->repository->getFooterTree($language, $siteId);
         $this->assertCount($nodeNumber, $nodes);
         if ($nodeId) {
             $this->assertSameNode($language, $version, $siteId, $nodes[$nodeId], $nodeId);
@@ -305,7 +305,7 @@ class NodeRepositoryTest extends KernelTestCase
      */
     public function testGetMenuTree($siteId, $nodeNumber, $version, $language = 'fr')
     {
-        $nodes = $this->repository->getMenuTreeByLanguageAndSiteId($language, $siteId);
+        $nodes = $this->repository->getMenuTree($language, $siteId);
 
         $this->assertCount($nodeNumber, $nodes);
         $this->assertSameNode($language, $version, $siteId, $nodes[NodeInterface::ROOT_NODE_ID]);
@@ -338,7 +338,7 @@ class NodeRepositoryTest extends KernelTestCase
         if (is_null($local)) {
             $local = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
         }
-        $nodes = $this->repository->getSubMenuByNodeIdAndNbLevelAndLanguageAndSiteId($nodeId, $nbLevel, $local, $siteId);
+        $nodes = $this->repository->getSubMenu($nodeId, $nbLevel, $local, $siteId);
 
         $this->assertCount($nodeNumber, $nodes);
         $this->assertSameNode($local, $version, $siteId, $nodes[0], $nodeId);
@@ -364,9 +364,9 @@ class NodeRepositoryTest extends KernelTestCase
      *
      * @dataProvider provideLanguageSiteIdAndCount
      */
-    public function testFindLastPublishedVersionByLanguageAndSiteId($language, $siteId, $count)
+    public function testFindLastPublishedVersion($language, $siteId, $count)
     {
-        $nodes = $this->repository->findLastPublishedVersionByLanguageAndSiteId($language, $siteId);
+        $nodes = $this->repository->findLastPublishedVersion($language, $siteId);
 
         $this->assertCount($count, $nodes);
         foreach ($nodes as $node) {
