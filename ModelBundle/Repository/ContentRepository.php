@@ -49,6 +49,8 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     public function findLastPublishedVersionByContentIdAndLanguage($contentId, $language)
     {
         @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.0 and will be removed in 1.2.0. Use the '.__CLASS__.'::findLastPublishedVersion method instead.', E_USER_DEPRECATED);
+
+        return $this->findLastPublishedVersion($contentId, $language);
     }
 
     /**
