@@ -46,6 +46,7 @@ class Role implements RoleInterface
 
     /**
      * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\TranslatedValueInterface", strategy="set")
+     * @ORCHESTRA\Search(key="label", type="description")
      */
     protected $descriptions;
 
