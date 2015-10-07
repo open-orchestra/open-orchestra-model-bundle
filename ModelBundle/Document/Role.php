@@ -25,7 +25,6 @@ class Role implements RoleInterface
     protected $id;
 
     /**
-     * @ODM\Field(type="string")
      * @ORCHESTRA\Search(key="description")
      */
     protected $name;
