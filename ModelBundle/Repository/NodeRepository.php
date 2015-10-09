@@ -760,7 +760,8 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         $qa = $this->createAggregationQuery();
         $filter = array(
             'nodeType' => NodeInterface::TYPE_DEFAULT,
-            'createdBy' => $author
+            'createdBy' => $author,
+            'deleted' => false
         );
         if (null !== $published) {
             $filter['status.published'] = $published;
