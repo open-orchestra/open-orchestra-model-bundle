@@ -300,7 +300,8 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     {
         $qa = $this->createAggregationQuery();
         $filter = array(
-            'createdBy' => $author
+            'createdBy' => $author,
+            'deleted' => false
         );
         if (null !== $published) {
             $filter['status.published'] = $published;
