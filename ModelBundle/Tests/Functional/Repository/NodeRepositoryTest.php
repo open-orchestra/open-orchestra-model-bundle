@@ -148,18 +148,18 @@ class NodeRepositoryTest extends KernelTestCase
      * @param string $siteId
      * @param int    $count
      *
-     * @dataProvider provideNodeIdSiteIdAndCount
+     * @dataProvider provideNodeSiteAndCount
      */
-    public function testFindByNodeIdAndSiteId($nodeId, $siteId, $count)
+    public function testFindByNodeAndSite($nodeId, $siteId, $count)
     {
-        $nodes = $this->repository->findByNodeIdAndSiteId($nodeId, $siteId);
+        $nodes = $this->repository->findByNodeAndSite($nodeId, $siteId);
         $this->assertCount($count, $nodes);
     }
 
     /**
      * @return array
      */
-    public function provideNodeIdSiteIdAndCount()
+    public function provideNodeSiteAndCount()
     {
         return array(
             array(NodeInterface::ROOT_NODE_ID, '2', 3),
@@ -395,8 +395,7 @@ class NodeRepositoryTest extends KernelTestCase
      */
     public function testFindByAuthor($author, $published, $count)
     {
-        $nodes = $this->repository->findByAuthor($author, $published);
-        $this->assertCount($count, $nodes);
+        $this->assertCount($count, $this->repository->findByAuthor($author, $published));
     }
 
     /**
@@ -413,4 +412,100 @@ class NodeRepositoryTest extends KernelTestCase
         );
     }
 
+    /**
+     * @param string $nodeId
+     * @param string $language
+     * @param int    $count
+     *
+     * @dataProvider provideFindPublishedSortedVersionData
+     */
+    public function testFindPublishedSortedByVersion($nodeId, $language, $count)
+    {
+        $this->assertCount($count, $this->repository->findPublishedSortedByVersion($nodeId, $language, '2'));
+    }
+
+    /**
+     * @return array
+     */
+    public function provideFindPublishedSortedVersionData()
+    {
+        return array(
+            array(NodeInterface::ROOT_NODE_ID, 'fr', 1),
+            array(NodeInterface::ROOT_NODE_ID, 'en', 1),
+            array('fixture_page_contact', 'en', 1),
+        );
+    }
+
+    /**
+     * @param string $language
+     *
+     * @dataProvider provideLanguage
+     */
+    public function testFindSubTreeByPath($language)
+    {
+        $nodes = $this->repository->findSubTreeByPath('root', '2', $language);
+
+        $this->assertCount(4, $nodes);
+        $this->assertSame('fixture_page_contact', $nodes[0]->getNodeId());
+        $this->assertSame('fixture_page_community', $nodes[1]->getNodeId());
+        $this->assertSame('fixture_page_news', $nodes[2]->getNodeId());
+        $this->assertSame('fixture_page_legal_mentions', $nodes[3]->getNodeId());
+    }
+
+    /**
+     * @return array
+     */
+    public function provideLanguage()
+    {
+        return array(
+            array('en'),
+            array('fr'),
+        );
+    }
+
+    /**
+     * @param string $parentId
+     * @param string $routePattern
+     * @param string $nodeId
+     *
+     * @dataProvider provideParentRouteAndNodeId
+     */
+    public function testFindByParentAndRoutePattern($parentId, $routePattern, $nodeId)
+    {
+        $this->assertEmpty($this->repository->findByParentAndRoutePattern($parentId, $routePattern, $nodeId, '2'));
+    }
+
+    /**
+     * @return array
+     */
+    public function provideParentRouteAndNodeId()
+    {
+        return array(
+            array(NodeInterface::ROOT_NODE_ID, 'page-contact', 'fixture_page_contact'),
+            array(NodeInterface::ROOT_NODE_ID, 'mentions-legales', 'fixture_page_legal_mentions'),
+        );
+    }
+
+    /**
+     * @param string $type
+     * @param int    $count
+     *
+     * @dataProvider provideNodeTypeAndCount
+     */
+    public function testFindAllNodesOfTypeInLastPublishedVersionForSite($type, $count)
+    {
+        $this->assertCount($count, $this->repository->findAllNodesOfTypeInLastPublishedVersionForSite($type, '2'));
+    }
+
+    /**
+     * @return array
+     */
+    public function provideNodeTypeAndCount()
+    {
+        return array(
+            array(NodeInterface::TYPE_DEFAULT, 10),
+            array(NodeInterface::TYPE_ERROR, 0),
+            array(NodeInterface::TYPE_TRANSVERSE, 0),
+        );
+    }
 }
