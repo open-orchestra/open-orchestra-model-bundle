@@ -25,7 +25,11 @@ use OpenOrchestra\MongoTrait\Versionable;
  *   repositoryClass="OpenOrchestra\ModelBundle\Repository\ContentRepository"
  * )
  * @ODM\Indexes({
- *  @ODM\Index(keys={"contentId"="asc", "siteId"="asc", "language"="asc", "version"="asc"}),
+ *  @ODM\Index(keys={"contentId"="asc"}),
+ *  @ODM\Index(keys={"language"="asc", "deleted"="asc", "status.published"="asc", "contentType"="asc", "keywords.label"="asc", "version"="desc"}),
+ *  @ODM\Index(keys={"language"="asc", "deleted"="asc", "status.published"="asc", "keywords.label"="asc", "version"="desc"}),
+ *  @ODM\Index(keys={"language"="asc", "deleted"="asc", "status.published"="asc", "contentType"="asc", "version"="desc"}),
+ *  @ODM\Index(keys={"language"="asc", "deleted"="asc", "status.published"="asc", "version"="desc"}),
  *  @ODM\Index(keys={"keywords"="asc"})
  * })
  * @ORCHESTRA\Document(

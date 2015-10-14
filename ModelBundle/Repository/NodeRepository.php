@@ -502,9 +502,9 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     protected function findLastVersion(Stage $qa)
     {
         $elementName = 'node';
+        $qa->sort(array('version' => 1));
         $qa->group(array(
             '_id' => array('nodeId' => '$nodeId'),
-            'version' => array('$max' => '$version'),
             $elementName => array('$last' => '$$ROOT')
         ));
 
