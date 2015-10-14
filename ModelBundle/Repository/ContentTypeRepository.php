@@ -57,7 +57,7 @@ class ContentTypeRepository extends AbstractAggregateRepository implements Conte
 
         $elementName = 'contentType';
         $this->generateLastVersionFilter($qa, $elementName, $configuration);
-        
+
         $qa = $this->generateFilterSort(
             $qa,
             $configuration->getOrder(),
@@ -65,7 +65,7 @@ class ContentTypeRepository extends AbstractAggregateRepository implements Conte
         );
         $qa = $this->generateSkipFilter($qa, $configuration->getSkip());
         $qa = $this->generateLimitFilter($qa, $configuration->getLimit());
-        
+
         return $this->hydrateAggregateQuery($qa, $elementName, 'getContentTypeId');
     }
 
@@ -135,7 +135,7 @@ class ContentTypeRepository extends AbstractAggregateRepository implements Conte
     protected function generateLastVersionFilter(Stage $qa, $elementName, $configuration = null)
     {
         $group = array();
-        
+
         if(!is_null($configuration)) {
             $group = $this->generateGroupForFilterSort($configuration);
         }
@@ -144,7 +144,7 @@ class ContentTypeRepository extends AbstractAggregateRepository implements Conte
                 '_id' => array('contentTypeId' => '$contentTypeId'),
                 $elementName => array('$last' => '$$ROOT')
         ));
-        
+
         $qa->sort(array('version' => 1));
         $qa->group($group);
     }

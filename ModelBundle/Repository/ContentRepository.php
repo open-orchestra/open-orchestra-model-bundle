@@ -322,7 +322,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
 
         $elementName = 'content';
         $this->generateLastVersionFilter($qa, $elementName, $configuration);
-        
+
         $qa = $this->generateFilterSort(
             $qa,
             $configuration->getOrder(),
@@ -429,16 +429,16 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     protected function generateLastVersionFilter(Stage $qa, $elementName, $configuration = null)
     {
         $group = array();
-        
+
         if(!is_null($configuration)) {
             $group = $this->generateGroupForFilterSort($configuration);
         }
-        $group = array_merge($group, 
+        $group = array_merge($group,
             array(
                 '_id' => array('contentId' => '$contentId'),
                 $elementName => array('$last' => '$$ROOT')
         ));
-        
+
         $qa->sort(array('version' => 1));
         $qa->group($group);
     }
