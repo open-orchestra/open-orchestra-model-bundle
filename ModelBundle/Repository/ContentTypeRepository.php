@@ -55,7 +55,14 @@ class ContentTypeRepository extends AbstractAggregateRepository implements Conte
         $qa = $this->generateFilter($qa, $configuration);
 
         $elementName = 'contentType';
-        $qa->group($this->generateLastVersionFilter($elementName));
+
+        $group = $this->generateLastVersionFilter($elementName);
+
+        if (!is_null($configuration)) {
+            $group = array_merge($group, $this->generateGroupForFilterSort($configuration));
+        }
+
+        $qa->group($group);
 
         $qa = $this->generateFilterSort(
             $qa,
