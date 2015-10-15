@@ -52,10 +52,14 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
     {
         return array(
             'name'           => true,
-            'status_label'   => true,
-            'version'        => true,
-            'language'       => true,
+            'status_label'   => false,
+            'version'        => false,
+            'language'       => false,
             'linked_to_site' => true,
+            'created_at'     => true,
+            'created_by'     => true,
+            'updated_at'     => false,
+            'updated_by'     => false,
         );
     }
 
