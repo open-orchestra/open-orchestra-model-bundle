@@ -430,7 +430,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     {
         $group = array();
 
-        if(!is_null($configuration)) {
+        if (!is_null($configuration)) {
             $group = $this->generateGroupForFilterSort($configuration);
         }
         $group = array_merge($group,
