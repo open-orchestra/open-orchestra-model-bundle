@@ -17,18 +17,12 @@ class NodeRepositoryTest extends KernelTestCase
      */
     protected $repository;
 
-    protected $currentSiteManager;
-
     /**
      * Set up test
      */
     protected function setUp()
     {
         parent::setUp();
-
-        $this->currentSiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
-        Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn('1');
-        Phake::when($this->currentSiteManager)->getCurrentSiteDefaultLanguage()->thenReturn('fr');
 
         static::bootKernel();
         $this->repository = static::$kernel->getContainer()->get('open_orchestra_model.repository.node');
@@ -152,8 +146,7 @@ class NodeRepositoryTest extends KernelTestCase
      */
     public function testFindByNodeAndSite($nodeId, $siteId, $count)
     {
-        $nodes = $this->repository->findByNodeAndSite($nodeId, $siteId);
-        $this->assertCount($count, $nodes);
+        $this->assertCount($count, $this->repository->findByNodeAndSite($nodeId, $siteId));
     }
 
     /**
@@ -324,20 +317,17 @@ class NodeRepositoryTest extends KernelTestCase
     }
 
     /**
-     * @param string      $nodeId
-     * @param int         $nbLevel
-     * @param int         $nodeNumber
-     * @param int         $version
-     * @param string      $siteId
-     * @param string|null $local
+     * @param string $nodeId
+     * @param int    $nbLevel
+     * @param int    $nodeNumber
+     * @param int    $version
+     * @param string $siteId
+     * @param string $local
      *
      * @dataProvider provideForGetSubMenu
      */
-    public function testGetSubMenu($nodeId, $nbLevel, $nodeNumber, $version, $siteId, $local = null)
+    public function testGetSubMenu($nodeId, $nbLevel, $nodeNumber, $version, $siteId, $local)
     {
-        if (is_null($local)) {
-            $local = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
-        }
         $nodes = $this->repository->getSubMenu($nodeId, $nbLevel, $local, $siteId);
 
         $this->assertCount($nodeNumber, $nodes);
@@ -353,7 +343,7 @@ class NodeRepositoryTest extends KernelTestCase
     {
         return array(
             array(NodeInterface::ROOT_NODE_ID, 1, 5, 1, '2', 'fr'),
-            array(NodeInterface::ROOT_NODE_ID, 1, 5, 1, '2'),
+            array(NodeInterface::ROOT_NODE_ID, 1, 5, 1, '2', 'en'),
         );
     }
 
