@@ -56,14 +56,13 @@ class ContentTypeRepository extends AbstractAggregateRepository implements Conte
         $qa = $this->generateFilter($qa, $configuration);
 
         $elementName = 'contentType';
-        $this->generateLastVersionFilter($qa, $elementName);
+        $this->generateLastVersionFilter($qa, $elementName, $configuration);
 
         $qa = $this->generateFilterSort(
             $qa,
             $configuration->getOrder(),
             $configuration->getDescriptionEntity()
         );
-
         $qa = $this->generateSkipFilter($qa, $configuration->getSkip());
         $qa = $this->generateLimitFilter($qa, $configuration->getLimit());
 
@@ -129,16 +128,25 @@ class ContentTypeRepository extends AbstractAggregateRepository implements Conte
     }
 
     /**
-     * @param Stage  $qa
-     * @param string $elementName
+     * @param Stage                            $qa
+     * @param string                           $elementName
+     * @param PaginateFinderConfiguration|null $configuration
      */
-    protected function generateLastVersionFilter(Stage $qa, $elementName)
+    protected function generateLastVersionFilter(Stage $qa, $elementName, $configuration = null)
     {
-        $qa->sort(array('version' => 1));
-        $qa->group(array(
-            '_id' => array('contentTypeId' => '$contentTypeId'),
-            $elementName => array('$last' => '$$ROOT')
+        $group = array();
+
+        if (!is_null($configuration)) {
+            $group = $this->generateGroupForFilterSort($configuration);
+        }
+        $group = array_merge($group,
+            array(
+                '_id' => array('contentTypeId' => '$contentTypeId'),
+                $elementName => array('$last' => '$$ROOT')
         ));
+
+        $qa->sort(array('version' => 1));
+        $qa->group($group);
     }
 
     /**

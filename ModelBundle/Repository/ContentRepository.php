@@ -111,11 +111,8 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         }
 
         $elementName = 'content';
-        $qa->sort(array('version' => 1));
-        $qa->group(array(
-            '_id' => array('contentId' => '$contentId'),
-            $elementName => array('$last' => '$$ROOT')
-        ));
+
+        $this->generateLastVersionFilter($qa, $elementName);
 
         return $this->hydrateAggregateQuery($qa, $elementName);
     }
@@ -324,7 +321,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         }
 
         $elementName = 'content';
-        $this->generateLastVersionFilter($qa, $elementName);
+        $this->generateLastVersionFilter($qa, $elementName, $configuration);
 
         $qa = $this->generateFilterSort(
             $qa,
@@ -425,16 +422,25 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     }
 
     /**
-     * @param Stage  $qa
-     * @param string $elementName
+     * @param Stage                            $qa
+     * @param string                           $elementName
+     * @param PaginateFinderConfiguration|null $configuration
      */
-    protected function generateLastVersionFilter(Stage $qa, $elementName)
+    protected function generateLastVersionFilter(Stage $qa, $elementName, $configuration = null)
     {
-        $qa->sort(array('version' => 1));
-        $qa->group(array(
-            '_id' => array('contentId' => '$contentId'),
-            $elementName => array('$last' => '$$ROOT')
+        $group = array();
+
+        if (!is_null($configuration)) {
+            $group = $this->generateGroupForFilterSort($configuration);
+        }
+        $group = array_merge($group,
+            array(
+                '_id' => array('contentId' => '$contentId'),
+                $elementName => array('$last' => '$$ROOT')
         ));
+
+        $qa->sort(array('version' => 1));
+        $qa->group($group);
     }
 
     /**
