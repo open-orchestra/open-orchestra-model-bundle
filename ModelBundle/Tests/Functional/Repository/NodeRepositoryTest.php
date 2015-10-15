@@ -436,10 +436,6 @@ class NodeRepositoryTest extends KernelTestCase
         $nodes = $this->repository->findSubTreeByPath('root', '2', $language);
 
         $this->assertCount(4, $nodes);
-        $this->assertSame('fixture_page_contact', $nodes[0]->getNodeId());
-        $this->assertSame('fixture_page_community', $nodes[1]->getNodeId());
-        $this->assertSame('fixture_page_news', $nodes[2]->getNodeId());
-        $this->assertSame('fixture_page_legal_mentions', $nodes[3]->getNodeId());
     }
 
     /**
