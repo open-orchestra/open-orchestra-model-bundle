@@ -1,0 +1,56 @@
+open_orchestra_model:
+    fixtures_interface:
+        all: [FakeAllFixtureInterface]
+    content_immutable_properties: [fake1, fake2]
+    document:
+        content:
+            class: FakeContent
+            repository: FakeContentRepository
+        content_type:
+            class: FakeContentType
+            repository: FakeContentTypeRepository
+        node:
+            class: FakeNode
+            repository: FakeNodeRepository
+        site:
+            class: FakeSite
+            repository: FakeSiteRepository
+        route_document:
+            class: FakeRouteDocument
+            repository: FakeRouteDocumentRepository
+        template:
+            class: FakeTemplate
+            repository: FakeTemplateRepository
+        theme:
+            class: FakeTheme
+            repository: FakeThemeRepository
+        role:
+            class: FakeRole
+            repository: FakeRoleRepository
+        redirection:
+            class: FakeRedirection
+            repository: FakeRedirectionRepository
+        keyword:
+            class: FakeKeyword
+            repository: FakeKeywordRepository
+        trash_item:
+            class: FakeTrashItem
+            repository: FakeTrashItemRepository
+        content_attribute:
+            class: FakeContentAttribute
+        area:
+            class: FakeArea
+        block:
+            class: FakeBlock
+        site_alias:
+            class: FakeSiteAlias
+        field_option:
+            class: FakeFieldOption
+        field_type:
+            class: FakeFieldType
+        embed_status:
+            class: FakeEmbedStatus
+        embed_keyword:
+            class: FakeEmbedKeyword
+        translated_value:
+            class: FakeTranslatedValue
