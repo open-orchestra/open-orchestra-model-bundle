@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ModelBundle\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface;
 use OpenOrchestra\ModelInterface\Form\Type\AbstractOrchestraRoleType;
