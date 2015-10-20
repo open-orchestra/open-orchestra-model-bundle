@@ -30,6 +30,14 @@ class TransverseDataGenerator extends AbstractDataGenerator
     }
 
     /**
+     * @return Node
+     */
+    protected function generateNodeDe()
+    {
+        return $this->generateNodeGlobal("de");
+    }
+
+    /**
      * @param string $language
      *
      * @return Node

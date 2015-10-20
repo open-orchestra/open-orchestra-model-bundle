@@ -61,6 +61,30 @@ EOF;
     }
 
     /**
+     * @return Node
+     */
+    protected function generateNodeDe()
+    {
+        $htmlContent = <<<EOF
+<div class='content2'>
+    <h1>Gemeinde</h1>
+    <p>Wir laden Sie zu der Open Orchestra Gemeinschaft durch unsere verschiedenen Kommunikationskanäle zu folgen : </p>
+    <ul>
+        <li>Einen Beitrag zu leisten und füllen Sie Änderungen : <a href="https://github.com/open-orchestra/"><strong>Github</strong></a></li>
+        <li>Technische Fragen : <a href="https://groups.google.com/forum/#!forum/open-orchestra"><strong>Google group</strong></a></li>
+        <li>Für die neuesten Plattform : <a href="https://twitter.com/open_orchestra"><strong>Twitter</strong></a></li>
+        <li>Weitere Informationen : <a href="http://open-orchestra.com/"><strong>Site officiel</strong></a></li>
+    </ul>
+</div>
+EOF;
+        $name = "Gemeinde";
+        $language = "de";
+        $routePattern = 'seite-Gemeinde';
+
+        return $this->generateNodeGlobal($htmlContent, $name, $language, $routePattern);
+    }
+
+    /**
      * @param string $htmlContent
      * @param string $name
      * @param string $language

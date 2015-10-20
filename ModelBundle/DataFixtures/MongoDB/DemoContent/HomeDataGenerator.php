@@ -82,6 +82,38 @@ EOF;
     }
 
     /**
+     * @return Node
+     */
+    protected function generateNodeDe()
+    {
+        $htmlContent = <<<EOF
+<div class='content2'>
+    <h1>Open-Orchestra</h1>
+    <p>Offene Orchestra ist ein leistungsfähiges Web-Integrationsplattform zur Beschleunigung der Bau von mehrjährige digitale Ökosysteme.
+     Diese Lösung von Interakting Erfahrung in der Entwicklung der internationalen Plattformen ist verfügbar unter der Open Source Lizenz.</p>
+    <p>In strikter Übereinstimmung mit den Standards und Best Practices Framework entwickelt auf Symfony2 und MongoDB.
+    Offene Orchestra ist schnell, sehr anpassungsfähig und erweiterbar, Multi-Site und Multi-Geräte.</p>
+    <p>Offene Orchestra CMS bietet erweiterte Funktionen und SI internen und externen Integrationskomponenten
+    in hohem Maße konfigurierbar, modular, hohen Belastungen und Sicherheit zugeschnitten.</p>
+    <p>Eine gezielte Lösung :
+    <ul>
+        <li>Projekt, wo «Erfahrung», ob Kunde, Mitarbeiter, Partner oder Händler ist der Kern des Problems.</li>
+        <li>Internationale Projekt Skaleneffekte erfordern.</li>
+        <li>Komplexe Projekte, bei denen interne Informationssysteme und Partner sind hoch beanspruchte.</li>
+        <li>Projekt, dessen Ziel ist es, digitale Ökosysteme (E-Commerce, Kommunikation, Referenz, Selbst-Pflege, Mobilität, Vertrieb, ...),
+        die mit den funktionalen und technologischen Synergien aufzubauen.</li>
+    </ul></p>
+    <p>Unser versprechen : « Skaleneffekte und die Bündelung von Investitionen für eine konsistente Web-Erfahrung auf allen Kanälen Fixed Mobile,
+    Tablet, TV, Poller ... »</p>
+</div>
+EOF;
+        $routePattern = "de";
+        $language = "de";
+
+        return $this->generateNodeGlobal($htmlContent, $language, $routePattern);
+    }
+
+    /**
      * @param string $htmlContent
      * @param string $language
      * @param string $routePattern

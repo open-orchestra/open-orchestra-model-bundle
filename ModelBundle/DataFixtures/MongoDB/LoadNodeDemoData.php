@@ -32,7 +32,7 @@ class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterfac
         $references["status-draft"] = $this->getReference('status-draft');
         $references["logo-orchestra"] = $this->getReference('logo-orchestra');
 
-        $languages = array("en", "fr");
+        $languages = array("en", "fr", "de");
 
         $transverseGenerator = new TransverseDataGenerator($references);
         foreach ($languages as $language) {
@@ -60,7 +60,7 @@ class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterfac
         return 61;
     }
 
-    protected function addNode(ObjectManager $manager, AbstractDataGenerator $dataGenerator, TransverseDataGenerator $transverseGenerator, array $languages = array("fr", "en"))
+    protected function addNode(ObjectManager $manager, AbstractDataGenerator $dataGenerator, TransverseDataGenerator $transverseGenerator, array $languages = array("fr", "en", "de"))
     {
         foreach ($languages as $language) {
             $node = $dataGenerator->generateNode($language);
