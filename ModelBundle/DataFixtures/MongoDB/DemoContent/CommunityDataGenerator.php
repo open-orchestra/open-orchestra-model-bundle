@@ -73,13 +73,13 @@ EOF;
         <li>Einen Beitrag zu leisten und füllen Sie Änderungen : <a href="https://github.com/open-orchestra/"><strong>Github</strong></a></li>
         <li>Technische Fragen : <a href="https://groups.google.com/forum/#!forum/open-orchestra"><strong>Google group</strong></a></li>
         <li>Für die neuesten Plattform : <a href="https://twitter.com/open_orchestra"><strong>Twitter</strong></a></li>
-        <li>Weitere Informationen : <a href="http://open-orchestra.com/"><strong>offizielle Website</strong></a></li>
+        <li>Weitere Informationen : <a href="http://open-orchestra.com/"><strong>Offizielle Website</strong></a></li>
     </ul>
 </div>
 EOF;
         $name = "Gemeinde";
         $language = "de";
-        $routePattern = 'seite-Gemeinde';
+        $routePattern = 'seite-gemeinde';
 
         return $this->generateNodeGlobal($htmlContent, $name, $language, $routePattern);
     }

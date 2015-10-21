@@ -38,9 +38,13 @@ abstract class AbstractDataGenerator
      */
     public function generateNode($language)
     {
-        return ($language == "fr") ?
-            $this->generateNodeFr(): (($language == "en") ?
-            $this->generateNodeEn(): $this->generateNodeDe());
+        if ($language == "fr") {
+            return $this->generateNodeFr();
+        } else if ($language == "en") {
+            return $this->generateNodeEn();
+        } else {
+            return $this->generateNodeDe();
+        }
     }
 
     /**

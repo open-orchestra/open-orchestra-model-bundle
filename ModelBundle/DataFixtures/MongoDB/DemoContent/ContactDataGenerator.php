@@ -102,15 +102,15 @@ EOF;
             Groupe Business & Decision
             <br>153 Rue de Courcelles
             <br>75017 PARIS FRANCE
-            <br><span class="fontOrange">Tél:</span> +33 1 56 21 21 21
+            <br><span class="fontOrange">Tel:</span> +33 1 56 21 21 21
             <br><span class="fontOrange">Fax:</span> +33 1 56 21 21 22
         </p>
     </div>
     <div class="access-interakting">
         <h4>Zugang:</h4>
         <p>
-            <span class="fontOrange">Metro ligne 3</span> arrêt Pereire
-            <br><span class="fontOrange">RER ligne C</span> arrêt Pereire-Levallois
+            <span class="fontOrange">Metro ligne 3</span> stoppen Pereire
+            <br><span class="fontOrange">RER ligne C</span> stoppen Pereire-Levallois
         </p>
     </div>
     <div class="google-maps-interakting"">
