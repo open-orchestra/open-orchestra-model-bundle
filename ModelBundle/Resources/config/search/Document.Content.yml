@@ -1,0 +1,26 @@
+OpenOrchestra\ModelBundle\Document\Content:
+    properties:
+        name:
+            key: name
+        language:
+            key: language
+        status:
+            key: status_label
+            fields: status.labels
+            type: translatedValue
+        version:
+            key: version
+            type: integer
+        linkedToSite:
+            key: linked_to_site
+            type: boolean
+        createdBy:
+            key:  created_by
+        updatedBy:
+            key:  updated_by
+        createdAt:
+            key:  created_at
+            type: date
+        updatedAt:
+            key:  updated_at
+            type: date
