@@ -60,7 +60,7 @@ class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterfac
         return 61;
     }
 
-    protected function addNode(ObjectManager $manager, AbstractDataGenerator $dataGenerator, TransverseDataGenerator $transverseGenerator, array $languages = array("fr", "en", "de"))
+    protected function addNode(ObjectManager $manager, AbstractDataGenerator $dataGenerator, TransverseDataGenerator $transverseGenerator, array $languages = array("fr", "en"))
     {
         foreach ($languages as $language) {
             $node = $dataGenerator->generateNode($language);
