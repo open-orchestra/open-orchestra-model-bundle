@@ -13,18 +13,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
  *   repositoryClass="OpenOrchestra\ModelBundle\Repository\RouteDocumentRepository"
  * )
  * @ODM\Indexes({
- *  @ODM\Index(keys={"name"="asc"}),
- *  @ODM\Index(keys={"token0"="asc"}),
- *  @ODM\Index(keys={"token1"="asc"}),
- *  @ODM\Index(keys={"token2"="asc"}),
- *  @ODM\Index(keys={"token3"="asc"}),
- *  @ODM\Index(keys={"token4"="asc"}),
- *  @ODM\Index(keys={"token5"="asc"}),
- *  @ODM\Index(keys={"token6"="asc"}),
- *  @ODM\Index(keys={"token7"="asc"}),
- *  @ODM\Index(keys={"token8"="asc"}),
- *  @ODM\Index(keys={"token9"="asc"}),
- *  @ODM\Index(keys={"token10"="asc"})
+ *  @ODM\Index(name="route_document_search_index", keys={"name"="asc", "token0"="asc", "token1"="asc", "token2"="asc", "token3"="asc", "token4"="asc", "token5"="asc", "token6"="asc", "token7"="asc", "token8"="asc", "token9"="asc", "token10"="asc", "weight"="desc"})
  * })
  */
 class RouteDocument implements RouteDocumentInterface
