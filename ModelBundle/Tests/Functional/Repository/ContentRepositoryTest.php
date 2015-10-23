@@ -7,6 +7,7 @@ use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use Phake;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use OpenOrchestra\Mapping\Annotations\Search;
 
 /**
  * Class ContentRepositoryTest
@@ -253,11 +254,15 @@ class ContentRepositoryTest extends KernelTestCase
      *
      * @dataProvider provideContentTypeAndPaginateAndSearchAndSiteId
      */
-    public function testFindPaginatedLastVersionByContentTypeAndSite($contentType, $descriptionEntity, $search, $siteId, $skip, $limit, $count)
+    public function testFindPaginatedLastVersionByContentTypeAndSite($contentType, $descriptionEntity, $search, $order, $siteId, $skip, $limit, $count, $name = null)
     {
         $configuration = PaginateFinderConfiguration::generateFromVariable($descriptionEntity, $search);
-        $configuration->setPaginateConfiguration(null, $skip, $limit);
+        $configuration->setPaginateConfiguration($order, $skip, $limit);
         $contents = $this->repository->findPaginatedLastVersionByContentTypeAndSite($contentType, $configuration, $siteId);
+
+        if(!is_null($name)) {
+            $this->assertEquals($name, $contents[0]->getName());
+        }
         $this->assertCount($count, $contents);
     }
 
@@ -269,18 +274,21 @@ class ContentRepositoryTest extends KernelTestCase
         $descriptionEntity = $this->getDescriptionColumnEntity();
 
         return array(
-            array('car', $descriptionEntity, null, null, 0 ,5 , 3),
-            array('car', $descriptionEntity, null, null, 0 ,1 , 1),
-            array('car', $descriptionEntity, $this->generateColumnsProvider(array('name' => '206')), null, 0 ,2 , 1),
-            array('car', $descriptionEntity, $this->generateColumnsProvider(array('version' => '2')), null, 0 ,2 , 2),
-            array('news', $descriptionEntity, null, null, 0 , 100, 4),
-            array('news', $descriptionEntity, null, null, 50 , 100, 0),
-            array('news', $descriptionEntity, $this->generateColumnsProvider(array('name' => 'news')), null, 0 , null, 0),
-            array('car', $descriptionEntity, null, '2', 0 ,5 , 3),
-            array('car', $descriptionEntity, $this->generateColumnsProvider(array('status_label' => 'publish')), null, null ,null , 3),
-            array('car', $descriptionEntity, $this->generateColumnsProvider(array('status_label' => 'publié')), null, null ,null , 3),
-            array('car', $descriptionEntity, $this->generateColumnsProvider(array('status_label' => 'draft')), null, null ,null , 0),
-            array('car', $descriptionEntity, $this->generateColumnsProvider(array('status_label' => 'brouillon')), null, null ,null , 0),
+            array('car', $descriptionEntity, null, array("name" => "name", "dir" => "asc"), null, 0 ,5 , 3, '206 3 portes en'),
+            array('car', $descriptionEntity, null, array("name" => "name", "dir" => "desc"), null, 0 ,5 , 3, 'R5 3 portes en'),
+            array('car', $descriptionEntity, null, array("name" => "attributes.car_name.string_value", "dir" => "asc"), null, 0 ,5 , 3, '206 3 portes en'),
+            array('car', $descriptionEntity, null, array("name" => "attributes.car_name.string_value", "dir" => "desc"), null, 0 ,5 , 3, 'R5 3 portes en'),
+            array('car', $descriptionEntity, null, null, null, 0 ,1 , 1),
+            array('car', $descriptionEntity, $this->generateColumnsProvider(array('name' => '206')), null, null, 0 ,2 , 1),
+            array('car', $descriptionEntity, $this->generateColumnsProvider(array('version' => '2')), null, null, 0 ,2 , 2),
+            array('news', $descriptionEntity, null, null, null, 0 , 100, 4),
+            array('news', $descriptionEntity, null, null, null, 50 , 100, 0),
+            array('news', $descriptionEntity, $this->generateColumnsProvider(array('name' => 'news')), null, null, 0 , null, 0),
+            array('car', $descriptionEntity, null, null, '2', 0 ,5 , 3),
+            array('car', $descriptionEntity, $this->generateColumnsProvider(array('status_label' => 'publish')), null, null, null ,null , 3),
+            array('car', $descriptionEntity, $this->generateColumnsProvider(array('status_label' => 'publié')), null, null, null ,null , 3),
+            array('car', $descriptionEntity, $this->generateColumnsProvider(array('status_label' => 'draft')), null, null, null ,null , 0),
+            array('car', $descriptionEntity, $this->generateColumnsProvider(array('status_label' => 'brouillon')), null, null, null ,null , 0),
 
         );
     }
@@ -334,7 +342,7 @@ class ContentRepositoryTest extends KernelTestCase
         return array(
             array('car', $descriptionEntity, $this->generateColumnsProvider(array('name' => '206')), 1),
             array('car', $descriptionEntity, $this->generateColumnsProvider(null, 'portes'), 2),
-            array('news', $descriptionEntity, $this->generateColumnsProvider(null, 'news'), 0)
+            array('news', $descriptionEntity, $this->generateColumnsProvider(null, 'news'), 4)
         );
     }
 
@@ -398,11 +406,75 @@ class ContentRepositoryTest extends KernelTestCase
      */
     protected function getDescriptionColumnEntity()
     {
-        return array(
-            'name'         => array('key' => 'name', 'field' => 'name', 'type' => 'string'),
-            'status_label' => array('key' => 'status_label', 'field' => 'status.labels', 'type' => 'translatedValue'),
-            'version'      => array('key' => 'version' , 'field' => 'version', 'type' => 'integer'),
-            'language'     => array('key' => 'language', 'field' => 'language', 'type' => 'string'),
+        return array (
+            'name' =>
+            array (
+                'key' => 'name',
+                'field' => 'name',
+                'type' => 'string',
+            ),
+            'language' =>
+            array (
+                'key' => 'language',
+                'field' => 'language',
+                'type' => 'string',
+            ),
+            'status_label' =>
+            array (
+                'key' => 'status_label',
+                'field' => 'status',
+                'type' => 'translatedValue',
+            ),
+            'version' =>
+            array (
+                'key' => 'version',
+                'field' => 'version',
+                'type' => 'integer',
+            ),
+            'linked_to_site' =>
+            array (
+                'key' => 'linked_to_site',
+                'field' => 'linkedToSite',
+                'type' => 'boolean',
+            ),
+            'created_by' =>
+            array (
+                'key' => 'created_by',
+                'field' => 'createdBy',
+                'type' => 'string',
+            ),
+            'updated_by' =>
+            array (
+                'key' => 'updated_by',
+                'field' => 'updatedBy',
+                'type' => 'string',
+            ),
+            'created_at' =>
+            array (
+                'key' => 'created_at',
+                'field' => 'createdAt',
+                'type' => 'date',
+            ),
+            'updated_at' =>
+            array (
+                'key' => 'updated_at',
+                'field' => 'updatedAt',
+                'type' => 'date',
+            ),
+            'attributes.car_name.string_value' =>
+            array(
+                'key' => 'attributes.car_name.string_value',
+                'field' => 'attributes.car_name.stringValue',
+                'type' => 'string',
+                'value' => NULL,
+            ),
+            'attributes.description.string_value' =>
+            array(
+                'key' => 'attributes.description.string_value',
+                'field' => 'attributes.description.stringValue',
+                'type' => 'string',
+                'value' => NULL,
+            ),
         );
     }
 
