@@ -321,7 +321,6 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         }
 
         $elementName = 'content';
-
         $this->generateLastVersionFilter($qa, $elementName, $configuration);
 
         $qa = $this->generateFilterSort(
