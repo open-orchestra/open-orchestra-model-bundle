@@ -331,9 +331,10 @@ class NodeRepositoryTest extends KernelTestCase
         $nodes = $this->repository->getSubMenu($nodeId, $nbLevel, $local, $siteId);
 
         $this->assertCount($nodeNumber, $nodes);
-        $this->assertSameNode($local, $version, $siteId, $nodes[0], $nodeId);
-
-        $this->assertSame('published', $nodes[0]->getStatus()->getName());
+        if ($nodeNumber > 0) {
+            $this->assertSameNode($local, $version, $siteId, $nodes[0], $nodeId);
+            $this->assertSame('published', $nodes[0]->getStatus()->getName());
+        }
     }
 
     /**
@@ -343,7 +344,12 @@ class NodeRepositoryTest extends KernelTestCase
     {
         return array(
             array(NodeInterface::ROOT_NODE_ID, 1, 5, 1, '2', 'fr'),
-            array(NodeInterface::ROOT_NODE_ID, 1, 5, 1, '2', 'en'),
+            array(NodeInterface::ROOT_NODE_ID, 2, 5, 1, '2', 'fr'),
+            array(NodeInterface::ROOT_NODE_ID, 0, 5, 1, '2', 'fr'),
+            array(NodeInterface::ROOT_NODE_ID, 0, 5, 1, '2', 'en'),
+            array('fixture_page_community', 1, 1, 1, '2', 'fr'),
+            array('fixture_page_community', 1, 1, 1, '2', 'en'),
+            array('page_unexistant', 1, 0, 1, '2', 'fr'),
         );
     }
 

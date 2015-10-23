@@ -124,10 +124,12 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     public function getSubMenu($nodeId, $nbLevel, $language, $siteId)
     {
         $node = $this->findPublishedInLastVersion($nodeId, $language, $siteId);
-
         $list = array();
-        $list[] = $node;
-        $list = array_merge($list, $this->getTreeParentIdLevelAndLanguage($node->getNodeId(), $nbLevel, $language, $siteId));
+
+        if ($node instanceof ReadNodeInterface) {
+            $list[] = $node;
+            $list = array_merge($list, $this->getTreeParentIdLevelAndLanguage($node->getNodeId(), $nbLevel, $language, $siteId));
+        }
 
         return $list;
     }
