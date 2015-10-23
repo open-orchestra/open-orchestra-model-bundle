@@ -89,6 +89,44 @@ EOF;
     }
 
     /**
+     * @return Node
+     */
+    protected function generateNodeDe()
+    {
+        $htmlContent = <<<EOF
+<div class="contact-information">
+    <h3>Kontaktieren Sie uns</h3>
+    <div class="info-interakting" >
+        <h4>Interakting</h4>
+        <p>
+            Groupe Business & Decision
+            <br>153 Rue de Courcelles
+            <br>75017 PARIS FRANCE
+            <br><span class="fontOrange">Tel:</span> +33 1 56 21 21 21
+            <br><span class="fontOrange">Fax:</span> +33 1 56 21 21 22
+        </p>
+    </div>
+    <div class="access-interakting">
+        <h4>Zugang:</h4>
+        <p>
+            <span class="fontOrange">Metro ligne 3</span> stoppen Pereire
+            <br><span class="fontOrange">RER ligne C</span> stoppen Pereire-Levallois
+        </p>
+    </div>
+    <div class="google-maps-interakting"">
+        <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+        src="https://maps.google.fr/maps?f=q&amp;source=s_q&amp;hl=fr&amp;geocode=&amp;q=153+Rue+de+Courcelles+75817+Paris&amp;aq=&amp;sll=48.834414,2.499298&amp;sspn=0.523838,0.909805&amp;ie=UTF8&amp;hq=&amp;hnear=153+Rue+de+Courcelles,+75817+Paris&amp;ll=48.883747,2.298345&amp;spn=0.004088,0.007108&amp;t=m&amp;z=14&amp;output=embed"></iframe>
+    </div>
+</div>
+EOF;
+        $name = "Contact";
+        $language = "de";
+        $routePattern = "seite-contact";
+
+        return $this->generateNodeGlobal($htmlContent, $name, $language, $routePattern);
+    }
+
+    /**
      * @param string $htmlContent
      * @param string $name
      * @param string $language

@@ -43,7 +43,7 @@ class LoadSiteData extends AbstractFixture implements OrderedFixtureInterface, O
         $site2->setName('Demo site');
         $this->addSitesAliases(
             array('demo.open-orchestra.com', 'demo.openorchestra.inte', 'demo.openorchestra.dev'),
-            array('fr', 'en'),
+            array('fr', 'en', 'de'),
             $site2);
         $site2->setSitemapPriority(0.5);
         $site2->setDeleted(false);

@@ -1,0 +1,16 @@
+open_orchestra_model_validators:
+    field:
+        special_character: Das Feld ein unzulässiges Zeichen enthält
+    document:
+        content_type:
+            unique_field_id: Felder identifizieren eindeutig sein
+            unique_content_type_id: Diese identifizieren wird bereits verwendet, wählen Sie bitte einen anderen.
+        area:
+            presence_required: Sie müssen eine von ihnen zu wählen
+        node:
+            check_route_pattern: Die Routenmuster ist bereits in dieser Website verwendet
+        status:
+            impossible_change: Sie haben nicht das Recht, den Status zu ändern
+        website:
+            unique_main_alias: Hauptaliasnamen muss eindeutig sein
+            unique_site_id: Website-ID muss eindeutig sein

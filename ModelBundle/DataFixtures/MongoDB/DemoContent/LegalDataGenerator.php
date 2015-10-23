@@ -63,6 +63,31 @@ EOF;
     }
 
     /**
+     * @return Node
+     */
+    protected function generateNodeDe()
+    {
+        $htmlContent = <<<EOF
+<div class="content2">
+    <h1>Geschäft</h1>
+    <p>Offene Orchester ist ein eingetragenes Warenzeichen von Business & Decision</p>
+    <ul>
+        <li>Firmenname : Business & Decision S.A. (tél : 01 56 21 21 21)</li>
+        <li>Aktiengesellschaft mit einem Kapital von 551 808,25 €</li>
+        <li>Aufgenommen in RCS Paris : 384 518 114 B</li>
+        <li>Sitz der Gesellschaft : 153 rue de Courcelles, 75817 Paris cedex 17</li>
+        <li>Herausgeber : Patrick Bensabat, PDG</li>
+    </ul>
+</div>
+EOF;
+        $name = "Rechtliche Hinweise";
+        $language = "de";
+        $routePattern = "rechtliche-hinweise";
+
+        return $this->generateNodeGlobal($htmlContent, $name, $language, $routePattern);
+    }
+
+    /**
      * @param string $htmlContent
      * @param string $name
      * @param string $language

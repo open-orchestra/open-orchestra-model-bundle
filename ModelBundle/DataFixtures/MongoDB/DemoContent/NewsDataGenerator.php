@@ -74,6 +74,37 @@ EOF;
     }
 
     /**
+     * @return Node
+     */
+    protected function generateNodeDe()
+    {
+        $htmlContent = <<<EOF
+<div class="content2">
+    <h1>Aktualität</h1>
+    <article>
+        <h2>Offene Orchestra in Symfony Live 2015 Paris</h2>
+        <p>
+            Die Symfony Live ist das Schlüsselereignis von Symfony und Französisch Open-Source-Community.
+            Deshalb ist das Öffnen Orchester-Team beschlossen, die Veranstaltung, indem er ein Gold Sponsor
+            dieser Ausgabe unterstützen. Bei dieser Gelegenheit wurde Öffnen Orchestra an der Gemeinschaft
+            anlässlich der 10 Jahre Symfony vor mehr als 600 Teilnehmern vorgestellt.
+        </p>
+        <h2>Offene Orchestra sponsert sfPot</h2>
+        <p>
+            Der 16. Juni 2015 nahm Öffnen Orchestra in der Organisation der
+             SfPot Paris auf dem Gelände der Mozilla Foundation etwa 100 Symfony-Entwickler.
+        </p>
+    </article>
+</div>
+EOF;
+        $name = "Aktualität";
+        $language = "de";
+        $routePattern = "unsere-nachrichten";
+
+        return $this->generateNodeGlobal($htmlContent, $name, $language, $routePattern);
+    }
+
+    /**
      * @param string $htmlContent
      * @param string $name
      * @param string $language
