@@ -1,14 +1,7 @@
 parameters:
-    open_orchestra_model.manager.node.class: OpenOrchestra\ModelBundle\Manager\NodeManager
     open_orchestra_model.manager.versionnable_saver.class: OpenOrchestra\ModelBundle\Manager\VersionableSaver
 
 services:
-    open_orchestra_model.manager.node:
-        class: %open_orchestra_model.manager.node.class%
-        arguments:
-            - %open_orchestra_model.document.node.class%
-            - %open_orchestra_model.document.area.class%
-
     open_orchestra_model.manager.versionnable_saver:
         class: %open_orchestra_model.manager.versionnable_saver.class%
         calls:
