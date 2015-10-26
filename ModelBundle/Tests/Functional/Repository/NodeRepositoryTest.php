@@ -155,8 +155,8 @@ class NodeRepositoryTest extends KernelTestCase
     public function provideNodeSiteAndCount()
     {
         return array(
-            array(NodeInterface::ROOT_NODE_ID, '2', 3),
-            array(NodeInterface::TRANSVERSE_NODE_ID, '2', 2),
+            array(NodeInterface::ROOT_NODE_ID, '2', 4),
+            array(NodeInterface::TRANSVERSE_NODE_ID, '2', 3),
             array('fixture_page_what_is_orchestra', '2', 0),
         );
     }
@@ -400,9 +400,9 @@ class NodeRepositoryTest extends KernelTestCase
     public function provideContributor()
     {
         return array(
-            array('fake_admin', null, 3),
+            array('fake_admin', null, 4),
             array('fake_admin', false, 1),
-            array('fake_admin', true, 2),
+            array('fake_admin', true, 3),
             array('fakeContributor', false, 0),
             array('fakeContributor', null, 0),
         );
@@ -495,7 +495,7 @@ class NodeRepositoryTest extends KernelTestCase
     public function provideNodeTypeAndCount()
     {
         return array(
-            array(NodeInterface::TYPE_DEFAULT, 10),
+            array(NodeInterface::TYPE_DEFAULT, 15),
             array(NodeInterface::TYPE_ERROR, 0),
             array(NodeInterface::TYPE_TRANSVERSE, 0),
         );
