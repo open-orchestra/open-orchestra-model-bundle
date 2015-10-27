@@ -541,12 +541,28 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      *
      * @throws \Exception
      *
+     * @deprecated used only in the fixtures, will be removed in 1.2.0
+     *
      * @return array
      */
     public function findByNodeType($type = NodeInterface::TYPE_DEFAULT)
     {
         return parent::findBy(array('nodeType' => $type));
     }
+
+    /**
+     * @param string $type
+     * @param string $siteId
+     *
+     * @throws \Exception
+     *
+     * @return array
+     */
+    public function findByNodeTypeAndSite($type, $siteId)
+    {
+        return parent::findBy(array('nodeType' => $type, 'siteId' => $siteId));
+    }
+
 
     /**
      * @param string $language
