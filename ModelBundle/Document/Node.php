@@ -156,7 +156,7 @@ class Node implements NodeInterface
     protected $areas;
 
     /**
-     * @var BlockInterface
+     * @var Collection
      *
      * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\BlockInterface")
      */
