@@ -11,6 +11,8 @@ use OpenOrchestra\Mapping\Annotations\Search;
 
 /**
  * Class ContentRepositoryTest
+ *
+ * @group integrationTest
  */
 class ContentRepositoryTest extends KernelTestCase
 {

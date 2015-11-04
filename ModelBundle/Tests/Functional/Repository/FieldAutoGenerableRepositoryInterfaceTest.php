@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
  * Class FieldAutoGenerableRepositoryInterfaceTest
+ *
+ * @group integrationTest
  */
 class FieldAutoGenerableRepositoryInterfaceTest extends KernelTestCase
 {

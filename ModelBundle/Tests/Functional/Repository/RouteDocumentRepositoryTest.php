@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
  * Test RouteDocumentRepositoryTest
+ *
+ * @group integrationTest
  */
 class RouteDocumentRepositoryTest extends KernelTestCase
 {

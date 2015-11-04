@@ -4,6 +4,8 @@ namespace OpenOrchestra\ModelBundle\Tests\Functional\Model;
 
 /**
  * Description of BaseNodeTest
+ *
+ * @group integrationTest
  */
 class EntityTest extends \PHPUnit_Framework_TestCase
 {
