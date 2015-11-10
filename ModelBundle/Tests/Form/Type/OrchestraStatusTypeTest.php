@@ -37,7 +37,7 @@ class OrchestraStatusTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testName()
     {
-        $this->assertSame('orchestra_status', $this->form->getName());
+        $this->assertSame('oo_orchestra_status', $this->form->getName());
     }
 
     /**

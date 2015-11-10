@@ -33,7 +33,7 @@ class OrchestraThemeTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testName()
     {
-        $this->assertSame('orchestra_theme', $this->form->getName());
+        $this->assertSame('oo_orchestra_theme', $this->form->getName());
     }
 
     /**
