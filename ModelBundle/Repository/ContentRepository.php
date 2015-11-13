@@ -399,6 +399,35 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     }
 
     /**
+     * @param string       $author
+     * @param string       $siteId
+     * @param boolean|null $published
+     * @param int|null     $limit
+     *
+     * @return array
+     */
+    public function findByAuthorAndSiteId($author, $siteId, $published = null, $limit = null)
+    {
+        $qa = $this->createAggregationQuery();
+        $filter = array(
+            'createdBy' => $author,
+            'deleted' => false
+        );
+        $qa->match($this->generateSiteIdAndNotLinkedFilter($siteId));
+        if (null !== $published) {
+            $filter['status.published'] = $published;
+        }
+
+        $qa->match($filter);
+
+        if (null !== $limit) {
+            $qa->limit($limit);
+        }
+
+        return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
      * @param string $siteId
      *
      * @return array
