@@ -2,13 +2,13 @@
 
 namespace OpenOrchestra\ModelBundle\Form\Type;
 
-use OpenOrchestra\ModelInterface\Form\Type\AbstractOrchestraThemeType;
+use OpenOrchestra\ModelInterface\Form\Type\AbstractSiteThemeChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class OrchestraThemeType
+ * Class SiteThemeChoiceType
  */
-class OrchestraThemeType extends AbstractOrchestraThemeType
+class SiteThemeChoiceType extends AbstractSiteThemeChoiceType
 {
     protected $themeClass;
 

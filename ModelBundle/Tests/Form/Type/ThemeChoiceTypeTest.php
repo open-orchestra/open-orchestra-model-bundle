@@ -3,15 +3,15 @@
 namespace OpenOrchestra\ModelBundle\Tests\Form\Type;
 
 use Phake;
-use OpenOrchestra\ModelBundle\Form\Type\OrchestraThemeType;
+use OpenOrchestra\ModelBundle\Form\Type\SiteThemeChoiceType;
 
 /**
- * Class OrchestraStatusTypeTest
+ * Class SiteThemeChoiceTypeTest
  */
-class OrchestraThemeTypeTest extends \PHPUnit_Framework_TestCase
+class SiteThemeChoiceTypeTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var OrchestraThemeType
+     * @var ThemeChoiceType
      */
     protected $form;
 
@@ -25,7 +25,7 @@ class OrchestraThemeTypeTest extends \PHPUnit_Framework_TestCase
     {
         $this->builder = Phake::mock('Symfony\Component\Form\FormBuilder');
 
-        $this->form = new OrchestraThemeType($this->themeClass);
+        $this->form = new SiteThemeChoiceType($this->themeClass);
     }
 
     /**
@@ -33,7 +33,7 @@ class OrchestraThemeTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testName()
     {
-        $this->assertSame('oo_orchestra_theme', $this->form->getName());
+        $this->assertSame('oo_site_theme_choice', $this->form->getName());
     }
 
     /**

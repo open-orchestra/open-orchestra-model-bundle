@@ -2,14 +2,14 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\Form\Type;
 
-use OpenOrchestra\ModelBundle\Form\Type\OrchestraRoleType;
+use OpenOrchestra\ModelBundle\Form\Type\WorkflowRoleChoiceType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Phake;
 
 /**
- * Description of OrchestraRoleTypeTest
+ * Description of WorkflowRoleChoiceTypeTest
  */
-class OrchestraRoleTypeTest extends \PHPUnit_Framework_TestCase
+class WorkflowRoleChoiceTypeTest extends \PHPUnit_Framework_TestCase
 {
     protected $roles;
     protected $roleClass = 'RoleClass';
@@ -30,7 +30,7 @@ class OrchestraRoleTypeTest extends \PHPUnit_Framework_TestCase
         $this->roleRepositoryInterface = Phake::mock('OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface');
         Phake::when($this->roleRepositoryInterface)->findWorkflowRole()->thenReturn($this->roles);
 
-        $this->form = new OrchestraRoleType($this->roleClass, $this->roleRepositoryInterface);
+        $this->form = new WorkflowRoleChoiceType($this->roleClass, $this->roleRepositoryInterface);
     }
 
     /**
@@ -38,7 +38,7 @@ class OrchestraRoleTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testName()
     {
-        $this->assertSame('oo_orchestra_role', $this->form->getName());
+        $this->assertSame('oo_workflow_role_choice', $this->form->getName());
     }
 
     /**

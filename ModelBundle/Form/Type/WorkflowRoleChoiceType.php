@@ -4,12 +4,12 @@ namespace OpenOrchestra\ModelBundle\Form\Type;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use OpenOrchestra\ModelInterface\Repository\RoleRepositoryInterface;
-use OpenOrchestra\ModelInterface\Form\Type\AbstractOrchestraRoleType;
+use OpenOrchestra\ModelInterface\Form\Type\AbstractWorkflowRoleChoiceType;
 
 /**
- * class OrchestraRoleType
+ * class WorkflowRoleChoiceType
  */
-class OrchestraRoleType extends AbstractOrchestraRoleType
+class WorkflowRoleChoiceType extends AbstractWorkflowRoleChoiceType
 {
     protected $roleClass;
     protected $roleRepositoryInterface;

@@ -3,16 +3,16 @@
 namespace OpenOrchestra\ModelBundle\Form\Type;
 
 use OpenOrchestra\ModelBundle\Form\DataTransformer\EmbedStatusToStatusTransformer;
-use OpenOrchestra\ModelInterface\Form\Type\AbstractOrchestraStatusType;
+use OpenOrchestra\ModelInterface\Form\Type\AbstractStatusChoiceType;
 use OpenOrchestra\ModelInterface\Manager\TranslationChoiceManagerInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class OrchestraStatusType
+ * Class StatusChoiceType
  */
-class OrchestraStatusType extends AbstractOrchestraStatusType
+class StatusChoiceType extends AbstractStatusChoiceType
 {
     protected $translationChoiceManager;
     protected $statusTransformer;
