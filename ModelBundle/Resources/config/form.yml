@@ -1,35 +1,35 @@
 parameters:
-    open_orchestra_model.type.orchestra_site.class: OpenOrchestra\ModelBundle\Form\Type\OrchestraSiteType
-    open_orchestra_model.type.orchestra_status.class: OpenOrchestra\ModelBundle\Form\Type\OrchestraStatusType
-    open_orchestra_model.type.orchestra_theme.class: OpenOrchestra\ModelBundle\Form\Type\OrchestraThemeType
-    open_orchestra_model.type.orchestra_role.class: OpenOrchestra\ModelBundle\Form\Type\OrchestraRoleType
+    open_orchestra_model.type.group_site_choice.class: OpenOrchestra\ModelBundle\Form\Type\GroupSiteChoiceType
+    open_orchestra_model.type.status_choice.class: OpenOrchestra\ModelBundle\Form\Type\StatusChoiceType
+    open_orchestra_model.type.site_theme_choice.class: OpenOrchestra\ModelBundle\Form\Type\SiteThemeChoiceType
+    open_orchestra_model.type.workflow_role_choice.class: OpenOrchestra\ModelBundle\Form\Type\WorkflowRoleChoiceType
 
 services:
-    open_orchestra_model.type.orchestra_site:
-        class: %open_orchestra_model.type.orchestra_site.class%
+    open_orchestra_model.type.group_site_choice:
+        class: %open_orchestra_model.type.group_site_choice.class%
         arguments:
             - %open_orchestra_model.document.site.class%
             - @open_orchestra_model.transformer.embed_site_to_site
         tags:
-            - { name: form.type, alias: oo_orchestra_site }
-    open_orchestra_model.type.orchestra_status:
-        class: %open_orchestra_model.type.orchestra_status.class%
+            - { name: form.type, alias: oo_group_site_choice }
+    open_orchestra_model.type.status_choice:
+        class: %open_orchestra_model.type.status_choice.class%
         arguments:
             - @open_orchestra_model.transformer.embed_status_to_status
             - %open_orchestra_model.document.status.class%
             - @?open_orchestra_backoffice.manager.translation_choice
         tags:
-            - { name: form.type, alias: oo_orchestra_status }
-    open_orchestra_model.type.orchestra_theme:
-        class: %open_orchestra_model.type.orchestra_theme.class%
+            - { name: form.type, alias: oo_status_choice }
+    open_orchestra_model.type.site_theme_choice:
+        class: %open_orchestra_model.type.site_theme_choice.class%
         arguments:
             - %open_orchestra_model.document.theme.class%
         tags:
-            - { name: form.type, alias: oo_orchestra_theme }
-    open_orchestra_model.type.orchestra_role:
-        class: %open_orchestra_model.type.orchestra_role.class%
+            - { name: form.type, alias: oo_site_theme_choice }
+    open_orchestra_model.type.workflow_role_choice:
+        class: %open_orchestra_model.type.workflow_role_choice.class%
         arguments:
             - %open_orchestra_model.document.role.class%
             - @open_orchestra_model.repository.role
         tags:
-            - { name: form.type, alias: oo_orchestra_role}
+            - { name: form.type, alias: oo_workflow_role_choice}

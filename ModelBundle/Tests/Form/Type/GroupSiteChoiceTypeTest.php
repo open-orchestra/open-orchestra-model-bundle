@@ -4,15 +4,15 @@ namespace OpenOrchestra\ModelBundle\Tests\Form\Type;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
 use Phake;
-use OpenOrchestra\ModelBundle\Form\Type\OrchestraSiteType;
+use OpenOrchestra\ModelBundle\Form\Type\GroupSiteChoiceType;
 
 /**
- * Class OrchestraSiteTypeTest
+ * Class GroupSiteChoiceTypeTest
  */
-class OrchestraSiteTypeTest extends \PHPUnit_Framework_TestCase
+class GroupSiteChoiceTypeTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var OrchestraSiteType
+     * @var GroupSiteChoiceType
      */
     protected $form;
 
@@ -26,7 +26,7 @@ class OrchestraSiteTypeTest extends \PHPUnit_Framework_TestCase
     {
         $this->transformer = Phake::mock('OpenOrchestra\ModelBundle\Form\DataTransformer\EmbedSiteToSiteTransformer');
 
-        $this->form = new OrchestraSiteType($this->siteClass, $this->transformer);
+        $this->form = new GroupSiteChoiceType($this->siteClass, $this->transformer);
     }
 
     /**
@@ -34,7 +34,7 @@ class OrchestraSiteTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testName()
     {
-        $this->assertSame('oo_orchestra_site', $this->form->getName());
+        $this->assertSame('oo_group_site_choice', $this->form->getName());
     }
 
     /**

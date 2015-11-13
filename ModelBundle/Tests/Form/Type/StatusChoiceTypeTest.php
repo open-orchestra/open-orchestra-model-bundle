@@ -3,15 +3,15 @@
 namespace OpenOrchestra\ModelBundle\Tests\Form\Type;
 
 use Phake;
-use OpenOrchestra\ModelBundle\Form\Type\OrchestraStatusType;
+use OpenOrchestra\ModelBundle\Form\Type\StatusChoiceType;
 
 /**
- * Class OrchestraStatusTypeTest
+ * Class StatusChoiceTypeTest
  */
-class OrchestraStatusTypeTest extends \PHPUnit_Framework_TestCase
+class StatusChoiceTypeTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var OrchestraStatusType
+     * @var StatusChoiceType
      */
     protected $form;
 
@@ -29,7 +29,7 @@ class OrchestraStatusTypeTest extends \PHPUnit_Framework_TestCase
         $this->transformer = Phake::mock('OpenOrchestra\ModelBundle\Form\DataTransformer\EmbedStatusToStatusTransformer');
         $this->translationChoiceManager = Phake::mock('OpenOrchestra\ModelInterface\Manager\TranslationChoiceManagerInterface');
 
-        $this->form = new OrchestraStatusType($this->transformer, $this->statusClass, $this->translationChoiceManager);
+        $this->form = new StatusChoiceType($this->transformer, $this->statusClass, $this->translationChoiceManager);
     }
 
     /**
@@ -37,7 +37,7 @@ class OrchestraStatusTypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testName()
     {
-        $this->assertSame('oo_orchestra_status', $this->form->getName());
+        $this->assertSame('oo_status_choice', $this->form->getName());
     }
 
     /**

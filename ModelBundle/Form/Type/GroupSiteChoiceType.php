@@ -4,14 +4,14 @@ namespace OpenOrchestra\ModelBundle\Form\Type;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
 use OpenOrchestra\ModelBundle\Form\DataTransformer\EmbedSiteToSiteTransformer;
-use OpenOrchestra\ModelInterface\Form\Type\AbstractOrchestraSiteType;
+use OpenOrchestra\ModelInterface\Form\Type\AbstractGroupSiteChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class OrchestraSiteType
+ * Class GroupSiteChoiceType
  */
-class OrchestraSiteType extends AbstractOrchestraSiteType
+class GroupSiteChoiceType extends AbstractGroupSiteChoiceType
 {
     protected $siteClass;
     protected $embedSiteToSiteTransformer;
