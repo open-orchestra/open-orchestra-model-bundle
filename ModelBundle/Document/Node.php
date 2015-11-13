@@ -19,7 +19,6 @@ use OpenOrchestra\MongoTrait\Cacheable;
 use OpenOrchestra\MongoTrait\Metaable;
 use OpenOrchestra\MongoTrait\Sitemapable;
 use OpenOrchestra\MongoTrait\Schemeable;
-use OpenOrchestra\MongoTrait\TrashCanable;
 use OpenOrchestra\MongoTrait\Versionable;
 
 /**
