@@ -772,6 +772,8 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      * @param int|null     $limit
      *
      * @return array
+     * 
+     * @deprecated will be removed in 1.2.0
      */
     public function findByAuthor($author, $published = null, $limit = null)
     {
@@ -779,6 +781,35 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         $filter = array(
             'nodeType' => NodeInterface::TYPE_DEFAULT,
             'createdBy' => $author,
+            'deleted' => false
+        );
+        if (null !== $published) {
+            $filter['status.published'] = $published;
+        }
+        $qa->match($filter);
+
+        if (null !== $limit) {
+            $qa->limit($limit);
+        }
+
+        return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param string       $author
+     * @param string       $siteId
+     * @param boolean|null $published
+     * @param int|null     $limit
+     *
+     * @return array
+     */
+    public function findByAuthorAndSiteId($author, $siteId, $published = null, $limit = null)
+    {
+        $qa = $this->createAggregationQuery();
+        $filter = array(
+            'nodeType' => NodeInterface::TYPE_DEFAULT,
+            'createdBy' => $author,
+            'siteId' => $siteId,
             'deleted' => false
         );
         if (null !== $published) {

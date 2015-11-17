@@ -143,8 +143,8 @@ class ContentRepositoryTest extends KernelTestCase
             array('news', ContentRepositoryInterface::CHOICE_AND, 'Lorem,Sit', 1),
             array('news', ContentRepositoryInterface::CHOICE_AND, '', 4),
             array('car', ContentRepositoryInterface::CHOICE_AND, '', 3),
-            array('', ContentRepositoryInterface::CHOICE_AND, null, 8),
-            array('', ContentRepositoryInterface::CHOICE_AND, '', 8),
+            array('', ContentRepositoryInterface::CHOICE_AND, null, 9),
+            array('', ContentRepositoryInterface::CHOICE_AND, '', 9),
             array('', ContentRepositoryInterface::CHOICE_AND, 'Lorem', 5),
             array('', ContentRepositoryInterface::CHOICE_AND, 'Sit', 4),
             array('', ContentRepositoryInterface::CHOICE_AND, 'Dolor', 0),
@@ -159,12 +159,12 @@ class ContentRepositoryTest extends KernelTestCase
             array('news', ContentRepositoryInterface::CHOICE_OR, 'Lorem,Sit', 6),
             array('news', ContentRepositoryInterface::CHOICE_OR, '', 4),
             array('car', ContentRepositoryInterface::CHOICE_OR, null, 3),
-            array('', ContentRepositoryInterface::CHOICE_OR, null, 8),
+            array('', ContentRepositoryInterface::CHOICE_OR, null, 9),
             array('', ContentRepositoryInterface::CHOICE_OR, 'Lorem', 5),
             array('', ContentRepositoryInterface::CHOICE_OR, 'Sit', 4),
             array('', ContentRepositoryInterface::CHOICE_OR, 'Dolor', 0),
             array('', ContentRepositoryInterface::CHOICE_OR, 'Lorem,Sit', 3),
-            array('', ContentRepositoryInterface::CHOICE_OR, '', 8),
+            array('', ContentRepositoryInterface::CHOICE_OR, '', 9),
         );
     }
 
@@ -314,7 +314,7 @@ class ContentRepositoryTest extends KernelTestCase
     {
         return array(
             array('car', 3),
-            array('customer', 1),
+            array('customer', 2),
             array('news', 4),
         );
     }
@@ -353,9 +353,9 @@ class ContentRepositoryTest extends KernelTestCase
      * @param boolean|null $published
      * @param int          $count
      *
-     * @dataProvider provideContributor
+     * @dataProvider provideFindByAuthor
      */
-    public function testFindByContributor($author, $published, $count)
+    public function testFindByAuthor($author, $published, $count)
     {
         $contents = $this->repository->findByAuthor($author, $published);
         $this->assertCount($count, $contents);
@@ -364,14 +364,44 @@ class ContentRepositoryTest extends KernelTestCase
     /**
      * @return array
      */
-    public function provideContributor()
+    public function provideFindByAuthor()
     {
         return array(
-            array('admin', null, 6),
+            array('admin', null, 7),
             array('admin', false, 0),
-            array('admin', true, 6),
+            array('admin', true, 7),
             array('fakeContributor', false, 0),
             array('fakeContributor', null, 0),
+        );
+    }
+
+    /**
+     * @param string       $author
+     * @param string       $siteId
+     * @param boolean|null $published
+     * @param int          $count
+     *
+     * @dataProvider provideFindByAuthorAndSiteId
+     */
+    public function testFindByAuthorAndSiteId($author, $siteId, $published, $count)
+    {
+        $contents = $this->repository->findByAuthorAndSiteId($author, $siteId, $published);
+        $this->assertCount($count, $contents);
+    }
+
+    /**
+     * @return array
+     */
+    public function provideFindByAuthorAndSiteId()
+    {
+        return array(
+            array('admin', '2', null, 6),
+            array('admin', '2', false, 0),
+            array('admin', '2', true, 6),
+            array('fakeContributor', '2', false, 0),
+            array('fakeContributor', '2', null, 0),
+            array('admin', '3', true, 5),
+            array('admin', 'not-an-id', true, 4)
         );
     }
 
