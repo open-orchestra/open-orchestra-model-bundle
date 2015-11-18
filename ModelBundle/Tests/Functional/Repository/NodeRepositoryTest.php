@@ -414,15 +414,16 @@ class NodeRepositoryTest extends KernelTestCase
      * @param string       $author
      * @param string       $siteId
      * @param boolean|null $published
+     * @param array|null   $sort
      * @param int          $count
      *
      * @dataProvider provideFindByAuthorAndSiteId
      */
-    public function testFindByAuthorAndSiteId($author, $siteId, $published, $count)
+    public function testFindByAuthorAndSiteId($author, $siteId, $published, $sort, $count)
     {
         $this->assertCount(
             $count,
-            $this->repository->findByAuthorAndSiteId($author, $siteId, $published)
+            $this->repository->findByAuthorAndSiteId($author, $siteId, $published, $sort)
             );
     }
 
@@ -432,12 +433,12 @@ class NodeRepositoryTest extends KernelTestCase
     public function provideFindByAuthorAndSiteId()
     {
         return array(
-            array('fake_admin', '2', null, 4),
-            array('fake_admin', '2', false, 1),
-            array('fake_admin', '2', true, 3),
-            array('fakeContributor', '2', false, 0),
-            array('fakeContributor', '2', null, 0),
-            array('fake_admin', '3', true, 1),
+            array('fake_admin', '2', null, array('updatedAt' => -1), 4),
+            array('fake_admin', '2', false, null, 1),
+            array('fake_admin', '2', true, null, 3),
+            array('fakeContributor', '2', false, null, 0),
+            array('fakeContributor', '2', null, null, 0),
+            array('fake_admin', '3', true, null, 1),
         );
     }
 
