@@ -380,7 +380,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
      * 
      * @deprecated will be removed in 1.2.0
      */
-    public function findByAuthor($author, $published = null, $limit = null)
+    public function findByAuthor($author, $published = null, $limit = null, $sort = null)
     {
         $qa = $this->createAggregationQuery();
         $filter = array(
@@ -395,6 +395,10 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
 
         if (null !== $limit) {
             $qa->limit($limit);
+        }
+
+        if (null !== $sort) {
+            $qa->sort($sort);
         }
 
         return $this->hydrateAggregateQuery($qa);

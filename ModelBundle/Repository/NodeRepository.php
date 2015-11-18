@@ -747,7 +747,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     /**
      * @param string $nodeType
      * @param string $siteId
-     * 
+     *
      * @return array
      */
     public function findAllNodesOfTypeInLastPublishedVersionForSite($nodeType, $siteId)
@@ -775,7 +775,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      * 
      * @deprecated will be removed in 1.2.0
      */
-    public function findByAuthor($author, $published = null, $limit = null)
+    public function findByAuthor($author, $published = null, $limit = null, $sort = null)
     {
         $qa = $this->createAggregationQuery();
         $filter = array(
@@ -790,6 +790,10 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
 
         if (null !== $limit) {
             $qa->limit($limit);
+        }
+
+        if (null !== $sort) {
+            $qa->sort($sort);
         }
 
         return $this->hydrateAggregateQuery($qa);
