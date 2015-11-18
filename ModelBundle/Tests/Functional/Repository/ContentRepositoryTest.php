@@ -350,43 +350,17 @@ class ContentRepositoryTest extends KernelTestCase
 
     /**
      * @param string       $author
-     * @param boolean|null $published
-     * @param int          $count
-     *
-     * @dataProvider provideFindByAuthor
-     */
-    public function testFindByAuthor($author, $published, $count)
-    {
-        $contents = $this->repository->findByAuthor($author, $published);
-        $this->assertCount($count, $contents);
-    }
-
-    /**
-     * @return array
-     */
-    public function provideFindByAuthor()
-    {
-        return array(
-            array('admin', null, 7),
-            array('admin', false, 0),
-            array('admin', true, 7),
-            array('fakeContributor', false, 0),
-            array('fakeContributor', null, 0),
-        );
-    }
-
-    /**
-     * @param string       $author
      * @param string       $siteId
      * @param boolean|null $published
+     * @param int          $limit
      * @param array|null   $sort
      * @param int          $count
      *
      * @dataProvider provideFindByAuthorAndSiteId
      */
-    public function testFindByAuthorAndSiteId($author, $siteId, $published, $sort, $count)
+    public function testFindByAuthorAndSiteId($author, $siteId, $published, $limit, $sort, $count)
     {
-        $contents = $this->repository->findByAuthorAndSiteId($author, $siteId, $published, $sort);
+        $contents = $this->repository->findByAuthorAndSiteId($author, $siteId, $published, $limit, $sort);
         $this->assertCount($count, $contents);
     }
 
@@ -396,13 +370,14 @@ class ContentRepositoryTest extends KernelTestCase
     public function provideFindByAuthorAndSiteId()
     {
         return array(
-            array('admin', '2', null, array('updatedAt' => -1), 6),
-            array('admin', '2', false, null, 0),
-            array('admin', '2', true, null, 6),
-            array('fakeContributor', '2', false, null, 0),
-            array('fakeContributor', '2', null, null, 0),
-            array('admin', '3', true, null, 5),
-            array('admin', 'not-an-id', true, null, 4),
+            array('admin', '2', null, 10, array('updatedAt' => -1), 6),
+            array('admin', '2', false, 10, null, 0),
+            array('admin', '2', true, 10, null, 6),
+            array('fakeContributor', '2', false, 10, null, 0),
+            array('fakeContributor', '2', null, 10, null, 0),
+            array('admin', '3', true, 10, null, 5),
+            array('admin', 'not-an-id', true, 10, null, 4),
+            array('admin', 'not-an-id', true, 3, null, 3),
         );
     }
 
