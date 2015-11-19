@@ -338,13 +338,15 @@ class ContentRepositoryTest extends KernelTestCase
     /**
      * @return array
      */
-    public function provideColumnsAndSearchAndCount(){
+    public function provideColumnsAndSearchAndCount()
+    {
         $descriptionEntity = $this->getDescriptionColumnEntity();
 
         return array(
             array('car', $descriptionEntity, $this->generateColumnsProvider(array('name' => '206')), 1),
             array('car', $descriptionEntity, $this->generateColumnsProvider(null, 'portes'), 2),
-            array('news', $descriptionEntity, $this->generateColumnsProvider(null, 'news'), 4)
+            array('news', $descriptionEntity, $this->generateColumnsProvider(null, 'news'), 0),
+            array('news', $descriptionEntity, $this->generateColumnsProvider(null, 'lorem'), 1),
         );
     }
 
@@ -468,6 +470,12 @@ class ContentRepositoryTest extends KernelTestCase
                 'key' => 'updated_at',
                 'field' => 'updatedAt',
                 'type' => 'date',
+            ),
+            'deleted' =>
+            array (
+                'key' => 'deleted',
+                'field' => 'deleted',
+                'type' => 'boolean',
             ),
             'attributes.car_name.string_value' =>
             array(

@@ -373,6 +373,17 @@ class NodeRepositoryTest extends KernelTestCase
     }
 
     /**
+     * @return array
+     */
+    public function provideLanguageSiteIdAndCount()
+    {
+        return array(
+            array('en', '2', 5),
+            array('fr', '2', 5),
+        );
+    }
+
+    /**
      * @param string       $author
      * @param string       $siteId
      * @param boolean|null $published
@@ -387,17 +398,6 @@ class NodeRepositoryTest extends KernelTestCase
         $this->assertCount(
             $count,
             $this->repository->findByAuthorAndSiteId($author, $siteId, $published, $limit, $sort)
-        );
-    }
-
-    /**
-     * @return array
-     */
-    public function provideLanguageSiteIdAndCount()
-    {
-        return array(
-            array('en', '2', 5),
-            array('fr', '2', 5),
         );
     }
 
