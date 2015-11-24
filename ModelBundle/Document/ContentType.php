@@ -211,7 +211,15 @@ class ContentType implements ContentTypeInterface
      */
     public function getName($language = 'en')
     {
-        return $this->names->get($language)->getValue();
+        if ($this->names->containsKey($language)) {
+            return $this->names->get($language)->getValue();
+        }
+
+        if ($this->names->count() > 0) {
+            return $this->names->first()->getValue();
+        }
+
+        return 'no name';
     }
 
     /**
