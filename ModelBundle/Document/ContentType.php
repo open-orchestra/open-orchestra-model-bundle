@@ -3,6 +3,7 @@
 namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+use OpenOrchestra\ModelInterface\Exceptions\TranslatedValueNotExisting;
 use OpenOrchestra\MongoTrait\SoftDeleteable;
 use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 use Gedmo\Blameable\Traits\BlameableDocument;
@@ -208,10 +209,15 @@ class ContentType implements ContentTypeInterface
      * @param string $language
      *
      * @return string
+     * @throws TranslatedValueNotExisting
      */
-    public function getName($language = 'en')
+    public function getName($language)
     {
-        return $this->names->get($language)->getValue();
+        if ($this->names->containsKey($language)) {
+            return $this->names->get($language)->getValue();
+        }
+
+        throw new TranslatedValueNotExisting();
     }
 
     /**
