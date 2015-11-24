@@ -38,7 +38,7 @@ class LoadDeletedSiteNodeData extends AbstractFixture implements OrderedFixtureI
      */
     public function getOrder()
     {
-        return 62;
+        return 561;
     }
     
     /**
