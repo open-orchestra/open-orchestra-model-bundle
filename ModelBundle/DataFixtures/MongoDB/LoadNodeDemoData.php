@@ -57,7 +57,7 @@ class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterfac
      */
     public function getOrder()
     {
-        return 61;
+        return 560;
     }
 
     protected function addNode(ObjectManager $manager, AbstractDataGenerator $dataGenerator, TransverseDataGenerator $transverseGenerator, array $languages = array("fr", "en"))
