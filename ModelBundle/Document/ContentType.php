@@ -219,7 +219,7 @@ class ContentType implements ContentTypeInterface
             return $this->names->first()->getValue();
         }
 
-        return 'no name';
+        return 'open_orchestra_model.content.no_name';
     }
 
     /**
