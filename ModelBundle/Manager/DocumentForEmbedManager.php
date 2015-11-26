@@ -22,11 +22,11 @@ class DocumentForEmbedManager implements DocumentForEmbedManagerInterface
     }
 
     /**
-     * Take a embed document array representation to return id
+     * Take a embed document array representation to return entity
      *
      * @param array $data
      *
-     * @return string
+     * @return mixed
      */
     public function fromDbToEntity($data)
     {
@@ -42,13 +42,12 @@ class DocumentForEmbedManager implements DocumentForEmbedManagerInterface
     /**
      * Take a id to turn it into a embed document array representation
      *
-     * @param array $data
+     * @param mixed $document
      *
      * @return array
      */
-    public function fromEntityToDb($id)
+    public function fromEntityToDb($document)
     {
-        $document = $this->documentManager->find($this->documentClass, $id);
         $unitOfWork = $this->documentManager->getUnitOfWork();
         $persistenceBuilder = new PersistenceBuilder($this->documentManager, $unitOfWork);
         $mapping = array (
