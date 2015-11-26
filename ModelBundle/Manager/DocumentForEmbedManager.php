@@ -28,7 +28,7 @@ class DocumentForEmbedManager implements DocumentForEmbedManagerInterface
      *
      * @return string
      */
-    public function transform($data)
+    public function fromDbToEntity($data)
     {
         $hydratorFactory = $this->documentManager->getHydratorFactory();
         $documentClass = $this->documentClass;
@@ -36,7 +36,7 @@ class DocumentForEmbedManager implements DocumentForEmbedManagerInterface
         $document = new $documentClass();
         $hydratorFactory->hydrate($document, $data);
 
-        return $document->getId();
+        return $document;
     }
 
     /**
@@ -46,7 +46,7 @@ class DocumentForEmbedManager implements DocumentForEmbedManagerInterface
      *
      * @return array
      */
-    public function reverseTransform($id)
+    public function fromEntityToDb($id)
     {
         $document = $this->documentManager->find($this->documentClass, $id);
         $unitOfWork = $this->documentManager->getUnitOfWork();
