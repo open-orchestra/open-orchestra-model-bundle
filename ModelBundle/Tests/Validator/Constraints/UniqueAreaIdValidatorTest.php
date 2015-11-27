@@ -3,7 +3,6 @@
 namespace OpenOrchestra\ModelBundle\Tests\Validator\Constraints;
 
 use OpenOrchestra\ModelBundle\Validator\Constraints\UniqueAreaIdValidator;
-use OpenOrchestra\ModelBundle\Validator\Constraints\UniqueFieldIdContentTypeValidator;
 use Phake;
 
 /**
@@ -12,7 +11,7 @@ use Phake;
 class UniqueAreaIdValidatorTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var UniqueFieldIdContentTypeValidator
+     * @var UniqueAreaIdValidator
      */
     protected $validator;
 
@@ -65,7 +64,7 @@ class UniqueAreaIdValidatorTest extends \PHPUnit_Framework_TestCase
      * @param string  $areaId2
      * @param integer $violationTimes
      *
-     * @dataProvider provideFieldIdAndViolation
+     * @dataProvider provideAreaIdAndViolation
      */
     public function testValidate($areaId, $areaId2, $violationTimes)
     {
@@ -80,7 +79,7 @@ class UniqueAreaIdValidatorTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array
      */
-    public function provideFieldIdAndViolation()
+    public function provideAreaIdAndViolation()
     {
         return array(
             array('fakeId2','fakeId3', 0),
