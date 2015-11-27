@@ -7,7 +7,6 @@ open_orchestra_model_validators:
             unique_content_type_id: Cet identifiant est déjà utilisé, choisissez en un autre s'il vous plait
         area:
             presence_required: Vous devez choisir l'un d'eux
-            unique_subarea_id: Les identifiants des sous aires doivent être unique
         node:
             check_route_pattern: Le pattern de route est déjà utilisé sur ce site
         status:

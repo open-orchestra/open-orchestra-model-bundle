@@ -7,7 +7,6 @@ open_orchestra_model_validators:
             unique_content_type_id: This id is already in use, please choose another one.
         area:
             presence_required: You need to choose one of them
-            unique_subarea_id: Subareas 's id have to be unique
         node:
             check_route_pattern: The route pattern is already used in this website
         status:
