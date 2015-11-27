@@ -13,6 +13,7 @@ use OpenOrchestra\MongoTrait\Statusable;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\Model\NodeTemplateSelectionInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 use OpenOrchestra\MongoTrait\Cacheable;
@@ -174,6 +175,13 @@ class Node implements NodeInterface
      * @ODM\Field(type="string")
      */
     protected $routePattern;
+
+    /**
+     * @var collection
+     *
+     * @ODM\EmbedMany(type="collection")
+     */
+    protected $templateSelection;
 
     /**
      * Constructor
@@ -599,12 +607,29 @@ class Node implements NodeInterface
     }
 
     /**
+     * @return array
+     */
+    public function getTemplateSelection()
+    {
+        return $this->templateSelection;
+    }
+
+    /**
+     * @param array $templateSelection
+     */
+    public function setTemplateSelection(array $templateSelection)
+    {
+        $this->templateSelection = $templateSelection;
+    }
+
+    /**
      * Initialize collections
      */
     protected function initializeCollections()
     {
         $this->areas = new ArrayCollection();
         $this->blocks = new ArrayCollection();
+        $this->templateSelection = array();
     }
 
     /**
