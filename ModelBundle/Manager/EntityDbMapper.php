@@ -31,7 +31,7 @@ class EntityDbMapper implements EntityDbMapperInterface
      *
      * @return mixed
      */
-    public function fromDbToEntity($data)
+    public function fromDbToEntity(array $data)
     {
         $hydratorFactory = $this->documentManager->getHydratorFactory();
         $documentClass = $this->documentClass;
