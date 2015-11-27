@@ -2,11 +2,11 @@
 
 namespace OpenOrchestra\ModelBundle\Manager;
 
-use OpenOrchestra\ModelInterface\Manager\DocumentForEmbedManagerInterface;
+use OpenOrchestra\ModelInterface\Manager\EntityDbMapperInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Persisters\PersistenceBuilder;
 
-class DocumentForEmbedManager implements DocumentForEmbedManagerInterface
+class EntityDbMapper implements EntityDbMapperInterface
 {
     protected $documentManager;
     protected $documentClass;

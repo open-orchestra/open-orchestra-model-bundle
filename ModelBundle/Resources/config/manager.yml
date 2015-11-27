@@ -1,6 +1,6 @@
 parameters:
     open_orchestra_model.manager.versionnable_saver.class: OpenOrchestra\ModelBundle\Manager\VersionableSaver
-    open_orchestra_model.manager.document_for_embed.class: OpenOrchestra\ModelBundle\Manager\DocumentForEmbedManager
+    open_orchestra_model.manager.entity_db_mapper.class: OpenOrchestra\ModelBundle\Manager\EntityDbMapper
 
 services:
     open_orchestra_model.manager.versionnable_saver:
@@ -8,7 +8,7 @@ services:
         calls:
             - [setContainer, ['@service_container']]
     open_orchestra_model.manager.content_for_embed:
-        class: %open_orchestra_model.manager.document_for_embed.class%
+        class: %open_orchestra_model.manager.entity_db_mapper.class%
         arguments:
             - @doctrine.odm.mongodb.document_manager
             - %open_orchestra_model.document.content.class%
