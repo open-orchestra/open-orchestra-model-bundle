@@ -1,4 +1,6 @@
 OpenOrchestra\ModelBundle\Document\Area:
+    constraints:
+        - OpenOrchestra\ModelBundle\Validator\Constraints\UniqueAreaId: ~
     properties:
         areaId:
             - NotBlank: ~
