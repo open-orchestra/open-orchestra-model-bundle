@@ -6,6 +6,9 @@ use OpenOrchestra\ModelInterface\Manager\EntityDbMapperInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Persisters\PersistenceBuilder;
 
+/**
+ * Class EntityDbMapper
+ */
 class EntityDbMapper implements EntityDbMapperInterface
 {
     protected $documentManager;

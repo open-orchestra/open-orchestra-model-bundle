@@ -6,6 +6,7 @@ use OpenOrchestra\ModelInterface\Manager\EntityDbMapperInterface;
 use OpenOrchestra\ModelBundle\Manager\EntityDbMapper;
 use Phake;
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
+
 /**
  * Class EntityDbMapperTest
  */
@@ -74,6 +75,9 @@ class EntityDbMapperTest extends \PHPUnit_Framework_TestCase
     }
 }
 
+/**
+ * Class FakeDocument
+ */
 class FakeDocument
 {
     public $fakeProperty;
