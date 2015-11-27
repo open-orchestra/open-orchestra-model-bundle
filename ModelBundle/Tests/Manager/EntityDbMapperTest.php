@@ -63,7 +63,6 @@ class EntityDbMapperTest extends \PHPUnit_Framework_TestCase
      */
     public function testFromEntityToDb()
     {
-
         $fakeClass = $this->fakeClass;
         $document = new $fakeClass();
         $document->setFakeProperty($this->fakePropertyValue);
