@@ -25,11 +25,8 @@ class VersionableSaver extends ContainerAware implements VersionableSaverInterfa
         $documentManager = $this->container->get('doctrine.odm.mongodb.document_manager');
         $documentManager->persist($versionable);
 
-        $count = 0;
-
-        while ($count < 10) {
+        for ($count = 1; $count < 10; $count++) {
             try {
-                $count ++;
                 $documentManager->flush($versionable);
             } catch (DuplicateKeyException $e) {
                 $versionable->setVersion($version + $count);
