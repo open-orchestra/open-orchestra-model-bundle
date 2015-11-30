@@ -54,7 +54,7 @@ class OpenOrchestraModelExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('listener.yml');
         $loader->load('validator.yml');
-        $loader->load('manager.yml');
+        $loader->load('saver.yml');
         $loader->load('form.yml');
         $loader->load('transformer.yml');
         $loader->load('helper.yml');

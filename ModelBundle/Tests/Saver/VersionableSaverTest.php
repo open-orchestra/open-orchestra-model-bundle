@@ -1,9 +1,9 @@
 <?php
 
-namespace OpenOrchestra\ModelBundle\Tests\Manager;
+namespace OpenOrchestra\ModelBundle\Tests\Saver;
 
-use OpenOrchestra\ModelBundle\Manager\VersionableSaver;
-use OpenOrchestra\ModelInterface\Manager\VersionableSaverInterface;
+use OpenOrchestra\ModelBundle\Saver\VersionableSaver;
+use OpenOrchestra\ModelInterface\Saver\VersionableSaverInterface;
 use Phake;
 use Symfony\Component\Config\Definition\Exception\DuplicateKeyException;
 
@@ -12,8 +12,11 @@ use Symfony\Component\Config\Definition\Exception\DuplicateKeyException;
  */
 class VersionableSaverTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var  VersionableSaverInterface */
+    /**
+     * @var VersionableSaverInterface
+     */
     protected $versionableSaver;
+
     protected $container;
     protected $documentManager;
     protected $database;
