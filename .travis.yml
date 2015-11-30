@@ -3,6 +3,7 @@ language: php
 cache:
   directories:
     - ~/.composer/cache
+    - ~/composer
 
 php:
   - 5.4
@@ -13,7 +14,6 @@ before_install:
   - phpenv config-add .travis.php.ini
   - if [ -f ~/composer/composer.phar ]; then mv ~/composer/composer.phar ./; else wget https://getcomposer.org/composer.phar; fi
   - mkdir -p ~/composer
-  - ./composer.phar self-update
   - cp composer.phar ~/composer/composer.phar
 
 install:
