@@ -88,4 +88,3 @@ class FakeDocument
         $this->fakeProperty = $fakeProperty;
     }
 }
-
