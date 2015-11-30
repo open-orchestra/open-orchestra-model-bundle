@@ -45,7 +45,6 @@ class EntityDbMapperTest extends \PHPUnit_Framework_TestCase
         Phake::when($documentManager)->getHydratorFactory()->thenReturn($hydratorFactory);
 
         $this->entityDbMapper = new EntityDbMapper($documentManager, $this->fakeClass);
-
     }
 
     /**
@@ -71,7 +70,6 @@ class EntityDbMapperTest extends \PHPUnit_Framework_TestCase
         $fakeArray = $this->entityDbMapper->fromEntityToDb($document);
 
         $this->assertEquals(array($this->fakeProperty => $this->fakePropertyValue), $fakeArray);
-
     }
 }
 
