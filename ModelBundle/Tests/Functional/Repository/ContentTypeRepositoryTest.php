@@ -47,7 +47,7 @@ class ContentTypeRepositoryTest extends KernelTestCase
     public function provideContentTypeAndVersionNumber()
     {
         return array(
-            array('news', 1),
+            array('news', 2),
             array('customer', 1),
         );
     }
