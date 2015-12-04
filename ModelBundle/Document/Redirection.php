@@ -62,6 +62,13 @@ class Redirection implements RedirectionInterface
     protected $nodeId;
 
     /**
+     * @var int $nodeVersion
+     *
+     * @ODM\Field(type="int")
+     */
+    protected $nodeVersion;
+
+    /**
      * @var string
      *
      * @ODM\Field(type="string")
@@ -163,6 +170,22 @@ class Redirection implements RedirectionInterface
     public function setNodeId($nodeId)
     {
         $this->nodeId = $nodeId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNodeVersion()
+    {
+        return $this->nodeVersion;
+    }
+
+    /**
+     * @param int $nodeVersion
+     */
+    public function setNodeVersion($nodeVersion)
+    {
+        $this->nodeVersion = $nodeVersion;
     }
 
     /**
