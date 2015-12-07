@@ -178,7 +178,6 @@ class FieldType implements FieldTypeInterface
         $this->searchable = $searchable;
     }
 
-
     /**
      * @return boolean
      */
