@@ -45,6 +45,13 @@ class FieldType implements FieldTypeInterface
     protected $searchable;
 
     /**
+     * @var string $fieldTypeSearchable
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $fieldTypeSearchable;
+
+    /**
      * @var boolean $translatable
      *
      * @ODM\Field(type="boolean")
@@ -195,6 +202,24 @@ class FieldType implements FieldTypeInterface
     public function getSearchable()
     {
         return $this->searchable;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFieldTypeSearchable()
+    {
+        return $this->fieldTypeSearchable;
+    }
+
+    /**
+     * Set field searchable
+     *
+     * @param string $fieldTypeSearchable
+     */
+    public function setFieldTypeSearchable($fieldTypeSearchable)
+    {
+        $this->fieldTypeSearchable = $fieldTypeSearchable;
     }
 
     /**
