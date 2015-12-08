@@ -15,17 +15,15 @@ class RedirectionRepository extends AbstractAggregateRepository implements Redir
 
     /**
      * @param string $nodeId
-     * @param int    $nodeVersion
      * @param string $language
      *
      * @return array
      */
-    public function findByNode($nodeId, $nodeVersion, $language){
+    public function findByNode($nodeId, $language){
         $qa = $this->createAggregationQuery();
 
         $qa->match(array(
             'nodeId' => $nodeId,
-            'nodeVersion' => $nodeVersion,
             'locale' => $language,
         ));
 

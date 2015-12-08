@@ -62,13 +62,6 @@ class Redirection implements RedirectionInterface
     protected $nodeId;
 
     /**
-     * @var int $nodeVersion
-     *
-     * @ODM\Field(type="int")
-     */
-    protected $nodeVersion;
-
-    /**
      * @var string
      *
      * @ODM\Field(type="string")
