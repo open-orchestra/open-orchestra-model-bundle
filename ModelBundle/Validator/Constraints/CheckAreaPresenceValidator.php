@@ -8,6 +8,8 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 /**
  * Class CheckAreaPresenceValidator
+ *
+ * @deprecated use the Constraint in the BackofficeBundle, will be removed in 1.2.0
  */
 class CheckAreaPresenceValidator extends ConstraintValidator
 {
