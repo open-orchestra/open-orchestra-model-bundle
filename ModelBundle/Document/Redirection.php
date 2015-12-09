@@ -166,22 +166,6 @@ class Redirection implements RedirectionInterface
     }
 
     /**
-     * @return int
-     */
-    public function getNodeVersion()
-    {
-        return $this->nodeVersion;
-    }
-
-    /**
-     * @param int $nodeVersion
-     */
-    public function setNodeVersion($nodeVersion)
-    {
-        $this->nodeVersion = $nodeVersion;
-    }
-
-    /**
      * @return string
      */
     public function getUrl()
