@@ -23,6 +23,16 @@ class RouteDocumentRepository extends AbstractAggregateRepository implements Rou
     }
 
     /**
+     * @param string $redirectionId
+     *
+     * @return RouteDocumentInterface
+     */
+    public function findByRedirection($redirectionId)
+    {
+        return $this->findBy(array('name' => new \MongoRegex('/.*_' . $redirectionId . '/')));
+    }
+
+    /**
      * @param string $pathInfo
      *
      * @return Collection
