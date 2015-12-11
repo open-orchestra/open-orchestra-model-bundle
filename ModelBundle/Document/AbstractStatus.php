@@ -57,7 +57,7 @@ abstract class AbstractStatus implements StatusInterface
 
     /**
      * @ODM\Field(type="boolean")
-     * @ORCHESTRA\Search(key="intial", type="boolean")
+     * @ORCHESTRA\Search(key="initial", type="boolean")
      */
     protected $initial = false;
 

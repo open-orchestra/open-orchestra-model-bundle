@@ -33,6 +33,7 @@ class Role implements RoleInterface
      * @var StatusInterface
      *
      * @ODM\ReferenceOne(targetDocument="OpenOrchestra\ModelInterface\Model\StatusInterface", inversedBy="fromRoles")
+     * @ORCHESTRA\Search(key="from_status", field="fromStatus.label", type="reference")
      */
     protected $fromStatus;
 
@@ -40,6 +41,7 @@ class Role implements RoleInterface
      * @var StatusInterface
      *
      * @ODM\ReferenceOne(targetDocument="OpenOrchestra\ModelInterface\Model\StatusInterface", inversedBy="toRoles")
+     * @ORCHESTRA\Search(key="to_status", field="toStatus.label", type="reference")
      */
     protected $toStatus;
 
