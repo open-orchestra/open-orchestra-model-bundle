@@ -818,12 +818,12 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         }
         $qa->match($filter);
 
-        if (null !== $limit) {
-            $qa->limit($limit);
-        }
-
         if (null !== $sort) {
             $qa->sort($sort);
+        }
+
+        if (null !== $limit) {
+            $qa->limit($limit);
         }
 
         return $this->hydrateAggregateQuery($qa);
