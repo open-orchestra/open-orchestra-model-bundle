@@ -509,4 +509,15 @@ class NodeRepositoryTest extends KernelTestCase
             array(NodeInterface::TYPE_TRANSVERSE, 0),
         );
     }
+
+    /**
+     * Test has statused element
+     */
+    public function testHasStatusedElement()
+    {
+        $statusRepository = static::$kernel->getContainer()->get('open_orchestra_model.repository.status');
+        $status = $statusRepository->findOneByInitial();
+
+        $this->assertTrue($this->repository->hasStatusedElement($status));
+    }
 }

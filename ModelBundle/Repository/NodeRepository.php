@@ -6,6 +6,7 @@ use Doctrine\ODM\MongoDB\Mapping;
 use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\AreaFinderTrait;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\FieldAutoGenerableRepositoryInterface;
 use Solution\MongoAggregation\Pipeline\Stage;
@@ -827,5 +828,17 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         }
 
         return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param StatusInterface $status
+     *
+     * @return bool
+     */
+    public function hasStatusedElement(StatusInterface $status)
+    {
+        $node = $this->findOneBy(array('status' => $status));
+
+        return $node instanceof NodeInterface;
     }
 }
