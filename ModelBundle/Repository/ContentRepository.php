@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\Repository;
 
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\Pagination\Configuration\FinderConfiguration;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use OpenOrchestra\ModelInterface\Repository\FieldAutoGenerableRepositoryInterface;
@@ -549,5 +550,17 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         );
 
         return $qa;
+    }
+
+    /**
+     * @param StatusInterface $status
+     *
+     * @return bool
+     */
+    public function hasStatusedElement(StatusInterface $status)
+    {
+        $content = $this->findOneBy(array('status' => $status));
+
+        return $content instanceof ContentInterface;
     }
 }

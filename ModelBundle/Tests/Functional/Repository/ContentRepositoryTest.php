@@ -516,4 +516,15 @@ class ContentRepositoryTest extends KernelTestCase
         }
         $this->assertSame(false, $content->isDeleted());
     }
+
+    /**
+     * Test has statused element
+     */
+    public function testHasStatusedElement()
+    {
+        $statusRepository = static::$kernel->getContainer()->get('open_orchestra_model.repository.status');
+        $status = $statusRepository->findOneByInitial();
+
+        $this->assertFalse($this->repository->hasStatusedElement($status));
+    }
 }

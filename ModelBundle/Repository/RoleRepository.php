@@ -75,4 +75,21 @@ class RoleRepository extends AbstractAggregateRepository implements RoleReposito
 
         return $this->hydrateAggregateQuery($qa);
     }
+
+    /**
+     * @param StatusInterface $status
+     *
+     * @return bool
+     */
+    public function hasStatusedElement(StatusInterface $status)
+    {
+        $role = $this->findOneBy(array('fromStatus.$id' => new \MongoId($status->getId())));
+        if ($role instanceof RoleInterface) {
+            return true;
+        }
+
+        $role = $this->findOneBy(array('toStatus.$id' => new \MongoId($status->getId())));
+
+        return $role instanceof RoleInterface;
+    }
 }
