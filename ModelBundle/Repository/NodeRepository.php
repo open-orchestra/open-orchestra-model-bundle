@@ -837,7 +837,9 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      */
     public function hasStatusedElement(StatusInterface $status)
     {
-        $node = $this->findOneBy(array('status' => $status));
+        $qa = $this->createAggregationQuery();
+        $qa->match(array('status._id' => new \MongoId($status->getId())));
+        $node = $this->singleHydrateAggregateQuery($qa);
 
         return $node instanceof NodeInterface;
     }

@@ -559,7 +559,9 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
      */
     public function hasStatusedElement(StatusInterface $status)
     {
-        $content = $this->findOneBy(array('status' => $status));
+        $qa = $this->createAggregationQuery();
+        $qa->match(array('status._id' => new \MongoId($status->getId())));
+        $content = $this->singleHydrateAggregateQuery($qa);
 
         return $content instanceof ContentInterface;
     }
