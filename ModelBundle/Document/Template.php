@@ -139,7 +139,7 @@ class Template implements TemplateInterface
     }
 
     /**
-     * @return AreaInterface
+     * @return ArrayCollection
      */
     public function getAreas()
     {
