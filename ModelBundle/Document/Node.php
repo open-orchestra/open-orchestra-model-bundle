@@ -438,7 +438,7 @@ class Node implements NodeInterface
     /**
      * Get blocks
      *
-     * @return ArrayCollection $blocks
+     * @return array $blocks
      */
     public function getBlocks()
     {

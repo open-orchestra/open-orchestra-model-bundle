@@ -139,7 +139,7 @@ class Template implements TemplateInterface
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
     public function getAreas()
     {
@@ -163,7 +163,7 @@ class Template implements TemplateInterface
     }
 
     /**
-     * @return ArrayCollection
+     * @return array
      */
     public function getBlocks()
     {
