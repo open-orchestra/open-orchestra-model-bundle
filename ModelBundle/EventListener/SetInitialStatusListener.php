@@ -5,13 +5,16 @@ namespace OpenOrchestra\ModelBundle\EventListener;
 use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Model\StatusableInterface;
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 /**
  * Class SetInitialStatusListener
  */
-class SetInitialStatusListener extends ContainerAware
+class SetInitialStatusListener implements ContainerAwareInterface
 {
+    use ContainerAwareTrait;
+
     /**
      * @param LifecycleEventArgs $eventArgs
      */

@@ -8,13 +8,16 @@ use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 /**
  * Class UpdateNonTranslatableContentFieldsListener
  */
-class UpdateNonTranslatableContentFieldsListener extends ContainerAware
+class UpdateNonTranslatableContentFieldsListener implements ContainerAwareInterface
 {
+    use ContainerAwareTrait;
+
     protected $contentManaged = array();
     protected $contentAttributeClass;
     protected $immutableData;
