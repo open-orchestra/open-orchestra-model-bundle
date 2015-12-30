@@ -7,13 +7,16 @@ use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
 use Doctrine\Common\Annotations\AnnotationReader;
 use OpenOrchestra\ModelInterface\Helper\SuppressSpecialCharacterHelperInterface;
 use OpenOrchestra\ModelInterface\Repository\FieldAutoGenerableRepositoryInterface;
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 /**
  * Class GenerateIdListener
  */
-class GenerateIdListener extends ContainerAware
+class GenerateIdListener implements ContainerAwareInterface
 {
+    use ContainerAwareTrait;
+
     protected $annotationReader;
     protected $suppressSpecialCharacterHelper;
 

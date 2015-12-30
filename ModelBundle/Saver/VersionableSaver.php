@@ -5,13 +5,16 @@ namespace OpenOrchestra\ModelBundle\Saver;
 use OpenOrchestra\ModelInterface\Saver\VersionableSaverInterface;
 use OpenOrchestra\ModelInterface\Model\VersionableInterface;
 use Symfony\Component\Config\Definition\Exception\DuplicateKeyException;
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 /**
  * Class VersionableSaver
  */
-class VersionableSaver extends ContainerAware implements VersionableSaverInterface
+class VersionableSaver implements VersionableSaverInterface, ContainerAwareInterface
 {
+    use ContainerAwareTrait;
+
     /**
      * Duplicate a node
      *
