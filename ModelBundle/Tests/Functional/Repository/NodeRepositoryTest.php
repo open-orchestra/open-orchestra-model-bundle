@@ -219,26 +219,24 @@ class NodeRepositoryTest extends KernelTestCase
 
     /**
      * @param string $siteId
-     * @param int    $nodeNumber
      * @param int    $version
      *
-     * @dataProvider provideSiteIdAndNumberOfNode
+     * @dataProvider provideSiteIdAndLastVersion
      */
-    public function testFindLastVersionByType($siteId, $nodeNumber, $version)
+    public function testFindLastVersionByType($siteId, $version)
     {
         $nodes = $this->repository->findLastVersionByType($siteId);
 
-        $this->assertCount($nodeNumber, $nodes);
         $this->assertSameNode('fr', $version, $siteId, $nodes[NodeInterface::ROOT_NODE_ID]);
     }
 
     /**
      * @return array
      */
-    public function provideSiteIdAndNumberOfNode()
+    public function provideSiteIdAndLastVersion()
     {
         return array(
-            array('2', 5, 2),
+            array('2', 2),
         );
     }
 
