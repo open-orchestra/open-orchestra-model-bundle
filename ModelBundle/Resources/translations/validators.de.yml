@@ -9,6 +9,7 @@ open_orchestra_model_validators:
             presence_required: Sie müssen eine von ihnen zu wählen
         node:
             check_route_pattern: Die Routenmuster ist bereits in dieser Website verwendet
+            unique_node_order: Die Seite Standort muss eindeutig sein
         status:
             impossible_change: Sie haben nicht das Recht, den Status zu ändern
         website:

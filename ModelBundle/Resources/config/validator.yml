@@ -4,6 +4,7 @@ parameters:
     open_orchestra_model.validator.unique_site_id.class: OpenOrchestra\ModelBundle\Validator\Constraints\UniqueSiteIdValidator
     open_orchestra_model.validator.unique_content_type_id.class: OpenOrchestra\ModelBundle\Validator\Constraints\UniqueContentTypeIdValidator
     open_orchestra_model.validator.id_authorized_character.class: OpenOrchestra\ModelBundle\Validator\Constraints\IdAuthorizedCharacterValidator
+    open_orchestra_model.validator.unique_node_order.class: OpenOrchestra\ModelBundle\Validator\Constraints\UniqueNodeOrderValidator
 
 services:
     open_orchestra_model.validator.prevent_prohibited_status_change:
@@ -36,3 +37,9 @@ services:
         class: %open_orchestra_model.validator.id_authorized_character.class%
         tags:
             - { name: validator.constraint_validator, alias: id_authorized_character}
+    open_orchestra_model.validator.unique_node_order:
+        class: %open_orchestra_model.validator.unique_node_order.class%
+        arguments:
+            - @open_orchestra_model.repository.node
+        tags:
+            - { name: validator.constraint_validator, alias: unique_node_order}
