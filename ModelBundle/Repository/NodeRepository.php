@@ -325,6 +325,24 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     }
 
     /**
+     * @param string $nodeId
+     * @param string $siteId
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     *
+     * @return mixed
+     */
+    public function findByNodeAndSiteSortedByVersion($nodeId, $siteId)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
+        $qa->match(array('nodeId' => $nodeId));
+
+        $qa->sort(array('version' => -1));
+
+        return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
      * @param string $parentId
      * @param string $siteId
      *
