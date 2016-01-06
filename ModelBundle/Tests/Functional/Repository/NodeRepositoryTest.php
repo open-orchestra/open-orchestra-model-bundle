@@ -189,7 +189,6 @@ class NodeRepositoryTest extends AbstractKernelTestCase
         );
     }
 
-
     /**
      * @param string $path
      * @param string $siteId
@@ -486,11 +485,10 @@ class NodeRepositoryTest extends AbstractKernelTestCase
 
     /**
      * @param string $parentId
-     * @param int    $order
+     * @param string $order
      * @param string $nodeId
-     * @param int    $count
      *
-     * @dataProvider provideParentOrderAndCount
+     * @dataProvider provideParentRouteAndOrder
      */
     public function testFindByParentAndOrder($parentId, $order, $nodeId, $count)
     {
@@ -500,14 +498,13 @@ class NodeRepositoryTest extends AbstractKernelTestCase
     /**
      * @return array
      */
-    public function provideParentOrderAndCount()
+    public function provideParentRouteAndOrder()
     {
         return array(
             array(NodeInterface::ROOT_NODE_ID, 10, 'fixture_page_contact', 3),
-            array(NodeInterface::ROOT_NODE_ID, 9, 'fixture_page_contact', 0),
             array(NodeInterface::ROOT_NODE_ID, 0, 'fixture_page_contact', 0),
             array(NodeInterface::ROOT_NODE_ID, 9, 'fixture_page_legal_mentions', 3),
-            array('fixture_page_legal_mentions', 0, 'fakeId', 0),
+            array('fixture_page_legal_mentions', 0, 'fakeID', 0),
         );
     }
 

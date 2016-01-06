@@ -120,6 +120,7 @@ EOF
         $nodeTransverse->setParentId('-');
         $nodeTransverse->setPath('-');
         $nodeTransverse->setVersion(1);
+        $nodeTransverse->setOrder(1);
         $nodeTransverse->setLanguage($language);
         $nodeTransverse->setStatus($this->references['status-draft']);
         $nodeTransverse->setDeleted(false);

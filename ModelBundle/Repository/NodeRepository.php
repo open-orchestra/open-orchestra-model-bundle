@@ -325,24 +325,6 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     }
 
     /**
-     * @param string $nodeId
-     * @param string $siteId
-     *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     *
-     * @return mixed
-     */
-    public function findByNodeAndSiteSortedByVersion($nodeId, $siteId)
-    {
-        $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
-        $qa->match(array('nodeId' => $nodeId));
-
-        $qa->sort(array('version' => -1));
-
-        return $this->hydrateAggregateQuery($qa);
-    }
-
-    /**
      * @param string $parentId
      * @param string $siteId
      *
@@ -371,6 +353,24 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     {
         $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
         $qa->match(array('parentId' => $parentId));
+
+        return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param string $parentId
+     * @param string $siteId
+     *
+     * @throws \Exception
+     *
+     * @return mixed
+     */
+    public function findByParentSortedByOrder($parentId, $siteId)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
+        $qa->match(array('parentId' => $parentId));
+
+        $qa->sort(array('order' => -1));
 
         return $this->hydrateAggregateQuery($qa);
     }
