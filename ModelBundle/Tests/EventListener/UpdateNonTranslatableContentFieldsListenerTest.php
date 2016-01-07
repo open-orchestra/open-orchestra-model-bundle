@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\EventListener;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelBundle\Document\Content;
 use OpenOrchestra\ModelBundle\EventListener\UpdateNonTranslatableContentFieldsListener;
 use Phake;
@@ -9,7 +10,7 @@ use Phake;
 /**
  * Test UpdateNonTranslatableContentFieldsListenerTest
  */
-class UpdateNonTranslatableContentFieldsListenerTest extends \PHPUnit_Framework_TestCase
+class UpdateNonTranslatableContentFieldsListenerTest extends AbstractBaseTestCase
 {
     /**
      * @var UpdateNonTranslatableContentFieldsListener

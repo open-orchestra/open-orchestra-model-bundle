@@ -2,13 +2,13 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\Document;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelBundle\Document\RouteDocument;
-use Phake;
 
 /**
  * Test RouteDocumentTest
  */
-class RouteDocumentTest extends \PHPUnit_Framework_TestCase
+class RouteDocumentTest extends AbstractBaseTestCase
 {
     /**
      * @var RouteDocument

@@ -2,13 +2,14 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\Form\Type;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\ModelBundle\Form\Type\StatusChoiceType;
 
 /**
  * Class StatusChoiceTypeTest
  */
-class StatusChoiceTypeTest extends \PHPUnit_Framework_TestCase
+class StatusChoiceTypeTest extends AbstractBaseTestCase
 {
     /**
      * @var StatusChoiceType

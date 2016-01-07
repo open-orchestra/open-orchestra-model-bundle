@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\Form\Type;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelBundle\Form\Type\WorkflowRoleChoiceType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Phake;
@@ -9,7 +10,7 @@ use Phake;
 /**
  * Description of WorkflowRoleChoiceTypeTest
  */
-class WorkflowRoleChoiceTypeTest extends \PHPUnit_Framework_TestCase
+class WorkflowRoleChoiceTypeTest extends AbstractBaseTestCase
 {
     protected $roles;
     protected $roleClass = 'RoleClass';

@@ -2,14 +2,14 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\Validator\Constraints;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
-use OpenOrchestra\ModelBundle\Validator\Constraints\CheckAreaPresence;
 use OpenOrchestra\ModelBundle\Validator\Constraints\CheckAreaPresenceValidator;
 
 /**
  * Class CheckAreaPresenceValidatorTest
  */
-class CheckAreaPresenceValidatorTest extends \PHPUnit_Framework_TestCase
+class CheckAreaPresenceValidatorTest extends AbstractBaseTestCase
 {
     /**
      * @var CheckAreaPresenceValidator

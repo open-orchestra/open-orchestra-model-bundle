@@ -2,19 +2,18 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\Functional\Repository;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractKernelTestCase;
 use OpenOrchestra\Pagination\Configuration\FinderConfiguration;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use Phake;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use OpenOrchestra\Mapping\Annotations\Search;
 
 /**
  * Class ContentRepositoryTest
  *
  * @group integrationTest
  */
-class ContentRepositoryTest extends KernelTestCase
+class ContentRepositoryTest extends AbstractKernelTestCase
 {
     /**
      * @var ContentRepositoryInterface

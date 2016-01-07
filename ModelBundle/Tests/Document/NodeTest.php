@@ -2,15 +2,15 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\Document;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelBundle\Document\Node;
 use OpenOrchestra\ModelBundle\Document\Status;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
-use Phake;
 
 /**
  * Test NodeTest
  */
-class NodeTest extends \PHPUnit_Framework_TestCase
+class NodeTest extends AbstractBaseTestCase
 {
     /**
      * @var Node

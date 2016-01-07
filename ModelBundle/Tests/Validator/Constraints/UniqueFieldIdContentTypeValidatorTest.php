@@ -2,13 +2,14 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\Validator\Constraints;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelBundle\Validator\Constraints\UniqueFieldIdContentTypeValidator;
 use Phake;
 
 /**
  * Class UniqueFieldIdContentTypeValidatorTest
  */
-class UniqueFieldIdContentTypeValidatorTest extends \PHPUnit_Framework_TestCase
+class UniqueFieldIdContentTypeValidatorTest extends AbstractBaseTestCase
 {
     /**
      * @var UniqueFieldIdContentTypeValidator

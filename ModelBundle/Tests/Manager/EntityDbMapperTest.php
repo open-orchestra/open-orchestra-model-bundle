@@ -2,15 +2,15 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\Manager;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelInterface\Manager\EntityDbMapperInterface;
 use OpenOrchestra\ModelBundle\Manager\EntityDbMapper;
 use Phake;
-use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 
 /**
  * Class EntityDbMapperTest
  */
-class EntityDbMapperTest extends \PHPUnit_Framework_TestCase
+class EntityDbMapperTest extends AbstractBaseTestCase
 {
     /** @var  EntityDbMapperInterface */
     protected $entityDbMapper;

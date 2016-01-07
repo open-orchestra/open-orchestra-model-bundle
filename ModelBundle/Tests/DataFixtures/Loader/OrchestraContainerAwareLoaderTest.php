@@ -4,6 +4,7 @@ namespace OpenOrchestra\ModelBundle\Tests\DataFixtures\Loader;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelBundle\DataFixtures\Loader\OrchestraContainerAwareLoader;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraProductionFixturesInterface;
 use Phake;
@@ -11,7 +12,7 @@ use Phake;
 /**
  * Test OrchestraContainerAwareLoaderTest
  */
-class OrchestraContainerAwareLoaderTest extends \PHPUnit_Framework_TestCase
+class OrchestraContainerAwareLoaderTest extends AbstractBaseTestCase
 {
     /**
      * @var OrchestraContainerAwareLoader

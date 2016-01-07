@@ -1,13 +1,14 @@
 <?php
 
 namespace OpenOrchestra\ModelBundle\Tests\Functional\Model;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 
 /**
  * Description of BaseNodeTest
  *
  * @group integrationTest
  */
-class EntityTest extends \PHPUnit_Framework_TestCase
+class EntityTest extends AbstractBaseTestCase
 {
     /**
      * @param string $class

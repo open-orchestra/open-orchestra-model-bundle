@@ -2,13 +2,14 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\Form\DataTransformer;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelBundle\Form\DataTransformer\EmbedSiteToSiteTransformer;
 use Phake;
 
 /**
  * Test EmbedSiteToSiteTransformerTest
  */
-class EmbedSiteToSiteTransformerTest extends \PHPUnit_Framework_TestCase
+class EmbedSiteToSiteTransformerTest extends AbstractBaseTestCase
 {
     /**
      * @var EmbedSiteToSiteTransformer

@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\EventListener;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\ModelBundle\EventListener\GeneratePathListener;
 use OpenOrchestra\ModelBundle\Document\Node;
@@ -11,7 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Class GeneratePathListenerTest
  */
-class GeneratePathListenerTest extends \PHPUnit_Framework_TestCase
+class GeneratePathListenerTest extends AbstractBaseTestCase
 {
     protected $listener;
     protected $container;

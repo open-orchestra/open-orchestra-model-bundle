@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\Document;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelBundle\Document\Site;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use Phake;
@@ -9,7 +10,7 @@ use Phake;
 /**
  * Class SiteTest
  */
-class SiteTest extends \PHPUnit_Framework_TestCase
+class SiteTest extends AbstractBaseTestCase
 {
     /**
      * @var SiteInterface

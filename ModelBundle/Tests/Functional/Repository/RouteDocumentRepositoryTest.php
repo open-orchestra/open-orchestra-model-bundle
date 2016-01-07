@@ -2,15 +2,15 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\Functional\Repository;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractKernelTestCase;
 use OpenOrchestra\ModelBundle\Repository\RouteDocumentRepository;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
  * Test RouteDocumentRepositoryTest
  *
  * @group integrationTest
  */
-class RouteDocumentRepositoryTest extends KernelTestCase
+class RouteDocumentRepositoryTest extends AbstractKernelTestCase
 {
     /**
      * @var RouteDocumentRepository

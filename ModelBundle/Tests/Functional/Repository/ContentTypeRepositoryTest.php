@@ -2,15 +2,15 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\Functional\Repository;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractKernelTestCase;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
  * Class ContentTypeRepositoryTest
  *
  * @group integrationTest
  */
-class ContentTypeRepositoryTest extends KernelTestCase
+class ContentTypeRepositoryTest extends AbstractKernelTestCase
 {
     /**
      * @var ContentTypeRepositoryInterface

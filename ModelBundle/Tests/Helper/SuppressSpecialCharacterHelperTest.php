@@ -2,13 +2,13 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\Helper;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelBundle\Helper\SuppressSpecialCharacterHelper;
-use Phake;
 
 /**
  * Class SuppressSpecialCharacterHelperTest
  */
-class SuppressSpecialCharacterHelperTest extends \PHPUnit_Framework_TestCase
+class SuppressSpecialCharacterHelperTest extends AbstractBaseTestCase
 {
     /**
      * @var SuppressSpecialCharacterHelper

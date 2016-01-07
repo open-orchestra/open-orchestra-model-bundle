@@ -2,12 +2,13 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\Document;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelBundle\Document\Block;
 
 /**
  * Class BlockTest
  */
-class BlockTest extends \PHPUnit_Framework_TestCase
+class BlockTest extends AbstractBaseTestCase
 {
     protected $block;
 

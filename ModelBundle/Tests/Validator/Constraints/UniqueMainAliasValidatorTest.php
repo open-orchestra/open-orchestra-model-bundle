@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\Validator\Constraints;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\ModelBundle\Validator\Constraints\UniqueMainAlias;
 use OpenOrchestra\ModelBundle\Validator\Constraints\UniqueMainAliasValidator;
@@ -9,7 +10,7 @@ use OpenOrchestra\ModelBundle\Validator\Constraints\UniqueMainAliasValidator;
 /**
  * Test UniqueMainAliasValidatorTest
  */
-class UniqueMainAliasValidatorTest extends \PHPUnit_Framework_TestCase
+class UniqueMainAliasValidatorTest extends AbstractBaseTestCase
 {
     /**
      * @var UniqueMainAliasValidator
