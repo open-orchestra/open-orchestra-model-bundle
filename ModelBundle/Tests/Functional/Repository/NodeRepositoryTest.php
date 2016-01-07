@@ -487,18 +487,19 @@ class NodeRepositoryTest extends AbstractKernelTestCase
      * @param string $parentId
      * @param string $order
      * @param string $nodeId
+     * @param int    $count
      *
-     * @dataProvider provideParentRouteAndOrder
+     * @dataProvider provideParentAndOrder
      */
-    public function testFindByParentAndOrder($parentId, $order, $nodeId, $count)
+    public function testFindByParentAndOrderAndNotNode($parentId, $order, $nodeId, $count)
     {
-        $this->assertCount($count, $this->repository->findByParentAndOrder($parentId, $order, $nodeId, '2'));
+        $this->assertCount($count, $this->repository->findByParentAndOrderAndNotNode($parentId, $order, $nodeId, '2'));
     }
 
     /**
      * @return array
      */
-    public function provideParentRouteAndOrder()
+    public function provideParentAndOrder()
     {
         return array(
             array(NodeInterface::ROOT_NODE_ID, 10, 'fixture_page_contact', 3),

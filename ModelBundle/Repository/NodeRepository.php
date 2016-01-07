@@ -363,7 +363,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      *
      * @throws \Exception
      *
-     * @return mixed
+     * @return array
      */
     public function findByParentSortedByOrder($parentId, $siteId)
     {
@@ -758,7 +758,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      *
      * @return array
      */
-    public function findByParentAndOrder($parentId, $order, $nodeId, $siteId)
+    public function findByParentAndOrderAndNotNode($parentId, $order, $nodeId, $siteId)
     {
         $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
         $qa->match(

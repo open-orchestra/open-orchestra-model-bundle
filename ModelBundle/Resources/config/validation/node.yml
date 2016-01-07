@@ -2,7 +2,6 @@ OpenOrchestra\ModelBundle\Document\Node:
     constraints:
         - OpenOrchestra\ModelBundle\Validator\Constraints\PreventProhibitedStatusChange: ~
         - OpenOrchestra\ModelBundle\Validator\Constraints\CheckRoutePattern: ~
-        - OpenOrchestra\ModelBundle\Validator\Constraints\UniqueNodeOrder: ~
     properties:
         nodeType:
             - NotBlank: ~

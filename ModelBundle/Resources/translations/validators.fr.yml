@@ -9,7 +9,6 @@ open_orchestra_model_validators:
             presence_required: Vous devez choisir l'un d'eux
         node:
             check_route_pattern: Le pattern de route est déjà utilisé sur ce site
-            unique_node_order: L'emplacement de la page doit être unique
         status:
             impossible_change: Vous n'avez pas les droits pour modifier le statut
         website:
