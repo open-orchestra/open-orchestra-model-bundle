@@ -363,16 +363,16 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      *
      * @throws \Exception
      *
-     * @return array
+     * @return mixed
      */
-    public function findByParentSortedByOrder($parentId, $siteId)
+    public function findOneByParentWithGreatestOrder($parentId, $siteId)
     {
         $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
         $qa->match(array('parentId' => $parentId));
 
         $qa->sort(array('order' => -1));
 
-        return $this->hydrateAggregateQuery($qa);
+        return $this->singleHydrateAggregateQuery($qa);
     }
 
     /**
@@ -756,7 +756,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      * @param string $nodeId
      * @param string $siteId
      *
-     * @return array
+     * @return bool
      */
     public function findByParentAndOrderAndNotNode($parentId, $order, $nodeId, $siteId)
     {
@@ -768,8 +768,9 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
                 'nodeId'   => array('$ne' => $nodeId),
             )
         );
+        $node = $this->singleHydrateAggregateQuery($qa);
 
-        return $this->hydrateAggregateQuery($qa);
+        return $node instanceof NodeInterface;
     }
 
     /**
