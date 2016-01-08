@@ -758,7 +758,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      *
      * @return bool
      */
-    public function findByParentAndOrderAndNotNode($parentId, $order, $nodeId, $siteId)
+    public function hasOtherNodeWithSameParentAndOrder($parentId, $order, $nodeId, $siteId)
     {
         $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
         $qa->match(

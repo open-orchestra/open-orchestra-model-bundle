@@ -491,9 +491,9 @@ class NodeRepositoryTest extends AbstractKernelTestCase
      *
      * @dataProvider provideParentAndOrder
      */
-    public function testFindByParentAndOrderAndNotNode($parentId, $order, $nodeId, $expectedValue)
+    public function testHasOtherNodeWithSameParentAndOrder($parentId, $order, $nodeId, $expectedValue)
     {
-        $this->assertSame($expectedValue, $this->repository->findByParentAndOrderAndNotNode($parentId, $order, $nodeId, '2'));
+        $this->assertSame($expectedValue, $this->repository->hasOtherNodeWithSameParentAndOrder($parentId, $order, $nodeId, '2'));
     }
 
     /**
