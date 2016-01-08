@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\Saver;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use OpenOrchestra\ModelBundle\Saver\VersionableSaver;
 use OpenOrchestra\ModelInterface\Saver\VersionableSaverInterface;
 use Phake;
@@ -10,7 +11,7 @@ use Symfony\Component\Config\Definition\Exception\DuplicateKeyException;
 /**
  * Class VersionableSaverTest
  */
-class VersionableSaverTest extends \PHPUnit_Framework_TestCase
+class VersionableSaverTest extends AbstractBaseTestCase
 {
     /**
      * @var VersionableSaverInterface

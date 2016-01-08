@@ -2,13 +2,13 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\Functional\Repository;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractKernelTestCase;
 use OpenOrchestra\ModelBundle\Repository\RoleRepository;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
  * Class RoleRepositoryTest
  */
-class RoleRepositoryTest extends KernelTestCase
+class RoleRepositoryTest extends AbstractKernelTestCase
 {
     /**
      * @var RoleRepository

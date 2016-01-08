@@ -2,17 +2,16 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\Functional\Repository;
 
-use Phake;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractKernelTestCase;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelBundle\Repository\NodeRepository;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
  * Class NodeRepositoryTest
  *
  * @group integrationTest
  */
-class NodeRepositoryTest extends KernelTestCase
+class NodeRepositoryTest extends AbstractKernelTestCase
 {
     /**
      * @var NodeRepository

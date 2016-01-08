@@ -3,13 +3,14 @@
 namespace OpenOrchestra\ModelBundle\Tests\Form\Type;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\ModelBundle\Form\Type\GroupSiteChoiceType;
 
 /**
  * Class GroupSiteChoiceTypeTest
  */
-class GroupSiteChoiceTypeTest extends \PHPUnit_Framework_TestCase
+class GroupSiteChoiceTypeTest extends AbstractBaseTestCase
 {
     /**
      * @var GroupSiteChoiceType

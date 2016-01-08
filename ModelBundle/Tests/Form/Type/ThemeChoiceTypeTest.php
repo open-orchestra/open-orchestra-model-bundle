@@ -2,13 +2,14 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\Form\Type;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\ModelBundle\Form\Type\SiteThemeChoiceType;
 
 /**
  * Class SiteThemeChoiceTypeTest
  */
-class SiteThemeChoiceTypeTest extends \PHPUnit_Framework_TestCase
+class SiteThemeChoiceTypeTest extends AbstractBaseTestCase
 {
     /**
      * @var ThemeChoiceType

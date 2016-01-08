@@ -3,13 +3,14 @@
 namespace OpenOrchestra\ModelBundle\Tests\Form\DataTransformer;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\ModelBundle\Form\DataTransformer\EmbedStatusToStatusTransformer;
 
 /**
  * Class EmbedStatusToStatusTransformerTest
  */
-class EmbedStatusToStatusTransformerTest extends \PHPUnit_Framework_TestCase
+class EmbedStatusToStatusTransformerTest extends AbstractBaseTestCase
 {
     /**
      * @var EmbedStatusToStatusTransformer

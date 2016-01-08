@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\EventListener;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\ModelBundle\EventListener\GenerateIdListener;
 use OpenOrchestra\Mapping\Annotations\Document;
@@ -11,7 +12,7 @@ use Doctrine\ODM\MongoDB\DocumentRepository;
 /**
  * Class GenerateIdListenerTest
  */
-class GenerateIdListenerTest extends \PHPUnit_Framework_TestCase
+class GenerateIdListenerTest extends AbstractBaseTestCase
 {
     /**
      * @var GenerateIdListener

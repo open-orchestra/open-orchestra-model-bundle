@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\BackofficeBundle\Tests\EventListener;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\ModelBundle\Document\Node;
 use OpenOrchestra\ModelBundle\Document\Status;
@@ -10,7 +11,7 @@ use OpenOrchestra\ModelBundle\EventListener\SetInitialStatusListener;
 /**
  * Class SetInitialStatusListenerTest
  */
-class SetInitialStatusListenerTest extends \PHPUnit_Framework_TestCase
+class SetInitialStatusListenerTest extends AbstractBaseTestCase
 {
     protected $listener;
     protected $lifecycleEventArgs;

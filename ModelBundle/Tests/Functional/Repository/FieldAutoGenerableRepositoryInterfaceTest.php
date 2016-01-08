@@ -2,14 +2,14 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\Functional\Repository;
 
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractKernelTestCase;
 
 /**
  * Class FieldAutoGenerableRepositoryInterfaceTest
  *
  * @group integrationTest
  */
-class FieldAutoGenerableRepositoryInterfaceTest extends KernelTestCase
+class FieldAutoGenerableRepositoryInterfaceTest extends AbstractKernelTestCase
 {
     /**
      * Set up test

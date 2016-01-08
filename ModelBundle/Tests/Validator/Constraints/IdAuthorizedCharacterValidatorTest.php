@@ -2,14 +2,14 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\Validator\Constraints;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
-use OpenOrchestra\ModelBundle\Validator\Constraints\IdAuthorizedCharacter;
 use OpenOrchestra\ModelBundle\Validator\Constraints\IdAuthorizedCharacterValidator;
 
 /**
  * Class IdAuthorizedCharacterValidatorTest
  */
-class IdAuthorizedCharacterValidatorTest extends \PHPUnit_Framework_TestCase
+class IdAuthorizedCharacterValidatorTest extends AbstractBaseTestCase
 {
     /**
      * @var IdAuthorizedCharacterValidator

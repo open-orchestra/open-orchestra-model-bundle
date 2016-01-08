@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\Validator\Constraints;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\ModelBundle\Validator\Constraints\CheckRoutePattern;
 use OpenOrchestra\ModelBundle\Validator\Constraints\CheckRoutePatternValidator;
@@ -9,7 +10,7 @@ use OpenOrchestra\ModelBundle\Validator\Constraints\CheckRoutePatternValidator;
 /**
  * Class CheckRoutePatternValidatorTest
  */
-class CheckRoutePatternValidatorTest extends \PHPUnit_Framework_TestCase
+class CheckRoutePatternValidatorTest extends AbstractBaseTestCase
 {
     /**
      * @var CheckRoutePatternValidator

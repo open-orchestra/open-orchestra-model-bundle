@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\Validator\Constraints;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\ModelBundle\Validator\Constraints\UniqueSiteId;
 use OpenOrchestra\ModelBundle\Validator\Constraints\UniqueSiteIdValidator;
@@ -10,7 +11,7 @@ use OpenOrchestra\ModelInterface\Model\SiteInterface;
 /**
  * Class UniqueSiteIdValidatorTest
  */
-class UniqueSiteIdValidatorTest extends \PHPUnit_Framework_TestCase
+class UniqueSiteIdValidatorTest extends AbstractBaseTestCase
 {
     /**
      * @var UniqueSiteIdValidator

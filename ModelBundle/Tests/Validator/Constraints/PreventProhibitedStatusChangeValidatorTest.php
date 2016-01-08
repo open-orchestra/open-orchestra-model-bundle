@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\Tests\Validator\Constraints;
 
+use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
 use Phake;
 use OpenOrchestra\ModelBundle\Validator\Constraints\PreventProhibitedStatusChange;
 use OpenOrchestra\ModelBundle\Validator\Constraints\PreventProhibitedStatusChangeValidator;
@@ -9,7 +10,7 @@ use OpenOrchestra\ModelBundle\Validator\Constraints\PreventProhibitedStatusChang
 /**
  * Class PreventProhibitedStatusChangeValidatorTest
  */
-class PreventProhibitedStatusChangeValidatorTest extends \PHPUnit_Framework_TestCase
+class PreventProhibitedStatusChangeValidatorTest extends AbstractBaseTestCase
 {
     /**
      * @var PreventProhibitedStatusChangeValidator
