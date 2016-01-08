@@ -189,7 +189,6 @@ class NodeRepositoryTest extends AbstractKernelTestCase
         );
     }
 
-
     /**
      * @param string $path
      * @param string $siteId
@@ -481,6 +480,32 @@ class NodeRepositoryTest extends AbstractKernelTestCase
         return array(
             array(NodeInterface::ROOT_NODE_ID, 'page-contact', 'fixture_page_contact'),
             array(NodeInterface::ROOT_NODE_ID, 'mentions-legales', 'fixture_page_legal_mentions'),
+        );
+    }
+
+    /**
+     * @param string $parentId
+     * @param int    $order
+     * @param string $nodeId
+     * @param bool   $expectedValue
+     *
+     * @dataProvider provideParentAndOrder
+     */
+    public function testHasOtherNodeWithSameParentAndOrder($parentId, $order, $nodeId, $expectedValue)
+    {
+        $this->assertSame($expectedValue, $this->repository->hasOtherNodeWithSameParentAndOrder($parentId, $order, $nodeId, '2'));
+    }
+
+    /**
+     * @return array
+     */
+    public function provideParentAndOrder()
+    {
+        return array(
+            array(NodeInterface::ROOT_NODE_ID, 10, 'fixture_page_contact', true),
+            array(NodeInterface::ROOT_NODE_ID, 0, 'fixture_page_contact', false),
+            array(NodeInterface::ROOT_NODE_ID, 9, 'fixture_page_legal_mentions', true),
+            array('fixture_page_legal_mentions', 0, 'fakeID', false),
         );
     }
 
