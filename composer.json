@@ -20,7 +20,7 @@
         "stof/doctrine-extensions-bundle": "1.2.1"
     },
     "require-dev": {
-        "open-orchestra/open-orchestra-base-bundle": "dev-master",
+        "open-orchestra/open-orchestra-base-bundle": "1.0.x-dev",
         "psr/log": "1.0.0",
         "codeclimate/php-test-reporter": "dev-master",
         "symfony/validator": "2.7.0",

@@ -162,6 +162,7 @@ abstract class AbstractDataGenerator
         $node->setTemplateId('');
         $node->setTheme('themePresentation');
         $node->addBlock($siteBlockLanguage);
+        $node->setBoDirection('v');
 
         return $node;
     }
