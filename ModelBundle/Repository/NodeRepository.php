@@ -582,6 +582,19 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         return parent::findBy(array('nodeType' => $type, 'siteId' => $siteId));
     }
 
+    /**
+     * @param string $nodeId
+     * @param string $type
+     * @param string $siteId
+     *
+     * @throws \Exception
+     *
+     * @return array
+     */
+    public function findByNodeIdAndNodeTypeAndSite($nodeId, $type, $siteId)
+    {
+        return parent::findBy(array('nodeId' => $nodeId, 'nodeType' => $type, 'siteId' => $siteId));
+    }
 
     /**
      * @param string $language
