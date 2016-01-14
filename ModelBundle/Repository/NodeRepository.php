@@ -338,7 +338,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     {
         @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.0 and will be removed in 1.2.0. Use the '.__CLASS__.'::findByParent method instead.', E_USER_DEPRECATED);
 
-        return $this->findByParent($$parentId, $siteId);
+        return $this->findByParent($parentId, $siteId);
     }
 
     /**
