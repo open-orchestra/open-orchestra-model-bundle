@@ -43,34 +43,6 @@ class Area implements AreaInterface
     protected $boDirection;
 
     /**
-     * @var int $gridX
-     *
-     * @ODM\Field(type="int")
-     */
-    protected $gridX;
-
-    /**
-     * @var int $gridY
-     *
-     * @ODM\Field(type="int")
-     */
-    protected $gridY;
-
-    /**
-     * @var int $gridWidth
-     *
-     * @ODM\Field(type="int")
-     */
-    protected $gridWidth;
-
-    /**
-     * @var int $gridHeight
-     *
-     * @ODM\Field(type="int")
-     */
-    protected $gridHeight;
-
-    /**
      * @var ArrayCollection
      *
      * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\AreaInterface")
@@ -168,86 +140,6 @@ class Area implements AreaInterface
     public function getBoDirection()
     {
         return $this->boDirection;
-    }
-
-    /**
-     * Set gridX
-     *
-     * @param int $gridX
-     */
-    public function setgridX($gridX)
-    {
-        $this->gridX = $gridX;
-    }
-
-    /**
-     * Get gridX
-     *
-     * @return int $gridX
-     */
-    public function getGridX()
-    {
-        return $this->gridX;
-    }
-
-    /**
-     * Set gridY
-     *
-     * @param int $gridY
-     */
-    public function setGridY($gridY)
-    {
-        $this->gridY = $gridY;
-    }
-
-    /**
-     * Get gridY
-     *
-     * @return int $gridY
-     */
-    public function getGridY()
-    {
-        return $this->gridY;
-    }
-
-    /**
-     * Set gridWidth
-     *
-     * @param int $gridWidth
-     */
-    public function setGridWidth($gridWidth)
-    {
-        $this->gridWidth = $gridWidth;
-    }
-
-    /**
-     * Get gridWidth
-     *
-     * @return int $gridWidth
-     */
-    public function getGridWidth()
-    {
-        return $this->gridWidth;
-    }
-
-    /**
-     * Set gridHeight
-     *
-     * @param int $gridHeight
-     */
-    public function setGridHeight($gridHeight)
-    {
-        $this->gridHeight = $gridHeight;
-    }
-
-    /**
-     * Get gridHeight
-     *
-     * @return int $gridHeight
-     */
-    public function getGridHeight()
-    {
-        return $this->gridHeight;
     }
 
     /**
