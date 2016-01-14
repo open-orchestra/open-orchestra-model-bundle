@@ -3,6 +3,7 @@
 namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use OpenOrchestra\ModelInterface\Model\RoleInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
@@ -178,33 +179,33 @@ abstract class AbstractStatus implements StatusInterface
     }
 
     /**
-     * @param Role $role
+     * @param RoleInterface $role
      */
-    public function addFromRole(Role $role)
+    public function addFromRole(RoleInterface $role)
     {
         $this->fromRoles->add($role);
     }
 
     /**
-     * @param Role $role
+     * @param RoleInterface $role
      */
-    public function removeFromRole(Role $role)
+    public function removeFromRole(RoleInterface $role)
     {
         $this->fromRoles->removeElement($role);
     }
 
     /**
-     * @param Role $role
+     * @param RoleInterface $role
      */
-    public function addToRole(Role $role)
+    public function addToRole(RoleInterface $role)
     {
         $this->toRoles->add($role);
     }
 
     /**
-     * @param Role $role
+     * @param RoleInterface $role
      */
-    public function removeToRole(Role $role)
+    public function removeToRole(RoleInterface $role)
     {
         $this->toRoles->removeElement($role);
     }
