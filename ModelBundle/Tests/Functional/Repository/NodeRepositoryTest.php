@@ -542,4 +542,26 @@ class NodeRepositoryTest extends AbstractKernelTestCase
 
         $this->assertTrue($this->repository->hasStatusedElement($status));
     }
+
+    /**
+     * @param bool $defaultTheme
+     * @param int  $count
+     *
+     * @dataProvider provideDefaultThemeAndCount
+     */
+    public function testFindBySiteIdAndDefaultTheme($defaultTheme, $count)
+    {
+        $this->assertCount($count, $this->repository->findBySiteIdAndDefaultTheme('2', $defaultTheme));
+    }
+
+    /**
+     * @return array
+     */
+    public function provideDefaultThemeAndCount()
+    {
+        return array(
+            array(true, 16),
+            array(false, 0),
+        );
+    }
 }
