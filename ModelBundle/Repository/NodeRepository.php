@@ -900,16 +900,16 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
 
     /**
      * @param string $siteId
-     * @param bool   $defaultTheme
+     * @param bool   $themeSiteDefault
      *
      * @return array
      */
-    public function findBySiteIdAndDefaultTheme($siteId, $defaultTheme = true)
+    public function findBySiteIdAndDefaultTheme($siteId, $themeSiteDefault = true)
     {
         $qa = $this->createAggregationQuery();
         $filter = array(
             'siteId' => $siteId,
-            'defaultTheme' => $defaultTheme
+            'themeSiteDefault' => $themeSiteDefault
         );
         $qa->match($filter);
 

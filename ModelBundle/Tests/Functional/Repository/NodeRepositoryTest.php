@@ -544,14 +544,14 @@ class NodeRepositoryTest extends AbstractKernelTestCase
     }
 
     /**
-     * @param bool $defaultTheme
+     * @param bool $themeSiteDefault
      * @param int  $count
      *
      * @dataProvider provideDefaultThemeAndCount
      */
-    public function testFindBySiteIdAndDefaultTheme($defaultTheme, $count)
+    public function testFindBySiteIdAndDefaultTheme($themeSiteDefault, $count)
     {
-        $this->assertCount($count, $this->repository->findBySiteIdAndDefaultTheme('2', $defaultTheme));
+        $this->assertCount($count, $this->repository->findBySiteIdAndDefaultTheme('2', $themeSiteDefault));
     }
 
     /**

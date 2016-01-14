@@ -21,7 +21,7 @@ OpenOrchestra\ModelBundle\Document\Node:
         inMenu:
             - Type:
                 type: bool
-        defaultTheme:
+        themeSiteDefault:
             - Type:
                 type: bool
         inFooter:

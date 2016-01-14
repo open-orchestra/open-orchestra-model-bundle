@@ -127,11 +127,11 @@ class Node implements NodeInterface
     protected $theme;
 
     /**
-     * @var string $defaultTheme
+     * @var string $themeSiteDefault
      *
      * @ODM\Field(type="boolean")
      */
-    protected $defaultTheme;
+    protected $themeSiteDefault;
 
     /**
      * @var boolean
@@ -381,23 +381,23 @@ class Node implements NodeInterface
     }
 
     /**
-     * Set default theme
+     * Set default theme site
      *
-     * @param boolean $defaultTheme
+     * @param boolean $themeSiteDefault
      */
-    public function setDefaultTheme($defaultTheme)
+    public function setThemeSiteDefault($themeSiteDefault)
     {
-        $this->defaultTheme = $defaultTheme;
+        $this->themeSiteDefault = $themeSiteDefault;
     }
 
     /**
-     * Is default theme
+     * Is default theme site
      *
-     * @return boolean $defaultTheme
+     * @return boolean $themeSiteDefault
      */
-    public function isDefaultTheme()
+    public function isThemeSiteDefault()
     {
-        return $this->defaultTheme;
+        return $this->themeSiteDefault;
     }
 
     /**
