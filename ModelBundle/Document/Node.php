@@ -385,17 +385,17 @@ class Node implements NodeInterface
      *
      * @param boolean $themeSiteDefault
      */
-    public function setThemeSiteDefault($themeSiteDefault)
+    public function setDefaultSiteTheme($themeSiteDefault)
     {
         $this->themeSiteDefault = $themeSiteDefault;
     }
 
     /**
-     * Is default theme site
+     * Has default site theme
      *
      * @return boolean $themeSiteDefault
      */
-    public function isThemeSiteDefault()
+    public function hasDefaultSiteTheme()
     {
         return $this->themeSiteDefault;
     }

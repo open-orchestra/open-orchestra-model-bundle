@@ -6,24 +6,17 @@ use Doctrine\ODM\MongoDB\Event\PostFlushEventArgs;
 use Doctrine\ODM\MongoDB\Event\PreUpdateEventArgs;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
-use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 /**
  * Class UpdateSiteNodesThemeListener
  */
-class UpdateSiteNodesThemeListener
+class UpdateSiteNodesThemeListener implements ContainerAwareInterface
 {
-    protected $nodeClass;
+    use ContainerAwareTrait;
 
     protected $nodes = array();
-
-    /**
-     * @param string $nodeClass
-     */
-    public function __construct($nodeClass)
-    {
-        $this->nodeClass = $nodeClass;
-    }
 
     /**
      * @param PreUpdateEventArgs $event
@@ -33,11 +26,7 @@ class UpdateSiteNodesThemeListener
         $document = $event->getDocument();
         if ($document instanceof SiteInterface && $event->hasChangedField("theme")) {
             $siteTheme = $document->getTheme()->getName();
-
-            /* @var $nodeRepository NodeRepositoryInterface */
-            $nodeRepository = $event->getDocumentManager()->getRepository($this->nodeClass);
-            $nodesToUpdate = $nodeRepository->findBySiteIdAndDefaultTheme($document->getSiteId());
-
+            $nodesToUpdate = $this->container->get('open_orchestra_model.repository.node')->findBySiteIdAndDefaultTheme($document->getSiteId());
             /* @var $node NodeInterface */
             foreach ($nodesToUpdate as $node) {
                 $node->setTheme($siteTheme);

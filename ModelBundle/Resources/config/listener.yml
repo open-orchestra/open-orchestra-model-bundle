@@ -48,8 +48,8 @@ services:
             -  { name: doctrine_mongodb.odm.event_listener, event: preUpdate }
     open_orchestra_model.doctrine_listener.update_site_nodes_theme:
         class: %open_orchestra_model.doctrine_listener.update_site_nodes_theme.class%
-        arguments:
-            - %open_orchestra_model.document.node.class%
+        calls:
+            - [setContainer, ['@service_container']]
         tags:
             - { name: doctrine_mongodb.odm.event_listener, event: preUpdate }
             - { name: doctrine_mongodb.odm.event_listener, event: postFlush }
