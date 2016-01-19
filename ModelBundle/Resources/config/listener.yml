@@ -52,4 +52,3 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: doctrine_mongodb.odm.event_listener, event: preUpdate }
-            - { name: doctrine_mongodb.odm.event_listener, event: postFlush }

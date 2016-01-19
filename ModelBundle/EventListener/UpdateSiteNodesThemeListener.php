@@ -16,8 +16,6 @@ class UpdateSiteNodesThemeListener implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
 
-    protected $nodes = array();
-
     /**
      * @param PreUpdateEventArgs $event
      */
@@ -30,23 +28,7 @@ class UpdateSiteNodesThemeListener implements ContainerAwareInterface
             /* @var $node NodeInterface */
             foreach ($nodesToUpdate as $node) {
                 $node->setTheme($siteTheme);
-                $this->nodes[] = $node;
             }
-        }
-    }
-
-    /**
-     * @param PostFlushEventArgs $event
-     */
-    public function postFlush(PostFlushEventArgs $event)
-    {
-        if (! empty($this->nodes)) {
-            $documentManager = $event->getDocumentManager();
-            foreach ($this->nodes as $node) {
-                $documentManager->persist($node);
-            }
-            $this->nodes = array();
-            $documentManager->flush();
         }
     }
 }

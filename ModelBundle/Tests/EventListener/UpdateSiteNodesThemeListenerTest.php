@@ -41,7 +41,6 @@ class UpdateSiteNodesThemeListenerTest extends AbstractBaseTestCase
     public function testCallable()
     {
         $this->assertTrue(is_callable(array($this->listener, 'preUpdate')));
-        $this->assertTrue(is_callable(array($this->listener, 'postFlush')));
     }
 
     /**
@@ -61,17 +60,6 @@ class UpdateSiteNodesThemeListenerTest extends AbstractBaseTestCase
         foreach ($documents as $document) {
             Phake::verify($document)->setTheme("fakeTheme");
         }
-
-        $documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
-        $postFlushEvent = Phake::mock('Doctrine\ODM\MongoDB\Event\PostFlushEventArgs');
-        Phake::when($postFlushEvent)->getDocumentManager()->thenReturn($documentManager);
-
-        $this->listener->postFlush($postFlushEvent);
-
-        foreach ($documents as $document) {
-            Phake::verify($documentManager)->persist($document);
-        }
-        Phake::verify($documentManager, Phake::times(! empty($documents)))->flush();
     }
 
     /**
