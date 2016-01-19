@@ -168,6 +168,7 @@ abstract class AbstractDataGenerator
         $node->setDeleted(false);
         $node->setTemplateId('');
         $node->setTheme('themePresentation');
+        $node->setDefaultSiteTheme(true);
         $node->addBlock($siteBlockLanguage);
 
         return $node;

@@ -127,6 +127,13 @@ class Node implements NodeInterface
     protected $theme;
 
     /**
+     * @var string $themeSiteDefault
+     *
+     * @ODM\Field(type="boolean")
+     */
+    protected $themeSiteDefault;
+
+    /**
      * @var boolean
      *
      * @ODM\Field(type="boolean")
@@ -371,6 +378,26 @@ class Node implements NodeInterface
     public function getTheme()
     {
         return $this->theme;
+    }
+
+    /**
+     * Set default theme site
+     *
+     * @param boolean $themeSiteDefault
+     */
+    public function setDefaultSiteTheme($themeSiteDefault)
+    {
+        $this->themeSiteDefault = $themeSiteDefault;
+    }
+
+    /**
+     * Has default site theme
+     *
+     * @return boolean $themeSiteDefault
+     */
+    public function hasDefaultSiteTheme()
+    {
+        return $this->themeSiteDefault;
     }
 
     /**
