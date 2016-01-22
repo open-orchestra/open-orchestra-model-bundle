@@ -188,11 +188,12 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
      */
     protected function appendFilters($filter1, $filter2, $choiceType)
     {
+        $choiceOperatior = '$and';
         if (self::CHOICE_OR == $choiceType) {
-            return array('$or' => array($filter1, $filter2));
-        } else {
-            return array('$and' => array($filter1, $filter2));
+            $choiceOperatior = '$or';
         }
+
+        return array($choiceOperatior => array($filter1, $filter2));
     }
 
     /**
