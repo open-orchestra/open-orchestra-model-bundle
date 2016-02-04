@@ -6,11 +6,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
-use OpenOrchestra\ModelInterface\Model\AreaInterface;
-use OpenOrchestra\ModelInterface\Model\BlockInterface;
+use OpenOrchestra\ModelInterface\Model\AreaFlexInterface;
 use OpenOrchestra\ModelInterface\Model\TemplateFlexInterface;
 use OpenOrchestra\MongoTrait\SoftDeleteable;
-use OpenOrchestra\MongoTrait\Versionable;
 
 /**
  * Description of Template Flex
@@ -28,7 +26,6 @@ use OpenOrchestra\MongoTrait\Versionable;
 
 class TemplateFlex implements TemplateFlexInterface
 {
-    use Versionable;
     use SoftDeleteable;
 
     /**
@@ -60,40 +57,32 @@ class TemplateFlex implements TemplateFlexInterface
     protected $name;
 
     /**
-     * @var AreaInterface
+     * @var AreaFlexInterface
      *
-     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\AreaInterface")
+     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\AreaFlexInterface")
      */
     protected $areas;
-
-    /**
-     * @var ArrayCollection
-     *
-     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\BlockInterface")
-     */
-    protected $blocks;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->blocks = new ArrayCollection();
         $this->areas = new ArrayCollection();
     }
 
     /**
-     * @param AreaInterface $area
+     * @param AreaFlexInterface $area
      */
-    public function addArea(AreaInterface $area)
+    public function addArea(AreaFlexInterface $area)
     {
         $this->areas->add($area);
     }
 
     /**
-     * @param AreaInterface $area
+     * @param AreaFlexInterface $area
      */
-    public function removeArea(AreaInterface $area)
+    public function removeArea(AreaFlexInterface $area)
     {
         $this->areas->removeElement($area);
     }
@@ -130,30 +119,6 @@ class TemplateFlex implements TemplateFlexInterface
     public function getAreas()
     {
         return $this->areas;
-    }
-
-    /**
-     * @param BlockInterface $block
-     */
-    public function addBlock(BlockInterface $block)
-    {
-        $this->blocks->add($block);
-    }
-
-    /**
-     * @param BlockInterface $block
-     */
-    public function removeBlock(BlockInterface $block)
-    {
-        $this->blocks->removeElement($block);
-    }
-
-    /**
-     * @return array
-     */
-    public function getBlocks()
-    {
-        return $this->blocks;
     }
 
     /**
