@@ -20,7 +20,7 @@ use OpenOrchestra\MongoTrait\SoftDeleteable;
  * @ORCHESTRA\Document(
  *   generatedField="templateId",
  *   sourceField="name",
- *   serviceName="open_orchestra_model.repository.template",
+ *   serviceName="open_orchestra_model.repository.template_flex",
  * )
  */
 
