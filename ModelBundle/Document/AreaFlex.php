@@ -29,6 +29,13 @@ class AreaFlex implements AreaFlexInterface
     protected $areaId;
 
     /**
+     * @var string $areaType
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $areaType;
+
+    /**
      * @var Collection
      *
      * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\AreaFlexInterface")
@@ -41,6 +48,26 @@ class AreaFlex implements AreaFlexInterface
     public function __construct()
     {
         $this->subAreas = new ArrayCollection();
+    }
+
+    /**
+     * Set area type
+     *
+     * @param string $areaType
+     */
+    public function setAreaType($areaType)
+    {
+        $this->areaType = $areaType;
+    }
+
+    /**
+     * Get area type
+     *
+     * @return string $areaType
+     */
+    public function getAreaType()
+    {
+        return $this->areaType;
     }
 
     /**

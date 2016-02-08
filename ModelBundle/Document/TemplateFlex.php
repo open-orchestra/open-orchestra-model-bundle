@@ -2,8 +2,6 @@
 
 namespace OpenOrchestra\ModelBundle\Document;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 use OpenOrchestra\ModelInterface\Model\AreaFlexInterface;
@@ -59,66 +57,24 @@ class TemplateFlex implements TemplateFlexInterface
     /**
      * @var AreaFlexInterface
      *
-     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\AreaFlexInterface")
+     * @ODM\EmbedOne(targetDocument="OpenOrchestra\ModelInterface\Model\AreaFlexInterface")
      */
-    protected $areas;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->areas = new ArrayCollection();
-    }
+    protected $area;
 
     /**
      * @param AreaFlexInterface $area
      */
-    public function addArea(AreaFlexInterface $area)
+    public function setArea(AreaFlexInterface $area)
     {
-        $this->areas->add($area);
+        $this->area = $area;
     }
 
     /**
-     * @param AreaFlexInterface $area
+     * @return AreaFlexInterface
      */
-    public function removeArea(AreaFlexInterface $area)
+    public function getArea()
     {
-        $this->areas->removeElement($area);
-    }
-
-    /**
-     * Remove subArea by areaId
-     *
-     * @param string $areaId
-     */
-    public function removeAreaByAreaId($areaId)
-    {
-        foreach ($this->getAreas() as $key => $area) {
-            if ($areaId == $area->getAreaId()) {
-                $this->getAreas()->remove($key);
-                break;
-            }
-        }
-    }
-
-    /**
-     * @param Collection $areas
-     */
-    public function setAreas(Collection $areas)
-    {
-        $this->areas = new ArrayCollection();
-        foreach ($areas as $key => $area) {
-            $this->areas->add($area);
-        }
-    }
-
-    /**
-     * @return Collection
-     */
-    public function getAreas()
-    {
-        return $this->areas;
+        return $this->area;
     }
 
     /**
