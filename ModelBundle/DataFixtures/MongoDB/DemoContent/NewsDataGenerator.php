@@ -116,7 +116,7 @@ EOF;
     {
         $siteNewsBlock0 = new Block();
         $siteNewsBlock0->setLabel('Wysiwyg 1');
-        $siteNewsBlock0->setComponent(TinyMCEWysiwygStrategy::TINYMCEWYSIWYG);
+        $siteNewsBlock0->setComponent(TinyMCEWysiwygStrategy::NAME);
         $siteNewsBlock0->setAttributes(array("htmlContent" => $htmlContent));
         $siteNewsBlock0->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));
 

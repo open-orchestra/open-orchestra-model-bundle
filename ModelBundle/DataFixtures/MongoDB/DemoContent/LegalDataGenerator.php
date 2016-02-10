@@ -99,7 +99,7 @@ EOF;
     {
         $siteLegalBlock0 = new Block();
         $siteLegalBlock0->setLabel('Wysiwyg 1');
-        $siteLegalBlock0->setComponent(TinyMCEWysiwygStrategy::TINYMCEWYSIWYG);
+        $siteLegalBlock0->setComponent(TinyMCEWysiwygStrategy::NAME);
         $siteLegalBlock0->setAttributes(array(
             "htmlContent" => $htmlContent));
         $siteLegalBlock0->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));
