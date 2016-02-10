@@ -36,6 +36,13 @@ class AreaFlex implements AreaFlexInterface
     protected $areaType;
 
     /**
+     * @var string $width
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $width;
+
+    /**
      * @var Collection
      *
      * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\AreaFlexInterface")
@@ -166,4 +173,19 @@ class AreaFlex implements AreaFlexInterface
         return $this->subAreas;
     }
 
+    /**
+     * @return string
+     */
+    public function getWidth()
+    {
+        return $this->width;
+    }
+
+    /**
+     * @param string $width
+     */
+    public function setWidth($width)
+    {
+        $this->width = $width;
+    }
 }
