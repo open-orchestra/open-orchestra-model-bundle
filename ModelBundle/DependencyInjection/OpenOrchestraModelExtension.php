@@ -31,7 +31,6 @@ class OpenOrchestraModelExtension extends Extension
             $container->setParameter('open_orchestra_model.fixtures_interface.' . $command, $content);
         }
         $container->setParameter('open_orchestra_model.fixtures.command', array_keys($config['fixtures_interface']));
-
         foreach ($config['document'] as $class => $content) {
             if (is_array($content)) {
                 $container->setParameter('open_orchestra_model.document.' . $class . '.class', $content['class']);

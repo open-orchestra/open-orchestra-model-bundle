@@ -5,6 +5,7 @@ resolve_target_documents:
     OpenOrchestra\ModelInterface\Model\EmbedKeywordInterface: OpenOrchestra\ModelBundle\Document\EmbedKeyword
     OpenOrchestra\ModelInterface\Model\RoleInterface: OpenOrchestra\ModelBundle\Document\Role
     OpenOrchestra\ModelInterface\Model\AreaInterface: OpenOrchestra\ModelBundle\Document\Area
+    OpenOrchestra\ModelInterface\Model\AreaFlexInterface: OpenOrchestra\ModelBundle\Document\AreaFlex
     OpenOrchestra\ModelInterface\Model\BlockInterface: OpenOrchestra\ModelBundle\Document\Block
     OpenOrchestra\ModelInterface\Model\StatusInterface: OpenOrchestra\ModelBundle\Document\Status
     OpenOrchestra\ModelInterface\Model\ThemeInterface: OpenOrchestra\ModelBundle\Document\Theme
