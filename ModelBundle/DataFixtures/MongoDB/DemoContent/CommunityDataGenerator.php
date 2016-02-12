@@ -96,7 +96,7 @@ EOF;
     {
         $siteComBlock0 = new Block();
         $siteComBlock0->setLabel('Wysiwyg 1');
-        $siteComBlock0->setComponent(TinyMCEWysiwygStrategy::TINYMCEWYSIWYG);
+        $siteComBlock0->setComponent(TinyMCEWysiwygStrategy::NAME);
         $siteComBlock0->setAttributes(array("htmlContent" => $htmlContent));
         $siteComBlock0->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));
 

@@ -124,7 +124,7 @@ EOF;
     {
         $siteHomeBlock0 = new Block();
         $siteHomeBlock0->setLabel('Wysiwyg');
-        $siteHomeBlock0->setComponent(TinyMCEWysiwygStrategy::TINYMCEWYSIWYG);
+        $siteHomeBlock0->setComponent(TinyMCEWysiwygStrategy::NAME);
         $siteHomeBlock0->setAttributes(array(
             "htmlContent" => $htmlContent
         ));

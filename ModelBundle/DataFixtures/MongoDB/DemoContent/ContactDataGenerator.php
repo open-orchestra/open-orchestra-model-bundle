@@ -138,7 +138,7 @@ EOF;
     {
         $siteContactBlock0 = new Block();
         $siteContactBlock0->setLabel('Wysiwyg 1');
-        $siteContactBlock0->setComponent(TinyMCEWysiwygStrategy::TINYMCEWYSIWYG);
+        $siteContactBlock0->setComponent(TinyMCEWysiwygStrategy::NAME);
         $siteContactBlock0->setAttributes(array("htmlContent" => $htmlContent));
         $siteContactBlock0->addArea(array('nodeId' => 0, 'areaId' => 'moduleArea'));
 

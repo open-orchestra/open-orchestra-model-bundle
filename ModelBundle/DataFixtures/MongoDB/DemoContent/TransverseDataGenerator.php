@@ -47,7 +47,7 @@ class TransverseDataGenerator extends AbstractDataGenerator
         $siteBlockLogo = new Block();
         $siteBlockLogo->setLabel('Wysiwyg logo');
         $siteBlockLogo->setClass('logo');
-        $siteBlockLogo->setComponent(TinyMCEWysiwygStrategy::TINYMCEWYSIWYG);
+        $siteBlockLogo->setComponent(TinyMCEWysiwygStrategy::NAME);
         $orchestraTitle = "Open Orchestra";
         if (isset($this->references['logo-orchestra'])) {
             $orchestraTitle = '[media=original]' . $this->references['logo-orchestra']->getId() . '[/media]';
@@ -69,7 +69,7 @@ class TransverseDataGenerator extends AbstractDataGenerator
 
         $siteBlockFooter = new Block();
         $siteBlockFooter->setLabel('Wysiwyg footer');
-        $siteBlockFooter->setComponent(TinyMCEWysiwygStrategy::TINYMCEWYSIWYG);
+        $siteBlockFooter->setComponent(TinyMCEWysiwygStrategy::NAME);
         $siteBlockFooter->setAttributes(array(
             "htmlContent" => <<<EOF
 <div class='footer-networks'>
@@ -96,7 +96,7 @@ EOF
         $siteBlockFooterMenu = new Block;
         $siteBlockFooterMenu->setLabel('footer menu');
         $siteBlockFooterMenu->setClass("footer-legal");
-        $siteBlockFooterMenu->setComponent(FooterStrategy::FOOTER);
+        $siteBlockFooterMenu->setComponent(FooterStrategy::NAME);
 
         $siteBlockContact = new Block();
         $siteBlockContact->setLabel('Contact');

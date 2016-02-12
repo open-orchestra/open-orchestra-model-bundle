@@ -156,7 +156,7 @@ abstract class AbstractDataGenerator
     {
         $siteBlockLanguage = new Block();
         $siteBlockLanguage->setLabel('Language list');
-        $siteBlockLanguage->setComponent(LanguageListStrategy::LANGUAGE_LIST);
+        $siteBlockLanguage->setComponent(LanguageListStrategy::NAME);
 
         $node = new Node();
         $node->setMaxAge(1000);
