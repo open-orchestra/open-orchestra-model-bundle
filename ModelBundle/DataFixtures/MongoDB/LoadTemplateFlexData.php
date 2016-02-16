@@ -49,16 +49,18 @@ class LoadTemplateFlexData extends AbstractFixture implements OrderedFixtureInte
 
         $header = new AreaFlex();
         $header->setAreaType(AreaFlexInterface::TYPE_ROW);
-        $header->setAreaId('header');
+        $header->setAreaId('root_row_1');
 
         $columnLogo = new AreaFlex();
         $columnLogo->setAreaType(AreaFlexInterface::TYPE_COLUMN);
-        $columnLogo->setAreaId('logo');
+        $columnLogo->setAreaId('root_row_1_column_1');
+        $columnLogo->setLabel('Logo');
         $columnLogo->setWidth('1');
 
         $columnMenu = new AreaFlex();
         $columnMenu->setAreaType(AreaFlexInterface::TYPE_COLUMN);
-        $columnMenu->setAreaId('logo');
+        $columnMenu->setAreaId('root_row_1_column_2');
+        $columnMenu->setLabel('Menu');
         $columnMenu->setWidth('3');
 
         $header->addArea($columnLogo);
@@ -66,32 +68,36 @@ class LoadTemplateFlexData extends AbstractFixture implements OrderedFixtureInte
 
         $main = new AreaFlex();
         $main->setAreaType(AreaFlexInterface::TYPE_ROW);
-        $main->setAreaId('main');
+        $main->setAreaId('root_row_2');
 
         $columnMain = new AreaFlex();
         $columnMain->setAreaType(AreaFlexInterface::TYPE_COLUMN);
-        $columnMain->setAreaId('content');
+        $columnMain->setAreaId('root_row_2_column_1');
+        $columnMain->setLabel('Content');
         $columnMain->setWidth('1');
 
         $main->addArea($columnMain);
 
         $footer = new AreaFlex();
         $footer->setAreaType(AreaFlexInterface::TYPE_ROW);
-        $footer->setAreaId('footer');
+        $footer->setAreaId('root_row_3');
 
         $footer1 = new AreaFlex();
         $footer1->setAreaType(AreaFlexInterface::TYPE_COLUMN);
-        $footer1->setAreaId('footer_1');
+        $footer1->setAreaId('root_row_3_column_1');
+        $footer1->setLabel('Footer 1');
         $footer1->setWidth('1');
 
         $footer2 = new AreaFlex();
         $footer2->setAreaType(AreaFlexInterface::TYPE_COLUMN);
-        $footer2->setAreaId('footer_2');
+        $footer2->setAreaId('root_row_3_column_2');
+        $footer2->setLabel('Footer 2');
         $footer2->setWidth('1');
 
         $footer3 = new AreaFlex();
         $footer3->setAreaType(AreaFlexInterface::TYPE_COLUMN);
-        $footer3->setAreaId('footer_3');
+        $footer3->setAreaId('root_row_3_column_3');
+        $footer3->setLabel('Footer 3');
         $footer3->setWidth('1');
 
         $footer->addArea($footer1);
