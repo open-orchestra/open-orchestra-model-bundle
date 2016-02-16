@@ -50,6 +50,13 @@ class AreaFlex implements AreaFlexInterface
     protected $subAreas;
 
     /**
+     * @var string $htmlClass
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $htmlClass;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -187,5 +194,25 @@ class AreaFlex implements AreaFlexInterface
     public function setWidth($width)
     {
         $this->width = $width;
+    }
+
+    /**
+     * Set htmlClass
+     *
+     * @param string $htmlClass
+     */
+    public function setHtmlClass($htmlClass)
+    {
+        $this->htmlClass = $htmlClass;
+    }
+
+    /**
+     * Get htmlClass
+     *
+     * @return string $htmlClass
+     */
+    public function getHtmlClass()
+    {
+        return $this->htmlClass;
     }
 }
