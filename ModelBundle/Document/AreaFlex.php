@@ -135,16 +135,6 @@ class AreaFlex implements AreaFlexInterface
     }
 
     /**
-     * Remove subArea
-     *
-     * @param AreaFlexInterface $subArea
-     */
-    public function removeArea(AreaFlexInterface $subArea)
-    {
-        $this->subAreas->removeElement($subArea);
-    }
-
-    /**
      * Remove subArea by areaId
      *
      * @param string $areaId
@@ -156,6 +146,7 @@ class AreaFlex implements AreaFlexInterface
                 $this->getAreas()->remove($key);
                 break;
             }
+            $area->removeAreaByAreaId($areaId);
         }
     }
 
@@ -164,9 +155,9 @@ class AreaFlex implements AreaFlexInterface
      */
     public function setAreas(Collection $areas)
     {
-        $this->areas = new ArrayCollection();
+        $this->subAreas = new ArrayCollection();
         foreach ($areas as $area) {
-            $this->areas->add($area);
+            $this->subAreas->add($area);
         }
     }
 
