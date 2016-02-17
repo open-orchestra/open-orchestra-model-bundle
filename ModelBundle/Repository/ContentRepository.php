@@ -88,10 +88,10 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     }
 
     /**
-     * @param string $language
-     * @param string $contentType
-     * @param string $choiceType
-     * @param string $keywords
+     * @param string      $language
+     * @param string      $contentType
+     * @param string      $choiceType
+     * @param string|null $keywords
      *
      * @return array
      */
@@ -109,6 +109,36 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
             $qa->match($filter1);
         } elseif ($filter2) {
             $qa->match($filter2);
+        }
+
+        $elementName = 'content';
+
+        $this->generateLastVersionFilter($qa, $elementName);
+
+        return $this->hydrateAggregateQuery($qa, $elementName);
+    }
+
+    /**
+     * @param string      $language
+     * @param string      $contentType
+     * @param string      $choiceType
+     * @param string|null $condition
+     *
+     * @return array
+     */
+    public function findByContentTypeAndCondition($language, $contentType = '', $choiceType = self::CHOICE_AND, $condition = null)
+    {
+        $qa = $this->createAggregationQuery();
+        $qa->match($this->generateFilterPublishedNotDeletedOnLanguage($language));
+
+        $filter = $this->generateContentTypeFilter($contentType);
+
+        if ($filter && $condition) {
+            $qa->match($this->appendFilters($filter, $condition, $choiceType));
+        } elseif ($filter) {
+            $qa->match($filter);
+        } elseif ($condition) {
+            $qa->match($condition);
         }
 
         $elementName = 'content';
