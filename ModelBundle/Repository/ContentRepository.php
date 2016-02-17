@@ -88,10 +88,10 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     }
 
     /**
-     * @param string $language
-     * @param string $contentType
-     * @param string $choiceType
-     * @param string $keywords
+     * @param string      $language
+     * @param string      $contentType
+     * @param string      $choiceType
+     * @param string|null $keywords
      *
      * @return array
      */
@@ -119,10 +119,10 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     }
 
     /**
-     * @param string $language
-     * @param string $contentType
-     * @param string $choiceType
-     * @param string $condition
+     * @param string      $language
+     * @param string      $contentType
+     * @param string      $choiceType
+     * @param string|null $condition
      *
      * @return array
      */
