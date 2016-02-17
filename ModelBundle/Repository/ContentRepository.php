@@ -121,6 +121,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     /**
      * @param string $language
      * @param string $contentType
+     * @param string $choiceType
      * @param string $condition
      *
      * @return array
