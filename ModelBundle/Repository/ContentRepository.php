@@ -119,6 +119,35 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     }
 
     /**
+     * @param string $language
+     * @param string $contentType
+     * @param string $condition
+     *
+     * @return array
+     */
+    public function findByContentTypeAndCondition($language, $contentType = '', $choiceType = self::CHOICE_AND, $condition = null)
+    {
+        $qa = $this->createAggregationQuery();
+        $qa->match($this->generateFilterPublishedNotDeletedOnLanguage($language));
+
+        $filter = $this->generateContentTypeFilter($contentType);
+
+        if ($filter && $condition) {
+            $qa->match($this->appendFilters($filter, $condition, $choiceType));
+        } elseif ($filter) {
+            $qa->match($filter);
+        } elseif ($condition) {
+            $qa->match($condition);
+        }
+
+        $elementName = 'content';
+
+        $this->generateLastVersionFilter($qa, $elementName);
+
+        return $this->hydrateAggregateQuery($qa, $elementName);
+    }
+
+    /**
      * Generate filter on visible published contents in $language
      *
      * @param string $language
