@@ -246,6 +246,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     {
         $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         $qa->match(array('nodeId' => $nodeId));
+        $qa->sort(array('version' => -1));
 
         return $this->hydrateAggregateQuery($qa);
     }
