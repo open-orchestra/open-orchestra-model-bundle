@@ -125,6 +125,11 @@ class NodeRepositoryTest extends AbstractKernelTestCase
         foreach ($nodes as $node) {
             $this->assertSameNode($language, $node->getVersion(), $siteId, $node);
         }
+        if(count($nodes) > 1) {
+            for ($i = 1; $i < count($nodes); $i++) {
+                $this->assertGreaterThan($nodes[$i]->getVersion(), $nodes[$i-1]->getVersion());
+            }
+        }
     }
 
     /**
