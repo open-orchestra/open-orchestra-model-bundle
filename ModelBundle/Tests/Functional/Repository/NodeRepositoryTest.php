@@ -493,12 +493,13 @@ class NodeRepositoryTest extends AbstractKernelTestCase
      * @param int    $order
      * @param string $nodeId
      * @param bool   $expectedValue
+     * @param string $siteId
      *
      * @dataProvider provideParentAndOrder
      */
-    public function testHasOtherNodeWithSameParentAndOrder($parentId, $order, $nodeId, $expectedValue)
+    public function testHasOtherNodeWithSameParentAndOrder($parentId, $order, $nodeId, $expectedValue, $siteId = '2')
     {
-        $this->assertSame($expectedValue, $this->repository->hasOtherNodeWithSameParentAndOrder($parentId, $order, $nodeId, '2'));
+        $this->assertSame($expectedValue, $this->repository->hasOtherNodeWithSameParentAndOrder($parentId, $order, $nodeId, $siteId));
     }
 
     /**
@@ -509,8 +510,8 @@ class NodeRepositoryTest extends AbstractKernelTestCase
         return array(
             array(NodeInterface::ROOT_NODE_ID, 10, 'fixture_page_contact', true),
             array(NodeInterface::ROOT_NODE_ID, 0, 'fixture_page_contact', false),
-            array(NodeInterface::ROOT_NODE_ID, 9, 'fixture_page_legal_mentions', true),
             array('fixture_page_legal_mentions', 0, 'fakeID', false),
+            array(NodeInterface::ROOT_NODE_ID, 0, 'fakeID', false, '3'),
         );
     }
 
