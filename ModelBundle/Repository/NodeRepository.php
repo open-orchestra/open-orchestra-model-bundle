@@ -798,6 +798,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
                 'parentId' => $parentId,
                 'order'    => $order,
                 'nodeId'   => array('$ne' => $nodeId),
+                'deleted'  => false
             )
         );
         $node = $this->singleHydrateAggregateQuery($qa);
