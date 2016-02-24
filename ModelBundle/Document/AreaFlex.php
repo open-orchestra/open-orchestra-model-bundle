@@ -156,8 +156,8 @@ class AreaFlex implements AreaFlexInterface
     public function setAreas(Collection $areas)
     {
         $this->subAreas = new ArrayCollection();
-        foreach ($areas as $area) {
-            $this->subAreas->add($area);
+        foreach ($areas as $key => $area) {
+            $this->subAreas->set($key, $area);
         }
     }
 
