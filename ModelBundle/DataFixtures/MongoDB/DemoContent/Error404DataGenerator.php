@@ -93,7 +93,7 @@ EOF;
         $error404->setNodeId(NodeInterface::ERROR_404_NODE_ID);
         $error404->setName('Error 404');
         $error404->setCreatedBy('fake_admin');
-        $error404->setParentId('-');
+        $error404->setParentId(NodeInterface::ROOT_NODE_ID);
         $error404->setRoutePattern($routePattern);
         $error404->setInFooter(false);
         $error404->setInMenu(false);
@@ -101,8 +101,6 @@ EOF;
         $error404->addArea($error404Area3);
         $error404->addArea($error404Area6);
         $error404->addBlock($error404Block0);
-        $error404->setSitemapChangefreq('hourly');
-        $error404->setSitemapPriority('0.8');
 
         return $error404;
     }

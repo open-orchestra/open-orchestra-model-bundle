@@ -346,10 +346,10 @@ class NodeRepositoryTest extends AbstractKernelTestCase
     public function provideForGetSubMenu()
     {
         return array(
-            array(NodeInterface::ROOT_NODE_ID, 1, 5, 1, '2', 'fr'),
-            array(NodeInterface::ROOT_NODE_ID, 2, 5, 1, '2', 'fr'),
-            array(NodeInterface::ROOT_NODE_ID, 0, 5, 1, '2', 'fr'),
-            array(NodeInterface::ROOT_NODE_ID, 0, 5, 1, '2', 'en'),
+            array(NodeInterface::ROOT_NODE_ID, 1, 7, 1, '2', 'fr'),
+            array(NodeInterface::ROOT_NODE_ID, 2, 7, 1, '2', 'fr'),
+            array(NodeInterface::ROOT_NODE_ID, 0, 7, 1, '2', 'fr'),
+            array(NodeInterface::ROOT_NODE_ID, 0, 7, 1, '2', 'en'),
             array('fixture_page_community', 1, 1, 1, '2', 'fr'),
             array('fixture_page_community', 1, 1, 1, '2', 'en'),
             array('page_unexistant', 1, 0, 1, '2', 'fr'),
@@ -451,7 +451,7 @@ class NodeRepositoryTest extends AbstractKernelTestCase
     {
         $nodes = $this->repository->findSubTreeByPath('root', '2', $language);
 
-        $this->assertCount(4, $nodes);
+        $this->assertCount(6, $nodes);
     }
 
     /**
@@ -509,7 +509,7 @@ class NodeRepositoryTest extends AbstractKernelTestCase
     {
         return array(
             array(NodeInterface::ROOT_NODE_ID, 10, 'fixture_page_contact', true),
-            array(NodeInterface::ROOT_NODE_ID, 0, 'fixture_page_contact', false),
+            array(NodeInterface::ROOT_NODE_ID, 0, 'fixture_page_contact', true),
             array('fixture_page_legal_mentions', 0, 'fakeID', false),
             array(NodeInterface::ROOT_NODE_ID, 0, 'fakeID', false, '3'),
         );
@@ -533,7 +533,7 @@ class NodeRepositoryTest extends AbstractKernelTestCase
     {
         return array(
             array(NodeInterface::TYPE_DEFAULT, 15),
-            array(NodeInterface::TYPE_ERROR, 0),
+            array(NodeInterface::TYPE_ERROR, 6),
             array(NodeInterface::TYPE_TRANSVERSE, 0),
         );
     }

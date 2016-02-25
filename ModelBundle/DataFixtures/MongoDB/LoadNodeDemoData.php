@@ -15,6 +15,7 @@ use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\TransverseDataGen
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
 use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\Error404DataGenerator;
+use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\Error503DataGenerator;
 
 /**
  * Class LoadNodeData
@@ -49,6 +50,7 @@ class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterfac
         $this->addNode($manager, new CommunityDataGenerator($references), $transverseGenerator, $languages);
         $this->addNode($manager, new NewsDataGenerator($references), $transverseGenerator, $languages);
         $this->addNode($manager, new Error404DataGenerator($references), $transverseGenerator, $languages);
+        $this->addNode($manager, new Error503DataGenerator($references), $transverseGenerator, $languages);
 
         $manager->flush();
     }
