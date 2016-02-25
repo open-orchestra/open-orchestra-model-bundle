@@ -88,7 +88,7 @@ EOF;
         $error404Area6 = $this->createFooter();
 
         $error404 = $this->createBaseNode();
-        $node->setNodeType(NodeInterface::TYPE_ERROR);
+        $error404->setNodeType(NodeInterface::TYPE_ERROR);
         $error404->setLanguage($language);
         $error404->setNodeId(NodeInterface::ERROR_404_NODE_ID);
         $error404->setName('Error 404');
