@@ -163,7 +163,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         $filter = array();
         if ($nodeId !== NodeInterface::TRANSVERSE_NODE_ID) {
-            $filter['status.published'] = true;
+            $filter['currentlyPublished'] = true;
         }
         $filter['deleted'] = false;
         $filter['nodeId'] = $nodeId;
@@ -643,13 +643,36 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
             array(
                 'siteId'=> $siteId,
                 'language'=> $language,
-                'status.published' => true,
+                'currentlyPublished' => true,
                 'nodeType' => NodeInterface::TYPE_DEFAULT
             )
         );
 
         return $this->findLastVersion($qa);
     }
+
+    /**
+     * @param string $nodeId
+     * @param string $language
+     * @param string $siteId
+     *
+     * @return NodeInterface
+     */
+    public function findPublishedInLastVersionWithoutFlag($nodeId, $language, $siteId)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
+        $filter = array();
+        if ($nodeId !== NodeInterface::TRANSVERSE_NODE_ID) {
+            $filter['status.published'] = true;
+        }
+        $filter['deleted'] = false;
+        $filter['nodeId'] = $nodeId;
+        $qa->match($filter);
+        $qa->sort(array('version' => -1));
+
+        return $this->singleHydrateAggregateQuery($qa);
+    }
+
 
     /**
      * @param string $siteId
@@ -675,7 +698,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         $qa->match(
             array(
-                'status.published' => true,
+                'currentlyPublished' => true,
                 'deleted' => false,
             )
         );
@@ -934,5 +957,22 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         $qa->match($filter);
 
         return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param string $nodeId
+     * @param string $language
+     * @param string $siteId
+     *
+     * @return NodeInterface
+     */
+    public function findCurrentlyPublished($nodeId, $language, $siteId)
+    {
+        return $this->findBy(array(
+            'nodeId' => $nodeId,
+            'language' => $language,
+            'siteId' => $siteId,
+            'currentlyPublished' => true
+        ));
     }
 }

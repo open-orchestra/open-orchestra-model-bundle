@@ -557,4 +557,38 @@ class NodeRepositoryTest extends AbstractKernelTestCase
         $this->assertCount(0, $this->repository->findBySiteIdAndDefaultTheme('2', false));
         $this->assertGreaterThanOrEqual(16, $this->repository->findBySiteIdAndDefaultTheme('2', true));
     }
+
+    /**
+     * @param string $nodeId
+     * @param string $language
+     *
+     * @dataProvider provideNodeIdAndLanguageForPublishedFlag
+     */
+    public function testFindCurrentlyPublished($nodeId, $language)
+    {
+        $this->assertCount(1, $this->repository->findCurrentlyPublished($nodeId, $language, '2'));
+    }
+
+    /**
+     * @return array
+     */
+    public function provideNodeIdAndLanguageForPublishedFlag()
+    {
+        return array(
+            'root in fr' => array(NodeInterface::ROOT_NODE_ID, 'fr'),
+            'root in en' => array(NodeInterface::ROOT_NODE_ID, 'en'),
+            'root in de' => array(NodeInterface::ROOT_NODE_ID, 'de'),
+            'community in fr' => array('fixture_page_community', 'fr'),
+            'community in en' => array('fixture_page_community', 'en'),
+            'community in de' => array('fixture_page_community', 'de'),
+        );
+    }
+//
+//    /**
+//     * Test find last published without flag
+//     */
+//    public function testFindPublishedInLastVersionWithoutFlag()
+//    {
+//
+//    }
 }
