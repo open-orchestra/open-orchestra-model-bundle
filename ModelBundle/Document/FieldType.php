@@ -45,6 +45,20 @@ class FieldType implements FieldTypeInterface
     protected $searchable;
 
     /**
+     * @var boolean $orderable
+     *
+     * @ODM\Field(type="boolean")
+     */
+    protected $orderable;
+
+    /**
+     * @var string $orderDirection
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $orderDirection;
+
+    /**
      * @var string $fieldTypeSearchable
      *
      * @ODM\Field(type="string")
@@ -169,16 +183,6 @@ class FieldType implements FieldTypeInterface
     }
 
     /**
-     * Set Searchable
-     *
-     * @param boolean $searchable
-     */
-    public function setSearchable($searchable)
-    {
-        $this->searchable = $searchable;
-    }
-
-    /**
      * @return boolean
      */
     public function getListable()
@@ -197,11 +201,55 @@ class FieldType implements FieldTypeInterface
     }
 
     /**
+     * Set Searchable
+     *
+     * @param boolean $searchable
+     */
+    public function setSearchable($searchable)
+    {
+        $this->searchable = $searchable;
+    }
+
+    /**
      * @return boolean
      */
     public function isSearchable()
     {
         return $this->searchable;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrderDirection()
+    {
+        return $this->orderDirection;
+    }
+
+    /**
+     * @param string $orderDirection
+     */
+    public function setOrderDirection($orderDirection)
+    {
+        $this->orderDirection = $orderDirection;
+    }
+
+    /**
+     * Set Orderable
+     *
+     * @param boolean $orderable
+     */
+    public function setOrderable($orderable)
+    {
+        $this->orderable = $orderable;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isOrderable()
+    {
+        return $this->orderable;
     }
 
     /**
