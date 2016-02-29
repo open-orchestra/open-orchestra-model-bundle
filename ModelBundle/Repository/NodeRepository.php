@@ -124,7 +124,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      */
     public function getSubMenu($nodeId, $nbLevel, $language, $siteId)
     {
-        $node = $this->findPublishedInLastVersion($nodeId, $language, $siteId);
+        $node = $this->findOneCurrentlyPublished($nodeId, $language, $siteId);
         $list = array();
 
         if ($node instanceof ReadNodeInterface) {
@@ -146,7 +146,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      */
     public function findOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion($nodeId, $language, $siteId)
     {
-        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.0 and will be removed in 1.2.0. Use the '.__CLASS__.'::findPpublishedInLastVersion method instead.', E_USER_DEPRECATED);
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.0 and will be removed in 1.2.0. Use the '.__CLASS__.'::findCurrentlyPublished method instead.', E_USER_DEPRECATED);
 
         return $this->findPublishedInLastVersion($nodeId, $language, $siteId);
     }
@@ -156,9 +156,35 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      * @param string $language
      * @param string $siteId
      *
+     * @deprecated With the currently published flag, use findCurrentlyPublished instead, will be remoted in 1.2.0
+     *
      * @return mixed
      */
     public function findPublishedInLastVersion($nodeId, $language, $siteId)
+    {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.0 and will be removed in 1.2.0. Use the '.__CLASS__.'::findOneCurrentlyPublished method instead.', E_USER_DEPRECATED);
+
+        $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
+        $filter = array();
+        if ($nodeId !== NodeInterface::TRANSVERSE_NODE_ID) {
+            $filter['status.published'] = true;
+        }
+        $filter['deleted'] = false;
+        $filter['nodeId'] = $nodeId;
+        $qa->match($filter);
+        $qa->sort(array('version' => -1));
+
+        return $this->singleHydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param string $nodeId
+     * @param string $language
+     * @param string $siteId
+     *
+     * @return mixed
+     */
+    public function findOneCurrentlyPublished($nodeId, $language, $siteId)
     {
         $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         $filter = array();
@@ -634,9 +660,34 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      * @param string $language
      * @param string $siteId
      *
+     * @deprecated with the fag usage, use findCurrentlyPublishedVersion, will be removed in 1.2
+     *
      * @return ReadNodeInterface
      */
     public function findLastPublishedVersion($language, $siteId)
+    {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.0 and will be removed in 1.2.0. Use the '.__CLASS__.'::findCurrentlyPublishedVersion method instead.', E_USER_DEPRECATED);
+
+        $qa = $this->createAggregationQuery();
+        $qa->match(
+            array(
+                'siteId'=> $siteId,
+                'language'=> $language,
+                'status.published' => true,
+                'nodeType' => NodeInterface::TYPE_DEFAULT
+            )
+        );
+
+        return $this->findLastVersion($qa);
+    }
+
+    /**
+     * @param string $language
+     * @param string $siteId
+     *
+     * @return ReadNodeInterface
+     */
+    public function findCurrentlyPublishedVersion($language, $siteId)
     {
         $qa = $this->createAggregationQuery();
         $qa->match(
@@ -698,7 +749,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         $qa->match(
             array(
-                'currentlyPublished' => true,
+                'status.published' => true,
                 'deleted' => false,
             )
         );
@@ -966,7 +1017,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      *
      * @return NodeInterface
      */
-    public function findCurrentlyPublished($nodeId, $language, $siteId)
+    public function findAllCurrentlyPublishedByNode($nodeId, $language, $siteId)
     {
         return $this->findBy(array(
             'nodeId' => $nodeId,

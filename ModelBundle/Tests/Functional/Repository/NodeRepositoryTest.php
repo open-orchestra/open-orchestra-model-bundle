@@ -36,9 +36,23 @@ class NodeRepositoryTest extends AbstractKernelTestCase
      *
      * @dataProvider provideLanguageLastVersionAndSiteId
      */
-    public function testfindOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion($language, $version, $siteId)
+    public function testFindOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion($language, $version, $siteId)
     {
         $node = $this->repository->findPublishedInLastVersion(NodeInterface::ROOT_NODE_ID, $language, $siteId);
+
+        $this->assertSameNode($language, $version, $siteId, $node);
+    }
+
+    /**
+     * @param string $language
+     * @param int    $version
+     * @param string $siteId
+     *
+     * @dataProvider provideLanguageLastVersionAndSiteId
+     */
+    public function testFindOneCurrentlyPublished($language, $version, $siteId)
+    {
+        $node = $this->repository->findOneCurrentlyPublished(NodeInterface::ROOT_NODE_ID, $language, $siteId);
 
         $this->assertSameNode($language, $version, $siteId, $node);
     }
@@ -374,6 +388,23 @@ class NodeRepositoryTest extends AbstractKernelTestCase
     }
 
     /**
+     * @param string $language
+     * @param string $siteId
+     * @param int    $count
+     *
+     * @dataProvider provideLanguageSiteIdAndCount
+     */
+    public function testFindCurrentlyPublishedVersion($language, $siteId, $count)
+    {
+        $nodes = $this->repository->findCurrentlyPublishedVersion($language, $siteId);
+
+        $this->assertCount($count, $nodes);
+        foreach ($nodes as $node) {
+            $this->assertSame($language, $node->getLanguage());
+        }
+    }
+
+    /**
      * @return array
      */
     public function provideLanguageSiteIdAndCount()
@@ -564,9 +595,9 @@ class NodeRepositoryTest extends AbstractKernelTestCase
      *
      * @dataProvider provideNodeIdAndLanguageForPublishedFlag
      */
-    public function testFindCurrentlyPublished($nodeId, $language)
+    public function testFindAllCurrentlyPublishedByNode($nodeId, $language)
     {
-        $this->assertCount(1, $this->repository->findCurrentlyPublished($nodeId, $language, '2'));
+        $this->assertCount(1, $this->repository->findAllCurrentlyPublishedByNode($nodeId, $language, '2'));
     }
 
     /**
