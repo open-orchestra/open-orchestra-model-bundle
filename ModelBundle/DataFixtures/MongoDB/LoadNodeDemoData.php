@@ -14,6 +14,8 @@ use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\NewsDataGenerator
 use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\TransverseDataGenerator;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
+use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\Error404DataGenerator;
+use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\Error503DataGenerator;
 
 /**
  * Class LoadNodeData
@@ -47,6 +49,8 @@ class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterfac
         $this->addNode($manager, new LegalDataGenerator($references), $transverseGenerator, $languages);
         $this->addNode($manager, new CommunityDataGenerator($references), $transverseGenerator, $languages);
         $this->addNode($manager, new NewsDataGenerator($references), $transverseGenerator, $languages);
+        $this->addNode($manager, new Error404DataGenerator($references), $transverseGenerator, $languages);
+        $this->addNode($manager, new Error503DataGenerator($references), $transverseGenerator, $languages);
 
         $manager->flush();
     }
@@ -61,8 +65,12 @@ class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterfac
         return 560;
     }
 
-    protected function addNode(ObjectManager $manager, AbstractDataGenerator $dataGenerator, TransverseDataGenerator $transverseGenerator, array $languages = array("fr", "en"))
-    {
+    protected function addNode(
+        ObjectManager $manager,
+        AbstractDataGenerator $dataGenerator,
+        TransverseDataGenerator $transverseGenerator,
+        array $languages = array("fr", "en")
+    ) {
         foreach ($languages as $language) {
             $node = $dataGenerator->generateNode($language);
             $this->addAreaRef($transverseGenerator->generateNode($language), $node);

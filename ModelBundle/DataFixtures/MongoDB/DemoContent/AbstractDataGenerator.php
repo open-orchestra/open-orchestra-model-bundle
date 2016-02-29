@@ -160,7 +160,7 @@ abstract class AbstractDataGenerator
 
         $node = new Node();
         $node->setMaxAge(1000);
-        $node->setNodeType('page');
+        $node->setNodeType(NodeInterface::TYPE_DEFAULT);
         $node->setSiteId('2');
         $node->setPath('-');
         $node->setVersion($this->version);
