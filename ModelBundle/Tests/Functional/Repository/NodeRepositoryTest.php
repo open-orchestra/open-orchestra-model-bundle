@@ -595,9 +595,9 @@ class NodeRepositoryTest extends AbstractKernelTestCase
      *
      * @dataProvider provideNodeIdAndLanguageForPublishedFlag
      */
-    public function testFindAllCurrentlyPublishedByNode($nodeId, $language)
+    public function testfindAllCurrentlyPublishedByElementId($nodeId, $language)
     {
-        $this->assertCount(1, $this->repository->findAllCurrentlyPublishedByNode($nodeId, $language, '2'));
+        $this->assertCount(1, $this->repository->findAllCurrentlyPublishedByElementId($nodeId, $language, '2'));
     }
 
     /**

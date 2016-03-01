@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\Repository;
 
+use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\Pagination\Configuration\FinderConfiguration;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
@@ -595,5 +596,61 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         $content = $this->singleHydrateAggregateQuery($qa);
 
         return $content instanceof ContentInterface;
+    }
+
+    /**
+     * @param string $contentId
+     * @param string $language
+     * @param string $siteId
+     *
+     * @return ContentInterface
+     */
+    public function findOneCurrentlyPublished($contentId, $language, $siteId)
+    {
+        $qa = $this->createAggregationQueryWithLanguageAndPublished($language);
+        $filter['currentlyPublished'] = true;
+        $filter['deleted'] = false;
+        $filter['contentId'] = $contentId;
+        $qa->match($filter);
+        $qa->sort(array('version' => -1));
+
+        return $this->singleHydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param string $contentId
+     * @param string $language
+     * @param string $siteId
+     *
+     * @return StatusableInterface
+     */
+    public function findPublishedInLastVersionWithoutFlag($contentId, $language, $siteId)
+    {
+        $qa = $this->createAggregationQueryWithLanguageAndPublished($language);
+        $filter['status.published'] = true;
+        $filter['currentlyPublished'] = false;
+        $filter['deleted'] = false;
+        $filter['contentId'] = $contentId;
+        $qa->match($filter);
+        $qa->sort(array('version' => -1));
+
+        return $this->singleHydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param string $contentId
+     * @param string $language
+     * @param string $siteId
+     *
+     * @return StatusableInterface
+     */
+    public function findAllCurrentlyPublishedByElementId($contentId, $language, $siteId)
+    {
+        return $this->findBy(array(
+            'contentId' => $contentId,
+            'language' => $language,
+            'siteId' => $siteId,
+            'currentlyPublished' => true
+        ));
     }
 }

@@ -715,6 +715,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         $filter = array();
         if ($nodeId !== NodeInterface::TRANSVERSE_NODE_ID) {
             $filter['status.published'] = true;
+            $filter['currentlyPublished'] = false;
         }
         $filter['deleted'] = false;
         $filter['nodeId'] = $nodeId;
@@ -1017,7 +1018,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      *
      * @return NodeInterface
      */
-    public function findAllCurrentlyPublishedByNode($nodeId, $language, $siteId)
+    public function findAllCurrentlyPublishedByElementId($nodeId, $language, $siteId)
     {
         return $this->findBy(array(
             'nodeId' => $nodeId,
