@@ -598,7 +598,7 @@ class NodeRepositoryTest extends AbstractKernelTestCase
      */
     public function testfindAllCurrentlyPublishedByElementId($nodeId, $language)
     {
-        $node = Phake::mock(NodeInteface::CLASS);
+        $node = Phake::mock(NodeInterface::CLASS);
         Phake::when($node)->getNodeId()->thenReturn($nodeId);
         Phake::when($node)->getLanguage()->thenReturn($language);
         Phake::when($node)->getSiteId()->thenReturn('2');
