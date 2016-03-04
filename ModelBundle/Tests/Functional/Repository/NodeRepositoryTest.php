@@ -5,6 +5,7 @@ namespace OpenOrchestra\ModelBundle\Tests\Functional\Repository;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractKernelTestCase;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelBundle\Repository\NodeRepository;
+use Phake;
 
 /**
  * Class NodeRepositoryTest
@@ -597,7 +598,12 @@ class NodeRepositoryTest extends AbstractKernelTestCase
      */
     public function testfindAllCurrentlyPublishedByElementId($nodeId, $language)
     {
-        $this->assertCount(1, $this->repository->findAllCurrentlyPublishedByElementId($nodeId, $language, '2'));
+        $node = Phake::mock(NodeInteface::CLASS);
+        Phake::when($node)->getNodeId()->thenReturn($nodeId);
+        Phake::when($node)->getLanguage()->thenReturn($language);
+        Phake::when($node)->getSiteId()->thenReturn('2');
+
+        $this->assertCount(1, $this->repository->findAllCurrentlyPublishedByElementId($node));
     }
 
     /**

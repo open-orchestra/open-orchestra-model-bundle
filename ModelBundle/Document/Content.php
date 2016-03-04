@@ -163,14 +163,6 @@ class Content implements ContentInterface
     }
 
     /**
-     * @return string
-     */
-    public function getElementId()
-    {
-        return $this->getContentId();
-    }
-
-    /**
      * @param string $contentType
      */
     public function setContentType($contentType)

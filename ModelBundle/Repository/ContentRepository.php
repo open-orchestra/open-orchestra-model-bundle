@@ -618,19 +618,27 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     }
 
     /**
-     * @param string $contentId
-     * @param string $language
-     * @param string $siteId
+     * @param ContentInterface $element
      *
      * @return StatusableInterface
      */
-    public function findPublishedInLastVersionWithoutFlag($contentId, $language, $siteId)
+    public function findOneCurrentlyPublishedByElement(StatusableInterface $element)
     {
-        $qa = $this->createAggregationQueryWithLanguageAndPublished($language);
+        return $this->findOneCurrentlyPublished($element->getContentId(), $element->getLanguage(), $element->getSiteId());
+    }
+
+    /**
+     * @param ContentInterface $element
+     *
+     * @return ContentInterface
+     */
+    public function findPublishedInLastVersionWithoutFlag(StatusableInterface $element)
+    {
+        $qa = $this->createAggregationQueryWithLanguageAndPublished($element->getLanguage());
         $filter['status.published'] = true;
         $filter['currentlyPublished'] = false;
         $filter['deleted'] = false;
-        $filter['contentId'] = $contentId;
+        $filter['contentId'] = $element->getContentId();
         $qa->match($filter);
         $qa->sort(array('version' => -1));
 
@@ -638,18 +646,15 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     }
 
     /**
-     * @param string $contentId
-     * @param string $language
-     * @param string $siteId
+     * @param ContentInterface $element
      *
-     * @return StatusableInterface
+     * @return array
      */
-    public function findAllCurrentlyPublishedByElementId($contentId, $language, $siteId)
+    public function findAllCurrentlyPublishedByElementId(StatusableInterface $element)
     {
         return $this->findBy(array(
-            'contentId' => $contentId,
-            'language' => $language,
-            'siteId' => $siteId,
+            'contentId' => $element->getContentId(),
+            'language' => $element->getLanguage(),
             'currentlyPublished' => true
         ));
     }

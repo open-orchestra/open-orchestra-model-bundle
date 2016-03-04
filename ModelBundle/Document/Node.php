@@ -221,14 +221,6 @@ class Node implements NodeInterface
     }
 
     /**
-     * @return string
-     */
-    public function getElementId()
-    {
-        return $this->getNodeId();
-    }
-
-    /**
      * Set nodeType
      *
      * @param string $nodeType

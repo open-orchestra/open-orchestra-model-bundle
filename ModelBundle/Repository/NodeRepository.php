@@ -6,6 +6,7 @@ use Doctrine\ODM\MongoDB\Mapping;
 use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\AreaFinderTrait;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
+use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\FieldAutoGenerableRepositoryInterface;
@@ -197,6 +198,16 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         $qa->sort(array('version' => -1));
 
         return $this->singleHydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param NodeInterface $element
+     *
+     * @return StatusableInterface
+     */
+    public function findOneCurrentlyPublishedByElement(StatusableInterface $element)
+    {
+        return $this->findOneCurrentlyPublished($element->getNodeId(), $element->getLanguage(), $element->getSiteId());
     }
 
     /**
@@ -703,22 +714,20 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     }
 
     /**
-     * @param string $nodeId
-     * @param string $language
-     * @param string $siteId
+     * @param NodeInterface $element
      *
      * @return NodeInterface
      */
-    public function findPublishedInLastVersionWithoutFlag($nodeId, $language, $siteId)
+    public function findPublishedInLastVersionWithoutFlag(StatusableInterface $element)
     {
-        $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
+        $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($element->getSiteId(), $element->getLanguage());
         $filter = array();
-        if ($nodeId !== NodeInterface::TRANSVERSE_NODE_ID) {
+        if ($element->getNodeId() !== NodeInterface::TRANSVERSE_NODE_ID) {
             $filter['status.published'] = true;
             $filter['currentlyPublished'] = false;
         }
         $filter['deleted'] = false;
-        $filter['nodeId'] = $nodeId;
+        $filter['nodeId'] = $element->getNodeId();
         $qa->match($filter);
         $qa->sort(array('version' => -1));
 
@@ -1012,18 +1021,16 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     }
 
     /**
-     * @param string $nodeId
-     * @param string $language
-     * @param string $siteId
+     * @param NodeInterface $element
      *
-     * @return NodeInterface
+     * @return array
      */
-    public function findAllCurrentlyPublishedByElementId($nodeId, $language, $siteId)
+    public function findAllCurrentlyPublishedByElementId(StatusableInterface $element)
     {
         return $this->findBy(array(
-            'nodeId' => $nodeId,
-            'language' => $language,
-            'siteId' => $siteId,
+            'nodeId' => $element->getNodeId(),
+            'language' => $element->getLanguage(),
+            'siteId' => $element->getSiteId(),
             'currentlyPublished' => true
         ));
     }
