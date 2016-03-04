@@ -620,12 +620,4 @@ class NodeRepositoryTest extends AbstractKernelTestCase
             'community in de' => array('fixture_page_community', 'de'),
         );
     }
-//
-//    /**
-//     * Test find last published without flag
-//     */
-//    public function testFindPublishedInLastVersionWithoutFlag()
-//    {
-//
-//    }
 }
