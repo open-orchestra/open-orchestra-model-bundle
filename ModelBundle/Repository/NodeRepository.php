@@ -6,6 +6,7 @@ use Doctrine\ODM\MongoDB\Mapping;
 use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\AreaFinderTrait;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
+use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\FieldAutoGenerableRepositoryInterface;
@@ -124,7 +125,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      */
     public function getSubMenu($nodeId, $nbLevel, $language, $siteId)
     {
-        $node = $this->findPublishedInLastVersion($nodeId, $language, $siteId);
+        $node = $this->findOneCurrentlyPublished($nodeId, $language, $siteId);
         $list = array();
 
         if ($node instanceof ReadNodeInterface) {
@@ -146,7 +147,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      */
     public function findOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion($nodeId, $language, $siteId)
     {
-        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.0 and will be removed in 1.2.0. Use the '.__CLASS__.'::findPpublishedInLastVersion method instead.', E_USER_DEPRECATED);
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.0 and will be removed in 1.2.0. Use the '.__CLASS__.'::findCurrentlyPublished method instead.', E_USER_DEPRECATED);
 
         return $this->findPublishedInLastVersion($nodeId, $language, $siteId);
     }
@@ -156,10 +157,14 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      * @param string $language
      * @param string $siteId
      *
+     * @deprecated With the currently published flag, use findCurrentlyPublished instead, will be remoted in 1.2.0
+     *
      * @return mixed
      */
     public function findPublishedInLastVersion($nodeId, $language, $siteId)
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.0 and will be removed in 1.2.0. Use the '.__CLASS__.'::findOneCurrentlyPublished method instead.', E_USER_DEPRECATED);
+
         $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         $filter = array();
         if ($nodeId !== NodeInterface::TRANSVERSE_NODE_ID) {
@@ -171,6 +176,38 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         $qa->sort(array('version' => -1));
 
         return $this->singleHydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param string $nodeId
+     * @param string $language
+     * @param string $siteId
+     *
+     * @return mixed
+     */
+    public function findOneCurrentlyPublished($nodeId, $language, $siteId)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
+        $filter = array();
+        if ($nodeId !== NodeInterface::TRANSVERSE_NODE_ID) {
+            $filter['currentlyPublished'] = true;
+        }
+        $filter['deleted'] = false;
+        $filter['nodeId'] = $nodeId;
+        $qa->match($filter);
+        $qa->sort(array('version' => -1));
+
+        return $this->singleHydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param NodeInterface $element
+     *
+     * @return StatusableInterface
+     */
+    public function findOneCurrentlyPublishedByElement(StatusableInterface $element)
+    {
+        return $this->findOneCurrentlyPublished($element->getNodeId(), $element->getLanguage(), $element->getSiteId());
     }
 
     /**
@@ -634,10 +671,14 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      * @param string $language
      * @param string $siteId
      *
+     * @deprecated with the fag usage, use findCurrentlyPublishedVersion, will be removed in 1.2
+     *
      * @return ReadNodeInterface
      */
     public function findLastPublishedVersion($language, $siteId)
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.0 and will be removed in 1.2.0. Use the '.__CLASS__.'::findCurrentlyPublishedVersion method instead.', E_USER_DEPRECATED);
+
         $qa = $this->createAggregationQuery();
         $qa->match(
             array(
@@ -650,6 +691,49 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
 
         return $this->findLastVersion($qa);
     }
+
+    /**
+     * @param string $language
+     * @param string $siteId
+     *
+     * @return ReadNodeInterface
+     */
+    public function findCurrentlyPublishedVersion($language, $siteId)
+    {
+        $qa = $this->createAggregationQuery();
+        $qa->match(
+            array(
+                'siteId'=> $siteId,
+                'language'=> $language,
+                'currentlyPublished' => true,
+                'nodeType' => NodeInterface::TYPE_DEFAULT
+            )
+        );
+
+        return $this->findLastVersion($qa);
+    }
+
+    /**
+     * @param NodeInterface $element
+     *
+     * @return NodeInterface
+     */
+    public function findPublishedInLastVersionWithoutFlag(StatusableInterface $element)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($element->getSiteId(), $element->getLanguage());
+        $filter = array();
+        if ($element->getNodeId() !== NodeInterface::TRANSVERSE_NODE_ID) {
+            $filter['status.published'] = true;
+            $filter['currentlyPublished'] = false;
+        }
+        $filter['deleted'] = false;
+        $filter['nodeId'] = $element->getNodeId();
+        $qa->match($filter);
+        $qa->sort(array('version' => -1));
+
+        return $this->singleHydrateAggregateQuery($qa);
+    }
+
 
     /**
      * @param string $siteId
@@ -934,5 +1018,20 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         $qa->match($filter);
 
         return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param NodeInterface $element
+     *
+     * @return array
+     */
+    public function findAllCurrentlyPublishedByElementId(StatusableInterface $element)
+    {
+        return $this->findBy(array(
+            'nodeId' => $element->getNodeId(),
+            'language' => $element->getLanguage(),
+            'siteId' => $element->getSiteId(),
+            'currentlyPublished' => true
+        ));
     }
 }

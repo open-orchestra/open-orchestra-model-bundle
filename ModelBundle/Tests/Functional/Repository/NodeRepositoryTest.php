@@ -5,6 +5,7 @@ namespace OpenOrchestra\ModelBundle\Tests\Functional\Repository;
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractKernelTestCase;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelBundle\Repository\NodeRepository;
+use Phake;
 
 /**
  * Class NodeRepositoryTest
@@ -36,9 +37,23 @@ class NodeRepositoryTest extends AbstractKernelTestCase
      *
      * @dataProvider provideLanguageLastVersionAndSiteId
      */
-    public function testfindOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion($language, $version, $siteId)
+    public function testFindOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion($language, $version, $siteId)
     {
         $node = $this->repository->findPublishedInLastVersion(NodeInterface::ROOT_NODE_ID, $language, $siteId);
+
+        $this->assertSameNode($language, $version, $siteId, $node);
+    }
+
+    /**
+     * @param string $language
+     * @param int    $version
+     * @param string $siteId
+     *
+     * @dataProvider provideLanguageLastVersionAndSiteId
+     */
+    public function testFindOneCurrentlyPublished($language, $version, $siteId)
+    {
+        $node = $this->repository->findOneCurrentlyPublished(NodeInterface::ROOT_NODE_ID, $language, $siteId);
 
         $this->assertSameNode($language, $version, $siteId, $node);
     }
@@ -374,6 +389,23 @@ class NodeRepositoryTest extends AbstractKernelTestCase
     }
 
     /**
+     * @param string $language
+     * @param string $siteId
+     * @param int    $count
+     *
+     * @dataProvider provideLanguageSiteIdAndCount
+     */
+    public function testFindCurrentlyPublishedVersion($language, $siteId, $count)
+    {
+        $nodes = $this->repository->findCurrentlyPublishedVersion($language, $siteId);
+
+        $this->assertCount($count, $nodes);
+        foreach ($nodes as $node) {
+            $this->assertSame($language, $node->getLanguage());
+        }
+    }
+
+    /**
      * @return array
      */
     public function provideLanguageSiteIdAndCount()
@@ -556,5 +588,36 @@ class NodeRepositoryTest extends AbstractKernelTestCase
     {
         $this->assertCount(0, $this->repository->findBySiteIdAndDefaultTheme('2', false));
         $this->assertGreaterThanOrEqual(16, $this->repository->findBySiteIdAndDefaultTheme('2', true));
+    }
+
+    /**
+     * @param string $nodeId
+     * @param string $language
+     *
+     * @dataProvider provideNodeIdAndLanguageForPublishedFlag
+     */
+    public function testfindAllCurrentlyPublishedByElementId($nodeId, $language)
+    {
+        $node = Phake::mock(NodeInteface::CLASS);
+        Phake::when($node)->getNodeId()->thenReturn($nodeId);
+        Phake::when($node)->getLanguage()->thenReturn($language);
+        Phake::when($node)->getSiteId()->thenReturn('2');
+
+        $this->assertCount(1, $this->repository->findAllCurrentlyPublishedByElementId($node));
+    }
+
+    /**
+     * @return array
+     */
+    public function provideNodeIdAndLanguageForPublishedFlag()
+    {
+        return array(
+            'root in fr' => array(NodeInterface::ROOT_NODE_ID, 'fr'),
+            'root in en' => array(NodeInterface::ROOT_NODE_ID, 'en'),
+            'root in de' => array(NodeInterface::ROOT_NODE_ID, 'de'),
+            'community in fr' => array('fixture_page_community', 'fr'),
+            'community in en' => array('fixture_page_community', 'en'),
+            'community in de' => array('fixture_page_community', 'de'),
+        );
     }
 }

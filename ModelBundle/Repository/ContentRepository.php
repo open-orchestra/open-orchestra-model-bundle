@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\Repository;
 
+use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\Pagination\Configuration\FinderConfiguration;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
@@ -595,5 +596,66 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         $content = $this->singleHydrateAggregateQuery($qa);
 
         return $content instanceof ContentInterface;
+    }
+
+    /**
+     * @param string $contentId
+     * @param string $language
+     * @param string $siteId
+     *
+     * @return ContentInterface
+     */
+    public function findOneCurrentlyPublished($contentId, $language, $siteId)
+    {
+        $qa = $this->createAggregationQueryWithLanguageAndPublished($language);
+        $filter['currentlyPublished'] = true;
+        $filter['deleted'] = false;
+        $filter['contentId'] = $contentId;
+        $qa->match($filter);
+        $qa->sort(array('version' => -1));
+
+        return $this->singleHydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param ContentInterface $element
+     *
+     * @return StatusableInterface
+     */
+    public function findOneCurrentlyPublishedByElement(StatusableInterface $element)
+    {
+        return $this->findOneCurrentlyPublished($element->getContentId(), $element->getLanguage(), $element->getSiteId());
+    }
+
+    /**
+     * @param ContentInterface $element
+     *
+     * @return ContentInterface
+     */
+    public function findPublishedInLastVersionWithoutFlag(StatusableInterface $element)
+    {
+        $qa = $this->createAggregationQueryWithLanguageAndPublished($element->getLanguage());
+        $filter['status.published'] = true;
+        $filter['currentlyPublished'] = false;
+        $filter['deleted'] = false;
+        $filter['contentId'] = $element->getContentId();
+        $qa->match($filter);
+        $qa->sort(array('version' => -1));
+
+        return $this->singleHydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param ContentInterface $element
+     *
+     * @return array
+     */
+    public function findAllCurrentlyPublishedByElementId(StatusableInterface $element)
+    {
+        return $this->findBy(array(
+            'contentId' => $element->getContentId(),
+            'language' => $element->getLanguage(),
+            'currentlyPublished' => true
+        ));
     }
 }

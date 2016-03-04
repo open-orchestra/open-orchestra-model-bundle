@@ -165,6 +165,9 @@ abstract class AbstractDataGenerator
         $node->setPath('-');
         $node->setVersion($this->version);
         $node->setStatus($this->references[$this->status]);
+        if ('status-published' == $this->status) {
+            $node->setCurrentlyPublished(true);
+        }
         $node->setDeleted(false);
         $node->setTemplateId('');
         $node->setTheme('themePresentation');

@@ -96,6 +96,7 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
         $content->setName("R5 3 portes " . $language);
         $content->setLanguage($language);
         $content->setStatus($this->getReference('status-published'));
+        $content->setCurrentlyPublished(true);
         $content->setVersion(2);
         $content->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-lorem')));
         $content->setLinkedToSite(false);
@@ -208,6 +209,7 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
         $content->setDeleted(false);
         $content->setCreatedBy('admin');
         $content->setStatus($this->getReference('status-published'));
+        $content->setCurrentlyPublished(true);
 
         return $content;
     }

@@ -100,6 +100,20 @@ class ContentRepositoryTest extends AbstractKernelTestCase
     }
 
     /**
+     * @param $contentId
+     * @param $version
+     * @param string|null $language
+     *
+     * @dataProvider providefindLastPublishedVersion
+     */
+    public function testFindOneCurrentlyPublished($contentId, $version, $language)
+    {
+        $content = $this->repository->findOneCurrentlyPublished($contentId, $language, '2');
+        $this->assertSameContent($language, $version, null, $contentId, $content);
+        $this->assertEquals($contentId, $content->getContentId());
+    }
+
+    /**
      * @return array
      */
     public function providefindLastPublishedVersion()

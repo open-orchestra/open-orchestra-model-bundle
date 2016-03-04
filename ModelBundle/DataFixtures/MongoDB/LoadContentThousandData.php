@@ -99,6 +99,10 @@ class LoadContentThousandData extends AbstractFixture implements OrderedFixtureI
                 break;
         }
 
+        if (3 == $version) {
+            $content->setCurrentlyPublished(true);
+        }
+
         return $content;
     }
 
