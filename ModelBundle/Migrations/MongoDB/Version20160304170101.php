@@ -15,7 +15,11 @@ class Version20160304170101 extends AbstractMigration
      */
     public function getDescription()
     {
-        return "Update users group collection";
+        $description = "Update users group collection: ".PHP_EOL;
+        $description .= " - In Collection of nodeRoles attribute nodeId is renamed by id".PHP_EOL;
+        $description .= " - Attribute nodeRoles is renamed by modelRoles".PHP_EOL;
+
+        return $description;
     }
 
     /**
