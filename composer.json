@@ -13,7 +13,8 @@
         "open-orchestra/open-orchestra-model-interface": "*",
         "open-orchestra/open-orchestra-mongo-libs": "*",
         "doctrine/data-fixtures": "1.1.1",
-        "stof/doctrine-extensions-bundle": "1.2.1"
+        "stof/doctrine-extensions-bundle": "1.2.1",
+        "antimattr/mongodb-migrations-bundle": "~1.0@stable"
     },
     "require-dev": {
         "open-orchestra/open-orchestra-base-bundle": "*",
