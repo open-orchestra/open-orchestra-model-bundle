@@ -137,6 +137,7 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $frLabel = $this->generateTranslatedValue('fr', 'Titre');
 
         $newsTitle = $this->generateField('text', 'title', array($enLabel, $frLabel));
+        $newsTitle->setFieldTypeSearchable('text');
         $newsTitle->addOption($maxLengthOption);
         $newsTitle->addOption($required);
 
@@ -150,6 +151,7 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $newBeginning->addOption($dateWidgetOption);
         $newBeginning->addOption($dateInputOption);
         $newBeginning->addOption($formatOption);
+        $newBeginning->setFieldTypeSearchable('date');
 
         /* ENDING DATE */
 
@@ -161,6 +163,7 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $newEnding->addOption($dateWidgetOption);
         $newEnding->addOption($dateInputOption);
         $newEnding->addOption($formatOption);
+        $newEnding->setFieldTypeSearchable('date');
 
         /* IMAGE */
 
@@ -168,6 +171,7 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $frLabel = $this->generateTranslatedValue('fr', 'Image');
 
         $newImage = $this->generateField('orchestra_media', 'image', array($enLabel, $frLabel));
+        $newImage->setFieldTypeSearchable('text');
 
         /* INTRODUCTION */
 
@@ -177,6 +181,7 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $newsIntro = $this->generateField('text', 'intro', array($enLabel, $frLabel));
         $newsIntro->addOption($maxLengthOption);
         $newsIntro->addOption($required);
+        $newsIntro->setFieldTypeSearchable('text');
 
         /* TEXT */
 
@@ -184,6 +189,7 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $frLabel = $this->generateTranslatedValue('fr', 'Texte');
 
         $newsText = $this->generateField('tinymce', 'text', array($enLabel, $frLabel));
+        $newsText->setFieldTypeSearchable('text');
 
         /* CONTENT TYPE */
 
@@ -234,6 +240,7 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $carName->setType('text');
         $carName->addOption($maxLengthOption);
         $carName->addOption($required);
+        $carName->setFieldTypeSearchable('text');
 
         $enLabel = new TranslatedValue();
         $enLabel->setLanguage('en');
@@ -251,6 +258,7 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $carDescription->setType('text');
         $carDescription->addOption($maxLengthOption);
         $carDescription->addOption($required);
+        $carDescription->setFieldTypeSearchable('text');
 
         $en = new TranslatedValue();
         $en->setLanguage('en');
@@ -298,6 +306,7 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $customerFirstName->setType('text');
         $customerFirstName->addOption($maxLengthOption);
         $customerFirstName->addOption($required);
+        $customerFirstName->setFieldTypeSearchable('text');
 
         $enLabel = new TranslatedValue();
         $enLabel->setLanguage('en');
@@ -315,6 +324,7 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $customerLastName->setType('text');
         $customerLastName->addOption($maxLengthOption);
         $customerLastName->addOption($required);
+        $customerLastName->setFieldTypeSearchable('text');
 
         $enLabel = new TranslatedValue();
         $enLabel->setLanguage('en');
@@ -332,6 +342,7 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $customerIdentifier->setType('integer');
         $customerIdentifier->addOption($maxLengthOption);
         $customerIdentifier->addOption($required);
+        $customerIdentifier->setFieldTypeSearchable('number');
 
         $en = new TranslatedValue();
         $en->setLanguage('en');
