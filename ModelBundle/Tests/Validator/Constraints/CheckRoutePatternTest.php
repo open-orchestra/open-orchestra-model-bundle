@@ -29,5 +29,6 @@ class CheckRoutePatternTest extends AbstractConstraintTest
             Constraint::CLASS_CONSTRAINT,
             'open_orchestra_model_validators.document.node.check_route_pattern'
         );
+        $this->assertSame('open_orchestra_model_validators.document.node.check_route_pattern_node_deleted', $this->constraint->messageWitNodeDeleted);
     }
 }

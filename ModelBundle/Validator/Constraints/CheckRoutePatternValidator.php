@@ -30,13 +30,19 @@ class CheckRoutePatternValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        if (0 < count($this->nodeRepository->findByParentAndRoutePattern(
-                $value->getParentId(),
-                $value->getRoutePattern(),
-                $value->getNodeId(),
-                $value->getSiteId()
-            ))) {
-            $this->context->buildViolation($constraint->message)
+        $nodesSameRoute = $this->nodeRepository->findByParentAndRoutePattern(
+            $value->getParentId(),
+            $value->getRoutePattern(),
+            $value->getNodeId(),
+            $value->getSiteId()
+        );
+        if (0 < count($nodesSameRoute)) {
+            $nodesSameRoute = current($nodesSameRoute);
+            $message = $constraint->message;
+            if (true === $nodesSameRoute->isDeleted()) {
+                $message = $constraint->messageWitNodeDeleted;
+            }
+            $this->context->buildViolation($message, array("%nodeName%" => $nodesSameRoute->getName()))
                 ->atPath('routePattern')
                 ->addViolation();
         }

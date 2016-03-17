@@ -8,7 +8,8 @@ open_orchestra_model_validators:
         area:
             presence_required: Vous devez choisir l'un d'eux
         node:
-            check_route_pattern: Le pattern de route est déjà utilisé sur ce site
+            check_route_pattern: Le pattern de route est déjà utilisé sur ce site par la page %nodeName%
+            check_route_pattern_node_deleted: Le pattern de route est déjà utilisé sur ce site par la page %nodeName% qui est dans la corbeille
         status:
             impossible_change: Vous n'avez pas les droits pour modifier le statut
         website:

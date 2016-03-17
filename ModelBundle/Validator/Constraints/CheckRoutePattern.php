@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraint;
 class CheckRoutePattern extends Constraint
 {
     public $message = 'open_orchestra_model_validators.document.node.check_route_pattern';
+    public $messageWitNodeDeleted = 'open_orchestra_model_validators.document.node.check_route_pattern_node_deleted';
 
     /**
      * @return string|void

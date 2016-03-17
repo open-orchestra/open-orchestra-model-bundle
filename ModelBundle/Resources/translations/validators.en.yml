@@ -8,7 +8,8 @@ open_orchestra_model_validators:
         area:
             presence_required: You need to choose one of them
         node:
-            check_route_pattern: The route pattern is already used in this website
+            check_route_pattern: The route pattern is already used in this website by the node %nodeName%
+            check_route_pattern_node_deleted: The route pattern is already used in this website by the node %nodeName% which is in trash can
         status:
             impossible_change: You don't have the right to change the status
         website:
