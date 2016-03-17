@@ -73,7 +73,7 @@ class SiteTest extends AbstractBaseTestCase
      *
      * @dataProvider provideAliasIdAndLanguage
      */
-    public function testGetAliasIdForLanguage($aliasId, $language)
+    public function testGetAliasIdForLanguage($language)
     {
         $alias1 = Phake::mock('OpenOrchestra\ModelInterface\Model\SiteAliasInterface');
         Phake::when($alias1)->getLanguage()->thenReturn('fr');
@@ -83,7 +83,9 @@ class SiteTest extends AbstractBaseTestCase
         $this->site->addAlias($alias1);
         $this->site->addAlias($alias2);
 
-        $this->assertSame($aliasId, $this->site->getAliasIdForLanguage($language));
+        $aliases = $this->site->getAliases();
+        $this->assertTrue($aliases->containsKey($this->site->getAliasIdForLanguage($language)));
+        $this->assertSame($language, $aliases[$this->site->getAliasIdForLanguage($language)]->getLanguage());
     }
 
     /**
@@ -92,8 +94,8 @@ class SiteTest extends AbstractBaseTestCase
     public function provideAliasIdAndLanguage()
     {
         return array(
-            array(0, 'fr'),
-            array(1, 'en'),
+            array('fr'),
+            array('en'),
         );
     }
 }
