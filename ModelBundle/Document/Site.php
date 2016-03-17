@@ -33,7 +33,6 @@ class Site implements SiteInterface
     use Sitemapable;
     use SoftDeleteable;
 
-
     /**
      * @var string $id
      *
@@ -81,7 +80,7 @@ class Site implements SiteInterface
     /**
      * @var Collection
      *
-     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\SiteAliasInterface", strategy="set")
+     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\SiteAliasInterface")
      */
     protected $aliases;
 

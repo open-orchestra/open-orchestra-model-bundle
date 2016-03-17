@@ -68,7 +68,6 @@ class SiteTest extends AbstractBaseTestCase
     }
 
     /**
-     * @param int    $aliasId
      * @param string $language
      *
      * @dataProvider provideAliasIdAndLanguage
