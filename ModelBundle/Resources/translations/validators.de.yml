@@ -9,6 +9,7 @@ open_orchestra_model_validators:
             presence_required: Sie müssen eine von ihnen zu wählen
         node:
             check_route_pattern: Die Routenmuster ist bereits in dieser Website verwendet
+            check_route_pattern_node_deleted: Die Routenmuster ist bereits in dieser Website verwendet für Seite %nodeName% was in den Korb ist
         status:
             impossible_change: Sie haben nicht das Recht, den Status zu ändern
         website:

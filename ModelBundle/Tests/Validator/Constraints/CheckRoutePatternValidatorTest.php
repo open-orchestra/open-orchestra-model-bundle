@@ -23,6 +23,7 @@ class CheckRoutePatternValidatorTest extends AbstractBaseTestCase
     protected $constraint;
     protected $constraintViolationBuilder;
     protected $nodeRepository;
+    protected $fakeNameNode = 'fakeNodeName';
 
     /**
      * Set up the test
@@ -41,7 +42,6 @@ class CheckRoutePatternValidatorTest extends AbstractBaseTestCase
         $this->areas = Phake::mock('Doctrine\Common\Collections\ArrayCollection');
 
         $this->node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        Phake::when($this->node)->getAreas()->thenReturn($this->areas);
 
         $this->validator = new CheckRoutePatternValidator($this->nodeRepository);
         $this->validator->initialize($this->context);
@@ -56,18 +56,22 @@ class CheckRoutePatternValidatorTest extends AbstractBaseTestCase
     }
 
     /**
-     * @param array $nodes
-     * @param int   $violationTimes
+     * @param array  $nodes
+     * @param int    $violationTimes
+     * @param string $message
      *
      * @dataProvider provideCountAndViolation
      */
-    public function testAddViolationOrNot($nodes, $violationTimes)
+    public function testAddViolationOrNot($nodes, $violationTimes, $message = null)
     {
         Phake::when($this->nodeRepository)->findByParentAndRoutePattern(Phake::anyParameters())->thenReturn($nodes);
 
         $this->validator->validate($this->node, $this->constraint);
 
-        Phake::verify($this->context, Phake::times($violationTimes))->buildViolation($this->constraint->message);
+        Phake::verify($this->context, Phake::times($violationTimes))->buildViolation(
+            $message,
+            array("%nodeName%" => $this->fakeNameNode)
+        );
         Phake::verify($this->constraintViolationBuilder, Phake::times($violationTimes))->atPath('routePattern');
     }
 
@@ -76,8 +80,19 @@ class CheckRoutePatternValidatorTest extends AbstractBaseTestCase
      */
     public function provideCountAndViolation()
     {
+        $nodeSameRoute = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        Phake::when($nodeSameRoute)->isDeleted()->thenReturn(false);
+        Phake::when($nodeSameRoute)->getName()->thenReturn($this->fakeNameNode);
+
+        $nodeSameRouteDeleted = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        Phake::when($nodeSameRouteDeleted)->isDeleted()->thenReturn(true);
+        Phake::when($nodeSameRouteDeleted)->getName()->thenReturn($this->fakeNameNode);
+        $message = 'open_orchestra_model_validators.document.node.check_route_pattern';
+        $messageWitNodeDeleted = 'open_orchestra_model_validators.document.node.check_route_pattern_node_deleted';
+
         return array(
-            array(array('node'), 1),
+            array(array($nodeSameRoute), 1, $message),
+            array(array($nodeSameRouteDeleted), 1, $messageWitNodeDeleted),
             array(array(), 0),
             array(null, 0),
         );
