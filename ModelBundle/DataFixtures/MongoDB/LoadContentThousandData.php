@@ -121,7 +121,6 @@ class LoadContentThousandData extends AbstractFixture implements OrderedFixtureI
         $news->addAttribute($title);
         $news->addAttribute($this->generateContentAttribute('publish_start', '2014-08-26', 'date'));
         $news->addAttribute($this->generateContentAttribute('publish_end', '2014-12-19', 'date'));
-        $news->addAttribute($this->generateContentAttribute('image', '', 'orchestra_media'));
         $news->addAttribute($intro);
         $news->addAttribute($text);
 

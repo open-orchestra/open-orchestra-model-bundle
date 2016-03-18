@@ -95,18 +95,16 @@ class LoadContentNewsData extends AbstractFixture implements OrderedFixtureInter
      * @param ContentAttribute $title
      * @param ContentAttribute $start
      * @param ContentAttribute $end
-     * @param ContentAttribute $image
      * @param ContentAttribute $intro
      * @param ContentAttribute $text
      *
      * @return Content
      */
-    protected function addNewsAttributes($news, $title, $start, $end, $image, $intro, $text)
+    protected function addNewsAttributes($news, $title, $start, $end, $intro, $text)
     {
         $news->addAttribute($title);
         $news->addAttribute($start);
         $news->addAttribute($end);
-        $news->addAttribute($image);
         $news->addAttribute($intro);
         $news->addAttribute($text);
 
@@ -119,7 +117,6 @@ class LoadContentNewsData extends AbstractFixture implements OrderedFixtureInter
     public function generateFirstNews()
     {
         $title = $this->generateContentAttribute('title', 'Welcome');
-        $image = $this->generateContentAttribute('image', array('id' => '', 'format' => ''), 'orchestra_media');
         $intro = $this->generateContentAttribute('intro', 'Bienvenue sur le site d\'openorchestra');
         $text = $this->generateContentAttribute('text', 'A l’occasion de la sortie du projet, nous serons
          présents au Symfony live 2015. Venez nous voir sur notre stand dédié !', 'wysiwyg');
@@ -128,7 +125,7 @@ class LoadContentNewsData extends AbstractFixture implements OrderedFixtureInter
         $welcome = $this->generateContent('news', 'welcome', 'Welcome', 'fr');
         $welcome->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-sit')));
 
-        return $this->addNewsAttributes($welcome, $title, $start, $end, $image, $intro, $text);
+        return $this->addNewsAttributes($welcome, $title, $start, $end, $intro, $text);
     }
 
     /**
@@ -137,7 +134,6 @@ class LoadContentNewsData extends AbstractFixture implements OrderedFixtureInter
     public function generateSecondNews()
     {
         $title = $this->generateContentAttribute('title', 'Notre vision');
-        $image = $this->generateContentAttribute('image', '', 'orchestra_media');
         $intro = $this->generateContentAttribute('intro',
             'Open orchestra propulse votre contenu web vers des hauteurs stratosphériques.');
         $text = $this->generateContentAttribute('text',
@@ -149,7 +145,7 @@ class LoadContentNewsData extends AbstractFixture implements OrderedFixtureInter
         $vision->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-sit')));
         $vision->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-lorem')));
 
-        return $this->addNewsAttributes($vision, $title, $start, $end, $image, $intro, $text);
+        return $this->addNewsAttributes($vision, $title, $start, $end, $intro, $text);
     }
 
     /**
@@ -158,7 +154,6 @@ class LoadContentNewsData extends AbstractFixture implements OrderedFixtureInter
     public function generateBienvenueFrance()
     {
         $title = $this->generateContentAttribute('title', 'Bien vivre en France');
-        $image = $this->generateContentAttribute('image', '', 'orchestra_media');
         $intro = $this->generateContentAttribute('intro',
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit.
          -Aenean non feugiat sem. Aliquam a mauris tellus. In hac habitasse platea dictumst. Nunc eget interdum ante,
@@ -179,7 +174,7 @@ class LoadContentNewsData extends AbstractFixture implements OrderedFixtureInter
         $end = $this->generateContentAttribute('publish_end', '2014-10-19', 'date');
         $bienvenueFrance = $this->generateContent('news', 'bien_vivre_en_france', 'Bien vivre en France', 'fr');
 
-        return $this->addNewsAttributes($bienvenueFrance, $title, $start, $end, $image, $intro, $text);
+        return $this->addNewsAttributes($bienvenueFrance, $title, $start, $end, $intro, $text);
     }
 
     /**
@@ -188,7 +183,6 @@ class LoadContentNewsData extends AbstractFixture implements OrderedFixtureInter
     public function generateLoremIpsum()
     {
         $title = $this->generateContentAttribute('title', 'lorem Ipsum');
-        $image = $this->generateContentAttribute('image', '', 'orchestra_media');
         $intro = $this->generateContentAttribute('intro', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         Aenean non feugiat sem. Aliquam a mauris tellus. In hac habitasse platea dictumst. Nunc eget interdum ante, id
         mollis diam. Suspendisse sed magna lectus. Aenean fringilla elementum lorem id suscipit. Phasellus feugiat
@@ -206,6 +200,6 @@ class LoadContentNewsData extends AbstractFixture implements OrderedFixtureInter
         $end = $this->generateContentAttribute('publish_end', '2014-11-19', 'date');
         $loremIpsum = $this->generateContent('news', 'lorem_ipsum', 'Lorem ipsum', 'fr');
 
-        return $this->addNewsAttributes($loremIpsum, $title, $start, $end, $image, $intro, $text);
+        return $this->addNewsAttributes($loremIpsum, $title, $start, $end, $intro, $text);
     }
 }
