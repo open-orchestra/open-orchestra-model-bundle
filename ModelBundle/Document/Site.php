@@ -80,7 +80,7 @@ class Site implements SiteInterface
     /**
      * @var Collection
      *
-     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\SiteAliasInterface")
+     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\SiteAliasInterface", strategy="set")
      */
     protected $aliases;
 
