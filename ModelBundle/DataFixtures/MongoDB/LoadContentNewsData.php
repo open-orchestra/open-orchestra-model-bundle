@@ -51,6 +51,9 @@ class LoadContentNewsData extends AbstractFixture implements OrderedFixtureInter
         $attribute = new ContentAttribute();
         $attribute->setName($name);
         $attribute->setValue($value);
+        if (is_array($value)) {
+            $value = '';
+        }
         $attribute->setStringValue($value);
         $attribute->setType($type);
 
@@ -116,7 +119,7 @@ class LoadContentNewsData extends AbstractFixture implements OrderedFixtureInter
     public function generateFirstNews()
     {
         $title = $this->generateContentAttribute('title', 'Welcome');
-        $image = $this->generateContentAttribute('image', '', 'orchestra_media');
+        $image = $this->generateContentAttribute('image', array('id' => '', 'format' => ''), 'orchestra_media');
         $intro = $this->generateContentAttribute('intro', 'Bienvenue sur le site d\'openorchestra');
         $text = $this->generateContentAttribute('text', 'A l’occasion de la sortie du projet, nous serons
          présents au Symfony live 2015. Venez nous voir sur notre stand dédié !', 'wysiwyg');
