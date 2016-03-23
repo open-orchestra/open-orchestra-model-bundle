@@ -80,7 +80,7 @@ class Site implements SiteInterface
     /**
      * @var Collection
      *
-     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\SiteAliasInterface")
+     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\SiteAliasInterface", strategy="set")
      */
     protected $aliases;
 
@@ -98,7 +98,7 @@ class Site implements SiteInterface
      */
     public function addAlias(SiteAliasInterface $alias)
     {
-        $this->aliases->add($alias);
+        $this->aliases->set(uniqid(SiteInterface::PREFIX_SITE_ALIAS), $alias);
     }
 
     /**
