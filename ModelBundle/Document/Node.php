@@ -169,6 +169,13 @@ class Node implements NodeInterface
     protected $blocks;
 
     /**
+     * @var string $boDirection
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $boDirection;
+
+    /**
      * @var int
      *
      * @ODM\Field(type="int")
@@ -623,6 +630,22 @@ class Node implements NodeInterface
     public function setRoutePattern($routePattern)
     {
         $this->routePattern = $routePattern;
+    }
+
+    /**
+     * @param string $boDirection
+     */
+    public function setBoDirection($boDirection)
+    {
+        $this->boDirection = $boDirection;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBoDirection()
+    {
+        return $this->boDirection;
     }
 
     /**
