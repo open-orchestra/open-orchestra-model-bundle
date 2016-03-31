@@ -9,7 +9,7 @@ class CheckMainAliasPresence extends Constraint
     public $message = 'open_orchestra_model_validators.document.website.exists_main_alias';
 
     /**
-     * @return array|string
+     * @return string
      */
     public function getTargets()
     {
