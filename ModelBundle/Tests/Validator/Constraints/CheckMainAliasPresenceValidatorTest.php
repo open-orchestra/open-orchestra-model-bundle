@@ -51,8 +51,8 @@ class CheckMainAliasPresenceValidatorTest extends AbstractBaseTestCase
     }
 
     /**
-     * @param int $count
-     * @param int $violationTimes
+     * @param boolean $isMain
+     * @param int     $violationTimes
      *
      * @dataProvider provideCountAndViolation
      */
