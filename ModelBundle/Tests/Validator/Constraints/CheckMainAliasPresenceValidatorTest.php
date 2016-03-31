@@ -60,7 +60,7 @@ class CheckMainAliasPresenceValidatorTest extends AbstractBaseTestCase
     {
         Phake::when($this->siteAlias)->isMain()->thenReturn($isMain);
 
-        $this->validator->validate($this->node, $this->constraint);
+        $this->validator->validate($this->site, $this->constraint);
 
         Phake::verify($this->constraintViolationBuilder, Phake::times($violationTimes));
     }
