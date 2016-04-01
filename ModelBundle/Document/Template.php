@@ -163,6 +163,16 @@ class Template implements TemplateInterface
     }
 
     /**
+     * Remove block with index $key
+     *
+     * @param string $key
+     */
+    public function removeBlockWithKey($key)
+    {
+        $this->blocks->remove($key);
+    }
+
+    /**
      * @return array
      */
     public function getBlocks()

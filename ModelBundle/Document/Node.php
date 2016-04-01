@@ -164,7 +164,7 @@ class Node implements NodeInterface
     /**
      * @var Collection
      *
-     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\BlockInterface")
+     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\BlockInterface", strategy="set")
      */
     protected $blocks;
 
@@ -467,6 +467,16 @@ class Node implements NodeInterface
     public function removeBlock(BlockInterface $block)
     {
         $this->blocks->removeElement($block);
+    }
+
+    /**
+     * Remove block with index $key
+     *
+     * @param string $key
+     */
+    public function removeBlockWithKey($key)
+    {
+        $this->blocks->remove($key);
     }
 
     /**
