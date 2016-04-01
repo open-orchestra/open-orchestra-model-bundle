@@ -589,14 +589,14 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     }
 
     /**
-     * @param string $name
+     * @param string $nodeId
      *
      * @return boolean
      */
-    public function testUniquenessInContext($name)
+    public function testUniquenessInContext($nodeId)
     {
         $qa = $this->createAggregationQuery();
-        $qa->match(array('name' => $name));
+        $qa->match(array('nodeId' => $nodeId));
 
         return $this->countDocumentAggregateQuery($qa) > 0;
     }
