@@ -54,7 +54,7 @@ class GeneratePathListener implements ContainerAwareInterface
     public function setPath(LifecycleEventArgs $eventArgs)
     {
         $document = $eventArgs->getDocument();
-        if ($document instanceof NodeInterface) {
+        if ($document instanceof NodeInterface && false === $document->isDeleted()) {
             $nodeRepository = $this->container->get('open_orchestra_model.repository.node');
             $nodeId = $document->getNodeId();
             $siteId = $document->getSiteId();
