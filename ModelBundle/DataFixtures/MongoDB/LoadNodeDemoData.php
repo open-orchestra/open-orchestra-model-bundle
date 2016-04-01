@@ -22,6 +22,10 @@ use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\Error503DataGener
  */
 class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterface, OrchestraFunctionalFixturesInterface
 {
+    protected $nodede;
+    protected $nodeen;
+    protected $nodefr;
+
     /**
      * Load data fixtures with the passed EntityManager
      *
@@ -39,18 +43,18 @@ class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterfac
 
         $transverseGenerator = new TransverseDataGenerator($references);
         foreach ($languages as $language) {
-            $node = $transverseGenerator->generateNode($language);
-            $manager->persist($node);
+            $this->node{$language} = $transverseGenerator->generateNode($language);
+            $manager->persist($this->node{$language});
         }
 
-        $this->addNode($manager, new HomeDataGenerator($references), $transverseGenerator, $languages);
-        $this->addNode($manager, new HomeDataGenerator($references, 2, 'status-draft'), $transverseGenerator, array('fr'));
-        $this->addNode($manager, new ContactDataGenerator($references), $transverseGenerator, $languages);
-        $this->addNode($manager, new LegalDataGenerator($references), $transverseGenerator, $languages);
-        $this->addNode($manager, new CommunityDataGenerator($references), $transverseGenerator, $languages);
-        $this->addNode($manager, new NewsDataGenerator($references), $transverseGenerator, $languages);
-        $this->addNode($manager, new Error404DataGenerator($references), $transverseGenerator, $languages);
-        $this->addNode($manager, new Error503DataGenerator($references), $transverseGenerator, $languages);
+        $this->addNode($manager, new HomeDataGenerator($references), $languages);
+        $this->addNode($manager, new HomeDataGenerator($references, 2, 'status-draft'), array('fr'));
+        $this->addNode($manager, new ContactDataGenerator($references), $languages);
+        $this->addNode($manager, new LegalDataGenerator($references), $languages);
+        $this->addNode($manager, new CommunityDataGenerator($references), $languages);
+        $this->addNode($manager, new NewsDataGenerator($references), $languages);
+        $this->addNode($manager, new Error404DataGenerator($references), $languages);
+        $this->addNode($manager, new Error503DataGenerator($references), $languages);
 
         $manager->flush();
     }
@@ -68,12 +72,11 @@ class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterfac
     protected function addNode(
         ObjectManager $manager,
         AbstractDataGenerator $dataGenerator,
-        TransverseDataGenerator $transverseGenerator,
         array $languages = array("fr", "en")
-    ) {
+    ){
         foreach ($languages as $language) {
             $node = $dataGenerator->generateNode($language);
-            $this->addAreaRef($transverseGenerator->generateNode($language), $node);
+            $this->addAreaRef($this->node{$language}, $node);
             $manager->persist($node);
         }
     }
@@ -89,6 +92,7 @@ class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterfac
                 if ($nodeTransverse->getNodeId() === $areaBlock['nodeId']) {
                     $block = $nodeTransverse->getBlock($areaBlock['blockId']);
                     $block->addArea(array('nodeId' => $node->getId(), 'areaId' => $area->getAreaId()));
+                    $nodeTransverse->setBlock($areaBlock['blockId'], $block);
                 }
             }
         }

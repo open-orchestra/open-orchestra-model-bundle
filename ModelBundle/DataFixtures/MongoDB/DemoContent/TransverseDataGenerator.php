@@ -97,6 +97,7 @@ EOF
         $siteBlockFooterMenu->setLabel('footer menu');
         $siteBlockFooterMenu->setClass("footer-legal");
         $siteBlockFooterMenu->setComponent(FooterStrategy::NAME);
+        $siteBlockFooterMenu->addArea(array('nodeId' => 0, 'areaId' => 'main'));
 
         $siteBlockContact = new Block();
         $siteBlockContact->setLabel('Contact');
