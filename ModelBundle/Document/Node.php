@@ -14,7 +14,6 @@ use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
-use Gedmo\Mapping\Annotation as Gedmo;
 use OpenOrchestra\MongoTrait\Cacheable;
 use OpenOrchestra\MongoTrait\Metaable;
 use OpenOrchestra\MongoTrait\Sitemapable;
@@ -164,7 +163,7 @@ class Node implements NodeInterface
     /**
      * @var Collection
      *
-     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\BlockInterface")
+     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\BlockInterface", strategy="set")
      */
     protected $blocks;
 
@@ -467,6 +466,16 @@ class Node implements NodeInterface
     public function removeBlock(BlockInterface $block)
     {
         $this->blocks->removeElement($block);
+    }
+
+    /**
+     * Remove block with index $key
+     *
+     * @param string $key
+     */
+    public function removeBlockWithKey($key)
+    {
+        $this->blocks->remove($key);
     }
 
     /**
