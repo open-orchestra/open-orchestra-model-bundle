@@ -13,6 +13,7 @@ use OpenOrchestra\ModelInterface\Model\ThemeInterface;
 use OpenOrchestra\MongoTrait\Metaable;
 use OpenOrchestra\MongoTrait\Sitemapable;
 use OpenOrchestra\MongoTrait\SoftDeleteable;
+use OpenOrchestra\ModelInterface\Exceptions\MainAliasNotExisting;
 
 /**
  * Description of Site
@@ -273,7 +274,7 @@ class Site implements SiteInterface
             }
         }
 
-        return $alias;
+        throw new MainAliasNotExisting();
     }
 
     /**
