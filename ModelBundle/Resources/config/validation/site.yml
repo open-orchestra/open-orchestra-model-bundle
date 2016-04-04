@@ -2,6 +2,7 @@ OpenOrchestra\ModelBundle\Document\Site:
     constraints:
         - OpenOrchestra\ModelBundle\Validator\Constraints\UniqueMainAlias: ~
         - OpenOrchestra\ModelBundle\Validator\Constraints\UniqueSiteId: ~
+        - OpenOrchestra\ModelBundle\Validator\Constraints\CheckMainAliasPresence: ~
     properties:
         siteId:
             - NotBlank: ~
