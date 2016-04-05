@@ -33,6 +33,14 @@ class TrashItem implements TrashItemInterface
     protected $name;
 
     /**
+     * @var string $type
+
+     * @ODM\Field(type="string")
+     * @ORCHESTRA\Search(key="type")
+     */
+    protected $type;
+
+    /**
      * @var string
      *
      * @ODM\Field(type="string")
@@ -116,5 +124,21 @@ class TrashItem implements TrashItemInterface
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
     }
 }

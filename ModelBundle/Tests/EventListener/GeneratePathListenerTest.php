@@ -3,6 +3,7 @@
 namespace OpenOrchestra\BackofficeBundle\Tests\EventListener;
 
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
+use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Phake;
 use OpenOrchestra\ModelBundle\EventListener\GeneratePathListener;
 use OpenOrchestra\ModelBundle\Document\Node;
@@ -104,13 +105,16 @@ class GeneratePathListenerTest extends AbstractBaseTestCase
         $node0 = Phake::mock('OpenOrchestra\ModelBundle\Document\Node');
         Phake::when($node0)->getNodeId()->thenReturn('fakeId');
         Phake::when($node0)->getPath()->thenReturn('fakeParentPath/fakePastId');
+        Phake::when($node0)->isDeleted()->thenReturn(false);
 
         $parentNode0 = Phake::mock('OpenOrchestra\ModelBundle\Document\Node');
         Phake::when($parentNode0)->getPath()->thenReturn('fakePath');
         Phake::when($parentNode0)->getPath()->thenReturn('fakeParentPath');
+        Phake::when($parentNode0)->isDeleted()->thenReturn(false);
 
         $child0_0 = Phake::mock('OpenOrchestra\ModelBundle\Document\Node');
         Phake::when($child0_0)->getPath()->thenReturn('fakeParentPath/fakePastId/fakeChild0Id');
+        Phake::when($child0_0)->isDeleted()->thenReturn(false);
 
         $children0 = new ArrayCollection();
         $children0->add($child0_0);
@@ -118,13 +122,16 @@ class GeneratePathListenerTest extends AbstractBaseTestCase
         $node1 = Phake::mock('OpenOrchestra\ModelBundle\Document\Node');
         Phake::when($node1)->getNodeId()->thenReturn('fakeId');
         Phake::when($node1)->getPath()->thenReturn('fakeParentPath/fakePastId');
+        Phake::when($node1)->isDeleted()->thenReturn(false);
 
         $parentNode1 = Phake::mock('OpenOrchestra\ModelBundle\Document\Node');
         Phake::when($parentNode1)->getPath()->thenReturn('fakePath');
         Phake::when($parentNode1)->getPath()->thenReturn('fakeParentPath');
+        Phake::when($parentNode1)->isDeleted()->thenReturn(false);
 
         $child1_0 = Phake::mock('OpenOrchestra\ModelBundle\Document\Node');
         Phake::when($child1_0)->getPath()->thenReturn('fakeParentPath/fakePastId/fakeChild0Id');
+        Phake::when($child1_0)->isDeleted()->thenReturn(false);
 
         $children1 = new ArrayCollection();
         $children1->add($child1_0);
@@ -134,6 +141,19 @@ class GeneratePathListenerTest extends AbstractBaseTestCase
             array('prePersist', $node0, $parentNode0, $children0, array('fakeParentPath/fakeId', 'fakeParentPath/fakeId/fakeChild0Id')),
             array('preUpdate', $node1, $parentNode1, $children1, array('fakeParentPath/fakeId', 'fakeParentPath/fakeId/fakeChild0Id'))
         );
+    }
+
+    /**
+     * Test no update path if node is deleted
+     */
+    public function testWithDeleteNode()
+    {
+        $node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
+        Phake::when($this->lifecycleEventArgs)->getDocument()->thenReturn($node);
+
+        $this->listener->prePersist($this->lifecycleEventArgs);
+
+        Phake::verify($node, Phake::never())->setPath(Phake::anyParameters());
     }
 
     /**
