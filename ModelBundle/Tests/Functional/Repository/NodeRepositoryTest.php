@@ -541,9 +541,10 @@ class NodeRepositoryTest extends AbstractKernelTestCase
     {
         return array(
             array(NodeInterface::ROOT_NODE_ID, 10, 'fixture_page_contact', true),
-            array(NodeInterface::ROOT_NODE_ID, 0, 'fixture_page_contact', true),
+            array(NodeInterface::ROOT_NODE_ID, 0, 'fixture_page_contact', false),
             array('fixture_page_legal_mentions', 0, 'fakeID', false),
             array(NodeInterface::ROOT_NODE_ID, 0, 'fakeID', false, '3'),
+            array(NodeInterface::TRANSVERSE_NODE_ID, 1, '-', false,),
         );
     }
 
