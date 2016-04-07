@@ -25,19 +25,18 @@ class Version20160407114518 extends AbstractMigration
      * @param Database $db
      */
     public function up(Database $db)
-    {db.node.find({'status.published':true}).snapshot().forEach(function(item){
-
-    });
+    {
         $db->execute('var currentNodeId = \'\';
-                      db.node.find({\'status.published\':1}).sort({\'version\':-1}).snapshot().forEach(function(item){
-                        if (item.nodeId != currentNodeId) {
+                      var currentLanguage = \'\';
+                      db.node.find({\'status.published\':true}).sort({\'language\':1, \'version\':-1}).forEach(function(item){
+                        if (item.nodeId != currentNodeId || item.language != currentLanguage) {
                             item.currentlyPublished = true;
                             currentNodeId = item.nodeId;
+                            currentLanguage = item.language;
                         }
                         db.node.update({_id: item._id}, item);
                      });'
-            );
-        $db->execute('db.users_group.update({}, {$rename : {\'nodeRoles\':\'modelRoles\'}});');
+        );
     }
 
     /**
@@ -45,17 +44,10 @@ class Version20160407114518 extends AbstractMigration
      */
     public function down(Database $db)
     {
-        $db->execute('db.users_group.find({\'modelRoles\':{$exists:1}}).snapshot().forEach(function(item){
-                        for(i = 0; i != item.modelRoles.length; ++i) {
-                            if(item.modelRoles[i].type == \'node\') {
-                                delete item.modelRoles[i].type;
-                                item.modelRoles[i].nodeId = item.modelRoles[i].id;
-                                delete item.modelRoles[i].id;
-                            }
-                        }
-                        db.users_group.update({_id: item._id}, item);
+        $db->execute('db.node.find().snapshot().forEach(function(item){
+                        delete item.currentlyPublished;
+                        db.node.update({_id: item._id}, item);
                      });'
-            );
-        $db->execute('db.users_group.update({}, {$rename : {\'modelRoles\':\'nodeRoles\'}});');
+        );
     }
 }
