@@ -882,11 +882,11 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
                 'parentId' => $parentId,
                 'order'    => $order,
                 'nodeId'   => array('$ne' => $nodeId),
-                'deleted'  => false
+                'deleted'  => false,
+                'nodeType' => NodeInterface::TYPE_DEFAULT
             )
         );
         $node = $this->singleHydrateAggregateQuery($qa);
-
         return $node instanceof NodeInterface;
     }
 
