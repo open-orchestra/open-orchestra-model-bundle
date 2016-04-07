@@ -35,6 +35,16 @@ class Version20160407114518 extends AbstractMigration
                             currentLanguage = item.language;
                         }
                         db.node.update({_id: item._id}, item);
+                     });
+                      var currentContentId = \'\';
+                      var currentLanguage = \'\';
+                      db.content.find({\'status.published\':true}).sort({\'language\':1, \'version\':-1}).forEach(function(item){
+                        if (item.contentId != currentCotentId || item.language != currentLanguage) {
+                            item.currentlyPublished = true;
+                            currentContentId = item.contentId;
+                            currentLanguage = item.language;
+                        }
+                        db.content.update({_id: item._id}, item);
                      });'
         );
     }
@@ -47,7 +57,12 @@ class Version20160407114518 extends AbstractMigration
         $db->execute('db.node.find().snapshot().forEach(function(item){
                         delete item.currentlyPublished;
                         db.node.update({_id: item._id}, item);
-                     });'
+                     });
+                     db.content.find().snapshot().forEach(function(item){
+                        delete item.currentlyPublished;
+                        db.content.update({_id: item._id}, item);
+                     });
+            '
         );
     }
 }
