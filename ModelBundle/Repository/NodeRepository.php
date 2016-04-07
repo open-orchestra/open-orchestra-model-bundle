@@ -818,7 +818,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
             array(
                 'siteId' => $siteId,
                 'language' => $language,
-                'status.published' => true,
+                'currentlyPublished' => true,
                 'deleted' => false,
                 $field => true
             )
