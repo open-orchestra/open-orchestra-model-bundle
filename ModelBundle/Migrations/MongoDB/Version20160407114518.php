@@ -15,8 +15,8 @@ class Version20160407114518 extends AbstractMigration
      */
     public function getDescription()
     {
-        $description = "Add currentlyPublished flag to nodes: ".PHP_EOL;
-        $description .= " - In Collection of nodes, the currentlyPublished flag is added to those with published status and bigger version rank".PHP_EOL;
+        $description = "Add currentlyPublished flag to nodes and contents: ".PHP_EOL;
+        $description .= " - In Collection of nodes and contents, the currentlyPublished flag is added to those with published status and bigger version rank".PHP_EOL;
 
         return $description;
     }
