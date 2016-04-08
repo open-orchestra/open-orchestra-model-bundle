@@ -22,9 +22,11 @@ class LoadRootNodeDemoData extends AbstractFixture implements OrderedFixtureInte
      */
     public function load(ObjectManager $manager)
     {
+        $status_published = "status-published";
+
         $references = array();
-        $references["status-published"] = $this->getReference('status-published');
-        $references["status-draft"] = $this->getReference('status-draft');
+        $references[$status_published] = $this->getReference($status_published);
+        $references["status-draft"] = $this->getReference("status-draft");
         $references["siteId"] = $this->getReference("site2")->getSiteId();
         $references["templateId"] = $this->getReference("homepage-template")->getTemplateId();
         $references["template-areas"] = $this->getReference("homepage-template")->getAreas();
@@ -38,7 +40,7 @@ class LoadRootNodeDemoData extends AbstractFixture implements OrderedFixtureInte
         }
 
         foreach ($languages as $language) {
-            $node = $this->generateNodeGlobal($references, $language, $routePattern);
+            $node = $this->generateNodeGlobal($references, $language, $routePattern, $status_published);
             $manager->persist($node);
         }
 
@@ -56,15 +58,16 @@ class LoadRootNodeDemoData extends AbstractFixture implements OrderedFixtureInte
     }
 
     /**
-     * @param array $references
+     * @param array  $references
      * @param string $language
      * @param string $routePattern
+     * @param string $status
      *
      * @return Node
      */
-    protected function generateNodeGlobal($references, $language, $routePattern)
+    protected function generateNodeGlobal($references, $language, $routePattern, $status)
     {
-        $siteHome = $this->createBaseNode($references);
+        $siteHome = $this->createBaseNode($references, $status);
         $siteHome->setLanguage($language);
         $siteHome->setNodeId(NodeInterface::ROOT_NODE_ID);
         $siteHome->setName('Homepage');
@@ -81,10 +84,11 @@ class LoadRootNodeDemoData extends AbstractFixture implements OrderedFixtureInte
     }
 
     /**
-     * @param array $references
+     * @param array  $references
+     * @param string $status
      * @return Node
      */
-    protected function createBaseNode($references)
+    protected function createBaseNode($references, $status)
     {
         $node = new Node();
         $node->setMaxAge(1000);
@@ -92,8 +96,8 @@ class LoadRootNodeDemoData extends AbstractFixture implements OrderedFixtureInte
         $node->setSiteId($references["siteId"]);
         $node->setPath('-');
         $node->setVersion("1");
-        $node->setStatus($references["status-published"]);
-        if ('status-published' == $references["status-published"]) {
+        $node->setStatus($references[$status]);
+        if ('status-published' == $status) {
             $node->setCurrentlyPublished(true);
         }
         $node->setDeleted(false);
