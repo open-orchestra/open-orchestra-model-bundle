@@ -38,15 +38,6 @@ class LoadRoleData extends AbstractFixture implements OrderedFixtureInterface, O
         $this->addReference('role-pending', $pending);
         $manager->persist($pending);
 
-        $published = new Role();
-        $published->setName('ROLE_FROM_PUBLISHED_TO_DRAFT');
-        $published->addDescription($this->generateTranslatedValue('en', 'Change status from published to draft'));
-        $published->addDescription($this->generateTranslatedValue('fr', 'Modifier le status de publié à brouillon'));
-        $published->setFromStatus($this->getReference('status-published'));
-        $published->setToStatus($this->getReference('status-draft'));
-        $this->addReference('role-published', $published);
-        $manager->persist($published);
-
         $manager->flush();
     }
 
