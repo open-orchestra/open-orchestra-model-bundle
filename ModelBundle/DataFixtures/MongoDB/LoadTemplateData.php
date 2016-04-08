@@ -8,11 +8,12 @@ use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\ModelBundle\Document\Area;
 use OpenOrchestra\ModelBundle\Document\Template;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
+use OpenOrchestra\ModelInterface\DataFixtures\OrchestraProductionFixturesInterface;
 
 /**
  * Class LoadTemplateData
  */
-class LoadTemplateData extends AbstractFixture implements OrderedFixtureInterface, OrchestraFunctionalFixturesInterface
+class LoadTemplateData extends AbstractFixture implements OrderedFixtureInterface, OrchestraFunctionalFixturesInterface, OrchestraProductionFixturesInterface
 {
     /**
      * @param ObjectManager $manager
@@ -22,6 +23,7 @@ class LoadTemplateData extends AbstractFixture implements OrderedFixtureInterfac
         $generic = $this->homepageTemplate();
         $manager->persist($generic);
 
+        $this->addReference("homepage-template", $generic);
         $full = $this->fullTemplate();
         $manager->persist($full);
 
