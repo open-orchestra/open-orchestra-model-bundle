@@ -13,7 +13,6 @@ use OpenOrchestra\MongoTrait\Statusable;
 use OpenOrchestra\ModelInterface\Model\ContentAttributeInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Model\ReadContentAttributeInterface;
-use Gedmo\Mapping\Annotation as Gedmo;
 use OpenOrchestra\MongoTrait\Keywordable;
 use OpenOrchestra\MongoTrait\Versionable;
 
