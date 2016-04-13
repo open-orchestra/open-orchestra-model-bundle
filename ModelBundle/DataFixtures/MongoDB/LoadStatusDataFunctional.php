@@ -13,15 +13,14 @@ use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterfa
 /**
  * Class LoadStatusData
  */
-class LoadStatusData extends AbstractFixture implements OrderedFixtureInterface, OrchestraProductionFixturesInterface, OrchestraFunctionalFixturesInterface
+class LoadStatusDataFunctional extends AbstractFixture implements OrderedFixtureInterface, OrchestraFunctionalFixturesInterface
 {
     /**
      * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
-        $manager->persist($this->loadStatus('Draft', 'Brouillon', 'draft', 'green', false, true));
-        $manager->persist($this->loadStatus('Published', 'Publié', 'published', 'red', true));
+        $manager->persist($this->loadStatus('Pending', 'En attente', 'pending', 'orange'));
 
         $manager->flush();
     }
@@ -33,7 +32,7 @@ class LoadStatusData extends AbstractFixture implements OrderedFixtureInterface,
      */
     public function getOrder()
     {
-        return 40;
+        return 45;
     }
 
     /**
