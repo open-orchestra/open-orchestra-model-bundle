@@ -18,7 +18,7 @@ class TransverseDataGenerator extends AbstractDataGenerator
      */
     protected function generateNodeFr()
     {
-        return $this->generateNodeGlobal("fr");
+        return $this->generateNodeGlobal("fr", "Page générale");
     }
 
     /**
@@ -26,7 +26,7 @@ class TransverseDataGenerator extends AbstractDataGenerator
      */
     protected function generateNodeEn()
     {
-        return $this->generateNodeGlobal("en");
+        return $this->generateNodeGlobal("en", "Global page");
     }
 
     /**
@@ -34,15 +34,16 @@ class TransverseDataGenerator extends AbstractDataGenerator
      */
     protected function generateNodeDe()
     {
-        return $this->generateNodeGlobal("de");
+        return $this->generateNodeGlobal("de", "Globale Seite");
     }
 
     /**
      * @param string $language
+     * @param string $name
      *
      * @return Node
      */
-    protected function generateNodeGlobal($language)
+    protected function generateNodeGlobal($language, $name)
     {
         $siteBlockLogo = new Block();
         $siteBlockLogo->setLabel('Wysiwyg logo');
@@ -116,7 +117,7 @@ EOF
         $nodeTransverse->setNodeId(NodeInterface::TRANSVERSE_NODE_ID);
         $nodeTransverse->setMaxAge(1000);
         $nodeTransverse->setNodeType(NodeInterface::TYPE_TRANSVERSE);
-        $nodeTransverse->setName(NodeInterface::TRANSVERSE_NODE_ID);
+        $nodeTransverse->setName($name);
         $nodeTransverse->setSiteId('2');
         $nodeTransverse->setParentId('-');
         $nodeTransverse->setPath('-');
