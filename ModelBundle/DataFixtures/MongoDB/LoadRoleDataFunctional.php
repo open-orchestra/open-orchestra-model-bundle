@@ -10,7 +10,7 @@ use OpenOrchestra\ModelBundle\Document\TranslatedValue;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
 
 /**
- * Class LoadRoleData
+ * Class LoadRoleDataFunctional
  */
 class LoadRoleDataFunctional extends AbstractFixture implements OrderedFixtureInterface, OrchestraFunctionalFixturesInterface
 {
