@@ -6,21 +6,15 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\AbstractDataGenerator;
-use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\CommunityDataGenerator;
-use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\ContactDataGenerator;
 use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\HomeDataGenerator;
-use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\LegalDataGenerator;
-use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\NewsDataGenerator;
 use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\TransverseDataGenerator;
-use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelInterface\DataFixtures\OrchestraProductionFixturesInterface;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
-use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\Error404DataGenerator;
-use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\Error503DataGenerator;
 
 /**
- * Class LoadNodeData
+ * Class LoadNodeDemoData
  */
-class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterface, OrchestraFunctionalFixturesInterface
+class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterface, OrchestraProductionFixturesInterface, OrchestraFunctionalFixturesInterface
 {
     protected $nodede;
     protected $nodeen;
@@ -44,18 +38,12 @@ class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterfac
         $transverseGenerator = new TransverseDataGenerator($references);
         foreach ($languages as $language) {
             $this->node{$language} = $transverseGenerator->generateNode($language);
+            $this->setReference("node-global-".$language, $this->node{$language});
             $manager->persist($this->node{$language});
         }
-
-        $this->addNode($manager, new HomeDataGenerator($references), $languages);
-        $this->addNode($manager, new HomeDataGenerator($references, 2, 'status-draft'), array('fr'));
-        $this->addNode($manager, new ContactDataGenerator($references), $languages);
-        $this->addNode($manager, new LegalDataGenerator($references), $languages);
-        $this->addNode($manager, new CommunityDataGenerator($references), $languages);
-        $this->addNode($manager, new NewsDataGenerator($references), $languages);
-        $this->addNode($manager, new Error404DataGenerator($references), $languages);
-        $this->addNode($manager, new Error503DataGenerator($references), $languages);
-
+        $homeNode = new HomeDataGenerator($references);
+        $this->setReference("home-node", $homeNode);
+        $this->addNode($manager, $homeNode, $languages);
         $manager->flush();
     }
 
@@ -76,25 +64,8 @@ class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterfac
     ){
         foreach ($languages as $language) {
             $node = $dataGenerator->generateNode($language);
-            $this->addAreaRef($this->node{$language}, $node);
+            $this->setReference("node-".$language, $node);
             $manager->persist($node);
-        }
-    }
-
-    /**
-     * @param NodeInterface $nodeTransverse
-     * @param NodeInterface $node
-     */
-    protected function addAreaRef(NodeInterface $nodeTransverse, NodeInterface $node)
-    {
-        foreach ($node->getAreas() as $area) {
-            foreach ($area->getBlocks() as $areaBlock) {
-                if ($nodeTransverse->getNodeId() === $areaBlock['nodeId']) {
-                    $block = $nodeTransverse->getBlock($areaBlock['blockId']);
-                    $block->addArea(array('nodeId' => $node->getId(), 'areaId' => $area->getAreaId()));
-                    $nodeTransverse->setBlock($areaBlock['blockId'], $block);
-                }
-            }
         }
     }
 }
