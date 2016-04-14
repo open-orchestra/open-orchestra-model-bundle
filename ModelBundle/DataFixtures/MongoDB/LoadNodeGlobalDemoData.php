@@ -72,6 +72,11 @@ class LoadNodeGlobalDemoData extends AbstractFixture implements OrderedFixtureIn
         return 570;
     }
 
+    /**
+     * @param ObjectManager         $manager
+     * @param AbstractDataGenerator $dataGenerator
+     * @param array                 $languages
+     */
     protected function addNode(
         ObjectManager $manager,
         AbstractDataGenerator $dataGenerator,

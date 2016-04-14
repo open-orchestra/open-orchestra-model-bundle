@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\ModelBundle\Document\Block;
 use OpenOrchestra\ModelBundle\Document\Node;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\TinyMCEWysiwygStrategy;
@@ -171,7 +172,8 @@ EOF;
     }
 
     /**
-     * @param $areas
+     * @param ArrayCollection $areas
+     * 
      * @return Area|null
      */
     protected function getAreaHeader($areas)

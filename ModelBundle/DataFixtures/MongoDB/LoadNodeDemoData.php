@@ -57,6 +57,11 @@ class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterfac
         return 560;
     }
 
+    /**
+     * @param ObjectManager         $manager
+     * @param AbstractDataGenerator $dataGenerator
+     * @param array                 $languages
+     */
     protected function addNode(
         ObjectManager $manager,
         AbstractDataGenerator $dataGenerator,
