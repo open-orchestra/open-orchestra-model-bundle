@@ -20,13 +20,6 @@ class LoadRoleData extends AbstractFixture implements OrderedFixtureInterface, O
      */
     public function load(ObjectManager $manager)
     {
-        $user = new Role();
-        $user->setName('ROLE_USER');
-        $user->addDescription($this->generateTranslatedValue('en', 'Authenticated user'));
-        $user->addDescription($this->generateTranslatedValue('fr', 'Utilisateur authentifié'));
-        $this->addReference('role-user', $user);
-        $manager->persist($user);
-
         $draft = new Role();
         $draft->setName('ROLE_FROM_DRAFT_TO_PENDING');
         $draft->addDescription($this->generateTranslatedValue('en', 'Change status from draft to pending'));
