@@ -44,8 +44,7 @@ class LoadNodeGlobalDemoData extends AbstractFixture implements OrderedFixtureIn
         }
         $languages = array("de", "en", "fr");
         
-        foreach ($languages as $language)
-        {
+        foreach ($languages as $language) {
             $references["node-".$language] = $this->getReference("node-".$language);
             $references["node-global-".$language] = $this->getReference("node-global-".$language);
             $this->node{$language} = $references["node-global-".$language];
@@ -167,10 +166,9 @@ EOF
         $siteBlockContact->setClass('my-form-contact');
         $siteBlockContact->addArea(array('nodeId' => 0, 'areaId' => 'main'));
 
-        $mainArea = $this->node{$language}->getAreas();//$this->createArea('main','main','main');
-        foreach ($mainArea as $area){
-            if($area->getAreaId() == "main")
-            {
+        $mainArea = $this->node{$language}->getAreas();
+        foreach ($mainArea as $area) {
+            if ($area->getAreaId() == "main") {
                 $area->addBlock(array('nodeId' => 0, 'blockId' => 0));
                 $area->addBlock(array('nodeId' => 0, 'blockId' => 1));
                 $area->addBlock(array('nodeId' => 0, 'blockId' => 2));

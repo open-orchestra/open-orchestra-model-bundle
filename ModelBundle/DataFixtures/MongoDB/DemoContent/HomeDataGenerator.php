@@ -10,7 +10,6 @@ use OpenOrchestra\ModelInterface\Model\NodeInterface;
  */
 class HomeDataGenerator extends AbstractDataGenerator
 {
-    protected $homeNode;
     /**
      * @return Node
      */
@@ -52,22 +51,22 @@ class HomeDataGenerator extends AbstractDataGenerator
      */
     protected function generateNodeGlobal($language, $routePattern)
     {
-        $siteHomeArea0 = $this->createArea('Header','header','header','h');
+        $nodeHomeArea0 = $this->createArea('Header','header','header','h');
         
-        $siteHome = $this->createBaseNode();
-        $siteHome->setLanguage($language);
-        $siteHome->setNodeId(NodeInterface::ROOT_NODE_ID);
-        $siteHome->setName('Orchestra ?');
-        $siteHome->setCreatedBy('fake_admin');
-        $siteHome->setParentId('-');
-        $siteHome->setOrder(0);
-        $siteHome->setRoutePattern($routePattern);
-        $siteHome->setInFooter(false);
-        $siteHome->setInMenu(true);
-        $siteHome->addArea($siteHomeArea0);
-        $siteHome->setSitemapChangefreq('hourly');
-        $siteHome->setSitemapPriority('0.8');
+        $nodeHome = $this->createBaseNode();
+        $nodeHome->setLanguage($language);
+        $nodeHome->setNodeId(NodeInterface::ROOT_NODE_ID);
+        $nodeHome->setName('Orchestra ?');
+        $nodeHome->setCreatedBy('fake_admin');
+        $nodeHome->setParentId('-');
+        $nodeHome->setOrder(0);
+        $nodeHome->setRoutePattern($routePattern);
+        $nodeHome->setInFooter(false);
+        $nodeHome->setInMenu(true);
+        $nodeHome->addArea($nodeHomeArea0);
+        $nodeHome->setSitemapChangefreq('hourly');
+        $nodeHome->setSitemapPriority('0.8');
 
-        return $siteHome;
+        return $nodeHome;
     }
 }
