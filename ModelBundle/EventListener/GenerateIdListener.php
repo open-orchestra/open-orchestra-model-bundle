@@ -4,7 +4,7 @@ namespace OpenOrchestra\ModelBundle\EventListener;
 
 use Doctrine\Common\Inflector\Inflector;
 use Doctrine\ODM\MongoDB\Event\LifecycleEventArgs;
-use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\Reader;
 use OpenOrchestra\ModelInterface\Helper\SuppressSpecialCharacterHelperInterface;
 use OpenOrchestra\ModelInterface\Repository\FieldAutoGenerableRepositoryInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -21,10 +21,10 @@ class GenerateIdListener implements ContainerAwareInterface
     protected $suppressSpecialCharacterHelper;
 
     /**
-     * @param AnnotationReader                        $annotationReader
+     * @param Reader                                  $annotationReader
      * @param SuppressSpecialCharacterHelperInterface $suppressSpecialCharacterHelper
      */
-    public function __construct(AnnotationReader $annotationReader, SuppressSpecialCharacterHelperInterface $suppressSpecialCharacterHelper)
+    public function __construct(Reader $annotationReader, SuppressSpecialCharacterHelperInterface $suppressSpecialCharacterHelper)
     {
         $this->annotationReader = $annotationReader;
         $this->suppressSpecialCharacterHelper = $suppressSpecialCharacterHelper;

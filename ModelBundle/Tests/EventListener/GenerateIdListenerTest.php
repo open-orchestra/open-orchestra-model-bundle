@@ -35,7 +35,7 @@ class GenerateIdListenerTest extends AbstractBaseTestCase
         $this->suppressSpecialCharacterHelper = Phake::mock('OpenOrchestra\ModelInterface\Helper\SuppressSpecialCharacterHelperInterface');
 
         $this->container = Phake::mock('Symfony\Component\DependencyInjection\Container');
-        $this->annotationReader = Phake::mock('Doctrine\Common\Annotations\AnnotationReader');
+        $this->annotationReader = Phake::mock('Doctrine\Common\Annotations\Reader');
         $this->documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
         $this->event = Phake::mock('Doctrine\ODM\MongoDB\Event\LifecycleEventArgs');
         Phake::when($this->event)->getDocumentManager()->thenReturn($this->documentManager);
