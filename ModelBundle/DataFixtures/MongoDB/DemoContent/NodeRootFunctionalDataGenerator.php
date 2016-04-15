@@ -137,13 +137,12 @@ EOF;
         $nodeHomeArea3 = $this->createMain(array($nodeHomeArea4, $nodeHomeArea5));
         $nodeHomeArea6 = $this->createFooter();
 
-        if($this->version > 1) {
+        if ($this->version > 1) {
             $nodeHomeArea0 = $this->createHeader();
 
             $nodeHome = $this->createBaseNode();
             $nodeHome->setLanguage($language);
             $nodeHome->setNodeId(NodeInterface::ROOT_NODE_ID);
-            $nodeHome->setName('Orchestra ?');
             $nodeHome->setCreatedBy('fake_admin');
             $nodeHome->setParentId('-');
             $nodeHome->setOrder(0);
@@ -153,8 +152,7 @@ EOF;
             $nodeHome->addArea($nodeHomeArea0);
             $nodeHome->setSitemapChangefreq('hourly');
             $nodeHome->setSitemapPriority('0.8');
-        }
-        else {
+        } else {
             $nodeHome = $this->references["node-".$language];
             $areaHeader = $this->getAreaHeader($nodeHome);
             if ($areaHeader != null) {
@@ -163,6 +161,7 @@ EOF;
                 $areaHeader->addBlock(array('nodeId' => 0, 'blockId' => 0));
             }
         }
+        $nodeHome->setName('Orchestra ?');
         $nodeHome->addArea($nodeHomeArea3);
         $nodeHome->addArea($nodeHomeArea6);
         $nodeHome->addBlock($nodeHomeBlock0);
@@ -179,7 +178,7 @@ EOF;
     {
         $areas = $nodeHome->getAreas();
         foreach ($areas as $area) {
-            if($area->getAreaId() == "header") {
+            if ($area->getAreaId() == "header") {
 
                 return $area;
             }

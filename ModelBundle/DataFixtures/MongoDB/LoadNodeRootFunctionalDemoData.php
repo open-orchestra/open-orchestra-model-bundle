@@ -51,7 +51,7 @@ class LoadNodeRootFunctionalDemoData extends AbstractFixture implements OrderedF
             $this->generateNodeGlobal($language);
         }
         $this->addNode($manager, new NodeRootFunctionalDataGenerator($references), $languages);
-        $this->addNode($manager, new NodeRootFunctionalDataGenerator($references, 2, 'status-draft'), array('fr'));
+        $this->addNode($manager, new NodeRootFunctionalDataGenerator($references, 2, 'status-published'), array('fr'));
         $this->addNode($manager, new ContactDataGenerator($references), $languages);
         $this->addNode($manager, new LegalDataGenerator($references), $languages);
         $this->addNode($manager, new CommunityDataGenerator($references), $languages);

@@ -41,7 +41,7 @@ class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterfac
             $this->setReference("node-global-".$language, $this->node{$language});
             $manager->persist($this->node{$language});
         }
-        $homeNode = new HomeDataGenerator($references);
+        $homeNode = new HomeDataGenerator($references, 1, 'status-draft');
         $this->setReference("home-node", $homeNode);
         $this->addNode($manager, $homeNode, $languages);
         $manager->flush();
