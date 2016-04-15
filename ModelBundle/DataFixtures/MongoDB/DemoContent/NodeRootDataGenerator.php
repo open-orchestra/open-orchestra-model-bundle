@@ -10,9 +10,9 @@ use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelBundle\Document\Area;
 
 /**
- * Class HomeRootDataGenerator
+ * Class NodeRootDataGenerator
  */
-class HomeRootDataGenerator extends AbstractDataGenerator
+class NodeRootDataGenerator extends AbstractDataGenerator
 {
     /**
      * @return Node
