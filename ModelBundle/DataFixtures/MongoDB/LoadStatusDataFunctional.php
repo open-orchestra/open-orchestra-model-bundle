@@ -3,21 +3,19 @@
 namespace OpenOrchestra\ModelBundle\DataFixtures\MongoDB;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use OpenOrchestra\ModelInterface\DataFixtures\OrchestraProductionFixturesInterface;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
 
 /**
- * Class LoadStatusData
+ * Class LoadStatusDataFunctional
  */
-class LoadStatusData extends AbstractLoadStatus implements OrchestraProductionFixturesInterface, OrchestraFunctionalFixturesInterface
+class LoadStatusDataFunctional extends AbstractLoadStatus implements OrchestraFunctionalFixturesInterface
 {
     /**
      * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
-        $manager->persist($this->loadStatus('Draft', 'Brouillon', 'draft', 'green', false, true));
-        $manager->persist($this->loadStatus('Published', 'Publié', 'published', 'red', true));
+        $manager->persist($this->loadStatus('Pending', 'En attente', 'pending', 'orange'));
 
         $manager->flush();
     }
@@ -29,6 +27,6 @@ class LoadStatusData extends AbstractLoadStatus implements OrchestraProductionFi
      */
     public function getOrder()
     {
-        return 40;
+        return 45;
     }
 }
