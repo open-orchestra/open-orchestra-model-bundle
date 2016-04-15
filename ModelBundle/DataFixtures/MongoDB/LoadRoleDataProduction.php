@@ -19,13 +19,6 @@ class LoadRoleDataProduction extends AbstractFixture implements OrderedFixtureIn
      */
     public function load(ObjectManager $manager)
     {
-        $user = new Role();
-        $user->setName('ROLE_USER');
-        $user->addDescription($this->generateTranslatedValue('en', 'Authenticated user'));
-        $user->addDescription($this->generateTranslatedValue('fr', 'Utilisateur authentifié'));
-        $this->addReference('role-user-production', $user);
-        $manager->persist($user);
-
         $draftToPublished = new Role();
         $draftToPublished->setName('ROLE_FROM_DRAFT_TO_PUBLISHED');
         $draftToPublished->addDescription($this->generateTranslatedValue('en', 'Change status from draft to published'));
