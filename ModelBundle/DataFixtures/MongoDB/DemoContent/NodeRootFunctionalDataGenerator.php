@@ -10,9 +10,9 @@ use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelBundle\Document\Area;
 
 /**
- * Class NodeRootDataGenerator
+ * Class NodeRootFunctionalDataGenerator
  */
-class NodeRootDataGenerator extends AbstractDataGenerator
+class NodeRootFunctionalDataGenerator extends AbstractDataGenerator
 {
     /**
      * @return Node
@@ -157,11 +157,11 @@ EOF;
         }
         else {
             $nodeHome = $this->references["node-".$language];
-            $area = $this->getAreaHeader($nodeHome->getAreas());
-            if ($area != null) {
-                $area->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 0));
-                $area->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 1, 'blockParameter' => array('request.aliasId')));
-                $area->addBlock(array('nodeId' => 0, 'blockId' => 0));
+            $areaHeader = $this->getAreaHeader($nodeHome);
+            if ($areaHeader != null) {
+                $areaHeader->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 0));
+                $areaHeader->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 1, 'blockParameter' => array('request.aliasId')));
+                $areaHeader->addBlock(array('nodeId' => 0, 'blockId' => 0));
             }
         }
         $nodeHome->addArea($nodeHomeArea3);
@@ -172,17 +172,20 @@ EOF;
     }
 
     /**
-     * @param ArrayCollection $areas
+     * @param NodeInterface $nodeHome
      * 
      * @return Area|null
      */
-    protected function getAreaHeader($areas)
+    protected function getAreaHeader(NodeInterface $nodeHome)
     {
+        $areas = $nodeHome->getAreas();
         foreach ($areas as $area) {
             if($area->getAreaId() == "header") {
+
                 return $area;
             }
         }
+
         return null;
     }
 }

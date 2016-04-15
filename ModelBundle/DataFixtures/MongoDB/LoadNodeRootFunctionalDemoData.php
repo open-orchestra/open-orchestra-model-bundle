@@ -8,7 +8,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\AbstractDataGenerator;
 use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\CommunityDataGenerator;
 use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\ContactDataGenerator;
-use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\NodeRootDataGenerator;
+use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\NodeRootFunctionalDataGenerator;
 use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\LegalDataGenerator;
 use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\NewsDataGenerator;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
@@ -21,9 +21,9 @@ use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\TinyMCEWysiwygStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\FooterStrategy;
 
 /**
- * Class LoadNodeRootDemoData
+ * Class LoadNodeRootFunctionalDemoData
  */
-class LoadNodeRootDemoData extends AbstractFixture implements OrderedFixtureInterface, OrchestraFunctionalFixturesInterface
+class LoadNodeRootFunctionalDemoData extends AbstractFixture implements OrderedFixtureInterface, OrchestraFunctionalFixturesInterface
 {
     protected $nodede;
     protected $nodeen;
@@ -50,8 +50,8 @@ class LoadNodeRootDemoData extends AbstractFixture implements OrderedFixtureInte
             $this->node{$language} = $references["node-global-".$language];
             $this->generateNodeGlobal($language);
         }
-        $this->addNode($manager, new NodeRootDataGenerator($references), $languages);
-        $this->addNode($manager, new NodeRootDataGenerator($references, 2, 'status-draft'), array('fr'));
+        $this->addNode($manager, new NodeRootFunctionalDataGenerator($references), $languages);
+        $this->addNode($manager, new NodeRootFunctionalDataGenerator($references, 2, 'status-draft'), array('fr'));
         $this->addNode($manager, new ContactDataGenerator($references), $languages);
         $this->addNode($manager, new LegalDataGenerator($references), $languages);
         $this->addNode($manager, new CommunityDataGenerator($references), $languages);
