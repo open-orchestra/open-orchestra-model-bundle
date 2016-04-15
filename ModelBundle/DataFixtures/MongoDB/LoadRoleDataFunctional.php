@@ -19,13 +19,6 @@ class LoadRoleDataFunctional extends AbstractFixture implements OrderedFixtureIn
      */
     public function load(ObjectManager $manager)
     {
-        $user = new Role();
-        $user->setName('ROLE_USER');
-        $user->addDescription($this->generateTranslatedValue('en', 'Authenticated user'));
-        $user->addDescription($this->generateTranslatedValue('fr', 'Utilisateur authentifié'));
-        $this->addReference('role-user-functional', $user);
-        $manager->persist($user);
-
         $draftToPending = new Role();
         $draftToPending->setName('ROLE_FROM_DRAFT_TO_PENDING');
         $draftToPending->addDescription($this->generateTranslatedValue('en', 'Change status from draft to pending'));

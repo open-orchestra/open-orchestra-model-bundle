@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: kevin
- * Date: 13/04/16
- * Time: 16:11
- */
 
 namespace OpenOrchestra\ModelBundle\DataFixtures\MongoDB;
 
