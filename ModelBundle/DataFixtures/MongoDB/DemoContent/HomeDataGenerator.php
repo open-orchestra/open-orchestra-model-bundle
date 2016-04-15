@@ -56,7 +56,7 @@ class HomeDataGenerator extends AbstractDataGenerator
         $nodeHome = $this->createBaseNode();
         $nodeHome->setLanguage($language);
         $nodeHome->setNodeId(NodeInterface::ROOT_NODE_ID);
-        $nodeHome->setName('Orchestra ?');
+        $nodeHome->setName('Homepage');
         $nodeHome->setCreatedBy('fake_admin');
         $nodeHome->setParentId('-');
         $nodeHome->setOrder(0);
