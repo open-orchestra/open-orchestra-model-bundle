@@ -162,6 +162,11 @@ EOF;
             }
         }
         $nodeHome->setName('Orchestra ?');
+        $nodeHome->setVersion($this->version);
+        $nodeHome->setStatus($this->references[$this->status]);
+        if ('status-published' == $this->status) {
+            $nodeHome->setCurrentlyPublished(true);
+        }
         $nodeHome->addArea($nodeHomeArea3);
         $nodeHome->addArea($nodeHomeArea6);
         $nodeHome->addBlock($nodeHomeBlock0);
