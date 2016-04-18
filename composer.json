@@ -17,7 +17,8 @@
 
     "open-orchestra/open-orchestra-libs": "1.1.*@dev",
     "solution/mongo-odm-aggregation-bundle": "dev-master",
-    "solution/pipeline-builder": "dev-master"
+    "solution/pipeline-builder": "dev-master",
+    "doctrine/data-fixtures:~1.1.1"
   },
   "require-dev": {
     "open-orchestra/open-orchestra-base-bundle": "1.1.*@dev",
