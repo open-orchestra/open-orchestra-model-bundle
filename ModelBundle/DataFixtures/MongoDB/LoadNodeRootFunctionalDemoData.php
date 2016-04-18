@@ -81,7 +81,7 @@ class LoadNodeRootFunctionalDemoData extends AbstractFixture implements OrderedF
         ObjectManager $manager,
         AbstractDataGenerator $dataGenerator,
         array $languages = array("fr", "en")
-    ){
+    ) {
         foreach ($languages as $language) {
             $node = $dataGenerator->generateNode($language);
             $this->addAreaRef($this->node{$language}, $node);
