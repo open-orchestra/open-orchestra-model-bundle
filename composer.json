@@ -1,36 +1,44 @@
 {
-    "name": "open-orchestra/open-orchestra-model-bundle",
-    "description": "An implemantation of the model-interface for OpenOrchestra on mongo",
-    "license": "Apache-2.0",
-    "authors": [
-        {
-            "name": "OpenOrchestra community",
-            "homepage": "https://github.com/open-orchestra/open-orchestra-model-bundle/graphs/contributors"
-        }
-    ],
-    "minimum-stability": "dev",
-    "require": {
-        "open-orchestra/open-orchestra-model-interface": "*",
-        "open-orchestra/open-orchestra-mongo-libs": "*",
-        "doctrine/data-fixtures": "1.1.1",
-        "stof/doctrine-extensions-bundle": "1.2.1",
-        "antimattr/mongodb-migrations-bundle": "~1.0@stable"
-    },
-    "require-dev": {
-        "open-orchestra/open-orchestra-base-bundle": "*",
-        "psr/log": "1.0.0",
-        "codeclimate/php-test-reporter": "dev-master",
-        "symfony/validator": "2.7.0",
-        "jmikola/geojson": "1.0.1",
-        "phpunit/phpunit" : "4.7.2",
-        "phake/phake": "2.1.0"
-    },
-    "config" : {
-        "bin-dir" : "bin"
-    },
-    "autoload": {
-        "psr-4": {
-            "OpenOrchestra\\ModelBundle\\": "ModelBundle/"
-        }
+  "name": "open-orchestra/open-orchestra-model-bundle",
+  "description": "An implemantation of the model-interface for OpenOrchestra on mongo",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "OpenOrchestra community",
+      "homepage": "https://github.com/open-orchestra/open-orchestra-model-bundle/graphs/contributors"
     }
+  ],
+  "require": {
+    "open-orchestra/open-orchestra-model-interface": "1.1.*@dev",
+    "open-orchestra/open-orchestra-mongo-libs": "1.1.*@dev",
+    "doctrine/data-fixtures": "1.1.1",
+    "stof/doctrine-extensions-bundle": "1.2.1",
+    "antimattr/mongodb-migrations-bundle": "~1.0",
+
+    "open-orchestra/open-orchestra-libs": "1.1.*@dev",
+    "solution/mongo-odm-aggregation-bundle": "dev-master",
+    "solution/pipeline-builder": "dev-master"
+  },
+  "require-dev": {
+    "open-orchestra/open-orchestra-base-bundle": "1.1.*@dev",
+    "psr/log": "1.0.0",
+    "codeclimate/php-test-reporter": "dev-master",
+    "symfony/validator": "2.7.0",
+    "jmikola/geojson": "1.0.1",
+    "phpunit/phpunit" : "4.7.2",
+    "phake/phake": "2.1.0"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.1.x-dev"
+    }
+  },
+  "config" : {
+    "bin-dir" : "bin"
+  },
+  "autoload": {
+    "psr-4": {
+      "OpenOrchestra\\ModelBundle\\": "ModelBundle/"
+    }
+  }
 }
