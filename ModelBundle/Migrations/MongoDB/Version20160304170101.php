@@ -27,7 +27,7 @@ class Version20160304170101 extends AbstractMigration
      */
     public function up(Database $db)
     {
-        $db->execute('db.users_group.find({\'nodeRoles\':{$exists:1}}).snapshot().forEach(function(item){
+        $db->execute('db.users_group.find({\'nodeRoles\':{$exists:1}}).forEach(function(item){
                         for(i = 0; i != item.nodeRoles.length; ++i) {
                             item.nodeRoles[i].type = \'node\'
                             item.nodeRoles[i].id = item.nodeRoles[i].nodeId;
@@ -45,7 +45,7 @@ class Version20160304170101 extends AbstractMigration
      */
     public function down(Database $db)
     {
-        $db->execute('db.users_group.find({\'modelRoles\':{$exists:1}}).snapshot().forEach(function(item){
+        $db->execute('db.users_group.find({\'modelRoles\':{$exists:1}}).forEach(function(item){
                         for(i = 0; i != item.modelRoles.length; ++i) {
                             if(item.modelRoles[i].type == \'node\') {
                                 delete item.modelRoles[i].type;

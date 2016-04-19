@@ -53,11 +53,11 @@ class Version20160407114518 extends AbstractMigration
      */
     public function down(Database $db)
     {
-        $db->execute('db.node.find().snapshot().forEach(function(item){
+        $db->execute('db.node.find().forEach(function(item){
                         delete item.currentlyPublished;
                         db.node.update({_id: item._id}, item);
                      });
-                     db.content.find().snapshot().forEach(function(item){
+                     db.content.find().forEach(function(item){
                         delete item.currentlyPublished;
                         db.content.update({_id: item._id}, item);
                      });

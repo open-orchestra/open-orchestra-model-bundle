@@ -27,7 +27,7 @@ class Version20160317140327 extends AbstractMigration
      */
     public function up(Database $db)
     {
-        $db->execute('db.site.find().snapshot().forEach(function(item){
+        $db->execute('db.site.find().forEach(function(item){
                         keyCharacters = "Zabcdefghijklmnopqrstuvwxyz0123456789";
                         aliases = item.aliases;
                         item.aliases = {};
@@ -52,7 +52,7 @@ class Version20160317140327 extends AbstractMigration
      */
     public function down(Database $db)
     {
-        $db->execute('db.site.find().snapshot().forEach(function(item){
+        $db->execute('db.site.find().forEach(function(item){
                         aliases = item.aliases;
                         item.aliases = [];
                         for(i in aliases) {
