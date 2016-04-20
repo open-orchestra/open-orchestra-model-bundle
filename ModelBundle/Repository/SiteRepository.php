@@ -90,14 +90,41 @@ class SiteRepository extends AbstractAggregateRepository implements SiteReposito
     /**
      * @param string $domain
      *
-     * @return ReadSiteInterface
+     * @return SiteInterface|null
      */
     public function findByAliasDomain($domain)
     {
-        $qa = $this->createAggregationQuery();
-        $qa->match(array('aliases.domain' => $domain));
+        $database = $this->dm->getDocumentDatabase($this->documentName);
+        $collectionName = $this->dm->getClassMetadata($this->documentName)->collection;
 
-        return $this->hydrateAggregateQuery($qa);
+        $map = new \MongoCode(
+            'function(){
+                for (var i in this.aliases) {
+                    if (this.aliases[i].domain == domain) {
+                        emit(this.siteId, this.siteId);
+                    }
+                }
+            }'
+        );
+        $reduce = new \MongoCode("function(key, values) { return values[0]; }");
+
+        $commandResult = $database->command(array(
+            "mapreduce" => $collectionName,
+            "map" => $map,
+            "reduce" => $reduce,
+            "out" => array("inline" => 1),
+            "scope" => array(
+                "domain" => "$domain"
+            )
+        ));
+
+        if (is_array($commandResult) && array_key_exists('ok', $commandResult ) && $commandResult['ok'] == 1) {
+            foreach ($commandResult['results'] as $siteId) {
+                return $this->findOneBySiteId($siteId['_id']);
+            }
+        }
+
+        return  null;
     }
 
     /**
