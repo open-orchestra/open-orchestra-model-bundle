@@ -27,11 +27,11 @@ class Version20160317140327 extends AbstractMigration
      */
     public function up(Database $db)
     {
-        $db->execute('db.site.find().forEach(function(item){
+        $db->execute('db.site.find().forEach(function(item) {
                         keyCharacters = "Zabcdefghijklmnopqrstuvwxyz0123456789";
                         aliases = item.aliases;
                         item.aliases = {};
-                        for(i in aliases) {
+                        for (i in aliases) {
                             if (i.indexOf("'.SiteInterface::PREFIX_SITE_ALIAS.'") == -1) {
                                 key = "";
                                 for (j = 0; j < 13; j++) {
@@ -52,10 +52,10 @@ class Version20160317140327 extends AbstractMigration
      */
     public function down(Database $db)
     {
-        $db->execute('db.site.find().forEach(function(item){
+        $db->execute('db.site.find().forEach(function(item) {
                         aliases = item.aliases;
                         item.aliases = [];
-                        for(i in aliases) {
+                        for (i in aliases) {
                             item.aliases.push(aliases[i]);
                         }
                         db.site.update({_id: item._id}, item);
