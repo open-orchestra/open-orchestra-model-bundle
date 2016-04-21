@@ -29,9 +29,8 @@ class Version20160421105828 extends AbstractMigration
                  } else {
                     boLabel = item.name;
                  }
-                 print (tojson(boLabel));
                  item.boLabel = boLabel;
-                db.node.update({_id: item._id}, item);
+                 db.node.update({_id: item._id}, item);
             });
         ');
     }
