@@ -118,7 +118,7 @@ class SiteRepository extends AbstractAggregateRepository implements SiteReposito
             )
         ));
 
-        if (is_array($commandResult) && array_key_exists('ok', $commandResult ) && $commandResult['ok'] == 1) {
+        if (is_array($commandResult) && array_key_exists('ok', $commandResult) && $commandResult['ok'] == 1) {
             foreach ($commandResult['results'] as $siteId) {
                 return $this->findOneBySiteId($siteId['_id']);
             }
