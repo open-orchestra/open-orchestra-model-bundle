@@ -92,6 +92,7 @@ EOF;
         $error404->setLanguage($language);
         $error404->setNodeId(NodeInterface::ERROR_404_NODE_ID);
         $error404->setName('Error 404');
+        $error404->setBoLabel('Error 404');
         $error404->setCreatedBy('fake_admin');
         $error404->setParentId(NodeInterface::ROOT_NODE_ID);
         $error404->setRoutePattern($routePattern);

@@ -162,6 +162,7 @@ EOF;
             }
         }
         $nodeHome->setName('Orchestra ?');
+        $nodeHome->setBoLabel('Orchestra ?');
         $nodeHome->setVersion($this->version);
         $nodeHome->setStatus($this->references[$this->status]);
         if ('status-published' == $this->status) {

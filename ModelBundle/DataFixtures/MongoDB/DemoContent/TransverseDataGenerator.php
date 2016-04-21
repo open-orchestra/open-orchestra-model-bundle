@@ -49,6 +49,7 @@ class TransverseDataGenerator extends AbstractDataGenerator
         $nodeTransverse->setMaxAge(1000);
         $nodeTransverse->setNodeType(NodeInterface::TYPE_TRANSVERSE);
         $nodeTransverse->setName($name);
+        $nodeTransverse->setBoLabel('Global page');
         $nodeTransverse->setSiteId('2');
         $nodeTransverse->setParentId('-');
         $nodeTransverse->setPath('-');

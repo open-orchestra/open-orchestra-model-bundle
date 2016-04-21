@@ -113,6 +113,7 @@ EOF;
         $siteLegal = $this->createBaseNode();
         $siteLegal->setNodeId('fixture_page_legal_mentions');
         $siteLegal->setName($name);
+        $siteLegal->setBoLabel("Legal Notice");
         $siteLegal->setLanguage($language);
         $siteLegal->setParentId(NodeInterface::ROOT_NODE_ID);
         $siteLegal->setOrder(10);

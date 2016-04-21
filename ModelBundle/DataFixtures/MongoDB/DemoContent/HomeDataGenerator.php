@@ -57,6 +57,7 @@ class HomeDataGenerator extends AbstractDataGenerator
         $nodeHome->setLanguage($language);
         $nodeHome->setNodeId(NodeInterface::ROOT_NODE_ID);
         $nodeHome->setName('Homepage');
+        $nodeHome->setBoLabel('Homepage');
         $nodeHome->setCreatedBy('fake_admin');
         $nodeHome->setParentId('-');
         $nodeHome->setOrder(0);
