@@ -1,4 +1,5 @@
 <?php
+
 namespace OpenOrchestra\ModelBundle\Tests\Functional\Repository;
 
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractKernelTestCase;
