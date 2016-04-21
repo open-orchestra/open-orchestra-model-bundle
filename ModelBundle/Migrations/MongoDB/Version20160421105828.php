@@ -6,7 +6,7 @@ use AntiMattr\MongoDB\Migrations\AbstractMigration;
 use Doctrine\MongoDB\Database;
 
 /**
- * Auto-generated Migration: Please modify to your needs!
+ * Class Version20160421105828
  */
 class Version20160421105828 extends AbstractMigration
 {
