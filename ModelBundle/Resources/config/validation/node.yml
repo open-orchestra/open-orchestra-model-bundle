@@ -11,6 +11,8 @@ OpenOrchestra\ModelBundle\Document\Node:
             - NotBlank: ~
         name:
             - NotBlank: ~
+        boLabel:
+            - NotBlank: ~
         language:
             - NotBlank: ~
         routePattern:

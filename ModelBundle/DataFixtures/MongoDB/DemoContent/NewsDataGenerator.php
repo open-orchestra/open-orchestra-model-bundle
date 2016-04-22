@@ -130,6 +130,7 @@ EOF;
         $siteNews = $this->createBaseNode();
         $siteNews->setNodeId('fixture_page_news');
         $siteNews->setName($name);
+        $siteNews->setBoLabel("News");
         $siteNews->setLanguage($language);
         $siteNews->setParentId(NodeInterface::ROOT_NODE_ID);
         $siteNews->setOrder(6);

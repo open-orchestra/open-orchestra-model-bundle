@@ -153,6 +153,7 @@ EOF;
         $siteContact = $this->createBaseNode();
         $siteContact->setNodeId('fixture_page_contact');
         $siteContact->setName($name);
+        $siteContact->setBoLabel('Contact');
         $siteContact->setLanguage($language);
         $siteContact->setParentId(NodeInterface::ROOT_NODE_ID);
         $siteContact->setOrder(9);

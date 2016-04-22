@@ -111,6 +111,7 @@ EOF;
         $siteCom->setNodeId('fixture_page_community');
         $siteCom->setLanguage($language);
         $siteCom->setName($name);
+        $siteCom->setBoLabel('Community');
         $siteCom->setParentId(NodeInterface::ROOT_NODE_ID);
         $siteCom->setOrder(3);
         $siteCom->setRoutePattern($routePattern);

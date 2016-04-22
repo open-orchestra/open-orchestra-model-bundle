@@ -105,6 +105,13 @@ class Node implements NodeInterface
     protected $name;
 
     /**
+     * @var string $boLabel
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $boLabel;
+
+    /**
      * @var string $language
      *
      * @ODM\Field(type="string")
@@ -324,6 +331,22 @@ class Node implements NodeInterface
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBoLabel()
+    {
+        return $this->boLabel;
+    }
+
+    /**
+     * @param string $boLabel
+     */
+    public function setBoLabel($boLabel)
+    {
+        $this->boLabel = $boLabel;
     }
 
     /**
