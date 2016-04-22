@@ -18,6 +18,9 @@ class Version20160422151315 extends AbstractMigration
         return "rename role role_access_move_node by role_access_move_tree";
     }
 
+    /**
+     * @param Database $db
+     */
     public function up(Database $db)
     {
         $db->execute('
@@ -29,6 +32,9 @@ class Version20160422151315 extends AbstractMigration
         ');
     }
 
+    /**
+     * @param Database $db
+     */
     public function down(Database $db)
     {
         $db->execute('
