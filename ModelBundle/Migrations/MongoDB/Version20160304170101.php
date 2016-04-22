@@ -37,7 +37,7 @@ class Version20160304170101 extends AbstractMigration
                 db.users_group.update({_id: item._id}, item);
             });
         ');
-        $db->execute('db.users_group.update({}, {$rename : {\'nodeRoles\':\'modelRoles\'}});');
+        $db->execute('db.users_group.update({}, {$rename : {\'nodeRoles\':\'modelRoles\'}}, { multi: true });');
 
     }
 
@@ -58,6 +58,6 @@ class Version20160304170101 extends AbstractMigration
                 db.users_group.update({_id: item._id}, item);
             });
         ');
-        $db->execute('db.users_group.update({}, {$rename : {\'modelRoles\':\'nodeRoles\'}});');
+        $db->execute('db.users_group.update({}, {$rename : {\'modelRoles\':\'nodeRoles\'}}, { multi: true });');
     }
 }
