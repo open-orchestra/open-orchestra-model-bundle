@@ -1,6 +1,6 @@
 {
   "name": "open-orchestra/open-orchestra-model-bundle",
-  "description": "An implemantation of the model-interface for OpenOrchestra on mongo",
+  "description": "A MongoDB implemantation of the Open Orchestra Model Interface",
   "license": "Apache-2.0",
   "authors": [
     {
@@ -15,8 +15,6 @@
     "stof/doctrine-extensions-bundle": "1.2.1",
     "antimattr/mongodb-migrations-bundle": "~1.0",
 
-    "solution/mongo-odm-aggregation-bundle": "@dev",
-    "solution/pipeline-builder": "@dev",
     "open-orchestra/open-orchestra-libs": "@dev"
   },
   "require-dev": {
