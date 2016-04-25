@@ -39,7 +39,7 @@ class Version20160407114518 extends AbstractMigration
                 db.node.update({_id: item._id}, item);
             });
             db.content.find({\'status.published\':true}).sort({\'language\':1, \'version\':-1}).forEach(function(item) {
-                if (item.contentId != currentCotentId || item.language != currentLanguage) {
+                if (item.contentId != currentContentId || item.language != currentLanguage) {
                     item.currentlyPublished = true;
                     currentContentId = item.contentId;
                     currentLanguage = item.language;
