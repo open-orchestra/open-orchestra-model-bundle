@@ -24,7 +24,7 @@ class Version20160422151315 extends AbstractMigration
     public function up(Database $db)
     {
         $db->execute('
-            db.users_group.find({roles: \'ROLE_ACCESS_MOVE_NODE\'}).forEach(function(item) {
+            db.users_group.find({ roles: \'ROLE_ACCESS_MOVE_NODE\' }).forEach(function(item) {
                 db.users_group.update({ _id: item._id}, { $pull: { roles : \'ROLE_ACCESS_MOVE_NODE\' }});
                 db.users_group.update({ _id: item._id}, { $push: { roles : \'ROLE_ACCESS_MOVE_TREE\' }});
             });
@@ -38,11 +38,11 @@ class Version20160422151315 extends AbstractMigration
     public function down(Database $db)
     {
         $db->execute('
-            db.users_group.find({roles: \'ROLE_ACCESS_MOVE_TREE\'}).forEach(function(item) {
+            db.users_group.find({ roles: \'ROLE_ACCESS_MOVE_TREE\' }).forEach(function(item) {
                 db.users_group.update({ _id: item._id}, { $pull: { roles : \'ROLE_ACCESS_MOVE_TREE\' }});
                 db.users_group.update({ _id: item._id}, { $push: { roles : \'ROLE_ACCESS_MOVE_NODE\' }});
             });
-            db.users_group.find({\'modelRoles\':{$exists:1}}).forEach(function(item) {
+            db.users_group.find({ \'modelRoles\' : { $exists:1 }}).forEach(function(item) {
                     var currentNodeId = [];
                     var length = item.modelRoles.length;
                     for (i = 0; i != length; ++i) {
@@ -57,7 +57,7 @@ class Version20160422151315 extends AbstractMigration
                           item.modelRoles.push(nodeRole);
                        }
                     }
-                    db.users_group.update({_id: item._id}, item);
+                    db.users_group.update({ _id: item._id }, item);
                 }
             );
         ');
