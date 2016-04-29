@@ -172,7 +172,7 @@ class SiteRepositoryTest extends AbstractKernelTestCase
     public function provideAliasDomain()
     {
         return array(
-            array('demo.open-orchestra.1-2.inte', 2),
+            array('demo.openorchestra.1-2.inte', 2),
             array('fakeDomain', null)
         );
     }
