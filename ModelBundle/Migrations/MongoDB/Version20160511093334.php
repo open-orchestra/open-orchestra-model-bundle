@@ -32,8 +32,7 @@ class Version20160511093334 extends AbstractMigration
                         typeof block.attributes["contentTypeId"] !== "undefined" &&
                         typeof block.attributes["contentId"] !== "undefined" &&
                         typeof block.attributes["contentSearch"] == "undefined"
-                    )
-                    {
+                    ) {
                         contentSearch.contentType = block.attributes["contentTypeId"];
                         contentSearch.choiceType = "";
                         contentSearch.keywords = "";
