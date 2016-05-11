@@ -37,7 +37,6 @@ class LoadSiteData extends AbstractLoadSiteData implements OrchestraFunctionalFi
             $site3);
         $site3->setDeleted(true);
         $site3->setTheme($this->getReference('themePresentation'));
-        $site3->addBlock('sample');
 
         return $site3;
     }
