@@ -7,7 +7,6 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\ModelBundle\Document\Content;
 use OpenOrchestra\ModelBundle\Document\ContentAttribute;
-use OpenOrchestra\ModelBundle\Document\EmbedKeyword;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
 
 /**
@@ -123,7 +122,7 @@ class LoadContentNewsData extends AbstractFixture implements OrderedFixtureInter
         $start = $this->generateContentAttribute('publish_start', '2014-08-26', 'date');
         $end = $this->generateContentAttribute('publish_end', '2014-12-19', 'date');
         $welcome = $this->generateContent('news', 'welcome', 'Welcome', 'fr');
-        $welcome->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-sit')));
+        $welcome->addKeyword($this->getReference('keyword-sit'));
 
         return $this->addNewsAttributes($welcome, $title, $start, $end, $intro, $text);
     }
@@ -142,8 +141,8 @@ class LoadContentNewsData extends AbstractFixture implements OrderedFixtureInter
         $start = $this->generateContentAttribute('publish_start', '2014-08-16', 'date');
         $end = $this->generateContentAttribute('publish_end', '2014-12-19', 'date');
         $vision = $this->generateContent('news', 'notre_vision', 'Notre vision', 'fr');
-        $vision->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-sit')));
-        $vision->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-lorem')));
+        $vision->addKeyword($this->getReference('keyword-sit'));
+        $vision->addKeyword($this->getReference('keyword-lorem'));
 
         return $this->addNewsAttributes($vision, $title, $start, $end, $intro, $text);
     }
