@@ -127,6 +127,7 @@ class SiteRepository extends AbstractAggregateRepository implements SiteReposito
 
         $qb = $this->createQueryBuilder();
         $qb->field('siteId')->in($ids);
+
         return $qb->getQuery()->execute();
     }
 
