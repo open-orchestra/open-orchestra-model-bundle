@@ -90,7 +90,7 @@ class SiteRepository extends AbstractAggregateRepository implements SiteReposito
     /**
      * @param string $domain
      *
-     * @return SiteInterface|null
+     * @return Doctrine\ODM\MongoDB\Cursor
      */
     public function findByAliasDomain($domain)
     {
@@ -118,13 +118,17 @@ class SiteRepository extends AbstractAggregateRepository implements SiteReposito
             )
         ));
 
+        $ids = array();
         if (is_array($commandResult) && array_key_exists('ok', $commandResult) && $commandResult['ok'] == 1) {
             foreach ($commandResult['results'] as $siteId) {
-                return $this->findOneBySiteId($siteId['_id']);
+                $ids[] = $siteId['_id'];
             }
         }
 
-        return  null;
+        $qb = $this->createQueryBuilder();
+        $qb->field('siteId')->in($ids);
+
+        return $qb->getQuery()->execute();
     }
 
     /**
