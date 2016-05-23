@@ -15,6 +15,3 @@ services:
             - %open_orchestra_model.document.embed_status.class%
     open_orchestra_model.transformer.boolean_to_bdd:
         class: %open_orchestra_model.transformer.boolean_to_bdd.class%
-        arguments:
-            - @open_orchestra_backoffice.manager.keyword_to_reference
-            - @open_orchestra_model.repository.keyword

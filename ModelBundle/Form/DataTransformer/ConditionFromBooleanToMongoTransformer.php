@@ -4,8 +4,6 @@ namespace OpenOrchestra\ModelBundle\Form\DataTransformer;
 
 use OpenOrchestra\ModelInterface\Form\DataTransformer\ConditionFromBooleanToBddTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
-use OpenOrchestra\Backoffice\Manager\KeywordToDocumentManager;
-use OpenOrchestra\ModelInterface\Repository\KeywordRepositoryInterface;
 
 /**
  * Class ConditionFromBooleanToMongoTransformer
@@ -13,20 +11,6 @@ use OpenOrchestra\ModelInterface\Repository\KeywordRepositoryInterface;
 class ConditionFromBooleanToMongoTransformer implements ConditionFromBooleanToBddTransformerInterface
 {
     protected $field = '';
-    protected $keywordToDocumentManager;
-    protected $keywordRepository;
-
-    /**
-     * @param KeywordToDocumentManager   $keywordToDocumentManager
-     * @param KeywordRepositoryInterface $keywordRepository
-     */
-    public function __construct(
-        KeywordToDocumentManager $keywordToDocumentManager,
-        KeywordRepositoryInterface $keywordRepository
-    ) {
-        $this->keywordToDocumentManager = $keywordToDocumentManager;
-        $this->keywordRepository = $keywordRepository;
-    }
 
     /**
      * @param string $field
@@ -71,14 +55,6 @@ class ConditionFromBooleanToMongoTransformer implements ConditionFromBooleanToBd
                 if (is_null($conditions[$key])) {
                     return null;
                 }
-                if (!is_array($condition)){
-                    $keyword = $this->keywordRepository->find($conditions[$key]);
-                    if (!is_null($keyword)) {
-                        $conditions[$key] = $keyword->getLabel();
-                    } else {
-                        return null;
-                    }
-                }
                 if ($key === '$eq' || $key === $this->field) {
                     $conditions = $conditions[$key];
                     break;
@@ -110,9 +86,8 @@ class ConditionFromBooleanToMongoTransformer implements ConditionFromBooleanToBd
     {
         if (!is_null($condition)) {
             $result = array();
-            $getBalancedBracketsRegExp = '/\( ([^\(\)]*) \)/';
             $encapsuledElements = array();
-            preg_match_all($getBalancedBracketsRegExp, $condition, $encapsuledElements);
+            preg_match_all(ConditionFromBooleanToBddTransformerInterface::GET_BALANCED_BRACKETS, $condition, $encapsuledElements);
             foreach ($encapsuledElements[0] as $key => $encapsuledElement) {
                 $alias = $delimiter.$count.$delimiter;
                 $condition = preg_replace('/'.preg_quote($encapsuledElement).'/', $alias, $condition, 1);
@@ -141,16 +116,11 @@ class ConditionFromBooleanToMongoTransformer implements ConditionFromBooleanToBd
      */
     protected function transformConditionToMongoCondition($condition, array &$aliases)
     {
-        $isAndBooleanRegExp = '/^((NOT (?=.)){0,1}[^ \(\)]+( AND (?=.)){0,1})+$/';
-        $isOrBooleanRegExp = '/^((NOT (?=.)){0,1}[^ \(\)]+( OR (?=.)){0,1})+$/';
-        $getAndSubBooleanRegExp = '/(NOT (?=.)){0,1}([^ \(\)]+)( AND (?=.)){0,1}/';
-        $getOrSubBooleanRegExp = '/(NOT (?=.)){0,1}([^ \(\)]+)( OR (?=.)){0,1}/';
-
         $subElements = array();
-        if (preg_match($isAndBooleanRegExp, $condition)) {
-            preg_match_all($getAndSubBooleanRegExp, $condition, $subElements);
-        } elseif  (preg_match($isOrBooleanRegExp, $condition)) {
-            preg_match_all($getOrSubBooleanRegExp, $condition, $subElements);
+        if (preg_match(ConditionFromBooleanToBddTransformerInterface::IS_AND_BOOLEAN, $condition)) {
+            preg_match_all(ConditionFromBooleanToBddTransformerInterface::GET_AND_SUB_BOOLEAN, $condition, $subElements);
+        } elseif  (preg_match(ConditionFromBooleanToBddTransformerInterface::IS_OR_BOOLEAN, $condition)) {
+            preg_match_all(ConditionFromBooleanToBddTransformerInterface::GET_OR_SUB_BOOLEAN, $condition, $subElements);
         }
         if (count($subElements) > 0) {
             $operator = ($subElements[3][0] == ' OR ') ? '$or' : '$and';
@@ -165,8 +135,7 @@ class ConditionFromBooleanToMongoTransformer implements ConditionFromBooleanToBd
                     unset($aliases[$subElement]);
                 } else {
                     $comparison = ($subElements[1][$key] == '') ? '$eq' : '$ne';
-                    $keyword = $this->keywordToDocumentManager->getDocument($subElement);
-                    array_push($result, array($this->field => array($comparison => $keyword->getId())));
+                    array_push($result, array($this->field => array($comparison => $subElement)));
                 }
             }
 
