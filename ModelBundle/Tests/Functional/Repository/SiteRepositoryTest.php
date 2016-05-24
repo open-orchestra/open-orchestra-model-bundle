@@ -151,19 +151,38 @@ class SiteRepositoryTest extends AbstractKernelTestCase
     }
 
     /**
-     * @param string      $domain
-     * @param string|null $expectedSiteId
+     * @param string        $domain
+     * @param array<string> $expectedSiteIds
      *
      * @dataProvider provideAliasDomain
      */
-    public function testFindByAliasDomain($domain, $expectedSiteId)
+    public function testFindByAliasDomain($domain, $expectedSiteIds)
     {
-        $site = $this->repository->findByAliasDomain($domain);
-        if (null !== $expectedSiteId) {
-            $this->assertEquals($expectedSiteId, $site->getSiteId());
-        } else {
-            $this->assertEquals($expectedSiteId, $site);
+        $sites = $this->repository->findByAliasDomain($domain);
+
+        $this->assertIdsMatches($expectedSiteIds, $sites);
+    }
+
+    /**
+     * Check if the $sites ids matches $expectedIds
+     *
+     * @param array $expectedIds
+     * @param array $sites
+     */
+    protected function assertIdsMatches($expectedIds, $sites)
+    {
+        if (count($expectedIds) != count($sites)) {
+            return false;
         }
+
+        foreach ($sites as $site) {
+            if (!in_array($site->getSiteId(), $expectedIds)) {
+
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -172,8 +191,8 @@ class SiteRepositoryTest extends AbstractKernelTestCase
     public function provideAliasDomain()
     {
         return array(
-            array('demo.openorchestra.1-1.inte', 2),
-            array('fakeDomain', null)
+            array('demo.openorchestra.1-2.inte', array('2')),
+            array('fakeDomain', array())
         );
     }
 
