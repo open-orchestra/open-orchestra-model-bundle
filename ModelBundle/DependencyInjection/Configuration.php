@@ -179,7 +179,6 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('repository')->defaultValue('OpenOrchestra\ModelBundle\Repository\KeywordRepository')->end()
                         ->end()
                     ->end()
-                    ->end()
                     /*@deprecated will be removed in 1.3.0 */
                     ->arrayNode('embed_keyword')
                         ->addDefaultsIfNotSet()
