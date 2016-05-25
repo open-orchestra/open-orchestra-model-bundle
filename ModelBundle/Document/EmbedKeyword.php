@@ -11,7 +11,6 @@ use OpenOrchestra\ModelInterface\Model\KeywordInterface;
 /**
  * Class EmbedKeyword
  *
- *
  * @deprecated will be removed in 1.3.0
  *
  * @ODM\EmbeddedDocument
