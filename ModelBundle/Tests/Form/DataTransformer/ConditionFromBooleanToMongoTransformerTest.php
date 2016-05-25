@@ -30,7 +30,7 @@ class ConditionFromBooleanToMongoTransformerTest extends \PHPUnit_Framework_Test
      */
     public function testReverseTransform($value, $expected)
     {
-        $this->assertEquals($expected, $this->transformer->reverseTransform($value));
+        $this->assertEquals(serialize($expected), $this->transformer->reverseTransform($value));
     }
 
     /**
@@ -39,10 +39,80 @@ class ConditionFromBooleanToMongoTransformerTest extends \PHPUnit_Framework_Test
     public function provideReverseTransformValue()
     {
         return array(
-            array('( NOT ( cat:X1 OR cat:X2 ) AND author:AAA ) OR ( T1 OR T2 OR NOT T3 )', '{"$or":[{"$and":[{"$not":{"$or":[{"keywords":{"$eq":"cat:X1"}},{"keywords":{"$eq":"cat:X2"}}]}},{"keywords":{"$eq":"author:AAA"}}]},{"$or":[{"keywords":{"$eq":"T1"}},{"keywords":{"$eq":"T2"}},{"keywords":{"$ne":"T3"}}]}]}'),
-            array('( cat:X1 OR cat:X2 ) AND ( author:AAA ) AND ( T1 OR T2 OR NOT T3 )', '{"$and":[{"$or":[{"keywords":{"$eq":"cat:X1"}},{"keywords":{"$eq":"cat:X2"}}]},{"$and":[{"keywords":{"$eq":"author:AAA"}}]},{"$or":[{"keywords":{"$eq":"T1"}},{"keywords":{"$eq":"T2"}},{"keywords":{"$ne":"T3"}}]}]}'),
-            array('cat:X1', '{"$and":[{"keywords":{"$eq":"cat:X1"}}]}'),
-            array('( cat:X1 )', '{"$and":[{"$and":[{"keywords":{"$eq":"cat:X1"}}]}]}'),
+            array('( NOT ( 57459d3202b0cfdf088b4570 OR 57459d3202b0cfdf088b4571 ) AND 57459d3202b0cfdf088b4572 ) OR ( 57459d3202b0cfdf088b4573 OR 57459d3202b0cfdf088b4574 OR NOT 57459d3202b0cfdf088b4575 )',
+                array (
+                    '$or' =>
+                        array (
+                            array (
+                                '$and' =>
+                                    array (
+                                        array (
+                                            '$not' =>
+                                                array (
+                                                    '$or' =>
+                                                        array (
+                                                            array (
+                                                                'keywords.$id' =>
+                                                                    array (
+                                                                        '$eq' => new \MongoId('57459d3202b0cfdf088b4570'),
+                                                                    ),
+                                                            ),
+                                                            array (
+                                                                'keywords.$id' =>
+                                                                    array (
+                                                                        '$eq' => new \MongoId('57459d3202b0cfdf088b4571'),
+                                                                    ),
+                                                            ),
+                                                        ),
+                                                ),
+                                        ),
+                                        array (
+                                            'keywords.$id' =>
+                                                array (
+                                                    '$eq' => new \MongoId('57459d3202b0cfdf088b4572'),
+                                                ),
+                                        ),
+                                    ),
+                            ),
+                            array (
+                                '$or' =>
+                                   array (
+                                        array (
+                                            'keywords.$id' =>
+                                                array (
+                                                    '$eq' => new \MongoId('57459d3202b0cfdf088b4573'),
+                                                ),
+                                        ),
+                                        array (
+                                            'keywords.$id' =>
+                                                array (
+                                                    '$eq' => new \MongoId('57459d3202b0cfdf088b4574'),
+                                                ),
+                                        ),
+                                        array (
+                                            'keywords.$id' =>
+                                                array (
+                                                    '$ne' => new \MongoId('57459d3202b0cfdf088b4575'),
+                                                ),
+                                        ),
+                                    ),
+                            ),
+                        ),
+                ),
+            ),
+            array('57459d3202b0cfdf088b4570',
+                array (
+                    '$and' =>
+                        array (
+                            array (
+                                'keywords.$id' =>
+                                    array (
+                                        '$eq' => new \MongoId('57459d3202b0cfdf088b4570')
+                                    )
+                            )
+                        )
+                 )
+            )
         );
     }
 
@@ -72,14 +142,14 @@ class ConditionFromBooleanToMongoTransformerTest extends \PHPUnit_Framework_Test
     }
 
     /**
-     * @param array $value
      * @param array $expected
+     * @param array $value
      *
      * @dataProvider provideTransformValue
      */
     public function testTransform($value, $expected)
     {
-        $this->assertEquals($expected, $this->transformer->transform($value));
+        $this->assertEquals($expected, $this->transformer->transform(serialize($value)));
     }
 
     /**
@@ -88,8 +158,82 @@ class ConditionFromBooleanToMongoTransformerTest extends \PHPUnit_Framework_Test
     public function provideTransformValue()
     {
         return array(
-            array('{"$and":[{"$or":[{"keywords":{"$eq":"cat:X1"}},{"keywords":{"$eq":"cat:X2"}}]},{"keywords":{"$eq":"author:AAA"}},{"$and":[{"$or":[{"keywords":{"$eq":"T1"}},{"keywords":{"$eq":"T2"}}]},{"keywords":{"$ne":"T3"}}]}]}', '( ( cat:X1 OR cat:X2 ) AND author:AAA AND ( ( T1 OR T2 ) AND NOT T3 ) )'),
-            array('{"keywords":{"$eq":"cat:X1"}}', 'cat:X1'),
+            array(
+                array (
+                    '$or' =>
+                        array (
+                            array (
+                                '$and' =>
+                                    array (
+                                        array (
+                                            '$not' =>
+                                                array (
+                                                    '$or' =>
+                                                        array (
+                                                            array (
+                                                                'keywords.$id' =>
+                                                                    array (
+                                                                        '$eq' => new \MongoId('57459d3202b0cfdf088b4570'),
+                                                                    ),
+                                                            ),
+                                                            array (
+                                                                'keywords.$id' =>
+                                                                    array (
+                                                                        '$eq' => new \MongoId('57459d3202b0cfdf088b4571'),
+                                                                    ),
+                                                            ),
+                                                        ),
+                                                ),
+                                        ),
+                                        array (
+                                            'keywords.$id' =>
+                                                array (
+                                                    '$eq' => new \MongoId('57459d3202b0cfdf088b4572'),
+                                                ),
+                                        ),
+                                    ),
+                            ),
+                            array (
+                                '$or' =>
+                                   array (
+                                        array (
+                                            'keywords.$id' =>
+                                                array (
+                                                    '$eq' => new \MongoId('57459d3202b0cfdf088b4573'),
+                                                ),
+                                        ),
+                                        array (
+                                            'keywords.$id' =>
+                                                array (
+                                                    '$eq' => new \MongoId('57459d3202b0cfdf088b4574'),
+                                                ),
+                                        ),
+                                        array (
+                                            'keywords.$id' =>
+                                                array (
+                                                    '$ne' => new \MongoId('57459d3202b0cfdf088b4575'),
+                                                ),
+                                        ),
+                                    ),
+                            ),
+                        ),
+                ),
+                '( ( NOT ( 57459d3202b0cfdf088b4570 OR 57459d3202b0cfdf088b4571 ) AND 57459d3202b0cfdf088b4572 ) OR ( 57459d3202b0cfdf088b4573 OR 57459d3202b0cfdf088b4574 OR NOT 57459d3202b0cfdf088b4575 ) )',
+            ),
+            array(
+                array (
+                    '$and' =>
+                        array (
+                            array (
+                                'keywords.$id' =>
+                                    array (
+                                        '$eq' => new \MongoId('57459d3202b0cfdf088b4570')
+                                    )
+                            )
+                        )
+                 ),
+                '( 57459d3202b0cfdf088b4570 )',
+            )
         );
     }
 }

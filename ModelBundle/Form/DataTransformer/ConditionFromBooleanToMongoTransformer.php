@@ -27,7 +27,7 @@ class ConditionFromBooleanToMongoTransformer implements ConditionFromBooleanToBd
      */
     public function transform($value)
     {
-        return $this->transformField(json_decode($value, true));
+        return $this->transformField(unserialize($value));
     }
 
     /**
@@ -55,10 +55,13 @@ class ConditionFromBooleanToMongoTransformer implements ConditionFromBooleanToBd
                 if (is_null($conditions[$key])) {
                     return null;
                 }
-                if ($key === '$eq' || $key === $this->field) {
+                if($conditions[$key] instanceof \MongoId) {
+                    $conditions[$key] = $conditions[$key]->{'$id'};
+                }
+                if ($key === '$eq' || $key === $this->field . '.$id') {
                     $conditions = $conditions[$key];
                     break;
-                } elseif ($key === '$ne') {
+                } elseif ($key === '$ne' || $key === '$not' ) {
                     $conditions = 'NOT '.$conditions[$key];
                     break;
                 } elseif ($key === '$and') {
@@ -97,7 +100,7 @@ class ConditionFromBooleanToMongoTransformer implements ConditionFromBooleanToBd
             if (count($encapsuledElements[0]) > 0) {
                 $result = $this->reverseTransformField($condition, $count, $aliases, $delimiter);
             } else {
-                $result = json_encode($this->transformConditionToMongoCondition($condition, $aliases));
+                $result = serialize($this->transformConditionToMongoCondition($condition, $aliases));
             }
         } else {
             $result = null;
@@ -135,7 +138,7 @@ class ConditionFromBooleanToMongoTransformer implements ConditionFromBooleanToBd
                     unset($aliases[$subElement]);
                 } else {
                     $comparison = ($subElements[1][$key] == '') ? '$eq' : '$ne';
-                    array_push($result, array($this->field => array($comparison => $subElement)));
+                    array_push($result, array($this->field . '.$id' => array($comparison => new \MongoId($subElement))));
                 }
             }
 

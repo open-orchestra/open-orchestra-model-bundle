@@ -20,7 +20,7 @@ class ContentRepositoryTest extends AbstractKernelTestCase
      */
     protected $repository;
 
-    protected $currentSiteManager;
+    protected $currentsiteManager;
 
     /**
      * Set up test
@@ -29,9 +29,9 @@ class ContentRepositoryTest extends AbstractKernelTestCase
     {
         parent::setUp();
 
-        $this->currentSiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
-        Phake::when($this->currentSiteManager)->getCurrentSiteId()->thenReturn('2');
-        Phake::when($this->currentSiteManager)->getCurrentSiteDefaultLanguage()->thenReturn('fr');
+        $this->currentsiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentsiteIdInterface');
+        Phake::when($this->currentsiteManager)->getCurrentsiteId()->thenReturn('2');
+        Phake::when($this->currentsiteManager)->getCurrentsiteDefaultLanguage()->thenReturn('fr');
 
         static::bootKernel();
         $this->repository = static::$kernel->getContainer()->get('open_orchestra_model.repository.content');
@@ -134,7 +134,7 @@ class ContentRepositoryTest extends AbstractKernelTestCase
      */
     public function testFindByContentTypeAndKeywords($contentType = '', $choiceType, $keywords = null, $count)
     {
-        $language = $this->currentSiteManager->getCurrentSiteDefaultLanguage();
+        $language = $this->currentsiteManager->getCurrentsiteDefaultLanguage();
         $elements = $this->repository->findByContentTypeAndKeywords($language, $contentType, $choiceType, $keywords);
 
         $this->assertCount($count, $elements);
@@ -146,37 +146,37 @@ class ContentRepositoryTest extends AbstractKernelTestCase
     public function provideContentTypeKeywordAndCount()
     {
         return array(
-            array('car', ContentRepositoryInterface::CHOICE_AND, 'Lorem', 3),
-            array('car', ContentRepositoryInterface::CHOICE_AND, 'Sit', 1),
+            array('car', ContentRepositoryInterface::CHOICE_AND, 'lorem', 3),
+            array('car', ContentRepositoryInterface::CHOICE_AND, 'sit', 1),
             array('car', ContentRepositoryInterface::CHOICE_AND, 'Dolor', 0),
-            array('car', ContentRepositoryInterface::CHOICE_AND, 'Lorem,Sit', 1),
-            array('news', ContentRepositoryInterface::CHOICE_AND, 'Lorem', 1),
-            array('news', ContentRepositoryInterface::CHOICE_AND, 'Sit', 2),
+            array('car', ContentRepositoryInterface::CHOICE_AND, 'lorem,sit', 1),
+            array('news', ContentRepositoryInterface::CHOICE_AND, 'lorem', 1),
+            array('news', ContentRepositoryInterface::CHOICE_AND, 'sit', 2),
             array('news', ContentRepositoryInterface::CHOICE_AND, 'Dolor', 0),
-            array('news', ContentRepositoryInterface::CHOICE_AND, 'Lorem,Sit', 1),
+            array('news', ContentRepositoryInterface::CHOICE_AND, 'lorem,sit', 1),
             array('news', ContentRepositoryInterface::CHOICE_AND, '', 4),
             array('car', ContentRepositoryInterface::CHOICE_AND, '', 3),
             array('', ContentRepositoryInterface::CHOICE_AND, null, 9),
             array('', ContentRepositoryInterface::CHOICE_AND, '', 9),
-            array('', ContentRepositoryInterface::CHOICE_AND, 'Lorem', 5),
-            array('', ContentRepositoryInterface::CHOICE_AND, 'Sit', 4),
+            array('', ContentRepositoryInterface::CHOICE_AND, 'lorem', 5),
+            array('', ContentRepositoryInterface::CHOICE_AND, 'sit', 4),
             array('', ContentRepositoryInterface::CHOICE_AND, 'Dolor', 0),
-            array('', ContentRepositoryInterface::CHOICE_AND, 'Lorem,Sit', 3),
-            array('car', ContentRepositoryInterface::CHOICE_OR, 'Lorem', 5),
-            array('car', ContentRepositoryInterface::CHOICE_OR, 'Sit', 6),
+            array('', ContentRepositoryInterface::CHOICE_AND, 'lorem,sit', 3),
+            array('car', ContentRepositoryInterface::CHOICE_OR, 'lorem', 5),
+            array('car', ContentRepositoryInterface::CHOICE_OR, 'sit', 6),
             array('car', ContentRepositoryInterface::CHOICE_OR, 'Dolor', 3),
-            array('car', ContentRepositoryInterface::CHOICE_OR, 'Lorem,Sit', 5),
-            array('news', ContentRepositoryInterface::CHOICE_OR, 'Lorem', 8),
-            array('news', ContentRepositoryInterface::CHOICE_OR, 'Sit', 6),
+            array('car', ContentRepositoryInterface::CHOICE_OR, 'lorem,sit', 5),
+            array('news', ContentRepositoryInterface::CHOICE_OR, 'lorem', 8),
+            array('news', ContentRepositoryInterface::CHOICE_OR, 'sit', 6),
             array('news', ContentRepositoryInterface::CHOICE_OR, 'Dolor', 4),
-            array('news', ContentRepositoryInterface::CHOICE_OR, 'Lorem,Sit', 6),
+            array('news', ContentRepositoryInterface::CHOICE_OR, 'lorem,sit', 6),
             array('news', ContentRepositoryInterface::CHOICE_OR, '', 4),
             array('car', ContentRepositoryInterface::CHOICE_OR, null, 3),
             array('', ContentRepositoryInterface::CHOICE_OR, null, 9),
-            array('', ContentRepositoryInterface::CHOICE_OR, 'Lorem', 5),
-            array('', ContentRepositoryInterface::CHOICE_OR, 'Sit', 4),
+            array('', ContentRepositoryInterface::CHOICE_OR, 'lorem', 5),
+            array('', ContentRepositoryInterface::CHOICE_OR, 'sit', 4),
             array('', ContentRepositoryInterface::CHOICE_OR, 'Dolor', 0),
-            array('', ContentRepositoryInterface::CHOICE_OR, 'Lorem,Sit', 3),
+            array('', ContentRepositoryInterface::CHOICE_OR, 'lorem,sit', 3),
             array('', ContentRepositoryInterface::CHOICE_OR, '', 9),
         );
     }
@@ -267,13 +267,13 @@ class ContentRepositoryTest extends AbstractKernelTestCase
      * @param int      $limit
      * @param integer  $count
      *
-     * @dataProvider provideContentTypeAndPaginateAndSearchAndSiteId
+     * @dataProvider provideContentTypeAndPaginateAndSearchAndsiteId
      */
-    public function testFindPaginatedLastVersionByContentTypeAndSite($contentType, $descriptionEntity, $search, $order, $siteId, $skip, $limit, $count, $name = null)
+    public function testFindPaginatedLastVersionByContentTypeAndsite($contentType, $descriptionEntity, $search, $order, $siteId, $skip, $limit, $count, $name = null)
     {
         $configuration = PaginateFinderConfiguration::generateFromVariable($descriptionEntity, $search);
         $configuration->setPaginateConfiguration($order, $skip, $limit);
-        $contents = $this->repository->findPaginatedLastVersionByContentTypeAndSite($contentType, $configuration, $siteId);
+        $contents = $this->repository->findPaginatedLastVersionByContentTypeAndsite($contentType, $configuration, $siteId);
 
         if(!is_null($name)) {
             $this->assertEquals($name, $contents[0]->getName());
@@ -284,7 +284,7 @@ class ContentRepositoryTest extends AbstractKernelTestCase
     /**
      * @return array
      */
-    public function provideContentTypeAndPaginateAndSearchAndSiteId()
+    public function provideContentTypeAndPaginateAndSearchAndsiteId()
     {
         $descriptionEntity = $this->getDescriptionColumnEntity();
 
@@ -371,18 +371,18 @@ class ContentRepositoryTest extends AbstractKernelTestCase
      * @param array|null   $sort
      * @param int          $count
      *
-     * @dataProvider provideFindByAuthorAndSiteId
+     * @dataProvider provideFindByAuthorAndsiteId
      */
-    public function testFindByAuthorAndSiteId($author, $siteId, $published, $limit, $sort, $count)
+    public function testFindByAuthorAndsiteId($author, $siteId, $published, $limit, $sort, $count)
     {
-        $contents = $this->repository->findByAuthorAndSiteId($author, $siteId, $published, $limit, $sort);
+        $contents = $this->repository->findByAuthorAndsiteId($author, $siteId, $published, $limit, $sort);
         $this->assertCount($count, $contents);
     }
 
     /**
      * @return array
      */
-    public function provideFindByAuthorAndSiteId()
+    public function provideFindByAuthorAndsiteId()
     {
         return array(
             array('admin', '2', null, 10, array('updatedAt' => -1), 6),
@@ -457,7 +457,7 @@ class ContentRepositoryTest extends AbstractKernelTestCase
             'linked_to_site' =>
             array (
                 'key' => 'linked_to_site',
-                'field' => 'linkedToSite',
+                'field' => 'linkedTosite',
                 'type' => 'boolean',
             ),
             'created_by' =>
@@ -525,7 +525,7 @@ class ContentRepositoryTest extends AbstractKernelTestCase
             $this->assertSame($version, $content->getVersion());
         }
         if (!is_null($siteId)) {
-            $this->assertSame($siteId, $content->getSiteId());
+            $this->assertSame($siteId, $content->getsiteId());
         }
         $this->assertSame(false, $content->isDeleted());
     }
