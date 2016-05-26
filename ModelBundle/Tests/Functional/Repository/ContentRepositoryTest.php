@@ -8,6 +8,8 @@ use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use Phake;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 
+use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
+
 /**
  * Class ContentRepositoryTest
  *
@@ -21,6 +23,7 @@ class ContentRepositoryTest extends AbstractKernelTestCase
     protected $repository;
 
     protected $currentsiteManager;
+    protected $keywordsLabelToId;
 
     /**
      * Set up test
@@ -28,12 +31,17 @@ class ContentRepositoryTest extends AbstractKernelTestCase
     protected function setUp()
     {
         parent::setUp();
-
-        $this->currentsiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentsiteIdInterface');
-        Phake::when($this->currentsiteManager)->getCurrentsiteId()->thenReturn('2');
-        Phake::when($this->currentsiteManager)->getCurrentsiteDefaultLanguage()->thenReturn('fr');
-
         static::bootKernel();
+        $keywordRepository = static::$kernel->getContainer()->get('open_orchestra_model.repository.keyword');
+        $keywords = $keywordRepository->findAll();
+        $this->keywordsLabelToId = array();
+        foreach($keywords as $keywords) {
+            $this->keywordsLabelToId[$keywords->getLabel()] = $keywords->getId();
+        }
+        $this->currentsiteManager = Phake::mock('OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface');
+        Phake::when($this->currentsiteManager)->getCurrentSiteId()->thenReturn('2');
+        Phake::when($this->currentsiteManager)->getCurrentSiteDefaultLanguage()->thenReturn('fr');
+
         $this->repository = static::$kernel->getContainer()->get('open_orchestra_model.repository.content');
     }
 
@@ -132,10 +140,11 @@ class ContentRepositoryTest extends AbstractKernelTestCase
      *
      * @dataProvider provideContentTypeKeywordAndCount
      */
-    public function testFindByContentTypeAndKeywords($contentType = '', $choiceType, $keywords = null, $count)
+    public function testFindByContentTypeAndCondition($contentType = '', $choiceType, $keywords = null, $count)
     {
-        $language = $this->currentsiteManager->getCurrentsiteDefaultLanguage();
-        $elements = $this->repository->findByContentTypeAndKeywords($language, $contentType, $choiceType, $keywords);
+        $keywords = $this->replaceKeywordLabelById($keywords);
+        $language = $this->currentsiteManager->getCurrentSiteDefaultLanguage();
+        $elements = $this->repository->findByContentTypeAndCondition($language, $contentType, $choiceType, $keywords);
 
         $this->assertCount($count, $elements);
     }
@@ -146,38 +155,338 @@ class ContentRepositoryTest extends AbstractKernelTestCase
     public function provideContentTypeKeywordAndCount()
     {
         return array(
-            array('car', ContentRepositoryInterface::CHOICE_AND, 'lorem', 3),
-            array('car', ContentRepositoryInterface::CHOICE_AND, 'sit', 1),
-            array('car', ContentRepositoryInterface::CHOICE_AND, 'Dolor', 0),
-            array('car', ContentRepositoryInterface::CHOICE_AND, 'lorem,sit', 1),
-            array('news', ContentRepositoryInterface::CHOICE_AND, 'lorem', 1),
-            array('news', ContentRepositoryInterface::CHOICE_AND, 'sit', 2),
-            array('news', ContentRepositoryInterface::CHOICE_AND, 'Dolor', 0),
-            array('news', ContentRepositoryInterface::CHOICE_AND, 'lorem,sit', 1),
-            array('news', ContentRepositoryInterface::CHOICE_AND, '', 4),
-            array('car', ContentRepositoryInterface::CHOICE_AND, '', 3),
-            array('', ContentRepositoryInterface::CHOICE_AND, null, 9),
-            array('', ContentRepositoryInterface::CHOICE_AND, '', 9),
-            array('', ContentRepositoryInterface::CHOICE_AND, 'lorem', 5),
-            array('', ContentRepositoryInterface::CHOICE_AND, 'sit', 4),
-            array('', ContentRepositoryInterface::CHOICE_AND, 'Dolor', 0),
-            array('', ContentRepositoryInterface::CHOICE_AND, 'lorem,sit', 3),
-            array('car', ContentRepositoryInterface::CHOICE_OR, 'lorem', 5),
-            array('car', ContentRepositoryInterface::CHOICE_OR, 'sit', 6),
-            array('car', ContentRepositoryInterface::CHOICE_OR, 'Dolor', 3),
-            array('car', ContentRepositoryInterface::CHOICE_OR, 'lorem,sit', 5),
-            array('news', ContentRepositoryInterface::CHOICE_OR, 'lorem', 8),
-            array('news', ContentRepositoryInterface::CHOICE_OR, 'sit', 6),
-            array('news', ContentRepositoryInterface::CHOICE_OR, 'Dolor', 4),
-            array('news', ContentRepositoryInterface::CHOICE_OR, 'lorem,sit', 6),
-            array('news', ContentRepositoryInterface::CHOICE_OR, '', 4),
-            array('car', ContentRepositoryInterface::CHOICE_OR, null, 3),
-            array('', ContentRepositoryInterface::CHOICE_OR, null, 9),
-            array('', ContentRepositoryInterface::CHOICE_OR, 'lorem', 5),
-            array('', ContentRepositoryInterface::CHOICE_OR, 'sit', 4),
-            array('', ContentRepositoryInterface::CHOICE_OR, 'Dolor', 0),
-            array('', ContentRepositoryInterface::CHOICE_OR, 'lorem,sit', 3),
-            array('', ContentRepositoryInterface::CHOICE_OR, '', 9),
+            array('car', ContentRepositoryInterface::CHOICE_AND, array (
+                    '$and' =>
+                        array (
+                            array (
+                                'keywords.$id' =>
+                                    array (
+                                        '$eq' => 'lorem'
+                                    )
+                            )
+                        )
+                 )
+                , 3),
+            array('car', ContentRepositoryInterface::CHOICE_AND, array (
+                    '$and' =>
+                        array (
+                            array (
+                                'keywords.$id' =>
+                                    array (
+                                        '$eq' => 'sit'
+                                    )
+                            )
+                        )
+                 )
+                , 1),
+            array('car', ContentRepositoryInterface::CHOICE_AND, array (
+                    '$and' =>
+                        array (
+                            array (
+                                'keywords.$id' =>
+                                    array (
+                                        '$eq' => 'dolor'
+                                    )
+                            )
+                        )
+                 )
+                , 0),
+            array('car', ContentRepositoryInterface::CHOICE_AND, array (
+                    '$and' =>
+                        array (
+                            array (
+                                'keywords.$id' =>
+                                    array (
+                                        '$eq' => 'lorem'
+                                    )
+                            ),
+                            array (
+                                'keywords.$id' =>
+                                    array (
+                                        '$eq' => 'sit'
+                                    )
+                            ),
+                        )
+                 )
+                , 1),
+            array('news', ContentRepositoryInterface::CHOICE_AND, array (
+                    '$and' =>
+                        array (
+                            array (
+                                'keywords.$id' =>
+                                    array (
+                                        '$eq' => 'lorem'
+                                    )
+                            )
+                        )
+                 )
+                , 1),
+            array('news', ContentRepositoryInterface::CHOICE_AND, array (
+                    '$and' =>
+                        array (
+                            array (
+                                'keywords.$id' =>
+                                    array (
+                                        '$eq' => 'sit'
+                                    )
+                            )
+                        )
+                 )
+                , 2),
+            array('news', ContentRepositoryInterface::CHOICE_AND, array (
+                    '$and' =>
+                        array (
+                            array (
+                                'keywords.$id' =>
+                                    array (
+                                        '$eq' => 'dolor'
+                                    )
+                            )
+                        )
+                 )
+                , 0),
+            array('news', ContentRepositoryInterface::CHOICE_AND, array (
+                    '$and' =>
+                        array (
+                            array (
+                                'keywords.$id' =>
+                                    array (
+                                        '$eq' => 'lorem'
+                                    )
+                            ),
+                            array (
+                                'keywords.$id' =>
+                                    array (
+                                        '$eq' => 'sit'
+                                    )
+                            ),
+                        )
+                 )
+                , 1),
+            array('news', ContentRepositoryInterface::CHOICE_AND, array(), 4),
+            array('car', ContentRepositoryInterface::CHOICE_AND, array(), 3),
+            array('', ContentRepositoryInterface::CHOICE_AND, array(), 9),
+            array('', ContentRepositoryInterface::CHOICE_AND, array(), 9),
+            array('', ContentRepositoryInterface::CHOICE_AND, array (
+                    '$and' =>
+                        array (
+                            array (
+                                'keywords.$id' =>
+                                    array (
+                                        '$eq' => 'lorem'
+                                    )
+                            )
+                        )
+                 )
+                , 5),
+            array('', ContentRepositoryInterface::CHOICE_AND, array (
+                    '$and' =>
+                        array (
+                            array (
+                                'keywords.$id' =>
+                                    array (
+                                        '$eq' => 'sit'
+                                    )
+                            )
+                        )
+                 )
+                , 4),
+            array('', ContentRepositoryInterface::CHOICE_AND, array (
+                    '$and' =>
+                        array (
+                            array (
+                                'keywords.$id' =>
+                                    array (
+                                        '$eq' => 'dolor'
+                                    )
+                            )
+                        )
+                 )
+                , 0),
+            array('', ContentRepositoryInterface::CHOICE_AND, array (
+                    '$and' =>
+                        array (
+                            array (
+                                'keywords.$id' =>
+                                    array (
+                                        '$eq' => 'lorem'
+                                    )
+                            ),
+                            array (
+                                'keywords.$id' =>
+                                    array (
+                                        '$eq' => 'sit'
+                                    )
+                            ),
+                        )
+                 )
+                , 3),
+            array('car', ContentRepositoryInterface::CHOICE_OR, array (
+                    '$and' =>
+                        array (
+                            array (
+                                'keywords.$id' =>
+                                    array (
+                                        '$eq' => 'lorem'
+                                    )
+                            )
+                        )
+                 )
+                , 5),
+            array('car', ContentRepositoryInterface::CHOICE_OR, array (
+                    '$and' =>
+                        array (
+                            array (
+                                'keywords.$id' =>
+                                    array (
+                                        '$eq' => 'sit'
+                                    )
+                            )
+                        )
+                 )
+                , 6),
+            array('car', ContentRepositoryInterface::CHOICE_OR, array (
+                    '$and' =>
+                        array (
+                            array (
+                                'keywords.$id' =>
+                                    array (
+                                        '$eq' => 'dolor'
+                                    )
+                            )
+                        )
+                 )
+                , 3),
+            array('car', ContentRepositoryInterface::CHOICE_OR, array (
+                    '$and' =>
+                        array (
+                            array (
+                                'keywords.$id' =>
+                                    array (
+                                        '$eq' => 'lorem'
+                                    )
+                            ),
+                            array (
+                                'keywords.$id' =>
+                                    array (
+                                        '$eq' => 'sit'
+                                    )
+                            ),
+                        )
+                 )
+                , 5),
+            array('news', ContentRepositoryInterface::CHOICE_OR, array (
+                    '$and' =>
+                        array (
+                            array (
+                                'keywords.$id' =>
+                                    array (
+                                        '$eq' => 'lorem'
+                                    )
+                            )
+                        )
+                 )
+                , 8),
+            array('news', ContentRepositoryInterface::CHOICE_OR, array (
+                    '$and' =>
+                        array (
+                            array (
+                                'keywords.$id' =>
+                                    array (
+                                        '$eq' => 'sit'
+                                    )
+                            )
+                        )
+                 )
+                , 6),
+            array('news', ContentRepositoryInterface::CHOICE_OR, array (
+                    '$and' =>
+                        array (
+                            array (
+                                'keywords.$id' =>
+                                    array (
+                                        '$eq' => 'dolor'
+                                    )
+                            )
+                        )
+                 )
+                , 4),
+            array('news', ContentRepositoryInterface::CHOICE_OR, array (
+                    '$and' =>
+                        array (
+                            array (
+                                'keywords.$id' =>
+                                    array (
+                                        '$eq' => 'lorem'
+                                    )
+                            ),
+                            array (
+                                'keywords.$id' =>
+                                    array (
+                                        '$eq' => 'sit'
+                                    )
+                            ),
+                        )
+                 )
+                , 6),
+            array('news', ContentRepositoryInterface::CHOICE_OR, array(), 4),
+            array('car', ContentRepositoryInterface::CHOICE_OR, array(), 3),
+            array('', ContentRepositoryInterface::CHOICE_OR, array(), 9),
+            array('', ContentRepositoryInterface::CHOICE_OR, array (
+                    '$and' =>
+                        array (
+                            array (
+                                'keywords.$id' =>
+                                    array (
+                                        '$eq' => 'lorem'
+                                    )
+                            )
+                        )
+                 )
+                , 5),
+            array('', ContentRepositoryInterface::CHOICE_OR, array (
+                    '$and' =>
+                        array (
+                            array (
+                                'keywords.$id' =>
+                                    array (
+                                        '$eq' => 'sit'
+                                    )
+                            )
+                        )
+                 )
+                , 4),
+            array('', ContentRepositoryInterface::CHOICE_OR, array (
+                    '$and' =>
+                        array (
+                            array (
+                                'keywords.$id' =>
+                                    array (
+                                        '$eq' => 'dolor'
+                                    )
+                            )
+                        )
+                 )
+                , 0),
+            array('', ContentRepositoryInterface::CHOICE_OR, array (
+                    '$and' =>
+                        array (
+                            array (
+                                'keywords.$id' =>
+                                    array (
+                                        '$eq' => 'lorem'
+                                    )
+                            ),
+                            array (
+                                'keywords.$id' =>
+                                    array (
+                                        '$eq' => 'sit'
+                                    )
+                            ),
+                        )
+                 )
+                , 3),
+            array('', ContentRepositoryInterface::CHOICE_OR, array(), 9),
         );
     }
 
@@ -539,5 +848,19 @@ class ContentRepositoryTest extends AbstractKernelTestCase
         $status = $statusRepository->findOneByInitial();
 
         $this->assertFalse($this->repository->hasStatusedElement($status));
+    }
+
+    /**
+     * @param array $data
+     */
+    protected function replaceKeywordLabelById($data)
+    {
+        $keywordsLabelToId = $this->keywordsLabelToId;
+        array_walk_recursive($data, function (&$item, $key) use ($keywordsLabelToId) {
+            if (array_key_exists($item, $keywordsLabelToId)) {
+                $item = new \MongoId($keywordsLabelToId[$item]);
+            }
+        });
+        return $data;
     }
 }

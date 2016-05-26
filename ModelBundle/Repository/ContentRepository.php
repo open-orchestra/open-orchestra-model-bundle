@@ -72,27 +72,12 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     }
 
     /**
-     * @param string $language
-     * @param string $contentType
-     * @param string $choiceType
-     * @param string $keywords
-     *
-     * @deprecated will be removed in 1.2.0, use findByContentTypeAndKeywords
-     *
-     * @return array
-     */
-    public function findByContentTypeAndChoiceTypeAndKeywordsAndLanguage($language, $contentType = '', $choiceType = self::CHOICE_AND, $keywords = null)
-    {
-        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.0 and will be removed in 1.2.0. Use the '.__CLASS__.'::findByContentTypeAndKeywords method instead.', E_USER_DEPRECATED);
-
-        return $this->findByContentTypeAndKeywords($language, $contentType, $choiceType, $keywords);
-    }
-
-    /**
      * @param string      $language
      * @param string      $contentType
      * @param string      $choiceType
      * @param string|null $keywords
+     *
+     * @deprecated will be removed in 1.3.0
      *
      * @return array
      */

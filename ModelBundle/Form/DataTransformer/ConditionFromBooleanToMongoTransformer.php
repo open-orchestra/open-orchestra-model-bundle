@@ -47,7 +47,7 @@ class ConditionFromBooleanToMongoTransformer implements ConditionFromBooleanToBd
      */
     protected function transformField($conditions)
     {
-        if (!is_null($conditions)) {
+        if (is_array($conditions)) {
             foreach ($conditions as $key => $condition) {
                 if (is_array($condition)){
                     $conditions[$key] = $this->transformField($condition);
