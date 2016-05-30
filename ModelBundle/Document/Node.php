@@ -594,16 +594,6 @@ class Node implements NodeInterface
     }
 
     /**
-     * @return boolean
-     *
-     * @deprecated use isInMenu
-     */
-    public function getInMenu()
-    {
-        return $this->isInMenu();
-    }
-
-    /**
      * @return string
      */
     public function getRole()
@@ -687,20 +677,5 @@ class Node implements NodeInterface
     {
         $this->areas = new ArrayCollection();
         $this->blocks = new ArrayCollection();
-    }
-
-    /**
-     * @return boolean
-     *
-     * @deprecated use the AuthorizeEditionManager
-     */
-    public function isEditable()
-    {
-        $isEditable = true;
-        if ($this->getNodeId() != self::TRANSVERSE_NODE_ID && $this->getStatus() instanceof StatusInterface) {
-            $isEditable = !$this->getStatus()->isPublished();
-        }
-
-        return $isEditable;
     }
 }

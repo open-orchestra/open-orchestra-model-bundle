@@ -37,20 +37,6 @@ class NodeRepositoryTest extends AbstractKernelTestCase
      *
      * @dataProvider provideLanguageLastVersionAndSiteId
      */
-    public function testFindOnePublishedByNodeIdAndLanguageAndSiteIdInLastVersion($language, $version, $siteId)
-    {
-        $node = $this->repository->findPublishedInLastVersion(NodeInterface::ROOT_NODE_ID, $language, $siteId);
-
-        $this->assertSameNode($language, $version, $siteId, $node);
-    }
-
-    /**
-     * @param string $language
-     * @param int    $version
-     * @param string $siteId
-     *
-     * @dataProvider provideLanguageLastVersionAndSiteId
-     */
     public function testFindOneCurrentlyPublished($language, $version, $siteId)
     {
         $node = $this->repository->findOneCurrentlyPublished(NodeInterface::ROOT_NODE_ID, $language, $siteId);
@@ -369,23 +355,6 @@ class NodeRepositoryTest extends AbstractKernelTestCase
             array('fixture_page_community', 1, 1, 1, '2', 'en'),
             array('page_unexistant', 1, 0, 1, '2', 'fr'),
         );
-    }
-
-    /**
-     * @param string $language
-     * @param string $siteId
-     * @param int    $count
-     *
-     * @dataProvider provideLanguageSiteIdAndCount
-     */
-    public function testFindLastPublishedVersion($language, $siteId, $count)
-    {
-        $nodes = $this->repository->findLastPublishedVersion($language, $siteId);
-
-        $this->assertCount($count, $nodes);
-        foreach ($nodes as $node) {
-            $this->assertSame($language, $node->getLanguage());
-        }
     }
 
     /**

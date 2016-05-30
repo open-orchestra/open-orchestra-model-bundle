@@ -47,21 +47,6 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
      * @param string $contentId
      * @param string $language
      *
-     * @deprecated will be removed in 1.2.0, use findLastPublishedVersion
-     *
-     * @return ContentInterface
-     */
-    public function findLastPublishedVersionByContentIdAndLanguage($contentId, $language)
-    {
-        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.0 and will be removed in 1.2.0. Use the '.__CLASS__.'::findLastPublishedVersion method instead.', E_USER_DEPRECATED);
-
-        return $this->findLastPublishedVersion($contentId, $language);
-    }
-
-    /**
-     * @param string $contentId
-     * @param string $language
-     *
      * @return ContentInterface
      */
     public function findLastPublishedVersion($contentId, $language)
@@ -221,41 +206,11 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
      * @param string $contentId
      * @param string $language
      *
-     * @deprecated will be removed in 1.2.0, use findOneByLanguage
-     *
-     * @return ContentInterface|null
-     */
-    public function findOneByContentIdAndLanguage($contentId, $language)
-    {
-        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.0 and will be removed in 1.2.0. Use the '.__CLASS__.'::findOneByLanguage method instead.', E_USER_DEPRECATED);
-
-        return $this->findOneByLanguage($contentId, $language);
-    }
-
-    /**
-     * @param string $contentId
-     * @param string $language
-     *
      * @return ContentInterface|null
      */
     public function findOneByLanguage($contentId, $language)
     {
         return $this->findOneByLanguageAndVersion($contentId, $language, null);
-    }
-
-    /**
-     * @param string $contentId
-     * @param string $language
-     *
-     * @deprecated will be removed in 1.2.0, use findByLanguage
-     *
-     * @return array
-     */
-    public function findByContentIdAndLanguage($contentId, $language)
-    {
-        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.0 and will be removed in 1.2.0. Use the '.__CLASS__.'::findByLanguage method instead.', E_USER_DEPRECATED);
-
-        return $this->findByLanguage($contentId, $language);
     }
 
     /**
@@ -286,22 +241,6 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
      * @param string      $language
      * @param int|null    $version
      *
-     * @deprecated will be removed in 1.2.0, use findOneByLanguageAndVersion
-     *
-     * @return ContentInterface|null
-     */
-    public function findOneByContentIdAndLanguageAndVersion($contentId, $language, $version = null)
-    {
-        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.0 and will be removed in 1.2.0. Use the '.__CLASS__.'::findOneByLanguageAndVersion method instead.', E_USER_DEPRECATED);
-
-        return $this->findOneByLanguageAndVersion($contentId, $language, $version);
-    }
-
-    /**
-     * @param string      $contentId
-     * @param string      $language
-     * @param int|null    $version
-     *
      * @return ContentInterface|null
      */
     public function findOneByLanguageAndVersion($contentId, $language, $version = null)
@@ -309,22 +248,6 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         $qa = $this->createAggregationQueryWithContentIdAndLanguageAndVersion($contentId, $language, $version);
 
         return $this->singleHydrateAggregateQuery($qa);
-    }
-
-    /**
-     * @param string|null                 $contentType
-     * @param PaginateFinderConfiguration $configuration
-     * @param string|null                 $siteId
-     *
-     * @deprecated will be removed in 1.2.0, use findPaginatedLastVersionByContentTypeAndSite
-     *
-     * @return array
-     */
-    public function findByContentTypeAndSiteIdInLastVersionForPaginate($contentType = null, PaginateFinderConfiguration $configuration = null, $siteId = null)
-    {
-        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.0 and will be removed in 1.2.0. Use the '.__CLASS__.'::findPaginatedLastVersionByContentTypeAndSite method instead.', E_USER_DEPRECATED);
-
-        return $this->findPaginatedLastVersionByContentTypeAndSite($contentType, $configuration, $siteId);
     }
 
     /**
@@ -392,35 +315,6 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         $this->generateLastVersionFilter($qa, $elementName);
 
         return $this->countDocumentAggregateQuery($qa);
-    }
-
-    /**
-     * @param string       $author
-     * @param boolean|null $published
-     * @param int|null     $limit
-     *
-     * @return array
-     *
-     * @deprecated will be removed in 1.2.0
-     */
-    public function findByAuthor($author, $published = null, $limit = null)
-    {
-        $qa = $this->createAggregationQuery();
-        $filter = array(
-            'createdBy' => $author,
-            'deleted' => false
-        );
-        if (null !== $published) {
-            $filter['status.published'] = $published;
-        }
-
-        $qa->match($filter);
-
-        if (null !== $limit) {
-            $qa->limit($limit);
-        }
-
-        return $this->hydrateAggregateQuery($qa);
     }
 
     /**
