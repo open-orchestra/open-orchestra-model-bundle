@@ -83,7 +83,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
      */
     public function findByContentTypeAndKeywords($language, $contentType = '', $choiceType = self::CHOICE_AND, $keywords = null)
     {
-        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 1.2.0', E_USER_DEPRECATED);
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 1.3.0', E_USER_DEPRECATED);
 
         $qa = $this->createAggregationQuery();
         $qa->match($this->generateFilterPublishedNotDeletedOnLanguage($language));
