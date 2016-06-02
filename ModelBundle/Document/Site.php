@@ -92,6 +92,8 @@ class Site implements SiteInterface
     {
         $this->robotsTxt = SiteInterface::ROBOTS_TXT_DEFAULT;
         $this->aliases = new ArrayCollection();
+        $this->metaKeywords = new ArrayCollection();
+        $this->metaDescriptions = new ArrayCollection();
     }
 
     /**
