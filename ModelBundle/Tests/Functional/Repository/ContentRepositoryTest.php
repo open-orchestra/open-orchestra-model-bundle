@@ -7,8 +7,8 @@ use OpenOrchestra\Pagination\Configuration\FinderConfiguration;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use Phake;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
-
 use OpenOrchestra\BaseBundle\Context\CurrentSiteIdInterface;
+use OpenOrchestra\ModelInterface\Repository\RepositoryTrait\KeywordableTraitInterface;
 
 /**
  * Class ContentRepositoryTest
@@ -553,7 +553,7 @@ class ContentRepositoryTest extends AbstractKernelTestCase
      */
     protected function replaceKeywordLabelById($condition)
     {
-        $conditionWithoutOperator = preg_replace(ContentRepositoryInterface::OPERATOR_SPLIT, ' ', $condition);
+        $conditionWithoutOperator = preg_replace(KeywordableTraitInterface::OPERATOR_SPLIT, ' ', $condition);
         $conditionArray = explode(' ', $conditionWithoutOperator);
 
         foreach ($conditionArray as $keyword) {
