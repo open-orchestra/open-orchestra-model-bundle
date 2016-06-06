@@ -369,6 +369,22 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      *
      * @return mixed
      */
+    public function findOneByNodeAndSite($nodeId, $siteId)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
+        $qa->match(array('nodeId' => $nodeId));
+
+        return $this->singleHydrateAggregateQuery($qa);
+    }
+
+/**
+     * @param string $nodeId
+     * @param string $siteId
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     *
+     * @return mixed
+     */
     public function findByNodeAndSiteSortedByVersion($nodeId, $siteId)
     {
         $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
