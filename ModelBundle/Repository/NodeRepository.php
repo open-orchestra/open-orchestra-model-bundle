@@ -377,7 +377,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         return $this->singleHydrateAggregateQuery($qa);
     }
 
-/**
+    /**
      * @param string $nodeId
      * @param string $siteId
      *
