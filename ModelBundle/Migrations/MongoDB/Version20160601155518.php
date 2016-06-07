@@ -136,32 +136,42 @@ class Version20160601155518 extends AbstractMigration implements ContainerAwareI
         }
     }
 
-
     protected function parseNode($direction) {
+        $step = 10;
         $documentManager = $this->container->get('object_manager');
-        $nodes = $this->container->get('open_orchestra_model.repository.node')->findAll();
-        foreach ($nodes as &$node) {
-            $blocks = $node->getBlocks();
-            $isChanged = false;
-            foreach ($blocks as $key => $block) {
-                $component = $block->getComponent();
-                foreach (array_keys($this->configuration) as $type) {
-                    if(array_key_exists($component, $this->configuration[$type])) {
-                        foreach ($this->configuration[$type][$component] as $attributePath) {
-                            $attributePath = explode('.', $attributePath);
-                            $attribute = $attributePath[0];
-                            array_shift($attributePath);
-                            if (null !== $block->getAttribute($attribute)) {
-                                $block->addAttribute($attribute, $this->transform($block->getAttribute($attribute), $direction, $type, $attributePath));
-                                $node->setBlock($key, $block);
-                                $isChanged = true;
+        $countNodes = $documentManager->createQueryBuilder('OpenOrchestra\ModelBundle\Document\Node')
+            ->getQuery()
+            ->execute()
+            ->count();
+        for ($i = 0; $i < intval($countNodes / $step) + 1; $i++) {
+            $nodes = $documentManager->createQueryBuilder('OpenOrchestra\ModelBundle\Document\Node')
+                ->limit($step)
+                ->skip($i * $step)
+                ->getQuery()
+                ->execute();
+            foreach ($nodes as $node) {
+                $blocks = $node->getBlocks();
+                $isChanged = false;
+                foreach ($blocks as $key => $block) {
+                    $component = $block->getComponent();
+                    foreach (array_keys($this->configuration) as $type) {
+                        if(array_key_exists($component, $this->configuration[$type])) {
+                            foreach ($this->configuration[$type][$component] as $attributePath) {
+                                $attributePath = explode('.', $attributePath);
+                                $attribute = $attributePath[0];
+                                array_shift($attributePath);
+                                if (null !== $block->getAttribute($attribute)) {
+                                    $block->addAttribute($attribute, $this->transform($block->getAttribute($attribute), $direction, $type, $attributePath));
+                                    $node->setBlock($key, $block);
+                                    $isChanged = true;
+                                }
                             }
                         }
                     }
                 }
-            }
-            if ($isChanged) {
-                $documentManager->flush($node);
+                if ($isChanged) {
+                    $documentManager->flush($node);
+                }
             }
         }
     }
