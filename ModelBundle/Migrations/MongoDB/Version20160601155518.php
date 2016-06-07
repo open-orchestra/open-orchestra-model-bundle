@@ -215,7 +215,7 @@ class Version20160601155518 extends AbstractMigration implements ContainerAwareI
      */
     protected function transformCsv($condition)
     {
-        $keywordWithoutOperator = preg_replace(KeywordableTraitInterface::$OPERATOR_SPLIT, ' ', $condition);
+        $keywordWithoutOperator = preg_replace(explode('|', KeywordableTraitInterface::OPERATOR_SPLIT), ' ', $condition);
         $keywordArray = explode(' ', $keywordWithoutOperator);
         foreach ($keywordArray as &$keyword) {
             if ($keyword != '') {
