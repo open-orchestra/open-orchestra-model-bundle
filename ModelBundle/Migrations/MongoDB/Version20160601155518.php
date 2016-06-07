@@ -12,8 +12,6 @@ use OpenOrchestra\ModelInterface\Repository\RepositoryTrait\KeywordableTraitInte
 class Version20160601155518 extends AbstractMigration implements ContainerAwareInterface
 {
     private $container;
-    protected $collections;
-    protected $configuration;
 
     /**
      * Set the container
@@ -23,8 +21,6 @@ class Version20160601155518 extends AbstractMigration implements ContainerAwareI
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
-        $this->getKeywordableCollection();
-        $this->loadConfiguration();
     }
 
     /**
@@ -41,6 +37,8 @@ class Version20160601155518 extends AbstractMigration implements ContainerAwareI
     public function up(Database $db)
     {
         $databaseName = $db->getName();
+        $collections = $this->getKeywordableCollection();
+        $configuration = $this->loadConfiguration();
 
         foreach ($this->collections as $collection) {
             $db->execute('
@@ -217,7 +215,7 @@ class Version20160601155518 extends AbstractMigration implements ContainerAwareI
      */
     protected function transformCsv($condition)
     {
-        $keywordWithoutOperator = preg_replace(KeywordableTraitInterface::OPERATOR_SPLIT, ' ', $condition);
+        $keywordWithoutOperator = preg_replace(KeywordableTraitInterface::$OPERATOR_SPLIT, ' ', $condition);
         $keywordArray = explode(' ', $keywordWithoutOperator);
         foreach ($keywordArray as &$keyword) {
             if ($keyword != '') {
