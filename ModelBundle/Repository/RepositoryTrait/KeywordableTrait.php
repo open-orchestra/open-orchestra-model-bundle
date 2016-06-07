@@ -59,7 +59,7 @@ trait KeywordableTrait
         if (count($subElements) > 0) {
             $operator = ($subElements[3][0] == ' OR ') ? '$or' : '$and';
             $result = array();
-            foreach($subElements[2] as $key => $subElement) {
+            foreach ($subElements[2] as $key => $subElement) {
                 if (array_key_exists($subElement, $aliases)) {
                     if ($subElements[1][$key] != '') {
                         array_push($result, array('$not' => $aliases[$subElement]));
