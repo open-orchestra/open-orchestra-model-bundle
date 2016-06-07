@@ -17,7 +17,7 @@ class KeywordRepository extends AbstractAggregateRepository implements KeywordRe
     /**
      * @param string $label
      *
-     * @return KeywordInterface
+     * @return KeywordInterface|null
      */
     public function findOneByLabel($label)
     {

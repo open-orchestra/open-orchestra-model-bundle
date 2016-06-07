@@ -1,0 +1,8 @@
+condition_csv:
+    # Describe here block where the keyword_choice_type form type is used as csv condition
+    # bloc component name: array of attributes using keyword_choice_type
+    media_list_by_keyword: [keywords]
+condition_boolean:
+    # Describe here block where the keyword_choice_type form type is used as boolean condition
+    # bloc component name: array of attributes using keyword_choice_type
+    content_list: [contentSearch.keywords]

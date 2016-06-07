@@ -50,7 +50,5 @@ open_orchestra_model:
             class: FakeFieldType
         embed_status:
             class: FakeEmbedStatus
-        embed_keyword:
-            class: FakeEmbedKeyword
         translated_value:
             class: FakeTranslatedValue

@@ -7,7 +7,6 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\ModelBundle\Document\Content;
 use OpenOrchestra\ModelBundle\Document\ContentAttribute;
-use OpenOrchestra\ModelBundle\Document\EmbedKeyword;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
 
 /**
@@ -98,7 +97,7 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
         $content->setStatus($this->getReference('status-published'));
         $content->setCurrentlyPublished(true);
         $content->setVersion(2);
-        $content->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-lorem')));
+        $content->addKeyword($this->getReference('keyword-lorem'));
         $content->setLinkedToSite(false);
         $content->setSiteId('2');
 
@@ -120,7 +119,7 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
         $content->setName("DS 3 " . $language);
         $content->setLanguage($language);
         $content->setVersion(1);
-        $content->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-lorem')));
+        $content->addKeyword($this->getReference('keyword-lorem'));
         $content->setLinkedToSite(true);
         $content->setSiteId('2');
 
@@ -148,8 +147,8 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
         $content->setName("206 3 portes " . $language);
         $content->setLanguage($language);
         $content->setVersion(2);
-        $content->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-lorem')));
-        $content->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-sit')));
+        $content->addKeyword($this->getReference('keyword-lorem'));
+        $content->addKeyword($this->getReference('keyword-sit'));
         $content->setLinkedToSite(false);
         $content->setSiteId('2');
 
@@ -177,8 +176,8 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
         $content->setName("Jean-Paul");
         $content->setLanguage($language);
         $content->setVersion(2);
-        $content->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-lorem')));
-        $content->addKeyword(EmbedKeyword::createFromKeyword($this->getReference('keyword-sit')));
+        $content->addKeyword($this->getReference('keyword-lorem'));
+        $content->addKeyword($this->getReference('keyword-sit'));
         $content->setLinkedToSite(false);
         $content->setSiteId('2');
 
