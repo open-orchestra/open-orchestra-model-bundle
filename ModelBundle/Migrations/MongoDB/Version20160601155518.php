@@ -12,6 +12,8 @@ use OpenOrchestra\ModelInterface\Repository\RepositoryTrait\KeywordableTraitInte
 class Version20160601155518 extends AbstractMigration implements ContainerAwareInterface
 {
     private $container;
+    protected $collections;
+    protected $configuration;
 
     /**
      * Set the container
@@ -37,8 +39,8 @@ class Version20160601155518 extends AbstractMigration implements ContainerAwareI
     public function up(Database $db)
     {
         $databaseName = $db->getName();
-        $collections = $this->getKeywordableCollection();
-        $configuration = $this->loadConfiguration();
+        $this->getKeywordableCollection();
+        $this->loadConfiguration();
 
         foreach ($this->collections as $collection) {
             $db->execute('
@@ -67,6 +69,9 @@ class Version20160601155518 extends AbstractMigration implements ContainerAwareI
      */
     public function down(Database $db)
     {
+        $this->getKeywordableCollection();
+        $this->loadConfiguration();
+
         foreach ($this->collections as $collection) {
             $db->execute('
                 db.' . $collection . '.find().forEach(function(item) {
@@ -145,6 +150,7 @@ class Version20160601155518 extends AbstractMigration implements ContainerAwareI
             $nodes = $documentManager->createQueryBuilder('OpenOrchestra\ModelBundle\Document\Node')
                 ->limit($step)
                 ->skip($i * $step)
+                ->sort('_id', 'asc')
                 ->getQuery()
                 ->execute();
             foreach ($nodes as $node) {
