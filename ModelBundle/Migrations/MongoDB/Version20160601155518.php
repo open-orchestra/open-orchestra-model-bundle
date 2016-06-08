@@ -277,6 +277,7 @@ class Version20160601155518 extends AbstractMigration implements ContainerAwareI
     protected function reverseTransformBoolean($condition)
     {
         $transformer = $this->container->get('open_orchestra.transformer.boolean_to_bdd');
+        $transformer->setField('keywords');
         $condition = $transformer->transform($condition);
 
         $transformer = $this->container->get('open_orchestra_backoffice.transformer.condition_to_reference_keyword');
