@@ -687,6 +687,8 @@ class Node implements NodeInterface
     {
         $this->areas = new ArrayCollection();
         $this->blocks = new ArrayCollection();
+        $this->metaKeywords = new ArrayCollection();
+        $this->metaDescriptions = new ArrayCollection();
     }
 
     /**
