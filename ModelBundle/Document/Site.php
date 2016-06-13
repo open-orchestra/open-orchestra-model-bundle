@@ -64,6 +64,20 @@ class Site implements SiteInterface
     protected $theme;
 
     /**
+     * @var string $metaKeywords
+     *
+     * @ODM\Field(type="hash")
+     */
+    protected $metaKeywords;
+
+    /**
+     * @var string $metaDescriptions
+     *
+     * @ODM\Field(type="hash")
+     */
+    protected $metaDescriptions;
+
+    /**
      * @var string $robotsTxt
      *
      * @ODM\Field(type="string")
@@ -190,6 +204,116 @@ class Site implements SiteInterface
     public function getTheme()
     {
         return $this->theme;
+    }
+
+    /**
+     * @param array $metaKeywords
+     */
+    public function setMetaKeywords(array $metaKeywords)
+    {
+        $this->metaKeywords = array();
+
+        foreach ($metaKeywords as $language => $keywords) {
+            $this->addMetaKeywords($language, $keywords);
+        }
+    }
+
+    /**
+     * @param string $language
+     * @param string $metaKeywords
+     */
+    public function addMetaKeywords($language, $metaKeywords)
+    {
+        if (\is_string($language) && \is_string($metaKeywords)) {
+            $this->metaKeywords[$language] = $metaKeywords;
+        }
+    }
+
+    /**
+     * @param string $language
+     */
+    public function removeMetaKeywords($language)
+    {
+        if (\is_string($language) && isset($this->metaKeywords[$language])) {
+            unset($this->metaKeywords[$language]);
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getMetaKeywords()
+    {
+        return $this->metaKeywords;
+    }
+
+    /**
+     * @param string $language
+     *
+     * @return string
+     */
+    public function getMetaKeywordsInLanguage($language)
+    {
+        if (isset($this->metaKeywords[$language])) {
+            return $this->metaKeywords[$language];
+        }
+
+        return '';
+    }
+
+    /**
+     * @param array $metaDescriptions
+     */
+    public function setMetaDescriptions(array $metaDescriptions)
+    {
+        $this->metaDescriptions = array();
+
+        foreach ($metaDescriptions as $language => $description) {
+            $this->addMetaDescription($language, $description);
+        }
+    }
+
+    /**
+     * @param string $language
+     * @param string $metaDescription
+     */
+    public function addMetaDescription($language, $metaDescription)
+    {
+        if (\is_string($language) && \is_string($metaDescription)) {
+            $this->metaDescriptions[$language] = $metaDescription;
+        }
+    }
+
+    /**
+     * @param string $language
+     */
+    public function removeMetaDescription($language)
+    {
+        if (\is_string($language) && isset($this->metaDescriptions[$language])) {
+            unset($this->metaDescriptions[$language]);
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getMetaDescriptions()
+    {
+        return $this->metaDescriptions;
+    }
+
+    /**
+     * @param string $language
+     *
+     * @return string
+     */
+    public function getMetaDescriptionInLanguage($language)
+    {
+        if (isset($this->metaDescriptions[$language])) {
+            return $this->metaDescriptions[$language];
+        }
+
+        return '';
     }
 
     /**
