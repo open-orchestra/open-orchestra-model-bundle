@@ -196,6 +196,20 @@ class Node implements NodeInterface
     protected $routePattern;
 
     /**
+     * @var string $metaKeywords
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $metaKeywords;
+
+    /**
+     * @var string $metaDescription
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $metaDescription;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -677,5 +691,37 @@ class Node implements NodeInterface
     {
         $this->areas = new ArrayCollection();
         $this->blocks = new ArrayCollection();
+    }
+
+    /**
+     * @param string $metaKeywords
+     */
+    public function setMetaKeywords($metaKeywords)
+    {
+        $this->metaKeywords = $metaKeywords;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMetaKeywords()
+    {
+        return $this->metaKeywords;
+    }
+
+    /**
+     * @param string $metaDescription
+     */
+    public function setMetaDescription($metaDescription)
+    {
+        $this->metaDescription = $metaDescription;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMetaDescription()
+    {
+        return $this->metaDescription;
     }
 }
