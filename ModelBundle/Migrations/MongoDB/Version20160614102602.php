@@ -15,7 +15,7 @@ class Version20160614102602 extends AbstractMigration implements ContainerAwareI
     protected $container;
 
     /**
-     * ContainerInterface $container
+     * @param ContainerInterface $container
      */
     public function setContainer(ContainerInterface $container = null)
     {
@@ -31,7 +31,7 @@ class Version20160614102602 extends AbstractMigration implements ContainerAwareI
     }
 
     /**
-     * Database $db
+     * @param Database $db
      */
     public function up(Database $db)
     {
@@ -82,7 +82,7 @@ class Version20160614102602 extends AbstractMigration implements ContainerAwareI
     }
 
     /**
-     * Database $db
+     * @param Database $db
      */
     public function down(Database $db)
     {
