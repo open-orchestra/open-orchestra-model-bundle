@@ -29,7 +29,7 @@ abstract class AbstractStatus implements StatusInterface
     protected $name;
 
     /**
-     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\TranslatedValueInterface")
+     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\TranslatedValueInterface", strategy="set")
      * @ORCHESTRA\Search(key="label", type="translatedValue")
      */
     protected $labels;
