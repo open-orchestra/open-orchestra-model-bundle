@@ -50,26 +50,31 @@ trait KeywordableTrait
      */
     public function transformSubConditionToMongoCondition($condition, array &$aliases)
     {
+        $elements = array();
         $subElements = array();
-        if (preg_match(KeywordableTraitInterface::IS_AND_BOOLEAN, $condition)) {
-            preg_match_all(KeywordableTraitInterface::GET_AND_SUB_BOOLEAN, $condition, $subElements);
-        } elseif  (preg_match(KeywordableTraitInterface::IS_OR_BOOLEAN, $condition)) {
+        $operator = '$and';
+        if (preg_match_all(KeywordableTraitInterface::IS_AND_BOOLEAN, $condition, $elements)) {
+            preg_match_all(KeywordableTraitInterface::IS_AND_BOOLEAN, $condition, $subElements);
+        } elseif  (preg_match_all(KeywordableTraitInterface::IS_OR_BOOLEAN, $condition, $elements)) {
+            $operator = '$or';
             preg_match_all(KeywordableTraitInterface::GET_OR_SUB_BOOLEAN, $condition, $subElements);
         }
-        if (count($subElements) > 0) {
-            $operator = ($subElements[3][0] == ' OR ') ? '$or' : '$and';
+        if (count($elements) > 0) {
+            foreach ($elements as $key => &$element) {
+                $element = array_merge($element, $subElements[$key]);
+            }
             $result = array();
-            foreach ($subElements[2] as $key => $subElement) {
-                if (array_key_exists($subElement, $aliases)) {
-                    if ($subElements[1][$key] != '') {
-                        array_push($result, array('$not' => $aliases[$subElement]));
+            foreach ($elements[2] as $key => $element) {
+                if (array_key_exists($element, $aliases)) {
+                    if ($elements[1][$key] != '') {
+                        array_push($result, array('$not' => $aliases[$element]));
                     } else {
-                        array_push($result, $aliases[$subElement]);
+                        array_push($result, $aliases[$element]);
                     }
-                    unset($aliases[$subElement]);
+                    unset($aliases[$element]);
                 } else {
-                    $comparison = ($subElements[1][$key] == '') ? '$eq' : '$ne';
-                    array_push($result, array('keywords.$id' => array($comparison => new \MongoId($subElement))));
+                    $comparison = ($elements[1][$key] == '') ? '$eq' : '$ne';
+                    array_push($result, array('keywords.$id' => array($comparison => new \MongoId($element))));
                 }
             }
 
