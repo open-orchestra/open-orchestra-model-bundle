@@ -5,11 +5,10 @@ The Open Orchestra model bundle
 
 | Service       | Badge         |
 | ------------- |:-------------:|
-| Travis | [![Build Status](https://travis-ci.org/open-orchestra/open-orchestra-model-bundle.svg)](https://travis-ci.org/open-orchestra/open-orchestra-model-bundle) |
-| CodeClimate (quality) | [![Code Climate](https://codeclimate.com/github/open-orchestra/open-orchestra-model-bundle/badges/gpa.svg)](https://codeclimate.com/github/open-orchestra/open-orchestra-model-bundle) |
-| CodeClimate (coverage) | [![Test Coverage](https://codeclimate.com/github/open-orchestra/open-orchestra-model-bundle/badges/coverage.svg)](https://codeclimate.com/github/open-orchestra/open-orchestra-model-bundle/coverage) |
+| Travis | [![Build Status](https://travis-ci.org/open-orchestra/open-orchestra-model-bundle.svg?branch=1.1)](https://travis-ci.org/open-orchestra/open-orchestra-model-bundle) |
 | Sensio insight | [![SensioLabsInsight](https://insight.sensiolabs.com/projects/22e9c4d6-0a06-4570-9053-38236f69cdee/big.png)](https://insight.sensiolabs.com/projects/22e9c4d6-0a06-4570-9053-38236f69cdee) |
-| VersionEye | [![Dependency Status](https://www.versioneye.com/user/projects/551e8799971f781c4800017c/badge.svg?style=flat)](https://www.versioneye.com/user/projects/551e8799971f781c4800017c) |
+| Code Climate (Quality) | [![Code Climate](https://codeclimate.com/github/open-orchestra/open-orchestra-model-bundle/badges/gpa.svg)](https://codeclimate.com/github/open-orchestra/open-orchestra-model-bundle) |
+| Code Climate (Code coverage) | [![Test Coverage](https://codeclimate.com/github/open-orchestra/open-orchestra-model-bundle/badges/coverage.svg)](https://codeclimate.com/github/open-orchestra/open-orchestra-model-bundle/coverage) |
 | Latest Stable Version | [![Latest Stable Version](https://poser.pugx.org/open-orchestra/open-orchestra-model-bundle/v/stable)](https://packagist.org/packages/open-orchestra/open-orchestra-model-bundle) |
 | Total Downloads | [![Total Downloads](https://poser.pugx.org/open-orchestra/open-orchestra-model-bundle/downloads)](https://packagist.org/packages/open-orchestra/open-orchestra-model-bundle) |
 
