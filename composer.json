@@ -14,10 +14,8 @@
     "antimattr/mongodb-migrations-bundle": "~1.0.1",
     "doctrine/data-fixtures": "~1.1.1",
     "stof/doctrine-extensions-bundle": "~1.2.1",
-    "open-orchestra/open-orchestra-model-interface": "1.2.*@dev",
-    "open-orchestra/open-orchestra-mongo-libs": "1.2.*@dev",
-
-    "open-orchestra/open-orchestra-libs": "@dev"
+    "open-orchestra/open-orchestra-model-interface": "self.version",
+    "open-orchestra/open-orchestra-mongo-libs": "self.version"
   },
 
   "require-dev": {
@@ -25,13 +23,8 @@
     "phake/phake": "~2.1.0",
     "phpunit/phpunit" : "~4.8.0",
 
-    "open-orchestra/open-orchestra-base-bundle": "1.2.*@dev"
-  },
-
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.2.x-dev"
-    }
+    "open-orchestra/open-orchestra-libs": "self.version",
+    "open-orchestra/open-orchestra-base-bundle": "self.version"
   },
 
   "config": {
