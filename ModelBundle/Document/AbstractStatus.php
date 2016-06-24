@@ -106,21 +106,6 @@ abstract class AbstractStatus implements StatusInterface
     }
 
     /**
-     * @param string $language
-     *
-     * @return string
-     * @throws TranslatedValueNotExisting
-     */
-    public function getLabel($language)
-    {
-        if ($this->labels->containsKey($language)) {
-            return $this->labels->get($language)->getValue();
-        }
-
-        throw new TranslatedValueNotExisting();
-    }
-
-    /**
      * @return ArrayCollection
      */
     public function getLabels()
