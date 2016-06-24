@@ -3,6 +3,7 @@
 namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use OpenOrchestra\ModelInterface\Exceptions\TranslatedValueNotExisting;
 use OpenOrchestra\ModelInterface\Model\RoleInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
@@ -113,19 +114,19 @@ abstract class AbstractStatus implements StatusInterface
     }
 
     /**
-     * @param TranslatedValueInterface $translatedValue
+     * @param TranslatedValueInterface $label
      */
-    public function addLabel(TranslatedValueInterface $translatedValue)
+    public function addLabel(TranslatedValueInterface $label)
     {
-        $this->labels->add($translatedValue);
+        $this->labels->set($label->getLanguage(), $label);
     }
 
     /**
-     * @param TranslatedValueInterface $translatedValue
+     * @param TranslatedValueInterface $label
      */
-    public function removeLabel(TranslatedValueInterface $translatedValue)
+    public function removeLabel(TranslatedValueInterface $label)
     {
-        $this->labels->removeElement($translatedValue);
+        $this->labels->remove($label->getLanguage());
     }
 
     /**
