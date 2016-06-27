@@ -3,7 +3,7 @@ parameters:
 
 services:
     open_orchestra_model.manager.content_for_embed:
-        class: %open_orchestra_model.manager.entity_db_mapper.class%
+        class: '%open_orchestra_model.manager.entity_db_mapper.class%'
         arguments:
-            - @doctrine.odm.mongodb.document_manager
-            - %open_orchestra_model.document.content.class%
+            - '@doctrine.odm.mongodb.document_manager'
+            - '%open_orchestra_model.document.content.class%'

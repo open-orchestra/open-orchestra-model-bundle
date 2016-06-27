@@ -3,6 +3,6 @@ parameters:
 
 services:
     open_orchestra_model.saver.versionnable_saver:
-        class: %open_orchestra_model.saver.versionnable_saver.class%
+        class: '%open_orchestra_model.saver.versionnable_saver.class%'
         calls:
             - [setContainer, ['@service_container']]

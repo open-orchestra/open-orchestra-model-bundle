@@ -9,20 +9,20 @@ parameters:
 
 services:
     open_orchestra_model.doctrine_listener.initial_status:
-        class: %open_orchestra_model.doctrine_listener.initial_status.class%
+        class: '%open_orchestra_model.doctrine_listener.initial_status.class%'
         calls:
             - [setContainer, ['@service_container']]
         tags:
             -  { name: doctrine_mongodb.odm.event_listener, event: preUpdate }
             -  { name: doctrine_mongodb.odm.event_listener, event: postFlush }
     open_orchestra_model.doctrine_listener.set_initial_status:
-        class: %open_orchestra_model.doctrine_listener.set_initial_status.class%
+        class: '%open_orchestra_model.doctrine_listener.set_initial_status.class%'
         calls:
-            - [ setContainer, [ @service_container ] ]
+            - [ setContainer, [ '@service_container' ] ]
         tags:
             -  { name: doctrine_mongodb.odm.event_listener, event: prePersist }
     open_orchestra_model.doctrine_listener.generate_path:
-        class: %open_orchestra_model.doctrine_listener.generate_path.class%
+        class: '%open_orchestra_model.doctrine_listener.generate_path.class%'
         calls:
             - [setContainer, ['@service_container']]
         tags:
@@ -30,31 +30,31 @@ services:
             -  { name: doctrine_mongodb.odm.event_listener, event: preUpdate }
             -  { name: doctrine_mongodb.odm.event_listener, event: postFlush }
     open_orchestra_model.doctrine_listener.generate_id:
-        class: %open_orchestra_model.doctrine_listener.generate_id.class%
+        class: '%open_orchestra_model.doctrine_listener.generate_id.class%'
         arguments:
-            - @open_orchestra.annotation_reader
-            - @open_orchestra_model.helper.suppress_special_character
+            - '@open_orchestra.annotation_reader'
+            - '@open_orchestra_model.helper.suppress_special_character'
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: doctrine_mongodb.odm.event_listener, event: prePersist }
     open_orchestra_model.doctrine_listener.update_non_translatable_content_field:
-        class: %open_orchestra_model.doctrine_listener.update_non_translatable_content_field.class%
+        class: '%open_orchestra_model.doctrine_listener.update_non_translatable_content_field.class%'
         arguments:
-            - %open_orchestra_model.document.content_attribute.class%
-            - %open_orchestra_model.content.immutable_properties%
+            - '%open_orchestra_model.document.content_attribute.class%'
+            - '%open_orchestra_model.content.immutable_properties%'
         calls:
             - [setContainer, ['@service_container']]
         tags:
             -  { name: doctrine_mongodb.odm.event_listener, event: preUpdate }
     open_orchestra_model.doctrine_listener.update_site_nodes_theme:
-        class: %open_orchestra_model.doctrine_listener.update_site_nodes_theme.class%
+        class: '%open_orchestra_model.doctrine_listener.update_site_nodes_theme.class%'
         calls:
             - [setContainer, ['@service_container']]
         tags:
             - { name: doctrine_mongodb.odm.event_listener, event: preUpdate }
     open_orchestra_model.doctrine_listener.update_bo_label_node:
-        class: %open_orchestra_model.doctrine_listener.update_bo_label_node.class%
+        class: '%open_orchestra_model.doctrine_listener.update_bo_label_node.class%'
         calls:
             - [setContainer, ['@service_container']]
         tags:

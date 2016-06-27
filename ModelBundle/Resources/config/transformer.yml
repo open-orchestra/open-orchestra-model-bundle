@@ -4,11 +4,11 @@ parameters:
 
 services:
     open_orchestra_model.transformer.embed_site_to_site:
-        class: %open_orchestra_model.transformer.embed_site_to_site.class%
+        class: '%open_orchestra_model.transformer.embed_site_to_site.class%'
         arguments:
-            - @open_orchestra_model.repository.site
+            - '@open_orchestra_model.repository.site'
     open_orchestra_model.transformer.embed_status_to_status:
-        class: %open_orchestra_model.transformer.embed_status_to_status.class%
+        class: '%open_orchestra_model.transformer.embed_status_to_status.class%'
         arguments:
-            - @open_orchestra_model.repository.status
-            - %open_orchestra_model.document.embed_status.class%
+            - '@open_orchestra_model.repository.status'
+            - '%open_orchestra_model.document.embed_status.class%'
