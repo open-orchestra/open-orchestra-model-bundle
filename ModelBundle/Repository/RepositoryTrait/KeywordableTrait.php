@@ -3,6 +3,7 @@
 namespace OpenOrchestra\ModelBundle\Repository\RepositoryTrait;
 
 use OpenOrchestra\ModelInterface\Repository\RepositoryTrait\KeywordableTraitInterface;
+
 /**
  * Trait KeywordableTrait
  */
@@ -19,7 +20,6 @@ trait KeywordableTrait
     public function transformConditionToMongoCondition($condition, $count = 0, array $aliases = array(), $delimiter = '##')
     {
         if (!is_null($condition)) {
-            $result = array();
             $encapsuledElements = array();
             preg_match_all(KeywordableTraitInterface::GET_BALANCED_BRACKETS, $condition, $encapsuledElements);
             foreach ($encapsuledElements[0] as $key => $encapsuledElement) {
@@ -44,9 +44,7 @@ trait KeywordableTrait
      * @param string $condition
      * @param array  $aliases
      *
-     * @return array
-     *
-     * @throws TransformationFailedException
+     * @return array|null
      */
     public function transformSubConditionToMongoCondition($condition, array &$aliases)
     {
@@ -54,14 +52,14 @@ trait KeywordableTrait
         $subElements = array();
         $operator = '$and';
         if (preg_match_all(KeywordableTraitInterface::IS_AND_BOOLEAN, $condition, $elements)) {
-            preg_match_all(KeywordableTraitInterface::IS_AND_BOOLEAN, $condition, $subElements);
+            preg_match_all(KeywordableTraitInterface::GET_AND_SUB_BOOLEAN, $condition, $subElements);
         } elseif  (preg_match_all(KeywordableTraitInterface::IS_OR_BOOLEAN, $condition, $elements)) {
             $operator = '$or';
             preg_match_all(KeywordableTraitInterface::GET_OR_SUB_BOOLEAN, $condition, $subElements);
         }
         if (count($elements) > 0) {
-            foreach ($elements as $key => &$element) {
-                $element = array_merge($element, $subElements[$key]);
+            foreach ($elements as $key => $element) {
+                $elements[$key] = array_merge($element, $subElements[$key]);
             }
             $result = array();
             foreach ($elements[2] as $key => $element) {
@@ -80,5 +78,7 @@ trait KeywordableTrait
 
             return (array($operator => $result));
         }
+
+        return null;
     }
 }
