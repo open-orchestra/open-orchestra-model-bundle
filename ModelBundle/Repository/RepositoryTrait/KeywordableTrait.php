@@ -45,8 +45,6 @@ trait KeywordableTrait
      * @param array  $aliases
      *
      * @return array|null
-     *
-     * @throws \Symfony\Component\Form\Exception\TransformationFailedException
      */
     public function transformSubConditionToMongoCondition($condition, array &$aliases)
     {
