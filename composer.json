@@ -25,7 +25,6 @@
 
     "open-orchestra/open-orchestra-libs": "self.version",
     "open-orchestra/open-orchestra-base-bundle": "self.version"
-
   },
 
   "config": {
