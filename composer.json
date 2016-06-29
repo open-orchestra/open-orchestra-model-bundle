@@ -12,7 +12,7 @@
   "require": {
     "php": "~5.6.0",
     "antimattr/mongodb-migrations-bundle": "~1.0.1",
-    "doctrine/data-fixtures": "~1.1.1",
+    "doctrine/data-fixtures": "~1.2.0",
     "stof/doctrine-extensions-bundle": "~1.2.1",
     "open-orchestra/open-orchestra-model-interface": "self.version",
     "open-orchestra/open-orchestra-mongo-libs": "self.version"
