@@ -21,7 +21,11 @@
   "require-dev": {
     "phpunit/phpunit": "~5.4.0",
     "phake/phake": "~2.3.0",
-    "codeclimate/php-test-reporter": "~0.3.2"
+    "codeclimate/php-test-reporter": "~0.3.2",
+
+    "open-orchestra/open-orchestra-libs": "self.version",
+    "open-orchestra/open-orchestra-base-bundle": "self.version"
+
   },
 
   "config": {
