@@ -374,25 +374,40 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
      * @param int|null            $siteId
      *
      * @return int
+     *
+     * @deprecated will be removed in 1.3.0, use countByContentTypeAndSiteInLastVersionWithFilter
      */
     public function countByContentTypeInLastVersionWithFilter($contentType = null, FinderConfiguration $configuration = null, $siteId = null)
     {
+        return $this->countByContentTypeAndSiteInLastVersionWithFilter($contentType, $configuration, $siteId);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface::countByContentTypeAndSiteInLastVersionWithFilter()
+     */
+    public function countByContentTypeAndSiteInLastVersionWithFilter(
+        $contentType = null,
+        FinderConfiguration $configuration = null,
+        $siteId = null
+    ) {
         $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
         $qa = $this->generateFilter($qa, $configuration);
         $qa->match($this->generateDeletedFilter());
         if (!is_null($siteId)) {
             $qa->match($this->generateSiteIdAndNotLinkedFilter($siteId));
         }
-        $elementName = 'content';
-        $this->generateLastVersionFilter($qa, $elementName);
+        $this->generateLastVersionFilter($qa, 'content');
 
-        return $this->countDocumentAggregateQuery($qa, $elementName);
+        return $this->countDocumentAggregateQuery($qa);
     }
 
     /**
      * @param string|null $contentType
      *
      * @return int
+     *
+     * @deprecated will be removed in 1.3.0, use countByContentTypeAndSiteInLastVersion
      */
     public function countByContentTypeInLastVersion($contentType = null)
     {
@@ -400,6 +415,23 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         $qa->match($this->generateDeletedFilter());
         $elementName = 'content';
         $this->generateLastVersionFilter($qa, $elementName);
+
+        return $this->countDocumentAggregateQuery($qa);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface::countByContentTypeAndSiteInLastVersion()
+     */
+    public function countByContentTypeAndSiteInLastVersion($contentType = null, $siteId = null)
+    {
+        $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
+        $qa->match($this->generateDeletedFilter());
+        if (!is_null($siteId)) {
+            $qa->match($this->generateSiteIdAndNotLinkedFilter($siteId));
+        }
+
+        $this->generateLastVersionFilter($qa, 'content');
 
         return $this->countDocumentAggregateQuery($qa);
     }
