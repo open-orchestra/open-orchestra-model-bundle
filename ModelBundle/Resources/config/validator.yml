@@ -7,32 +7,32 @@ parameters:
 
 services:
     open_orchestra_model.validator.prevent_prohibited_status_change:
-        class: %open_orchestra_model.validator.prevent_prohibited_status_change.class%
+        class: '%open_orchestra_model.validator.prevent_prohibited_status_change.class%'
         arguments:
-            - @security.context
-            - @doctrine_mongodb.odm.default_document_manager
-            - @open_orchestra_model.repository.role
+            - '@security.context'
+            - '@doctrine_mongodb.odm.default_document_manager'
+            - '@open_orchestra_model.repository.role'
         tags:
             - { name: validator.constraint_validator, alias: prevent_prohibited_status_change}
     open_orchestra_model.validator.check_route_pattern:
-        class: %open_orchestra_model.validator.check_route_pattern.class%
+        class: '%open_orchestra_model.validator.check_route_pattern.class%'
         arguments:
-            - @open_orchestra_model.repository.node
+            - '@open_orchestra_model.repository.node'
         tags:
             - { name: validator.constraint_validator, alias: check_route_pattern}
     open_orchestra_model.validator.unique_site_id:
-        class: %open_orchestra_model.validator.unique_site_id.class%
+        class: '%open_orchestra_model.validator.unique_site_id.class%'
         arguments:
-            - @open_orchestra_model.repository.site
+            - '@open_orchestra_model.repository.site'
         tags:
             - { name: validator.constraint_validator, alias: unique_site_id}
     open_orchestra_model.validator.unique_content_type_id:
-        class: %open_orchestra_model.validator.unique_content_type_id.class%
+        class: '%open_orchestra_model.validator.unique_content_type_id.class%'
         arguments:
-            - @open_orchestra_model.repository.content_type
+            - '@open_orchestra_model.repository.content_type'
         tags:
             - { name: validator.constraint_validator, alias: unique_content_type_id}
     open_orchestra_model.validator.id_authorized_character:
-        class: %open_orchestra_model.validator.id_authorized_character.class%
+        class: '%open_orchestra_model.validator.id_authorized_character.class%'
         tags:
             - { name: validator.constraint_validator, alias: id_authorized_character}

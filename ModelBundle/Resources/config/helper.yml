@@ -2,4 +2,4 @@ parameters:
     open_orchestra_model.helper.suppress_special_character.class: OpenOrchestra\ModelBundle\Helper\SuppressSpecialCharacterHelper
 services:
     open_orchestra_model.helper.suppress_special_character:
-        class: %open_orchestra_model.helper.suppress_special_character.class%
+        class: '%open_orchestra_model.helper.suppress_special_character.class%'
