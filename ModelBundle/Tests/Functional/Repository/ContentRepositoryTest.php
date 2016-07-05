@@ -334,6 +334,34 @@ class ContentRepositoryTest extends AbstractKernelTestCase
 
     /**
      * @param string  $contentType
+     * @param string  $siteId
+     * @param integer $count
+     *
+     * @dataProvider provideCountByContentTypeAndSiteInLastVersion
+     */
+    public function testCountByContentTypeAndSiteInLastVersion($contentType, $siteId, $count)
+    {
+        $contents = $this->repository->countByContentTypeAndSiteInLastVersion($contentType, $siteId);
+        $this->assertEquals($count, $contents);
+    }
+
+    /**
+     * @return array
+     */
+    public function provideCountByContentTypeAndSiteInLastVersion()
+    {
+        return array(
+            array('car', '1', 2),
+            array('car', '2', 3),
+            array('customer', '1', 2),
+            array('customer', '2', 2),
+            array('news', '1', 3),
+            array('news', '2', 4),
+        );
+    }
+
+    /**
+     * @param string  $contentType
      * @param array   $descriptionEntity
      * @param string  $search
      * @param int     $count
@@ -360,6 +388,49 @@ class ContentRepositoryTest extends AbstractKernelTestCase
             array('car', $descriptionEntity, $this->generateColumnsProvider(null, 'portes'), 2),
             array('news', $descriptionEntity, $this->generateColumnsProvider(null, 'news'), 0),
             array('news', $descriptionEntity, $this->generateColumnsProvider(null, 'lorem'), 1),
+        );
+    }
+
+    /**
+     * @param string $contentType
+     * @param array  $descriptionEntity
+     * @param string $search
+     * @param string $siteId
+     * @param int    $count
+     *
+     * @dataProvider provideCountByContentTypeAndSiteInLastVersionWithSearchFilter
+     */
+    public function testCountByContentTypeAndSiteInLastVersionWithSearchFilter(
+        $contentType,
+        $descriptionEntity,
+        $search,
+        $siteId,
+        $count
+    ) {
+        $configuration = FinderConfiguration::generateFromVariable($descriptionEntity, $search);
+
+        $contents = $this->repository->countByContentTypeInLastVersionWithFilter($contentType, $configuration, $siteId);
+        $this->assertEquals($count, $contents);
+    }
+
+    /**
+     * @return array
+     */
+    public function provideCountByContentTypeAndSiteInLastVersionWithSearchFilter()
+    {
+        $descriptionEntity = $this->getDescriptionColumnEntity();
+
+        return array(
+            array('car', $descriptionEntity, $this->generateColumnsProvider(array('name' => '206')), '1', 1),
+            array('car', $descriptionEntity, $this->generateColumnsProvider(array('name' => '206')), '2', 1),
+            array('car', $descriptionEntity, $this->generateColumnsProvider(array('name' => 'DS 3')), '1', 0),
+            array('car', $descriptionEntity, $this->generateColumnsProvider(array('name' => 'DS 3')), '2', 1),
+            array('car', $descriptionEntity, $this->generateColumnsProvider(null, 'portes'), '1', 2),
+            array('car', $descriptionEntity, $this->generateColumnsProvider(null, 'portes'), '2', 2),
+            array('news', $descriptionEntity, $this->generateColumnsProvider(null, 'news'), '1', 0),
+            array('news', $descriptionEntity, $this->generateColumnsProvider(null, 'news'), '2', 0),
+            array('news', $descriptionEntity, $this->generateColumnsProvider(null, 'lorem'), '1', 1),
+            array('news', $descriptionEntity, $this->generateColumnsProvider(null, 'lorem'), '2', 1),
         );
     }
 
