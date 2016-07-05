@@ -379,6 +379,8 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
      */
     public function countByContentTypeInLastVersionWithFilter($contentType = null, FinderConfiguration $configuration = null, $siteId = null)
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.3 and will be removed in 1.3.0. Use the '.__CLASS__.'::countByContentTypeAndSiteInLastVersionWithFilter method instead.', E_USER_DEPRECATED);
+
         return $this->countByContentTypeAndSiteInLastVersionWithFilter($contentType, $configuration, $siteId);
     }
 
@@ -411,6 +413,8 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
      */
     public function countByContentTypeInLastVersion($contentType = null)
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.3 and will be removed in 1.3.0. Use the '.__CLASS__.'::countByContentTypeAndSiteInLastVersion method instead.', E_USER_DEPRECATED);
+
         $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
         $qa->match($this->generateDeletedFilter());
         $elementName = 'content';
