@@ -1,6 +1,6 @@
 open_orchestra_model_validators:
     field:
-        special_character: Le champ contient des caractères interdits
+        special_character: Le champ contient des caractères interdits, les caractères autorisés sont a-z, 0-9, _, -.
     document:
         content_type:
             unique_field_id: Les identifiants des champs doivent être unique

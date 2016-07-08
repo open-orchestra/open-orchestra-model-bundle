@@ -1,6 +1,6 @@
 open_orchestra_model_validators:
     field:
-        special_character: Das Feld ein unzulässiges Zeichen enthält
+        special_character: Das Feld ein unzulässiges Zeichen enthält. Erlaubte Zeichen sind a-z, 0-9, _, -.
     document:
         content_type:
             unique_field_id: Felder identifizieren eindeutig sein
