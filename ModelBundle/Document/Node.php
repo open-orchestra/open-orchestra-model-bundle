@@ -13,7 +13,6 @@ use OpenOrchestra\MongoTrait\Statusable;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
-use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\MongoTrait\Cacheable;
 use OpenOrchestra\MongoTrait\Metaable;
 use OpenOrchestra\MongoTrait\Sitemapable;
