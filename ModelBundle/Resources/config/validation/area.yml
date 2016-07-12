@@ -2,5 +2,7 @@ OpenOrchestra\ModelBundle\Document\Area:
     properties:
         areaId:
             - NotBlank: ~
+        areaType:
+            - NotBlank: ~
         subAreas:
             - Valid: ~

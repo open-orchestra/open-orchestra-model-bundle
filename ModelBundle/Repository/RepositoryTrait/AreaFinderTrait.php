@@ -9,11 +9,11 @@ trait AreaFinderTrait
 {
     /**
      * @param \OpenOrchestra\ModelInterface\Model\AreaContainerInterface $area
-     * @param string                 $areaId
+     * @param string                                                     $areaId
      *
      * @return null|\OpenOrchestra\ModelInterface\Model\AreaInterface
      */
-    public function findAreaByAreaId(\OpenOrchestra\ModelInterface\Model\AreaContainerInterface $area, $areaId)
+    public function findAreaByAreaId($area, $areaId)
     {
         foreach ($area->getAreas() as $subArea) {
             if ($areaId == $subArea->getAreaId()) {

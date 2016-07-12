@@ -39,8 +39,23 @@ class Area implements AreaInterface
      * @var string $boDirection
      *
      * @ODM\Field(type="string")
+     * @deprecated will be removed in 2.0
      */
     protected $boDirection;
+
+    /**
+     * @var string $width
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $width;
+
+    /**
+     * @var string $areaType
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $areaType;
 
     /**
      * @var ArrayCollection
@@ -126,9 +141,13 @@ class Area implements AreaInterface
      * Set boDirection
      *
      * @param string $boDirection
+     *
+     * @deprecated will be removed in 2.0
      */
     public function setBoDirection($boDirection)
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
+
         $this->boDirection = $boDirection;
     }
 
@@ -136,10 +155,49 @@ class Area implements AreaInterface
      * Get boDirection
      *
      * @return string $boDirection
+     *
+     * @deprecated will be removed in 2.0
      */
     public function getBoDirection()
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
         return $this->boDirection;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWidth()
+    {
+        return $this->width;
+    }
+
+    /**
+     * @param string $width
+     */
+    public function setWidth($width)
+    {
+        $this->width = $width;
+    }
+
+    /**
+     * Set area type
+     *
+     * @param string $areaType
+     */
+    public function setAreaType($areaType)
+    {
+        $this->areaType = $areaType;
+    }
+
+    /**
+     * Get area type
+     *
+     * @return string $areaType
+     */
+    public function getAreaType()
+    {
+        return $this->areaType;
     }
 
     /**
@@ -174,6 +232,7 @@ class Area implements AreaInterface
                 $this->getAreas()->remove($key);
                 break;
             }
+            $area->removeAreaByAreaId($areaId);
         }
     }
 
@@ -182,9 +241,9 @@ class Area implements AreaInterface
      */
     public function setAreas(Collection $areas)
     {
-        $this->areas = new ArrayCollection();
+        $this->subAreas = new ArrayCollection();
         foreach ($areas as $area) {
-            $this->areas->add($area);
+            $this->subAreas->add($area);
         }
     }
 

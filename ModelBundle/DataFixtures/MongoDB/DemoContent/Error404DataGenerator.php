@@ -72,17 +72,17 @@ EOF;
      */
     protected function generateNodeGlobal($htmlContent, $language, $routePattern)
     {
-        $error404Block0 = new Block();
+        /*$error404Block0 = new Block();
         $error404Block0->setLabel('Wysiwyg');
         $error404Block0->setComponent(TinyMCEWysiwygStrategy::NAME);
         $error404Block0->setAttributes(array(
             "htmlContent" => $htmlContent
         ));
-        $error404Block0->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));
+        $error404Block0->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));*/
 
         $error404Area0 = $this->createHeader();
-        $error404Area4 = $this->createArea('Main content area 1', 'mainContentArea1', 'main-content-area1');
-        $error404Area4->addBlock(array('nodeId' => 0, 'blockId' => 1));
+        $error404Area4 = $this->createColumnArea('Main content area 1', 'mainContentArea1', 'main-content-area1');
+        //$error404Area4->addBlock(array('nodeId' => 0, 'blockId' => 1));
         $error404Area5 = $this->createModuleArea();
         $error404Area3 = $this->createMain(array($error404Area4, $error404Area5));
         $error404Area6 = $this->createFooter();
@@ -98,10 +98,12 @@ EOF;
         $error404->setRoutePattern($routePattern);
         $error404->setInFooter(false);
         $error404->setInMenu(false);
-        $error404->addArea($error404Area0);
-        $error404->addArea($error404Area3);
-        $error404->addArea($error404Area6);
-        $error404->addBlock($error404Block0);
+
+        $rootArea = $error404->getArea();
+        $rootArea->addArea($error404Area0);
+        $rootArea->addArea($error404Area3);
+        $rootArea->addArea($error404Area6);
+        //$error404->addBlock($error404Block0);
 
         return $error404;
     }

@@ -3,6 +3,7 @@
 namespace OpenOrchestra\ModelBundle\Repository;
 
 use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\AreaFinderTrait;
+use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
 use OpenOrchestra\ModelInterface\Model\StatusableInterface;
@@ -19,6 +20,22 @@ use MongoRegex;
 class NodeRepository extends AbstractAggregateRepository implements FieldAutoGenerableRepositoryInterface, NodeRepositoryInterface
 {
     use AreaFinderTrait;
+
+    /**
+     * @param $node  NodeInterface
+     * @param string $areaId
+     *
+     * @return null|AreaInterface
+     */
+    public function findAreaInNodeByAreaId(NodeInterface $node, $areaId)
+    {
+        $rootArea = $node->getArea();
+        if ($areaId === $rootArea->getAreaId()) {
+            return $rootArea;
+        }
+
+        return $this->findAreaByAreaId($rootArea, $areaId);
+    }
 
     /**
      * @param string $entityId

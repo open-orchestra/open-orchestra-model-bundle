@@ -97,16 +97,16 @@ EOF;
      */
     protected function generateNodeGlobal($htmlContent, $name, $language, $routePattern)
     {
-        $siteLegalBlock0 = new Block();
+        /*$siteLegalBlock0 = new Block();
         $siteLegalBlock0->setLabel('Wysiwyg 1');
         $siteLegalBlock0->setComponent(TinyMCEWysiwygStrategy::NAME);
         $siteLegalBlock0->setAttributes(array(
             "htmlContent" => $htmlContent));
-        $siteLegalBlock0->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));
+        $siteLegalBlock0->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));*/
 
         $siteLegalArea0 = $this->createHeader();
-        $siteLegalArea4 = $this->createArea('Main content area 1', 'mainContentArea1', 'main-content-area1' );
-        $siteLegalArea4->addBlock(array('nodeId' => 0, 'blockId' => 1));
+        $siteLegalArea4 = $this->createColumnArea('Main content area 1', 'mainContentArea1', 'main-content-area1' );
+        //$siteLegalArea4->addBlock(array('nodeId' => 0, 'blockId' => 1));
         $siteLegalArea3 = $this->createMain(array($siteLegalArea4));
         $siteLegalArea5 = $this->createFooter();
 
@@ -120,10 +120,12 @@ EOF;
         $siteLegal->setRoutePattern($routePattern);
         $siteLegal->setInFooter(true);
         $siteLegal->setInMenu(false);
-        $siteLegal->addArea($siteLegalArea0);
-        $siteLegal->addArea($siteLegalArea3);
-        $siteLegal->addArea($siteLegalArea5);
-        $siteLegal->addBlock($siteLegalBlock0);
+
+        $rootArea = $siteLegal->getArea();
+        $rootArea->addArea($siteLegalArea0);
+        $rootArea->addArea($siteLegalArea3);
+        $rootArea->addArea($siteLegalArea5);
+        //$siteLegal->addBlock($siteLegalBlock0);
 
         return $siteLegal;
     }

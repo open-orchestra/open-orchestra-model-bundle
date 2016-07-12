@@ -123,22 +123,22 @@ EOF;
      */
     protected function generateNodeGlobal($htmlContent, $language, $routePattern)
     {
-        $nodeHomeBlock0 = new Block();
+        /*$nodeHomeBlock0 = new Block();
         $nodeHomeBlock0->setLabel('Wysiwyg');
         $nodeHomeBlock0->setComponent(TinyMCEWysiwygStrategy::NAME);
         $nodeHomeBlock0->setAttributes(array(
             "htmlContent" => $htmlContent
         ));
-        $nodeHomeBlock0->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));
+        $nodeHomeBlock0->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));*/
 
-        $nodeHomeArea4 = $this->createArea('Main content area 1', 'mainContentArea1', 'main-content-area1');
-        $nodeHomeArea4->addBlock(array('nodeId' => 0, 'blockId' => 1));
+        $nodeHomeArea4 = $this->createColumnArea('Main content area 1', 'mainContentArea1', 'main-content-area1');
+        //$nodeHomeArea4->addBlock(array('nodeId' => 0, 'blockId' => 1));
         $nodeHomeArea5 = $this->createModuleArea();
         $nodeHomeArea3 = $this->createMain(array($nodeHomeArea4, $nodeHomeArea5));
         $nodeHomeArea6 = $this->createFooter();
+        $nodeHomeArea0 = $this->createHeader();
 
         if ($this->version > 1) {
-            $nodeHomeArea0 = $this->createHeader();
 
             $nodeHome = $this->createBaseNode();
             $nodeHome->setLanguage($language);
@@ -149,17 +149,16 @@ EOF;
             $nodeHome->setRoutePattern($routePattern);
             $nodeHome->setInFooter(false);
             $nodeHome->setInMenu(true);
-            $nodeHome->addArea($nodeHomeArea0);
             $nodeHome->setSitemapChangefreq('hourly');
             $nodeHome->setSitemapPriority('0.8');
         } else {
             $nodeHome = $this->references["node-".$language];
-            $areaHeader = $this->getAreaHeader($nodeHome);
-            if ($areaHeader != null) {
+            //$areaHeader = $this->getAreaHeader($nodeHome);
+            /*if ($areaHeader != null) {
                 $areaHeader->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 0));
                 $areaHeader->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 1, 'blockParameter' => array('request.aliasId')));
                 $areaHeader->addBlock(array('nodeId' => 0, 'blockId' => 0));
-            }
+            }*/
         }
         $nodeHome->setName('Orchestra ?');
         $nodeHome->setBoLabel('Orchestra ?');
@@ -168,9 +167,11 @@ EOF;
         if ('status-published' == $this->status) {
             $nodeHome->setCurrentlyPublished(true);
         }
-        $nodeHome->addArea($nodeHomeArea3);
-        $nodeHome->addArea($nodeHomeArea6);
-        $nodeHome->addBlock($nodeHomeBlock0);
+        $rootArea = $nodeHome->getArea();
+        $rootArea->addArea($nodeHomeArea0);
+        $rootArea->addArea($nodeHomeArea3);
+        $rootArea->addArea($nodeHomeArea6);
+        //$nodeHome->addBlock($nodeHomeBlock0);
 
         return $nodeHome;
     }
