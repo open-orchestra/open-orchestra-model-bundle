@@ -99,11 +99,9 @@ abstract class AbstractDataGenerator
 
         $header->addArea($column);
 
-
-        //$header = $this->createArea('Header','header','header','h');
-        //$header->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 0));
-        //$header->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 1, 'blockParameter' => array('request.aliasId')));
-        //$header->addBlock(array('nodeId' => 0, 'blockId' => 0));
+        $column->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 0));
+        $column->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 1, 'blockParameter' => array('request.aliasId')));
+        $column->addBlock(array('nodeId' => 0, 'blockId' => 0));
 
         return $header;
     }
@@ -122,9 +120,8 @@ abstract class AbstractDataGenerator
 
         $footer->addArea($columnMenu);
         $footer->addArea($columnInfo);
-        //$area = $this->createArea('Footer','footer','footer','h');
-        //$area->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3, 'blockParameter' => array('request.aliasId')));
-        //$area->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 2));
+        $columnMenu->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3, 'blockParameter' => array('request.aliasId')));
+        $columnInfo->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 2));
 
         return $footer;
     }
@@ -139,9 +136,9 @@ abstract class AbstractDataGenerator
     {
         $area = $this->createColumnArea('Module area', 'moduleArea', $htmlClass);
 
-        /*if ($haveBlocks) {
+        if ($haveBlocks) {
             $area->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 4));
-        }*/
+        }
 
         return $area;
     }
@@ -178,10 +175,10 @@ abstract class AbstractDataGenerator
         $root->setAreaId(AreaInterface::ROOT_AREA_ID);
         $root->setLabel(AreaInterface::ROOT_AREA_LABEL);
 
-        /*$siteBlockLanguage = new Block();
+        $siteBlockLanguage = new Block();
         $siteBlockLanguage->setLabel('Language list');
         $siteBlockLanguage->setComponent(LanguageListStrategy::NAME);
-        $siteBlockLanguage->addArea(array('nodeId' => 0, 'areaId' => 'header'));*/
+        $siteBlockLanguage->addArea(array('nodeId' => 0, 'areaId' => 'header'));
 
         $node = new Node();
         $node->setArea($root);
@@ -198,8 +195,7 @@ abstract class AbstractDataGenerator
         $node->setTemplateId('');
         $node->setTheme('themePresentation');
         $node->setDefaultSiteTheme(true);
-        //$node->addBlock($siteBlockLanguage);
-        $node->setBoDirection('v');
+        $node->addBlock($siteBlockLanguage);
 
         return $node;
     }

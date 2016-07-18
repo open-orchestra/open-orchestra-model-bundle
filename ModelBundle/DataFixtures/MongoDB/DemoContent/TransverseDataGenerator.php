@@ -49,6 +49,10 @@ class TransverseDataGenerator extends AbstractDataGenerator
         $root->setAreaId(AreaInterface::ROOT_AREA_ID);
         $root->setLabel(AreaInterface::ROOT_AREA_LABEL);
 
+        $mainColumn = $this->createColumnArea('main', 'main');
+        $mainRow = $this->createMain(array($mainColumn));
+        $root->addArea($mainRow);
+
         $nodeTransverse = new Node();
         $nodeTransverse->setNodeId(NodeInterface::TRANSVERSE_NODE_ID);
         $nodeTransverse->setMaxAge(1000);

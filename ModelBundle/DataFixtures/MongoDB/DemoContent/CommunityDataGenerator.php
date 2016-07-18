@@ -94,15 +94,15 @@ EOF;
      */
     protected function generateNodeGlobal($htmlContent, $name, $language, $routePattern)
     {
-        /*$siteComBlock0 = new Block();
+        $siteComBlock0 = new Block();
         $siteComBlock0->setLabel('Wysiwyg 1');
         $siteComBlock0->setComponent(TinyMCEWysiwygStrategy::NAME);
         $siteComBlock0->setAttributes(array("htmlContent" => $htmlContent));
-        $siteComBlock0->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));*/
+        $siteComBlock0->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));
 
         $header = $this->createHeader();
         $contentColumn = $this->createColumnArea('Main content area 1', 'mainContentArea1', 'main-content-area1');
-        /*$siteComArea4->addBlock(array('nodeId' => 0, 'blockId' => 1));*/
+        $contentColumn->addBlock(array('nodeId' => 0, 'blockId' => 1));
         $moduleColumn = $this->createModuleArea();
         $main = $this->createMain(array($contentColumn, $moduleColumn));
         $footer = $this->createFooter();
@@ -123,7 +123,7 @@ EOF;
         $rootArea->addArea($header);
         $rootArea->addArea($main);
         $rootArea->addArea($footer);
-        /*$siteCom->addBlock($siteComBlock0);*/
+        $siteCom->addBlock($siteComBlock0);
 
         return $siteCom;
     }
