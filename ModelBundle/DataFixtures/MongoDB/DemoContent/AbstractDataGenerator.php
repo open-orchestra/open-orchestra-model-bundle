@@ -112,7 +112,7 @@ abstract class AbstractDataGenerator
     protected function createFooter()
     {
         $footer = new Area();
-        $footer->setAreaId('row_header');
+        $footer->setAreaId('row_footer');
         $footer->setAreaType(AreaInterface::TYPE_ROW);
 
         $columnMenu = $this->createColumnArea('menu footer', 'column1_footer');
