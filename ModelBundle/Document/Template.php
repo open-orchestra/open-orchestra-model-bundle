@@ -92,7 +92,7 @@ class Template implements TemplateInterface
 
     /**
      * @var ArrayCollection
-     *
+     * @deprecated will be removed in 2.0
      * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\BlockInterface")
      */
     protected $blocks;
@@ -184,17 +184,23 @@ class Template implements TemplateInterface
 
     /**
      * @param BlockInterface $block
+     * @deprecated will be removed in 2.0
      */
     public function addBlock(BlockInterface $block)
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
+
         $this->blocks->add($block);
     }
 
     /**
      * @param BlockInterface $block
+     * @deprecated will be removed in 2.0
      */
     public function removeBlock(BlockInterface $block)
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
+
         $this->blocks->removeElement($block);
     }
 
@@ -202,17 +208,24 @@ class Template implements TemplateInterface
      * Remove block with index $key
      *
      * @param string $key
+     *
+     * @deprecated will be removed in 2.0
      */
     public function removeBlockWithKey($key)
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
+
         $this->blocks->remove($key);
     }
 
     /**
      * @return array
+     * @deprecated will be removed in 2.0
      */
     public function getBlocks()
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
+
         return $this->blocks;
     }
 

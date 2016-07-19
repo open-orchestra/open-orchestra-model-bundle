@@ -613,7 +613,7 @@ class Node implements NodeInterface
     {
         @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
 
-        return $this->areas;
+        return $this->area->getAreas();
     }
 
     /**
