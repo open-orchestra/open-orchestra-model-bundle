@@ -526,6 +526,48 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     }
 
     /**
+     * @param string $siteId
+     * @param string $type
+     *
+     * @return array
+     */
+    public function findLastVersionByTypeCurrentlyPublished($siteId, $type = NodeInterface::TYPE_DEFAULT)
+    {
+        $qa = $this->createAggregationQuery();
+        $qa->match(
+            array(
+                'siteId' => $siteId,
+                'deleted' => false,
+                'nodeType' => $type,
+                'currentlyPublished' => true,
+            )
+        );
+
+        return $this->findLastVersion($qa);
+    }
+
+    /**
+     * @param string $path
+     * @param string $siteId
+     *
+     * @return Collection
+     */
+    public function findByPathCurrentlyPublished($path, $siteId)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
+        $qa->match(
+            array(
+                'path' => new MongoRegex('/'.$path.'.*/i'),
+                'currentlyPublished' => true,
+                'deleted' => false,
+            )
+        );
+
+        return $this->findLastVersion($qa);
+    }
+
+
+    /**
      * @param string $path
      * @param string $siteId
      * @param string $language
