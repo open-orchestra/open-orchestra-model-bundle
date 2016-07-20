@@ -94,6 +94,7 @@ abstract class AbstractDataGenerator
         $header = new Area();
         $header->setAreaId('row_header');
         $header->setAreaType(AreaInterface::TYPE_ROW);
+        $header->setHtmlClass('header');
 
         $column = $this->createColumnArea('header', 'column_header');
 
@@ -114,6 +115,7 @@ abstract class AbstractDataGenerator
         $footer = new Area();
         $footer->setAreaId('row_footer');
         $footer->setAreaType(AreaInterface::TYPE_ROW);
+        $footer->setHtmlClass('footer');
 
         $columnMenu = $this->createColumnArea('menu footer', 'column1_footer');
         $columnInfo = $this->createColumnArea('footer information', 'column2_footer');
