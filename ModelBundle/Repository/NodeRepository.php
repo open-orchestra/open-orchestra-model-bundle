@@ -566,7 +566,6 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         return $this->findLastVersion($qa);
     }
 
-
     /**
      * @param string $path
      * @param string $siteId
