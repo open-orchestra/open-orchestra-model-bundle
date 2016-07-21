@@ -79,7 +79,7 @@ class LoadTemplateData extends AbstractFixture implements OrderedFixtureInterfac
         $generic->setVersion(1);
         $generic->setName('Homepage Template');
         $generic->setDeleted(false);
-        $generic->setArea($root);
+        $generic->setRootArea($root);
 
         return $generic;
     }
@@ -124,7 +124,7 @@ class LoadTemplateData extends AbstractFixture implements OrderedFixtureInterfac
         $full->setVersion(1);
         $full->setName('Full Template');
         $full->setDeleted(false);
-        $full->setArea($root);
+        $full->setRootArea($root);
 
         return $full;
     }

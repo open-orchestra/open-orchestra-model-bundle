@@ -167,7 +167,7 @@ EOF;
         if ('status-published' == $this->status) {
             $nodeHome->setCurrentlyPublished(true);
         }
-        $rootArea = $nodeHome->getArea();
+        $rootArea = $nodeHome->getRootArea();
         $rootArea->addArea($nodeHomeArea0);
         $rootArea->addArea($nodeHomeArea3);
         $rootArea->addArea($nodeHomeArea6);
@@ -183,7 +183,7 @@ EOF;
      */
     protected function getAreaHeader(NodeInterface $nodeHome)
     {
-        $areas = $nodeHome->getArea()->getAreas();
+        $areas = $nodeHome->getRootArea()->getAreas();
         foreach ($areas as $area) {
             if ($area->getAreaId() == "header") {
 

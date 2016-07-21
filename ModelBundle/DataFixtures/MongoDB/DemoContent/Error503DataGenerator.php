@@ -99,7 +99,7 @@ EOF;
         $error503->setInFooter(false);
         $error503->setInMenu(false);
 
-        $rootArea = $error503->getArea();
+        $rootArea = $error503->getRootArea();
         $rootArea->addArea($error503Area0);
         $rootArea->addArea($error503Area3);
         $rootArea->addArea($error503Area6);

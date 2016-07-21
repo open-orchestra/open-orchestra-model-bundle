@@ -24,7 +24,7 @@ class TemplateRepository extends AbstractAggregateRepository implements FieldAut
      */
     public function findAreaInTemplateByAreaId(TemplateInterface $template, $areaId)
     {
-        $rootArea = $template->getArea();
+        $rootArea = $template->getRootArea();
         if ($areaId === $rootArea->getAreaId()) {
             return $rootArea;
         }

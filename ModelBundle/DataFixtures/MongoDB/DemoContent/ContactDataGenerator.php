@@ -161,7 +161,7 @@ EOF;
         $siteContact->setInFooter(false);
         $siteContact->setInMenu(true);
 
-        $rootArea = $siteContact->getArea();
+        $rootArea = $siteContact->getRootArea();
         $rootArea->addArea($header);
         $rootArea->addArea($main);
         $rootArea->addArea($footer);

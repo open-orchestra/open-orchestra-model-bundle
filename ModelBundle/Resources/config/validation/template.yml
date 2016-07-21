@@ -5,5 +5,5 @@ OpenOrchestra\ModelBundle\Document\Template:
         deleted:
             - Type:
                 type: bool
-        area:
+        rootArea:
             - Valid: ~

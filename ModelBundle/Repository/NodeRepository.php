@@ -29,7 +29,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      */
     public function findAreaInNodeByAreaId(NodeInterface $node, $areaId)
     {
-        $rootArea = $node->getArea();
+        $rootArea = $node->getRootArea();
         if ($areaId === $rootArea->getAreaId()) {
             return $rootArea;
         }

@@ -183,7 +183,7 @@ abstract class AbstractDataGenerator
         $siteBlockLanguage->addArea(array('nodeId' => 0, 'areaId' => 'header'));
 
         $node = new Node();
-        $node->setArea($root);
+        $node->setRootArea($root);
         $node->setMaxAge(1000);
         $node->setNodeType(NodeInterface::TYPE_DEFAULT);
         $node->setSiteId('2');

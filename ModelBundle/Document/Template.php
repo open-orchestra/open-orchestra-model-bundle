@@ -80,7 +80,7 @@ class Template implements TemplateInterface
      *
      * @ODM\EmbedOne(targetDocument="OpenOrchestra\ModelInterface\Model\AreaInterface")
      */
-    protected $area;
+    protected $rootArea;
 
     /**
      * @var string $boDirection
@@ -167,19 +167,19 @@ class Template implements TemplateInterface
     }
 
     /**
-     * @param AreaInterface $area
+     * @param AreaInterface $rootArea
      */
-    public function setArea(AreaInterface $area)
+    public function setRootArea(AreaInterface $rootArea)
     {
-        $this->area = $area;
+        $this->rootArea = $rootArea;
     }
 
     /**
      * @return AreaInterface
      */
-    public function getArea()
+    public function getRootArea()
     {
-        return $this->area;
+        return $this->rootArea;
     }
 
     /**

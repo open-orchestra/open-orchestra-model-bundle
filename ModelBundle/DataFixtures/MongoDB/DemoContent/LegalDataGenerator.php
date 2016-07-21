@@ -121,7 +121,7 @@ EOF;
         $siteLegal->setInFooter(true);
         $siteLegal->setInMenu(false);
 
-        $rootArea = $siteLegal->getArea();
+        $rootArea = $siteLegal->getRootArea();
         $rootArea->addArea($siteLegalArea0);
         $rootArea->addArea($siteLegalArea3);
         $rootArea->addArea($siteLegalArea5);

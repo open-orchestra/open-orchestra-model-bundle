@@ -165,7 +165,7 @@ class Node implements NodeInterface
      *
      * @ODM\EmbedOne(targetDocument="OpenOrchestra\ModelInterface\Model\AreaInterface")
      */
-    protected $area;
+    protected $rootArea;
 
     /**
      * @var ArrayCollection
@@ -535,23 +535,24 @@ class Node implements NodeInterface
     }
 
     /**
-     * @param AreaInterface $area
+     * @param AreaInterface $rootArea
      */
-    public function setArea(AreaInterface $area)
+    public function setRootArea(AreaInterface $rootArea)
     {
-        $this->area = $area;
+        $this->rootArea = $rootArea;
     }
 
     /**
      * @return AreaInterface
      */
-    public function getArea()
+    public function getRootArea()
     {
-        return $this->area;
+        return $this->rootArea;
     }
 
     /**
      * @param AreaInterface $area
+     *
      * @deprecated will be removed in 2.0
      */
     public function addArea(AreaInterface $area)
@@ -613,7 +614,7 @@ class Node implements NodeInterface
     {
         @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
 
-        return $this->area->getAreas();
+        return $this->rootArea->getAreas();
     }
 
     /**

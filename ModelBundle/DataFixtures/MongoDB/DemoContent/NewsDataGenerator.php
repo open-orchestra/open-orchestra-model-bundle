@@ -138,7 +138,7 @@ EOF;
         $siteNews->setInFooter(false);
         $siteNews->setInMenu(true);
 
-        $rootArea = $siteNews->getArea();
+        $rootArea = $siteNews->getRootArea();
         $rootArea->addArea($siteNewsArea0);
         $rootArea->addArea($siteNewsArea3);
         $rootArea->addArea($siteNewsArea6);

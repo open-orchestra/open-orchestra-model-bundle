@@ -99,7 +99,7 @@ EOF;
         $error404->setInFooter(false);
         $error404->setInMenu(false);
 
-        $rootArea = $error404->getArea();
+        $rootArea = $error404->getRootArea();
         $rootArea->addArea($error404Area0);
         $rootArea->addArea($error404Area3);
         $rootArea->addArea($error404Area6);

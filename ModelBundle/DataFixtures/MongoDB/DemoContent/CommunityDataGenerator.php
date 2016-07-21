@@ -119,7 +119,7 @@ EOF;
         $siteCom->setInFooter(false);
         $siteCom->setInMenu(true);
 
-        $rootArea = $siteCom->getArea();
+        $rootArea = $siteCom->getRootArea();
         $rootArea->addArea($header);
         $rootArea->addArea($main);
         $rootArea->addArea($footer);

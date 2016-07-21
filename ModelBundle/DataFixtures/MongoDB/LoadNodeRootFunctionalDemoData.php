@@ -171,7 +171,7 @@ EOF
         $siteBlockContact->setClass('my-form-contact');
         $siteBlockContact->addArea(array('nodeId' => 0, 'areaId' => 'main'));
 
-        $rootArea = $this->node{$language}->getArea()->getAreas();
+        $rootArea = $this->node{$language}->getRootArea()->getAreas();
         foreach ($rootArea as $area) {
             if ($area->getAreaId() == "myMain") {
                 foreach ($area->getAreas() as $subArea) {

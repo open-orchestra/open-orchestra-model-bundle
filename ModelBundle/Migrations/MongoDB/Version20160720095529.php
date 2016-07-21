@@ -43,11 +43,11 @@ class Version20160720095529 extends AbstractMigration
                 return rowArea;
             }
             db.template.find().forEach(function(item) {
-                 var area = {}
-                 area.label = \'Root\';
-                 area.areaType = \'root\';
-                 area.areaId = \'root\';
-                 area.subAreas = [];
+                 var rootArea = {}
+                 rootArea.label = \'Root\';
+                 rootArea.areaType = \'root\';
+                 rootArea.areaId = \'root\';
+                 rootArea.subAreas = [];
 
                  var areas = item.areas;
                  for (var i in areas) {
@@ -56,7 +56,7 @@ class Version20160720095529 extends AbstractMigration
                     area.subAreas.push(rowArea);
                  }
 
-                 item.area = area;
+                 item.rootArea = area;
                  delete item.areas;
                  db.template.update({ _id: item._id }, item);
 
@@ -85,11 +85,11 @@ class Version20160720095529 extends AbstractMigration
             }
 
             db.template.find().forEach(function(item) {
-                 var rowAreas = item.area.subAreas;
+                 var rowAreas = item.rootArea.subAreas;
                  areas = []
                  areas = cleanRowAreas(rowAreas);
                  item.areas = areas;
-                 delete item.area;
+                 delete item.rootArea;
                  db.template.update({ _id: item._id }, item);
             });
         ');

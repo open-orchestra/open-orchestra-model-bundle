@@ -71,7 +71,7 @@ class TransverseDataGenerator extends AbstractDataGenerator
         $nodeTransverse->setTheme('');
         $nodeTransverse->setInFooter(false);
         $nodeTransverse->setInMenu(false);
-        $nodeTransverse->setArea($root);
+        $nodeTransverse->setRootArea($root);
 
 
         return $nodeTransverse;
