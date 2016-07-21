@@ -53,10 +53,10 @@ class Version20160720095529 extends AbstractMigration
                  for (var i in areas) {
                     var subAreas = areas[i];
                     rowArea = updateArea(subAreas);
-                    area.subAreas.push(rowArea);
+                    rootArea.subAreas.push(rowArea);
                  }
 
-                 item.rootArea = area;
+                 item.rootArea = rootArea;
                  delete item.areas;
                  db.template.update({ _id: item._id }, item);
 

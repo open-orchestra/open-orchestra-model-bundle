@@ -56,7 +56,7 @@ class Version20160720134051 extends AbstractMigration
                     rootArea.subAreas.push(rowArea);
                  }
 
-                 item.rootArea = area;
+                 item.rootArea = rootArea;
                  delete item.areas;
 
                  db.node.update({ _id: item._id }, item);
