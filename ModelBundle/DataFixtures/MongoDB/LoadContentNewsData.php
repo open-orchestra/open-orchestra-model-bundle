@@ -123,6 +123,7 @@ class LoadContentNewsData extends AbstractFixture implements OrderedFixtureInter
         $end = $this->generateContentAttribute('publish_end', '2014-12-19', 'date');
         $welcome = $this->generateContent('news', 'welcome', 'Welcome', 'fr');
         $welcome->addKeyword($this->getReference('keyword-sit'));
+        $welcome->setLinkedToSite(true);
 
         return $this->addNewsAttributes($welcome, $title, $start, $end, $intro, $text);
     }
