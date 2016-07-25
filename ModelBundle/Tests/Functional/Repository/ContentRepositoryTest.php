@@ -313,9 +313,13 @@ class ContentRepositoryTest extends AbstractKernelTestCase
      * @param integer $count
      *
      * @dataProvider provideContentTypeCount
+     *
+     * @deprecated will be removed in 2.0, use countByContentTypeAndSiteInLastVersion
      */
     public function testCountByContentTypeInLastVersion($contentType, $count)
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.3 and will be removed in 2.0. Use the '.__CLASS__.'::countByContentTypeAndSiteInLastVersion method instead.', E_USER_DEPRECATED);
+
         $contents = $this->repository->countByContentTypeInLastVersion($contentType);
         $this->assertEquals($count, $contents);
     }
@@ -364,43 +368,12 @@ class ContentRepositoryTest extends AbstractKernelTestCase
      * @param string  $contentType
      * @param array   $descriptionEntity
      * @param string  $search
+     * @param string  $siteId
      * @param int     $count
      *
      * @dataProvider provideColumnsAndSearchAndCount
      */
-    public function testCountByContentTypeInLastVersionWithSearchFilter($contentType, $descriptionEntity, $search, $count)
-    {
-        $configuration = FinderConfiguration::generateFromVariable($descriptionEntity, $search);
-
-        $sites = $this->repository->countByContentTypeInLastVersionWithFilter($contentType, $configuration);
-        $this->assertEquals($count, $sites);
-    }
-
-    /**
-     * @return array
-     */
-    public function provideColumnsAndSearchAndCount()
-    {
-        $descriptionEntity = $this->getDescriptionColumnEntity();
-
-        return array(
-            array('car', $descriptionEntity, $this->generateColumnsProvider(array('name' => '206')), 1),
-            array('car', $descriptionEntity, $this->generateColumnsProvider(null, 'portes'), 2),
-            array('news', $descriptionEntity, $this->generateColumnsProvider(null, 'news'), 0),
-            array('news', $descriptionEntity, $this->generateColumnsProvider(null, 'lorem'), 1),
-        );
-    }
-
-    /**
-     * @param string $contentType
-     * @param array  $descriptionEntity
-     * @param string $search
-     * @param string $siteId
-     * @param int    $count
-     *
-     * @dataProvider provideCountByContentTypeAndSiteInLastVersionWithSearchFilter
-     */
-    public function testCountByContentTypeAndSiteInLastVersionWithSearchFilter(
+    public function testCountByContentTypeInLastVersionWithSearchFilter(
         $contentType,
         $descriptionEntity,
         $search,
@@ -416,7 +389,7 @@ class ContentRepositoryTest extends AbstractKernelTestCase
     /**
      * @return array
      */
-    public function provideCountByContentTypeAndSiteInLastVersionWithSearchFilter()
+    public function provideColumnsAndSearchAndCount()
     {
         $descriptionEntity = $this->getDescriptionColumnEntity();
 

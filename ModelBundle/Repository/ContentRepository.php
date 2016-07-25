@@ -369,27 +369,14 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     }
 
     /**
-     * @param null                $contentType
+     * @param string|null         $contentType
      * @param FinderConfiguration $configuration
      * @param int|null            $siteId
      *
      * @return int
-     *
-     * @deprecated will be removed in 1.3.0, use countByContentTypeAndSiteInLastVersionWithFilter
      */
-    public function countByContentTypeInLastVersionWithFilter($contentType = null, FinderConfiguration $configuration = null, $siteId = null)
-    {
-        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.3 and will be removed in 1.3.0. Use the '.__CLASS__.'::countByContentTypeAndSiteInLastVersionWithFilter method instead.', E_USER_DEPRECATED);
-
-        return $this->countByContentTypeAndSiteInLastVersionWithFilter($contentType, $configuration, $siteId);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @see \OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface::countByContentTypeAndSiteInLastVersionWithFilter()
-     */
-    public function countByContentTypeAndSiteInLastVersionWithFilter(
-        $contentType = null,
+    public function countByContentTypeInLastVersionWithFilter(
+        $contentType,
         FinderConfiguration $configuration = null,
         $siteId = null
     ) {
@@ -409,11 +396,11 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
      *
      * @return int
      *
-     * @deprecated will be removed in 1.3.0, use countByContentTypeAndSiteInLastVersion
+     * @deprecated will be removed in 2.0, use countByContentTypeAndSiteInLastVersion
      */
     public function countByContentTypeInLastVersion($contentType = null)
     {
-        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.3 and will be removed in 1.3.0. Use the '.__CLASS__.'::countByContentTypeAndSiteInLastVersion method instead.', E_USER_DEPRECATED);
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.3 and will be removed in 2.0. Use the '.__CLASS__.'::countByContentTypeAndSiteInLastVersion method instead.', E_USER_DEPRECATED);
 
         $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
         $qa->match($this->generateDeletedFilter());
@@ -424,10 +411,12 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     }
 
     /**
-     * {@inheritDoc}
-     * @see \OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface::countByContentTypeAndSiteInLastVersion()
+     * @param string      $contentType
+     * @param string|null $siteId
+     *
+     * @return int
      */
-    public function countByContentTypeAndSiteInLastVersion($contentType = null, $siteId = null)
+    public function countByContentTypeAndSiteInLastVersion($contentType, $siteId = null)
     {
         $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
         $qa->match($this->generateDeletedFilter());
