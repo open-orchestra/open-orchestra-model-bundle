@@ -12,7 +12,7 @@ OpenOrchestra\ModelBundle\Document\Node:
         name:
             - NotBlank: ~
         boLabel:
-            - NotBlank: ~
+            - NotBlank: { groups: [page] }
         language:
             - NotBlank: ~
         routePattern:
