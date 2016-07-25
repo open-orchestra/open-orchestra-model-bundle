@@ -369,37 +369,62 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     }
 
     /**
-     * @param null                $contentType
+     * @param string|null         $contentType
      * @param FinderConfiguration $configuration
      * @param int|null            $siteId
      *
      * @return int
      */
-    public function countByContentTypeInLastVersionWithFilter($contentType = null, FinderConfiguration $configuration = null, $siteId = null)
-    {
+    public function countByContentTypeInLastVersionWithFilter(
+        $contentType,
+        FinderConfiguration $configuration = null,
+        $siteId = null
+    ) {
         $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
         $qa = $this->generateFilter($qa, $configuration);
         $qa->match($this->generateDeletedFilter());
         if (!is_null($siteId)) {
             $qa->match($this->generateSiteIdAndNotLinkedFilter($siteId));
         }
-        $elementName = 'content';
-        $this->generateLastVersionFilter($qa, $elementName);
+        $this->generateLastVersionFilter($qa, 'content');
 
-        return $this->countDocumentAggregateQuery($qa, $elementName);
+        return $this->countDocumentAggregateQuery($qa);
     }
 
     /**
      * @param string|null $contentType
      *
      * @return int
+     *
+     * @deprecated will be removed in 2.0, use countByContentTypeAndSiteInLastVersion
      */
     public function countByContentTypeInLastVersion($contentType = null)
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.3 and will be removed in 2.0. Use the '.__CLASS__.'::countByContentTypeAndSiteInLastVersion method instead.', E_USER_DEPRECATED);
+
         $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
         $qa->match($this->generateDeletedFilter());
         $elementName = 'content';
         $this->generateLastVersionFilter($qa, $elementName);
+
+        return $this->countDocumentAggregateQuery($qa);
+    }
+
+    /**
+     * @param string      $contentType
+     * @param string|null $siteId
+     *
+     * @return int
+     */
+    public function countByContentTypeAndSiteInLastVersion($contentType, $siteId = null)
+    {
+        $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
+        $qa->match($this->generateDeletedFilter());
+        if (!is_null($siteId)) {
+            $qa->match($this->generateSiteIdAndNotLinkedFilter($siteId));
+        }
+
+        $this->generateLastVersionFilter($qa, 'content');
 
         return $this->countDocumentAggregateQuery($qa);
     }
