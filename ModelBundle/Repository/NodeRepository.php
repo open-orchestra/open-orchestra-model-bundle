@@ -557,7 +557,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
         $qa->match(
             array(
-                'path' => new MongoRegex('/'.$path.'.*/i'),
+                'path' => new MongoRegex('/^'.$path.'(\/.*)?$/'),
                 'currentlyPublished' => true,
                 'deleted' => false,
             )
