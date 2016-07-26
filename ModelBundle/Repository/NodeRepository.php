@@ -328,7 +328,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      * @param string $path
      * @param string $siteId
      *
-     * @return Collection
+     * @return array
      */
     public function findByPathCurrentlyPublished($path, $siteId)
     {
