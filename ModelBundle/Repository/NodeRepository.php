@@ -457,7 +457,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     public function findByIncludedPathAndSiteId($path, $siteId)
     {
         $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
-        $qa->match(array('path' => new MongoRegex('/'.$path.'.*/i')));
+        $qa->match(array('path' => new MongoRegex('/^'.$path.'(\/.*)?$/')));
 
         return $this->hydrateAggregateQuery($qa);
     }
