@@ -10,8 +10,8 @@ use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
 trait AreaFinderTrait
 {
     /**
-     * @param \OpenOrchestra\ModelInterface\Model\AreaContainerInterface $area
-     * @param string                                                     $areaId
+     * @param AreaContainerInterface $area
+     * @param string                 $areaId
      *
      * @return null|\OpenOrchestra\ModelInterface\Model\AreaInterface
      */

@@ -66,10 +66,10 @@ abstract class AbstractDataGenerator
     /**
      * @param string      $label
      * @param string      $areaId
-     * @param string      $width
      * @param string|null $htmlClass
+     * @param string      $width
      *
-     * @return AreaInterface
+     * @return Area
      */
     protected function createColumnArea($label, $areaId, $htmlClass = null, $width = '1')
     {
@@ -87,7 +87,7 @@ abstract class AbstractDataGenerator
     }
 
     /**
-     * @return AreaInterface
+     * @return Area
      */
     protected function createHeader()
     {
@@ -108,7 +108,7 @@ abstract class AbstractDataGenerator
     }
 
     /**
-     * @return AreaInterface
+     * @return Area
      */
     protected function createFooter()
     {
@@ -132,7 +132,7 @@ abstract class AbstractDataGenerator
      * @param boolean $haveBlocks
      * @param string  $htmlClass
      *
-     * @return AreaInterface
+     * @return Area
      */
     protected function createModuleArea($haveBlocks = true, $htmlClass = "module-area")
     {
@@ -149,7 +149,7 @@ abstract class AbstractDataGenerator
      * @param array   $areas
      * @param boolean $hasHtmlClass
      *
-     * @return AreaInterface
+     * @return Area
      */
     protected function createMain(array $areas, $hasHtmlClass = true)
     {
