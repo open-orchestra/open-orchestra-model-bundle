@@ -8,6 +8,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 use Gedmo\Blameable\Traits\BlameableDocument;
 use Gedmo\Timestampable\Traits\TimestampableDocument;
+use OpenOrchestra\MongoTrait\AreaRootContainer;
 use OpenOrchestra\MongoTrait\SoftDeleteable;
 use OpenOrchestra\MongoTrait\Statusable;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
@@ -53,6 +54,7 @@ class Node implements NodeInterface
     use Cacheable;
     use Metaable;
     use SoftDeleteable;
+    use AreaRootContainer;
 
     /**
      * @var string $id
@@ -160,12 +162,6 @@ class Node implements NodeInterface
      */
     protected $role;
 
-    /**
-     * @var AreaInterface
-     *
-     * @ODM\EmbedOne(targetDocument="OpenOrchestra\ModelInterface\Model\AreaInterface")
-     */
-    protected $rootArea;
 
     /**
      * @var ArrayCollection
@@ -532,22 +528,6 @@ class Node implements NodeInterface
     public function getBlocks()
     {
         return $this->blocks;
-    }
-
-    /**
-     * @param AreaInterface $rootArea
-     */
-    public function setRootArea(AreaInterface $rootArea)
-    {
-        $this->rootArea = $rootArea;
-    }
-
-    /**
-     * @return AreaInterface
-     */
-    public function getRootArea()
-    {
-        return $this->rootArea;
     }
 
     /**

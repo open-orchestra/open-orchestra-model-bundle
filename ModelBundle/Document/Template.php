@@ -9,6 +9,7 @@ use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\ModelInterface\Model\TemplateInterface;
+use OpenOrchestra\MongoTrait\AreaRootContainer;
 use OpenOrchestra\MongoTrait\SoftDeleteable;
 use OpenOrchestra\MongoTrait\Versionable;
 
@@ -30,6 +31,7 @@ class Template implements TemplateInterface
 {
     use Versionable;
     use SoftDeleteable;
+    use AreaRootContainer;
 
     /**
      * @var string $id
@@ -74,13 +76,6 @@ class Template implements TemplateInterface
      * @deprecated will be removed in 2.0
      */
     protected $areas;
-
-    /**
-     * @var AreaInterface
-     *
-     * @ODM\EmbedOne(targetDocument="OpenOrchestra\ModelInterface\Model\AreaInterface")
-     */
-    protected $rootArea;
 
     /**
      * @var string $boDirection
@@ -164,22 +159,6 @@ class Template implements TemplateInterface
     {
         @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
         return $this->areas;
-    }
-
-    /**
-     * @param AreaInterface $rootArea
-     */
-    public function setRootArea(AreaInterface $rootArea)
-    {
-        $this->rootArea = $rootArea;
-    }
-
-    /**
-     * @return AreaInterface
-     */
-    public function getRootArea()
-    {
-        return $this->rootArea;
     }
 
     /**
