@@ -58,12 +58,14 @@ class Version20160720134051 extends AbstractAreaMigration
             $this->getCleanRowAreasFunction() .'
 
             db.node.find().forEach(function(item) {
-                 var rowAreas = item.rootArea.subAreas;
-                 areas = []
-                 areas = cleanRowAreas(rowAreas);
-                 item.areas = areas;
-                 delete item.rootArea;
-                 db.node.update({ _id: item._id }, item);
+                 if (typeof item.rootArea != \'undefined\') {
+                     var rowAreas = item.rootArea.subAreas;
+                     areas = []
+                     areas = cleanRowAreas(rowAreas);
+                     item.areas = areas;
+                     delete item.rootArea;
+                     db.node.update({ _id: item._id }, item);
+                 }
             });
         ');
     }
