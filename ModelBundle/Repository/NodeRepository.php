@@ -275,6 +275,24 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     /**
      * @param string $path
      * @param string $siteId
+     * @param string $language
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     *
+     * @return mixed
+     */
+    public function findByIncludedPathSiteIdAndLanguage($path, $siteId, $language)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
+        $qa->match(array('language' => $language));
+        $qa->match(array('path' => new MongoRegex('/^'.$path.'(\/.*)?$/')));
+
+        return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param string $path
+     * @param string $siteId
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
@@ -338,16 +356,17 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
             )
         );
 
-        return $this->findLastVersion($qa);
+        return $this->findLastVersionInLanguage($qa);
     }
 
     /**
      * @param string $path
      * @param string $siteId
+     * @param string $language
      *
      * @return array
      */
-    public function findByPathCurrentlyPublished($path, $siteId)
+    public function findByPathCurrentlyPublishedAndLanguage($path, $siteId, $language)
     {
         $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
         $qa->match(
@@ -355,6 +374,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
                 'path' => new MongoRegex('/^'.$path.'(\/.*)?$/'),
                 'currentlyPublished' => true,
                 'deleted' => false,
+                'language' => $language,
             )
         );
 
@@ -421,6 +441,23 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         ));
 
         return $this->hydrateAggregateQuery($qa, $elementName, 'getNodeId');
+    }
+
+    /**
+     * @param Stage $qa
+     *
+     * @return array
+     */
+    protected function findLastVersionInLanguage(Stage $qa)
+    {
+        $elementName = 'node';
+        $qa->sort(array('version' => 1));
+        $qa->group(array(
+            '_id' => array('nodeId' => '$nodeId', 'language' => '$language'),
+            $elementName => array('$last' => '$$ROOT')
+        ));
+
+        return $this->hydrateAggregateQuery($qa, $elementName);
     }
 
     /**
