@@ -362,6 +362,27 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     /**
      * @param string $path
      * @param string $siteId
+     *
+     * @return array
+     * @deprecated will be removed in 2.0, use findByPathCurrentlyPublishedAndLanguage
+     */
+    public function findByPathCurrentlyPublished($path, $siteId)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
+        $qa->match(
+            array(
+                'path' => new MongoRegex('/^'.$path.'(\/.*)?$/'),
+                'currentlyPublished' => true,
+                'deleted' => false,
+            )
+        );
+
+        return $this->findLastVersion($qa);
+    }
+
+    /**
+     * @param string $path
+     * @param string $siteId
      * @param string $language
      *
      * @return array
