@@ -1,9 +1,0 @@
-OpenOrchestra\ModelBundle\Document\TemplateFlex:
-    properties:
-        name:
-            - NotBlank: ~
-        deleted:
-            - Type:
-                type: bool
-        area:
-            - Valid: ~

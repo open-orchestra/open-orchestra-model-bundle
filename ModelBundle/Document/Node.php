@@ -8,6 +8,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 use Gedmo\Blameable\Traits\BlameableDocument;
 use Gedmo\Timestampable\Traits\TimestampableDocument;
+use OpenOrchestra\MongoTrait\AreaRootContainer;
 use OpenOrchestra\MongoTrait\SoftDeleteable;
 use OpenOrchestra\MongoTrait\Statusable;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
@@ -53,6 +54,7 @@ class Node implements NodeInterface
     use Cacheable;
     use Metaable;
     use SoftDeleteable;
+    use AreaRootContainer;
 
     /**
      * @var string $id
@@ -107,6 +109,7 @@ class Node implements NodeInterface
      * @var string $boLabel
      *
      * @ODM\Field(type="string")
+     * @deprecated will be removed in 2.0
      */
     protected $boLabel;
 
@@ -159,10 +162,12 @@ class Node implements NodeInterface
      */
     protected $role;
 
+
     /**
      * @var ArrayCollection
      *
      * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\AreaInterface")
+     * @deprecated will be removed in 2.0
      */
     protected $areas;
 
@@ -177,6 +182,7 @@ class Node implements NodeInterface
      * @var string $boDirection
      *
      * @ODM\Field(type="string")
+     * @deprecated will be removed in 2.0
      */
     protected $boDirection;
 
@@ -526,17 +532,25 @@ class Node implements NodeInterface
 
     /**
      * @param AreaInterface $area
+     *
+     * @deprecated will be removed in 2.0
      */
     public function addArea(AreaInterface $area)
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
+
         $this->areas->add($area);
     }
 
     /**
      * @param Collection $areas
+     * @deprecated will be removed in 2.0
+     *
      */
     public function setAreas(Collection $areas)
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
+
         $this->areas = new ArrayCollection();
         foreach ($areas as $area) {
             $this->areas->add($area);
@@ -545,9 +559,12 @@ class Node implements NodeInterface
 
     /**
      * @param AreaInterface $area
+     * @deprecated will be removed in 2.0
      */
     public function removeArea(AreaInterface $area)
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
+
         $this->areas->removeElement($area);
     }
 
@@ -555,9 +572,12 @@ class Node implements NodeInterface
      * Remove subArea by areaId
      *
      * @param string $areaId
+     * @deprecated will be removed in 2.0
      */
     public function removeAreaByAreaId($areaId)
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
+
         foreach ($this->getAreas() as $key => $area) {
             if ($areaId == $area->getAreaId()) {
                 $this->getAreas()->remove($key);
@@ -568,10 +588,13 @@ class Node implements NodeInterface
 
     /**
      * @return ArrayCollection
+     * @deprecated will be removed in 2.0
      */
     public function getAreas()
     {
-        return $this->areas;
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
+
+        return $this->rootArea->getAreas();
     }
 
     /**
@@ -669,17 +692,23 @@ class Node implements NodeInterface
 
     /**
      * @param string $boDirection
+     * @deprecated will be removed in 2.0
      */
     public function setBoDirection($boDirection)
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
+
         $this->boDirection = $boDirection;
     }
 
     /**
      * @return string
+     * @deprecated will be removed in 2.0
      */
     public function getBoDirection()
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
+
         return $this->boDirection;
     }
 

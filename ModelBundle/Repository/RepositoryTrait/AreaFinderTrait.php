@@ -2,18 +2,20 @@
 
 namespace OpenOrchestra\ModelBundle\Repository\RepositoryTrait;
 
+use OpenOrchestra\ModelInterface\Model\AreaContainerInterface;
+
 /**
  * Trait AreaFinderTrait
  */
 trait AreaFinderTrait
 {
     /**
-     * @param \OpenOrchestra\ModelInterface\Model\AreaContainerInterface $area
+     * @param AreaContainerInterface $area
      * @param string                 $areaId
      *
      * @return null|\OpenOrchestra\ModelInterface\Model\AreaInterface
      */
-    public function findAreaByAreaId(\OpenOrchestra\ModelInterface\Model\AreaContainerInterface $area, $areaId)
+    public function findAreaByAreaId(AreaContainerInterface $area, $areaId)
     {
         foreach ($area->getAreas() as $subArea) {
             if ($areaId == $subArea->getAreaId()) {

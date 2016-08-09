@@ -131,14 +131,14 @@ EOF;
         ));
         $nodeHomeBlock0->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));
 
-        $nodeHomeArea4 = $this->createArea('Main content area 1', 'mainContentArea1', 'main-content-area1');
+        $nodeHomeArea4 = $this->createColumnArea('Main content area 1', 'mainContentArea1', 'main-content-area1');
         $nodeHomeArea4->addBlock(array('nodeId' => 0, 'blockId' => 1));
         $nodeHomeArea5 = $this->createModuleArea();
         $nodeHomeArea3 = $this->createMain(array($nodeHomeArea4, $nodeHomeArea5));
         $nodeHomeArea6 = $this->createFooter();
+        $nodeHomeArea0 = $this->createHeader();
 
         if ($this->version > 1) {
-            $nodeHomeArea0 = $this->createHeader();
 
             $nodeHome = $this->createBaseNode();
             $nodeHome->setLanguage($language);
@@ -149,7 +149,6 @@ EOF;
             $nodeHome->setRoutePattern($routePattern);
             $nodeHome->setInFooter(false);
             $nodeHome->setInMenu(true);
-            $nodeHome->addArea($nodeHomeArea0);
             $nodeHome->setSitemapChangefreq('hourly');
             $nodeHome->setSitemapPriority('0.8');
         } else {
@@ -168,8 +167,10 @@ EOF;
         if ('status-published' == $this->status) {
             $nodeHome->setCurrentlyPublished(true);
         }
-        $nodeHome->addArea($nodeHomeArea3);
-        $nodeHome->addArea($nodeHomeArea6);
+        $rootArea = $nodeHome->getRootArea();
+        $rootArea->addArea($nodeHomeArea0);
+        $rootArea->addArea($nodeHomeArea3);
+        $rootArea->addArea($nodeHomeArea6);
         $nodeHome->addBlock($nodeHomeBlock0);
 
         return $nodeHome;
@@ -182,7 +183,7 @@ EOF;
      */
     protected function getAreaHeader(NodeInterface $nodeHome)
     {
-        $areas = $nodeHome->getAreas();
+        $areas = $nodeHome->getRootArea()->getAreas();
         foreach ($areas as $area) {
             if ($area->getAreaId() == "header") {
 

@@ -2,7 +2,9 @@
 
 namespace OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent;
 
+use OpenOrchestra\ModelBundle\Document\Area;
 use OpenOrchestra\ModelBundle\Document\Node;
+use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 
 /**
@@ -42,7 +44,14 @@ class TransverseDataGenerator extends AbstractDataGenerator
      */
     protected function generateNodeGlobal($language, $name)
     {
-        $mainArea = $this->createArea('main','main','main');
+        $root = new Area();
+        $root->setAreaType(AreaInterface::TYPE_ROOT);
+        $root->setAreaId(AreaInterface::ROOT_AREA_ID);
+        $root->setLabel(AreaInterface::ROOT_AREA_LABEL);
+
+        $mainColumn = $this->createColumnArea('main', 'main');
+        $mainRow = $this->createMain(array($mainColumn));
+        $root->addArea($mainRow);
 
         $nodeTransverse = new Node();
         $nodeTransverse->setNodeId(NodeInterface::TRANSVERSE_NODE_ID);
@@ -62,7 +71,8 @@ class TransverseDataGenerator extends AbstractDataGenerator
         $nodeTransverse->setTheme('');
         $nodeTransverse->setInFooter(false);
         $nodeTransverse->setInMenu(false);
-        $nodeTransverse->addArea($mainArea);
+        $nodeTransverse->setRootArea($root);
+
 
         return $nodeTransverse;
     }

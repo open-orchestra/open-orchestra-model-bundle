@@ -121,7 +121,7 @@ EOF;
         $siteNewsBlock0->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));
 
         $siteNewsArea0 = $this->createHeader();
-        $siteNewsArea4 = $this->createArea('Main content area 1', 'mainContentArea1', 'main-content-area1');
+        $siteNewsArea4 = $this->createColumnArea('Main content area 1', 'mainContentArea1', 'main-content-area1');
         $siteNewsArea4->addBlock(array('nodeId' => 0, 'blockId' => 1));
         $siteNewsArea5 = $this->createModuleArea();
         $siteNewsArea3 = $this->createMain(array($siteNewsArea4, $siteNewsArea5));
@@ -137,9 +137,11 @@ EOF;
         $siteNews->setRoutePattern($routePattern);
         $siteNews->setInFooter(false);
         $siteNews->setInMenu(true);
-        $siteNews->addArea($siteNewsArea0);
-        $siteNews->addArea($siteNewsArea3);
-        $siteNews->addArea($siteNewsArea6);
+
+        $rootArea = $siteNews->getRootArea();
+        $rootArea->addArea($siteNewsArea0);
+        $rootArea->addArea($siteNewsArea3);
+        $rootArea->addArea($siteNewsArea6);
         $siteNews->addBlock($siteNewsBlock0);
 
         return $siteNews;

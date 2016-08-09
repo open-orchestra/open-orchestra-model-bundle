@@ -171,13 +171,17 @@ EOF
         $siteBlockContact->setClass('my-form-contact');
         $siteBlockContact->addArea(array('nodeId' => 0, 'areaId' => 'main'));
 
-        $mainArea = $this->node{$language}->getAreas();
-        foreach ($mainArea as $area) {
-            if ($area->getAreaId() == "main") {
-                $area->addBlock(array('nodeId' => 0, 'blockId' => 0));
-                $area->addBlock(array('nodeId' => 0, 'blockId' => 1));
-                $area->addBlock(array('nodeId' => 0, 'blockId' => 2));
-                $area->addBlock(array('nodeId' => 0, 'blockId' => 3));
+        $rootArea = $this->node{$language}->getRootArea()->getAreas();
+        foreach ($rootArea as $area) {
+            if ($area->getAreaId() == "myMain") {
+                foreach ($area->getAreas() as $subArea) {
+                    if ($subArea->getAreaId() == "main") {
+                        $subArea->addBlock(array('nodeId' => 0, 'blockId' => 0));
+                        $subArea->addBlock(array('nodeId' => 0, 'blockId' => 1));
+                        $subArea->addBlock(array('nodeId' => 0, 'blockId' => 2));
+                        $subArea->addBlock(array('nodeId' => 0, 'blockId' => 3));
+                    }
+                }
             }
         }
         $this->node{$language}->addBlock($siteBlockLogo);

@@ -9,6 +9,7 @@ use OpenOrchestra\ModelBundle\Document\Area;
 use OpenOrchestra\ModelBundle\Document\Template;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraProductionFixturesInterface;
+use OpenOrchestra\ModelInterface\Model\AreaInterface;
 
 /**
  * Class LoadTemplateData
@@ -45,24 +46,40 @@ class LoadTemplateData extends AbstractFixture implements OrderedFixtureInterfac
      */
     protected function homepageTemplate()
     {
+        $root = new Area();
+        $root->setAreaType(AreaInterface::TYPE_ROOT);
+        $root->setAreaId(AreaInterface::ROOT_AREA_ID);
+        $root->setLabel(AreaInterface::ROOT_AREA_LABEL);
+
         $header = new Area();
-        $header->setAreaId('header');
+        $header->setAreaId('row_header');
+        $header->setAreaType(AreaInterface::TYPE_ROW);
+        $columnHeader = $this->createColumnArea('header', 'column-header');
+        $header->addArea($columnHeader);
+
         $main = new Area();
-        $main->setAreaId('main');
+        $main->setAreaId('row_main');
+        $main->setAreaType(AreaInterface::TYPE_ROW);
+        $columnMain = $this->createColumnArea('main', 'column-main');
+        $main->addArea($columnMain);
+
         $footer = new Area();
-        $footer->setAreaId('footer');
+        $footer->setAreaId('row_footer');
+        $footer->setAreaType(AreaInterface::TYPE_ROW);
+        $columnFooter = $this->createColumnArea('footer', 'column-footer');
+        $footer->addArea($columnFooter);
+
+        $root->addArea($header);
+        $root->addArea($main);
+        $root->addArea($footer);
 
         $generic = new Template();
         $generic->setTemplateId('template_home');
         $generic->setSiteId('1');
         $generic->setVersion(1);
         $generic->setName('Homepage Template');
-        $generic->setLanguage('fr');
         $generic->setDeleted(false);
-        $generic->setBoDirection('h');
-        $generic->addArea($header);
-        $generic->addArea($main);
-        $generic->addArea($footer);
+        $generic->setRootArea($root);
 
         return $generic;
     }
@@ -72,36 +89,66 @@ class LoadTemplateData extends AbstractFixture implements OrderedFixtureInterfac
      */
     protected function fullTemplate()
     {
-        $header = new Area();
-        $header->setAreaId('header');
+        $root = new Area();
+        $root->setAreaType(AreaInterface::TYPE_ROOT);
+        $root->setAreaId(AreaInterface::ROOT_AREA_ID);
+        $root->setLabel(AreaInterface::ROOT_AREA_LABEL);
 
-        $leftMenu = new Area();
-        $leftMenu->setAreaId('left_menu');
+        $header = new Area();
+        $header->setAreaId('row_header');
+        $header->setAreaType(AreaInterface::TYPE_ROW);
+        $columnHeader = $this->createColumnArea('header', 'column-header');
+        $header->addArea($columnHeader);
 
         $main = new Area();
-        $main->setAreaId('main');
-
-        $body = new Area();
-        $body->setAreaId('body');
-        $body->setBoDirection('v');
-        $body->addArea($leftMenu);
-        $body->addArea($main);
+        $main->setAreaId('row_main');
+        $main->setAreaType(AreaInterface::TYPE_ROW);
+        $columnMain = $this->createColumnArea('main', 'column-main');
+        $columnLeft = $this->createColumnArea('left menu', 'left_menu');
+        $main->addArea($columnMain);
+        $main->addArea($columnLeft);
 
         $footer = new Area();
-        $footer->setAreaId('footer');
+        $footer->setAreaId('row_footer');
+        $footer->setAreaType(AreaInterface::TYPE_ROW);
+        $columnFooter = $this->createColumnArea('footer', 'column-footer');
+        $footer->addArea($columnFooter);
+
+        $root->addArea($header);
+        $root->addArea($main);
+        $root->addArea($footer);
 
         $full = new Template();
         $full->setTemplateId('template_full');
         $full->setSiteId('1');
         $full->setVersion(1);
         $full->setName('Full Template');
-        $full->setLanguage('fr');
-        $full->setBoDirection('h');
         $full->setDeleted(false);
-        $full->addArea($header);
-        $full->addArea($body);
-        $full->addArea($footer);
+        $full->setRootArea($root);
 
         return $full;
+    }
+
+    /**
+     * @param string      $label
+     * @param string      $areaId
+     * @param string      $width
+     * @param string|null $htmlClass
+     *
+     * @return AreaInterface
+     */
+    protected function createColumnArea($label, $areaId, $htmlClass = null, $width = '1')
+    {
+        $area = new Area();
+        $area->setLabel($label);
+        $area->setAreaId($areaId);
+        $area->setWidth($width);
+        $area->setAreaType(AreaInterface::TYPE_COLUMN);
+
+        if ($htmlClass !== null) {
+            $area->setHtmlClass($htmlClass);
+        }
+
+        return $area;
     }
 }

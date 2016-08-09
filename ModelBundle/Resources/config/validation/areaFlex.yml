@@ -1,8 +1,0 @@
-OpenOrchestra\ModelBundle\Document\AreaFlex:
-    properties:
-        areaId:
-            - NotBlank: ~
-        areaType:
-            - NotBlank: ~
-        subAreas:
-            - Valid: ~

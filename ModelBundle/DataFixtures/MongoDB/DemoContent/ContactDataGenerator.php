@@ -142,13 +142,13 @@ EOF;
         $siteContactBlock0->setAttributes(array("htmlContent" => $htmlContent));
         $siteContactBlock0->addArea(array('nodeId' => 0, 'areaId' => 'moduleArea'));
 
-        $siteContactArea0 = $this->createHeader();
-        $siteContactArea4 = $this->createArea('Main content area 1', 'mainContentArea1', 'main-content-contact');
-        $siteContactArea4->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 4));
-        $siteContactArea5 = $this->createModuleArea(false, "module-area-contact");
-        $siteContactArea5->addBlock(array('nodeId' => 0, 'blockId' => 1));
-        $siteContactArea3 = $this->createMain(array($siteContactArea4, $siteContactArea5));
-        $siteContactArea6 = $this->createFooter();
+        $header = $this->createHeader();
+        $contentColumn = $this->createColumnArea('Main content area 1', 'mainContentArea1', 'main-content-contact');
+        $contentColumn->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 4));
+        $moduleColumn = $this->createModuleArea(false, "module-area-contact");
+        $moduleColumn->addBlock(array('nodeId' => 0, 'blockId' => 1));
+        $main = $this->createMain(array($contentColumn, $moduleColumn));
+        $footer = $this->createFooter();
 
         $siteContact = $this->createBaseNode();
         $siteContact->setNodeId('fixture_page_contact');
@@ -160,9 +160,11 @@ EOF;
         $siteContact->setRoutePattern($routePattern);
         $siteContact->setInFooter(false);
         $siteContact->setInMenu(true);
-        $siteContact->addArea($siteContactArea0);
-        $siteContact->addArea($siteContactArea3);
-        $siteContact->addArea($siteContactArea6);
+
+        $rootArea = $siteContact->getRootArea();
+        $rootArea->addArea($header);
+        $rootArea->addArea($main);
+        $rootArea->addArea($footer);
         $siteContact->addBlock($siteContactBlock0);
 
         return $siteContact;

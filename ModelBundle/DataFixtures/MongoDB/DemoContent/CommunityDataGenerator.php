@@ -100,12 +100,12 @@ EOF;
         $siteComBlock0->setAttributes(array("htmlContent" => $htmlContent));
         $siteComBlock0->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));
 
-        $siteComArea0 = $this->createHeader();
-        $siteComArea4 = $this->createArea('Main content area 1', 'mainContentArea1', 'main-content-area1');
-        $siteComArea4->addBlock(array('nodeId' => 0, 'blockId' => 1));
-        $siteComArea5 = $this->createModuleArea();
-        $siteComArea3 = $this->createMain(array($siteComArea4, $siteComArea5));
-        $siteComArea6 = $this->createFooter();
+        $header = $this->createHeader();
+        $contentColumn = $this->createColumnArea('Main content area 1', 'mainContentArea1', 'main-content-area1');
+        $contentColumn->addBlock(array('nodeId' => 0, 'blockId' => 1));
+        $moduleColumn = $this->createModuleArea();
+        $main = $this->createMain(array($contentColumn, $moduleColumn));
+        $footer = $this->createFooter();
 
         $siteCom = $this->createBaseNode();
         $siteCom->setNodeId('fixture_page_community');
@@ -118,9 +118,11 @@ EOF;
         $siteCom->setTheme('themePresentation');
         $siteCom->setInFooter(false);
         $siteCom->setInMenu(true);
-        $siteCom->addArea($siteComArea0);
-        $siteCom->addArea($siteComArea3);
-        $siteCom->addArea($siteComArea6);
+
+        $rootArea = $siteCom->getRootArea();
+        $rootArea->addArea($header);
+        $rootArea->addArea($main);
+        $rootArea->addArea($footer);
         $siteCom->addBlock($siteComBlock0);
 
         return $siteCom;

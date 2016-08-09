@@ -81,7 +81,7 @@ EOF;
         $error503Block0->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));
 
         $error503Area0 = $this->createHeader();
-        $error503Area4 = $this->createArea('Main content area 1', 'mainContentArea1', 'main-content-area1');
+        $error503Area4 = $this->createColumnArea('Main content area 1', 'mainContentArea1', 'main-content-area1');
         $error503Area4->addBlock(array('nodeId' => 0, 'blockId' => 1));
         $error503Area5 = $this->createModuleArea();
         $error503Area3 = $this->createMain(array($error503Area4, $error503Area5));
@@ -98,9 +98,11 @@ EOF;
         $error503->setRoutePattern($routePattern);
         $error503->setInFooter(false);
         $error503->setInMenu(false);
-        $error503->addArea($error503Area0);
-        $error503->addArea($error503Area3);
-        $error503->addArea($error503Area6);
+
+        $rootArea = $error503->getRootArea();
+        $rootArea->addArea($error503Area0);
+        $rootArea->addArea($error503Area3);
+        $rootArea->addArea($error503Area6);
         $error503->addBlock($error503Block0);
 
         return $error503;

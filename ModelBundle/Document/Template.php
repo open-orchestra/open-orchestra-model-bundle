@@ -9,6 +9,7 @@ use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\ModelInterface\Model\TemplateInterface;
+use OpenOrchestra\MongoTrait\AreaRootContainer;
 use OpenOrchestra\MongoTrait\SoftDeleteable;
 use OpenOrchestra\MongoTrait\Versionable;
 
@@ -30,6 +31,7 @@ class Template implements TemplateInterface
 {
     use Versionable;
     use SoftDeleteable;
+    use AreaRootContainer;
 
     /**
      * @var string $id
@@ -63,6 +65,7 @@ class Template implements TemplateInterface
      * @var string
      *
      * @ODM\Field(type="string")
+     * @deprecated will be removed in 2.0
      */
     protected $language;
 
@@ -70,6 +73,7 @@ class Template implements TemplateInterface
      * @var AreaInterface
      *
      * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\AreaInterface")
+     * @deprecated will be removed in 2.0
      */
     protected $areas;
 
@@ -77,12 +81,13 @@ class Template implements TemplateInterface
      * @var string $boDirection
      *
      * @ODM\Field(type="string")
+     * @deprecated will be removed in 2.0
      */
     protected $boDirection;
 
     /**
      * @var ArrayCollection
-     *
+     * @deprecated will be removed in 2.0
      * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\BlockInterface")
      */
     protected $blocks;
@@ -98,17 +103,21 @@ class Template implements TemplateInterface
 
     /**
      * @param AreaInterface $area
+     * @deprecated will be removed in 2.0
      */
     public function addArea(AreaInterface $area)
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
         $this->areas->add($area);
     }
 
     /**
      * @param AreaInterface $area
+     * @deprecated will be removed in 2.0
      */
     public function removeArea(AreaInterface $area)
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
         $this->areas->removeElement($area);
     }
 
@@ -116,9 +125,11 @@ class Template implements TemplateInterface
      * Remove subArea by areaId
      *
      * @param string $areaId
+     * @deprecated will be removed in 2.0
      */
     public function removeAreaByAreaId($areaId)
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
         foreach ($this->getAreas() as $key => $area) {
             if ($areaId == $area->getAreaId()) {
                 $this->getAreas()->remove($key);
@@ -129,9 +140,11 @@ class Template implements TemplateInterface
 
     /**
      * @param Collection $areas
+     * @deprecated will be removed in 2.0
      */
     public function setAreas(Collection $areas)
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
         $this->areas = new ArrayCollection();
         foreach ($areas as $key => $area) {
             $this->areas->add($area);
@@ -140,25 +153,33 @@ class Template implements TemplateInterface
 
     /**
      * @return Collection
+     * @deprecated will be removed in 2.0
      */
     public function getAreas()
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
         return $this->areas;
     }
 
     /**
      * @param BlockInterface $block
+     * @deprecated will be removed in 2.0
      */
     public function addBlock(BlockInterface $block)
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
+
         $this->blocks->add($block);
     }
 
     /**
      * @param BlockInterface $block
+     * @deprecated will be removed in 2.0
      */
     public function removeBlock(BlockInterface $block)
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
+
         $this->blocks->removeElement($block);
     }
 
@@ -166,33 +187,44 @@ class Template implements TemplateInterface
      * Remove block with index $key
      *
      * @param string $key
+     *
+     * @deprecated will be removed in 2.0
      */
     public function removeBlockWithKey($key)
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
+
         $this->blocks->remove($key);
     }
 
     /**
      * @return array
+     * @deprecated will be removed in 2.0
      */
     public function getBlocks()
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
+
         return $this->blocks;
     }
 
     /**
      * @param string $boDirection
+     * @deprecated will be removed in 2.0
      */
     public function setBoDirection($boDirection)
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
         $this->boDirection = $boDirection;
     }
 
     /**
      * @return string
+     * @deprecated will be removed in 2.0
      */
     public function getBoDirection()
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
         return $this->boDirection;
     }
 
@@ -254,17 +286,22 @@ class Template implements TemplateInterface
 
     /**
      * @param string $language
+     * @deprecated will be removed in 2.0
      */
     public function setLanguage($language)
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
         $this->language = $language;
     }
 
     /**
      * @return string
+     * @deprecated will be removed in 2.0
      */
     public function getLanguage()
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
+
         return $this->language;
     }
 
