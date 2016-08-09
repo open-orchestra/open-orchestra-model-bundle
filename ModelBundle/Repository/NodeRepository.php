@@ -279,7 +279,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
-     * @return mixed
+     * @return array
      */
     public function findByIncludedPathSiteIdAndLanguage($path, $siteId, $language)
     {
@@ -368,6 +368,8 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      */
     public function findByPathCurrentlyPublished($path, $siteId)
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
+
         $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
         $qa->match(
             array(
