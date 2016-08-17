@@ -6,7 +6,6 @@ parameters:
     open_orchestra_model.doctrine_listener.update_non_translatable_content_field.class: OpenOrchestra\ModelBundle\EventListener\UpdateNonTranslatableContentFieldsListener
     open_orchestra_model.doctrine_listener.update_site_nodes_theme.class: OpenOrchestra\ModelBundle\EventListener\UpdateSiteNodesThemeListener
     open_orchestra_model.doctrine_listener.update_bo_label_node.class: OpenOrchestra\ModelBundle\EventListener\UpdateBoLabelNodeFieldListener
-    open_orchestra_model.doctrine_listener.content_type_order_fields.class: OpenOrchestra\ModelBundle\EventListener\ContentTypeOrderFieldListener
 
 services:
     open_orchestra_model.doctrine_listener.initial_status:
@@ -60,8 +59,3 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: doctrine_mongodb.odm.event_listener, event: preUpdate }
-    open_orchestra_model.doctrine_listener.content_type_order_fields:
-        class: '%open_orchestra_model.doctrine_listener.content_type_order_fields.class%'
-        tags:
-            -  { name: doctrine_mongodb.odm.event_listener, event: prePersist }
-            -  { name: doctrine_mongodb.odm.event_listener, event: preUpdate }
