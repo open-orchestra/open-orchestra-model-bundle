@@ -26,6 +26,24 @@ class StatusRepository extends AbstractAggregateRepository implements StatusRepo
     }
 
     /**
+     * @param string $name
+     *
+     * @return mixed
+     */
+    public function findOtherByInitial($name)
+    {
+        $qa = $this->createAggregationQuery();
+        $qa->match(
+            array(
+                'name'    => array('$ne' => $name),
+                'initial' => true,
+            )
+        );
+
+        return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
      * @return StatusInterface
      */
     public function findOneByPublished()
@@ -61,15 +79,15 @@ class StatusRepository extends AbstractAggregateRepository implements StatusRepo
     /**
      * @param string $name
      *
-     * @return mixed
+     * @return array
      */
-    public function findOtherByInitial($name)
+    public function findOtherByAutoUnpublishTo($name)
     {
         $qa = $this->createAggregationQuery();
         $qa->match(
             array(
-                'name'    => array('$ne' => $name),
-                'initial' => true,
+                'name' => array('$ne' => $name),
+                'autoUnpublishTo' => true
             )
         );
 

@@ -9,9 +9,9 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 /**
- * Class InitialStatusListener
+ * Class AutoUnpublishStatusListener
  */
-class InitialStatusListener implements ContainerAwareInterface
+class AutoUnpublishStatusListener implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
 
@@ -23,11 +23,11 @@ class InitialStatusListener implements ContainerAwareInterface
     public function preUpdate(LifecycleEventArgs $eventArgs)
     {
         $document = $eventArgs->getDocument();
-        if ($document instanceof StatusInterface && $document->isInitial()) {
+        if ($document instanceof StatusInterface && $document->isAutoUnpublishTo()) {
             $statuses = $this->container->get('open_orchestra_model.repository.status')
-                ->findOtherByInitial($document->getName());
+                ->findOtherByAutoUnpublishTo($document->getName());
             foreach ($statuses as $status) {
-                $status->setInitial(false);
+                $status->setAutoUnpublishTo(false);
                 $this->statuses[] = $status;
             }
         }
@@ -38,7 +38,7 @@ class InitialStatusListener implements ContainerAwareInterface
      */
     public function postFlush(PostFlushEventArgs $eventArgs)
     {
-        if (! empty($this->statuses)) {
+        if (!empty($this->statuses)) {
             $documentManager = $eventArgs->getDocumentManager();
             foreach ($this->statuses as $status) {
                 $documentManager->persist($status);
