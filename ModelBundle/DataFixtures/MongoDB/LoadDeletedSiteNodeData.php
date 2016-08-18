@@ -7,6 +7,7 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 use OpenOrchestra\ModelBundle\Document\Node;
+use OpenOrchestra\ModelBundle\Document\RouteDocument;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
 
@@ -24,6 +25,7 @@ class LoadDeletedSiteNodeData extends AbstractFixture implements OrderedFixtureI
     {
         $rootNodeFr = $this->generateRootNodeFr();
         $manager->persist($rootNodeFr);
+        $this->generateRouteNode($manager, $rootNodeFr);
         
         $deletedNodeFr = $this->generateDeletedNodeFr();
         $manager->persist($deletedNodeFr);
@@ -40,7 +42,34 @@ class LoadDeletedSiteNodeData extends AbstractFixture implements OrderedFixtureI
     {
         return 561;
     }
-    
+
+    /**
+     * @param ObjectManager $manager
+     * @param NodeInterface $node
+     */
+    protected function generateRouteNode(ObjectManager $manager, $node)
+    {
+        $site = $this->getReference('site3');
+
+        foreach ($site->getAliases() as $key => $alias) {
+            if ($alias->getLanguage() == $node->getLanguage()) {
+                $route = new RouteDocument();
+                $route->setName($key . '_' . $node->getId());
+                $route->setHost($alias->getDomain());
+                $scheme = $alias->getScheme();
+                $route->setSchemes($scheme);
+                $route->setLanguage($node->getLanguage());
+                $route->setNodeId($node->getNodeId());
+                $route->setSiteId($site->getSiteId());
+                $route->setAliasId($key);
+
+                $route->setPattern($node->getRoutePattern());
+                $manager->persist($route);
+            }
+        }
+
+    }
+
     /**
      * @return Node
      */
@@ -57,6 +86,7 @@ class LoadDeletedSiteNodeData extends AbstractFixture implements OrderedFixtureI
         $node->setCreatedBy('fake_admin');
         $node->setParentId('-');
         $node->setOrder(0);
+        $node->setCurrentlyPublished(true);
 
         return $node;
     }
