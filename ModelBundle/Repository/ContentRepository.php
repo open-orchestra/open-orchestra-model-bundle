@@ -372,6 +372,16 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     }
 
     /**
+     * @param string $entityId
+     *
+     * @return ContentInterface
+     */
+    public function findById($entityId)
+    {
+        return $this->find(new \MongoId($entityId));
+    }
+
+    /**
      * @param string $siteId
      *
      * @return array
