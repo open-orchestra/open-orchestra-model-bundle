@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\Document;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\ModelInterface\Exceptions\TranslatedValueNotExisting;
 use OpenOrchestra\MongoTrait\SoftDeleteable;
@@ -124,9 +125,9 @@ class ContentType implements ContentTypeInterface
     }
 
     /**
-     * @param FieldTypeInterface $fields
+     * @param Collection $fields
      */
-    public function setFields(FieldTypeInterface $fields)
+    public function setFields(Collection $fields)
     {
         $this->fields = $fields;
     }

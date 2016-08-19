@@ -101,6 +101,13 @@ class FieldType implements FieldTypeInterface
     protected $options;
 
     /**
+     * @var string $position
+     *
+     * @ODM\Field(type="int")
+     */
+    protected $position = 0;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -389,5 +396,21 @@ class FieldType implements FieldTypeInterface
     public function setTranslatable($translatable)
     {
         $this->translatable = $translatable;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * @param string $position
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
     }
 }
