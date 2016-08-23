@@ -109,7 +109,6 @@ class Node implements NodeInterface
      * @var string $boLabel
      *
      * @ODM\Field(type="string")
-     * @deprecated will be removed in 2.0
      */
     protected $boLabel;
 
