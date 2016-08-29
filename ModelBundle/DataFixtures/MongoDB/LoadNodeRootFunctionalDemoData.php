@@ -176,10 +176,10 @@ EOF
             if ($area->getAreaId() == "myMain") {
                 foreach ($area->getAreas() as $subArea) {
                     if ($subArea->getAreaId() == "main") {
-                        $subArea->addBlock(array('nodeId' => 0, 'blockId' => 0));
-                        $subArea->addBlock(array('nodeId' => 0, 'blockId' => 1));
-                        $subArea->addBlock(array('nodeId' => 0, 'blockId' => 2));
-                        $subArea->addBlock(array('nodeId' => 0, 'blockId' => 3));
+                        $subArea->addBlock(array('nodeId' => 0, 'blockId' => 0, 'blockPrivate' => false));
+                        $subArea->addBlock(array('nodeId' => 0, 'blockId' => 1, 'blockPrivate' => false));
+                        $subArea->addBlock(array('nodeId' => 0, 'blockId' => 2, 'blockPrivate' => false));
+                        $subArea->addBlock(array('nodeId' => 0, 'blockId' => 3, 'blockPrivate' => false));
                     }
                 }
             }

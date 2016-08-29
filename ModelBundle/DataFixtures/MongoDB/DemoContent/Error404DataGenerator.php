@@ -82,7 +82,7 @@ EOF;
 
         $error404Area0 = $this->createHeader();
         $error404Area4 = $this->createColumnArea('Main content area 1', 'mainContentArea1', 'main-content-area1');
-        $error404Area4->addBlock(array('nodeId' => 0, 'blockId' => 1));
+        $error404Area4->addBlock(array('nodeId' => 0, 'blockId' => 1, 'blockPrivate' => false));
         $error404Area5 = $this->createModuleArea();
         $error404Area3 = $this->createMain(array($error404Area4, $error404Area5));
         $error404Area6 = $this->createFooter();

@@ -144,9 +144,9 @@ EOF;
 
         $header = $this->createHeader();
         $contentColumn = $this->createColumnArea('Main content area 1', 'mainContentArea1', 'main-content-contact');
-        $contentColumn->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 4));
+        $contentColumn->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 4, 'blockPrivate' => false));
         $moduleColumn = $this->createModuleArea(false, "module-area-contact");
-        $moduleColumn->addBlock(array('nodeId' => 0, 'blockId' => 1));
+        $moduleColumn->addBlock(array('nodeId' => 0, 'blockId' => 1, 'blockPrivate' => true));
         $main = $this->createMain(array($contentColumn, $moduleColumn));
         $footer = $this->createFooter();
 
