@@ -729,10 +729,12 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
 
     /**
      * @param string $nodeType
+     * @param int    $skip
+     * @param int    $limit
      *
      * @return array
      */
-    public function findAllCurrentlyPublishedByType($nodeType)
+    public function findAllCurrentlyPublishedByTypeWithSkipAndLimit($nodeType, $skip, $limit)
     {
         $qa = $this->createAggregationQuery();
         $qa->match(
@@ -742,6 +744,8 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
                 'deleted' => false
             )
         );
+        $qa->skip($skip);
+        $qa->limit($limit);
 
         return $this->hydrateAggregateQuery($qa);
     }
