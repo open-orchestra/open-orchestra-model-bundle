@@ -7,6 +7,7 @@ use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use OpenOrchestra\ModelInterface\Model\IsStatusableInterface;
 
 /**
  * Class SetInitialStatusListener
@@ -21,7 +22,7 @@ class SetInitialStatusListener implements ContainerAwareInterface
     public function prePersist(LifecycleEventArgs $eventArgs)
     {
         $document = $eventArgs->getDocument();
-        if ($document instanceof StatusableInterface && is_null($document->getStatus())) {
+        if ($document instanceof StatusableInterface && is_null($document->getStatus()) && (!$document instanceof IsStatusableInterface || $document->isStatusable())) {
             $status = $this->container->get('open_orchestra_model.repository.status')->findOneByInitial();
             if ($status instanceof StatusInterface) {
                 $document->setStatus($status);

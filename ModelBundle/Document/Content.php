@@ -9,7 +9,7 @@ use Gedmo\Timestampable\Traits\TimestampableDocument;
 use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 use OpenOrchestra\MongoTrait\SiteLinkable;
 use OpenOrchestra\MongoTrait\SoftDeleteable;
-use OpenOrchestra\MongoTrait\Statusable;
+use OpenOrchestra\MongoTrait\OptionalllyStatusable;
 use OpenOrchestra\ModelInterface\Model\ContentAttributeInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Model\ReadContentAttributeInterface;
@@ -42,7 +42,7 @@ class Content implements ContentInterface
     use BlameableDocument;
     use TimestampableDocument;
     use Keywordable;
-    use Statusable;
+    use OptionalllyStatusable;
     use Versionable;
     use SiteLinkable;
     use SoftDeleteable;
@@ -257,7 +257,6 @@ class Content implements ContentInterface
         $this->id = null;
         $this->initializeCollections();
     }
-
     /**
      * initialize collections
      */
