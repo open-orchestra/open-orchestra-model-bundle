@@ -7,6 +7,7 @@ use Phake;
 use OpenOrchestra\ModelBundle\Document\Node;
 use OpenOrchestra\ModelBundle\Document\Status;
 use OpenOrchestra\ModelBundle\EventListener\SetInitialStatusListener;
+use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 
 /**
  * Class SetInitialStatusListenerTest
@@ -44,19 +45,20 @@ class SetInitialStatusListenerTest extends AbstractBaseTestCase
     }
 
     /**
-     * @param Node   $node
-     * @param Status $status
+     * @param StatusableInterface $document
+     * @param Status              $status
+     * @param integer             $nbrCall
      *
      * @dataProvider provideNodeForPersist
      */
-    public function testprePersist(Node $node, Status $status)
+    public function testprePersist(StatusableInterface $document, Status $status, $nbrCall)
     {
         Phake::when($this->statusRepository)->findOneByInitial()->thenReturn($status);
-        Phake::when($this->lifecycleEventArgs)->getDocument()->thenReturn($node);
+        Phake::when($this->lifecycleEventArgs)->getDocument()->thenReturn($document);
 
         $this->listener->prePersist($this->lifecycleEventArgs);
 
-        Phake::verify($node, Phake::times(1))->setStatus($status);
+        Phake::verify($document, Phake::times($nbrCall))->setStatus($status);
     }
 
     /**
@@ -68,8 +70,12 @@ class SetInitialStatusListenerTest extends AbstractBaseTestCase
         $node = Phake::mock('OpenOrchestra\ModelBundle\Document\Node');
         $status = Phake::mock('OpenOrchestra\ModelBundle\Document\Status');
 
+        $content = Phake::mock('OpenOrchestra\ModelInterface\Model\ContentInterface');
+        Phake::when($content)->isStatusable()->thenReturn(false);
+
         return array(
-            array($node, $status)
+            array($node, $status, 1),
+            array($content, $status, 0),
         );
     }
 }
