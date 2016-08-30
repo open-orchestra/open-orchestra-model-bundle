@@ -589,7 +589,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
                     )
                 )
             )
-        )
+        );
         $qa->match($filter);
         $qa->sort(array('version' => -1));
 

@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ModelBundle\Migrations\MongoDB;
 
-use AntiMattr\MongoDB\Migrations\AbstractMigration;
 use Doctrine\MongoDB\Database;
 
 /**
