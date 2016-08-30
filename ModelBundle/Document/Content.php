@@ -257,6 +257,7 @@ class Content implements ContentInterface
         $this->id = null;
         $this->initializeCollections();
     }
+
     /**
      * initialize collections
      */

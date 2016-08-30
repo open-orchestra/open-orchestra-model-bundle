@@ -134,9 +134,14 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     protected function generateFilterPublishedNotDeletedOnLanguage($language)
     {
         return array(
-            'language' => $language,
-            'deleted' => false,
-            'status.published' => true
+            '$and' => array(
+                'language' => $language,
+                'deleted' => false,
+                '$or' => array(
+                    'status.published' => true,
+                    'statusable' => false,
+                ),
+             )
         );
     }
 
@@ -355,7 +360,25 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         );
         $qa->match($this->generateSiteIdAndNotLinkedFilter($siteId));
         if (null !== $published) {
-            $filter['status.published'] = $published;
+            $filter = array(
+                '$and' => array(
+                    'createdBy' => $author,
+                    'deleted' => false,
+                    'status.published' => $published,
+                )
+            );
+            if ($published) {
+                $filter = array(
+                    '$and' => array(
+                        'createdBy' => $author,
+                        'deleted' => false,
+                        '$or' => array(
+                            'status.published' => true,
+                            'statusable' => false,
+                        ),
+                    )
+                );
+            }
         }
 
         $qa->match($filter);
@@ -490,8 +513,13 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         $qa = $this->createAggregationQueryWithLanguage($language);
         $qa->match(
             array(
-                'deleted'          => false,
-                'status.published' => true,
+                '$and' => array(
+                    'deleted' => false,
+                    '$or' => array(
+                        'status.published' => true,
+                        'statusable' => false,
+                    )
+                )
             )
         );
 
@@ -549,10 +577,19 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     public function findPublishedInLastVersionWithoutFlag(StatusableInterface $element)
     {
         $qa = $this->createAggregationQueryWithLanguageAndPublished($element->getLanguage());
-        $filter['status.published'] = true;
-        $filter['currentlyPublished'] = false;
-        $filter['deleted'] = false;
-        $filter['contentId'] = $element->getContentId();
+        $filter = array(
+            '$and' => array(
+                'deleted' => false,
+                'contentId'=> $element->getContentId(),
+                '$or' => array(
+                    'statusable' => false,
+                    '$and' => array(
+                        'status.published' => true,
+                        'currentlyPublished' => false
+                    )
+                )
+            )
+        )
         $qa->match($filter);
         $qa->sort(array('version' => -1));
 
