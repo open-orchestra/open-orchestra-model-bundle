@@ -7,7 +7,6 @@ use Doctrine\Common\Inflector\Inflector;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\ModelInterface\Model\FieldOptionInterface;
 use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
-use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
 
 /**
  * Description of Base FieldType
@@ -24,9 +23,9 @@ class FieldType implements FieldTypeInterface
     protected $fieldId;
 
     /**
-     * @var ArrayCollection $labels
+     * @var array $labels
      *
-     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\TranslatedValueInterface", strategy="set")
+     * @ODM\Field(type="hash")
      */
     protected $labels;
 
@@ -112,6 +111,7 @@ class FieldType implements FieldTypeInterface
      */
     public function __construct()
     {
+        $this->labels = array();
         $this->initializeCollection();
     }
 
@@ -136,23 +136,42 @@ class FieldType implements FieldTypeInterface
     }
 
     /**
-     * @param TranslatedValueInterface $label
+     * @param string $language
+     * @param string $label
      */
-    public function addLabel(TranslatedValueInterface $label)
+    public function addLabel($language, $label)
     {
-        $this->labels->set($label->getLanguage(), $label);
+        if (is_string($language) && is_string($label)) {
+            $this->labels[$language] = $label;
+        }
     }
 
     /**
-     * @param TranslatedValueInterface $label
+     * @param string $language
      */
-    public function removeLabel(TranslatedValueInterface $label)
+    public function removeLabel($language)
     {
-        $this->labels->remove($label->getLanguage());
+        if (is_string($language) && isset($this->labels[$language])) {
+            unset($this->labels[$language]);
+        }
     }
 
     /**
-     * @return ArrayCollection
+     * @param string $language
+     *
+     * @return string
+     */
+    public function getLabel($language)
+    {
+        if (isset($this->labels[$language])) {
+            return $this->labels[$language];
+        }
+
+        return '';
+    }
+
+    /**
+     * @return array
      */
     public function getLabels()
     {
@@ -160,13 +179,13 @@ class FieldType implements FieldTypeInterface
     }
 
     /**
-     * @param string $language
-     *
-     * @return mixed
+     * @param array $labels
      */
-    public function getLabel($language = 'en')
+    public function setLabels(array $labels)
     {
-        return $this->labels->get($language)->getValue();
+        foreach ($labels as $language => $label) {
+            $this->addLabel($language, $label);
+        }
     }
 
     /**
@@ -356,16 +375,6 @@ class FieldType implements FieldTypeInterface
     }
 
     /**
-     * @return array
-     */
-    public function getTranslatedProperties()
-    {
-        return array(
-            'getLabels'
-        );
-    }
-
-    /**
      * Clone the element
      */
     public function __clone()
@@ -378,7 +387,6 @@ class FieldType implements FieldTypeInterface
      */
     protected function initializeCollection()
     {
-        $this->labels = new ArrayCollection();
         $this->options = new ArrayCollection();
     }
 

@@ -2,9 +2,9 @@
 
 namespace OpenOrchestra\ModelBundle\Form\Type;
 
+use OpenOrchestra\Backoffice\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\ModelBundle\Form\DataTransformer\EmbedStatusToStatusTransformer;
 use OpenOrchestra\ModelInterface\Form\Type\AbstractStatusChoiceType;
-use OpenOrchestra\ModelInterface\Manager\TranslationChoiceManagerInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -14,18 +14,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class StatusChoiceType extends AbstractStatusChoiceType
 {
-    protected $translationChoiceManager;
+    protected $multiLanguagesChoiceManager;
     protected $statusTransformer;
     protected $statusClass;
 
     /**
-     * @param EmbedStatusToStatusTransformer         $statusTransformer
-     * @param string                                 $statusClass
-     * @param TranslationChoiceManagerInterface|null $translationChoiceManager
+     * @param EmbedStatusToStatusTransformer       $statusTransformer
+     * @param string                               $statusClass
+     * @param MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager
      */
-    public function __construct(EmbedStatusToStatusTransformer $statusTransformer, $statusClass, TranslationChoiceManagerInterface $translationChoiceManager = null)
+    public function __construct(EmbedStatusToStatusTransformer $statusTransformer, $statusClass, MultiLanguagesChoiceManagerInterface $multiLanguagesChoiceManager)
     {
-        $this->translationChoiceManager = $translationChoiceManager;
+        $this->multiLanguagesChoiceManager = $multiLanguagesChoiceManager;
         $this->statusTransformer = $statusTransformer;
         $this->statusClass = $statusClass;
     }
@@ -46,12 +46,12 @@ class StatusChoiceType extends AbstractStatusChoiceType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $translationChoiceManager = $this->translationChoiceManager;
+        $multiLanguagesChoiceManager = $this->multiLanguagesChoiceManager;
         $resolver->setDefaults(array(
             'embedded' => true,
             'class' => $this->statusClass,
-            'choice_label' => function (StatusInterface $choice) use ($translationChoiceManager) {
-                return $translationChoiceManager->choose($choice->getLabels());
+            'choice_label' => function (StatusInterface $choice) use ($multiLanguagesChoiceManager) {
+                return $multiLanguagesChoiceManager->choose($choice->getLabels());
             },
         ));
     }

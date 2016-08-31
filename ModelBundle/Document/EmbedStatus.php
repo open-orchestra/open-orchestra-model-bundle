@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ModelBundle\Document;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\ModelInterface\Model\EmbedStatusInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
@@ -19,26 +18,18 @@ class EmbedStatus extends AbstractStatus implements EmbedStatusInterface
      */
     public function __construct(StatusInterface $status)
     {
+        parent::__construct();
         $this->id = $status->getId();
         $this->setName($status->getName());
         $this->setPublished($status->isPublished());
         $this->setInitial($status->isInitial());
         $this->setDisplayColor($status->getDisplayColor());
+        $this->setLabels($status->getLabels());
 
-        $this->labels = new ArrayCollection();
-        $labels = $status->getLabels();
-        if (!empty($labels)) {
-            foreach ($labels as $label){
-                $this->addLabel($label);
-            }
-        }
-
-        $this->toRoles = new ArrayCollection();
         foreach ($status->getToRoles() as $toRole) {
             $this->addToRole($toRole);
         }
 
-        $this->fromRoles = new ArrayCollection();
         foreach ($status->getFromRoles() as $fromRole) {
             $this->addFromRole($fromRole);
         }

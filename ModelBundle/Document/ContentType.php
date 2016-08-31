@@ -4,7 +4,6 @@ namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use OpenOrchestra\ModelInterface\Exceptions\TranslatedValueNotExisting;
 use OpenOrchestra\MongoTrait\SoftDeleteable;
 use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 use Gedmo\Blameable\Traits\BlameableDocument;
@@ -12,7 +11,6 @@ use Gedmo\Timestampable\Traits\TimestampableDocument;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
 use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
-use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
 use OpenOrchestra\MongoTrait\SiteLinkable;
 use OpenOrchestra\MongoTrait\Versionable;
 
@@ -48,8 +46,8 @@ class ContentType implements ContentTypeInterface
     protected $contentTypeId;
 
     /**
-     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\TranslatedValueInterface", strategy="set")
-     * @ORCHESTRA\Search(key="name", type="translatedValue")
+     * @ODM\Field(type="hash")
+     * @ORCHESTRA\Search(key="name", type="multiLanguages")
      */
     protected $names;
 
@@ -80,7 +78,7 @@ class ContentType implements ContentTypeInterface
     public function __construct()
     {
         $this->fields = new ArrayCollection();
-        $this->names = new ArrayCollection();
+        $this->names = array();
         $this->defaultListable = array();
     }
 
@@ -157,19 +155,56 @@ class ContentType implements ContentTypeInterface
     }
 
     /**
-     * @param TranslatedValueInterface $name
+     * @param string $language
+     * @param string $name
      */
-    public function addName(TranslatedValueInterface $name)
+    public function addName($language, $name)
     {
-        $this->names->set($name->getLanguage(), $name);
+        if (is_string($language) && is_string($name)) {
+            $this->names[$language] = $name;
+        }
     }
 
     /**
-     * @param TranslatedValueInterface $name
+     * @param string $language
      */
-    public function removeName(TranslatedValueInterface $name)
+    public function removeName($language)
     {
-        $this->names->remove($name->getLanguage());
+        if (is_string($language) && isset($this->names[$language])) {
+            unset($this->names[$language]);
+        }
+    }
+
+    /**
+     * @param string $language
+     *
+     * @return string
+     */
+    public function getName($language)
+    {
+        if (isset($this->names[$language])) {
+            return $this->names[$language];
+        }
+
+        return '';
+    }
+
+    /**
+     * @return array
+     */
+    public function getNames()
+    {
+        return $this->names;
+    }
+
+    /**
+     * @param array $names
+     */
+    public function setNames(array $names)
+    {
+        foreach ($names as $language => $name) {
+            $this->addName($language, $name);
+        }
     }
 
     /**
@@ -206,44 +241,11 @@ class ContentType implements ContentTypeInterface
     }
 
     /**
-     * @param string $language
-     *
-     * @return string
-     * @throws TranslatedValueNotExisting
-     */
-    public function getName($language)
-    {
-        if ($this->names->containsKey($language)) {
-            return $this->names->get($language)->getValue();
-        }
-
-        throw new TranslatedValueNotExisting();
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getNames()
-    {
-        return $this->names;
-    }
-
-    /**
      * @return string
      */
     public function __toString()
     {
         return (string) $this->getContentTypeId();
-    }
-
-    /**
-     * @return array
-     */
-    public function getTranslatedProperties()
-    {
-        return array(
-            'getNames'
-        );
     }
 
     /**
@@ -253,7 +255,6 @@ class ContentType implements ContentTypeInterface
     {
         if (!is_null($this->id)) {
             $this->id = null;
-            $this->names = new ArrayCollection();
             $this->fields = new ArrayCollection();
             $this->setUpdatedAt(new \DateTime());
             $this->setVersion($this->getVersion() + 1);

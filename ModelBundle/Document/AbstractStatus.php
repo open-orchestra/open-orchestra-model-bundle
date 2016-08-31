@@ -5,7 +5,6 @@ namespace OpenOrchestra\ModelBundle\Document;
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\ModelInterface\Model\RoleInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
-use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 
@@ -29,8 +28,8 @@ abstract class AbstractStatus implements StatusInterface
     protected $name;
 
     /**
-     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\TranslatedValueInterface")
-     * @ORCHESTRA\Search(key="label", type="translatedValue")
+     * @ODM\Field(type="hash")
+     * @ORCHESTRA\Search(key="label", type="multiLanguages")
      */
     protected $labels;
 
@@ -75,7 +74,7 @@ abstract class AbstractStatus implements StatusInterface
      */
     public function __construct()
     {
-        $this->labels = new ArrayCollection();
+        $this->labels = array();
         $this->fromRoles = new ArrayCollection();
         $this->toRoles = new ArrayCollection();
     }
@@ -105,7 +104,42 @@ abstract class AbstractStatus implements StatusInterface
     }
 
     /**
-     * @return ArrayCollection
+     * @param string $language
+     * @param string $label
+     */
+    public function addLabel($language, $label)
+    {
+        if (is_string($language) && is_string($label)) {
+            $this->labels[$language] = $label;
+        }
+    }
+
+    /**
+     * @param string $language
+     */
+    public function removeLabel($language)
+    {
+        if (is_string($language) && isset($this->labels[$language])) {
+            unset($this->labels[$language]);
+        }
+    }
+
+    /**
+     * @param string $language
+     *
+     * @return string
+     */
+    public function getLabel($language)
+    {
+        if (isset($this->labels[$language])) {
+            return $this->labels[$language];
+        }
+
+        return '';
+    }
+
+    /**
+     * @return array
      */
     public function getLabels()
     {
@@ -113,19 +147,13 @@ abstract class AbstractStatus implements StatusInterface
     }
 
     /**
-     * @param TranslatedValueInterface $label
+     * @param array $labels
      */
-    public function addLabel(TranslatedValueInterface $label)
+    public function setLabels(array $labels)
     {
-        $this->labels->set($label->getLanguage(), $label);
-    }
-
-    /**
-     * @param TranslatedValueInterface $label
-     */
-    public function removeLabel(TranslatedValueInterface $label)
-    {
-        $this->labels->remove($label->getLanguage());
+        foreach ($labels as $language => $label) {
+            $this->addLabel($language, $label);
+        }
     }
 
     /**
@@ -158,16 +186,6 @@ abstract class AbstractStatus implements StatusInterface
     public function isInitial()
     {
         return $this->initial;
-    }
-
-    /**
-     * @return array
-     */
-    public function getTranslatedProperties()
-    {
-        return array(
-            'getLabels'
-        );
     }
 
     /**

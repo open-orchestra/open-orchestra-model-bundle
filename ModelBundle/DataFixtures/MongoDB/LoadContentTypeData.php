@@ -8,7 +8,6 @@ use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\ModelBundle\Document\ContentType;
 use OpenOrchestra\ModelBundle\Document\FieldType;
 use OpenOrchestra\ModelBundle\Document\FieldOption;
-use OpenOrchestra\ModelBundle\Document\TranslatedValue;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
 
 /**
@@ -64,23 +63,6 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
     }
 
     /**
-     * Generate a translatedValue
-     *
-     * @param string $language
-     * @param string $value
-     *
-     * @return TranslatedValue
-     */
-    protected function generateTranslatedValue($language, $value)
-    {
-        $label = new TranslatedValue();
-        $label->setLanguage($language);
-        $label->setValue($value);
-
-        return $label;
-    }
-
-    /**
      * Generate a field type
      *
      * @param string $fieldType
@@ -89,16 +71,14 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
      *
      * @return FieldType
      */
-    protected function generateField($fieldType, $fieldId, $labels)
+    protected function generateField($fieldType, $fieldId, array $labels)
     {
         $field = new FieldType();
         $field->setType($fieldType);
         $field->setFieldId($fieldId);
         $field->setDefaultValue(null);
         $field->setSearchable(true);
-        foreach ($labels as $label) {
-            $field->addLabel($label);
-        }
+        $field->setLabels($labels);
 
         return $field;
     }
@@ -133,20 +113,14 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
 
         /* TITLE */
 
-        $enLabel = $this->generateTranslatedValue('en', 'Title');
-        $frLabel = $this->generateTranslatedValue('fr', 'Titre');
-
-        $newsTitle = $this->generateField('text', 'title', array($enLabel, $frLabel));
+        $newsTitle = $this->generateField('text', 'title', array('en' => 'Title', 'fr' => 'Titre'));
         $newsTitle->setFieldTypeSearchable('text');
         $newsTitle->addOption($maxLengthOption);
         $newsTitle->addOption($required);
 
         /* BEGINING DATE */
 
-        $enLabel = $this->generateTranslatedValue('en', 'Publicated from (yyyy-MM-dd)');
-        $frLabel = $this->generateTranslatedValue('fr', 'Publié du (aaaa-MM-jj)');
-
-        $newBeginning = $this->generateField('date', 'publish_start', array($enLabel, $frLabel));
+        $newBeginning = $this->generateField('date', 'publish_start', array('en' => 'Publicated from (yyyy-MM-dd)', 'fr' => 'Publié du (aaaa-MM-jj)'));
         $newBeginning->addOption($required);
         $newBeginning->addOption($dateWidgetOption);
         $newBeginning->addOption($dateInputOption);
@@ -155,10 +129,7 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
 
         /* ENDING DATE */
 
-        $enLabel = $this->generateTranslatedValue('en', 'till (yyyy-MM-dd)');
-        $frLabel = $this->generateTranslatedValue('fr', 'au (aaaa-MM-jj)');
-
-        $newEnding = $this->generateField('date', 'publish_end', array($enLabel, $frLabel));
+        $newEnding = $this->generateField('date', 'publish_end', array('en' => 'till (yyyy-MM-dd)', 'fr' => 'au (aaaa-MM-jj)'));
         $newEnding->addOption($required);
         $newEnding->addOption($dateWidgetOption);
         $newEnding->addOption($dateInputOption);
@@ -167,39 +138,27 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
 
         /* IMAGE */
 
-        $enLabel = $this->generateTranslatedValue('en', 'Image');
-        $frLabel = $this->generateTranslatedValue('fr', 'Image');
-
-        $newImage = $this->generateField('orchestra_media', 'image', array($enLabel, $frLabel));
+        $newImage = $this->generateField('orchestra_media', 'image', array('en' => 'Image', 'fr' => 'Image'));
         $newImage->setFieldTypeSearchable('text');
 
         /* INTRODUCTION */
 
-        $enLabel = $this->generateTranslatedValue('en', 'Introduction');
-        $frLabel = $this->generateTranslatedValue('fr', 'Introduction');
-
-        $newsIntro = $this->generateField('text', 'intro', array($enLabel, $frLabel));
+        $newsIntro = $this->generateField('text', 'intro', array('en' => 'Introduction', 'fr' => 'Introduction'));
         $newsIntro->addOption($maxLengthOption);
         $newsIntro->addOption($required);
         $newsIntro->setFieldTypeSearchable('text');
 
         /* TEXT */
 
-        $enLabel = $this->generateTranslatedValue('en', 'Text');
-        $frLabel = $this->generateTranslatedValue('fr', 'Texte');
-
-        $newsText = $this->generateField('tinymce', 'text', array($enLabel, $frLabel));
+        $newsText = $this->generateField('tinymce', 'text', array('en' => 'Text', 'fr' => 'Texte'));
         $newsText->setFieldTypeSearchable('text');
 
         /* CONTENT TYPE */
 
-        $enLabel = $this->generateTranslatedValue('en', 'News');
-        $frLabel = $this->generateTranslatedValue('fr', 'Actualité');
-
         $news = new ContentType();
         $news->setContentTypeId('news');
-        $news->addName($enLabel);
-        $news->addName($frLabel);
+        $news->addName('en', 'News');
+        $news->addName('fr', 'Actualité');
         $news->setDeleted(false);
         $news->setVersion(1);
         $news->setDefaultListable($this->genereteDefaultListable());
@@ -223,18 +182,10 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
 
         $required = $this->generateOption('required', true);
 
-        $enLabel = new TranslatedValue();
-        $enLabel->setLanguage('en');
-        $enLabel->setValue('Name');
-
-        $frLabel = new TranslatedValue();
-        $frLabel->setLanguage('fr');
-        $frLabel->setValue('Nom');
-
         $carName = new FieldType();
         $carName->setFieldId('car_name');
-        $carName->addLabel($enLabel);
-        $carName->addLabel($frLabel);
+        $carName->addLabel('en', 'Name');
+        $carName->addLabel('fr', 'Nom');
         $carName->setDefaultValue('');
         $carName->setSearchable(true);
         $carName->setType('text');
@@ -242,17 +193,10 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $carName->addOption($required);
         $carName->setFieldTypeSearchable('text');
 
-        $enLabel = new TranslatedValue();
-        $enLabel->setLanguage('en');
-        $frLabel = new TranslatedValue();
-        $frLabel->setLanguage('fr');
-        $enLabel->setValue('Description');
-        $frLabel->setValue('Description');
-
         $carDescription = new FieldType();
         $carDescription->setFieldId('description');
-        $carDescription->addLabel($enLabel);
-        $carDescription->addLabel($frLabel);
+        $carDescription->addLabel('en', 'Description');
+        $carDescription->addLabel('fr', 'Description');
         $carDescription->setDefaultValue('');
         $carDescription->setSearchable(true);
         $carDescription->setType('text');
@@ -260,18 +204,10 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $carDescription->addOption($required);
         $carDescription->setFieldTypeSearchable('text');
 
-        $en = new TranslatedValue();
-        $en->setLanguage('en');
-        $en->setValue('Car');
-
-        $fr = new TranslatedValue();
-        $fr->setLanguage('fr');
-        $fr->setValue('Voiture');
-
         $car = new ContentType();
         $car->setContentTypeId('car');
-        $car->addName($en);
-        $car->addName($fr);
+        $car->addName('en', 'Car');
+        $car->addName('fr', 'Voiture');
         $car->setDeleted(false);
         $car->setVersion(2);
         $car->setDefaultListable($this->genereteDefaultListable());
@@ -290,17 +226,10 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $maxLengthOption = $this->generateOption('max_length', 25);
         $required = $this->generateOption('required', true);
 
-        $enLabel = new TranslatedValue();
-        $enLabel->setLanguage('en');
-        $frLabel = new TranslatedValue();
-        $frLabel->setLanguage('fr');
-        $enLabel->setValue('Firstname');
-        $frLabel->setValue('Prénom');
-
         $customerFirstName = new FieldType();
         $customerFirstName->setFieldId('firstname');
-        $customerFirstName->addLabel($enLabel);
-        $customerFirstName->addLabel($frLabel);
+        $customerFirstName->addLabel('en', 'Firstname');
+        $customerFirstName->addLabel('fr', 'Prénom');
         $customerFirstName->setDefaultValue('');
         $customerFirstName->setSearchable(true);
         $customerFirstName->setType('text');
@@ -308,17 +237,10 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $customerFirstName->addOption($required);
         $customerFirstName->setFieldTypeSearchable('text');
 
-        $enLabel = new TranslatedValue();
-        $enLabel->setLanguage('en');
-        $frLabel = new TranslatedValue();
-        $frLabel->setLanguage('fr');
-        $enLabel->setValue('Lastname');
-        $frLabel->setValue('Nom de famille');
-
         $customerLastName = new FieldType();
         $customerLastName->setFieldId('lastname');
-        $customerLastName->addLabel($enLabel);
-        $customerLastName->addLabel($frLabel);
+        $customerLastName->addLabel('en', 'Lastname');
+        $customerLastName->addLabel('fr', 'Nom de famille');
         $customerLastName->setDefaultValue('');
         $customerLastName->setSearchable(true);
         $customerLastName->setType('text');
@@ -326,17 +248,10 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $customerLastName->addOption($required);
         $customerLastName->setFieldTypeSearchable('text');
 
-        $enLabel = new TranslatedValue();
-        $enLabel->setLanguage('en');
-        $frLabel = new TranslatedValue();
-        $frLabel->setLanguage('fr');
-        $enLabel->setValue('Identifier');
-        $frLabel->setValue('Identifiant');
-
         $customerIdentifier = new FieldType();
         $customerIdentifier->setFieldId('identifier');
-        $customerIdentifier->addLabel($enLabel);
-        $customerIdentifier->addLabel($frLabel);
+        $customerIdentifier->addLabel('en', 'Identifier');
+        $customerIdentifier->addLabel('fr', 'Identifiant');
         $customerIdentifier->setDefaultValue(0);
         $customerIdentifier->setSearchable(false);
         $customerIdentifier->setType('integer');
@@ -344,18 +259,10 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $customerIdentifier->addOption($required);
         $customerIdentifier->setFieldTypeSearchable('number');
 
-        $en = new TranslatedValue();
-        $en->setLanguage('en');
-        $en->setValue('Customer');
-
-        $fr = new TranslatedValue();
-        $fr->setLanguage('fr');
-        $fr->setValue('Client');
-
         $customer = new ContentType();
         $customer->setContentTypeId('customer');
-        $customer->addName($en);
-        $customer->addName($fr);
+        $customer->addName('en', 'Customer');
+        $customer->addName('fr', 'Client');
         $customer->setDeleted(false);
         $customer->setVersion(1);
         $customer->setDefaultListable($this->genereteDefaultListable());
