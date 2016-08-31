@@ -744,6 +744,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
                 'deleted' => false
             )
         );
+        $qa->sort(array('createdAt', 1));
         $qa->skip($skip);
         $qa->limit($limit);
 
