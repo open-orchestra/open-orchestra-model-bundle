@@ -2,9 +2,9 @@
 
 namespace OpenOrchestra\ModelBundle\Form\Type;
 
-use OpenOrchestra\Backoffice\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\ModelBundle\Form\DataTransformer\EmbedStatusToStatusTransformer;
 use OpenOrchestra\ModelInterface\Form\Type\AbstractStatusChoiceType;
+use OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

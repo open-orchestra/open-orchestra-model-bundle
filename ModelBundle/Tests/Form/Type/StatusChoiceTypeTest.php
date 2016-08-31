@@ -28,7 +28,7 @@ class StatusChoiceTypeTest extends AbstractBaseTestCase
     {
         $this->builder = Phake::mock('Symfony\Component\Form\FormBuilder');
         $this->transformer = Phake::mock('OpenOrchestra\ModelBundle\Form\DataTransformer\EmbedStatusToStatusTransformer');
-        $this->multiLanguagesManager = Phake::mock('OpenOrchestra\Backoffice\Manager\MultiLanguagesChoiceManagerInterface');
+        $this->multiLanguagesManager = Phake::mock('OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface');
 
         $this->form = new StatusChoiceType($this->transformer, $this->statusClass, $this->multiLanguagesManager);
     }
