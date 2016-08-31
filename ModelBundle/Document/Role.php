@@ -2,11 +2,9 @@
 
 namespace OpenOrchestra\ModelBundle\Document;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\ModelInterface\Model\RoleInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
-use OpenOrchestra\ModelInterface\Model\TranslatedValueInterface;
 use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 
 /**
@@ -46,8 +44,8 @@ class Role implements RoleInterface
     protected $toStatus;
 
     /**
-     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\TranslatedValueInterface", strategy="set")
-     * @ORCHESTRA\Search(key="description", type="translatedValue")
+     * @ODM\Field(type="hash")
+     * @ORCHESTRA\Search(key="description", type="multiLanguages")
      */
     protected $descriptions;
 
@@ -56,7 +54,7 @@ class Role implements RoleInterface
      */
     public function __construct()
     {
-        $this->descriptions = new ArrayCollection();
+        $this->descriptions = array();
     }
 
     /**
@@ -126,19 +124,24 @@ class Role implements RoleInterface
     }
 
     /**
-     * @param TranslatedValueInterface $description
+     * @param string $language
+     * @param string $description
      */
-    public function addDescription(TranslatedValueInterface $description)
+    public function addDescription($language, $description)
     {
-        $this->descriptions->set($description->getLanguage(), $description);
+        if (is_string($language) && is_string($description)) {
+            $this->descriptions[$language] = $description;
+        }
     }
 
     /**
-     * @param TranslatedValueInterface $description
+     * @param string $language
      */
-    public function removeDescription(TranslatedValueInterface $description)
+    public function removeDescription($language)
     {
-        $this->descriptions->remove($description->getLanguage());
+        if (is_string($language) && isset($this->descriptions[$language])) {
+            unset($this->descriptions[$language]);
+        }
     }
 
     /**
@@ -146,13 +149,17 @@ class Role implements RoleInterface
      *
      * @return string
      */
-    public function getDescription($language = 'en')
+    public function getDescription($language)
     {
-        return $this->descriptions->get($language)->getValue();
+        if (isset($this->descriptions[$language])) {
+            return $this->descriptions[$language];
+        }
+
+        return '';
     }
 
     /**
-     * @return ArrayCollection
+     * @return array
      */
     public function getDescriptions()
     {
@@ -160,10 +167,12 @@ class Role implements RoleInterface
     }
 
     /**
-     * @return array
+     * @param array $descriptions
      */
-    public function getTranslatedProperties()
+    public function setDescriptions(array $descriptions)
     {
-        return array('getDescriptions');
+        foreach ($descriptions as $language => $description) {
+            $this->addDescription($language, $description);
+        }
     }
 }

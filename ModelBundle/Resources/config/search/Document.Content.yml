@@ -7,7 +7,7 @@ OpenOrchestra\ModelBundle\Document\Content:
         status:
             key: status_label
             fields: status.labels
-            type: translatedValue
+            type: multiLanguages
         version:
             key: version
             type: integer

@@ -18,7 +18,7 @@ class StatusChoiceTypeTest extends AbstractBaseTestCase
 
     protected $builder;
     protected $transformer;
-    protected $translationChoiceManager;
+    protected $multiLanguagesManager;
     protected $statusClass = 'statusClass';
 
     /**
@@ -28,9 +28,9 @@ class StatusChoiceTypeTest extends AbstractBaseTestCase
     {
         $this->builder = Phake::mock('Symfony\Component\Form\FormBuilder');
         $this->transformer = Phake::mock('OpenOrchestra\ModelBundle\Form\DataTransformer\EmbedStatusToStatusTransformer');
-        $this->translationChoiceManager = Phake::mock('OpenOrchestra\ModelInterface\Manager\TranslationChoiceManagerInterface');
+        $this->multiLanguagesManager = Phake::mock('OpenOrchestra\ModelInterface\Manager\MultiLanguagesChoiceManagerInterface');
 
-        $this->form = new StatusChoiceType($this->transformer, $this->statusClass, $this->translationChoiceManager);
+        $this->form = new StatusChoiceType($this->transformer, $this->statusClass, $this->multiLanguagesManager);
     }
 
     /**
@@ -54,7 +54,7 @@ class StatusChoiceTypeTest extends AbstractBaseTestCase
      */
     public function testConfigureOptions()
     {
-        $translationChoiceManager = $this->translationChoiceManager;
+        $multiLanguagesManager = $this->multiLanguagesManager;
         $resolverMock = Phake::mock('Symfony\Component\OptionsResolver\OptionsResolver');
 
         $this->form->configureOptions($resolverMock);
@@ -62,8 +62,8 @@ class StatusChoiceTypeTest extends AbstractBaseTestCase
         Phake::verify($resolverMock)->setDefaults(array(
             'embedded' => true,
             'class' => $this->statusClass,
-            'choice_label' => function ($choice) use ($translationChoiceManager) {
-                return $translationChoiceManager->choose($choice->getLabels());
+            'choice_label' => function ($choice) use ($multiLanguagesManager) {
+                return $multiLanguagesManager->choose($choice->getLabels());
             },
         ));
     }

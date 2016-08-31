@@ -106,6 +106,7 @@ class Site implements SiteInterface
     {
         $this->robotsTxt = SiteInterface::ROBOTS_TXT_DEFAULT;
         $this->aliases = new ArrayCollection();
+        $this->metaKeywords = array();
     }
 
     /**
@@ -211,8 +212,6 @@ class Site implements SiteInterface
      */
     public function setMetaKeywords(array $metaKeywords)
     {
-        $this->metaKeywords = array();
-
         foreach ($metaKeywords as $language => $keywords) {
             $this->addMetaKeywords($language, $keywords);
         }
@@ -388,6 +387,8 @@ class Site implements SiteInterface
 
     /**
      * @return ReadSiteAliasInterface
+     *
+     * @throws MainAliasNotExisting
      */
     public function getMainAlias()
     {

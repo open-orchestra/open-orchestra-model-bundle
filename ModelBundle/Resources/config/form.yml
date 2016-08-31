@@ -1,8 +1,8 @@
 parameters:
     open_orchestra_model.type.group_site_choice.class: OpenOrchestra\ModelBundle\Form\Type\GroupSiteChoiceType
-    open_orchestra_model.type.status_choice.class: OpenOrchestra\ModelBundle\Form\Type\StatusChoiceType
     open_orchestra_model.type.site_theme_choice.class: OpenOrchestra\ModelBundle\Form\Type\SiteThemeChoiceType
     open_orchestra_model.type.workflow_role_choice.class: OpenOrchestra\ModelBundle\Form\Type\WorkflowRoleChoiceType
+    open_orchestra_model.type.status_choice.class: OpenOrchestra\ModelBundle\Form\Type\StatusChoiceType
 
 services:
     open_orchestra_model.type.group_site_choice:
@@ -12,14 +12,6 @@ services:
             - '@open_orchestra_model.transformer.embed_site_to_site'
         tags:
             - { name: form.type, alias: oo_group_site_choice }
-    open_orchestra_model.type.status_choice:
-        class: '%open_orchestra_model.type.status_choice.class%'
-        arguments:
-            - '@open_orchestra_model.transformer.embed_status_to_status'
-            - '%open_orchestra_model.document.status.class%'
-            - '@?open_orchestra_backoffice.manager.translation_choice'
-        tags:
-            - { name: form.type, alias: oo_status_choice }
     open_orchestra_model.type.site_theme_choice:
         class: '%open_orchestra_model.type.site_theme_choice.class%'
         arguments:
