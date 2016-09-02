@@ -102,7 +102,7 @@ EOF;
 
         $header = $this->createHeader();
         $contentColumn = $this->createColumnArea('Main content area 1', 'mainContentArea1', 'main-content-area1');
-        $contentColumn->addBlock(array('nodeId' => 0, 'blockId' => 1));
+        $contentColumn->addBlock(array('nodeId' => 0, 'blockId' => 1, 'blockPrivate' => false));
         $moduleColumn = $this->createModuleArea();
         $main = $this->createMain(array($contentColumn, $moduleColumn));
         $footer = $this->createFooter();

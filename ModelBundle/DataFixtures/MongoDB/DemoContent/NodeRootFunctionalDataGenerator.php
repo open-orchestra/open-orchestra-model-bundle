@@ -132,7 +132,7 @@ EOF;
         $nodeHomeBlock0->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));
 
         $nodeHomeArea4 = $this->createColumnArea('Main content area 1', 'mainContentArea1', 'main-content-area1');
-        $nodeHomeArea4->addBlock(array('nodeId' => 0, 'blockId' => 1));
+        $nodeHomeArea4->addBlock(array('nodeId' => 0, 'blockId' => 1, 'blockPrivate' => false));
         $nodeHomeArea5 = $this->createModuleArea();
         $nodeHomeArea3 = $this->createMain(array($nodeHomeArea4, $nodeHomeArea5));
         $nodeHomeArea6 = $this->createFooter();
@@ -155,9 +155,9 @@ EOF;
             $nodeHome = $this->references["node-".$language];
             $areaHeader = $this->getAreaHeader($nodeHome);
             if ($areaHeader != null) {
-                $areaHeader->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 0));
-                $areaHeader->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 1, 'blockParameter' => array('request.aliasId')));
-                $areaHeader->addBlock(array('nodeId' => 0, 'blockId' => 0));
+                $areaHeader->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 0, 'blockPrivate' => false));
+                $areaHeader->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 1, 'blockParameter' => array('request.aliasId'), 'blockPrivate' => false));
+                $areaHeader->addBlock(array('nodeId' => 0, 'blockId' => 0, 'blockPrivate' => false));
             }
         }
         $nodeHome->setName('Orchestra ?');

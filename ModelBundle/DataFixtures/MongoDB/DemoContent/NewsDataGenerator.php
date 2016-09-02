@@ -122,7 +122,7 @@ EOF;
 
         $siteNewsArea0 = $this->createHeader();
         $siteNewsArea4 = $this->createColumnArea('Main content area 1', 'mainContentArea1', 'main-content-area1');
-        $siteNewsArea4->addBlock(array('nodeId' => 0, 'blockId' => 1));
+        $siteNewsArea4->addBlock(array('nodeId' => 0, 'blockId' => 1, 'blockPrivate' => false));
         $siteNewsArea5 = $this->createModuleArea();
         $siteNewsArea3 = $this->createMain(array($siteNewsArea4, $siteNewsArea5));
         $siteNewsArea6 = $this->createFooter();

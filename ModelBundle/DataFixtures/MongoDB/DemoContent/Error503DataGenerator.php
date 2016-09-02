@@ -82,7 +82,7 @@ EOF;
 
         $error503Area0 = $this->createHeader();
         $error503Area4 = $this->createColumnArea('Main content area 1', 'mainContentArea1', 'main-content-area1');
-        $error503Area4->addBlock(array('nodeId' => 0, 'blockId' => 1));
+        $error503Area4->addBlock(array('nodeId' => 0, 'blockId' => 1, 'blockPrivate' => false));
         $error503Area5 = $this->createModuleArea();
         $error503Area3 = $this->createMain(array($error503Area4, $error503Area5));
         $error503Area6 = $this->createFooter();

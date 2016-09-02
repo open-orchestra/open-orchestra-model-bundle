@@ -100,8 +100,8 @@ abstract class AbstractDataGenerator
 
         $header->addArea($column);
 
-        $column->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 0));
-        $column->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 1, 'blockParameter' => array('request.aliasId')));
+        $column->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 0, 'blockPrivate' => false));
+        $column->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 1, 'blockPrivate' => false, 'blockParameter' => array('request.aliasId')));
         $column->addBlock(array('nodeId' => 0, 'blockId' => 0));
 
         return $header;
@@ -122,8 +122,8 @@ abstract class AbstractDataGenerator
 
         $footer->addArea($columnMenu);
         $footer->addArea($columnInfo);
-        $columnMenu->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3, 'blockParameter' => array('request.aliasId')));
-        $columnInfo->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 2));
+        $columnMenu->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3, 'blockPrivate' => false, 'blockParameter' => array('request.aliasId')));
+        $columnInfo->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 2, 'blockPrivate' => false));
 
         return $footer;
     }
@@ -139,7 +139,7 @@ abstract class AbstractDataGenerator
         $area = $this->createColumnArea('Module area', 'moduleArea', $htmlClass);
 
         if ($haveBlocks) {
-            $area->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 4));
+            $area->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 4, 'blockPrivate' => true));
         }
 
         return $area;
