@@ -256,7 +256,7 @@ class ContentType implements ContentTypeInterface
     }
 
     /**
-     * @return int
+     * @return boolean
      */
     public function isVersionable()
     {
