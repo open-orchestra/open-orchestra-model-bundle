@@ -13,7 +13,6 @@ use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\MongoTrait\SiteLinkable;
 use OpenOrchestra\MongoTrait\Versionable;
-use OpenOrchestra\MongoTrait\OptionallyVersionable;
 
 /**
  * Description of ContentType
@@ -30,7 +29,6 @@ class ContentType implements ContentTypeInterface
     use Versionable;
     use SiteLinkable;
     use SoftDeleteable;
-    use OptionallyVersionable;
 
     /**
      * @var string $id
