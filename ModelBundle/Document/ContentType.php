@@ -13,7 +13,6 @@ use OpenOrchestra\ModelInterface\Model\FieldTypeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\MongoTrait\SiteLinkable;
 use OpenOrchestra\MongoTrait\Versionable;
-use OpenOrchestra\MongoTrait\OptionallyVersionable;
 
 /**
  * Description of ContentType
@@ -30,7 +29,6 @@ class ContentType implements ContentTypeInterface
     use Versionable;
     use SiteLinkable;
     use SoftDeleteable;
-    use OptionallyVersionable;
 
     /**
      * @var string $id
@@ -73,6 +71,13 @@ class ContentType implements ContentTypeInterface
      * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\FieldTypeInterface")
      */
     protected $fields;
+
+    /**
+     * @var boolean versionable
+     *
+     * @ODM\Field(type="boolean")
+     */
+    protected $versionable = true;
 
     /**
      * Constructor
@@ -240,6 +245,22 @@ class ContentType implements ContentTypeInterface
     public function setDefaultListable(array $defaultListable)
     {
         $this->defaultListable = $defaultListable;
+    }
+
+    /**
+     * @param boolean $versionable
+     */
+    public function setVersionable($versionable)
+    {
+        $this->versionable = $versionable;
+    }
+
+    /**
+     * @return int
+     */
+    public function isVersionable()
+    {
+        return $this->versionable;
     }
 
     /**
