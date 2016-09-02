@@ -12,7 +12,7 @@ use OpenOrchestra\ModelInterface\Repository\RepositoryTrait\UseTrackableTraitInt
 /**
  * Class KeywordRepository
  */
-class KeywordRepository extends AbstractAggregateRepository implements KeywordRepositoryInterface, UseTrackableTraitInterface
+class KeywordRepository extends AbstractAggregateRepository implements KeywordRepositoryInterface
 {
     use PaginationTrait;
     use UseTrackableTrait;
