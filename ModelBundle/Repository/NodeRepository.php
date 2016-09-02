@@ -729,6 +729,30 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
 
     /**
      * @param string $nodeType
+     * @param int    $skip
+     * @param int    $limit
+     *
+     * @return array
+     */
+    public function findAllCurrentlyPublishedByTypeWithSkipAndLimit($nodeType, $skip, $limit)
+    {
+        $qa = $this->createAggregationQuery();
+        $qa->match(
+            array(
+                'nodeType' => $nodeType,
+                'currentlyPublished' => true,
+                'deleted' => false
+            )
+        );
+        $qa->sort(array('createdAt', 1));
+        $qa->skip($skip);
+        $qa->limit($limit);
+
+        return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param string $nodeType
      * @param string $siteId
      *
      * @return array
