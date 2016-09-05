@@ -73,6 +73,13 @@ class ContentType implements ContentTypeInterface
     protected $fields;
 
     /**
+     * @var boolean versionable
+     *
+     * @ODM\Field(type="boolean")
+     */
+    protected $versionable = true;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -238,6 +245,22 @@ class ContentType implements ContentTypeInterface
     public function setDefaultListable(array $defaultListable)
     {
         $this->defaultListable = $defaultListable;
+    }
+
+    /**
+     * @param boolean $versionable
+     */
+    public function setVersionable($versionable)
+    {
+        $this->versionable = $versionable;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isVersionable()
+    {
+        return $this->versionable;
     }
 
     /**
