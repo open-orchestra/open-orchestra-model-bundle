@@ -7,7 +7,6 @@ use OpenOrchestra\ModelInterface\Repository\KeywordRepositoryInterface;
 use OpenOrchestra\Pagination\MongoTrait\PaginationTrait;
 use OpenOrchestra\Repository\AbstractAggregateRepository;
 use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\UseTrackableTrait;
-use OpenOrchestra\ModelInterface\Repository\RepositoryTrait\UseTrackableTraitInterface;
 
 /**
  * Class KeywordRepository
