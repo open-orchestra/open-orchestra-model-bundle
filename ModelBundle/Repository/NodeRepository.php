@@ -744,11 +744,30 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
                 'deleted' => false
             )
         );
-        $qa->sort(array('createdAt', 1));
+        $qa->sort(array('createdAt' => 1));
         $qa->skip($skip);
         $qa->limit($limit);
 
         return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param string $nodeType
+     *
+     * @return int
+     */
+    public function countAllCurrentlyPublishedByType($nodeType)
+    {
+        $qa = $this->createAggregationQuery();
+        $qa->match(
+            array(
+                'nodeType' => $nodeType,
+                'currentlyPublished' => true,
+                'deleted' => false
+            )
+        );
+
+        return $this->countDocumentAggregateQuery($qa);
     }
 
     /**
