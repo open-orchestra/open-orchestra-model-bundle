@@ -79,7 +79,7 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function generateCarR5($language)
     {
-        $content = new Content();
+        $content = $this->addBaseContent("r5_3_portes", "car", 1);
 
         $attribute1 = $this->generateContentAttribute('car_name', 'R5');
         $attribute2 = $this->generateContentAttribute('description',
@@ -88,14 +88,8 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
              ante, id mollis diam. Suspendisse sed magna lectus. Aenean fringilla elementum
              lorem id suscipit. Phasellus feugiat tellus sapien, id tempus nisi ultrices ut.');
 
-        $content->setContentId("r5_3_portes");
-        $content->setContentType("car");
-        $content->setContentTypeVersion(1);
-        $content->setDeleted(false);
         $content->setName("R5 3 portes " . $language);
         $content->setLanguage($language);
-        $content->setStatus($this->getReference('status-published'));
-        $content->setCurrentlyPublished(true);
         $content->setVersion(2);
         $content->addKeyword($this->getReference('keyword-lorem'));
         $content->setLinkedToSite(false);
