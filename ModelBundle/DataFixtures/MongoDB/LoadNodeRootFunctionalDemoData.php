@@ -19,6 +19,7 @@ use OpenOrchestra\ModelBundle\Document\Node;
 use OpenOrchestra\ModelBundle\Document\Block;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\TinyMCEWysiwygStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\FooterStrategy;
+use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\AutoPublishDataGenerator;
 
 /**
  * Class LoadNodeRootFunctionalDemoData
@@ -39,11 +40,12 @@ class LoadNodeRootFunctionalDemoData extends AbstractFixture implements OrderedF
         $references = array();
         $references["status-published"] = $this->getReference('status-published');
         $references["status-draft"] = $this->getReference('status-draft');
+        $references["status-pending"] = $this->getReference('status-pending');
         if ($this->hasReference('logo-orchestra')) {
             $references["logo-orchestra"] = $this->getReference('logo-orchestra');
         }
         $languages = array("de", "en", "fr");
-        
+
         foreach ($languages as $language) {
             $references["node-".$language] = $this->getReference("node-".$language);
             $references["node-global-".$language] = $this->getReference("node-global-".$language);
@@ -58,6 +60,7 @@ class LoadNodeRootFunctionalDemoData extends AbstractFixture implements OrderedF
         $this->addNode($manager, new NewsDataGenerator($references), $languages);
         $this->addNode($manager, new Error404DataGenerator($references), $languages);
         $this->addNode($manager, new Error503DataGenerator($references), $languages);
+        $this->addNode($manager, new AutoPublishDataGenerator($references), array('fr', 'en'));
 
         $manager->flush();
     }
