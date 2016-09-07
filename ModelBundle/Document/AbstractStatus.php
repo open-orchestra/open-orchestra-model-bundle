@@ -42,6 +42,14 @@ abstract class AbstractStatus implements StatusInterface
     protected $published = false;
 
     /**
+     * @var bool
+     *
+     * @ODM\Field(type="boolean")
+     * @ORCHESTRA\Search(key="blocked_edition", type="boolean")
+     */
+    protected $blockedEdition = false;
+
+    /**
      * @var ArrayCollection
      *
      * @ODM\ReferenceMany(targetDocument="OpenOrchestra\ModelInterface\Model\RoleInterface", mappedBy="fromStatus")
@@ -170,6 +178,22 @@ abstract class AbstractStatus implements StatusInterface
     public function isPublished()
     {
         return $this->published;
+    }
+
+    /**
+     * @param boolean $blockedEdition
+     */
+    public function setBlockedEdition($blockedEdition)
+    {
+        $this->blockedEdition = $blockedEdition;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isBlockedEdition()
+    {
+        return $this->blockedEdition;
     }
 
     /**

@@ -18,10 +18,11 @@ abstract class AbstractLoadStatus extends AbstractFixture implements OrderedFixt
      * @param string $color
      * @param bool   $published
      * @param bool   $initial
+     * @param bool   $blockedEdition
      *
      * @return Status
      */
-    protected function loadStatus($enName, $frName, $name, $color, $published = false, $initial = false)
+    protected function loadStatus($enName, $frName, $name, $color, $published = false, $initial = false, $blockedEdition = false)
     {
         $value = new Status();
         $value->setName($name);
@@ -30,6 +31,7 @@ abstract class AbstractLoadStatus extends AbstractFixture implements OrderedFixt
         $value->addLabel('en', $enName);
         $value->addLabel('fr', $frName);
         $value->setDisplayColor($color);
+        $value->setBlockedEdition($blockedEdition);
 
         $this->addReference('status-' . $name, $value);
 
