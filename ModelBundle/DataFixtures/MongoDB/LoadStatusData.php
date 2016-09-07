@@ -16,9 +16,9 @@ class LoadStatusData extends AbstractLoadStatus implements OrchestraProductionFi
      */
     public function load(ObjectManager $manager)
     {
+        $manager->persist($this->loadStatus('Out of validation workflow', 'Non soumis au workflow de validation', 'outOfWorkflow', 'grayDark', true));
         $manager->persist($this->loadStatus('Draft', 'Brouillon', 'draft', 'green', false, true));
         $manager->persist($this->loadStatus('Published', 'Publié', 'published', 'red', true, false, true));
-        $manager->persist($this->loadStatus('Out of validation workflow', 'Non soumis au workflow de validation', 'outOfWorkflow', 'grayDark', true));
 
         $manager->flush();
     }
