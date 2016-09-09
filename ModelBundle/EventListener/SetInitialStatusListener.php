@@ -7,6 +7,7 @@ use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use OpenOrchestra\ModelInterface\Model\ContentInterface;
 
 /**
  * Class SetInitialStatusListener
@@ -25,6 +26,15 @@ class SetInitialStatusListener implements ContainerAwareInterface
             $status = $this->container->get('open_orchestra_model.repository.status')->findOneByInitial();
             if ($status instanceof StatusInterface) {
                 $document->setStatus($status);
+            }
+            if ($document instanceof ContentInterface) {
+                $contentType = $this->container->get('open_orchestra_model.repository.content_type')->findOneByContentTypeIdInLastVersion($document->getContentType());
+                if ($contentType->isDefiningNonStatusable()) {
+                    $status = $this->container->get('open_orchestra_model.repository.status')->findOneByOutOfWorkflow();
+                    if ($status instanceof StatusInterface) {
+                        $document->setStatus($status);
+                    }
+                }
             }
         }
     }

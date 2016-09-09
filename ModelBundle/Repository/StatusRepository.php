@@ -104,4 +104,15 @@ class StatusRepository extends AbstractAggregateRepository implements StatusRepo
 
         return $this->singleHydrateAggregateQuery($qa);
     }
+
+    /**
+     * @return StatusInterface
+     */
+    public function findOneByOutOfWorkflow()
+    {
+        $qa = $this->createAggregationQuery();
+        $qa->match(array('outOfWorkflow' => true));
+
+        return $this->singleHydrateAggregateQuery($qa);
+    }
 }

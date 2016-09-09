@@ -50,6 +50,14 @@ abstract class AbstractStatus implements StatusInterface
     protected $blockedEdition = false;
 
     /**
+     * @var bool
+     *
+     * @ODM\Field(type="boolean")
+     * @ORCHESTRA\Search(key="out_of_workflow", type="boolean")
+     */
+    protected $outOfWorkflow = false;
+
+    /**
      * @var ArrayCollection
      *
      * @ODM\ReferenceMany(targetDocument="OpenOrchestra\ModelInterface\Model\RoleInterface", mappedBy="fromStatus")
@@ -206,6 +214,22 @@ abstract class AbstractStatus implements StatusInterface
     public function isBlockedEdition()
     {
         return $this->blockedEdition;
+    }
+
+    /**
+     * @param boolean $outOfWorkflow
+     */
+    public function setOutOfWorkflow($outOfWorkflow)
+    {
+        $this->outOfWorkflow = $outOfWorkflow;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isOutOfWorkflow()
+    {
+        return $this->outOfWorkflow;
     }
 
     /**
