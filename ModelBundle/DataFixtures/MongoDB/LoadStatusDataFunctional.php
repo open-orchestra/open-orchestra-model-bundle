@@ -15,7 +15,7 @@ class LoadStatusDataFunctional extends AbstractLoadStatus implements OrchestraFu
      */
     public function load(ObjectManager $manager)
     {
-        $manager->persist($this->loadStatus('Pending', 'En attente', 'pending', 'orange'));
+        $manager->persist($this->loadStatus('Pending', 'En attente', 'pending', 'orange', false, false, true));
 
         $manager->flush();
     }

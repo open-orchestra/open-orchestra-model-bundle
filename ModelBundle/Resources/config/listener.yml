@@ -1,6 +1,7 @@
 parameters:
     open_orchestra_model.doctrine_listener.generate_id.class: OpenOrchestra\ModelBundle\EventListener\GenerateIdListener
     open_orchestra_model.doctrine_listener.initial_status.class: OpenOrchestra\ModelBundle\EventListener\InitialStatusListener
+    open_orchestra_model.doctrine_listener.auto_unpublish_status.class: OpenOrchestra\ModelBundle\EventListener\AutoUnpublishStatusListener
     open_orchestra_model.doctrine_listener.generate_path.class: OpenOrchestra\ModelBundle\EventListener\GeneratePathListener
     open_orchestra_model.doctrine_listener.set_initial_status.class: OpenOrchestra\ModelBundle\EventListener\SetInitialStatusListener
     open_orchestra_model.doctrine_listener.update_non_translatable_content_field.class: OpenOrchestra\ModelBundle\EventListener\UpdateNonTranslatableContentFieldsListener
@@ -10,6 +11,13 @@ parameters:
 services:
     open_orchestra_model.doctrine_listener.initial_status:
         class: '%open_orchestra_model.doctrine_listener.initial_status.class%'
+        calls:
+            - [setContainer, ['@service_container']]
+        tags:
+            -  { name: doctrine_mongodb.odm.event_listener, event: preUpdate }
+            -  { name: doctrine_mongodb.odm.event_listener, event: postFlush }
+    open_orchestra_model.doctrine_listener.auto_unpublish_status:
+        class: '%open_orchestra_model.doctrine_listener.auto_unpublish_status.class%'
         calls:
             - [setContainer, ['@service_container']]
         tags:

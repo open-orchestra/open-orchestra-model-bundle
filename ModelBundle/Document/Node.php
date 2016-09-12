@@ -161,7 +161,6 @@ class Node implements NodeInterface
      */
     protected $role;
 
-
     /**
      * @var ArrayCollection
      *
@@ -212,6 +211,20 @@ class Node implements NodeInterface
      * @ODM\Field(type="string")
      */
     protected $metaDescription;
+
+    /**
+     * @var DateTime $publishDate
+     *
+     * @ODM\Field(type="date")
+     */
+    protected $publishDate;
+
+    /**
+     * @var DateTime $unpublishDate
+     *
+     * @ODM\Field(type="date")
+     */
+    protected $unpublishDate;
 
     /**
      * Constructor
@@ -662,7 +675,7 @@ class Node implements NodeInterface
      */
     public function setOrder($order)
     {
-        $this->order =$order;
+        $this->order = $order;
     }
 
     /**
@@ -750,5 +763,41 @@ class Node implements NodeInterface
     public function getMetaDescription()
     {
         return $this->metaDescription;
+    }
+
+    /**
+     * @param DateTime|null $date
+     */
+    public function setPublishDate($date)
+    {
+        if (is_null($date) || $date instanceof \DateTime) {
+            $this->publishDate = $date;
+        }
+    }
+
+    /**
+     * @return Date
+     */
+    public function getPublishDate()
+    {
+        return $this->publishDate;
+    }
+
+    /**
+     * @param DateTime|null $date
+     */
+    public function setUnpublishDate($date)
+    {
+        if (is_null($date) || $date instanceof \DateTime) {
+            $this->unpublishDate = $date;
+        }
+    }
+
+    /**
+     * @return Date
+     */
+    public function getUnpublishDate()
+    {
+        return $this->unpublishDate;
     }
 }

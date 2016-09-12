@@ -70,6 +70,18 @@ abstract class AbstractStatus implements StatusInterface
     protected $initial = false;
 
     /**
+     * @ODM\Field(type="boolean")
+     * @ORCHESTRA\Search(key="autoPublishFrom", type="boolean")
+     */
+    protected $autoPublishFrom = false;
+
+    /**
+     * @ODM\Field(type="boolean")
+     * @ORCHESTRA\Search(key="autoUnpublishTo", type="boolean")
+     */
+    protected $autoUnpublishTo = false;
+
+    /**
      * @var string
      *
      * @ODM\Field(type="string")
@@ -210,6 +222,38 @@ abstract class AbstractStatus implements StatusInterface
     public function isInitial()
     {
         return $this->initial;
+    }
+
+    /**
+     * @param boolean $autoPublishFrom
+     */
+    public function setAutoPublishFrom($autoPublishFrom)
+    {
+        $this->autoPublishFrom = $autoPublishFrom;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isAutoPublishFrom()
+    {
+        return $this->autoPublishFrom;
+    }
+
+    /**
+     * @param boolean $autoUnpublishTo
+     */
+    public function setAutoUnpublishTo($autoUnpublishTo)
+    {
+        $this->autoUnpublishTo = $autoUnpublishTo;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isAutoUnpublishTo()
+    {
+        return $this->autoUnpublishTo;
     }
 
     /**

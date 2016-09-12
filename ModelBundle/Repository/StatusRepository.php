@@ -46,6 +46,57 @@ class StatusRepository extends AbstractAggregateRepository implements StatusRepo
     /**
      * @return StatusInterface
      */
+    public function findOneByPublished()
+    {
+        $qa = $this->createAggregationQuery();
+        $qa->match(array('published' => true));
+
+        return $this->singleHydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @return array
+     */
+    public function findByAutoPublishFrom()
+    {
+        $qa = $this->createAggregationQuery();
+        $qa->match(array('autoPublishFrom' => true));
+
+        return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @return StatusInterface
+     */
+    public function findOnebyAutoUnpublishTo()
+    {
+        $qa = $this->createAggregationQuery();
+        $qa->match(array('autoUnpublishTo' => true));
+
+        return $this->singleHydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return array
+     */
+    public function findOtherByAutoUnpublishTo($name)
+    {
+        $qa = $this->createAggregationQuery();
+        $qa->match(
+            array(
+                'name' => array('$ne' => $name),
+                'autoUnpublishTo' => true
+            )
+        );
+
+        return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @return StatusInterface
+     */
     public function findOneByEditable()
     {
         $qa = $this->createAggregationQuery();
