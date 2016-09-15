@@ -14,6 +14,7 @@ use OpenOrchestra\Repository\AbstractAggregateRepository;
 use Solution\MongoAggregation\Pipeline\Stage;
 use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\KeywordableTrait;
 use OpenOrchestra\ModelInterface\Repository\RepositoryTrait\KeywordableTraitInterface;
+use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\UseTrackableTrait;
 
 /**
  * Class ContentRepository
@@ -22,6 +23,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
 {
     use PaginationTrait;
     use KeywordableTrait;
+    use UseTrackableTrait;
 
     /**
      * @param string $contentId
