@@ -26,6 +26,7 @@ class EmbedStatus extends AbstractStatus implements EmbedStatusInterface
         $this->setDisplayColor($status->getDisplayColor());
         $this->setLabels($status->getLabels());
         $this->setBlockedEdition($status->isBlockedEdition());
+        $this->setOutOfWorkflow($status->isOutOfWorkflow());
 
         foreach ($status->getToRoles() as $toRole) {
             $this->addToRole($toRole);
