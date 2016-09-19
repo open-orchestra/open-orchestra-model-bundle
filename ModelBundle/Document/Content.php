@@ -15,6 +15,7 @@ use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Model\ReadContentAttributeInterface;
 use OpenOrchestra\MongoTrait\Keywordable;
 use OpenOrchestra\MongoTrait\Versionable;
+use OpenOrchestra\MongoTrait\UseTrackable;
 
 /**
  * Description of Content
@@ -46,6 +47,7 @@ class Content implements ContentInterface
     use Versionable;
     use SiteLinkable;
     use SoftDeleteable;
+    use UseTrackable;
 
     /**
      * @var string $id
