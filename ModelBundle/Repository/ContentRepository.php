@@ -340,6 +340,18 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     }
 
     /**
+     * @param string $contentType
+     *
+     * @return int
+     */
+    public function countByContentType($contentType)
+    {
+        $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
+
+        return $this->countDocumentAggregateQuery($qa);
+    }
+
+/**
      * @param string       $author
      * @param string       $siteId
      * @param boolean|null $published
