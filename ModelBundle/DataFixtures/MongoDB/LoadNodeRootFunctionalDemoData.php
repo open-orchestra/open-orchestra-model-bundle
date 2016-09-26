@@ -183,6 +183,7 @@ EOF
                         $subArea->addBlock(array('nodeId' => 0, 'blockId' => 1, 'blockPrivate' => false));
                         $subArea->addBlock(array('nodeId' => 0, 'blockId' => 2, 'blockPrivate' => false));
                         $subArea->addBlock(array('nodeId' => 0, 'blockId' => 3, 'blockPrivate' => false));
+                        $subArea->addBlock(array('nodeId' => 0, 'blockId' => 4, 'blockPrivate' => false));
                     }
                 }
             }
