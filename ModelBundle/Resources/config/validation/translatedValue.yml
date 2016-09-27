@@ -1,4 +1,4 @@
-# @deprecated will be removed in 1.3.0
+# @deprecated will be removed in 2.0
 OpenOrchestra\ModelBundle\Document\TranslatedValue:
     properties:
         value:
