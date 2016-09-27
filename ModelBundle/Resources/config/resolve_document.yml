@@ -1,9 +1,9 @@
 resolve_target_documents:
-    # @deprecated will be removed in 1.3.0
+    # @deprecated will be removed in 2.0
     OpenOrchestra\ModelInterface\Model\TranslatedValueInterface: OpenOrchestra\ModelBundle\Document\TranslatedValue
     OpenOrchestra\ModelInterface\Model\ReadSiteInterface: OpenOrchestra\ModelBundle\Document\Site
     OpenOrchestra\ModelInterface\Model\EmbedStatusInterface: OpenOrchestra\ModelBundle\Document\EmbedStatus
-    # @deprecated will be removed in 1.3.0
+    # @deprecated will be removed in 2.0
     OpenOrchestra\ModelInterface\Model\EmbedKeywordInterface: OpenOrchestra\ModelBundle\Document\EmbedKeyword
     OpenOrchestra\ModelInterface\Model\KeywordInterface: OpenOrchestra\ModelBundle\Document\Keyword
     OpenOrchestra\ModelInterface\Model\RoleInterface: OpenOrchestra\ModelBundle\Document\Role
