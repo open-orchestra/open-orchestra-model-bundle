@@ -16,7 +16,7 @@ class Report implements ReportInterface
     /**
      * @var string $user
      *
-     * @ODM\EmbedOne(targetDocument="OpenOrchestra\UserBundle\Model\UserInterface")
+     * @ODM\ReferenceOne(targetDocument="Symfony\Component\Security\Core\User\UserInterface")
      */
     protected $user;
 
