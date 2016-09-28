@@ -799,14 +799,52 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      * @param int|null     $limit
      * @param array        $sort
      *
+     * @deprecated will be removed in 2.0
+     *
      * @return array
      */
     public function findByAuthorAndSiteId($author, $siteId, $published = null, $limit = null, $sort = null)
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0', E_USER_DEPRECATED);
+
         $qa = $this->createAggregationQuery();
         $filter = array(
             'nodeType' => NodeInterface::TYPE_DEFAULT,
             'createdBy' => $author,
+            'siteId' => $siteId,
+            'deleted' => false
+        );
+        if (null !== $published) {
+            $filter['status.published'] = $published;
+        }
+        $qa->match($filter);
+
+        if (null !== $sort) {
+            $qa->sort($sort);
+        }
+
+        if (null !== $limit) {
+            $qa->limit($limit);
+        }
+
+        return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param string       $id
+     * @param string       $siteId
+     * @param boolean|null $published
+     * @param int|null     $limit
+     * @param array        $sort
+     *
+     * @return array
+     */
+    public function findByReportAndSiteId($id, $siteId, $published = null, $limit = null, $sort = null)
+    {
+        $qa = $this->createAggregationQuery();
+        $filter = array(
+            'nodeType' => NodeInterface::TYPE_DEFAULT,
+            'reports.user.$id' => new \MongoId($id),
             'siteId' => $siteId,
             'deleted' => false
         );
