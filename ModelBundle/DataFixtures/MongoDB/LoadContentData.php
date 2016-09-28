@@ -8,7 +8,6 @@ use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\ModelBundle\Document\Content;
 use OpenOrchestra\ModelBundle\Document\ContentAttribute;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
-use OpenOrchestra\ModelBundle\Document\Report;
 
 /**
  * Class LoadContentData
@@ -96,11 +95,6 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
         $content->setLinkedToSite(false);
         $content->setSiteId('2');
 
-        $report = new Report();
-        $report->setUpdatedAt(new \DateTime());
-        $report->setUser($this->getReference('user-admin'));
-        $content->addReport($report);
-
         $content->addAttribute($attribute1);
         $content->addAttribute($attribute2);
 
@@ -132,6 +126,7 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
 
         $content->addAttribute($attribute1);
         $content->addAttribute($attribute2);
+        $this->setReference("ds_3_".$language, $content);
 
         return $content;
     }
