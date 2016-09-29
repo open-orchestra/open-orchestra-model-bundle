@@ -6,6 +6,9 @@ namespace OpenOrchestra\ModelBundle\Repository;
 =======
 use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\AreaFinderTrait;
 use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\UseTrackableTrait;
+<<<<<<< 81aa7c98e38f7af12a2f6ec7f626afe74b10ff8a
+>>>>>>> add reference node
+=======
 >>>>>>> add reference node
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;

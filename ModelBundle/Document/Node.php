@@ -54,6 +54,7 @@ class Node implements NodeInterface
     use Metaable;
     use SoftDeleteable;
     use Historisable;
+    use UseTrackable;
 
     /**
      * @var string $id
