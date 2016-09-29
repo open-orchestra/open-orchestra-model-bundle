@@ -3,15 +3,15 @@
 namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use OpenOrchestra\ModelInterface\Model\ReportInterface;
+use OpenOrchestra\ModelInterface\Model\HistoryInterface;
 use OpenOrchestra\UserBundle\Model\UserInterface;
 
 /**
- * Description of Report
+ * Description of History
  *
  * @ODM\EmbeddedDocument
  */
-class Report implements ReportInterface
+class History implements HistoryInterface
 {
     /**
      * @var string $user

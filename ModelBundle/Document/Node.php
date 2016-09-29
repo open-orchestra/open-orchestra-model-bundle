@@ -19,7 +19,7 @@ use OpenOrchestra\MongoTrait\Metaable;
 use OpenOrchestra\MongoTrait\Sitemapable;
 use OpenOrchestra\MongoTrait\Schemeable;
 use OpenOrchestra\MongoTrait\Versionable;
-use OpenOrchestra\MongoTrait\Reportable;
+use OpenOrchestra\MongoTrait\Historisable;
 
 /**
  * Description of Node
@@ -55,7 +55,7 @@ class Node implements NodeInterface
     use Cacheable;
     use Metaable;
     use SoftDeleteable;
-    use Reportable;
+    use Historisable;
     use AreaRootContainer;
 
     /**
@@ -733,7 +733,7 @@ class Node implements NodeInterface
     {
         $this->areas = new ArrayCollection();
         $this->blocks = new ArrayCollection();
-        $this->initializeReports();
+        $this->initializeHistory();
     }
 
     /**

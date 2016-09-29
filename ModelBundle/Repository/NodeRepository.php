@@ -839,12 +839,12 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      *
      * @return array
      */
-    public function findByReportAndSiteId($id, $siteId, $published = null, $limit = null, $sort = null)
+    public function findByHistoryAndSiteId($id, $siteId, $published = null, $limit = null, $sort = null)
     {
         $qa = $this->createAggregationQuery();
         $filter = array(
             'nodeType' => NodeInterface::TYPE_DEFAULT,
-            'reports.user.$id' => new \MongoId($id),
+            'histories.user.$id' => new \MongoId($id),
             'siteId' => $siteId,
             'deleted' => false
         );

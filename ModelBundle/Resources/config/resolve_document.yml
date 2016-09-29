@@ -15,4 +15,4 @@ resolve_target_documents:
     OpenOrchestra\ModelInterface\Model\ContentAttributeInterface: OpenOrchestra\ModelBundle\Document\ContentAttribute
     OpenOrchestra\ModelInterface\Model\FieldTypeInterface: OpenOrchestra\ModelBundle\Document\FieldType
     OpenOrchestra\ModelInterface\Model\FieldOptionInterface: OpenOrchestra\ModelBundle\Document\FieldOption
-    OpenOrchestra\ModelInterface\Model\ReportInterface: OpenOrchestra\ModelBundle\Document\Report
+    OpenOrchestra\ModelInterface\Model\HistoryInterface: OpenOrchestra\ModelBundle\Document\History

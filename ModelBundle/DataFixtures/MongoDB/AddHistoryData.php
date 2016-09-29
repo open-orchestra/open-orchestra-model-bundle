@@ -6,12 +6,12 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
-use OpenOrchestra\ModelBundle\Document\Report;
+use OpenOrchestra\ModelBundle\Document\History;
 
 /**
- * Class AddReportData
+ * Class AddHistoryData
  */
-class AddReportData extends AbstractFixture implements OrderedFixtureInterface, OrchestraFunctionalFixturesInterface
+class AddHistoryData extends AbstractFixture implements OrderedFixtureInterface, OrchestraFunctionalFixturesInterface
 {
     protected $objectManager;
 
@@ -22,9 +22,9 @@ class AddReportData extends AbstractFixture implements OrderedFixtureInterface, 
     {
         $this->objectManager = $objectManager;
 
-        $objectManager->persist($this->addReport("ds_3_fr"));
-        $objectManager->persist($this->addReport("ds_3_en"));
-        $objectManager->persist($this->addReport("node-fr"));
+        $objectManager->persist($this->addHistory("ds_3_fr"));
+        $objectManager->persist($this->addHistory("ds_3_en"));
+        $objectManager->persist($this->addHistory("node-fr"));
 
         $objectManager->flush();
     }
@@ -32,13 +32,13 @@ class AddReportData extends AbstractFixture implements OrderedFixtureInterface, 
     /**
      * @param string $name
      */
-    protected function addReport($name){
+    protected function addHistory($name){
         $document = $this->getReference($name);
 
-        $report = new Report();
-        $report->setUpdatedAt(new \DateTime());
-        $report->setUser($this->getReference("user-admin"));
-        $document->addReport($report);
+        $history = new History();
+        $history->setUpdatedAt(new \DateTime());
+        $history->setUser($this->getReference("user-admin"));
+        $document->addHistory($history);
 
         return $document;
     }
