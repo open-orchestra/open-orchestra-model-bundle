@@ -2,6 +2,11 @@
 
 namespace OpenOrchestra\ModelBundle\Repository;
 
+<<<<<<< 051ee1ae50195acba886f42a3db3ffd2153691a4
+=======
+use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\AreaFinderTrait;
+use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\UseTrackableTrait;
+>>>>>>> add reference node
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
@@ -18,6 +23,12 @@ use MongoRegex;
  */
 class NodeRepository extends AbstractAggregateRepository implements FieldAutoGenerableRepositoryInterface, NodeRepositoryInterface
 {
+<<<<<<< 051ee1ae50195acba886f42a3db3ffd2153691a4
+=======
+    use AreaFinderTrait;
+    use UseTrackableTrait;
+
+>>>>>>> add reference node
     /**
      * @param $node  NodeInterface
      * @param string $areaId
@@ -199,6 +210,27 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         $qa->match(array('nodeId' => $nodeId));
 
         return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param string $referenceNodeId
+     * @param string $nodeId
+     * @param string $siteId
+     * @param string $entityType
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
+    public function updateUseReference($referenceNodeId, $nodeId, $siteId, $entityType)
+    {
+        $qb = $this->createQueryBuilder()
+             ->update()
+             ->multiple(true)
+             ->field('nodeId')->equals($nodeId)
+             ->field('siteId')->equals($siteId);
+
+        $this->addUpdateUseReferenceField($qb, $entityType, $referenceNodeId)
+             ->getQuery()
+             ->execute();
     }
 
     /**

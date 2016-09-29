@@ -14,6 +14,7 @@ use OpenOrchestra\MongoTrait\Cacheable;
 use OpenOrchestra\MongoTrait\Metaable;
 use OpenOrchestra\MongoTrait\Sitemapable;
 use OpenOrchestra\MongoTrait\Schemeable;
+use OpenOrchestra\MongoTrait\UseTrackable;
 use OpenOrchestra\MongoTrait\Versionable;
 use OpenOrchestra\MongoTrait\Historisable;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
