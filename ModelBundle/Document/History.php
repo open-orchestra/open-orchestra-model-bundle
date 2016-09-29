@@ -4,7 +4,7 @@ namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\ModelInterface\Model\HistoryInterface;
-use OpenOrchestra\UserBundle\Model\UserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Description of History
@@ -16,7 +16,7 @@ class History implements HistoryInterface
     /**
      * @var string $user
      *
-     * @ODM\ReferenceOne(targetDocument="OpenOrchestra\UserBundle\Model\UserInterface")
+     * @ODM\ReferenceOne(targetDocument="Symfony\Component\Security\Core\User\UserInterface")
      */
     protected $user;
 
