@@ -186,6 +186,12 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('repository')->defaultValue('OpenOrchestra\ModelBundle\Repository\TrashItemRepository')->end()
                         ->end()
                     ->end()
+                    ->arrayNode('history')
+                        ->addDefaultsIfNotSet()
+                        ->children()
+                            ->scalarNode('class')->defaultValue('OpenOrchestra\ModelBundle\Document\History')->end()
+                        ->end()
+                    ->end()
                 ->end()
             ->end()
         ->end();

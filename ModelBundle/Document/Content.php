@@ -16,6 +16,7 @@ use OpenOrchestra\ModelInterface\Model\ReadContentAttributeInterface;
 use OpenOrchestra\MongoTrait\Keywordable;
 use OpenOrchestra\MongoTrait\Versionable;
 use OpenOrchestra\MongoTrait\UseTrackable;
+use OpenOrchestra\MongoTrait\Historisable;
 
 /**
  * Description of Content
@@ -48,6 +49,7 @@ class Content implements ContentInterface
     use SiteLinkable;
     use SoftDeleteable;
     use UseTrackable;
+    use Historisable;
 
     /**
      * @var string $id
@@ -267,5 +269,6 @@ class Content implements ContentInterface
     {
         $this->attributes = new ArrayCollection();
         $this->keywords = new ArrayCollection();
+        $this->initializeHistories();
     }
 }

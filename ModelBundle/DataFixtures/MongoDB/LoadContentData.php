@@ -126,6 +126,7 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
 
         $content->addAttribute($attribute1);
         $content->addAttribute($attribute2);
+        $this->setReference("ds_3_".$language, $content);
 
         return $content;
     }

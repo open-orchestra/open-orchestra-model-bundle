@@ -351,23 +351,65 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         return $this->countDocumentAggregateQuery($qa);
     }
 
-/**
+    /**
      * @param string       $author
      * @param string       $siteId
      * @param boolean|null $published
      * @param int|null     $limit
      * @param array        $sort
      *
+     * @deprecated will be removed in 2.0
+     *
      * @return array
      */
     public function findByAuthorAndSiteId($author, $siteId, $published = null, $limit = null, $sort = null)
     {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0', E_USER_DEPRECATED);
+
         $qa = $this->createAggregationQuery();
         $filter = array(
             'createdBy' => $author,
             'deleted' => false
         );
         $qa->match($this->generateSiteIdAndNotLinkedFilter($siteId));
+        if (null !== $published) {
+            $filter['status.published'] = $published;
+        }
+
+        $qa->match($filter);
+
+        if (null !== $limit) {
+            $qa->limit($limit);
+        }
+
+        if (null !== $sort) {
+            $qa->sort($sort);
+        }
+
+        return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param string       $id
+     * @param string       $siteId
+     * @param array|null   $eventTypes
+     * @param boolean|null $published
+     * @param int|null     $limit
+     * @param array|null   $sort
+     *
+     * @return array
+     */
+    public function findByHistoryAndSiteId($id, $siteId, array $eventTypes = null, $published = null, $limit = null, array $sort = null)
+    {
+        $qa = $this->createAggregationQuery();
+        $filter = array(
+            'histories.user.$id' => new \MongoId($id),
+            'deleted' => false
+        );
+        $qa->match($this->generateSiteIdAndNotLinkedFilter($siteId));
+        if (null !== $eventTypes) {
+            $filter['histories.eventType'] = array('$in' => $eventTypes);
+        }
         if (null !== $published) {
             $filter['status.published'] = $published;
         }
