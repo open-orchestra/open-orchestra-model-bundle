@@ -269,6 +269,6 @@ class Content implements ContentInterface
     {
         $this->attributes = new ArrayCollection();
         $this->keywords = new ArrayCollection();
-        $this->initializeHistory();
+        $this->initializeHistories();
     }
 }

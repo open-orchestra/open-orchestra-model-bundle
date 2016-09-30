@@ -733,7 +733,7 @@ class Node implements NodeInterface
     {
         $this->areas = new ArrayCollection();
         $this->blocks = new ArrayCollection();
-        $this->initializeHistory();
+        $this->initializeHistories();
     }
 
     /**
