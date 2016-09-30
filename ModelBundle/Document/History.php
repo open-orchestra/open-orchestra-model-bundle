@@ -75,7 +75,7 @@ class History implements HistoryInterface
     }
 
     /**
-     * Sets eventType
+     * Set eventType
      *
      * @param  string $eventType
      */

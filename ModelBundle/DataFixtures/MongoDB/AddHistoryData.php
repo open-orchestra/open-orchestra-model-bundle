@@ -33,6 +33,7 @@ class AddHistoryData extends AbstractFixture implements OrderedFixtureInterface,
 
     /**
      * @param string $name
+     * @param string $eventType
      */
     protected function addHistory($name, $eventType){
         $document = $this->getReference($name);
