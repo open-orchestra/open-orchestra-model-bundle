@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class History implements HistoryInterface
 {
     /**
-     * @var string $user
+     * @var UserInterface
      *
      * @ODM\ReferenceOne(targetDocument="Symfony\Component\Security\Core\User\UserInterface")
      */
@@ -26,6 +26,13 @@ class History implements HistoryInterface
      * @ODM\Date
      */
     protected $updatedAt;
+
+    /**
+     * @var string $eventType
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $eventType;
 
     /**
      * Set user
@@ -48,7 +55,7 @@ class History implements HistoryInterface
     }
 
     /**
-     * Sets updatedAt.
+     * Sets updatedAt
      *
      * @param  \DateTime $updatedAt
      */
@@ -58,12 +65,32 @@ class History implements HistoryInterface
     }
 
     /**
-     * Returns updatedAt.
+     * Returns updatedAt
      *
      * @return \Datetime
      */
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Sets eventType
+     *
+     * @param  string $eventType
+     */
+    public function setEventType($eventType)
+    {
+        $this->eventType = $eventType;
+    }
+
+    /**
+     * Returns eventType
+     *
+     * @return string
+     */
+    public function getEventType()
+    {
+        return $this->eventType;
     }
 }

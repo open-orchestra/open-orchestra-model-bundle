@@ -392,13 +392,14 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     /**
      * @param string       $id
      * @param string       $siteId
+     * @param string|null  $eventType
      * @param boolean|null $published
      * @param int|null     $limit
      * @param array|null   $sort
      *
      * @return array
      */
-    public function findByHistoryAndSiteId($id, $siteId, $published = null, $limit = null, array $sort = null)
+    public function findByHistoryAndSiteId($id, $siteId, $eventType = null, $published = null, $limit = null, array $sort = null)
     {
         $qa = $this->createAggregationQuery();
         $filter = array(
@@ -406,6 +407,9 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
             'deleted' => false
         );
         $qa->match($this->generateSiteIdAndNotLinkedFilter($siteId));
+        if (null !== $eventType) {
+            $filter['histories.eventType'] = $eventType;
+        }
         if (null !== $published) {
             $filter['status.published'] = $published;
         }

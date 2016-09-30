@@ -6,6 +6,8 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
+use OpenOrchestra\ModelInterface\ContentEvents;
+use OpenOrchestra\ModelInterface\NodeEvents;
 use OpenOrchestra\ModelBundle\Document\History;
 
 /**
@@ -22,9 +24,9 @@ class AddHistoryData extends AbstractFixture implements OrderedFixtureInterface,
     {
         $this->objectManager = $objectManager;
 
-        $objectManager->persist($this->addHistory("ds_3_fr"));
-        $objectManager->persist($this->addHistory("ds_3_en"));
-        $objectManager->persist($this->addHistory("node-fr"));
+        $objectManager->persist($this->addHistory("ds_3_fr", ContentEvents::CONTENT_CREATION));
+        $objectManager->persist($this->addHistory("ds_3_en", ContentEvents::CONTENT_CREATION));
+        $objectManager->persist($this->addHistory("node-fr", NodeEvents::NODE_CREATION));
 
         $objectManager->flush();
     }
@@ -32,12 +34,13 @@ class AddHistoryData extends AbstractFixture implements OrderedFixtureInterface,
     /**
      * @param string $name
      */
-    protected function addHistory($name){
+    protected function addHistory($name, $eventType){
         $document = $this->getReference($name);
 
         $history = new History();
         $history->setUpdatedAt(new \DateTime());
         $history->setUser($this->getReference("user-admin"));
+        $history->setEventType($eventType);
         $document->addHistory($history);
 
         return $document;

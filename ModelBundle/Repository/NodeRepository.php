@@ -833,13 +833,14 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     /**
      * @param string       $id
      * @param string       $siteId
+     * @param string|null  $eventType
      * @param boolean|null $published
      * @param int|null     $limit
      * @param array|null   $sort
      *
      * @return array
      */
-    public function findByHistoryAndSiteId($id, $siteId, $published = null, $limit = null, array $sort = null)
+    public function findByHistoryAndSiteId($id, $siteId, $eventType = null, $published = null, $limit = null, array $sort = null)
     {
         $qa = $this->createAggregationQuery();
         $filter = array(
@@ -848,6 +849,9 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
             'siteId' => $siteId,
             'deleted' => false
         );
+        if (null !== $eventType) {
+            $filter['histories.eventType'] = $eventType;
+        }
         if (null !== $published) {
             $filter['status.published'] = $published;
         }
