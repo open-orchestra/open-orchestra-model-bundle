@@ -22,7 +22,7 @@ class AddHistoryData extends AbstractFixture implements OrderedFixtureInterface,
      */
     public function load(ObjectManager $objectManager)
     {
-        if (!is_null($this->getReference("user-admin")) {
+        if (!is_null($this->getReference("user-admin"))) {
             $this->objectManager = $objectManager;
 
             $objectManager->persist($this->addHistory("ds_3_fr", ContentEvents::CONTENT_CREATION));
