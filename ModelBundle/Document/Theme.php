@@ -4,6 +4,7 @@ namespace OpenOrchestra\ModelBundle\Document;
 
 use OpenOrchestra\ModelInterface\Model\ThemeInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 
 /**
  * Class Theme
@@ -26,6 +27,7 @@ class Theme implements ThemeInterface
      * @var string $name
      *
      * @ODM\Field(type="string")
+     * @ORCHESTRA\Search(key="name")
      */
     protected $name;
 
