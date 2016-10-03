@@ -29,7 +29,7 @@ class SetInitialStatusListener implements ContainerAwareInterface
             }
             if ($document instanceof ContentInterface) {
                 $contentType = $this->container->get('open_orchestra_model.repository.content_type')->findOneByContentTypeIdInLastVersion($document->getContentType());
-                if ($contentType->isDefiningNonStatusable()) {
+                if (!$contentType->isDefiningStatusable()) {
                     $status = $this->container->get('open_orchestra_model.repository.status')->findOneByOutOfWorkflow();
                     if ($status instanceof StatusInterface) {
                         $document->setStatus($status);

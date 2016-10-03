@@ -32,7 +32,7 @@ class Version20160907153954 extends AbstractMigration
                 db.status.update({ _id: item._id }, item);
             });
             db.content_type.find().forEach(function(item) {
-                item.definingNonStatusable = false;
+                item.definingStatusable = true;
                 db.content_type.update({ _id: item._id }, item);
             });
         ');
@@ -45,7 +45,7 @@ class Version20160907153954 extends AbstractMigration
     {
         $db->execute('
             db.status.update({}, {$unset: {"outOfWorkflow":1}} , {"multi": true});;
-            db.content_type.update({}, {$unset: {"definingNonStatusable":1}} , {"multi": true});;
+            db.content_type.update({}, {$unset: {"definingStatusable":1}} , {"multi": true});;
         ');
     }
 }

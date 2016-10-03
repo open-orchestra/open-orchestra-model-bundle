@@ -159,10 +159,12 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $news->setContentTypeId('news');
         $news->addName('en', 'News');
         $news->addName('fr', 'Actualité');
+        $news->setDefiningStatusable(true);
+        $news->setDefiningVersionable(true);
         $news->setDeleted(false);
         $news->setVersion(1);
         $news->setDefaultListable($this->genereteDefaultListable());
-        $news->setDefiningNonStatusable(false);
+        $news->setDefiningStatusable(true);
 
         $news->addFieldType($newsTitle);
         $news->addFieldType($newBeginning);
@@ -209,10 +211,12 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $car->setContentTypeId('car');
         $car->addName('en', 'Car');
         $car->addName('fr', 'Voiture');
+        $car->setDefiningStatusable(true);
+        $car->setDefiningVersionable(true);
         $car->setDeleted(false);
         $car->setVersion(2);
         $car->setDefaultListable($this->genereteDefaultListable());
-        $car->setDefiningNonStatusable(false);
+        $car->setDefiningStatusable(true);
 
         $car->addFieldType($carName);
         $car->addFieldType($carDescription);
@@ -265,10 +269,12 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $customer->setContentTypeId('customer');
         $customer->addName('en', 'Customer');
         $customer->addName('fr', 'Client');
+        $customer->setDefiningStatusable(true);
+        $customer->setDefiningVersionable(true);
         $customer->setDeleted(false);
         $customer->setVersion(1);
         $customer->setDefaultListable($this->genereteDefaultListable());
-        $customer->setDefiningNonStatusable(false);
+        $customer->setDefiningStatusable(true);
 
         $customer->addFieldType($customerFirstName);
         $customer->addFieldType($customerLastName);
