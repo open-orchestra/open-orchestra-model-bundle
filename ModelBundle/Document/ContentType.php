@@ -73,18 +73,18 @@ class ContentType implements ContentTypeInterface
     protected $fields;
 
     /**
-     * @var boolean versionable
+     * @var boolean definingVersionable
      *
      * @ODM\Field(type="boolean")
      */
-    protected $versionable = true;
+    protected $definingVersionable = true;
 
     /**
-     * @var boolean definingNonStatusable
+     * @var boolean definingStatusable
      *
      * @ODM\Field(type="boolean")
      */
-    protected $definingNonStatusable = false;
+    protected $definingStatusable = true;
 
     /**
      * Constructor
@@ -255,35 +255,35 @@ class ContentType implements ContentTypeInterface
     }
 
     /**
-     * @param boolean $versionable
+     * @param boolean $definingVersionable
      */
-    public function setVersionable($versionable)
+    public function setDefiningVersionable($definingVersionable)
     {
-        $this->versionable = $versionable;
+        $this->definingVersionable = $definingVersionable;
     }
 
     /**
      * @return boolean
      */
-    public function isVersionable()
+    public function isDefiningVersionable()
     {
-        return $this->versionable;
+        return $this->definingVersionable;
     }
 
     /**
-     * @param boolean $definingNonStatusable
+     * @param boolean $definingStatusable
      */
-    public function setDefiningNonStatusable($definingNonStatusable)
+    public function setDefiningStatusable($definingStatusable)
     {
-        $this->definingNonStatusable = $definingNonStatusable;
+        $this->definingStatusable = $definingStatusable;
     }
 
     /**
      * @return boolean
      */
-    public function isDefiningNonStatusable()
+    public function isDefiningStatusable()
     {
-        return $this->definingNonStatusable;
+        return $this->definingStatusable;
     }
 
     /**
