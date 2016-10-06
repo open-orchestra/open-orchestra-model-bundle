@@ -123,7 +123,6 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         }
 
         $elementName = 'content';
-        $qa->match(array('deleted' => false));
 
         $this->generateLastVersionFilter($qa, $elementName);
 
