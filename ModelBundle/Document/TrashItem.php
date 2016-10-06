@@ -49,6 +49,14 @@ class TrashItem implements TrashItemInterface
     protected $deletedAt;
 
     /**
+     * @var string
+     *
+     * @ODM\Field(type="string")
+     * @ORCHESTRA\Search(key="site_id")
+     */
+    protected $siteId;
+
+    /**
      * @ODM\ReferenceOne
      */
     private $entity;
@@ -140,5 +148,21 @@ class TrashItem implements TrashItemInterface
     public function setType($type)
     {
         $this->type = $type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSiteId()
+    {
+        return $this->siteId;
+    }
+
+    /**
+     * @param string $siteId
+     */
+    public function setSiteId($siteId)
+    {
+        $this->siteId = $siteId;
     }
 }
