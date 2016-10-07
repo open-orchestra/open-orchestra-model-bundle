@@ -1,6 +1,7 @@
 <?php
 
 namespace OpenOrchestra\ModelBundle\Repository\RepositoryTrait;
+
 use Doctrine\MongoDB\Query\Builder;
 
 /**
