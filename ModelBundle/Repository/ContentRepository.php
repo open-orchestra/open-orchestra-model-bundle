@@ -278,7 +278,8 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
             $qa,
             $configuration->getOrder(),
             $configuration->getDescriptionEntity(),
-            $elementName);
+            true
+        );
 
         $qa = $this->generateSkipFilter($qa, $configuration->getSkip());
         $qa = $this->generateLimitFilter($qa, $configuration->getLimit());
