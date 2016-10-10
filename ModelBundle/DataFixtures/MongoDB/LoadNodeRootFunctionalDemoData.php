@@ -98,7 +98,8 @@ class LoadNodeRootFunctionalDemoData extends AbstractFixture implements OrderedF
      */
     protected function addAreaRef(NodeInterface $nodeTransverse, NodeInterface $node)
     {
-        foreach ($node->getAreas() as $area) {
+        $areas = $node->getRootArea()->getAreas();
+        foreach ($areas as $area) {
             foreach ($area->getBlocks() as $areaBlock) {
                 if ($nodeTransverse->getNodeId() === $areaBlock['nodeId']) {
                     $block = $nodeTransverse->getBlock($areaBlock['blockId']);

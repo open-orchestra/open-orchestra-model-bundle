@@ -36,14 +36,6 @@ class Area implements AreaInterface
     protected $htmlClass;
 
     /**
-     * @var string $boDirection
-     *
-     * @ODM\Field(type="string")
-     * @deprecated will be removed in 2.0
-     */
-    protected $boDirection;
-
-    /**
      * @var string $width
      *
      * @ODM\Field(type="string")
@@ -135,33 +127,6 @@ class Area implements AreaInterface
     public function getHtmlClass()
     {
         return $this->htmlClass;
-    }
-
-    /**
-     * Set boDirection
-     *
-     * @param string $boDirection
-     *
-     * @deprecated will be removed in 2.0
-     */
-    public function setBoDirection($boDirection)
-    {
-        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
-
-        $this->boDirection = $boDirection;
-    }
-
-    /**
-     * Get boDirection
-     *
-     * @return string $boDirection
-     *
-     * @deprecated will be removed in 2.0
-     */
-    public function getBoDirection()
-    {
-        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
-        return $this->boDirection;
     }
 
     /**
