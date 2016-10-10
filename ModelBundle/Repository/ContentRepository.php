@@ -65,41 +65,6 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
      * @param string      $language
      * @param string      $contentType
      * @param string      $choiceType
-     * @param string|null $keywords
-     *
-     * @deprecated will be removed in 2.0
-     *
-     * @return array
-     */
-    public function findByContentTypeAndKeywords($language, $contentType = '', $choiceType = self::CHOICE_AND, $keywords = null)
-    {
-        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0', E_USER_DEPRECATED);
-
-        $qa = $this->createAggregationQuery();
-        $qa->match($this->generateFilterPublishedNotDeletedOnLanguage($language));
-
-        $filter1 = $this->generateContentTypeFilter($contentType);
-        $filter2 = $this->generateKeywordsFilter($keywords);
-
-        if ($filter1 && $filter2) {
-            $qa->match($this->appendFilters($filter1, $filter2, $choiceType));
-        } elseif ($filter1) {
-            $qa->match($filter1);
-        } elseif ($filter2) {
-            $qa->match($filter2);
-        }
-
-        $elementName = 'content';
-
-        $this->generateLastVersionFilter($qa, $elementName);
-
-        return $this->hydrateAggregateQuery($qa, $elementName);
-    }
-
-    /**
-     * @param string      $language
-     * @param string      $contentType
-     * @param string      $choiceType
      * @param string|null $condition
      * @param string|null $siteId
      *
@@ -310,23 +275,6 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     }
 
     /**
-     * @param string|null $contentType
-     *
-     * @return int
-     *
-     * @deprecated will be removed in 2.0, use countByContentTypeAndSiteInLastVersion
-     */
-    public function countByContentTypeInLastVersion($contentType = null)
-    {
-        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.1.3 and will be removed in 2.0. Use the '.__CLASS__.'::countByContentTypeAndSiteInLastVersion method instead.', E_USER_DEPRECATED);
-        $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
-        $qa->match($this->generateDeletedFilter());
-        $elementName = 'content';
-        $this->generateLastVersionFilter($qa, $elementName);
-        return $this->countDocumentAggregateQuery($qa);
-    }
-
-    /**
      * @param string      $contentType
      * @param string|null $siteId
      *
@@ -353,44 +301,6 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
 
         return $this->countDocumentAggregateQuery($qa);
-    }
-
-    /**
-     * @param string       $author
-     * @param string       $siteId
-     * @param boolean|null $published
-     * @param int|null     $limit
-     * @param array        $sort
-     *
-     * @deprecated will be removed in 2.0
-     *
-     * @return array
-     */
-    public function findByAuthorAndSiteId($author, $siteId, $published = null, $limit = null, $sort = null)
-    {
-        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0', E_USER_DEPRECATED);
-
-        $qa = $this->createAggregationQuery();
-        $filter = array(
-            'createdBy' => $author,
-            'deleted' => false
-        );
-        $qa->match($this->generateSiteIdAndNotLinkedFilter($siteId));
-        if (null !== $published) {
-            $filter['status.published'] = $published;
-        }
-
-        $qa->match($filter);
-
-        if (null !== $limit) {
-            $qa->limit($limit);
-        }
-
-        if (null !== $sort) {
-            $qa->sort($sort);
-        }
-
-        return $this->hydrateAggregateQuery($qa);
     }
 
     /**

@@ -1,5 +1,0 @@
-# @deprecated will be removed in 2.0
-OpenOrchestra\ModelBundle\Document\TranslatedValue:
-    properties:
-        value:
-            - NotBlank: ~
