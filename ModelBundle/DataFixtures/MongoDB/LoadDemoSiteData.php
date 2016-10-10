@@ -51,8 +51,6 @@ class LoadDemoSiteData extends AbstractLoadSiteData implements OrchestraProducti
         $site2->addBlock('content');
         $site2->addBlock('media_list_by_keyword');
         $site2->addBlock('video');
-        $site2->addBlock('gmap');
-        $site2->addBlock('add_this');
         $site2->addBlock('audience_analysis');
 
         return $site2;
