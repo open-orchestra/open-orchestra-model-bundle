@@ -26,7 +26,7 @@ class HomeDataGenerator extends AbstractDataGenerator
      */
     protected function generateNodeEn()
     {
-        $routePattern = "en";
+        $routePattern = "/";
         $language = "en";
 
         return $this->generateNodeGlobal($language, $routePattern);
@@ -37,7 +37,7 @@ class HomeDataGenerator extends AbstractDataGenerator
      */
     protected function generateNodeDe()
     {
-        $routePattern = "de";
+        $routePattern = "/";
         $language = "de";
 
         return $this->generateNodeGlobal($language, $routePattern);
@@ -52,7 +52,7 @@ class HomeDataGenerator extends AbstractDataGenerator
     protected function generateNodeGlobal($language, $routePattern)
     {
         $nodeHomeArea0 = $this->createArea('Header','header','header','h');
-        
+
         $nodeHome = $this->createBaseNode();
         $nodeHome->setLanguage($language);
         $nodeHome->setNodeId(NodeInterface::ROOT_NODE_ID);
