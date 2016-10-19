@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ModelBundle\Repository;
 
-use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\AreaFinderTrait;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
@@ -19,8 +18,6 @@ use MongoRegex;
  */
 class NodeRepository extends AbstractAggregateRepository implements FieldAutoGenerableRepositoryInterface, NodeRepositoryInterface
 {
-    use AreaFinderTrait;
-
     /**
      * @param $node  NodeInterface
      * @param string $areaId
@@ -29,12 +26,11 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      */
     public function findAreaInNodeByAreaId(NodeInterface $node, $areaId)
     {
-        $rootArea = $node->getRootArea();
-        if ($areaId === $rootArea->getAreaId()) {
-            return $rootArea;
+        foreach ($node->getAreas() as $key => $area) {
+            if ($areaId === $key) {
+                return $area;
+            }
         }
-
-        return $this->findAreaByAreaId($rootArea, $areaId);
     }
 
     /**
@@ -100,12 +96,11 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     public function findOneCurrentlyPublished($nodeId, $language, $siteId)
     {
         $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
-        $filter = array();
-        if ($nodeId !== NodeInterface::TRANSVERSE_NODE_ID) {
-            $filter['currentlyPublished'] = true;
-        }
-        $filter['deleted'] = false;
-        $filter['nodeId'] = $nodeId;
+        $filter = array(
+            'currentlyPublished' => true,
+            'deleted' => false,
+            'nodeId' => $nodeId,
+        );
         $qa->match($filter);
         $qa->sort(array('version' => -1));
 
@@ -539,13 +534,12 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     public function findPublishedInLastVersionWithoutFlag(StatusableInterface $element)
     {
         $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($element->getSiteId(), $element->getLanguage());
-        $filter = array();
-        if ($element->getNodeId() !== NodeInterface::TRANSVERSE_NODE_ID) {
-            $filter['status.published'] = true;
-            $filter['currentlyPublished'] = false;
-        }
-        $filter['deleted'] = false;
-        $filter['nodeId'] = $element->getNodeId();
+        $filter = array(
+            'status.published' => true,
+            'currentlyPublished' => false,
+            'deleted' => false,
+            'nodeId' => $element->getNodeId(),
+        );
         $qa->match($filter);
         $qa->sort(array('version' => -1));
 
@@ -932,5 +926,25 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         $qa->sort(array('version' => 1));
 
         return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
+     * indicates if node collection contains an usage of a particular block
+     *
+     * @param string          $blockId
+     *
+     * @return boolean
+     */
+    public function isBlockUsed($blockId)
+    {
+        $qa = $this->createAggregationQuery();
+
+        $filter = array(
+            'areas.blocks.$id' => new \MongoId($blockId),
+        );
+
+        $qa->match($filter);
+
+        return $this->countDocumentAggregateQuery($qa) > 0;
     }
 }

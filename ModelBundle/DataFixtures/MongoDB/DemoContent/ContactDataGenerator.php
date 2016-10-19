@@ -6,6 +6,7 @@ use OpenOrchestra\ModelBundle\Document\Block;
 use OpenOrchestra\ModelBundle\Document\Node;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\TinyMCEWysiwygStrategy;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelBundle\Document\Area;
 
 /**
  * Class ContactDataGenerator
@@ -136,37 +137,37 @@ EOF;
      */
     protected function generateNodeGlobal($htmlContent, $name, $language, $routePattern)
     {
-        $siteContactBlock0 = new Block();
-        $siteContactBlock0->setLabel('Wysiwyg 1');
-        $siteContactBlock0->setComponent(TinyMCEWysiwygStrategy::NAME);
-        $siteContactBlock0->setAttributes(array("htmlContent" => $htmlContent));
-        $siteContactBlock0->addArea(array('nodeId' => 0, 'areaId' => 'moduleArea'));
+        $nodeContactBlock = new Block();
+        $nodeContactBlock->setLabel('Wysiwyg');
+        $nodeContactBlock->setComponent(TinyMCEWysiwygStrategy::NAME);
+        $nodeContactBlock->setAttributes(array(
+            "htmlContent" => $htmlContent
+        ));
+
+        $nodeContactBlock = $this->generateBlock($nodeContactBlock);
+
+        $main = new Area();
+        $main->addBlock($nodeContactBlock);
 
         $header = $this->createHeader();
-        $contentColumn = $this->createColumnArea('Main content area 1', 'mainContentArea1', 'main-content-contact');
-        $contentColumn->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 4, 'blockPrivate' => false));
-        $moduleColumn = $this->createModuleArea(false, "module-area-contact");
-        $moduleColumn->addBlock(array('nodeId' => 0, 'blockId' => 1, 'blockPrivate' => true));
-        $main = $this->createMain(array($contentColumn, $moduleColumn));
+
         $footer = $this->createFooter();
 
-        $siteContact = $this->createBaseNode();
-        $siteContact->setNodeId('fixture_page_contact');
-        $siteContact->setName($name);
-        $siteContact->setBoLabel('Contact');
-        $siteContact->setLanguage($language);
-        $siteContact->setParentId(NodeInterface::ROOT_NODE_ID);
-        $siteContact->setOrder(9);
-        $siteContact->setRoutePattern($routePattern);
-        $siteContact->setInFooter(false);
-        $siteContact->setInMenu(true);
+        $nodeContact = $this->createBaseNode();
+        $nodeContact->setArea('main', $main);
+        $nodeContact->setArea('footer', $footer);
+        $nodeContact->setArea('header', $header);
 
-        $rootArea = $siteContact->getRootArea();
-        $rootArea->addArea($header);
-        $rootArea->addArea($main);
-        $rootArea->addArea($footer);
-        $siteContact->addBlock($siteContactBlock0);
+        $nodeContact->setNodeId('fixture_page_contact');
+        $nodeContact->setName($name);
+        $nodeContact->setBoLabel('Contact');
+        $nodeContact->setLanguage($language);
+        $nodeContact->setParentId(NodeInterface::ROOT_NODE_ID);
+        $nodeContact->setOrder(9);
+        $nodeContact->setRoutePattern($routePattern);
+        $nodeContact->setInFooter(false);
+        $nodeContact->setInMenu(true);
 
-        return $siteContact;
+        return $nodeContact;
     }
 }

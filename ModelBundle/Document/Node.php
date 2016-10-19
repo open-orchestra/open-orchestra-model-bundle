@@ -2,16 +2,13 @@
 
 namespace OpenOrchestra\ModelBundle\Document;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 use Gedmo\Blameable\Traits\BlameableDocument;
 use Gedmo\Timestampable\Traits\TimestampableDocument;
-use OpenOrchestra\MongoTrait\AreaRootContainer;
 use OpenOrchestra\MongoTrait\SoftDeleteable;
 use OpenOrchestra\MongoTrait\Statusable;
-use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\MongoTrait\Cacheable;
 use OpenOrchestra\MongoTrait\Metaable;
@@ -19,6 +16,7 @@ use OpenOrchestra\MongoTrait\Sitemapable;
 use OpenOrchestra\MongoTrait\Schemeable;
 use OpenOrchestra\MongoTrait\Versionable;
 use OpenOrchestra\MongoTrait\Historisable;
+use OpenOrchestra\ModelInterface\Model\AreaInterface;
 
 /**
  * Description of Node
@@ -55,7 +53,6 @@ class Node implements NodeInterface
     use Metaable;
     use SoftDeleteable;
     use Historisable;
-    use AreaRootContainer;
 
     /**
      * @var string $id
@@ -125,7 +122,7 @@ class Node implements NodeInterface
      *
      * @ODM\Field(type="string")
      */
-    protected $templateId;
+    protected $template;
 
     /**
      * @var string $theme
@@ -161,13 +158,6 @@ class Node implements NodeInterface
      * @ODM\Field(type="string")
      */
     protected $role;
-
-    /**
-     * @var Collection
-     *
-     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\BlockInterface", strategy="set")
-     */
-    protected $blocks;
 
     /**
      * @var int
@@ -210,6 +200,11 @@ class Node implements NodeInterface
      * @ODM\Field(type="date")
      */
     protected $unpublishDate;
+
+    /**
+     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\SiteAliasInterface", strategy="set")
+    */
+    protected $areas;
 
     /**
      * Constructor
@@ -386,23 +381,23 @@ class Node implements NodeInterface
     }
 
     /**
-     * Set templateId
+     * Set template
      *
-     * @param string $templateId
+     * @param string $template
      */
-    public function setTemplateId($templateId)
+    public function setTemplate($template)
     {
-        $this->templateId = $templateId;
+        $this->template = $template;
     }
 
     /**
-     * Get templateId
+     * Get template
      *
-     * @return string $templateId
+     * @return string $template
      */
-    public function getTemplateId()
+    public function getTemplate()
     {
-        return $this->templateId;
+        return $this->template;
     }
 
     /**
@@ -443,88 +438,6 @@ class Node implements NodeInterface
     public function hasDefaultSiteTheme()
     {
         return $this->themeSiteDefault;
-    }
-
-    /**
-     * Add block
-     *
-     * @param BlockInterface $block
-     */
-    public function addBlock(BlockInterface $block)
-    {
-        $this->blocks->add($block);
-    }
-
-    /**
-     * Set blocks
-     *
-     * @param Collection $blocks
-     */
-    public function setBlocks(Collection $blocks)
-    {
-        $this->blocks->clear();
-        foreach ($blocks as $block) {
-            $this->blocks->add($block);
-        }
-    }
-
-    /**
-     * @param BlockInterface $block
-     *
-     * @return bool|int|mixed|string
-     */
-    public function getBlockIndex(BlockInterface $block)
-    {
-        return $this->blocks->indexOf($block);
-    }
-
-    /**
-     * @param int            $key
-     * @param BlockInterface $block
-     */
-    public function setBlock($key, BlockInterface $block)
-    {
-        $this->blocks->set($key, $block);
-    }
-
-    /**
-     * @param int $key
-     *
-     * @return BlockInterface
-     */
-    public function getBlock($key)
-    {
-        return $this->blocks->get($key);
-    }
-
-    /**
-     * Remove block
-     *
-     * @param BlockInterface $block
-     */
-    public function removeBlock(BlockInterface $block)
-    {
-        $this->blocks->removeElement($block);
-    }
-
-    /**
-     * Remove block with index $key
-     *
-     * @param string $key
-     */
-    public function removeBlockWithKey($key)
-    {
-        $this->blocks->remove($key);
-    }
-
-    /**
-     * Get blocks
-     *
-     * @return array $blocks
-     */
-    public function getBlocks()
-    {
-        return $this->blocks;
     }
 
     /**
@@ -621,15 +534,6 @@ class Node implements NodeInterface
     }
 
     /**
-     * Initialize collections
-     */
-    protected function initializeCollections()
-    {
-        $this->blocks = new ArrayCollection();
-        $this->initializeHistories();
-    }
-
-    /**
      * @param string $metaKeywords
      */
     public function setMetaKeywords($metaKeywords)
@@ -695,5 +599,44 @@ class Node implements NodeInterface
     public function getUnpublishDate()
     {
         return $this->unpublishDate;
+    }
+
+    /**
+     * @param string        $areaId
+     * @param AreaInterface $area
+     */
+    public function setArea($areaId, AreaInterface $area)
+    {
+        $this->areas->set($areaId, $area);
+    }
+
+    /**
+     * Get areas
+     *
+     * @return array $areas
+     */
+    public function getAreas()
+    {
+        return $this->areas;
+    }
+
+    /**
+     * Get area
+     * @param string        $areaId
+     *
+     * @return AreaInterface $area
+     */
+    public function getArea($areaId)
+    {
+        $this->areas->get($areaId);
+    }
+
+    /**
+     * Initialize collections
+     */
+    protected function initializeCollections()
+    {
+        $this->initializeHistories();
+        $this->areas = new ArrayCollection();
     }
 }

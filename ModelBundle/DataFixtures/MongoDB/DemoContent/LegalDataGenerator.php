@@ -6,6 +6,7 @@ use OpenOrchestra\ModelBundle\Document\Block;
 use OpenOrchestra\ModelBundle\Document\Node;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\TinyMCEWysiwygStrategy;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelBundle\Document\Area;
 
 /**
  * Class LegalDataGenerator
@@ -97,36 +98,37 @@ EOF;
      */
     protected function generateNodeGlobal($htmlContent, $name, $language, $routePattern)
     {
-        $siteLegalBlock0 = new Block();
-        $siteLegalBlock0->setLabel('Wysiwyg 1');
-        $siteLegalBlock0->setComponent(TinyMCEWysiwygStrategy::NAME);
-        $siteLegalBlock0->setAttributes(array(
-            "htmlContent" => $htmlContent));
-        $siteLegalBlock0->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));
+        $nodeLegalBlock = new Block();
+        $nodeLegalBlock->setLabel('Wysiwyg');
+        $nodeLegalBlock->setComponent(TinyMCEWysiwygStrategy::NAME);
+        $nodeLegalBlock->setAttributes(array(
+            "htmlContent" => $htmlContent
+        ));
 
-        $siteLegalArea0 = $this->createHeader();
-        $siteLegalArea4 = $this->createColumnArea('Main content area 1', 'mainContentArea1', 'main-content-area1' );
-        $siteLegalArea4->addBlock(array('nodeId' => 0, 'blockId' => 1, 'blockPrivate' => false));
-        $siteLegalArea3 = $this->createMain(array($siteLegalArea4));
-        $siteLegalArea5 = $this->createFooter();
+        $nodeLegalBlock = $this->generateBlock($nodeLegalBlock);
 
-        $siteLegal = $this->createBaseNode();
-        $siteLegal->setNodeId('fixture_page_legal_mentions');
-        $siteLegal->setName($name);
-        $siteLegal->setBoLabel("Legal Notice");
-        $siteLegal->setLanguage($language);
-        $siteLegal->setParentId(NodeInterface::ROOT_NODE_ID);
-        $siteLegal->setOrder(10);
-        $siteLegal->setRoutePattern($routePattern);
-        $siteLegal->setInFooter(true);
-        $siteLegal->setInMenu(false);
+        $main = new Area();
+        $main->addBlock($nodeLegalBlock);
 
-        $rootArea = $siteLegal->getRootArea();
-        $rootArea->addArea($siteLegalArea0);
-        $rootArea->addArea($siteLegalArea3);
-        $rootArea->addArea($siteLegalArea5);
-        $siteLegal->addBlock($siteLegalBlock0);
+        $header = $this->createHeader();
 
-        return $siteLegal;
+        $footer = $this->createFooter();
+
+        $nodeLegal = $this->createBaseNode();
+        $nodeLegal->setArea('main', $main);
+        $nodeLegal->setArea('footer', $footer);
+        $nodeLegal->setArea('header', $header);
+
+        $nodeLegal->setNodeId('fixture_page_legal_mentions');
+        $nodeLegal->setName($name);
+        $nodeLegal->setBoLabel("Legal Notice");
+        $nodeLegal->setLanguage($language);
+        $nodeLegal->setParentId(NodeInterface::ROOT_NODE_ID);
+        $nodeLegal->setOrder(10);
+        $nodeLegal->setRoutePattern($routePattern);
+        $nodeLegal->setInFooter(true);
+        $nodeLegal->setInMenu(false);
+
+        return $nodeLegal;
     }
 }

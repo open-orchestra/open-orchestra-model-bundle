@@ -26,7 +26,7 @@ class LoadDeletedSiteNodeData extends AbstractFixture implements OrderedFixtureI
         $rootNodeFr = $this->generateRootNodeFr();
         $manager->persist($rootNodeFr);
         $this->generateRouteNode($manager, $rootNodeFr);
-        
+
         $deletedNodeFr = $this->generateDeletedNodeFr();
         $manager->persist($deletedNodeFr);
 
@@ -90,7 +90,7 @@ class LoadDeletedSiteNodeData extends AbstractFixture implements OrderedFixtureI
 
         return $node;
     }
-    
+
     /**
      * @return Node
      */
@@ -110,7 +110,7 @@ class LoadDeletedSiteNodeData extends AbstractFixture implements OrderedFixtureI
 
         return $node;
     }
-    
+
     /**
      * @return Node
      */
@@ -122,9 +122,9 @@ class LoadDeletedSiteNodeData extends AbstractFixture implements OrderedFixtureI
         $node->setSiteId('3');
         $node->setPath('-');
         $node->setVersion(1);
-        $node->setTemplateId('');
+        $node->setTemplate('default');
         $node->setTheme('themePresentation');
-        
+
         return $node;
     }
 }

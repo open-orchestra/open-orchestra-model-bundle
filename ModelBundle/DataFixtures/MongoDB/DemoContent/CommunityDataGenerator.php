@@ -6,6 +6,7 @@ use OpenOrchestra\ModelBundle\Document\Block;
 use OpenOrchestra\ModelBundle\Document\Node;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\TinyMCEWysiwygStrategy;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelBundle\Document\Area;
 
 /**
  * Class CommunityDataGenerator
@@ -94,37 +95,38 @@ EOF;
      */
     protected function generateNodeGlobal($htmlContent, $name, $language, $routePattern)
     {
-        $siteComBlock0 = new Block();
-        $siteComBlock0->setLabel('Wysiwyg 1');
-        $siteComBlock0->setComponent(TinyMCEWysiwygStrategy::NAME);
-        $siteComBlock0->setAttributes(array("htmlContent" => $htmlContent));
-        $siteComBlock0->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));
+        $nodeCommunityBlock = new Block();
+        $nodeCommunityBlock->setLabel('Wysiwyg');
+        $nodeCommunityBlock->setComponent(TinyMCEWysiwygStrategy::NAME);
+        $nodeCommunityBlock->setAttributes(array(
+            "htmlContent" => $htmlContent
+        ));
+
+        $nodeCommunityBlock = $this->generateBlock($nodeCommunityBlock);
+
+        $main = new Area();
+        $main->addBlock($nodeCommunityBlock);
 
         $header = $this->createHeader();
-        $contentColumn = $this->createColumnArea('Main content area 1', 'mainContentArea1', 'main-content-area1');
-        $contentColumn->addBlock(array('nodeId' => 0, 'blockId' => 1, 'blockPrivate' => false));
-        $moduleColumn = $this->createModuleArea();
-        $main = $this->createMain(array($contentColumn, $moduleColumn));
+
         $footer = $this->createFooter();
 
-        $siteCom = $this->createBaseNode();
-        $siteCom->setNodeId('fixture_page_community');
-        $siteCom->setLanguage($language);
-        $siteCom->setName($name);
-        $siteCom->setBoLabel('Community');
-        $siteCom->setParentId(NodeInterface::ROOT_NODE_ID);
-        $siteCom->setOrder(3);
-        $siteCom->setRoutePattern($routePattern);
-        $siteCom->setTheme('themePresentation');
-        $siteCom->setInFooter(false);
-        $siteCom->setInMenu(true);
+        $nodeCommunity = $this->createBaseNode();
+        $nodeCommunity->setArea('main', $main);
+        $nodeCommunity->setArea('footer', $footer);
+        $nodeCommunity->setArea('header', $header);
 
-        $rootArea = $siteCom->getRootArea();
-        $rootArea->addArea($header);
-        $rootArea->addArea($main);
-        $rootArea->addArea($footer);
-        $siteCom->addBlock($siteComBlock0);
+        $nodeCommunity->setNodeId('fixture_page_community');
+        $nodeCommunity->setLanguage($language);
+        $nodeCommunity->setName($name);
+        $nodeCommunity->setBoLabel('Community');
+        $nodeCommunity->setParentId(NodeInterface::ROOT_NODE_ID);
+        $nodeCommunity->setOrder(3);
+        $nodeCommunity->setRoutePattern($routePattern);
+        $nodeCommunity->setTheme('themePresentation');
+        $nodeCommunity->setInFooter(false);
+        $nodeCommunity->setInMenu(true);
 
-        return $siteCom;
+        return $nodeCommunity;
     }
 }

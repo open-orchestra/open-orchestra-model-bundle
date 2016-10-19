@@ -7,18 +7,32 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\AbstractDataGenerator;
 use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\HomeDataGenerator;
-use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\TransverseDataGenerator;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraProductionFixturesInterface;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
 /**
  * Class LoadNodeDemoData
  */
-class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterface, OrchestraProductionFixturesInterface, OrchestraFunctionalFixturesInterface
+class LoadNodeDemoData extends AbstractFixture implements ContainerAwareInterface, OrderedFixtureInterface, OrchestraProductionFixturesInterface, OrchestraFunctionalFixturesInterface
 {
     protected $nodede;
     protected $nodeen;
     protected $nodefr;
+
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
+    }
 
     /**
      * Load data fixtures with the passed EntityManager
@@ -27,24 +41,10 @@ class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterfac
      */
     public function load(ObjectManager $manager)
     {
-        $references = array();
-        $references["status-published"] = $this->getReference('status-published');
-        $references["status-draft"] = $this->getReference('status-draft');
-        if ($this->hasReference('logo-orchestra')) {
-            $references["logo-orchestra"] = $this->getReference('logo-orchestra');
-        }
         $languages = array("de", "en", "fr");
 
-        $transverseGenerator = new TransverseDataGenerator($references);
-        foreach ($languages as $language) {
-            $this->node{$language} = $transverseGenerator->generateNode($language);
-            $this->setReference("node-global-".$language, $this->node{$language});
-            $manager->persist($this->node{$language});
-        }
-        $homeNode = new HomeDataGenerator($references, 1, 'status-draft');
-        $this->setReference("home-node", $homeNode);
+        $homeNode = new HomeDataGenerator($this, $this->container, $manager, 1, 'status-draft');
         $this->addNode($manager, $homeNode, $languages);
-        $manager->flush();
     }
 
     /**
@@ -69,8 +69,9 @@ class LoadNodeDemoData extends AbstractFixture implements OrderedFixtureInterfac
     ){
         foreach ($languages as $language) {
             $node = $dataGenerator->generateNode($language);
-            $this->setReference("node-".$language, $node);
+            $this->setReference("node-".$node->getNodeId().'-'.$node->getLanguage().'-'.$node->getVersion(), $node);
             $manager->persist($node);
         }
+        $manager->flush();
     }
 }

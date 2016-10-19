@@ -6,6 +6,7 @@ use OpenOrchestra\ModelBundle\Document\Block;
 use OpenOrchestra\ModelBundle\Document\Node;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\TinyMCEWysiwygStrategy;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelBundle\Document\Area;
 
 /**
  * Class NewsDataGenerator
@@ -114,36 +115,37 @@ EOF;
      */
     protected function generateNodeGlobal($htmlContent, $name, $language, $routePattern)
     {
-        $siteNewsBlock0 = new Block();
-        $siteNewsBlock0->setLabel('Wysiwyg 1');
-        $siteNewsBlock0->setComponent(TinyMCEWysiwygStrategy::NAME);
-        $siteNewsBlock0->setAttributes(array("htmlContent" => $htmlContent));
-        $siteNewsBlock0->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));
+        $nodeNewsBlock = new Block();
+        $nodeNewsBlock->setLabel('Wysiwyg');
+        $nodeNewsBlock->setComponent(TinyMCEWysiwygStrategy::NAME);
+        $nodeNewsBlock->setAttributes(array(
+            "htmlContent" => $htmlContent
+        ));
 
-        $siteNewsArea0 = $this->createHeader();
-        $siteNewsArea4 = $this->createColumnArea('Main content area 1', 'mainContentArea1', 'main-content-area1');
-        $siteNewsArea4->addBlock(array('nodeId' => 0, 'blockId' => 1, 'blockPrivate' => false));
-        $siteNewsArea5 = $this->createModuleArea();
-        $siteNewsArea3 = $this->createMain(array($siteNewsArea4, $siteNewsArea5));
-        $siteNewsArea6 = $this->createFooter();
+        $nodeNewsBlock = $this->generateBlock($nodeNewsBlock);
 
-        $siteNews = $this->createBaseNode();
-        $siteNews->setNodeId('fixture_page_news');
-        $siteNews->setName($name);
-        $siteNews->setBoLabel("News");
-        $siteNews->setLanguage($language);
-        $siteNews->setParentId(NodeInterface::ROOT_NODE_ID);
-        $siteNews->setOrder(6);
-        $siteNews->setRoutePattern($routePattern);
-        $siteNews->setInFooter(false);
-        $siteNews->setInMenu(true);
+        $main = new Area();
+        $main->addBlock($nodeNewsBlock);
 
-        $rootArea = $siteNews->getRootArea();
-        $rootArea->addArea($siteNewsArea0);
-        $rootArea->addArea($siteNewsArea3);
-        $rootArea->addArea($siteNewsArea6);
-        $siteNews->addBlock($siteNewsBlock0);
+        $header = $this->createHeader();
 
-        return $siteNews;
+        $footer = $this->createFooter();
+
+        $nodeNews = $this->createBaseNode();
+        $nodeNews->setArea('main', $main);
+        $nodeNews->setArea('footer', $footer);
+        $nodeNews->setArea('header', $header);
+
+        $nodeNews->setNodeId('fixture_page_news');
+        $nodeNews->setName($name);
+        $nodeNews->setBoLabel("News");
+        $nodeNews->setLanguage($language);
+        $nodeNews->setParentId(NodeInterface::ROOT_NODE_ID);
+        $nodeNews->setOrder(6);
+        $nodeNews->setRoutePattern($routePattern);
+        $nodeNews->setInFooter(false);
+        $nodeNews->setInMenu(true);
+
+        return $nodeNews;
     }
 }
