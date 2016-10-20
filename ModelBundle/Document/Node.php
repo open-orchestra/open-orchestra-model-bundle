@@ -202,7 +202,7 @@ class Node implements NodeInterface
     protected $unpublishDate;
 
     /**
-     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\SiteAliasInterface", strategy="set")
+     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\AreaInterface", strategy="set")
     */
     protected $areas;
 
