@@ -35,7 +35,9 @@ class LoadDemoSiteData extends AbstractLoadSiteData implements OrchestraProducti
         $this->addSitesAliases(
             array('front.pddv-openorchestra-master.eolas-services.com', 'demo.openorchestra.2-0.dev'),
             array('fr', 'en', 'de'),
-            $site2);
+            $site2,
+            array('en' => 'en', 'de' => 'de')
+        );
         $site2->setSitemapPriority(0.5);
         $site2->setDeleted(false);
         $site2->setTheme($this->getReference('themePresentation'));
