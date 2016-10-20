@@ -449,6 +449,24 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     /**
      * @param string $path
      * @param string $siteId
+     * @param string $language
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     *
+     * @return array
+     */
+    public function findByIncludedPathSiteIdAndLanguage($path, $siteId, $language)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
+        $qa->match(array('language' => $language));
+        $qa->match(array('path' => new MongoRegex('/^'.$path.'(\/.*)?$/')));
+
+        return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param string $path
+     * @param string $siteId
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
@@ -543,7 +561,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
             )
         );
 
-        return $this->findLastVersion($qa);
+        return $this->findLastVersionInLanguage($qa);
     }
 
     /**
@@ -551,8 +569,32 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      * @param string $siteId
      *
      * @return array
+     * @deprecated will be removed in 2.0, use findByPathCurrentlyPublishedAndLanguage
      */
     public function findByPathCurrentlyPublished($path, $siteId)
+    {
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 1.2.0 and will be removed in 2.0.', E_USER_DEPRECATED);
+
+        $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
+        $qa->match(
+            array(
+                'path' => new MongoRegex('/^'.$path.'(\/.*)?$/'),
+                'currentlyPublished' => true,
+                'deleted' => false,
+            )
+        );
+
+        return $this->findLastVersion($qa);
+    }
+
+    /**
+     * @param string $path
+     * @param string $siteId
+     * @param string $language
+     *
+     * @return array
+     */
+    public function findByPathCurrentlyPublishedAndLanguage($path, $siteId, $language)
     {
         $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
         $qa->match(
@@ -560,6 +602,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
                 'path' => new MongoRegex('/^'.$path.'(\/.*)?$/'),
                 'currentlyPublished' => true,
                 'deleted' => false,
+                'language' => $language,
             )
         );
 
@@ -642,6 +685,23 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         ));
 
         return $this->hydrateAggregateQuery($qa, $elementName, 'getNodeId');
+    }
+
+    /**
+     * @param Stage $qa
+     *
+     * @return array
+     */
+    protected function findLastVersionInLanguage(Stage $qa)
+    {
+        $elementName = 'node';
+        $qa->sort(array('version' => 1));
+        $qa->group(array(
+            '_id' => array('nodeId' => '$nodeId', 'language' => '$language'),
+            $elementName => array('$last' => '$$ROOT')
+        ));
+
+        return $this->hydrateAggregateQuery($qa, $elementName);
     }
 
     /**
