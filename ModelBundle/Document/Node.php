@@ -628,7 +628,7 @@ class Node implements NodeInterface
      */
     public function getArea($areaId)
     {
-        $this->areas->get($areaId);
+        return $this->areas->get($areaId);
     }
 
     /**
