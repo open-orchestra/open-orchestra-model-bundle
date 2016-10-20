@@ -613,7 +613,7 @@ class Node implements NodeInterface
     /**
      * Get areas
      *
-     * @return array $areas
+     * @return \Doctrine\Common\Collections\Collection $areas
      */
     public function getAreas()
     {
