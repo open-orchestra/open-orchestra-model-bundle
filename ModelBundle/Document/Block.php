@@ -222,7 +222,7 @@ class Block implements BlockInterface
      *
      * @return boolean $private
      */
-    public function getPrivate()
+    public function isPrivate()
     {
         return $this->private;
     }
