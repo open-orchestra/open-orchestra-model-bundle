@@ -101,7 +101,7 @@ class LoadNodeRootFunctionalDemoData extends AbstractFixture implements Containe
      */
     protected function generateBlock(ObjectManager $manager, BlockInterface $block)
     {
-        $block->setPrivate($this->container->get('open_orchestra_display.display_block_manager')->isPublic($block));
+        $block->setPrivate(!$this->container->get('open_orchestra_display.display_block_manager')->isPublic($block));
         $block->setParameter($this->container->get('open_orchestra_backoffice.block_parameter_manager')->getBlockParameter($block));
 
         $manager->persist($block);
