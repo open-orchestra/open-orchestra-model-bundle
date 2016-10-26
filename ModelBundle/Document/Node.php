@@ -202,6 +202,13 @@ class Node implements NodeInterface
     protected $unpublishDate;
 
     /**
+     * @var string $specialPageName
+     *
+     * @ODM\Field(type="string") @Index(unique=true)
+     */
+    protected $specialPageName;
+
+    /**
      * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\AreaInterface", strategy="set")
     */
     protected $areas;
@@ -599,6 +606,22 @@ class Node implements NodeInterface
     public function getUnpublishDate()
     {
         return $this->unpublishDate;
+    }
+
+    /**
+     * @param string specialPageName
+     */
+    public function setSpecialPageName($specialPageName)
+    {
+        $this->specialPageName = $specialPageName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSpecialPageName()
+    {
+        return $this->specialPageName;
     }
 
     /**

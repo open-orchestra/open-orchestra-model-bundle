@@ -61,6 +61,13 @@ class Block implements BlockInterface
     protected $private;
 
     /**
+     * @var string $language
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $language;
+
+    /**
      * @var boolean $parameter
      *
      * @ODM\Field(type="hash")
@@ -227,6 +234,25 @@ class Block implements BlockInterface
         return $this->private;
     }
 
+    /**
+     * Set language
+     *
+     * @param string $language
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+    }
+
+    /**
+     * Get language
+     *
+     * @return string $language
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
 
     /**
      * Set parameter
