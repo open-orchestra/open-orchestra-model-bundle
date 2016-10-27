@@ -7,13 +7,23 @@ use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\MongoTrait\Cacheable;
 
 /**
- * Description of BaseBlock
+ * Class Block
  *
- * @ODM\EmbeddedDocument
+ * @ODM\Document(
+ *   collection="block",
+ *   repositoryClass="OpenOrchestra\ModelBundle\Repository\BlockRepository"
+ * )
  */
 class Block implements BlockInterface
 {
     use Cacheable;
+
+    /**
+     * @var string $id
+     *
+     * @ODM\Id
+     */
+    protected $id;
 
     /**
      * @var string $component
@@ -21,6 +31,13 @@ class Block implements BlockInterface
      * @ODM\Field(type="string")
      */
     protected $component;
+
+    /**
+     * @var boolean $transverse
+     *
+     * @ODM\Field(type="boolean")
+     */
+    protected $transverse;
 
     /**
      * @var string $label
@@ -37,11 +54,25 @@ class Block implements BlockInterface
     protected $class;
 
     /**
-     * @var string $id
+     * @var boolean $private
+     *
+     * @ODM\Field(type="boolean")
+     */
+    protected $private;
+
+    /**
+     * @var string $language
      *
      * @ODM\Field(type="string")
      */
-    protected $id;
+    protected $language;
+
+    /**
+     * @var boolean $parameter
+     *
+     * @ODM\Field(type="hash")
+     */
+    protected $parameter;
 
     /**
      * @var array $attributes
@@ -51,9 +82,14 @@ class Block implements BlockInterface
     protected $attributes = array();
 
     /**
-     * @ODM\Field(type="collection")
+     * Get id
+     *
+     * @return string $id
      */
-    protected $areas = array();
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set component
@@ -73,6 +109,26 @@ class Block implements BlockInterface
     public function getComponent()
     {
         return $this->component;
+    }
+
+    /**
+     * Set transverse
+     *
+     * @param boolean $transverse
+     */
+    public function setTransverse($transverse)
+    {
+        $this->transverse = $transverse;
+    }
+
+    /**
+     * Get transverse
+     *
+     * @return boolean
+     */
+    public function isTransverse()
+    {
+        return $this->transverse;
     }
 
     /**
@@ -139,45 +195,6 @@ class Block implements BlockInterface
     }
 
     /**
-     * @return array
-     */
-    public function getAreas()
-    {
-        return $this->areas;
-    }
-
-    /**
-     * @param array $areas
-     */
-    public function setAreas(array $areas)
-    {
-        $this->areas = $areas;
-    }
-
-    /**
-     * @param array $area
-     */
-    public function addArea(array $area)
-    {
-        if (!in_array($area, $this->areas)) {
-            $this->areas[] = $area;
-        }
-    }
-
-    /**
-     * @param string $areaId
-     * @param string $nodeId
-     */
-    public function removeAreaRef($areaId, $nodeId)
-    {
-        foreach ($this->getAreas() as $key => $area) {
-            if ($areaId === $area['areaId'] && ($nodeId === $area['nodeId'] || 0 === $area['nodeId'])) {
-                unset($this->areas[$key]);
-            }
-        }
-    }
-
-    /**
      * Set class
      *
      * @param string $class
@@ -198,22 +215,62 @@ class Block implements BlockInterface
     }
 
     /**
-     * Set id
+     * Set private
      *
-     * @param string $id
+     * @param boolean $private
      */
-    public function setId($id)
+    public function setPrivate($private)
     {
-        $this->id = $id;
+        $this->private = $private;
     }
 
     /**
-     * Get id
+     * Get private
      *
-     * @return string $id
+     * @return boolean $private
      */
-    public function getId()
+    public function isPrivate()
     {
-        return $this->id;
+        return $this->private;
+    }
+
+    /**
+     * Set language
+     *
+     * @param string $language
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+    }
+
+    /**
+     * Get language
+     *
+     * @return string $language
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * Set parameter
+     *
+     * @param array $parameter
+     */
+    public function setParameter(array $parameter)
+    {
+        $this->parameter = $parameter;
+    }
+
+    /**
+     * Get parameter
+     *
+     * @return array $parameter
+     */
+    public function getParameter()
+    {
+        return $this->parameter;
     }
 }

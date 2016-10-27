@@ -2,32 +2,39 @@
 
 namespace OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent;
 
-use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\LanguageListStrategy;
 use OpenOrchestra\ModelBundle\Document\Area;
-use OpenOrchestra\ModelBundle\Document\Block;
 use OpenOrchestra\ModelBundle\Document\Node;
-use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Doctrine\Common\Persistence\ObjectManager;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
+use Doctrine\Common\DataFixtures\AbstractFixture;
 
 /**
  * Class AbstractDataGenerator
  */
 abstract class AbstractDataGenerator
 {
-    protected $references;
+    protected $fixture;
+    protected $container;
+    protected $manager;
     protected $version;
     protected $status;
 
     /**
      * Constructor
      *
-     * @param array  $references
-     * @param int    $version
-     * @param string $status
+     * @param AbstractFixture    $fixture
+     * @param ContainerInterface $container
+     * @param ObjectManager      $manager
+     * @param int                $version
+     * @param string             $status
      */
-    public function __construct(array $references, $version = 1, $status = 'status-published')
+    public function __construct(AbstractFixture $fixture, ContainerInterface $container, ObjectManager $manager, $version = 1, $status = 'status-published')
     {
-        $this->references = $references;
+        $this->fixture = $fixture;
+        $this->container = $container;
+        $this->manager = $manager;
         $this->version = $version;
         $this->status = $status;
     }
@@ -49,6 +56,22 @@ abstract class AbstractDataGenerator
     }
 
     /**
+     * @param BlockInterface $block
+     *
+     * @return BlockInterface
+     */
+    protected function generateBlock(BlockInterface $block)
+    {
+        $block->setPrivate($this->container->get('open_orchestra_display.display_block_manager')->isPublic($block));
+        $block->setParameter($this->container->get('open_orchestra_backoffice.block_parameter_manager')->getBlockParameter($block));
+
+        $this->manager->persist($block);
+        $this->manager->flush();
+
+        return $block;
+    }
+
+    /**
      * @return Node
      */
     abstract protected function generateNodeFr();
@@ -64,45 +87,14 @@ abstract class AbstractDataGenerator
     abstract protected function generateNodeDe();
 
     /**
-     * @param string      $label
-     * @param string      $areaId
-     * @param string|null $htmlClass
-     * @param string      $width
-     *
-     * @return Area
-     */
-    protected function createColumnArea($label, $areaId, $htmlClass = null, $width = '1')
-    {
-        $area = new Area();
-        $area->setLabel($label);
-        $area->setAreaId($areaId);
-        $area->setWidth($width);
-        $area->setAreaType(AreaInterface::TYPE_COLUMN);
-
-        if ($htmlClass !== null) {
-            $area->setHtmlClass($htmlClass);
-        }
-
-        return $area;
-    }
-
-    /**
      * @return Area
      */
     protected function createHeader()
     {
         $header = new Area();
-        $header->setAreaId('row_header');
-        $header->setAreaType(AreaInterface::TYPE_ROW);
-        $header->setHtmlClass('header');
 
-        $column = $this->createColumnArea('header', 'column_header');
-
-        $header->addArea($column);
-
-        $column->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 0, 'blockPrivate' => false));
-        $column->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 1, 'blockPrivate' => false, 'blockParameter' => array('request.aliasId')));
-        $column->addBlock(array('nodeId' => 0, 'blockId' => 0));
+        $header->addBlock($this->fixture->getReference('Wysiwyg logo'));
+        $header->addBlock($this->fixture->getReference('Menu'));
 
         return $header;
     }
@@ -113,58 +105,11 @@ abstract class AbstractDataGenerator
     protected function createFooter()
     {
         $footer = new Area();
-        $footer->setAreaId('row_footer');
-        $footer->setAreaType(AreaInterface::TYPE_ROW);
-        $footer->setHtmlClass('footer');
 
-        $columnMenu = $this->createColumnArea('menu footer', 'column1_footer');
-        $columnInfo = $this->createColumnArea('footer information', 'column2_footer');
-
-        $footer->addArea($columnMenu);
-        $footer->addArea($columnInfo);
-        $columnMenu->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 3, 'blockPrivate' => false, 'blockParameter' => array('request.aliasId')));
-        $columnInfo->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 2, 'blockPrivate' => false));
+        $footer->addBlock($this->fixture->getReference('footer menu'));
+        $footer->addBlock($this->fixture->getReference('Wysiwyg footer'));
 
         return $footer;
-    }
-
-    /**
-     * @param boolean $haveBlocks
-     * @param string  $htmlClass
-     *
-     * @return Area
-     */
-    protected function createModuleArea($haveBlocks = true, $htmlClass = "module-area")
-    {
-        $area = $this->createColumnArea('Module area', 'moduleArea', $htmlClass);
-
-        if ($haveBlocks) {
-            $area->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 4, 'blockPrivate' => true));
-        }
-
-        return $area;
-    }
-
-    /**
-     * @param array   $areas
-     * @param boolean $hasHtmlClass
-     *
-     * @return Area
-     */
-    protected function createMain(array $areas, $hasHtmlClass = true)
-    {
-        $main = new Area();
-        $main->setAreaId('myMain');
-        $main->setAreaType(AreaInterface::TYPE_ROW);
-
-        if ($hasHtmlClass) {
-            $main->setHtmlClass('my-main');
-        }
-        foreach ($areas as $area) {
-            $main->addArea($area);
-        }
-
-        return $main;
     }
 
     /**
@@ -172,32 +117,20 @@ abstract class AbstractDataGenerator
      */
     protected function createBaseNode()
     {
-        $root = new Area();
-        $root->setAreaType(AreaInterface::TYPE_ROOT);
-        $root->setAreaId(AreaInterface::ROOT_AREA_ID);
-        $root->setLabel(AreaInterface::ROOT_AREA_LABEL);
-
-        $siteBlockLanguage = new Block();
-        $siteBlockLanguage->setLabel('Language list');
-        $siteBlockLanguage->setComponent(LanguageListStrategy::NAME);
-        $siteBlockLanguage->addArea(array('nodeId' => 0, 'areaId' => 'header'));
-
         $node = new Node();
-        $node->setRootArea($root);
         $node->setMaxAge(1000);
         $node->setNodeType(NodeInterface::TYPE_DEFAULT);
         $node->setSiteId('2');
         $node->setPath('-');
         $node->setVersion($this->version);
-        $node->setStatus($this->references[$this->status]);
+        $node->setStatus($this->fixture->getReference($this->status));
         if ('status-published' == $this->status) {
             $node->setCurrentlyPublished(true);
         }
         $node->setDeleted(false);
-        $node->setTemplateId('');
+        $node->setTemplate('default');
         $node->setTheme('themePresentation');
         $node->setDefaultSiteTheme(true);
-        $node->addBlock($siteBlockLanguage);
 
         return $node;
     }

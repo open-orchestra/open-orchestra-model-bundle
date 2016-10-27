@@ -123,74 +123,51 @@ EOF;
      */
     protected function generateNodeGlobal($htmlContent, $language, $routePattern)
     {
-        $nodeHomeBlock0 = new Block();
-        $nodeHomeBlock0->setLabel('Wysiwyg');
-        $nodeHomeBlock0->setComponent(TinyMCEWysiwygStrategy::NAME);
-        $nodeHomeBlock0->setAttributes(array(
+        $nodeHomeBlock = new Block();
+        $nodeHomeBlock->setLabel('Wysiwyg');
+        $nodeHomeBlock->setComponent(TinyMCEWysiwygStrategy::NAME);
+        $nodeHomeBlock->setAttributes(array(
             "htmlContent" => $htmlContent
         ));
-        $nodeHomeBlock0->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));
 
-        $nodeHomeArea4 = $this->createColumnArea('Main content area 1', 'mainContentArea1', 'main-content-area1');
-        $nodeHomeArea4->addBlock(array('nodeId' => 0, 'blockId' => 1, 'blockPrivate' => false));
-        $nodeHomeArea5 = $this->createModuleArea();
-        $nodeHomeArea3 = $this->createMain(array($nodeHomeArea4, $nodeHomeArea5));
-        $nodeHomeArea6 = $this->createFooter();
-        $nodeHomeArea0 = $this->createHeader();
+        $nodeHomeBlock = $this->generateBlock($nodeHomeBlock);
 
-        if ($this->version > 1) {
+        $main = new Area();
+        $main->addBlock($nodeHomeBlock);
 
-            $nodeHome = $this->createBaseNode();
-            $nodeHome->setLanguage($language);
-            $nodeHome->setNodeId(NodeInterface::ROOT_NODE_ID);
-            $nodeHome->setCreatedBy('fake_admin');
-            $nodeHome->setParentId('-');
-            $nodeHome->setOrder(0);
-            $nodeHome->setRoutePattern($routePattern);
-            $nodeHome->setInFooter(false);
-            $nodeHome->setInMenu(true);
-            $nodeHome->setSitemapChangefreq('hourly');
-            $nodeHome->setSitemapPriority('0.8');
-        } else {
-            $nodeHome = $this->references["node-".$language];
-            $areaHeader = $this->getAreaHeader($nodeHome);
-            if ($areaHeader != null) {
-                $areaHeader->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 0, 'blockPrivate' => false));
-                $areaHeader->addBlock(array('nodeId' => NodeInterface::TRANSVERSE_NODE_ID, 'blockId' => 1, 'blockParameter' => array('request.aliasId'), 'blockPrivate' => false));
-                $areaHeader->addBlock(array('nodeId' => 0, 'blockId' => 0, 'blockPrivate' => false));
-            }
+        $header = $this->createHeader();
+        $header->addBlock($this->fixture->getReference('Language list'));
+
+        $footer = $this->createFooter();
+
+        $nodeHome = $this->createBaseNode();
+        $keyReference = "node-".NodeInterface::ROOT_NODE_ID.'-'.$language.'-'.$this->version;
+        if($this->fixture->hasReference($keyReference)) {
+            $nodeHome = $this->fixture->getReference($keyReference);
+
         }
+        $nodeHome->setArea('main', $main);
+        $nodeHome->setArea('footer', $footer);
+        $nodeHome->setArea('header', $header);
+
+        $nodeHome->setLanguage($language);
+        $nodeHome->setNodeId(NodeInterface::ROOT_NODE_ID);
+        $nodeHome->setCreatedBy('fake_admin');
+        $nodeHome->setParentId('-');
+        $nodeHome->setOrder(0);
+        $nodeHome->setRoutePattern($routePattern);
+        $nodeHome->setInFooter(false);
+        $nodeHome->setInMenu(true);
+        $nodeHome->setSitemapChangefreq('hourly');
+        $nodeHome->setSitemapPriority('0.8');
         $nodeHome->setName('Orchestra ?');
         $nodeHome->setBoLabel('Orchestra ?');
         $nodeHome->setVersion($this->version);
-        $nodeHome->setStatus($this->references[$this->status]);
+        $nodeHome->setStatus($this->fixture->getReference($this->status));
         if ('status-published' == $this->status) {
             $nodeHome->setCurrentlyPublished(true);
         }
-        $rootArea = $nodeHome->getRootArea();
-        $rootArea->addArea($nodeHomeArea0);
-        $rootArea->addArea($nodeHomeArea3);
-        $rootArea->addArea($nodeHomeArea6);
-        $nodeHome->addBlock($nodeHomeBlock0);
 
         return $nodeHome;
-    }
-
-    /**
-     * @param NodeInterface $nodeHome
-     * 
-     * @return Area|null
-     */
-    protected function getAreaHeader(NodeInterface $nodeHome)
-    {
-        $areas = $nodeHome->getRootArea()->getAreas();
-        foreach ($areas as $area) {
-            if ($area->getAreaId() == "header") {
-
-                return $area;
-            }
-        }
-
-        return null;
     }
 }

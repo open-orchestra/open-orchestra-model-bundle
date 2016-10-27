@@ -1,9 +1,0 @@
-OpenOrchestra\ModelBundle\Document\Template:
-    properties:
-        name:
-            - NotBlank: ~
-        deleted:
-            - Type:
-                type: bool
-        rootArea:
-            - Valid: ~

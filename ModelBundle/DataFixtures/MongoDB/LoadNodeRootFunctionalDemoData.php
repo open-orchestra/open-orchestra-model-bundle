@@ -11,24 +11,39 @@ use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\ContactDataGenera
 use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\NodeRootFunctionalDataGenerator;
 use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\LegalDataGenerator;
 use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\NewsDataGenerator;
-use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
 use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\Error404DataGenerator;
 use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\Error503DataGenerator;
-use OpenOrchestra\ModelBundle\Document\Node;
 use OpenOrchestra\ModelBundle\Document\Block;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\TinyMCEWysiwygStrategy;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\FooterStrategy;
 use OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent\AutoPublishDataGenerator;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
+use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\LanguageListStrategy;
 
 /**
  * Class LoadNodeRootFunctionalDemoData
  */
-class LoadNodeRootFunctionalDemoData extends AbstractFixture implements OrderedFixtureInterface, OrchestraFunctionalFixturesInterface
+class LoadNodeRootFunctionalDemoData extends AbstractFixture implements ContainerAwareInterface, OrderedFixtureInterface, OrchestraFunctionalFixturesInterface
 {
     protected $nodede;
     protected $nodeen;
     protected $nodefr;
+
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
+    }
 
     /**
      * Load data fixtures with the passed EntityManager
@@ -37,32 +52,20 @@ class LoadNodeRootFunctionalDemoData extends AbstractFixture implements OrderedF
      */
     public function load(ObjectManager $manager)
     {
-        $references = array();
-        $references["status-published"] = $this->getReference('status-published');
-        $references["status-draft"] = $this->getReference('status-draft');
-        $references["status-pending"] = $this->getReference('status-pending');
-        if ($this->hasReference('logo-orchestra')) {
-            $references["logo-orchestra"] = $this->getReference('logo-orchestra');
-        }
         $languages = array("de", "en", "fr");
 
-        foreach ($languages as $language) {
-            $references["node-".$language] = $this->getReference("node-".$language);
-            $references["node-global-".$language] = $this->getReference("node-global-".$language);
-            $this->node{$language} = $references["node-global-".$language];
-            $this->generateNodeGlobal($language);
-        }
-        $this->addNode($manager, new NodeRootFunctionalDataGenerator($references), $languages);
-        $this->addNode($manager, new NodeRootFunctionalDataGenerator($references, 2, 'status-draft'), array('fr'));
-        $this->addNode($manager, new LegalDataGenerator($references), $languages);
-        $this->addNode($manager, new ContactDataGenerator($references), $languages);
-        $this->addNode($manager, new CommunityDataGenerator($references), $languages);
-        $this->addNode($manager, new NewsDataGenerator($references), $languages);
-        $this->addNode($manager, new Error404DataGenerator($references), $languages);
-        $this->addNode($manager, new Error503DataGenerator($references), $languages);
-        $this->addNode($manager, new AutoPublishDataGenerator($references), array('fr', 'en'));
+        $this->generateGlobalBlock($manager);
 
-        $manager->flush();
+
+        $this->addNode($manager, new NodeRootFunctionalDataGenerator($this, $this->container, $manager), $languages);
+        $this->addNode($manager, new NodeRootFunctionalDataGenerator($this, $this->container, $manager, 2, 'status-draft'), array('fr'));
+        $this->addNode($manager, new LegalDataGenerator($this, $this->container, $manager), $languages);
+        $this->addNode($manager, new ContactDataGenerator($this, $this->container, $manager), $languages);
+        $this->addNode($manager, new CommunityDataGenerator($this, $this->container, $manager), $languages);
+        $this->addNode($manager, new NewsDataGenerator($this, $this->container, $manager), $languages);
+        $this->addNode($manager, new Error404DataGenerator($this, $this->container, $manager), $languages);
+        $this->addNode($manager, new Error503DataGenerator($this, $this->container, $manager), $languages);
+        $this->addNode($manager, new AutoPublishDataGenerator($this, $this->container, $manager), array('fr', 'en'));
     }
 
     /**
@@ -88,42 +91,38 @@ class LoadNodeRootFunctionalDemoData extends AbstractFixture implements OrderedF
         foreach ($languages as $language) {
             $node = $dataGenerator->generateNode($language);
             $manager->persist($node);
-            $this->addAreaRef($this->node{$language}, $node);
+            $this->setReference("node-".$node->getNodeId().'-'.$node->getLanguage().'-'.$node->getVersion(), $node);
         }
+        $manager->flush();
     }
 
     /**
-     * @param NodeInterface $nodeTransverse
-     * @param NodeInterface $node
+     * @param ObjectManager  $manager
+     * @param BlockInterface $block
      */
-    protected function addAreaRef(NodeInterface $nodeTransverse, NodeInterface $node)
+    protected function generateBlock(ObjectManager $manager, BlockInterface $block)
     {
-        $areas = $node->getRootArea()->getAreas();
-        foreach ($areas as $area) {
-            foreach ($area->getBlocks() as $areaBlock) {
-                if ($nodeTransverse->getNodeId() === $areaBlock['nodeId']) {
-                    $block = $nodeTransverse->getBlock($areaBlock['blockId']);
-                    $block->addArea(array('nodeId' => $node->getId(), 'areaId' => $area->getAreaId()));
-                    $nodeTransverse->setBlock($areaBlock['blockId'], $block);
-                }
-            }
-        }
+        $block->setPrivate(!$this->container->get('open_orchestra_display.display_block_manager')->isPublic($block));
+        $block->setParameter($this->container->get('open_orchestra_backoffice.block_parameter_manager')->getBlockParameter($block));
+
+        $manager->persist($block);
+        $manager->flush();
+
+        $this->setReference($block->getLabel(), $block);
     }
 
     /**
-     * @param string $language
-     *
-     * @return Node
+     * @param ObjectManager $manager
      */
-    protected function generateNodeGlobal($language)
+    protected function generateGlobalBlock(ObjectManager $manager)
     {
         $siteBlockLogo = new Block();
         $siteBlockLogo->setLabel('Wysiwyg logo');
         $siteBlockLogo->setClass('logo');
         $siteBlockLogo->setComponent(TinyMCEWysiwygStrategy::NAME);
         $orchestraTitle = "Open Orchestra";
-        if (isset($this->references['logo-orchestra'])) {
-            $orchestraTitle = '[media=original]' . $this->references['logo-orchestra']->getId() . '[/media]';
+        if ($this->hasReference('logo-orchestra')) {
+            $orchestraTitle = '[media=original]' . $this->getReference('logo-orchestra')->getId() . '[/media]';
         }
         $siteBlockLogo->setAttributes(
             array(
@@ -131,13 +130,14 @@ class LoadNodeRootFunctionalDemoData extends AbstractFixture implements OrderedF
                     '<a href="/" id="myLogo">' . $orchestraTitle . '</a>',
             )
         );
-        $siteBlockLogo->addArea(array('nodeId' => 0, 'areaId' => 'main'));
+        $this->generateBlock($manager, $siteBlockLogo);
+
         $siteBlockMainMenu = new Block();
         $siteBlockMainMenu->setLabel('Menu');
         $siteBlockMainMenu->setComponent('menu');
-        $siteBlockMainMenu->setId('myMainMenu');
         $siteBlockMainMenu->setClass('my-main-menu');
-        $siteBlockMainMenu->addArea(array('nodeId' => 0, 'areaId' => 'main'));
+        $this->generateBlock($manager, $siteBlockMainMenu);
+
         $siteBlockFooter = new Block();
         $siteBlockFooter->setLabel('Wysiwyg footer');
         $siteBlockFooter->setComponent(TinyMCEWysiwygStrategy::NAME);
@@ -162,39 +162,23 @@ class LoadNodeRootFunctionalDemoData extends AbstractFixture implements OrderedF
 </div>
 EOF
         ));
-        $siteBlockFooter->addArea(array('nodeId' => 0, 'areaId' => 'main'));
+        $this->generateBlock($manager, $siteBlockFooter);
+
         $siteBlockFooterMenu = new Block;
         $siteBlockFooterMenu->setLabel('footer menu');
         $siteBlockFooterMenu->setClass("footer-legal");
         $siteBlockFooterMenu->setComponent(FooterStrategy::NAME);
-        $siteBlockFooterMenu->addArea(array('nodeId' => 0, 'areaId' => 'main'));
+        $this->generateBlock($manager, $siteBlockFooterMenu);
+
         $siteBlockContact = new Block();
         $siteBlockContact->setLabel('Contact');
         $siteBlockContact->setComponent('contact');
-        $siteBlockContact->setId('myFormContact');
         $siteBlockContact->setClass('my-form-contact');
-        $siteBlockContact->addArea(array('nodeId' => 0, 'areaId' => 'main'));
+        $this->generateBlock($manager, $siteBlockContact);
 
-        $rootArea = $this->node{$language}->getRootArea()->getAreas();
-        foreach ($rootArea as $area) {
-            if ($area->getAreaId() == "myMain") {
-                foreach ($area->getAreas() as $subArea) {
-                    if ($subArea->getAreaId() == "main") {
-                        $subArea->addBlock(array('nodeId' => 0, 'blockId' => 0, 'blockPrivate' => false));
-                        $subArea->addBlock(array('nodeId' => 0, 'blockId' => 1, 'blockPrivate' => false));
-                        $subArea->addBlock(array('nodeId' => 0, 'blockId' => 2, 'blockPrivate' => false));
-                        $subArea->addBlock(array('nodeId' => 0, 'blockId' => 3, 'blockPrivate' => false));
-                        $subArea->addBlock(array('nodeId' => 0, 'blockId' => 4, 'blockPrivate' => false));
-                    }
-                }
-            }
-        }
-        $this->node{$language}->addBlock($siteBlockLogo);
-        $this->node{$language}->addBlock($siteBlockMainMenu);
-        $this->node{$language}->addBlock($siteBlockFooter);
-        $this->node{$language}->addBlock($siteBlockFooterMenu);
-        $this->node{$language}->addBlock($siteBlockContact);
-
-        return $this->node{$language};
+        $siteBlockLanguage = new Block();
+        $siteBlockLanguage->setLabel('Language list');
+        $siteBlockLanguage->setComponent(LanguageListStrategy::NAME);
+        $this->generateBlock($manager, $siteBlockLanguage);
     }
 }

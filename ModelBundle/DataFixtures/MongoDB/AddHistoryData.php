@@ -27,7 +27,7 @@ class AddHistoryData extends AbstractFixture implements OrderedFixtureInterface,
 
             $objectManager->persist($this->addHistory("ds_3_fr", ContentEvents::CONTENT_CREATION));
             $objectManager->persist($this->addHistory("ds_3_en", ContentEvents::CONTENT_CREATION));
-            $objectManager->persist($this->addHistory("node-fr", NodeEvents::NODE_CREATION));
+            $objectManager->persist($this->addHistory("node-root-fr-1", NodeEvents::NODE_CREATION));
 
             $objectManager->flush();
         }

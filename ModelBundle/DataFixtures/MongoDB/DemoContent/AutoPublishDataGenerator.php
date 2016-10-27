@@ -6,6 +6,7 @@ use OpenOrchestra\ModelBundle\Document\Block;
 use OpenOrchestra\ModelBundle\Document\Node;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\TinyMCEWysiwygStrategy;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelBundle\Document\Area;
 
 /**
  * Class AutoPublishDataGenerator
@@ -64,7 +65,7 @@ EOF;
 
         $node = $this->generateNodeGlobal($htmlContent, $name, $language, $routePattern);
         $node->setPublishDate(\DateTime::createFromFormat('j-M-Y', '01-Jan-2016'));
-        $node->setStatus($this->references['status-pending']);
+        $node->setStatus($this->fixture->getReference('status-pending'));
 
         return $node;
     }
@@ -86,38 +87,37 @@ EOF;
      */
     protected function generateNodeGlobal($htmlContent, $name, $language, $routePattern)
     {
-        $autoPublishBlock0 = new Block();
-        $autoPublishBlock0->setLabel('Wysiwyg 1');
-        $autoPublishBlock0->setComponent(TinyMCEWysiwygStrategy::NAME);
-        $autoPublishBlock0->setAttributes(array(
-            "htmlContent" => $htmlContent));
-        $autoPublishBlock0->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));
+        $nodeAutoPublishBlock = new Block();
+        $nodeAutoPublishBlock->setLabel('Wysiwyg');
+        $nodeAutoPublishBlock->setComponent(TinyMCEWysiwygStrategy::NAME);
+        $nodeAutoPublishBlock->setAttributes(array(
+            "htmlContent" => $htmlContent
+        ));
 
-        $autoPublishArea0 = $this->createHeader();
-        $autoPublishArea4 = $this->createColumnArea('Main content area 1', 'mainContentArea1', 'main-content-area1' );
-        $autoPublishArea4->addBlock(array('nodeId' => 0, 'blockId' => 1, 'blockPrivate' => false));
-        $autoPublishArea3 = $this->createMain(array($autoPublishArea4));
-        $autoPublishArea5 = $this->createFooter();
+        $nodeAutoPublishBlock = $this->generateBlock($nodeAutoPublishBlock);
 
-        $autoPublish = $this->createBaseNode();
-        $autoPublish->setNodeId('fixture_auto_unpublish');
-        $autoPublish->setName($name);
-        $autoPublish->setBoLabel("Auto unpublish");
-        $autoPublish->setLanguage($language);
-        $autoPublish->setParentId(NodeInterface::ROOT_NODE_ID);
-        $autoPublish->setOrder(15);
-        $autoPublish->setRoutePattern($routePattern);
-        $autoPublish->setInFooter(true);
-        $autoPublish->setInMenu(false);
+        $main = new Area();
+        $main->addBlock($nodeAutoPublishBlock);
 
-        $rootArea = $autoPublish->getRootArea();
-        $rootArea->addArea($autoPublishArea0);
-        $rootArea->addArea($autoPublishArea3);
-        $rootArea->addArea($autoPublishArea5);
-        $autoPublish->addBlock($autoPublishBlock0);
+        $header = $this->createHeader();
 
-        $autoPublish->setInFooter(false);
+        $footer = $this->createFooter();
 
-        return $autoPublish;
+        $nodeAutoPublish = $this->createBaseNode();
+        $nodeAutoPublish->setArea('main', $main);
+        $nodeAutoPublish->setArea('footer', $footer);
+        $nodeAutoPublish->setArea('header', $header);
+
+        $nodeAutoPublish->setNodeId('fixture_auto_unpublish');
+        $nodeAutoPublish->setName($name);
+        $nodeAutoPublish->setBoLabel("Auto unpublish");
+        $nodeAutoPublish->setLanguage($language);
+        $nodeAutoPublish->setParentId(NodeInterface::ROOT_NODE_ID);
+        $nodeAutoPublish->setOrder(15);
+        $nodeAutoPublish->setRoutePattern($routePattern);
+        $nodeAutoPublish->setInFooter(false);
+        $nodeAutoPublish->setInMenu(false);
+
+        return $nodeAutoPublish;
     }
 }

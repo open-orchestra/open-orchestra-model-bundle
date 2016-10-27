@@ -3,63 +3,21 @@
 namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
+use OpenOrchestra\ModelInterface\Model\BlockInterface;
 
 /**
- * Description of BaseArea
+ * Description of Area
  *
  * @ODM\EmbeddedDocument
  */
 class Area implements AreaInterface
 {
     /**
-     * @var string $label
-     *
-     * @ODM\Field(type="string")
+     * @ODM\ReferenceMany(targetDocument="OpenOrchestra\ModelInterface\Model\BlockInterface")
      */
-    protected $label;
-
-    /**
-     * @var string $areaId
-     *
-     * @ODM\Field(type="string")
-     */
-    protected $areaId;
-
-    /**
-     * @var string $htmlClass
-     *
-     * @ODM\Field(type="string")
-     */
-    protected $htmlClass;
-
-    /**
-     * @var string $width
-     *
-     * @ODM\Field(type="string")
-     */
-    protected $width;
-
-    /**
-     * @var string $areaType
-     *
-     * @ODM\Field(type="string")
-     */
-    protected $areaType;
-
-    /**
-     * @var ArrayCollection
-     *
-     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\AreaInterface")
-     */
-    protected $subAreas;
-
-    /**
-     * @ODM\Field(type="collection")
-     */
-    protected $blocks = array();
+    protected $blocks;
 
     /**
      * Constructor
@@ -70,174 +28,53 @@ class Area implements AreaInterface
     }
 
     /**
-     * Set label
-     *
-     * @param string $label
-     */
-    public function setLabel($label)
-    {
-        $this->label = $label;
-    }
-
-    /**
-     * Get label
-     *
-     * @return string $label
-     */
-    public function getLabel()
-    {
-        return $this->label;
-    }
-
-    /**
-     * Set areaId
-     *
-     * @param string $areaId
-     */
-    public function setAreaId($areaId)
-    {
-        $this->areaId = $areaId;
-    }
-
-    /**
-     * Get areaId
-     *
-     * @return string $areaId
-     */
-    public function getAreaId()
-    {
-        return $this->areaId;
-    }
-
-    /**
-     * Set htmlClass
-     *
-     * @param string $htmlClass
-     */
-    public function setHtmlClass($htmlClass)
-    {
-        $this->htmlClass = $htmlClass;
-    }
-
-    /**
-     * Get htmlClass
-     *
-     * @return string $htmlClass
-     */
-    public function getHtmlClass()
-    {
-        return $this->htmlClass;
-    }
-
-    /**
-     * @return string
-     */
-    public function getWidth()
-    {
-        return $this->width;
-    }
-
-    /**
-     * @param string $width
-     */
-    public function setWidth($width)
-    {
-        $this->width = $width;
-    }
-
-    /**
-     * Set area type
-     *
-     * @param string $areaType
-     */
-    public function setAreaType($areaType)
-    {
-        $this->areaType = $areaType;
-    }
-
-    /**
-     * Get area type
-     *
-     * @return string $areaType
-     */
-    public function getAreaType()
-    {
-        return $this->areaType;
-    }
-
-    /**
-     * Add subArea
-     *
-     * @param AreaInterface $subArea
-     */
-    public function addArea(AreaInterface $subArea)
-    {
-        $this->subAreas->add($subArea);
-    }
-
-    /**
-     * Remove subArea
-     *
-     * @param AreaInterface $subArea
-     */
-    public function removeArea(AreaInterface $subArea)
-    {
-        $this->subAreas->removeElement($subArea);
-    }
-
-    /**
-     * Remove subArea by areaId
-     *
-     * @param string $areaId
-     */
-    public function removeAreaByAreaId($areaId)
-    {
-        foreach ($this->getAreas() as $key => $area) {
-            if ($areaId == $area->getAreaId()) {
-                $this->getAreas()->remove($key);
-                break;
-            }
-            $area->removeAreaByAreaId($areaId);
-        }
-    }
-
-    /**
-     * @param Collection $areas
-     */
-    public function setAreas(Collection $areas)
-    {
-        $this->subAreas = new ArrayCollection();
-        foreach ($areas as $area) {
-            $this->subAreas->add($area);
-        }
-    }
-
-    /**
-     * Get subAreas
-     *
-     * @return ArrayCollection $subAreas
-     */
-    public function getAreas()
-    {
-        return $this->subAreas;
-    }
-
-    /**
      * Set blocks
      *
      * @param array $blocks
      */
-    public function setBlocks(array $blocks)
+    public function setBlocks(ArrayCollection $blocks)
     {
-        $this->blocks = $blocks;
+        $this->blocks->clear();
+        foreach ($blocks as $block) {
+            $this->blocks->add($block);
+        }
     }
 
     /**
-     * @param array $blockDescription
+     * @param int            $key
+     * @param BlockInterface $block
      */
-    public function addBlock(array $blockDescription)
+    public function setBlock($key, BlockInterface $block)
     {
-        $this->blocks[] = $blockDescription;
+        $this->blocks->set($key, $block);
+    }
+
+    /**
+     * @param array $block
+     */
+    public function addBlock(BlockInterface $block)
+    {
+        $this->blocks->add($block);
+    }
+
+    /**
+     * Remove block
+     *
+     * @param BlockInterface $block
+     */
+    public function removeBlock(BlockInterface $block)
+    {
+        $this->blocks->removeElement($block);
+    }
+
+    /**
+     * Remove block with index $key
+     *
+     * @param string $key
+     */
+    public function removeBlockWithKey($key)
+    {
+        $this->blocks->remove($key);
     }
 
     /**
@@ -251,11 +88,21 @@ class Area implements AreaInterface
     }
 
     /**
+     * @param BlockInterface $block
+     *
+     * @return mixed
+     */
+    public function getBlockIndex(BlockInterface $block)
+    {
+        return $this->blocks->indexOf($block);
+    }
+
+    /**
      * Initialize collections
      */
     protected function initializeCollections()
     {
-        $this->subAreas = new ArrayCollection();
+        $this->blocks = new ArrayCollection();
     }
 
     /**

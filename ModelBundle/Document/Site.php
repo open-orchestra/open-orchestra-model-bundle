@@ -93,6 +93,22 @@ class Site implements SiteInterface
     protected $name;
 
     /**
+     * @var string $templateSet
+     *
+     * @ODM\Field(type="string")
+     * @ORCHESTRA\Search(key="template_set")
+     */
+    protected $templateSet;
+
+    /**
+     * @var string $templateNodeRoot
+     *
+     * @ODM\Field(type="string")
+     * @ORCHESTRA\Search(key="template_root")
+     */
+    protected $templateNodeRoot;
+
+    /**
      * @var Collection
      *
      * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\SiteAliasInterface", strategy="set")
@@ -353,6 +369,46 @@ class Site implements SiteInterface
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * Get templateSet
+     *
+     * @return string $templateSet
+     */
+    public function getTemplateSet()
+    {
+        return $this->templateSet;
+    }
+
+    /**
+     * Set templateSet
+     *
+     * @param string $templateSet
+     */
+    public function setTemplateSet($templateSet)
+    {
+        $this->templateSet = $templateSet;
+    }
+
+    /**
+     * Get templateNodeRoot
+     *
+     * @return string $templateNodeRoot
+     */
+    public function getTemplateNodeRoot()
+    {
+        return $this->templateNodeRoot;
+    }
+
+    /**
+     * Set templateNodeRoot
+     *
+     * @param string $templateNodeRoot
+     */
+    public function setTemplateNodeRoot($templateNodeRoot)
+    {
+        $this->templateNodeRoot = $templateNodeRoot;
     }
 
     /**

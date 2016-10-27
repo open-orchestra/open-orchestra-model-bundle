@@ -6,6 +6,7 @@ use OpenOrchestra\ModelBundle\Document\Block;
 use OpenOrchestra\ModelBundle\Document\Node;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\TinyMCEWysiwygStrategy;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelBundle\Document\Area;
 
 /**
  * Class Error503DataGenerator
@@ -72,39 +73,38 @@ EOF;
      */
     protected function generateNodeGlobal($htmlContent, $language, $routePattern)
     {
-        $error503Block0 = new Block();
-        $error503Block0->setLabel('Wysiwyg');
-        $error503Block0->setComponent(TinyMCEWysiwygStrategy::NAME);
-        $error503Block0->setAttributes(array(
+        $nodeError503Block = new Block();
+        $nodeError503Block->setLabel('Wysiwyg');
+        $nodeError503Block->setComponent(TinyMCEWysiwygStrategy::NAME);
+        $nodeError503Block->setAttributes(array(
             "htmlContent" => $htmlContent
         ));
-        $error503Block0->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));
 
-        $error503Area0 = $this->createHeader();
-        $error503Area4 = $this->createColumnArea('Main content area 1', 'mainContentArea1', 'main-content-area1');
-        $error503Area4->addBlock(array('nodeId' => 0, 'blockId' => 1, 'blockPrivate' => false));
-        $error503Area5 = $this->createModuleArea();
-        $error503Area3 = $this->createMain(array($error503Area4, $error503Area5));
-        $error503Area6 = $this->createFooter();
+        $nodeError503Block = $this->generateBlock($nodeError503Block);
 
-        $error503 = $this->createBaseNode();
-        $error503->setNodeType(NodeInterface::TYPE_ERROR);
-        $error503->setLanguage($language);
-        $error503->setNodeId(NodeInterface::ERROR_503_NODE_ID);
-        $error503->setName('Error 503');
-        $error503->setBoLabel('Error 503');
-        $error503->setCreatedBy('fake_admin');
-        $error503->setParentId(NodeInterface::ROOT_NODE_ID);
-        $error503->setRoutePattern($routePattern);
-        $error503->setInFooter(false);
-        $error503->setInMenu(false);
+        $main = new Area();
+        $main->addBlock($nodeError503Block);
 
-        $rootArea = $error503->getRootArea();
-        $rootArea->addArea($error503Area0);
-        $rootArea->addArea($error503Area3);
-        $rootArea->addArea($error503Area6);
-        $error503->addBlock($error503Block0);
+        $header = $this->createHeader();
 
-        return $error503;
+        $footer = $this->createFooter();
+
+        $nodeError503 = $this->createBaseNode();
+        $nodeError503->setArea('main', $main);
+        $nodeError503->setArea('footer', $footer);
+        $nodeError503->setArea('header', $header);
+
+        $nodeError503->setNodeType(NodeInterface::TYPE_ERROR);
+        $nodeError503->setLanguage($language);
+        $nodeError503->setNodeId(NodeInterface::ERROR_503_NODE_ID);
+        $nodeError503->setName('Error 503');
+        $nodeError503->setBoLabel('Error 503');
+        $nodeError503->setCreatedBy('fake_admin');
+        $nodeError503->setParentId(NodeInterface::ROOT_NODE_ID);
+        $nodeError503->setRoutePattern($routePattern);
+        $nodeError503->setInFooter(false);
+        $nodeError503->setInMenu(false);
+
+        return $nodeError503;
     }
 }

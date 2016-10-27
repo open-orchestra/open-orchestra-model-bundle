@@ -6,6 +6,7 @@ use OpenOrchestra\ModelBundle\Document\Block;
 use OpenOrchestra\ModelBundle\Document\Node;
 use OpenOrchestra\DisplayBundle\DisplayBlock\Strategies\TinyMCEWysiwygStrategy;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
+use OpenOrchestra\ModelBundle\Document\Area;
 
 /**
  * Class Error404DataGenerator
@@ -72,39 +73,38 @@ EOF;
      */
     protected function generateNodeGlobal($htmlContent, $language, $routePattern)
     {
-        $error404Block0 = new Block();
-        $error404Block0->setLabel('Wysiwyg');
-        $error404Block0->setComponent(TinyMCEWysiwygStrategy::NAME);
-        $error404Block0->setAttributes(array(
+        $nodeError404Block = new Block();
+        $nodeError404Block->setLabel('Wysiwyg');
+        $nodeError404Block->setComponent(TinyMCEWysiwygStrategy::NAME);
+        $nodeError404Block->setAttributes(array(
             "htmlContent" => $htmlContent
         ));
-        $error404Block0->addArea(array('nodeId' => 0, 'areaId' => 'mainContentArea1'));
 
-        $error404Area0 = $this->createHeader();
-        $error404Area4 = $this->createColumnArea('Main content area 1', 'mainContentArea1', 'main-content-area1');
-        $error404Area4->addBlock(array('nodeId' => 0, 'blockId' => 1, 'blockPrivate' => false));
-        $error404Area5 = $this->createModuleArea();
-        $error404Area3 = $this->createMain(array($error404Area4, $error404Area5));
-        $error404Area6 = $this->createFooter();
+        $nodeError404Block = $this->generateBlock($nodeError404Block);
 
-        $error404 = $this->createBaseNode();
-        $error404->setNodeType(NodeInterface::TYPE_ERROR);
-        $error404->setLanguage($language);
-        $error404->setNodeId(NodeInterface::ERROR_404_NODE_ID);
-        $error404->setName('Error 404');
-        $error404->setBoLabel('Error 404');
-        $error404->setCreatedBy('fake_admin');
-        $error404->setParentId(NodeInterface::ROOT_NODE_ID);
-        $error404->setRoutePattern($routePattern);
-        $error404->setInFooter(false);
-        $error404->setInMenu(false);
+        $main = new Area();
+        $main->addBlock($nodeError404Block);
 
-        $rootArea = $error404->getRootArea();
-        $rootArea->addArea($error404Area0);
-        $rootArea->addArea($error404Area3);
-        $rootArea->addArea($error404Area6);
-        $error404->addBlock($error404Block0);
+        $header = $this->createHeader();
 
-        return $error404;
+        $footer = $this->createFooter();
+
+        $nodeError404 = $this->createBaseNode();
+        $nodeError404->setArea('main', $main);
+        $nodeError404->setArea('footer', $footer);
+        $nodeError404->setArea('header', $header);
+
+        $nodeError404->setNodeType(NodeInterface::TYPE_ERROR);
+        $nodeError404->setLanguage($language);
+        $nodeError404->setNodeId(NodeInterface::ERROR_404_NODE_ID);
+        $nodeError404->setName('Error 404');
+        $nodeError404->setBoLabel('Error 404');
+        $nodeError404->setCreatedBy('fake_admin');
+        $nodeError404->setParentId(NodeInterface::ROOT_NODE_ID);
+        $nodeError404->setRoutePattern($routePattern);
+        $nodeError404->setInFooter(false);
+        $nodeError404->setInMenu(false);
+
+        return $nodeError404;
     }
 }

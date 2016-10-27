@@ -53,8 +53,10 @@ class UpdateBoLabelNodeFieldListenerTest extends AbstractBaseTestCase
     public function testPreUpdate(array $documents)
     {
         $boLabel = 'fakeBoLabel';
+        $nodeId = 'fakeNodeId';
         $node = Phake::mock('OpenOrchestra\ModelBundle\Document\Node');
         Phake::when($node)->getBoLabel()->thenReturn($boLabel);
+        Phake::when($node)->getId()->thenReturn($nodeId);
         Phake::when($this->preUpdateEventArgs)->getDocument()->thenReturn($node);
         Phake::when($this->preUpdateEventArgs)->hasChangedField(Phake::anyParameters())->thenReturn(true);
         Phake::when($this->nodeRepository)->findByNodeAndSite(Phake::anyParameters())->thenReturn($documents);
@@ -74,10 +76,13 @@ class UpdateBoLabelNodeFieldListenerTest extends AbstractBaseTestCase
     {
         $document0 = Phake::mock('OpenOrchestra\ModelBundle\Document\Node');
         Phake::when($document0)->getBoLabel()->thenReturn("");
+        Phake::when($document0)->getId()->thenReturn("fakeDocument0Id");
         $document1 = Phake::mock('OpenOrchestra\ModelBundle\Document\Node');
         Phake::when($document1)->getBoLabel()->thenReturn("");
+        Phake::when($document1)->getId()->thenReturn("fakeDocument1Id");
         $document2 = Phake::mock('OpenOrchestra\ModelBundle\Document\Node');
         Phake::when($document2)->getBoLabel()->thenReturn("");
+        Phake::when($document2)->getId()->thenReturn("fakeDocument2Id");
 
         return array(
             array(array($document0)),
