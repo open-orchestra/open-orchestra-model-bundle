@@ -101,12 +101,12 @@ class Site implements SiteInterface
     protected $templateSet;
 
     /**
-     * @var string $templateRoot
+     * @var string $templateNodeRoot
      *
      * @ODM\Field(type="string")
      * @ORCHESTRA\Search(key="template_root")
      */
-    protected $templateRoot;
+    protected $templateNodeRoot;
 
     /**
      * @var Collection
@@ -392,23 +392,23 @@ class Site implements SiteInterface
     }
 
     /**
-     * Get templateRoot
+     * Get templateNodeRoot
      *
-     * @return string $templateRoot
+     * @return string $templateNodeRoot
      */
-    public function getTemplateRoot()
+    public function getTemplateNodeRoot()
     {
-        return $this->templateRoot;
+        return $this->templateNodeRoot;
     }
 
     /**
-     * Set templateRoot
+     * Set templateNodeRoot
      *
-     * @param string $templateRoot
+     * @param string $templateNodeRoot
      */
-    public function setTemplateRoot($templateRoot)
+    public function setTemplateNodeRoot($templateNodeRoot)
     {
-        $this->templateRoot = $templateRoot;
+        $this->templateNodeRoot = $templateNodeRoot;
     }
 
     /**

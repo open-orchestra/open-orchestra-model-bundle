@@ -144,6 +144,7 @@ EOF;
         $keyReference = "node-".NodeInterface::ROOT_NODE_ID.'-'.$language.'-'.$this->version;
         if($this->fixture->hasReference($keyReference)) {
             $nodeHome = $this->fixture->getReference($keyReference);
+
         }
         $nodeHome->setArea('main', $main);
         $nodeHome->setArea('footer', $footer);

@@ -17,7 +17,7 @@ class Area implements AreaInterface
     /**
      * @ODM\ReferenceMany(targetDocument="OpenOrchestra\ModelInterface\Model\BlockInterface")
      */
-    protected $blocks = array();
+    protected $blocks;
 
     /**
      * Constructor
@@ -90,7 +90,7 @@ class Area implements AreaInterface
     /**
      * @param BlockInterface $block
      *
-     * @return bool|int|mixed|string
+     * @return mixed
      */
     public function getBlockIndex(BlockInterface $block)
     {

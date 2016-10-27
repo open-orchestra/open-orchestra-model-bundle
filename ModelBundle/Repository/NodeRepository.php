@@ -31,6 +31,8 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
                 return $area;
             }
         }
+
+        return null;
     }
 
     /**
@@ -931,7 +933,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     /**
      * indicates if node collection contains an usage of a particular block
      *
-     * @param string          $blockId
+     * @param string $blockId
      *
      * @return boolean
      */

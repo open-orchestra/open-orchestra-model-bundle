@@ -267,7 +267,7 @@ class Block implements BlockInterface
     /**
      * Get parameter
      *
-     * @return array $private
+     * @return array $parameter
      */
     public function getParameter()
     {

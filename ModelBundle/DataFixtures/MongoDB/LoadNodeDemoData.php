@@ -69,8 +69,8 @@ class LoadNodeDemoData extends AbstractFixture implements ContainerAwareInterfac
     ){
         foreach ($languages as $language) {
             $node = $dataGenerator->generateNode($language);
-            $this->setReference("node-".$node->getNodeId().'-'.$node->getLanguage().'-'.$node->getVersion(), $node);
             $manager->persist($node);
+            $this->setReference("node-".$node->getNodeId().'-'.$node->getLanguage().'-'.$node->getVersion(), $node);
         }
         $manager->flush();
     }

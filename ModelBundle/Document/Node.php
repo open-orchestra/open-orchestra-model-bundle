@@ -204,7 +204,7 @@ class Node implements NodeInterface
     /**
      * @var string $specialPageName
      *
-     * @ODM\Field(type="string") @Index(unique=true)
+     * @ODM\Field(type="string") @ODM\Index(unique=true, sparse=true)
      */
     protected $specialPageName;
 

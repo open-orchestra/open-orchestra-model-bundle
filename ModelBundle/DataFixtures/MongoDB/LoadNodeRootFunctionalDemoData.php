@@ -56,6 +56,7 @@ class LoadNodeRootFunctionalDemoData extends AbstractFixture implements Containe
 
         $this->generateGlobalBlock($manager);
 
+
         $this->addNode($manager, new NodeRootFunctionalDataGenerator($this, $this->container, $manager), $languages);
         $this->addNode($manager, new NodeRootFunctionalDataGenerator($this, $this->container, $manager, 2, 'status-draft'), array('fr'));
         $this->addNode($manager, new LegalDataGenerator($this, $this->container, $manager), $languages);
@@ -89,8 +90,8 @@ class LoadNodeRootFunctionalDemoData extends AbstractFixture implements Containe
     ) {
         foreach ($languages as $language) {
             $node = $dataGenerator->generateNode($language);
-            $this->setReference("node-".$node->getNodeId().'-'.$node->getLanguage().'-'.$node->getVersion(), $node);
             $manager->persist($node);
+            $this->setReference("node-".$node->getNodeId().'-'.$node->getLanguage().'-'.$node->getVersion(), $node);
         }
         $manager->flush();
     }
