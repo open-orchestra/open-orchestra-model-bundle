@@ -18,6 +18,7 @@ use OpenOrchestra\MongoTrait\Cacheable;
 use OpenOrchestra\MongoTrait\Metaable;
 use OpenOrchestra\MongoTrait\Sitemapable;
 use OpenOrchestra\MongoTrait\Schemeable;
+use OpenOrchestra\MongoTrait\UseTrackable;
 use OpenOrchestra\MongoTrait\Versionable;
 use OpenOrchestra\MongoTrait\Historisable;
 
@@ -57,6 +58,7 @@ class Node implements NodeInterface
     use SoftDeleteable;
     use Historisable;
     use AreaRootContainer;
+    use UseTrackable;
 
     /**
      * @var string $id
