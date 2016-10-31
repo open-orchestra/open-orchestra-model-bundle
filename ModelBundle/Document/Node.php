@@ -668,6 +668,7 @@ class Node implements NodeInterface
     {
         if (!is_null($this->id)) {
             $this->id = null;
+            $this->useReferences = array();
             $this->initializeCollections();
             $this->setCreatedAt(new \DateTime());
             $this->setUpdatedAt(new \DateTime());
