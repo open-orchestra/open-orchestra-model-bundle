@@ -2,14 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\Repository;
 
-<<<<<<< 051ee1ae50195acba886f42a3db3ffd2153691a4
-=======
-use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\AreaFinderTrait;
 use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\UseTrackableTrait;
-<<<<<<< 81aa7c98e38f7af12a2f6ec7f626afe74b10ff8a
->>>>>>> add reference node
-=======
->>>>>>> add reference node
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use OpenOrchestra\ModelInterface\Model\ReadNodeInterface;
@@ -26,12 +19,8 @@ use MongoRegex;
  */
 class NodeRepository extends AbstractAggregateRepository implements FieldAutoGenerableRepositoryInterface, NodeRepositoryInterface
 {
-<<<<<<< 051ee1ae50195acba886f42a3db3ffd2153691a4
-=======
-    use AreaFinderTrait;
     use UseTrackableTrait;
 
->>>>>>> add reference node
     /**
      * @param $node  NodeInterface
      * @param string $areaId
