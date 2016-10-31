@@ -4,8 +4,6 @@ namespace OpenOrchestra\ModelBundle\Repository\RepositoryTrait;
 
 use Doctrine\MongoDB\Query\Builder;
 
-use Doctrine\MongoDB\Query\Builder;
-
 /**
  * Trait UseTrackableTrait
  */
