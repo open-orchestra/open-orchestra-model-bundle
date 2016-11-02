@@ -632,4 +632,18 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
             'currentlyPublished' => true
         ));
     }
+
+    /**
+     * @param StatusInterface $status
+     * @param string          $contentType
+     */
+    public function updateStatusByContentType(StatusInterface $status, $contentType) {
+        $this->createQueryBuilder()
+            ->update()
+            ->multiple(true)
+            ->field('status')->set($status)
+            ->field('contentType')->equals($contentType)
+            ->getQuery()
+            ->execute();
+    }
 }
