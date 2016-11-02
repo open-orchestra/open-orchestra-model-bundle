@@ -14,6 +14,7 @@ use OpenOrchestra\MongoTrait\Schemeable;
 class SiteAlias implements SiteAliasInterface
 {
     use Schemeable;
+    use Metaable;
 
     /**
      * @var string $domain

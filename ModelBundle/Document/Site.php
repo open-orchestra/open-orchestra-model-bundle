@@ -30,7 +30,6 @@ use OpenOrchestra\ModelInterface\Exceptions\MainAliasNotExisting;
  */
 class Site implements SiteInterface
 {
-    use Metaable;
     use Sitemapable;
     use SoftDeleteable;
 
