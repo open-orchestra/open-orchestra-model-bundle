@@ -546,6 +546,8 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     /**
      * @param StatusInterface $status
      * @param string          $contentType
+     *
+     * @return array
      */
     public function updateStatusByContentType(StatusInterface $status, $contentType) {
         $this->createQueryBuilder()
