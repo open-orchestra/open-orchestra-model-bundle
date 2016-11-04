@@ -10,7 +10,6 @@ use OpenOrchestra\ModelInterface\Model\SiteAliasInterface;
 use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\ModelInterface\Model\ThemeInterface;
-use OpenOrchestra\MongoTrait\Metaable;
 use OpenOrchestra\MongoTrait\Sitemapable;
 use OpenOrchestra\MongoTrait\SoftDeleteable;
 use OpenOrchestra\ModelInterface\Exceptions\MainAliasNotExisting;
