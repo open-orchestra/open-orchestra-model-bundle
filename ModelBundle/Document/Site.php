@@ -10,7 +10,6 @@ use OpenOrchestra\ModelInterface\Model\SiteAliasInterface;
 use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
 use OpenOrchestra\ModelInterface\Model\ThemeInterface;
-use OpenOrchestra\MongoTrait\Metaable;
 use OpenOrchestra\MongoTrait\Sitemapable;
 use OpenOrchestra\MongoTrait\SoftDeleteable;
 use OpenOrchestra\ModelInterface\Exceptions\MainAliasNotExisting;
@@ -30,7 +29,6 @@ use OpenOrchestra\ModelInterface\Exceptions\MainAliasNotExisting;
  */
 class Site implements SiteInterface
 {
-    use Metaable;
     use Sitemapable;
     use SoftDeleteable;
 
@@ -64,18 +62,11 @@ class Site implements SiteInterface
     protected $theme;
 
     /**
-     * @var string $metaKeywords
+     * @var string $metaAuthor
      *
-     * @ODM\Field(type="hash")
+     * @ODM\Field(type="string")
      */
-    protected $metaKeywords;
-
-    /**
-     * @var string $metaDescriptions
-     *
-     * @ODM\Field(type="hash")
-     */
-    protected $metaDescriptions;
+    protected $metaAuthor;
 
     /**
      * @var string $robotsTxt
@@ -122,7 +113,6 @@ class Site implements SiteInterface
     {
         $this->robotsTxt = SiteInterface::ROBOTS_TXT_DEFAULT;
         $this->aliases = new ArrayCollection();
-        $this->metaKeywords = array();
     }
 
     /**
@@ -224,111 +214,23 @@ class Site implements SiteInterface
     }
 
     /**
-     * @param array $metaKeywords
-     */
-    public function setMetaKeywords(array $metaKeywords)
-    {
-        foreach ($metaKeywords as $language => $keywords) {
-            $this->addMetaKeywords($language, $keywords);
-        }
-    }
-
-    /**
-     * @param string $language
-     * @param string $metaKeywords
-     */
-    public function addMetaKeywords($language, $metaKeywords)
-    {
-        if (\is_string($language) && \is_string($metaKeywords)) {
-            $this->metaKeywords[$language] = $metaKeywords;
-        }
-    }
-
-    /**
-     * @param string $language
-     */
-    public function removeMetaKeywords($language)
-    {
-        if (\is_string($language) && isset($this->metaKeywords[$language])) {
-            unset($this->metaKeywords[$language]);
-        }
-    }
-
-    /**
-     * @return string
-     */
-    public function getMetaKeywords()
-    {
-        return $this->metaKeywords;
-    }
-
-    /**
-     * @param string $language
+     * Set metaAuthor
      *
-     * @return string
+     * @param string $metaAuthor
      */
-    public function getMetaKeywordsInLanguage($language)
+    public function setMetaAuthor($metaAuthor)
     {
-        if (isset($this->metaKeywords[$language])) {
-            return $this->metaKeywords[$language];
-        }
-
-        return '';
+        $this->metaAuthor = $metaAuthor;
     }
 
     /**
-     * @param array $metaDescriptions
-     */
-    public function setMetaDescriptions(array $metaDescriptions)
-    {
-        $this->metaDescriptions = array();
-
-        foreach ($metaDescriptions as $language => $description) {
-            $this->addMetaDescription($language, $description);
-        }
-    }
-
-    /**
-     * @param string $language
-     * @param string $metaDescription
-     */
-    public function addMetaDescription($language, $metaDescription)
-    {
-        if (\is_string($language) && \is_string($metaDescription)) {
-            $this->metaDescriptions[$language] = $metaDescription;
-        }
-    }
-
-    /**
-     * @param string $language
-     */
-    public function removeMetaDescription($language)
-    {
-        if (\is_string($language) && isset($this->metaDescriptions[$language])) {
-            unset($this->metaDescriptions[$language]);
-        }
-    }
-
-    /**
-     * @return string
-     */
-    public function getMetaDescriptions()
-    {
-        return $this->metaDescriptions;
-    }
-
-    /**
-     * @param string $language
+     * Get metaAuthor
      *
-     * @return string
+     * @return string $metaAuthor
      */
-    public function getMetaDescriptionInLanguage($language)
+    public function getMetaAuthor()
     {
-        if (isset($this->metaDescriptions[$language])) {
-            return $this->metaDescriptions[$language];
-        }
-
-        return '';
+        return $this->metaAuthor;
     }
 
     /**

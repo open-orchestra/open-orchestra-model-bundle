@@ -5,6 +5,7 @@ namespace OpenOrchestra\ModelBundle\Document;
 use OpenOrchestra\ModelInterface\Model\SiteAliasInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\MongoTrait\Schemeable;
+use OpenOrchestra\MongoTrait\Metaable;
 
 /**
  * Class SiteAlias
@@ -14,6 +15,7 @@ use OpenOrchestra\MongoTrait\Schemeable;
 class SiteAlias implements SiteAliasInterface
 {
     use Schemeable;
+    use Metaable;
 
     /**
      * @var string $domain
@@ -42,6 +44,48 @@ class SiteAlias implements SiteAliasInterface
      * @ODM\Field(type="boolean")
      */
     protected $main;
+
+    /**
+     * @var string $metaDescription
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $metaDescription;
+
+    /**
+     * @var string $googleMarker
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $googleMarker;
+
+    /**
+     * @var boolean $cnilCompliance
+     *
+     * @ODM\Field(type="boolean")
+     */
+    protected $cnilCompliance;
+
+    /**
+     * @var string $xtsd
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $xtsd;
+
+    /**
+     * @var string $xtside
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $xtside;
+
+    /**
+     * @var string $xtn2
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $xtn2;
 
     /**
      * @param string $language
@@ -105,5 +149,101 @@ class SiteAlias implements SiteAliasInterface
     public function setMain($main)
     {
         $this->main = $main;
+    }
+
+    /**
+     * @param string $metaDescription
+     */
+    public function setMetaDescription($metaDescription)
+    {
+        $this->metaDescription = $metaDescription;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMetaDescription()
+    {
+        return $this->metaDescription;
+    }
+
+    /**
+     * @param string $googleMarker
+     */
+    public function setGoogleMarker($googleMarker)
+    {
+        $this->googleMarker = $googleMarker;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGoogleMarker()
+    {
+        return $this->googleMarker;
+    }
+
+    /**
+     * @param bool $cnilCompliance
+     */
+    public function setCnilCompliance($cnilCompliance)
+    {
+        $this->cnilCompliance = $cnilCompliance;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCnilCompliance()
+    {
+        return $this->cnilCompliance;
+    }
+
+    /**
+     * @param string $xtsd
+     */
+    public function setXtsd($xtsd)
+    {
+        $this->xtsd = $xtsd;
+    }
+
+    /**
+     * @return string
+     */
+    public function getXtsd()
+    {
+        return $this->xtsd;
+    }
+
+    /**
+     * @param string $xtside
+     */
+    public function setXtside($xtside)
+    {
+        $this->xtside = $xtside;
+    }
+
+    /**
+     * @return string
+     */
+    public function getXtside()
+    {
+        return $this->xtside;
+    }
+
+    /**
+     * @param string $xtn2
+     */
+    public function setXtn2($xtn2)
+    {
+        $this->xtn2 = $xtn2;
+    }
+
+    /**
+     * @return string
+     */
+    public function getXtn2()
+    {
+        return $this->xtn2;
     }
 }
