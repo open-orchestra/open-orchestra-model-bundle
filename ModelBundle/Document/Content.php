@@ -259,6 +259,7 @@ class Content implements ContentInterface
     public function __clone()
     {
         $this->id = null;
+        $this->useReferences = array();
         $this->initializeCollections();
     }
 
