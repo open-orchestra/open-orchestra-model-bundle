@@ -47,11 +47,11 @@ class Block implements BlockInterface
     protected $label;
 
     /**
-     * @var string $class
+     * @var string $style
      *
      * @ODM\Field(type="string")
      */
-    protected $class;
+    protected $style;
 
     /**
      * @var boolean $private
@@ -195,23 +195,23 @@ class Block implements BlockInterface
     }
 
     /**
-     * Set class
+     * Set style
      *
-     * @param string $class
+     * @param string $style
      */
-    public function setClass($class)
+    public function setStyle($style)
     {
-        $this->class = $class;
+        $this->style = $style;
     }
 
     /**
-     * Get class
+     * Get style
      *
-     * @return string $class
+     * @return string $style
      */
-    public function getClass()
+    public function getStyle()
     {
-        return $this->class;
+        return $this->style;
     }
 
     /**
