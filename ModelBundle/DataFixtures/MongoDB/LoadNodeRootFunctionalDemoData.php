@@ -118,7 +118,7 @@ class LoadNodeRootFunctionalDemoData extends AbstractFixture implements Containe
     {
         $siteBlockLogo = new Block();
         $siteBlockLogo->setLabel('Wysiwyg logo');
-        $siteBlockLogo->setClass('logo');
+        $siteBlockLogo->setStyle('default');
         $siteBlockLogo->setComponent(TinyMCEWysiwygStrategy::NAME);
         $orchestraTitle = "Open Orchestra";
         if ($this->hasReference('logo-orchestra')) {
@@ -135,7 +135,7 @@ class LoadNodeRootFunctionalDemoData extends AbstractFixture implements Containe
         $siteBlockMainMenu = new Block();
         $siteBlockMainMenu->setLabel('Menu');
         $siteBlockMainMenu->setComponent('menu');
-        $siteBlockMainMenu->setClass('my-main-menu');
+        $siteBlockMainMenu->setStyle('default');
         $this->generateBlock($manager, $siteBlockMainMenu);
 
         $siteBlockFooter = new Block();
@@ -166,14 +166,14 @@ EOF
 
         $siteBlockFooterMenu = new Block;
         $siteBlockFooterMenu->setLabel('footer menu');
-        $siteBlockFooterMenu->setClass("footer-legal");
+        $siteBlockFooterMenu->setStyle('default');
         $siteBlockFooterMenu->setComponent(FooterStrategy::NAME);
         $this->generateBlock($manager, $siteBlockFooterMenu);
 
         $siteBlockContact = new Block();
         $siteBlockContact->setLabel('Contact');
         $siteBlockContact->setComponent('contact');
-        $siteBlockContact->setClass('my-form-contact');
+        $siteBlockContact->setStyle('default');
         $this->generateBlock($manager, $siteBlockContact);
 
         $siteBlockLanguage = new Block();
