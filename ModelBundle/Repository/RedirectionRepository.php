@@ -29,4 +29,19 @@ class RedirectionRepository extends AbstractAggregateRepository implements Redir
 
         return $this->hydrateAggregateQuery($qa);
     }
+
+    /**
+     * @param string $siteId
+     *
+     * @return array
+     */
+    public function findBySiteId($siteId){
+        $qa = $this->createAggregationQuery();
+
+        $qa->match(array(
+            'siteId' => $siteId,
+        ));
+
+        return $this->hydrateAggregateQuery($qa);
+    }
 }
