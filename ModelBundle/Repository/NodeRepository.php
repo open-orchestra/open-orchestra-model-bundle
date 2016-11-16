@@ -337,6 +337,31 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
 
     /**
      * @param string $siteId
+     * @param string $language
+     *
+     * @return array
+     */
+    public function findTreeNode($siteId, $language)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
+        $qa->match(array( 'deleted' => false));
+
+        $elementName = 'node';
+        $qa->group(array(
+            '_id' => array('nodesId' => '$nodeId'),
+            'order' => array('$last' => '$order'),
+            'nodeId' => array('$last' => '$nodeId'),
+            $elementName => array('$last' => '$$ROOT')
+        ));
+        $qa->sort(array('version' => 1, 'order' => 1));
+
+        $nodes = $qa->getQuery()->aggregate()->toArray();
+
+        return $this->generateTree($nodes);
+    }
+
+    /**
+     * @param string $siteId
      * @param string $type
      *
      * @return array
@@ -948,5 +973,61 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         $qa->match($filter);
 
         return $this->countDocumentAggregateQuery($qa) > 0;
+    }
+
+    /**
+     * @param array $nodes
+     *
+     * @return array
+     */
+    protected function generateTree($nodes)
+    {
+        if (empty($nodes)) {
+            return array();
+        }
+
+        $positionNodeRoot = array_search(NodeInterface::ROOT_NODE_ID, array_column($nodes, 'nodeId'));
+        $nodeRoot = $nodes[$positionNodeRoot];
+        unset($nodes[$positionNodeRoot]);
+
+        $tree = array('node' => $nodeRoot['node'], 'child' => $this->getChildren($nodeRoot['nodeId'], $nodes));
+
+        return $tree;
+    }
+
+    /**
+     * @param string $parentId
+     * @param array  $nodes
+     *
+     * @return array
+     */
+    protected function getChildren($parentId, $nodes)
+    {
+        $children = array();
+        foreach ($nodes as $position => $node) {
+            if ($parentId === $node['node']['parentId']) {
+                unset($nodes[$position]);
+                $children[] = array('node' => $node['node'], 'child' => $this->getChildren($node['nodeId'], $nodes));
+            }
+        }
+        uasort($children, array($this, 'sortTree'));
+
+        return $children;
+    }
+
+    /**
+     * @param ReadNodeInterface $node1
+     * @param ReadNodeInterface $node2
+     *
+     * @return int
+     */
+    protected function sortTree($node1, $node2)
+    {
+        $order1 = $node1['node']['order'];
+        $order2 = $node2['node']['order'];
+        if ($order1 == $order2) {
+            return 0;
+        }
+        return ($order1 < $order2) ? -1 : 1;
     }
 }
