@@ -32,5 +32,3 @@ OpenOrchestra\ModelBundle\Document\Node:
         order:
             - Type:
                 type: integer
-        rootArea:
-            - Valid: ~

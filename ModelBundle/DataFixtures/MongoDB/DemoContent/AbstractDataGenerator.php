@@ -20,6 +20,7 @@ abstract class AbstractDataGenerator
     protected $manager;
     protected $version;
     protected $status;
+    protected $blockParameters;
 
     /**
      * Constructor
@@ -37,6 +38,9 @@ abstract class AbstractDataGenerator
         $this->manager = $manager;
         $this->version = $version;
         $this->status = $status;
+        $this->blockParameters = array(
+            'tiny_mce_wysiwyg' => array()
+        );
     }
 
     /**
@@ -63,7 +67,7 @@ abstract class AbstractDataGenerator
     protected function generateBlock(BlockInterface $block)
     {
         $block->setPrivate($this->container->get('open_orchestra_display.display_block_manager')->isPublic($block));
-        $block->setParameter($this->container->get('open_orchestra_backoffice.block_parameter_manager')->getBlockParameter($block));
+        $block->setParameter($this->blockParameters[$block->getComponent()]);
 
         $this->manager->persist($block);
         $this->manager->flush();

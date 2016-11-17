@@ -53,6 +53,13 @@ class LoadNodeRootFunctionalDemoData extends AbstractFixture implements Containe
     public function load(ObjectManager $manager)
     {
         $languages = array("de", "en", "fr");
+        $this->blockParameters = array(
+            'tiny_mce_wysiwyg' => array(),
+            'menu' => array('request.aliasId'),
+            'footer' => array('request.aliasId'),
+            'contact' => array('post_data', 'request.aliasId'),
+            'language_list' => array(),
+        );
 
         $this->generateGlobalBlock($manager);
 
@@ -103,7 +110,7 @@ class LoadNodeRootFunctionalDemoData extends AbstractFixture implements Containe
     protected function generateBlock(ObjectManager $manager, BlockInterface $block)
     {
         $block->setPrivate(!$this->container->get('open_orchestra_display.display_block_manager')->isPublic($block));
-        $block->setParameter($this->container->get('open_orchestra_backoffice.block_parameter_manager')->getBlockParameter($block));
+        $block->setParameter($this->blockParameters[$block->getComponent()]);
 
         $manager->persist($block);
         $manager->flush();
