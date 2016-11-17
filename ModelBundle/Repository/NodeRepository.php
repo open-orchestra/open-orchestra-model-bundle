@@ -999,7 +999,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
             $tree[] = array('node' => $nodeRoot['node'], 'child' => $this->getChildren($nodeRoot['nodeId'], $nodes));
         }
         uasort($tree, array($this, 'sortTree'));
-        $tree= array_values($tree);
+        $tree = array_values($tree);
 
         return $tree;
     }
@@ -1020,6 +1020,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
             }
         }
         uasort($children, array($this, 'sortTree'));
+        $children = array_values($children);
 
         return $children;
     }

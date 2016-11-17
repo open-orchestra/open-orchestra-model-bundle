@@ -15,6 +15,17 @@ class StatusRepository extends AbstractAggregateRepository implements StatusRepo
     use PaginationTrait;
 
     /**
+     * @return array
+     */
+    public function findNotOutOfWorkflow()
+    {
+        $qa = $this->createAggregationQuery();
+        $qa->match(array('outOfWorkflow' => false));
+
+        return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
      * @return StatusInterface
      */
     public function findOneByInitial()
