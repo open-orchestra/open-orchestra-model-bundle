@@ -1035,6 +1035,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     {
         $order1 = $node1['node']['order'];
         $order2 = $node2['node']['order'];
+
         if ($order1 == $order2 || $order1 == -1 || $order2 == -1) {
             return 0;
         }
