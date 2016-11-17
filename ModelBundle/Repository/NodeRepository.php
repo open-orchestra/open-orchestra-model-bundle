@@ -999,6 +999,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
             $tree[] = array('node' => $nodeRoot['node'], 'child' => $this->getChildren($nodeRoot['nodeId'], $nodes));
         }
         uasort($tree, array($this, 'sortTree'));
+        $tree= array_values($tree);
 
         return $tree;
     }
