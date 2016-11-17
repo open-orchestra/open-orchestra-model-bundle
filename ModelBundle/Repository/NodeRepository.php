@@ -981,7 +981,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      *
      * @return array
      */
-    protected function generateTree($nodes)
+    protected function generateTree(array $nodes)
     {
         if (empty($nodes)) {
             return array();
@@ -1010,7 +1010,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      *
      * @return array
      */
-    protected function getChildren($parentId, $nodes)
+    protected function getChildren($parentId, array $nodes)
     {
         $children = array();
         foreach ($nodes as $position => $node) {
