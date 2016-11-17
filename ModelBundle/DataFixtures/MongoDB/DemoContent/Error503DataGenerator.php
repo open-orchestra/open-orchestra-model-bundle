@@ -100,10 +100,11 @@ EOF;
         $nodeError503->setName('Error 503');
         $nodeError503->setBoLabel('Error 503');
         $nodeError503->setCreatedBy('fake_admin');
-        $nodeError503->setParentId(NodeInterface::ROOT_NODE_ID);
+        $nodeError503->setParentId(NodeInterface::ROOT_PARENT_ID);
         $nodeError503->setRoutePattern($routePattern);
         $nodeError503->setInFooter(false);
         $nodeError503->setInMenu(false);
+        $nodeError503->setOrder(-1);
 
         return $nodeError503;
     }

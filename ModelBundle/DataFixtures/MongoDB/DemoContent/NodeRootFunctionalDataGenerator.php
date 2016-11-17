@@ -153,7 +153,7 @@ EOF;
         $nodeHome->setLanguage($language);
         $nodeHome->setNodeId(NodeInterface::ROOT_NODE_ID);
         $nodeHome->setCreatedBy('fake_admin');
-        $nodeHome->setParentId('-');
+        $nodeHome->setParentId(NodeInterface::ROOT_PARENT_ID);
         $nodeHome->setOrder(0);
         $nodeHome->setRoutePattern($routePattern);
         $nodeHome->setInFooter(false);

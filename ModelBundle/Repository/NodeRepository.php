@@ -346,15 +346,16 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         $qa->match(array( 'deleted' => false));
 
+        $qa->sort(array('version' => 1));
         $elementName = 'node';
         $qa->group(array(
             '_id' => array('nodesId' => '$nodeId'),
+            'version' => array('$last' => '$version'),
             'order' => array('$last' => '$order'),
             'nodeId' => array('$last' => '$nodeId'),
             $elementName => array('$last' => '$$ROOT')
         ));
-        $qa->sort(array('version' => 1, 'order' => 1));
-
+        $qa->sort(array('order' => 1));
         $nodes = $qa->getQuery()->aggregate()->toArray();
 
         return $this->generateTree($nodes);
@@ -986,11 +987,18 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
             return array();
         }
 
-        $positionNodeRoot = array_search(NodeInterface::ROOT_NODE_ID, array_column($nodes, 'nodeId'));
-        $nodeRoot = $nodes[$positionNodeRoot];
-        unset($nodes[$positionNodeRoot]);
+        $nodesRoot = array_filter($nodes, function($node, $key) {
+            if (NodeInterface::ROOT_PARENT_ID !== $node['node']['parentId']) {
+                return false;
+            }
+            return true;
+        }, ARRAY_FILTER_USE_BOTH);
 
-        $tree = array('node' => $nodeRoot['node'], 'child' => $this->getChildren($nodeRoot['nodeId'], $nodes));
+        $tree = array();
+        foreach ($nodesRoot as $nodeRoot) {
+            $tree[] = array('node' => $nodeRoot['node'], 'child' => $this->getChildren($nodeRoot['nodeId'], $nodes));
+        }
+        uasort($tree, array($this, 'sortTree'));
 
         return $tree;
     }
@@ -1025,9 +1033,11 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     {
         $order1 = $node1['node']['order'];
         $order2 = $node2['node']['order'];
-        if ($order1 == $order2) {
+
+        if ($order1 == $order2 || $order1 == -1 || $order2 == -1) {
             return 0;
         }
+
         return ($order1 < $order2) ? -1 : 1;
     }
 }
