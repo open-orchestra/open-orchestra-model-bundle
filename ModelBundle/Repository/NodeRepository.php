@@ -9,6 +9,7 @@ use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\FieldAutoGenerableRepositoryInterface;
+use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use Solution\MongoAggregation\Pipeline\Stage;
 use OpenOrchestra\Repository\AbstractAggregateRepository;
 use MongoRegex;
@@ -417,6 +418,58 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         $qa->match(array('path' => new \MongoRegex('/'.preg_quote($path).'.+/')));
 
         return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param PaginateFinderConfiguration $configuration
+     * @param string                $siteId
+     * @param string                $language
+     *
+     * @return array
+     */
+    public function findForPaginate(PaginateFinderConfiguration $configuration, $siteId, $language)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
+        $qa->match(array('deleted' => false));
+
+        $order = $configuration->getOrder();
+        if (null !== $order) {
+            $qa->sort($order);
+        }
+
+        $qa->skip($configuration->getSkip());
+        $qa->limit($configuration->getLimit());
+
+        return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param string                $siteId
+     * @param string                $language
+     *
+     * @return int
+     */
+    public function count($siteId, $language)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
+        $qa->match(array('deleted' => false));
+
+        return $this->countDocumentAggregateQuery($qa);
+    }
+
+    /**
+     * @param PaginateFinderConfiguration $configuration
+     * @param string                $siteId
+     * @param string                $language
+     *
+     * @return int
+     */
+    public function countWithFilter(PaginateFinderConfiguration $configuration, $siteId, $language)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
+        $qa->match(array('deleted' => false));
+
+        return $this->countDocumentAggregateQuery($qa);
     }
 
     /**
