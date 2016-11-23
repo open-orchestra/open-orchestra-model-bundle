@@ -100,10 +100,11 @@ EOF;
         $nodeError404->setName('Error 404');
         $nodeError404->setBoLabel('Error 404');
         $nodeError404->setCreatedBy('fake_admin');
-        $nodeError404->setParentId(NodeInterface::ROOT_NODE_ID);
+        $nodeError404->setParentId(NodeInterface::ROOT_PARENT_ID);
         $nodeError404->setRoutePattern($routePattern);
         $nodeError404->setInFooter(false);
         $nodeError404->setInMenu(false);
+        $nodeError404->setOrder(-1);
 
         return $nodeError404;
     }
