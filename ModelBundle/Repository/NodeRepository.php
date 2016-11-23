@@ -422,8 +422,8 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
 
     /**
      * @param PaginateFinderConfiguration $configuration
-     * @param string                $siteId
-     * @param string                $language
+     * @param string                      $siteId
+     * @param string                      $language
      *
      * @return array
      */
@@ -448,8 +448,8 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     }
 
     /**
-     * @param string                $siteId
-     * @param string                $language
+     * @param string  $siteId
+     * @param string  $language
      *
      * @return int
      */
@@ -463,8 +463,8 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
 
     /**
      * @param PaginateFinderConfiguration $configuration
-     * @param string                $siteId
-     * @param string                $language
+     * @param string                      $siteId
+     * @param string                      $language
      *
      * @return int
      */
