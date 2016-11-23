@@ -431,6 +431,10 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     {
         $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         $qa->match(array('deleted' => false));
+        $filters = $this->getFilterSearch($configuration);
+        if (!empty($filters)) {
+            $qa->match($filters);
+        }
 
         $order = $configuration->getOrder();
         if (null !== $order) {
@@ -468,6 +472,10 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     {
         $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         $qa->match(array('deleted' => false));
+        $filters = $this->getFilterSearch($configuration);
+        if (!empty($filters)) {
+            $qa->match($filters);
+        }
 
         return $this->countDocumentAggregateQuery($qa);
     }
@@ -1027,6 +1035,31 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         $qa->match($filter);
 
         return $this->countDocumentAggregateQuery($qa) > 0;
+    }
+
+    /**
+     * @param PaginateFinderConfiguration $configuration
+     *
+     * @return array
+     */
+    protected function getFilterSearch(PaginateFinderConfiguration $configuration) {
+        $filter = array();
+        $name = $configuration->getSearchIndex('name');
+        if (null !== $name && $name !== '') {
+            $filter['name'] = new MongoRegex('/.*'.$name.'.*/i');
+        }
+
+        $inMenu = $configuration->getSearchIndex('inMenu');
+        if (null !== $inMenu && $inMenu !== '') {
+            $filter['inMenu'] = (boolean) $inMenu;
+        }
+
+        $status = $configuration->getSearchIndex('status');
+        if (null !== $status && $status !== '') {
+            $filter['status.name'] = $status;
+        }
+
+        return $filter;
     }
 
     /**
