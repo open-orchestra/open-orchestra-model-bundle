@@ -9,6 +9,7 @@ use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\ModelInterface\Repository\NodeRepositoryInterface;
 use OpenOrchestra\ModelInterface\Repository\FieldAutoGenerableRepositoryInterface;
+use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use Solution\MongoAggregation\Pipeline\Stage;
 use OpenOrchestra\Repository\AbstractAggregateRepository;
 use MongoRegex;
@@ -417,6 +418,104 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         $qa->match(array('path' => new \MongoRegex('/'.preg_quote($path).'.+/')));
 
         return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param PaginateFinderConfiguration $configuration
+     * @param string                      $siteId
+     * @param string                      $language
+     *
+     * @return array
+     */
+    public function findForPaginate(PaginateFinderConfiguration $configuration, $siteId, $language)
+    {
+        $elementName = 'node';
+        $order = $configuration->getOrder();
+        $qa = $this->createQueryWithFilterAndLastVersion($configuration, $siteId, $language, $elementName, $order);
+
+        $qa->skip($configuration->getSkip());
+        $qa->limit($configuration->getLimit());
+
+        return $this->hydrateAggregateQuery($qa, $elementName);
+    }
+
+    /**
+     * @param string  $siteId
+     * @param string  $language
+     *
+     * @return int
+     */
+    public function count($siteId, $language)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
+        $qa->match(array('deleted' => false));
+        $elementName = 'node';
+        $qa->sort(array('version' => 1));
+        $qa->group(array(
+            '_id' => array('nodeId' => '$nodeId'),
+            $elementName => array('$last' => '$$ROOT')
+        ));
+
+        return $this->countDocumentAggregateQuery($qa);
+    }
+
+    /**
+     * @param PaginateFinderConfiguration $configuration
+     * @param string                      $siteId
+     * @param string                      $language
+     *
+     * @return int
+     */
+    public function countWithFilter(PaginateFinderConfiguration $configuration, $siteId, $language)
+    {
+        $elementName = 'node';
+        $qa = $this->createQueryWithFilterAndLastVersion($configuration, $siteId, $language, $elementName);
+
+        return $this->countDocumentAggregateQuery($qa);
+    }
+
+    /**
+     * @param PaginateFinderConfiguration $configuration
+     * @param string                      $siteId
+     * @param string                      $language
+     * @param string                      $elementName
+     * @param array                       $order
+     *
+     * @return Stage
+     */
+    protected function createQueryWithFilterAndLastVersion(
+        PaginateFinderConfiguration $configuration,
+        $siteId,
+        $language,
+        $elementName,
+        $order = array()
+    ){
+        $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
+        $qa->match(array('deleted' => false));
+        $filters = $this->getFilterSearch($configuration);
+        if (!empty($filters)) {
+            $qa->match($filters);
+        }
+
+        $qa->sort(array('version' => 1));
+
+        $group = array(
+            '_id' => array('nodeId' => '$nodeId'),
+            $elementName => array('$last' => '$$ROOT')
+        );
+        $groupOrder = array();
+        foreach ($order as $name => $dir) {
+            $nameOrder = str_replace('.', '_', $name);
+            $groupOrder[$nameOrder] = $dir;
+            $group[$nameOrder] = array('$last' => '$'.$name);
+        }
+        $qa->group($group);
+
+        if (!empty($groupOrder)) {
+            $qa->sort($groupOrder);
+        }
+
+        return $qa;
     }
 
     /**
@@ -974,6 +1073,31 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         $qa->match($filter);
 
         return $this->countDocumentAggregateQuery($qa) > 0;
+    }
+
+    /**
+     * @param PaginateFinderConfiguration $configuration
+     *
+     * @return array
+     */
+    protected function getFilterSearch(PaginateFinderConfiguration $configuration) {
+        $filter = array();
+        $name = $configuration->getSearchIndex('name');
+        if (null !== $name && $name !== '') {
+            $filter['name'] = new MongoRegex('/.*'.$name.'.*/i');
+        }
+
+        $inMenu = $configuration->getSearchIndex('inMenu');
+        if (null !== $inMenu && $inMenu !== '') {
+            $filter['inMenu'] = (boolean) $inMenu;
+        }
+
+        $status = $configuration->getSearchIndex('status');
+        if (null !== $status && $status !== '') {
+            $filter['status.name'] = $status;
+        }
+
+        return $filter;
     }
 
     /**
