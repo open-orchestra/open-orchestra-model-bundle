@@ -429,22 +429,14 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      */
     public function findForPaginate(PaginateFinderConfiguration $configuration, $siteId, $language)
     {
-        $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
-        $qa->match(array('deleted' => false));
-        $filters = $this->getFilterSearch($configuration);
-        if (!empty($filters)) {
-            $qa->match($filters);
-        }
-
+        $elementName = 'node';
         $order = $configuration->getOrder();
-        if (null !== $order) {
-            $qa->sort($order);
-        }
+        $qa = $this->createQueryWithFilterAndLastVersion($configuration, $siteId, $language, $elementName, $order);
 
         $qa->skip($configuration->getSkip());
         $qa->limit($configuration->getLimit());
 
-        return $this->hydrateAggregateQuery($qa);
+        return $this->hydrateAggregateQuery($qa, $elementName);
     }
 
     /**
@@ -457,6 +449,12 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     {
         $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         $qa->match(array('deleted' => false));
+        $elementName = 'node';
+        $qa->sort(array('version' => 1));
+        $qa->group(array(
+            '_id' => array('nodeId' => '$nodeId'),
+            $elementName => array('$last' => '$$ROOT')
+        ));
 
         return $this->countDocumentAggregateQuery($qa);
     }
@@ -470,6 +468,28 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      */
     public function countWithFilter(PaginateFinderConfiguration $configuration, $siteId, $language)
     {
+        $elementName = 'node';
+        $qa = $this->createQueryWithFilterAndLastVersion($configuration, $siteId, $language, $elementName);
+
+        return $this->countDocumentAggregateQuery($qa);
+    }
+
+    /**
+     * @param PaginateFinderConfiguration $configuration
+     * @param string                      $siteId
+     * @param string                      $language
+     * @param string                      $elementName
+     * @param array                       $order
+     *
+     * @return Stage
+     */
+    protected function createQueryWithFilterAndLastVersion(
+        PaginateFinderConfiguration $configuration,
+        $siteId,
+        $language,
+        $elementName,
+        $order = array()
+    ){
         $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         $qa->match(array('deleted' => false));
         $filters = $this->getFilterSearch($configuration);
@@ -477,7 +497,25 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
             $qa->match($filters);
         }
 
-        return $this->countDocumentAggregateQuery($qa);
+        $qa->sort(array('version' => 1));
+
+        $group = array(
+            '_id' => array('nodeId' => '$nodeId'),
+            $elementName => array('$last' => '$$ROOT')
+        );
+        $groupOrder = array();
+        foreach ($order as $name => $dir) {
+            $nameOrder = str_replace('.', '_', $name);
+            $groupOrder[$nameOrder] = $dir;
+            $group[$nameOrder] = array('$last' => '$'.$name);
+        }
+        $qa->group($group);
+
+        if (!empty($groupOrder)) {
+            $qa->sort($groupOrder);
+        }
+
+        return $qa;
     }
 
     /**
