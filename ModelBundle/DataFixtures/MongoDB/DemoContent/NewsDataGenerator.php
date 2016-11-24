@@ -138,7 +138,6 @@ EOF;
 
         $nodeNews->setNodeId('fixture_page_news');
         $nodeNews->setName($name);
-        $nodeNews->setBoLabel("News");
         $nodeNews->setLanguage($language);
         $nodeNews->setParentId(NodeInterface::ROOT_NODE_ID);
         $nodeNews->setOrder(6);
