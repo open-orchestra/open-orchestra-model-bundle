@@ -176,6 +176,7 @@ class Node implements NodeInterface
     protected $metaDescription;
 
     /**
+<<<<<<< d040faf3ec4f3f5733cdc4c8eaa1e7aecab7dc07
      * @var string $seoTitle
      *
      * @ODM\Field(type="string")
@@ -551,19 +552,19 @@ class Node implements NodeInterface
     }
 
     /**
-     * @return string
-     */
-    public function getSeoTitle()
-    {
-        return $this->seoTitle;
-    }
-
-    /**
      * @param string $canonicalPage
      */
     public function setCanonicalPage($canonicalPage)
     {
         $this->canonicalPage = $canonicalPage;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSeoTitle()
+    {
+        return $this->seoTitle;
     }
 
     /**
