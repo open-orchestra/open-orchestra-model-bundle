@@ -176,6 +176,13 @@ class Node implements NodeInterface
     protected $metaDescription;
 
     /**
+     * @var string $seoTitle
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $seoTitle;
+
+    /**
      * @var string $canonicalPage
      *
      * @ODM\Field(type="string")
@@ -533,6 +540,22 @@ class Node implements NodeInterface
     public function getMetaDescription()
     {
         return $this->metaDescription;
+    }
+
+    /**
+     * @param string $seoTitle
+     */
+    public function setSeoTitle($seoTitle)
+    {
+        $this->seoTitle = $seoTitle;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSeoTitle()
+    {
+        return $this->seoTitle;
     }
 
     /**
