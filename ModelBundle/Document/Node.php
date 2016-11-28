@@ -176,7 +176,10 @@ class Node implements NodeInterface
     protected $metaDescription;
 
     /**
+<<<<<<< 8c4754319b4ed0aef41d8ef961ed7869bcfe11e2
 <<<<<<< d040faf3ec4f3f5733cdc4c8eaa1e7aecab7dc07
+=======
+>>>>>>> add seo title
      * @var string $seoTitle
      *
      * @ODM\Field(type="string")
@@ -552,19 +555,19 @@ class Node implements NodeInterface
     }
 
     /**
-     * @param string $canonicalPage
-     */
-    public function setCanonicalPage($canonicalPage)
-    {
-        $this->canonicalPage = $canonicalPage;
-    }
-
-    /**
      * @return string
      */
     public function getSeoTitle()
     {
         return $this->seoTitle;
+    }
+
+    /**
+     * @param string $canonicalPage
+     */
+    public function setCanonicalPage($canonicalPage)
+    {
+        $this->canonicalPage = $canonicalPage;
     }
 
     /**
