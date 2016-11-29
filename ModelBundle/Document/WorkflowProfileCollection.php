@@ -4,8 +4,8 @@ namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use OpenOrchestra\Workflow\Model\WorkflowProfileCollectionInterface;
-use OpenOrchestra\Workflow\Model\WorkflowProfileInterface;
+use OpenOrchestra\ModelInterface\Model\WorkflowProfileCollectionInterface;
+use OpenOrchestra\ModelInterface\Model\WorkflowProfileInterface;
 
 /**
  * @ODM\EmbeddedDocument
@@ -16,7 +16,7 @@ class WorkflowProfileCollection implements WorkflowProfileCollectionInterface
      * @var ArrayCollection
      *
      * @ODM\ReferenceMany(
-     *  targetDocument="OpenOrchestra\Workflow\Model\WorkflowProfileInterface"
+     *  targetDocument="OpenOrchestra\ModelInterface\Model\WorkflowProfileInterface"
      * )
      */
     protected $profiles;

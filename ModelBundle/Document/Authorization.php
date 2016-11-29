@@ -5,8 +5,8 @@ namespace OpenOrchestra\ModelBundle\Document;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use OpenOrchestra\Workflow\Model\AuthorizationInterface;
-use OpenOrchestra\Workflow\Model\WorkflowFunctionInterface;
+use OpenOrchestra\ModelInterface\Model\AuthorizationInterface;
+use OpenOrchestra\ModelInterface\Model\WorkflowFunctionInterface;
 
 /**
  * Description of Authorization
@@ -25,7 +25,7 @@ class Authorization implements AuthorizationInterface
     /**
      * @var Collection $workflowFunctions
      *
-     * @ODM\ReferenceMany(targetDocument="OpenOrchestra\Workflow\Model\WorkflowFunctionInterface")
+     * @ODM\ReferenceMany(targetDocument="OpenOrchestra\ModelInterface\Model\WorkflowFunctionInterface")
      */
     protected $workflowFunctions;
 

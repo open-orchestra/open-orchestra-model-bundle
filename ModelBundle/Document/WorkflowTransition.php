@@ -3,7 +3,7 @@
 namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use OpenOrchestra\Workflow\Model\WorkflowTransitionInterface;
+use OpenOrchestra\ModelInterface\Model\WorkflowTransitionInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 
 /**

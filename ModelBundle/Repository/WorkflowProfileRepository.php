@@ -3,7 +3,7 @@
 namespace OpenOrchestra\ModelBundle\Repository;
 
 use OpenOrchestra\Repository\AbstractAggregateRepository;
-use OpenOrchestra\Workflow\Repository\WorkflowProfileRepositoryInterface;
+use OpenOrchestra\ModelInterface\Repository\WorkflowProfileRepositoryInterface;
 
 /**
  * Class WorkflowProfileRepository

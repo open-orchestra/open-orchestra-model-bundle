@@ -5,8 +5,8 @@ namespace OpenOrchestra\ModelBundle\Document;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use OpenOrchestra\Workflow\Model\WorkflowRightInterface;
-use OpenOrchestra\Workflow\Model\AuthorizationInterface;
+use OpenOrchestra\ModelInterface\Model\WorkflowRightInterface;
+use OpenOrchestra\ModelInterface\Model\AuthorizationInterface;
 
 /**
  * Class WorkflowRight
@@ -28,7 +28,7 @@ class WorkflowRight implements WorkflowRightInterface
     /**
      * @var Collection $authorizations
      *
-     * @ODM\EmbedMany(targetDocument="OpenOrchestra\Workflow\Model\AuthorizationInterface")
+     * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\AuthorizationInterface")
      */
     protected $authorizations;
 
