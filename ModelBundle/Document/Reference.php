@@ -3,7 +3,7 @@
 namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use OpenOrchestra\WorkflowFunction\Model\ReferenceInterface;
+use OpenOrchestra\Workflow\Model\ReferenceInterface;
 
 /**
  * Description of Reference

@@ -6,7 +6,7 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraProductionFixturesInterface;
-use OpenOrchestra\WorkflowFunction\Model\WorkflowRightInterface;
+use OpenOrchestra\Workflow\Model\WorkflowRightInterface;
 use OpenOrchestra\ModelBundle\Document\Authorization;
 use OpenOrchestra\ModelBundle\Document\WorkflowRight;
 

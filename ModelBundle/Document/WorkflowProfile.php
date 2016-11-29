@@ -5,8 +5,8 @@ namespace OpenOrchestra\ModelBundle\Document;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use OpenOrchestra\WorkflowFunction\Model\WorkflowProfileInterface;
-use OpenOrchestra\WorkflowFunction\Model\WorkflowTransitionInterface;
+use OpenOrchestra\Workflow\Model\WorkflowProfileInterface;
+use OpenOrchestra\Workflow\Model\WorkflowTransitionInterface;
 
 /**
  * Class WorkflowProfile
@@ -36,7 +36,7 @@ class WorkflowProfile implements WorkflowProfileInterface
      * @var Collection
      *
      * @ODM\EmbedMany(
-     *  targetDocument="OpenOrchestra\WorkflowFunction\Model\WorkflowTransitionInterface"
+     *  targetDocument="OpenOrchestra\Workflow\Model\WorkflowTransitionInterface"
      * )
      */
     protected $transitions;

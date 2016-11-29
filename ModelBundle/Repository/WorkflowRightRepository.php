@@ -3,9 +3,9 @@
 namespace OpenOrchestra\ModelBundle\Repository;
 
 use OpenOrchestra\Repository\AbstractAggregateRepository;
-use OpenOrchestra\WorkflowFunction\Model\WorkflowFunctionInterface;
-use OpenOrchestra\WorkflowFunction\Model\WorkflowRightInterface;
-use OpenOrchestra\WorkflowFunction\Repository\WorkflowRightRepositoryInterface;
+use OpenOrchestra\Workflow\Model\WorkflowFunctionInterface;
+use OpenOrchestra\Workflow\Model\WorkflowRightInterface;
+use OpenOrchestra\Workflow\Repository\WorkflowRightRepositoryInterface;
 
 /**
  * Class WorkflowRightRepositoryInterface
@@ -15,7 +15,7 @@ class WorkflowRightRepository extends AbstractAggregateRepository implements Wor
     /**
      * @param string $userId
      *
-     * @return \OpenOrchestra\WorkflowFunction\Model\WorkflowRightInterface
+     * @return \OpenOrchestra\Workflow\Model\WorkflowRightInterface
      */
     public function findOneByUserId($userId)
     {

@@ -5,7 +5,7 @@ namespace OpenOrchestra\ModelBundle\DataFixtures\MongoDB;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use OpenOrchestra\WorkflowFunction\Model\WorkflowRightInterface;
+use OpenOrchestra\Workflow\Model\WorkflowRightInterface;
 use OpenOrchestra\ModelBundle\Document\Authorization;
 use OpenOrchestra\ModelBundle\Document\WorkflowRight;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;

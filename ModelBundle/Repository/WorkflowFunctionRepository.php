@@ -4,9 +4,9 @@ namespace OpenOrchestra\ModelBundle\Repository;
 
 use OpenOrchestra\Pagination\MongoTrait\PaginationTrait;
 use OpenOrchestra\Repository\AbstractAggregateRepository;
-use OpenOrchestra\WorkflowFunction\Repository\WorkflowFunctionRepositoryInterface;
+use OpenOrchestra\Workflow\Repository\WorkflowFunctionRepositoryInterface;
 use OpenOrchestra\ModelInterface\Model\RoleInterface;
-use OpenOrchestra\WorkflowFunction\Model\WorkflowFunctionInterface;
+use OpenOrchestra\Workflow\Model\WorkflowFunctionInterface;
 
 /**
  * Class WorkflowFunctionRepository
