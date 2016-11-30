@@ -49,3 +49,13 @@ open_orchestra_model:
             class: FakeEmbedStatus
         translated_value:
             class: FakeTranslatedValue
+        workflow_function:
+            class: FakeClassWorkflowFunction
+            repository: FakeRepositoryWorkflowFunction
+        workflow_right:
+            class: FakeClassWorkflowRight
+            repository: FakeRepositoryWorkflowRight
+        authorization:
+            class: FakeClassAuthorization
+        reference:
+            class: FakeClassReference

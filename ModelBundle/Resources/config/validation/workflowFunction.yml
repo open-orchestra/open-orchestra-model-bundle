@@ -1,0 +1,6 @@
+OpenOrchestra\ModelBundle\Document\WorkflowFunction:
+    properties:
+        names:
+            - NotBlank: ~
+        roles:
+            - NotBlank: ~
