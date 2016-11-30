@@ -497,6 +497,13 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
             ->field('order')->inc(1)
             ->getQuery()
             ->execute();
+        /*return $this->createQueryBuilder()
+            ->field('nodeId')->notEqual($nodeId)
+            ->field('siteId')->equals($siteId)
+            ->field('parentId')->equals($parentId)
+            ->field('order')->gte($order)
+            ->getQuery()
+            ->execute();*/
     }
 
     /**
