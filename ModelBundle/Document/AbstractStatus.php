@@ -79,6 +79,11 @@ abstract class AbstractStatus implements StatusInterface
 
     /**
      * @ODM\Field(type="boolean")
+     */
+    protected $translationState = true;
+
+    /**
+     * @ODM\Field(type="boolean")
      * @ORCHESTRA\Search(key="autoPublishFrom", type="boolean")
      */
     protected $autoPublishFrom = false;
@@ -246,6 +251,22 @@ abstract class AbstractStatus implements StatusInterface
     public function isInitial()
     {
         return $this->initial;
+    }
+
+    /**
+     * @param boolean $translationState
+     */
+    public function setTranslationState($translationState)
+    {
+        $this->translationState = $translationState;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isTranslationState()
+    {
+        return $this->translationState;
     }
 
     /**

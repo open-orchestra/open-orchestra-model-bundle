@@ -479,6 +479,27 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     }
 
     /**
+     * @param string $siteId
+     * @param string $nodeId
+     * @param int    $order
+     * @param string $parentId
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
+    public function updateOrderBrotherNode($siteId, $nodeId, $order, $parentId)
+    {
+        $this->createQueryBuilder()
+            ->updateMany()
+            ->field('nodeId')->notEqual($nodeId)
+            ->field('siteId')->equals($siteId)
+            ->field('parentId')->equals($parentId)
+            ->field('order')->gte($order)
+            ->field('order')->inc(1)
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
      * @param PaginateFinderConfiguration $configuration
      * @param string                      $siteId
      * @param string                      $language
@@ -813,6 +834,30 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
             )
         );
         $node = $this->singleHydrateAggregateQuery($qa);
+
+        return $node instanceof NodeInterface;
+    }
+
+    /**
+     * @param string $parentId
+     * @param int    $order
+     * @param string $siteId
+     *
+     * @return bool
+     */
+    public function hasNodeWithSameParentAndOrder($parentId, $order, $siteId)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
+        $qa->match(
+            array(
+                'parentId' => $parentId,
+                'order'    => $order,
+                'deleted'  => false,
+                'nodeType' => NodeInterface::TYPE_DEFAULT
+            )
+        );
+        $node = $this->singleHydrateAggregateQuery($qa);
+
         return $node instanceof NodeInterface;
     }
 

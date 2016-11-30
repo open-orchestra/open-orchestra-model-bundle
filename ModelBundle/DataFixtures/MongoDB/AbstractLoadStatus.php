@@ -19,8 +19,10 @@ abstract class AbstractLoadStatus extends AbstractFixture implements OrderedFixt
      * @param bool   $published
      * @param bool   $initial
      * @param bool   $blockedEdition
+     * @param bool   $outOfWorkflow
      * @param bool   $autoPublishFrom
      * @param bool   $autoUnpublishTo
+     * @param bool   $translationState
      *
      * @return Status
      */
@@ -34,7 +36,8 @@ abstract class AbstractLoadStatus extends AbstractFixture implements OrderedFixt
         $blockedEdition = false,
         $outOfWorkflow = false,
         $autoPublishFrom = false,
-        $autoUnpublishTo = false
+        $autoUnpublishTo = false,
+        $translationState = false
     ) {
         $value = new Status();
         $value->setName($name);
@@ -47,6 +50,7 @@ abstract class AbstractLoadStatus extends AbstractFixture implements OrderedFixt
         $value->setDisplayColor($color);
         $value->setBlockedEdition($blockedEdition);
         $value->setOutOfWorkflow($outOfWorkflow);
+        $value->setTranslationState($translationState);
 
         $this->addReference('status-' . $name, $value);
 
