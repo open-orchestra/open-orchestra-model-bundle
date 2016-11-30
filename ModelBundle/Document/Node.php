@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 use Gedmo\Blameable\Traits\BlameableDocument;
 use Gedmo\Timestampable\Traits\TimestampableDocument;
+use OpenOrchestra\MongoTrait\Keywordable;
 use OpenOrchestra\MongoTrait\SoftDeleteable;
 use OpenOrchestra\MongoTrait\Statusable;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
@@ -53,6 +54,7 @@ class Node implements NodeInterface
     use Metaable;
     use SoftDeleteable;
     use Historisable;
+    use Keywordable;
 
     /**
      * @var string $id
@@ -102,13 +104,6 @@ class Node implements NodeInterface
      * @ODM\Field(type="string")
      */
     protected $name;
-
-    /**
-     * @var string $boLabel
-     *
-     * @ODM\Field(type="string")
-     */
-    protected $boLabel;
 
     /**
      * @var string $language
@@ -174,18 +169,25 @@ class Node implements NodeInterface
     protected $routePattern;
 
     /**
-     * @var string $metaKeywords
-     *
-     * @ODM\Field(type="string")
-     */
-    protected $metaKeywords;
-
-    /**
      * @var string $metaDescription
      *
      * @ODM\Field(type="string")
      */
     protected $metaDescription;
+
+    /**
+     * @var string $seoTitle
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $seoTitle;
+
+    /**
+     * @var string $canonicalPage
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $canonicalPage;
 
     /**
      * @var \DateTime $publishDate
@@ -349,22 +351,6 @@ class Node implements NodeInterface
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBoLabel()
-    {
-        return $this->boLabel;
-    }
-
-    /**
-     * @param string $boLabel
-     */
-    public function setBoLabel($boLabel)
-    {
-        $this->boLabel = $boLabel;
     }
 
     /**
@@ -541,22 +527,6 @@ class Node implements NodeInterface
     }
 
     /**
-     * @param string $metaKeywords
-     */
-    public function setMetaKeywords($metaKeywords)
-    {
-        $this->metaKeywords = $metaKeywords;
-    }
-
-    /**
-     * @return string
-     */
-    public function getMetaKeywords()
-    {
-        return $this->metaKeywords;
-    }
-
-    /**
      * @param string $metaDescription
      */
     public function setMetaDescription($metaDescription)
@@ -570,6 +540,38 @@ class Node implements NodeInterface
     public function getMetaDescription()
     {
         return $this->metaDescription;
+    }
+
+    /**
+     * @param string $seoTitle
+     */
+    public function setSeoTitle($seoTitle)
+    {
+        $this->seoTitle = $seoTitle;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSeoTitle()
+    {
+        return $this->seoTitle;
+    }
+
+    /**
+     * @param string $canonicalPage
+     */
+    public function setCanonicalPage($canonicalPage)
+    {
+        $this->canonicalPage = $canonicalPage;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCanonicalPage()
+    {
+        return $this->canonicalPage;
     }
 
     /**
@@ -609,7 +611,7 @@ class Node implements NodeInterface
     }
 
     /**
-     * @param string specialPageName
+     * @param string $specialPageName
      */
     public function setSpecialPageName($specialPageName)
     {

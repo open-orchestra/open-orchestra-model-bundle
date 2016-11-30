@@ -119,7 +119,6 @@ EOF;
         $nodeCommunity->setNodeId('fixture_page_community');
         $nodeCommunity->setLanguage($language);
         $nodeCommunity->setName($name);
-        $nodeCommunity->setBoLabel('Community');
         $nodeCommunity->setParentId(NodeInterface::ROOT_NODE_ID);
         $nodeCommunity->setOrder(3);
         $nodeCommunity->setRoutePattern($routePattern);

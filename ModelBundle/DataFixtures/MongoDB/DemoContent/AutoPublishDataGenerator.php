@@ -110,7 +110,6 @@ EOF;
 
         $nodeAutoPublish->setNodeId('fixture_auto_unpublish');
         $nodeAutoPublish->setName($name);
-        $nodeAutoPublish->setBoLabel("Auto unpublish");
         $nodeAutoPublish->setLanguage($language);
         $nodeAutoPublish->setParentId(NodeInterface::ROOT_NODE_ID);
         $nodeAutoPublish->setOrder(15);

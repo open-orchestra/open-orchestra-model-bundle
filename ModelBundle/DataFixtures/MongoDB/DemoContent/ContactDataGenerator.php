@@ -160,7 +160,6 @@ EOF;
 
         $nodeContact->setNodeId('fixture_page_contact');
         $nodeContact->setName($name);
-        $nodeContact->setBoLabel('Contact');
         $nodeContact->setLanguage($language);
         $nodeContact->setParentId(NodeInterface::ROOT_NODE_ID);
         $nodeContact->setOrder(9);

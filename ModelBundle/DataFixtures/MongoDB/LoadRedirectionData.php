@@ -19,6 +19,7 @@ class LoadRedirectionData implements FixtureInterface, OrchestraFunctionalFixtur
     function load(ObjectManager $manager)
     {
         $manager->persist($this->generateGoogleRedirection());
+        $manager->persist($this->generateNodeRedirection());
 
         $manager->flush();
     }
@@ -39,4 +40,19 @@ class LoadRedirectionData implements FixtureInterface, OrchestraFunctionalFixtur
         return $redirection;
     }
 
+    /**
+     * @return Redirection
+     */
+    protected function generateNodeRedirection()
+    {
+        $redirection = new Redirection();
+        $redirection->setSiteId('2');
+        $redirection->setSiteName('Demo site');
+        $redirection->setRoutePattern('/test-root-redirection');
+        $redirection->setLocale('fr');
+        $redirection->setPermanent(false);
+        $redirection->setNodeId('root');
+
+        return $redirection;
+    }
 }
