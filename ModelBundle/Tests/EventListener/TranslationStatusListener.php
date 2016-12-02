@@ -3,17 +3,17 @@
 namespace OpenOrchestra\ModelBundle\Tests\EventListener;
 
 use OpenOrchestra\BaseBundle\Tests\AbstractTest\AbstractBaseTestCase;
+use OpenOrchestra\ModelBundle\EventListener\TranslationStatusListener;
 use Phake;
 use OpenOrchestra\ModelBundle\Document\Status;
-use OpenOrchestra\ModelBundle\EventListener\AutoUnpublishStatusListener;
 
 /**
- * Class AutoUnpublishStatusListenerTest
+ * Class TranslationStatusListenerTest
  */
-class AutoUnpublishStatusListenerTest extends AbstractBaseTestCase
+class TranslationStatusListenerTest extends AbstractBaseTestCase
 {
     /**
-     * @var AutoUnpublishStatusListener
+     * @var TranslationStatusListener
      */
     protected $listener;
 
@@ -33,7 +33,7 @@ class AutoUnpublishStatusListenerTest extends AbstractBaseTestCase
         $this->lifecycleEventArgs = Phake::mock('Doctrine\ODM\MongoDB\Event\LifecycleEventArgs');
         $this->postFlushEventArgs = Phake::mock('Doctrine\ODM\MongoDB\Event\PostFlushEventArgs');
 
-        $this->listener = new AutoUnpublishStatusListener();
+        $this->listener = new TranslationStatusListener();
         $this->listener->setContainer($this->container);
     }
 
@@ -54,13 +54,13 @@ class AutoUnpublishStatusListenerTest extends AbstractBaseTestCase
      */
     public function testPreUpdate(Status $status, $documents)
     {
-        Phake::when($this->statusRepository)->findOtherByAutoUnpublishTo(Phake::anyParameters())->thenReturn($documents);
+        Phake::when($this->statusRepository)->findOtherByTranslationState(Phake::anyParameters())->thenReturn($documents);
         Phake::when($this->lifecycleEventArgs)->getDocument()->thenReturn($status);
 
         $this->listener->preUpdate($this->lifecycleEventArgs);
 
         foreach ($documents as $document) {
-            Phake::verify($document)->setAutoUnpublishTo(false);
+            Phake::verify($document)->setTranslationState(false);
         }
 
         $documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
@@ -82,7 +82,7 @@ class AutoUnpublishStatusListenerTest extends AbstractBaseTestCase
     {
         $status = Phake::mock('OpenOrchestra\ModelBundle\Document\Status');
         Phake::when($status)->isPublished()->thenReturn(true);
-        Phake::when($status)->isAutoUnpublishTo()->thenReturn(true);
+        Phake::when($status)->isTranslationState()->thenReturn(true);
 
         $document0 = Phake::mock('OpenOrchestra\ModelBundle\Document\Status');
         Phake::when($document0)->isInitial()->thenReturn(true);

@@ -106,6 +106,35 @@ class StatusRepository extends AbstractAggregateRepository implements StatusRepo
     }
 
     /**
+     * @param string $name
+     *
+     * @return array
+     */
+    public function findOtherByTranslationState($name)
+    {
+        $qa = $this->createAggregationQuery();
+        $qa->match(
+            array(
+                'name' => array('$ne' => $name),
+                'translationState' => true
+            )
+        );
+
+        return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @return StatusInterface
+     */
+    public function findOneByTranslationState()
+    {
+        $qa = $this->createAggregationQuery();
+        $qa->match(array('translationState' => true));
+
+        return $this->singleHydrateAggregateQuery($qa);
+    }
+
+    /**
      * @return StatusInterface
      */
     public function findOneByEditable()

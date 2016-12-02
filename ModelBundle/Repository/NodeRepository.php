@@ -339,13 +339,17 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     /**
      * @param string $siteId
      * @param string $language
+     * @param string $parentId
      *
      * @return array
      */
-    public function findTreeNode($siteId, $language)
+    public function findTreeNode($siteId, $language, $parentId)
     {
         $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
-        $qa->match(array( 'deleted' => false));
+        if (NodeInterface::ROOT_PARENT_ID !== $parentId ) {
+            $qa->match(array('path' => new MongoRegex('/'.$parentId.'(\/.*)?$/')));
+        }
+        $qa->match(array('deleted' => false));
 
         $qa->sort(array('version' => 1));
         $elementName = 'node';
@@ -359,7 +363,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         $qa->sort(array('order' => 1));
         $nodes = $qa->getQuery()->aggregate()->toArray();
 
-        return $this->generateTree($nodes);
+        return $this->generateTree($nodes, $parentId);
     }
 
     /**
@@ -472,6 +476,27 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         $qa = $this->createQueryWithFilterAndLastVersion($configuration, $siteId, $language, $elementName);
 
         return $this->countDocumentAggregateQuery($qa);
+    }
+
+    /**
+     * @param string $siteId
+     * @param string $nodeId
+     * @param int    $order
+     * @param string $parentId
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
+    public function updateOrderOfBrothers($siteId, $nodeId, $order, $parentId)
+    {
+        $this->createQueryBuilder()
+            ->updateMany()
+            ->field('nodeId')->notEqual($nodeId)
+            ->field('siteId')->equals($siteId)
+            ->field('parentId')->equals($parentId)
+            ->field('order')->gte($order)
+            ->field('order')->inc(1)
+            ->getQuery()
+            ->execute();
     }
 
     /**
@@ -809,6 +834,30 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
             )
         );
         $node = $this->singleHydrateAggregateQuery($qa);
+
+        return $node instanceof NodeInterface;
+    }
+
+    /**
+     * @param string $parentId
+     * @param int    $order
+     * @param string $siteId
+     *
+     * @return bool
+     */
+    public function hasNodeWithSameParentAndOrder($parentId, $order, $siteId)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
+        $qa->match(
+            array(
+                'parentId' => $parentId,
+                'order'    => $order,
+                'deleted'  => false,
+                'nodeType' => NodeInterface::TYPE_DEFAULT
+            )
+        );
+        $node = $this->singleHydrateAggregateQuery($qa);
+
         return $node instanceof NodeInterface;
     }
 
@@ -1101,18 +1150,23 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     }
 
     /**
-     * @param array $nodes
+     * @param array  $nodes
+     * @param string $parentId
      *
      * @return array
      */
-    protected function generateTree(array $nodes)
+    protected function generateTree(array $nodes, $parentId)
     {
         if (empty($nodes)) {
             return array();
         }
 
-        $nodesRoot = array_filter($nodes, function($node, $key) {
-            if (NodeInterface::ROOT_PARENT_ID !== $node['node']['parentId']) {
+        $nodesRoot = array_filter($nodes, function($node, $key) use ($parentId) {
+            $property = 'nodeId';
+            if (NodeInterface::ROOT_PARENT_ID === $parentId) {
+                $property = 'parentId';
+            }
+            if ($parentId !== $node['node'][$property]) {
                 return false;
             }
             return true;

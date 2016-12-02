@@ -148,13 +148,6 @@ class Node implements NodeInterface
     protected $inFooter;
 
     /**
-     * @var string
-     *
-     * @ODM\Field(type="string")
-     */
-    protected $role;
-
-    /**
      * @var int
      *
      * @ODM\Field(type="int")
@@ -463,22 +456,6 @@ class Node implements NodeInterface
     public function isInMenu()
     {
         return $this->inMenu;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
-     * @param string $role
-     */
-    public function setRole($role)
-    {
-        $this->role = $role;
     }
 
     /**
