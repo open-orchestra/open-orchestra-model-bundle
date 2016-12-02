@@ -258,7 +258,9 @@ abstract class AbstractStatus implements StatusInterface
      */
     public function setTranslationState($translationState)
     {
-        $this->translationState = $translationState;
+        if (!is_bool($translationState)) {
+            $this->translationState = $translationState;
+        }
     }
 
     /**
