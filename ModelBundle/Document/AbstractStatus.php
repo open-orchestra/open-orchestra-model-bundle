@@ -80,7 +80,7 @@ abstract class AbstractStatus implements StatusInterface
     /**
      * @ODM\Field(type="boolean")
      */
-    protected $translationState = true;
+    protected $translationState = false;
 
     /**
      * @ODM\Field(type="boolean")
