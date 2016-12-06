@@ -69,6 +69,16 @@ class WorkflowProfile implements WorkflowProfileInterface
     }
 
     /**
+     * @param WorkflowTransitionInterface $transition
+     *
+     * @return boolean
+     */
+    public function hasTransition(WorkflowTransitionInterface $transition)
+    {
+        return $this->transitions->contains($transition);
+    }
+
+    /**
      * Initialize collections
      */
     protected function initCollections() {
