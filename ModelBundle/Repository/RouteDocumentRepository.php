@@ -47,7 +47,7 @@ class RouteDocumentRepository extends AbstractAggregateRepository implements Rou
         $i = 0;
         while ($i <= 10) {
             if (array_key_exists($i, $workingPattern)) {
-                $filter['token' . $i] = new \MongoRegex('/' . $workingPattern[$i] . '|\*/');
+                $filter['token' . $i] = new \MongoRegex('/^' . $workingPattern[$i] . '$|\*/');
             } else {
                 $filter['token' . $i] = null;
             }
