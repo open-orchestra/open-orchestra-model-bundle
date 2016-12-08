@@ -38,10 +38,26 @@ class WorkflowTransition implements WorkflowTransitionInterface
     }
 
     /**
+     * @return StatusInterface
+     */
+    public function getStatusFrom()
+    {
+        return $this->statusFrom;
+    }
+
+    /**
      * @param string $status
      */
     public function setStatusTo(StatusInterface $status)
     {
         $this->statusTo = $status;
+    }
+
+    /**
+     * @return StatusInterface
+     */
+    public function getStatusTo()
+    {
+        return $this->statusTo;
     }
 }

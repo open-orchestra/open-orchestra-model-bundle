@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\ModelInterface\Model\WorkflowProfileInterface;
 use OpenOrchestra\ModelInterface\Model\WorkflowTransitionInterface;
+use OpenOrchestra\ModelInterface\Model\StatusInterface;
 
 /**
  * Class WorkflowProfile
@@ -69,13 +70,22 @@ class WorkflowProfile implements WorkflowProfileInterface
     }
 
     /**
-     * @param WorkflowTransitionInterface $transition
+     * @param StatusInterface $fromStatus
+     * @param StatusInterface $toStatus
      *
      * @return boolean
      */
-    public function hasTransition(WorkflowTransitionInterface $transition)
+    public function hasTransition(StatusInterface $fromStatus, StatusInterface $toStatus)
     {
-        return $this->transitions->contains($transition);
+        foreach ($this->transitions as $transition) {
+            if ($transition->getStatusFrom()->getId() === $fromStatus->getId()
+                && $transition->getStatusTo()->getId() === $toStatus->getId()
+            ) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
