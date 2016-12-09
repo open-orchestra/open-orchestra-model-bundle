@@ -640,5 +640,6 @@ class Node implements NodeInterface
     {
         $this->initializeHistories();
         $this->areas = new ArrayCollection();
+        $this->keywords = new ArrayCollection();
     }
 }
