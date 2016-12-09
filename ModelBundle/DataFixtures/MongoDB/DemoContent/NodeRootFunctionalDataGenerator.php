@@ -76,7 +76,7 @@ EOF;
     web experience across all channels fixed mobile, tablet, TV, bollards ... »</p>
 </div>
 EOF;
-        $routePattern = "en";
+        $routePattern = "/";
         $language = "en";
 
         return $this->generateNodeGlobal($htmlContent, $language, $routePattern);
@@ -108,7 +108,7 @@ EOF;
     Tablet, TV, Poller ... »</p>
 </div>
 EOF;
-        $routePattern = "de";
+        $routePattern = "/";
         $language = "de";
 
         return $this->generateNodeGlobal($htmlContent, $language, $routePattern);
