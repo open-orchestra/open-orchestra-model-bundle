@@ -106,7 +106,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         return array(
             'language' => $language,
             'deleted' => false,
-            'status.published' => true
+            'status.publishedState' => true
         );
     }
 
@@ -461,7 +461,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         $qa->match(
             array(
                 'deleted'          => false,
-                'status.published' => true,
+                'status.publishedState' => true,
             )
         );
 
@@ -519,7 +519,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     public function findPublishedInLastVersionWithoutFlag(StatusableInterface $element)
     {
         $qa = $this->createAggregationQueryWithLanguageAndPublished($element->getLanguage());
-        $filter['status.published'] = true;
+        $filter['status.publishedState'] = true;
         $filter['currentlyPublished'] = false;
         $filter['deleted'] = false;
         $filter['contentId'] = $element->getContentId();

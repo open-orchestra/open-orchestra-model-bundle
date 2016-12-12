@@ -81,11 +81,11 @@ class TranslationStatusListenerTest extends AbstractBaseTestCase
     public function provideStatus()
     {
         $status = Phake::mock('OpenOrchestra\ModelBundle\Document\Status');
-        Phake::when($status)->isPublished()->thenReturn(true);
+        Phake::when($status)->isPublishedState()->thenReturn(true);
         Phake::when($status)->isTranslationState()->thenReturn(true);
 
         $document0 = Phake::mock('OpenOrchestra\ModelBundle\Document\Status');
-        Phake::when($document0)->isInitial()->thenReturn(true);
+        Phake::when($document0)->isInitialState()->thenReturn(true);
 
         return array(
             array($status, array($document0)),

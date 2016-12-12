@@ -16,12 +16,12 @@ abstract class AbstractLoadStatus extends AbstractFixture implements OrderedFixt
      * @param string $frName
      * @param string $name
      * @param string $color
-     * @param bool   $published
-     * @param bool   $initial
+     * @param bool   $publishedState
+     * @param bool   $initialState
      * @param bool   $blockedEdition
      * @param bool   $outOfWorkflow
-     * @param bool   $autoPublishFrom
-     * @param bool   $autoUnpublishTo
+     * @param bool   $autoPublishFromState
+     * @param bool   $autoUnpublishToState
      * @param bool   $translationState
      *
      * @return Status
@@ -31,20 +31,20 @@ abstract class AbstractLoadStatus extends AbstractFixture implements OrderedFixt
         $frName,
         $name,
         $color,
-        $published = false,
-        $initial = false,
+        $publishedState = false,
+        $initialState = false,
         $blockedEdition = false,
         $outOfWorkflow = false,
-        $autoPublishFrom = false,
-        $autoUnpublishTo = false,
+        $autoPublishFromState = false,
+        $autoUnpublishToState = false,
         $translationState = false
     ) {
         $value = new Status();
         $value->setName($name);
-        $value->setPublished($published);
-        $value->setInitial($initial);
-        $value->setAutoPublishFrom($autoPublishFrom);
-        $value->setAutoUnpublishTo($autoUnpublishTo);
+        $value->setPublishedState($publishedState);
+        $value->setInitialState($initialState);
+        $value->setAutoPublishFromState($autoPublishFromState);
+        $value->setAutoUnpublishToState($autoUnpublishToState);
         $value->addLabel('en', $enName);
         $value->addLabel('fr', $frName);
         $value->setDisplayColor($color);

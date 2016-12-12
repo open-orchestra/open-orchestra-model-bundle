@@ -34,12 +34,30 @@ abstract class AbstractStatus implements StatusInterface
     protected $labels;
 
     /**
+     * @ODM\Field(type="boolean")
+     * @ORCHESTRA\Search(key="initialState", type="boolean")
+     */
+    protected $initialState = false;
+
+    /**
      * @var bool
      *
      * @ODM\Field(type="boolean")
-     * @ORCHESTRA\Search(key="published", type="boolean")
+     * @ORCHESTRA\Search(key="publishedState", type="boolean")
      */
-    protected $published = false;
+    protected $publishedState = false;
+
+    /**
+     * @ODM\Field(type="boolean")
+     * @ORCHESTRA\Search(key="autoPublishFromState", type="boolean")
+     */
+    protected $autoPublishFromState = false;
+
+    /**
+     * @ODM\Field(type="boolean")
+     * @ORCHESTRA\Search(key="autoUnpublishToState", type="boolean")
+     */
+    protected $autoUnpublishToState = false;
 
     /**
      * @var bool
@@ -73,26 +91,8 @@ abstract class AbstractStatus implements StatusInterface
 
     /**
      * @ODM\Field(type="boolean")
-     * @ORCHESTRA\Search(key="initial", type="boolean")
-     */
-    protected $initial = false;
-
-    /**
-     * @ODM\Field(type="boolean")
      */
     protected $translationState = false;
-
-    /**
-     * @ODM\Field(type="boolean")
-     * @ORCHESTRA\Search(key="autoPublishFrom", type="boolean")
-     */
-    protected $autoPublishFrom = false;
-
-    /**
-     * @ODM\Field(type="boolean")
-     * @ORCHESTRA\Search(key="autoUnpublishTo", type="boolean")
-     */
-    protected $autoUnpublishTo = false;
 
     /**
      * @var string
@@ -190,19 +190,19 @@ abstract class AbstractStatus implements StatusInterface
     }
 
     /**
-     * @param boolean $published
+     * @param boolean $publishedState
      */
-    public function setPublished($published)
+    public function setPublishedState($publishedState)
     {
-        $this->published = $published;
+        $this->publishedState = $publishedState;
     }
 
     /**
      * @return boolean
      */
-    public function isPublished()
+    public function isPublishedState()
     {
-        return $this->published;
+        return $this->publishedState;
     }
 
     /**
@@ -238,19 +238,19 @@ abstract class AbstractStatus implements StatusInterface
     }
 
     /**
-     * @param boolean $initial
+     * @param boolean $initialState
      */
-    public function setInitial($initial)
+    public function setInitialState($initialState)
     {
-        $this->initial = $initial;
+        $this->initialState = $initialState;
     }
 
     /**
      * @return boolean
      */
-    public function isInitial()
+    public function isInitialState()
     {
-        return $this->initial;
+        return $this->initialState;
     }
 
     /**
@@ -272,35 +272,35 @@ abstract class AbstractStatus implements StatusInterface
     }
 
     /**
-     * @param boolean $autoPublishFrom
+     * @param boolean $autoPublishFromState
      */
-    public function setAutoPublishFrom($autoPublishFrom)
+    public function setAutoPublishFromState($autoPublishFromState)
     {
-        $this->autoPublishFrom = $autoPublishFrom;
+        $this->autoPublishFromState = $autoPublishFromState;
     }
 
     /**
      * @return boolean
      */
-    public function isAutoPublishFrom()
+    public function isAutoPublishFromState()
     {
-        return $this->autoPublishFrom;
+        return $this->autoPublishFromState;
     }
 
     /**
-     * @param boolean $autoUnpublishTo
+     * @param boolean $autoUnpublishToState
      */
-    public function setAutoUnpublishTo($autoUnpublishTo)
+    public function setAutoUnpublishToState($autoUnpublishToState)
     {
-        $this->autoUnpublishTo = $autoUnpublishTo;
+        $this->autoUnpublishToState = $autoUnpublishToState;
     }
 
     /**
      * @return boolean
      */
-    public function isAutoUnpublishTo()
+    public function isAutoUnpublishToState()
     {
-        return $this->autoUnpublishTo;
+        return $this->autoUnpublishToState;
     }
 
     /**

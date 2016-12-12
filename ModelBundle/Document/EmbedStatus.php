@@ -21,8 +21,8 @@ class EmbedStatus extends AbstractStatus implements EmbedStatusInterface
         parent::__construct();
         $this->id = $status->getId();
         $this->setName($status->getName());
-        $this->setPublished($status->isPublished());
-        $this->setInitial($status->isInitial());
+        $this->setPublishedState($status->isPublishedState());
+        $this->setInitialState($status->isInitialState());
         $this->setDisplayColor($status->getDisplayColor());
         $this->setLabels($status->getLabels());
         $this->setBlockedEdition($status->isBlockedEdition());
