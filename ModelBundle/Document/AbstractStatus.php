@@ -6,7 +6,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\ModelInterface\Model\RoleInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 
 /**
  * Class AbstractStatus
@@ -29,13 +28,11 @@ abstract class AbstractStatus implements StatusInterface
 
     /**
      * @ODM\Field(type="hash")
-     * @ORCHESTRA\Search(key="label", type="multiLanguages")
      */
     protected $labels;
 
     /**
      * @ODM\Field(type="boolean")
-     * @ORCHESTRA\Search(key="initialState", type="boolean")
      */
     protected $initialState = false;
 
@@ -43,19 +40,16 @@ abstract class AbstractStatus implements StatusInterface
      * @var bool
      *
      * @ODM\Field(type="boolean")
-     * @ORCHESTRA\Search(key="publishedState", type="boolean")
      */
     protected $publishedState = false;
 
     /**
      * @ODM\Field(type="boolean")
-     * @ORCHESTRA\Search(key="autoPublishFromState", type="boolean")
      */
     protected $autoPublishFromState = false;
 
     /**
      * @ODM\Field(type="boolean")
-     * @ORCHESTRA\Search(key="autoUnpublishToState", type="boolean")
      */
     protected $autoUnpublishToState = false;
 
@@ -63,7 +57,6 @@ abstract class AbstractStatus implements StatusInterface
      * @var bool
      *
      * @ODM\Field(type="boolean")
-     * @ORCHESTRA\Search(key="blocked_edition", type="boolean")
      */
     protected $blockedEdition = false;
 
@@ -71,7 +64,6 @@ abstract class AbstractStatus implements StatusInterface
      * @var bool
      *
      * @ODM\Field(type="boolean")
-     * @ORCHESTRA\Search(key="out_of_workflow", type="boolean")
      */
     protected $outOfWorkflow = false;
 
@@ -98,7 +90,6 @@ abstract class AbstractStatus implements StatusInterface
      * @var string
      *
      * @ODM\Field(type="string")
-     * @ORCHESTRA\Search(key="display_color")
      */
     protected $displayColor;
 
