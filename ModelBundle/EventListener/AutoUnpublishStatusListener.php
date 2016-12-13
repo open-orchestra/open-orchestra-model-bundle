@@ -23,11 +23,11 @@ class AutoUnpublishStatusListener implements ContainerAwareInterface
     public function preUpdate(LifecycleEventArgs $eventArgs)
     {
         $document = $eventArgs->getDocument();
-        if ($document instanceof StatusInterface && $document->isAutoUnpublishTo()) {
+        if ($document instanceof StatusInterface && $document->isAutoUnpublishToState()) {
             $statuses = $this->container->get('open_orchestra_model.repository.status')
                 ->findOtherByAutoUnpublishTo($document->getName());
             foreach ($statuses as $status) {
-                $status->setAutoUnpublishTo(false);
+                $status->setAutoUnpublishToState(false);
                 $this->statuses[] = $status;
             }
         }

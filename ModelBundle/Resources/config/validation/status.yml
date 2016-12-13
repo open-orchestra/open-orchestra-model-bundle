@@ -10,9 +10,9 @@ OpenOrchestra\ModelBundle\Document\Status:
             - Valid: ~
         fromRoles:
             - Valid: ~
-        published:
+        publishedState:
             - Type:
                 type: bool
-        initial :
+        initialState :
             - Type:
                 type: bool

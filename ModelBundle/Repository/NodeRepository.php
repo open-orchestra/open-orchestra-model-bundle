@@ -178,7 +178,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         $qa->match(
             array(
                 'nodeId'  => $nodeId,
-                'status.published' => true,
+                'status.publishedState' => true,
             )
         );
         $qa->sort(array('version' => -1));
@@ -687,7 +687,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     {
         $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($element->getSiteId(), $element->getLanguage());
         $filter = array(
-            'status.published' => true,
+            'status.publishedState' => true,
             'currentlyPublished' => false,
             'deleted' => false,
             'nodeId' => $element->getNodeId(),
@@ -723,7 +723,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         $qa->match(
             array(
-                'status.published' => true,
+                'status.publishedState' => true,
                 'deleted' => false,
             )
         );
@@ -867,7 +867,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     public function findLastPublished()
     {
         $qb = $this->createQueryBuilder();
-        $qb->field('status.published')->equals(true);
+        $qb->field('status.publishedState')->equals(true);
         $qb->field('deleted')->equals(false);
         $qb->sort('updatedAt', 'desc');
 
@@ -929,7 +929,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         $qa->match(
             array(
                 'nodeType' => $nodeType,
-                'status.published' => true,
+                'status.publishedState' => true,
                 'deleted' => false
             )
         );
@@ -962,7 +962,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
             $filter['histories.eventType'] = array('$in' => $eventTypes);
         }
         if (null !== $published) {
-            $filter['status.published'] = $published;
+            $filter['status.publishedState'] = $published;
         }
         $qa->match($filter);
 

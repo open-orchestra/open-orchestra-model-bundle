@@ -31,7 +31,7 @@ class StatusRepository extends AbstractAggregateRepository implements StatusRepo
     public function findOneByInitial()
     {
         $qa = $this->createAggregationQuery();
-        $qa->match(array('initial' => true));
+        $qa->match(array('initialState' => true));
 
         return $this->singleHydrateAggregateQuery($qa);
     }
@@ -47,7 +47,7 @@ class StatusRepository extends AbstractAggregateRepository implements StatusRepo
         $qa->match(
             array(
                 'name'    => array('$ne' => $name),
-                'initial' => true,
+                'initialState' => true,
             )
         );
 
@@ -60,7 +60,7 @@ class StatusRepository extends AbstractAggregateRepository implements StatusRepo
     public function findOneByPublished()
     {
         $qa = $this->createAggregationQuery();
-        $qa->match(array('published' => true));
+        $qa->match(array('publishedState' => true));
 
         return $this->singleHydrateAggregateQuery($qa);
     }
@@ -71,7 +71,7 @@ class StatusRepository extends AbstractAggregateRepository implements StatusRepo
     public function findByAutoPublishFrom()
     {
         $qa = $this->createAggregationQuery();
-        $qa->match(array('autoPublishFrom' => true));
+        $qa->match(array('autoPublishFromState' => true));
 
         return $this->hydrateAggregateQuery($qa);
     }
@@ -82,7 +82,7 @@ class StatusRepository extends AbstractAggregateRepository implements StatusRepo
     public function findOnebyAutoUnpublishTo()
     {
         $qa = $this->createAggregationQuery();
-        $qa->match(array('autoUnpublishTo' => true));
+        $qa->match(array('autoUnpublishToState' => true));
 
         return $this->singleHydrateAggregateQuery($qa);
     }
@@ -98,7 +98,7 @@ class StatusRepository extends AbstractAggregateRepository implements StatusRepo
         $qa->match(
             array(
                 'name' => array('$ne' => $name),
-                'autoUnpublishTo' => true
+                'autoUnpublishToState' => true
             )
         );
 
@@ -140,7 +140,7 @@ class StatusRepository extends AbstractAggregateRepository implements StatusRepo
     public function findOneByEditable()
     {
         $qa = $this->createAggregationQuery();
-        $qa->match(array('published' => false));
+        $qa->match(array('publishedState' => false));
 
         return $this->singleHydrateAggregateQuery($qa);
     }

@@ -23,11 +23,11 @@ class InitialStatusListener implements ContainerAwareInterface
     public function preUpdate(LifecycleEventArgs $eventArgs)
     {
         $document = $eventArgs->getDocument();
-        if ($document instanceof StatusInterface && $document->isInitial()) {
+        if ($document instanceof StatusInterface && $document->isInitialState()) {
             $statuses = $this->container->get('open_orchestra_model.repository.status')
                 ->findOtherByInitial($document->getName());
             foreach ($statuses as $status) {
-                $status->setInitial(false);
+                $status->setInitialState(false);
                 $this->statuses[] = $status;
             }
         }

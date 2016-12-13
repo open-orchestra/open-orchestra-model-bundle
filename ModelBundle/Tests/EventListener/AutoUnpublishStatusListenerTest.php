@@ -60,7 +60,7 @@ class AutoUnpublishStatusListenerTest extends AbstractBaseTestCase
         $this->listener->preUpdate($this->lifecycleEventArgs);
 
         foreach ($documents as $document) {
-            Phake::verify($document)->setAutoUnpublishTo(false);
+            Phake::verify($document)->setAutoUnpublishToState(false);
         }
 
         $documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
@@ -81,11 +81,11 @@ class AutoUnpublishStatusListenerTest extends AbstractBaseTestCase
     public function provideStatus()
     {
         $status = Phake::mock('OpenOrchestra\ModelBundle\Document\Status');
-        Phake::when($status)->isPublished()->thenReturn(true);
-        Phake::when($status)->isAutoUnpublishTo()->thenReturn(true);
+        Phake::when($status)->isPublishedState()->thenReturn(true);
+        Phake::when($status)->isAutoUnpublishToState()->thenReturn(true);
 
         $document0 = Phake::mock('OpenOrchestra\ModelBundle\Document\Status');
-        Phake::when($document0)->isInitial()->thenReturn(true);
+        Phake::when($document0)->isInitialState()->thenReturn(true);
 
         return array(
             array($status, array($document0)),

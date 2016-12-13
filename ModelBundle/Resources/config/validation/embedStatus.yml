@@ -10,9 +10,9 @@ OpenOrchestra\ModelBundle\Document\EmbedStatus:
             - Valid: ~
         fromRoles:
             - Valid: ~
-        published:
+        publishedState:
             - Type:
                 type: bool
-        initial :
+        initialState :
             - Type:
                 type: bool

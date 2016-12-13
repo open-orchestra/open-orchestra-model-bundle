@@ -27,12 +27,12 @@ use OpenOrchestra\ModelInterface\Model\AreaInterface;
  *   repositoryClass="OpenOrchestra\ModelBundle\Repository\NodeRepository"
  * )
  * @ODM\Indexes({
- *  @ODM\Index(keys={"nodeId"="asc", "siteId"="asc", "language"="asc", "deleted"="asc", "status.published"="asc", "version"="desc"}),
- *  @ODM\Index(keys={"siteId"="asc", "language"="asc", "nodeType"="asc", "status.published"="asc", "version"="desc"}),
- *  @ODM\Index(keys={"siteId"="asc", "deleted"="asc", "nodeType"="asc", "status.published"="asc", "version"="desc"}),
- *  @ODM\Index(keys={"siteId"="asc", "language"="asc", "deleted"="asc", "status.published"="asc", "inFooter"="asc", "version"="desc"}),
- *  @ODM\Index(keys={"siteId"="asc", "language"="asc", "deleted"="asc", "status.published"="asc", "inMenu"="asc", "version"="desc"}),
- *  @ODM\Index(keys={"deleted"="asc", "status.published"="asc", "updatedAt"="desc"}),
+ *  @ODM\Index(keys={"nodeId"="asc", "siteId"="asc", "language"="asc", "deleted"="asc", "status.publishedState"="asc", "version"="desc"}),
+ *  @ODM\Index(keys={"siteId"="asc", "language"="asc", "nodeType"="asc", "status.publishedState"="asc", "version"="desc"}),
+ *  @ODM\Index(keys={"siteId"="asc", "deleted"="asc", "nodeType"="asc", "status.publishedState"="asc", "version"="desc"}),
+ *  @ODM\Index(keys={"siteId"="asc", "language"="asc", "deleted"="asc", "status.publishedState"="asc", "inFooter"="asc", "version"="desc"}),
+ *  @ODM\Index(keys={"siteId"="asc", "language"="asc", "deleted"="asc", "status.publishedState"="asc", "inMenu"="asc", "version"="desc"}),
+ *  @ODM\Index(keys={"deleted"="asc", "status.publishedState"="asc", "updatedAt"="desc"}),
  *  @ODM\Index(keys={"nodeId"="asc", "siteId"="asc", "language"="asc", "deleted"="asc", "version"="desc"})
  * })
  * @ODM\UniqueIndex(keys={"nodeId"="asc", "siteId"="asc", "version"="asc", "language"="asc"})

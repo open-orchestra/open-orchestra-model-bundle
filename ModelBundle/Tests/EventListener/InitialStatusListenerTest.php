@@ -60,7 +60,7 @@ class InitialStatusListenerTest extends AbstractBaseTestCase
         $this->listener->preUpdate($this->lifecycleEventArgs);
 
         foreach ($documents as $document) {
-            Phake::verify($document)->setInitial(false);
+            Phake::verify($document)->setInitialState(false);
         }
 
         $documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
@@ -81,11 +81,11 @@ class InitialStatusListenerTest extends AbstractBaseTestCase
     public function provideStatus()
     {
         $status = Phake::mock('OpenOrchestra\ModelBundle\Document\Status');
-        Phake::when($status)->isPublished()->thenReturn(true);
-        Phake::when($status)->isInitial()->thenReturn(true);
+        Phake::when($status)->isPublishedState()->thenReturn(true);
+        Phake::when($status)->isInitialState()->thenReturn(true);
 
         $document0 = Phake::mock('OpenOrchestra\ModelBundle\Document\Status');
-        Phake::when($document0)->isInitial()->thenReturn(true);
+        Phake::when($document0)->isInitialState()->thenReturn(true);
 
         return array(
             array($status, array($document0)),
