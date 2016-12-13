@@ -46,6 +46,14 @@ class WorkflowProfileCollection implements WorkflowProfileCollectionInterface
     }
 
     /**
+     * @return ArrayCollection
+     */
+    public function getProfiles()
+    {
+        return $this->profiles;
+    }
+
+    /**
      * Init collections
      */
     protected function initCollections() {
