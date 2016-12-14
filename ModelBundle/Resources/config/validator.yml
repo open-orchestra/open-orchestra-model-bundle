@@ -9,9 +9,7 @@ services:
     open_orchestra_model.validator.prevent_prohibited_status_change:
         class: '%open_orchestra_model.validator.prevent_prohibited_status_change.class%'
         arguments:
-            - '@security.context'
-            - '@doctrine_mongodb.odm.default_document_manager'
-            - '@open_orchestra_model.repository.role'
+            - '@security.authorization_checker'
         tags:
             - { name: validator.constraint_validator, alias: prevent_prohibited_status_change}
     open_orchestra_model.validator.check_route_pattern:

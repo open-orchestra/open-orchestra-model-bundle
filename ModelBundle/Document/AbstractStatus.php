@@ -2,8 +2,6 @@
 
 namespace OpenOrchestra\ModelBundle\Document;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use OpenOrchestra\ModelInterface\Model\RoleInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
@@ -68,20 +66,6 @@ abstract class AbstractStatus implements StatusInterface
     protected $outOfWorkflow = false;
 
     /**
-     * @var ArrayCollection
-     *
-     * @ODM\ReferenceMany(targetDocument="OpenOrchestra\ModelInterface\Model\RoleInterface", mappedBy="fromStatus")
-     */
-    protected $fromRoles;
-
-    /**
-     * @var string
-     *
-     * @ODM\ReferenceMany(targetDocument="OpenOrchestra\ModelInterface\Model\RoleInterface", mappedBy="toStatus")
-     */
-    protected $toRoles;
-
-    /**
      * @ODM\Field(type="boolean")
      */
     protected $translationState = false;
@@ -99,8 +83,6 @@ abstract class AbstractStatus implements StatusInterface
     public function __construct()
     {
         $this->labels = array();
-        $this->fromRoles = new ArrayCollection();
-        $this->toRoles = new ArrayCollection();
     }
 
     /**
@@ -292,54 +274,6 @@ abstract class AbstractStatus implements StatusInterface
     public function isAutoUnpublishToState()
     {
         return $this->autoUnpublishToState;
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getFromRoles()
-    {
-        return $this->fromRoles;
-    }
-
-    /**
-     * @param RoleInterface $role
-     */
-    public function addFromRole(RoleInterface $role)
-    {
-        $this->fromRoles->add($role);
-    }
-
-    /**
-     * @param RoleInterface $role
-     */
-    public function removeFromRole(RoleInterface $role)
-    {
-        $this->fromRoles->removeElement($role);
-    }
-
-    /**
-     * @param RoleInterface $role
-     */
-    public function addToRole(RoleInterface $role)
-    {
-        $this->toRoles->add($role);
-    }
-
-    /**
-     * @param RoleInterface $role
-     */
-    public function removeToRole(RoleInterface $role)
-    {
-        $this->toRoles->removeElement($role);
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getToRoles()
-    {
-        return $this->toRoles;
     }
 
     /**

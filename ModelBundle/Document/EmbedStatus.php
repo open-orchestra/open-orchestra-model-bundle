@@ -28,14 +28,6 @@ class EmbedStatus extends AbstractStatus implements EmbedStatusInterface
         $this->setBlockedEdition($status->isBlockedEdition());
         $this->setOutOfWorkflow($status->isOutOfWorkflow());
         $this->setTranslationState($status->isTranslationState());
-
-        foreach ($status->getToRoles() as $toRole) {
-            $this->addToRole($toRole);
-        }
-
-        foreach ($status->getFromRoles() as $fromRole) {
-            $this->addFromRole($fromRole);
-        }
     }
 
     /**

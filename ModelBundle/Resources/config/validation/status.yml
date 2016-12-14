@@ -6,10 +6,6 @@ OpenOrchestra\ModelBundle\Document\Status:
             - NotBlank: ~
         labels:
             - Valid: ~
-        toRoles:
-            - Valid: ~
-        fromRoles:
-            - Valid: ~
         publishedState:
             - Type:
                 type: bool
