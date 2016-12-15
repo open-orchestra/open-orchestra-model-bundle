@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\Validator\Constraints;
 
+use Doctrine\ODM\MongoDB\DocumentManager;
 use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -14,13 +15,16 @@ use Symfony\Component\Validator\ConstraintValidator;
 class PreventProhibitedStatusChangeValidator extends ConstraintValidator
 {
     protected $authorizationChecker;
+    protected $objectManager;
 
     /**
      * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param DocumentManager                $objectManager
      */
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker)
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker, DocumentManager $objectManager)
     {
         $this->authorizationChecker = $authorizationChecker;
+        $this->objectManager = $objectManager;
     }
 
     /**
@@ -35,8 +39,16 @@ class PreventProhibitedStatusChangeValidator extends ConstraintValidator
             return;
         }
 
+        $oldNode = $this->objectManager->getUnitOfWork()->getOriginalDocumentData($value);
         $status = $value->getStatus();
-        if (!$status instanceof StatusInterface) {
+        $oldStatus = $oldNode['status'];
+
+        if (!$status instanceof StatusInterface &&
+            !$oldStatus instanceof StatusInterface) {
+            return ;
+        }
+
+        if ($oldStatus->getId() === $status->getId()) {
             return;
         }
 

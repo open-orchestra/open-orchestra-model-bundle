@@ -18,19 +18,15 @@ class PreventProhibitedStatusChangeValidatorTest extends AbstractBaseTestCase
     protected $validator;
     protected $authorizationChecker;
 
-    protected $roleRepository;
     protected $documentManager;
     protected $oldRoleName;
     protected $constraint;
     protected $constraintViolationBuilder;
     protected $unitOfWork;
     protected $oldStatus;
-    protected $roleName;
-    protected $oldRole;
     protected $oldNode;
     protected $context;
     protected $status;
-    protected $role;
     protected $node;
 
     /**
@@ -51,8 +47,18 @@ class PreventProhibitedStatusChangeValidatorTest extends AbstractBaseTestCase
         $this->node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
         Phake::when($this->node)->getStatus()->thenReturn($this->status);
 
+        $this->oldStatus = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
+        Phake::when($this->oldStatus)->getId()->thenReturn('oldId');
+        $this->oldNode = array('status' => $this->oldStatus);
+
+        $this->unitOfWork = Phake::mock('Doctrine\ODM\MongoDB\UnitOfWork');
+        Phake::when($this->unitOfWork)->getOriginalDocumentData(Phake::anyParameters())->thenReturn($this->oldNode);
+        $this->documentManager = Phake::mock('Doctrine\ODM\MongoDB\DocumentManager');
+        Phake::when($this->documentManager)->getUnitOfWork()->thenReturn($this->unitOfWork);
+
         $this->validator = new PreventProhibitedStatusChangeValidator(
-            $this->authorizationChecker
+            $this->authorizationChecker,
+            $this->documentManager
         );
         $this->validator->initialize($this->context);
     }
