@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ModelBundle\Document;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
