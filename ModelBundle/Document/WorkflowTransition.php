@@ -12,7 +12,7 @@ use OpenOrchestra\ModelInterface\Model\StatusInterface;
 class WorkflowTransition implements WorkflowTransitionInterface
 {
     /**
-     * @var OpenOrchestra\ModelInterface\Model\StatusInterface
+     * @var \OpenOrchestra\ModelInterface\Model\StatusInterface
      *
      * @ODM\ReferenceOne(
      *  targetDocument="OpenOrchestra\ModelInterface\Model\StatusInterface"
@@ -21,7 +21,7 @@ class WorkflowTransition implements WorkflowTransitionInterface
     protected $statusFrom;
 
     /**
-     * @var OpenOrchestra\ModelInterface\Model\StatusInterface
+     * @var \OpenOrchestra\ModelInterface\Model\StatusInterface
      *
      * @ODM\ReferenceOne(
      *  targetDocument="OpenOrchestra\ModelInterface\Model\StatusInterface"
@@ -30,7 +30,7 @@ class WorkflowTransition implements WorkflowTransitionInterface
     protected $statusTo;
 
     /**
-     * @param string $status
+     * @param StatusInterface $status
      */
     public function setStatusFrom(StatusInterface $status)
     {
@@ -46,7 +46,7 @@ class WorkflowTransition implements WorkflowTransitionInterface
     }
 
     /**
-     * @param string $status
+     * @param StatusInterface $status
      */
     public function setStatusTo(StatusInterface $status)
     {

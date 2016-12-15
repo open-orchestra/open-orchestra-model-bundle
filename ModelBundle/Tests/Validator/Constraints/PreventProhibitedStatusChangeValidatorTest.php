@@ -19,7 +19,6 @@ class PreventProhibitedStatusChangeValidatorTest extends AbstractBaseTestCase
     protected $authorizationChecker;
 
     protected $roleRepository;
-
     protected $documentManager;
     protected $oldRoleName;
     protected $constraint;
@@ -47,9 +46,10 @@ class PreventProhibitedStatusChangeValidatorTest extends AbstractBaseTestCase
         Phake::when($this->context)->buildViolation(Phake::anyParameters())->thenReturn($this->constraintViolationBuilder);
         Phake::when($this->constraintViolationBuilder)->atPath(Phake::anyParameters())->thenReturn($this->constraintViolationBuilder);
 
+        $this->status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
+
         $this->node = Phake::mock('OpenOrchestra\ModelInterface\Model\NodeInterface');
-        $status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
-        Phake::when($this->node)->getStatus()->thenReturn($status);
+        Phake::when($this->node)->getStatus()->thenReturn($this->status);
 
         $this->validator = new PreventProhibitedStatusChangeValidator(
             $this->authorizationChecker

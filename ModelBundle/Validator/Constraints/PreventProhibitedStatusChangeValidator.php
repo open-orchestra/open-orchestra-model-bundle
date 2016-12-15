@@ -18,7 +18,8 @@ class PreventProhibitedStatusChangeValidator extends ConstraintValidator
     /**
      * @param AuthorizationCheckerInterface $authorizationChecker
      */
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker) {
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker)
+    {
         $this->authorizationChecker = $authorizationChecker;
     }
 
@@ -39,7 +40,7 @@ class PreventProhibitedStatusChangeValidator extends ConstraintValidator
             return;
         }
 
-        if (!$this->authorizationChecker->isGranted($status, $value)) {
+        if (! $this->authorizationChecker->isGranted($status, $value)) {
             $this->context->buildViolation($constraint->message)
                 ->atPath('status')
                 ->addViolation();
