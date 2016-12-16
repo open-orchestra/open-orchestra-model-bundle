@@ -33,8 +33,6 @@ class EmbedStatusToStatusTransformerTest extends AbstractBaseTestCase
 
         $this->status = Phake::mock('OpenOrchestra\ModelInterface\Model\StatusInterface');
         Phake::when($this->status)->getId()->thenReturn($this->statusId);
-        Phake::when($this->status)->getToRoles()->thenReturn(new ArrayCollection());
-        Phake::when($this->status)->getFromRoles()->thenReturn(new ArrayCollection());
         Phake::when($this->status)->getLabels()->thenReturn(array());
 
         $this->embedStatus = Phake::mock('OpenOrchestra\ModelBundle\Document\EmbedStatus');

@@ -67,7 +67,6 @@ class OpenOrchestraModelExtensionTest extends AbstractBaseTestCase
             array("empty", "OpenOrchestra\\ModelBundle\\Document\\Status"           , "status"            , "OpenOrchestra\\ModelBundle\\Repository\\StatusRepository"          , true),
             array("empty", "OpenOrchestra\\ModelBundle\\Document\\EmbedStatus"      , "embed_status"                                                                                  ),
             array("empty", "OpenOrchestra\\ModelBundle\\Document\\Theme"            , "theme"             , "OpenOrchestra\\ModelBundle\\Repository\\ThemeRepository"                 ),
-            array("empty", "OpenOrchestra\\ModelBundle\\Document\\Role"             , "role"              , "OpenOrchestra\\ModelBundle\\Repository\\RoleRepository"            , true),
             array("empty", "OpenOrchestra\\ModelBundle\\Document\\Redirection"      , "redirection"       , "OpenOrchestra\\ModelBundle\\Repository\\RedirectionRepository"     , true),
             array("empty", "OpenOrchestra\\ModelBundle\\Document\\Keyword"          , "keyword"           , "OpenOrchestra\\ModelBundle\\Repository\\KeywordRepository"         , true),
             array("empty", "OpenOrchestra\\ModelBundle\\Document\\TranslatedValue"  , "translated_value"                                                                              ),
@@ -86,17 +85,10 @@ class OpenOrchestraModelExtensionTest extends AbstractBaseTestCase
             array("value", "FakeEmbedStatus"                                        , "embed_status"                                                                                  ),
             array("value", "FakeTranslatedValue"                                    , "translated_value"                                                                              ),
             array("value", "FakeTheme"                                              , "theme"             , "FakeThemeRepository"                                                     ),
-            array("value", "FakeRole"                                               , "role"              , "FakeRoleRepository"                                                      ),
             array("value", "FakeRedirection"                                        , "redirection"       , "FakeRedirectionRepository"                                               ),
             array("value", "FakeTrashItem"                                          , "trash_item"        , "FakeTrashItemRepository"                                                 ),
             array("value", "FakeKeyword"                                            , "keyword"           , "FakeKeywordRepository"                                                   ),
-            array("empty", "OpenOrchestra\\ModelBundle\\Document\\WorkflowFunction" , "workflow_function" , "OpenOrchestra\\ModelBundle\\Repository\\WorkflowFunctionRepository", true),
-            array("empty", "OpenOrchestra\\ModelBundle\\Document\\WorkflowRight"    , "workflow_right"    , "OpenOrchestra\\ModelBundle\\Repository\\WorkflowRightRepository"         ),
-            array("empty", "OpenOrchestra\\ModelBundle\\Document\\Authorization"    , "authorization"                                                                                 ),
             array("empty", "OpenOrchestra\\ModelBundle\\Document\\Reference"        , "reference"                                                                                     ),
-            array("value", "FakeClassWorkflowFunction"                              , "workflow_function" , "FakeRepositoryWorkflowFunction"                                          ),
-            array("value", "FakeClassWorkflowRight"                                 , "workflow_right"    , "FakeRepositoryWorkflowRight"                                             ),
-            array("value", "FakeClassAuthorization"                                 , "authorization"                                                                                 ),
             array("value", "FakeClassReference"                                     , "reference"                                                                                     )
         );
     }

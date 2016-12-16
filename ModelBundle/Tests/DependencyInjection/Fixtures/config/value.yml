@@ -21,9 +21,6 @@ open_orchestra_model:
         theme:
             class: FakeTheme
             repository: FakeThemeRepository
-        role:
-            class: FakeRole
-            repository: FakeRoleRepository
         redirection:
             class: FakeRedirection
             repository: FakeRedirectionRepository
@@ -49,13 +46,5 @@ open_orchestra_model:
             class: FakeEmbedStatus
         translated_value:
             class: FakeTranslatedValue
-        workflow_function:
-            class: FakeClassWorkflowFunction
-            repository: FakeRepositoryWorkflowFunction
-        workflow_right:
-            class: FakeClassWorkflowRight
-            repository: FakeRepositoryWorkflowRight
-        authorization:
-            class: FakeClassAuthorization
         reference:
             class: FakeClassReference

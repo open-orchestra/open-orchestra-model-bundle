@@ -6,10 +6,6 @@ OpenOrchestra\ModelBundle\Document\EmbedStatus:
             - NotBlank: ~
         labels:
             - Valid: ~
-        toRoles:
-            - Valid: ~
-        fromRoles:
-            - Valid: ~
         publishedState:
             - Type:
                 type: bool

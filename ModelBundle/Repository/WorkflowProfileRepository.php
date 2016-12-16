@@ -26,18 +26,18 @@ class WorkflowProfileRepository extends AbstractAggregateRepository implements W
 
         $qa = $this->createAggregationQuery();
         $qa->match(
-          array(
-               'transitions' => array(
-                   'statusFrom' => array (
-                       '$ref' => $statusClassMetaData->getCollection(),
-                       '$id' => new \MongoId($fromStatus->getId()),
-                       '$db' => $this->dm->getDocumentDatabase($statusClassMetaData->name)->getName()
-                   ),
-                   'statusTo' => array (
-                       '$ref' => $statusClassMetaData->getCollection(),
-                       '$id' => new \MongoId($toStatus->getId()),
-                       '$db' => $this->dm->getDocumentDatabase($statusClassMetaData->name)->getName()
-                   )
+            array(
+                'transitions' => array(
+                    'statusFrom' => array (
+                        '$ref' => $statusClassMetaData->getCollection(),
+                        '$id' => new \MongoId($fromStatus->getId()),
+                        '$db' => $this->dm->getDocumentDatabase($statusClassMetaData->name)->getName()
+                    ),
+                    'statusTo' => array (
+                        '$ref' => $statusClassMetaData->getCollection(),
+                        '$id' => new \MongoId($toStatus->getId()),
+                        '$db' => $this->dm->getDocumentDatabase($statusClassMetaData->name)->getName()
+                    )
                 )
             )
         );

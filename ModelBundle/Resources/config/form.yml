@@ -1,7 +1,6 @@
 parameters:
     open_orchestra_model.type.group_site_choice.class: OpenOrchestra\ModelBundle\Form\Type\GroupSiteChoiceType
     open_orchestra_model.type.site_theme_choice.class: OpenOrchestra\ModelBundle\Form\Type\SiteThemeChoiceType
-    open_orchestra_model.type.workflow_role_choice.class: OpenOrchestra\ModelBundle\Form\Type\WorkflowRoleChoiceType
     open_orchestra_model.type.status_choice.class: OpenOrchestra\ModelBundle\Form\Type\StatusChoiceType
 
 services:
@@ -18,10 +17,3 @@ services:
             - '%open_orchestra_model.document.theme.class%'
         tags:
             - { name: form.type, alias: oo_site_theme_choice }
-    open_orchestra_model.type.workflow_role_choice:
-        class: '%open_orchestra_model.type.workflow_role_choice.class%'
-        arguments:
-            - '%open_orchestra_model.document.role.class%'
-            - '@open_orchestra_model.repository.role'
-        tags:
-            - { name: form.type, alias: oo_workflow_role_choice}
