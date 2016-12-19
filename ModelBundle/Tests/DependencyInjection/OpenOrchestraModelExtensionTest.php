@@ -64,7 +64,7 @@ class OpenOrchestraModelExtensionTest extends AbstractBaseTestCase
             '9'  => array("empty", "OpenOrchestra\\ModelBundle\\Document\\SiteAlias"        , "site_alias"                                                                                    ),
             '10' => array("empty", "OpenOrchestra\\ModelBundle\\Document\\FieldOption"      , "field_option"                                                                                  ),
             '11' => array("empty", "OpenOrchestra\\ModelBundle\\Document\\FieldType"        , "field_type"                                                                                    ),
-            '12' => array("empty", "OpenOrchestra\\ModelBundle\\Document\\Status"           , "status"            , "OpenOrchestra\\ModelBundle\\Repository\\StatusRepository"          , true),
+            '12' => array("empty", "OpenOrchestra\\ModelBundle\\Document\\Status"           , "status"            , "OpenOrchestra\\ModelBundle\\Repository\\StatusRepository"                ),
             '13' => array("empty", "OpenOrchestra\\ModelBundle\\Document\\EmbedStatus"      , "embed_status"                                                                                  ),
             '14' => array("empty", "OpenOrchestra\\ModelBundle\\Document\\Theme"            , "theme"             , "OpenOrchestra\\ModelBundle\\Repository\\ThemeRepository"                 ),
             '15' => array("empty", "OpenOrchestra\\ModelBundle\\Document\\Redirection"      , "redirection"       , "OpenOrchestra\\ModelBundle\\Repository\\RedirectionRepository"     , true),
