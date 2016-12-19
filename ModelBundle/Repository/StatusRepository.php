@@ -217,4 +217,23 @@ class StatusRepository extends AbstractAggregateRepository implements StatusRepo
 
         return $qa;
     }
+
+    /**
+     * @param array $statusIds
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
+    public function removeStatuses(array $statusIds)
+    {
+        $statusMongoIds = array();
+        foreach ($statusIds as $statusId) {
+            $statusMongoIds[] = new \MongoId($statusId);
+        }
+
+        $qb = $this->createQueryBuilder();
+        $qb->remove()
+            ->field('id')->in($statusMongoIds)
+            ->getQuery()
+            ->execute();
+    }
 }
