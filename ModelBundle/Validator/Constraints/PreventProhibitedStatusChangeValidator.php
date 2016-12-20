@@ -40,6 +40,10 @@ class PreventProhibitedStatusChangeValidator extends ConstraintValidator
         }
 
         $oldNode = $this->objectManager->getUnitOfWork()->getOriginalDocumentData($value);
+        if (empty($oldNode)) {
+            return ;
+        }
+
         $status = $value->getStatus();
         $oldStatus = $oldNode['status'];
 
