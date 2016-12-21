@@ -39,24 +39,28 @@ class PreventProhibitedStatusChangeValidator extends ConstraintValidator
             return;
         }
 
-        $oldNode = $this->objectManager->getUnitOfWork()->getOriginalDocumentData($value);
-        if (empty($oldNode)) {
+        $originalDoc = $this->objectManager->getUnitOfWork()->getOriginalDocumentData($value);
+        if (empty($originalDoc)) {
             return ;
         }
 
         $status = $value->getStatus();
-        $oldStatus = $oldNode['status'];
+        $oldStatus = $originalDoc['status'];
 
-        if (!$status instanceof StatusInterface &&
-            !$oldStatus instanceof StatusInterface) {
-            return ;
+        if (!$status instanceof StatusInterface || !$oldStatus instanceof StatusInterface) {
+            return;
         }
 
         if ($oldStatus->getId() === $status->getId()) {
             return;
         }
 
-        if (! $this->authorizationChecker->isGranted($status, $value)) {
+        $oldNode = clone $value;
+        $this->objectManager->detach($oldNode);
+        $oldNode->setStatus($originalDoc['status']);
+
+        if (!$this->authorizationChecker->isGranted($status, $oldNode)) {
+            echo 'pas autorisé';
             $this->context->buildViolation($constraint->message)
                 ->atPath('status')
                 ->addViolation();
