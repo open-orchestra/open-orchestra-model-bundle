@@ -1124,6 +1124,16 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         return $this->countDocumentAggregateQuery($qa) > 0;
     }
 
+    public function removeBlock($blockId,  $nodeId, $siteId, $language, $version)
+    {
+        $qb = $this->createQueryBuilder();
+        $qb->field('nodeId')->equals($nodeId)
+           ->field('siteId')->equals($siteId)
+           ->field('language')->equals($language)
+           ->field('version')->equals($version);
+        dump($qb->getQuery()->execute());
+    }
+
     /**
      * @param PaginateFinderConfiguration $configuration
      *
