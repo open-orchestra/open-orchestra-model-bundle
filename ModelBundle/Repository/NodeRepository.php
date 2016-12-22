@@ -1124,14 +1124,28 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         return $this->countDocumentAggregateQuery($qa) > 0;
     }
 
-    public function removeBlock($blockId,  $nodeId, $siteId, $language, $version)
+    /**
+     * @param string  $blockId
+     * @param string  $areaName
+     * @param string  $nodeId
+     * @param string  $siteId
+     * @param string  $language
+     * @param integer $version
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
+    public function removeBlockInArea($blockId, $areaName, $nodeId, $siteId, $language, $version)
     {
         $qb = $this->createQueryBuilder();
-        $qb->field('nodeId')->equals($nodeId)
-           ->field('siteId')->equals($siteId)
-           ->field('language')->equals($language)
-           ->field('version')->equals($version);
-        dump($qb->getQuery()->execute());
+        $qb->updateMany()
+            ->field('nodeId')->equals($nodeId)
+            ->field('siteId')->equals($siteId)
+            ->field('language')->equals($language)
+            ->field('version')->equals($version)
+            ->field('areas.'.$areaName.'.blocks.$id')->equals(new \MongoId($blockId))
+            ->field('areas.'.$areaName.'.blocks')->pull(array('$id' => new \MongoId($blockId)))
+            ->getQuery()
+            ->execute();
     }
 
     /**
