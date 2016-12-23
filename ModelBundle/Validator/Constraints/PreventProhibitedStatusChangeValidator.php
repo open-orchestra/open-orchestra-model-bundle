@@ -42,6 +42,7 @@ class PreventProhibitedStatusChangeValidator extends ConstraintValidator
         $originalDoc = $this->objectManager->getUnitOfWork()->getOriginalDocumentData($value);
         if (empty($originalDoc)) {
             return ;
+            return;
         }
 
         $status = $value->getStatus();
@@ -60,7 +61,6 @@ class PreventProhibitedStatusChangeValidator extends ConstraintValidator
         $oldNode->setStatus($originalDoc['status']);
 
         if (!$this->authorizationChecker->isGranted($status, $oldNode)) {
-            echo 'pas autorisé';
             $this->context->buildViolation($constraint->message)
                 ->atPath('status')
                 ->addViolation();
