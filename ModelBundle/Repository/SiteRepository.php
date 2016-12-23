@@ -3,19 +3,16 @@
 namespace OpenOrchestra\ModelBundle\Repository;
 
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
-use OpenOrchestra\Pagination\Configuration\FinderConfiguration;
-use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use OpenOrchestra\ModelInterface\Repository\SiteRepositoryInterface;
-use OpenOrchestra\Pagination\MongoTrait\PaginationTrait;
+use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use OpenOrchestra\Repository\AbstractAggregateRepository;
+use Solution\MongoAggregation\Pipeline\Stage;
 
 /**
  * Class SiteRepository
  */
 class SiteRepository extends AbstractAggregateRepository implements SiteRepositoryInterface
 {
-    use PaginationTrait;
-
     /**
      * @param string $siteId
      *
@@ -48,48 +45,9 @@ class SiteRepository extends AbstractAggregateRepository implements SiteReposito
     }
 
     /**
-     * @param boolean                     $deleted
-     * @param PaginateFinderConfiguration $configuration
-     *
-     * @return array
-     */
-    public function findByDeletedForPaginate($deleted, PaginateFinderConfiguration $configuration)
-    {
-        $qa = $this->createAggregateQueryWithDeletedFilter($deleted);
-        $qa = $this->generateFilterForPaginate($qa, $configuration);
-
-        return $this->hydrateAggregateQuery($qa);
-    }
-
-    /**
-     * @param boolean $deleted
-     *
-     * @return int
-     */
-    public function countByDeleted($deleted)
-    {
-        $qa = $this->createAggregateQueryWithDeletedFilter($deleted);
-
-        return $this->countDocumentAggregateQuery($qa);
-    }
-
-    /**
-     * @param boolean             $deleted
-     * @param FinderConfiguration $configuration
-     *
-     * @return int
-     */
-    public function countWithSearchFilterByDeleted($deleted, FinderConfiguration $configuration)
-    {
-        $qa = $this->createAggregateQueryWithDeletedFilter($deleted);
-        $qa = $this->generateFilter($qa, $configuration);
-
-        return $this->countDocumentAggregateQuery($qa);
-    }
-    /**
      * @param string $domain
      *
-     * @return Doctrine\ODM\MongoDB\Cursor
+     * @return \Doctrine\ODM\MongoDB\Cursor
      */
     public function findByAliasDomain($domain)
     {
@@ -128,6 +86,95 @@ class SiteRepository extends AbstractAggregateRepository implements SiteReposito
         $qb->field('siteId')->in($ids);
 
         return $qb->getQuery()->execute();
+    }
+
+    /**
+     * @param PaginateFinderConfiguration $configuration
+     * @param array|null                  $siteIds
+     *
+     * @return array
+     */
+    public function findForPaginateFilterBySiteIds(PaginateFinderConfiguration $configuration, array $siteIds = null)
+    {
+        $qa = $this->createAggregateQueryWithDeletedFilter(false);
+        if (null !== $siteIds) {
+            $qa->match(array('siteId' => array('$in' => $siteIds)));
+        }
+
+        $this->filterSearch($configuration, $qa);
+
+        $order = $configuration->getOrder();
+        if (!empty($order)) {
+            $qa->sort($order);
+        }
+
+        $qa->skip($configuration->getSkip());
+        $qa->limit($configuration->getLimit());
+
+        return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param array|null $siteIds
+     *
+     * @return int
+     */
+    public function countFilterBySiteIds(array $siteIds = null)
+    {
+        $qa = $this->createAggregateQueryWithDeletedFilter(false);
+        if (null !== $siteIds) {
+            $qa->match(array('siteId' => array('$in' => $siteIds)));
+        }
+
+        return $this->countDocumentAggregateQuery($qa);
+    }
+
+    /**
+     * @param PaginateFinderConfiguration $configuration
+     * @param array|null                  $siteIds
+     *
+     * @return int
+     */
+    public function countWithFilterAndSiteIds(PaginateFinderConfiguration $configuration, array $siteIds = null)
+    {
+        $qa = $this->createAggregateQueryWithDeletedFilter(false);
+        if (null !== $siteIds) {
+            $qa->match(array('siteId' => array('$in' => $siteIds)));
+        }
+        $this->filterSearch($configuration, $qa);
+
+        return $this->countDocumentAggregateQuery($qa);
+    }
+
+    /**
+     * @param array $siteIds
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
+    public function removeSites(array $siteIds)
+    {
+        $qb = $this->createQueryBuilder();
+        $qb->updateMany()
+            ->field('siteId')->in($siteIds)
+            ->field('deleted')->set(true)
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * @param PaginateFinderConfiguration $configuration
+     * @param Stage                       $qa
+     *
+     * @return array
+     */
+    protected function filterSearch(PaginateFinderConfiguration $configuration, Stage $qa)
+    {
+        $search = $configuration->getSearchIndex('name');
+        if (null !== $search && $search !== '') {
+            $qa->match(array('name' => new \MongoRegex('/.*'.$search.'.*/i')));
+        }
+
+        return $qa;
     }
 
     /**

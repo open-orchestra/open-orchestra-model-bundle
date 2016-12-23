@@ -59,7 +59,7 @@ class OpenOrchestraModelExtensionTest extends AbstractBaseTestCase
             '4'  => array("empty", "OpenOrchestra\\ModelBundle\\Document\\Node"             , "node"              , "OpenOrchestra\\ModelBundle\\Repository\\NodeRepository"                  ),
             '5'  => array("empty", "OpenOrchestra\\ModelBundle\\Document\\Area"             , "area"                                                                                          ),
             '6'  => array("empty", "OpenOrchestra\\ModelBundle\\Document\\Block"            , "block"                                                                                         ),
-            '7'  => array("empty", "OpenOrchestra\\ModelBundle\\Document\\Site"             , "site"              , "OpenOrchestra\\ModelBundle\\Repository\\SiteRepository"            , true),
+            '7'  => array("empty", "OpenOrchestra\\ModelBundle\\Document\\Site"             , "site"              , "OpenOrchestra\\ModelBundle\\Repository\\SiteRepository"                  ),
             '8'  => array("empty", "OpenOrchestra\\ModelBundle\\Document\\RouteDocument"    , "route_document"    , "OpenOrchestra\\ModelBundle\\Repository\\RouteDocumentRepository"         ),
             '9'  => array("empty", "OpenOrchestra\\ModelBundle\\Document\\SiteAlias"        , "site_alias"                                                                                    ),
             '10' => array("empty", "OpenOrchestra\\ModelBundle\\Document\\FieldOption"      , "field_option"                                                                                  ),
