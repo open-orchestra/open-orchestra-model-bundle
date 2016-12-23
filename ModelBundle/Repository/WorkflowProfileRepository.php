@@ -102,11 +102,29 @@ class WorkflowProfileRepository extends AbstractAggregateRepository implements W
      */
     protected function filterSearch(PaginateFinderConfiguration $configuration, Stage $qa)
     {
-        $search = $configuration->getSearchIndex('label');
-        if (null !== $search && $search !== '') {
-            $qa->match(array('label' => new \MongoRegex('/.*'.$search.'.*/i')));
+        $label = $configuration->getSearchIndex('label');
+        $language = $configuration->getSearchIndex('language');
+
+        if (null !== $label && '' !== $label && null !== $language && '' !== $language) {
+            $qa->match(array('labels.' . $language => new \MongoRegex('/.*'.$label.'.*/i')));
         }
 
         return $qa;
+    }
+
+    /**
+     * @param array $workflowProfileIds
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
+    public function removeWorkflowProfiles(array $workflowProfileIds)
+    {
+        array_walk($workflowProfileIds, function(&$workflowProfileId) {$workflowProfileId = new \MongoId($workflowProfileId);});
+
+        $qb = $this->createQueryBuilder();
+        $qb->remove()
+            ->field('id')->in($workflowProfileIds)
+            ->getQuery()
+            ->execute();
     }
 }

@@ -27,11 +27,18 @@ class WorkflowProfile implements WorkflowProfileInterface
     protected $id;
 
     /**
-     * @var string $label
+     * @var array $labels
      *
-     * @ODM\String
+     * @ODM\Field(type="hash")
      */
-    protected $label = '';
+    protected $labels;
+
+    /**
+     * @var array $descriptions
+     *
+     * @ODM\Field(type="hash")
+     */
+    protected $descriptions;
 
     /**
      * @var Collection
@@ -44,13 +51,12 @@ class WorkflowProfile implements WorkflowProfileInterface
 
     /**
      * Constructor
-     *
-     * @param string $label
      */
-    public function __construct($label = '')
+    public function __construct()
     {
         $this->initCollections();
-        $this->label = $label;
+        $this->labels = array();
+        $this->descriptions = array();
     }
 
     /**
@@ -59,6 +65,120 @@ class WorkflowProfile implements WorkflowProfileInterface
     public function __clone()
     {
         $this->initCollections();
+    }
+
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param string $language
+     * @param string $label
+     */
+    public function addLabel($language, $label)
+    {
+        if (is_string($language) && is_string($label)) {
+            $this->labels[$language] = $label;
+        }
+    }
+
+    /**
+     * @param string $language
+     */
+    public function removeLabel($language)
+    {
+        if (is_string($language) && isset($this->labels[$language])) {
+            unset($this->labels[$language]);
+        }
+    }
+
+    /**
+     * @param string $language
+     *
+     * @return string
+     */
+    public function getLabel($language)
+    {
+        if (isset($this->labels[$language])) {
+            return $this->labels[$language];
+        }
+
+        return '';
+    }
+
+    /**
+     * @return array
+     */
+    public function getLabels()
+    {
+        return $this->labels;
+    }
+
+    /**
+     * @param array $labels
+     */
+    public function setLabels(array $labels)
+    {
+        foreach ($labels as $language => $label) {
+            $this->addLabel($language, $label);
+        }
+    }
+
+    /**
+     * @param string $language
+     * @param string $description
+     */
+    public function addDescription($language, $description)
+    {
+        if (is_string($language) && is_string($description)) {
+            $this->descriptions[$language] = $description;
+        }
+    }
+
+    /**
+     * @param string $language
+     */
+    public function removeDescription($language)
+    {
+        if (is_string($language) && isset($this->labels[$language])) {
+            unset($this->labels[$language]);
+        }
+    }
+
+    /**
+     * @param string $language
+     *
+     * @return string
+     */
+    public function getDescription($language)
+    {
+        if (isset($this->descriptions[$language])) {
+            return $this->descriptions[$language];
+        }
+
+        return '';
+    }
+
+    /**
+     * @return array
+     */
+    public function getDescriptions()
+    {
+        return $this->descriptions;
+    }
+
+    /**
+     * @param array $descriptions
+     */
+    public function setDescriptions(array $descriptions)
+    {
+        foreach ($descriptions as $language => $description) {
+            $this->addDescription($language, $description);
+        }
     }
 
     /**

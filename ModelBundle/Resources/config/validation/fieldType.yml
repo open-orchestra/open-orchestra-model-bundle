@@ -12,6 +12,6 @@ OpenOrchestra\ModelBundle\Document\FieldType:
         fieldId:
             - OpenOrchestra\ModelBundle\Validator\Constraints\IdAuthorizedCharacter: ~
         labels:
-            - Valid: ~
+            - NotBlank: ~
         options:
             - Valid: ~
