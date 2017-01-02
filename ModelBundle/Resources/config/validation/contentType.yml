@@ -9,6 +9,6 @@ OpenOrchestra\ModelBundle\Document\ContentType:
         contentTypeId:
             - OpenOrchestra\ModelBundle\Validator\Constraints\IdAuthorizedCharacter: ~
         names:
-            - Valid: ~
+            - NotBlank: ~
         fields:
             - Valid: ~

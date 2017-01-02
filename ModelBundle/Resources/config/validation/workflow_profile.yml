@@ -1,0 +1,6 @@
+OpenOrchestra\ModelBundle\Document\WorkflowProfile:
+    properties:
+        labels:
+            - NotBlank: ~
+        descriptions:
+            - NotBlank: ~

@@ -5,7 +5,7 @@ OpenOrchestra\ModelBundle\Document\EmbedStatus:
         displayColor:
             - NotBlank: ~
         labels:
-            - Valid: ~
+            - NotBlank: ~
         publishedState:
             - Type:
                 type: bool
