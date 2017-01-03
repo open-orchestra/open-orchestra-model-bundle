@@ -30,7 +30,7 @@ class Area implements AreaInterface
     /**
      * Set blocks
      *
-     * @param array $blocks
+     * @param ArrayCollection $blocks
      */
     public function setBlocks(ArrayCollection $blocks)
     {
@@ -50,7 +50,7 @@ class Area implements AreaInterface
     }
 
     /**
-     * @param array $block
+     * @param BlockInterface $block
      */
     public function addBlock(BlockInterface $block)
     {

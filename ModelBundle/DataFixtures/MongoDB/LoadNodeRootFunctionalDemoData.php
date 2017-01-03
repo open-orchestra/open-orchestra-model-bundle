@@ -127,6 +127,7 @@ class LoadNodeRootFunctionalDemoData extends AbstractFixture implements Containe
         $siteBlockLogo->setLabel('Wysiwyg logo');
         $siteBlockLogo->setStyle('default');
         $siteBlockLogo->setComponent(TinyMCEWysiwygStrategy::NAME);
+        $siteBlockLogo->setTransverse(true);
         $orchestraTitle = "Open Orchestra";
         if ($this->hasReference('logo-orchestra')) {
             $orchestraTitle = '[media=original]' . $this->getReference('logo-orchestra')->getId() . '[/media]';
@@ -143,11 +144,13 @@ class LoadNodeRootFunctionalDemoData extends AbstractFixture implements Containe
         $siteBlockMainMenu->setLabel('Menu');
         $siteBlockMainMenu->setComponent('menu');
         $siteBlockMainMenu->setStyle('default');
+        $siteBlockMainMenu->setTransverse(true);
         $this->generateBlock($manager, $siteBlockMainMenu);
 
         $siteBlockFooter = new Block();
         $siteBlockFooter->setLabel('Wysiwyg footer');
         $siteBlockFooter->setComponent(TinyMCEWysiwygStrategy::NAME);
+        $siteBlockFooter->setTransverse(true);
         $siteBlockFooter->setAttributes(array(
             "htmlContent" => <<<EOF
 <div class='footer-networks'>
@@ -175,6 +178,7 @@ EOF
         $siteBlockFooterMenu->setLabel('footer menu');
         $siteBlockFooterMenu->setStyle('default');
         $siteBlockFooterMenu->setComponent(FooterStrategy::NAME);
+        $siteBlockFooterMenu->setTransverse(true);
         $this->generateBlock($manager, $siteBlockFooterMenu);
 
         $siteBlockContact = new Block();
@@ -186,6 +190,7 @@ EOF
         $siteBlockLanguage = new Block();
         $siteBlockLanguage->setLabel('Language list');
         $siteBlockLanguage->setComponent(LanguageListStrategy::NAME);
+        $siteBlockLanguage->setTransverse(true);
         $this->generateBlock($manager, $siteBlockLanguage);
     }
 }

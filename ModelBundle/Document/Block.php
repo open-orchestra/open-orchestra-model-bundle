@@ -37,7 +37,7 @@ class Block implements BlockInterface
      *
      * @ODM\Field(type="boolean")
      */
-    protected $transverse;
+    protected $transverse = false;
 
     /**
      * @var string $label
