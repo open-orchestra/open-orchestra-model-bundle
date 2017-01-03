@@ -182,30 +182,6 @@ class WorkflowProfile implements WorkflowProfileInterface
     }
 
     /**
-     * @return string
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param string $label
-     */
-    public function setLabel($label)
-    {
-        $this->label = $label;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLabel()
-    {
-        return $this->label;
-    }
-
-    /**
      * @param WorkflowTransitionInterface $transition
      */
     public function addTransition(WorkflowTransitionInterface $transition)
