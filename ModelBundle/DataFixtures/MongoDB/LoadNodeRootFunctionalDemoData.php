@@ -32,6 +32,7 @@ class LoadNodeRootFunctionalDemoData extends AbstractFixture implements Containe
     protected $nodeen;
     protected $nodefr;
 
+    protected $blockParameters;
     /**
      * @var ContainerInterface
      */
@@ -61,8 +62,9 @@ class LoadNodeRootFunctionalDemoData extends AbstractFixture implements Containe
             'language_list' => array(),
         );
 
-        $this->generateGlobalBlock($manager);
-
+        foreach($languages as $language) {
+            $this->generateGlobalBlock($manager, $language);
+        }
 
         $this->addNode($manager, new NodeRootFunctionalDataGenerator($this, $this->container, $manager), $languages);
         $this->addNode($manager, new NodeRootFunctionalDataGenerator($this, $this->container, $manager, 2, 'status-draft'), array('fr'));
@@ -106,22 +108,26 @@ class LoadNodeRootFunctionalDemoData extends AbstractFixture implements Containe
     /**
      * @param ObjectManager  $manager
      * @param BlockInterface $block
+     * @param string         $language
      */
-    protected function generateBlock(ObjectManager $manager, BlockInterface $block)
+    protected function generateBlock(ObjectManager $manager, BlockInterface $block, $language)
     {
+        $block->setSiteId('2');
         $block->setPrivate(!$this->container->get('open_orchestra_display.display_block_manager')->isPublic($block));
         $block->setParameter($this->blockParameters[$block->getComponent()]);
+        $block->setLanguage($language);
 
         $manager->persist($block);
         $manager->flush();
 
-        $this->setReference($block->getLabel(), $block);
+        $this->setReference($block->getLabel().'-'.$language, $block);
     }
 
     /**
      * @param ObjectManager $manager
+     * @param string        $language
      */
-    protected function generateGlobalBlock(ObjectManager $manager)
+    protected function generateGlobalBlock(ObjectManager $manager, $language)
     {
         $siteBlockLogo = new Block();
         $siteBlockLogo->setLabel('Wysiwyg logo');
@@ -138,14 +144,14 @@ class LoadNodeRootFunctionalDemoData extends AbstractFixture implements Containe
                     '<a href="/" id="myLogo">' . $orchestraTitle . '</a>',
             )
         );
-        $this->generateBlock($manager, $siteBlockLogo);
+        $this->generateBlock($manager, $siteBlockLogo, $language);
 
         $siteBlockMainMenu = new Block();
         $siteBlockMainMenu->setLabel('Menu');
         $siteBlockMainMenu->setComponent('menu');
         $siteBlockMainMenu->setStyle('default');
         $siteBlockMainMenu->setTransverse(true);
-        $this->generateBlock($manager, $siteBlockMainMenu);
+        $this->generateBlock($manager, $siteBlockMainMenu, $language);
 
         $siteBlockFooter = new Block();
         $siteBlockFooter->setLabel('Wysiwyg footer');
@@ -172,25 +178,25 @@ class LoadNodeRootFunctionalDemoData extends AbstractFixture implements Containe
 </div>
 EOF
         ));
-        $this->generateBlock($manager, $siteBlockFooter);
+        $this->generateBlock($manager, $siteBlockFooter, $language);
 
         $siteBlockFooterMenu = new Block;
         $siteBlockFooterMenu->setLabel('footer menu');
         $siteBlockFooterMenu->setStyle('default');
         $siteBlockFooterMenu->setComponent(FooterStrategy::NAME);
         $siteBlockFooterMenu->setTransverse(true);
-        $this->generateBlock($manager, $siteBlockFooterMenu);
+        $this->generateBlock($manager, $siteBlockFooterMenu, $language);
 
         $siteBlockContact = new Block();
         $siteBlockContact->setLabel('Contact');
         $siteBlockContact->setComponent('contact');
         $siteBlockContact->setStyle('default');
-        $this->generateBlock($manager, $siteBlockContact);
+        $this->generateBlock($manager, $siteBlockContact, $language);
 
         $siteBlockLanguage = new Block();
         $siteBlockLanguage->setLabel('Language list');
         $siteBlockLanguage->setComponent(LanguageListStrategy::NAME);
         $siteBlockLanguage->setTransverse(true);
-        $this->generateBlock($manager, $siteBlockLanguage);
+        $this->generateBlock($manager, $siteBlockLanguage, $language);
     }
 }

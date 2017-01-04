@@ -100,6 +100,7 @@ EOF;
     {
         $nodeLegalBlock = new Block();
         $nodeLegalBlock->setLabel('Wysiwyg');
+        $nodeLegalBlock->setLanguage($language);
         $nodeLegalBlock->setComponent(TinyMCEWysiwygStrategy::NAME);
         $nodeLegalBlock->setAttributes(array(
             "htmlContent" => $htmlContent
@@ -110,9 +111,9 @@ EOF;
         $main = new Area();
         $main->addBlock($nodeLegalBlock);
 
-        $header = $this->createHeader();
+        $header = $this->createHeader($language);
 
-        $footer = $this->createFooter();
+        $footer = $this->createFooter($language);
 
         $nodeLegal = $this->createBaseNode();
         $nodeLegal->setArea('main', $main);

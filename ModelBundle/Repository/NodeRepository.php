@@ -1105,13 +1105,11 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     }
 
     /**
-     * indicates if node collection contains an usage of a particular block
-     *
      * @param string $blockId
      *
      * @return boolean
      */
-    public function isBlockUsed($blockId)
+    public function countBlockUsed($blockId)
     {
         $qa = $this->createAggregationQuery();
 
@@ -1121,7 +1119,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
 
         $qa->match($filter);
 
-        return $this->countDocumentAggregateQuery($qa) > 0;
+        return $this->countDocumentAggregateQuery($qa);
     }
 
     /**

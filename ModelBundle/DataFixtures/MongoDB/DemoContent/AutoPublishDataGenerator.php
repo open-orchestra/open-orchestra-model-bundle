@@ -75,6 +75,28 @@ EOF;
      */
     protected function generateNodeDe()
     {
+        $htmlContent = <<<EOF
+<div class="content2">
+    <h1>Herausgeber</h1>
+    <p>Open Orchestra ist ein eingetragenes Warenzeichen von Business & Decision</p>
+    <ul>
+        <li>Firmenname: Unternehmen & Entscheidung S.A. (Tel .: 01 56 21 21 21)</li>
+        <li>Aktiengesellschaft mit einem Kapital von EUR 551.808,25</li>
+        <li>Eingetragen bei RCS Paris unter der Nummer: 384 518 114 B</li>
+        <li>Hauptsitz: 153 rue de Courcelles, 75817 Paris cedex 17</li>
+        <li>Herausgeber: Patrick Bensabat, CEO</li>
+    </ul>
+</div>
+EOF;
+        $name = "Automatisch veröffentlichen";
+        $language = "de";
+        $routePattern = "auto-publish";
+
+        $node = $this->generateNodeGlobal($htmlContent, $name, $language, $routePattern);
+        $node->setPublishDate(\DateTime::createFromFormat('j-M-Y', '01-Jan-2016'));
+        $node->setStatus($this->fixture->getReference('status-pending'));
+
+        return $node;
     }
 
     /**
@@ -89,6 +111,7 @@ EOF;
     {
         $nodeAutoPublishBlock = new Block();
         $nodeAutoPublishBlock->setLabel('Wysiwyg');
+        $nodeAutoPublishBlock->setLanguage($language);
         $nodeAutoPublishBlock->setComponent(TinyMCEWysiwygStrategy::NAME);
         $nodeAutoPublishBlock->setAttributes(array(
             "htmlContent" => $htmlContent
@@ -99,9 +122,9 @@ EOF;
         $main = new Area();
         $main->addBlock($nodeAutoPublishBlock);
 
-        $header = $this->createHeader();
+        $header = $this->createHeader($language);
 
-        $footer = $this->createFooter();
+        $footer = $this->createFooter($language);
 
         $nodeAutoPublish = $this->createBaseNode();
         $nodeAutoPublish->setArea('main', $main);

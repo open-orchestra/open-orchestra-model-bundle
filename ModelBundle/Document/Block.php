@@ -3,6 +3,7 @@
 namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+use Gedmo\Timestampable\Traits\TimestampableDocument;
 use OpenOrchestra\ModelInterface\Model\BlockInterface;
 use OpenOrchestra\MongoTrait\Cacheable;
 
@@ -17,6 +18,7 @@ use OpenOrchestra\MongoTrait\Cacheable;
 class Block implements BlockInterface
 {
     use Cacheable;
+    use TimestampableDocument;
 
     /**
      * @var string $id
@@ -66,6 +68,13 @@ class Block implements BlockInterface
      * @ODM\Field(type="string")
      */
     protected $language;
+
+    /**
+     * @var string $siteId
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $siteId;
 
     /**
      * @var boolean $parameter
@@ -252,6 +261,26 @@ class Block implements BlockInterface
     public function getLanguage()
     {
         return $this->language;
+    }
+
+    /**
+     * Set site id
+     *
+     * @param string $siteId
+     */
+    public function setSiteId($siteId)
+    {
+        $this->siteId = $siteId;
+    }
+
+    /**
+     * Get site id
+     *
+     * @return string $siteId
+     */
+    public function getSiteId()
+    {
+        return $this->siteId;
     }
 
     /**
