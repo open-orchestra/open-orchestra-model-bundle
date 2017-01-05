@@ -1,6 +1,5 @@
 OpenOrchestra\ModelBundle\Document\Site:
     constraints:
-        - OpenOrchestra\ModelBundle\Validator\Constraints\UniqueMainAlias: ~
         - OpenOrchestra\ModelBundle\Validator\Constraints\UniqueSiteId: ~
     properties:
         siteId:
