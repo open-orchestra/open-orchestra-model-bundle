@@ -221,7 +221,7 @@ class StatusRepository extends AbstractAggregateRepository implements StatusRepo
     /**
      * @param array $statusIds
      *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     * @throws \Exception
      */
     public function removeStatuses(array $statusIds)
     {
