@@ -147,21 +147,6 @@ class SiteRepository extends AbstractAggregateRepository implements SiteReposito
     }
 
     /**
-     * @param array $siteIds
-     *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     */
-    public function removeSites(array $siteIds)
-    {
-        $qb = $this->createQueryBuilder();
-        $qb->updateMany()
-            ->field('siteId')->in($siteIds)
-            ->field('deleted')->set(true)
-            ->getQuery()
-            ->execute();
-    }
-
-    /**
      * @param PaginateFinderConfiguration $configuration
      * @param Stage                       $qa
      *
