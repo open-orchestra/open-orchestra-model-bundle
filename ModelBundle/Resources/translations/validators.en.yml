@@ -13,5 +13,4 @@ open_orchestra_model_validators:
         status:
             impossible_change: You don't have the right to change the status
         website:
-            unique_main_alias: Principal alias has to be unique
             unique_site_id: Site id has to be unique
