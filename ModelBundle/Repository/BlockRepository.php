@@ -96,10 +96,10 @@ class BlockRepository extends AbstractAggregateRepository implements BlockReposi
      */
     protected function filterSearch(PaginateFinderConfiguration $configuration, Stage $qa)
     {
-        $type = $configuration->getSearchIndex('type');
-
-        if (null !== $type && '' !== $type) {
-            $qa->match(array('type' => new \MongoRegex('/.*'.$type.'.*/i')));
+        $filter = array();
+        $name = $configuration->getSearchIndex('name');
+        if (null !== $name && $name !== '') {
+            $filter['name'] = new \MongoRegex('/.*'.$name.'.*/i');
         }
 
         return $qa;
