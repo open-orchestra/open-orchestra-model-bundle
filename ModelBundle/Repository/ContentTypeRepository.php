@@ -122,8 +122,9 @@ class ContentTypeRepository extends AbstractAggregateRepository implements Conte
     public function removeByContentTypeId(array $contentTypeIds)
     {
         $qb = $this->createQueryBuilder();
-        $qb->remove()
+        $qb->updateMany()
             ->field('contentTypeId')->in($contentTypeIds)
+            ->field('deleted')->set(true)
             ->getQuery()
             ->execute();
     }
