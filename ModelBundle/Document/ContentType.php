@@ -5,7 +5,6 @@ namespace OpenOrchestra\ModelBundle\Document;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\MongoTrait\SoftDeleteable;
-use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 use Gedmo\Blameable\Traits\BlameableDocument;
 use Gedmo\Timestampable\Traits\TimestampableDocument;
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
@@ -41,13 +40,11 @@ class ContentType implements ContentTypeInterface
      * @var string $contentTypeId
      *
      * @ODM\Field(type="string")
-     * @ORCHESTRA\Search(key="content_type_id")
      */
     protected $contentTypeId;
 
     /**
      * @ODM\Field(type="hash")
-     * @ORCHESTRA\Search(key="name", type="multiLanguages")
      */
     protected $names;
 
