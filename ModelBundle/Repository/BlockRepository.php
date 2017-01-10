@@ -50,6 +50,12 @@ class BlockRepository extends AbstractAggregateRepository implements BlockReposi
         $transverse
     ) {
         $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language, $transverse);
+        $this->filterSearch($configuration, $qa);
+
+        $order = $configuration->getOrder();
+        if (!empty($order)) {
+            $qa->sort($order);
+        }
 
         return $this->hydrateAggregateQuery($qa);
     }
@@ -97,9 +103,18 @@ class BlockRepository extends AbstractAggregateRepository implements BlockReposi
     protected function filterSearch(PaginateFinderConfiguration $configuration, Stage $qa)
     {
         $filter = array();
-        $name = $configuration->getSearchIndex('name');
-        if (null !== $name && $name !== '') {
-            $filter['name'] = new \MongoRegex('/.*'.$name.'.*/i');
+        $label = $configuration->getSearchIndex('label');
+        if (null !== $label && $label !== '') {
+            $filter['label'] = new \MongoRegex('/.*'.$label.'.*/i');
+        }
+
+        $components = $configuration->getSearchIndex('components');
+        if (null !== $components && is_array($components) && !empty($components)) {
+            $filter['component'] =  array('$in' => $components);
+        }
+
+        if (!empty($filter)) {
+            $qa->match($filter);
         }
 
         return $qa;
