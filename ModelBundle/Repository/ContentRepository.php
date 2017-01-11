@@ -9,7 +9,6 @@ use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use OpenOrchestra\ModelInterface\Repository\FieldAutoGenerableRepositoryInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
-use OpenOrchestra\Pagination\MongoTrait\PaginationTrait;
 use OpenOrchestra\Repository\AbstractAggregateRepository;
 use Solution\MongoAggregation\Pipeline\Stage;
 use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\KeywordableTrait;
@@ -21,7 +20,6 @@ use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\UseTrackableTrait;
  */
 class ContentRepository extends AbstractAggregateRepository implements FieldAutoGenerableRepositoryInterface, ContentRepositoryInterface, KeywordableTraitInterface
 {
-    use PaginationTrait;
     use KeywordableTrait;
     use UseTrackableTrait;
 
@@ -221,84 +219,69 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     }
 
     /**
-     * @param string|null                 $contentType
      * @param PaginateFinderConfiguration $configuration
-     * @param string|null                 $siteId
+     * @param string                      $contentType
+     * @param string                      $siteId
      *
      * @return array
      */
-    public function findPaginatedLastVersionByContentTypeAndSite($contentType = null, PaginateFinderConfiguration $configuration = null, $siteId = null)
+    public function findForPaginateFilterByContentTypeAndSite(PaginateFinderConfiguration $configuration, $contentTypeId, $siteId)
     {
-        $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
-        $qa = $this->generateFilter($qa, $configuration);
-        $qa->match($this->generateDeletedFilter());
-        if (!is_null($siteId)) {
-            $qa->match($this->generateSiteIdAndNotLinkedFilter($siteId));
-        }
+        $qa = $this->createAggregateQueryWithDeletedFilter(false);
+        $qa->match(array('contentTypeId' => $contentTypeId));
+        $qa->match(array('$or' => array(array('siteId' => $siteId)), array('linkedToSite' => false)));
+
+        $this->filterSearch($configuration, $qa);
 
         $elementName = 'content';
         $this->generateLastVersionFilter($qa, $elementName, $configuration);
 
-        $qa = $this->generateFilterSort(
-            $qa,
-            $configuration->getOrder(),
-            $configuration->getDescriptionEntity(),
-            true
-        );
-
-        $qa = $this->generateSkipFilter($qa, $configuration->getSkip());
-        $qa = $this->generateLimitFilter($qa, $configuration->getLimit());
-
-        return $this->hydrateAggregateQuery($qa, $elementName);
-    }
-
-    /**
-     * @param string|null         $contentType
-     * @param FinderConfiguration $configuration
-     * @param int|null            $siteId
-     *
-     * @return int
-     */
-    public function countByContentTypeInLastVersionWithFilter(
-        $contentType,
-        FinderConfiguration $configuration = null,
-        $siteId = null
-    ) {
-        $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
-        $qa = $this->generateFilter($qa, $configuration);
-        $qa->match($this->generateDeletedFilter());
-        if (!is_null($siteId)) {
-            $qa->match($this->generateSiteIdAndNotLinkedFilter($siteId));
+        $order = $configuration->getOrder();
+        if (!empty($order)) {
+            $qa->sort($order);
         }
-        $this->generateLastVersionFilter($qa, 'content');
-        return $this->countDocumentAggregateQuery($qa);
+
+        $qa->skip($configuration->getSkip());
+        $qa->limit($configuration->getLimit());
+
+        return $this->hydrateAggregateQuery($qa);
     }
 
-    /**
-     * @param string      $contentType
-     * @param string|null $siteId
-     *
-     * @return int
-     */
-    public function countByContentTypeAndSiteInLastVersion($contentType, $siteId = null)
-    {
-        $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
-        $qa->match($this->generateDeletedFilter());
-        if (!is_null($siteId)) {
-            $qa->match($this->generateSiteIdAndNotLinkedFilter($siteId));
-        }
-        $this->generateLastVersionFilter($qa, 'content');
-        return $this->countDocumentAggregateQuery($qa);
-    }
 
     /**
      * @param string $contentType
+     * @param string $siteId
      *
      * @return int
      */
-    public function countByContentType($contentType)
+    public function countFilterByContentTypeAndSite($contentTypeId, $siteId)
     {
-        $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
+        $qa = $this->createAggregateQueryWithDeletedFilter(false);
+        $qa->match(array('contentTypeId' => $contentTypeId));
+        $qa->match(array('$or' => array(array('siteId' => $siteId)), array('linkedToSite' => false)));
+        $elementName = 'content';
+        $this->generateLastVersionFilter($qa, $elementName);
+
+        return $this->countDocumentAggregateQuery($qa);
+    }
+
+    /**
+     * @param PaginateFinderConfiguration $configuration
+     * @param string                      $contentType
+     * @param string                      $siteId
+     *
+     * @return int
+     */
+    public function countWithFilterAndContentTypeAndSite(PaginateFinderConfiguration $configuration, $contentTypeId, $siteId)
+    {
+        $qa = $this->createAggregateQueryWithDeletedFilter(false);
+        $qa->match(array('contentTypeId' => $contentTypeId));
+        $qa->match(array('$or' => array(array('siteId' => $siteId)), array('linkedToSite' => false)));
+
+        $this->filterSearch($configuration, $qa);
+
+        $elementName = 'content';
+        $this->generateLastVersionFilter($qa, $elementName, $configuration);
 
         return $this->countDocumentAggregateQuery($qa);
     }
@@ -383,9 +366,6 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     {
         $group = array();
 
-        if (!is_null($configuration)) {
-            $group = $this->generateGroupForFilterSort($configuration);
-        }
         $group = array_merge($group,
             array(
                 '_id' => array('contentId' => '$contentId'),
@@ -557,5 +537,29 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
             ->field('contentType')->equals($contentType)
             ->getQuery()
             ->execute();
+    }
+
+    /**
+     * @param PaginateFinderConfiguration $configuration
+     * @param Stage                       $qa
+     *
+     * @return array
+     */
+    protected function filterSearch(PaginateFinderConfiguration $configuration, Stage $qa)
+    {
+        return $qa;
+    }
+
+    /**
+     * @param $deleted
+     *
+     * @return \Solution\MongoAggregation\Pipeline\Stage
+     */
+    protected function createAggregateQueryWithDeletedFilter($deleted)
+    {
+        $qa = $this->createAggregationQuery();
+        $qa->match(array('deleted' => $deleted));
+
+        return $qa;
     }
 }
