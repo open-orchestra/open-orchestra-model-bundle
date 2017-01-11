@@ -87,6 +87,13 @@ class ContentType implements ContentTypeInterface
     protected $definingStatusable = true;
 
     /**
+     * @var boolean alwaysShared
+     *
+     * @ODM\Field(type="boolean")
+     */
+    protected $alwaysShared = false;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -284,6 +291,22 @@ class ContentType implements ContentTypeInterface
     public function isDefiningStatusable()
     {
         return $this->definingStatusable;
+    }
+
+    /**
+     * @param boolean $alwaysShared
+     */
+    public function setAlwaysShared($alwaysShared)
+    {
+        $this->alwaysShared = $alwaysShared;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isAlwaysShared()
+    {
+        return $this->alwaysShared;
     }
 
     /**

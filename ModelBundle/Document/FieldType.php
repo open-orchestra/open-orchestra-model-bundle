@@ -51,13 +51,6 @@ class FieldType implements FieldTypeInterface
     protected $orderable;
 
     /**
-     * @var string $orderDirection
-     *
-     * @ODM\Field(type="string")
-     */
-    protected $orderDirection;
-
-    /**
      * @var string $fieldTypeSearchable
      *
      * @ODM\Field(type="string")
@@ -98,13 +91,6 @@ class FieldType implements FieldTypeInterface
      * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\FieldOptionInterface")
      */
     protected $options;
-
-    /**
-     * @var string $position
-     *
-     * @ODM\Field(type="int")
-     */
-    protected $position = 0;
 
     /**
      * Constructor
@@ -245,22 +231,6 @@ class FieldType implements FieldTypeInterface
     }
 
     /**
-     * @return string
-     */
-    public function getOrderDirection()
-    {
-        return $this->orderDirection;
-    }
-
-    /**
-     * @param string $orderDirection
-     */
-    public function setOrderDirection($orderDirection)
-    {
-        $this->orderDirection = $orderDirection;
-    }
-
-    /**
      * Set Orderable
      *
      * @param boolean $orderable
@@ -341,7 +311,7 @@ class FieldType implements FieldTypeInterface
     {
         return $this->options->filter(function(FieldOptionInterface $option) use ($key) {
             return $option->getKey() == $key;
-        })->count();
+        })->count() != 0;
     }
 
     /**
@@ -404,21 +374,5 @@ class FieldType implements FieldTypeInterface
     public function setTranslatable($translatable)
     {
         $this->translatable = $translatable;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPosition()
-    {
-        return $this->position;
-    }
-
-    /**
-     * @param string $position
-     */
-    public function setPosition($position)
-    {
-        $this->position = $position;
     }
 }
