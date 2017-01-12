@@ -4,7 +4,6 @@ namespace OpenOrchestra\ModelBundle\Repository;
 
 use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
-use OpenOrchestra\Pagination\Configuration\FinderConfiguration;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use OpenOrchestra\ModelInterface\Repository\FieldAutoGenerableRepositoryInterface;
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
@@ -85,11 +84,9 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
             $qa->match($this->transformConditionToMongoCondition($condition));
         }
 
-        $elementName = 'content';
+        $qa = $this->generateLastVersionFilter($qa);
 
-        $this->generateLastVersionFilter($qa, $elementName);
-
-        return $this->hydrateAggregateQuery($qa, $elementName);
+        return $this->hydrateAggregateQuery($qa, 'content');
     }
 
     /**
@@ -222,19 +219,20 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
      * @param PaginateFinderConfiguration $configuration
      * @param string                      $contentType
      * @param string                      $siteId
+     * @param string                      $language
      *
      * @return array
      */
-    public function findForPaginateFilterByContentTypeAndSite(PaginateFinderConfiguration $configuration, $contentTypeId, $siteId)
+    public function findForPaginateFilterByContentTypeSiteAndLanguage(PaginateFinderConfiguration $configuration, $contentType, $siteId, $language)
     {
         $qa = $this->createAggregateQueryWithDeletedFilter(false);
-        $qa->match(array('contentTypeId' => $contentTypeId));
-        $qa->match(array('$or' => array(array('siteId' => $siteId)), array('linkedToSite' => false)));
+        $qa->match($this->generateContentTypeFilter($contentType));
+        $qa->match($this->generateSiteIdAndNotLinkedFilter($siteId));
+        $qa->match($this->generateLanguageFilter($language));
 
         $this->filterSearch($configuration, $qa);
 
-        $elementName = 'content';
-        $this->generateLastVersionFilter($qa, $elementName, $configuration);
+        $qa = $this->generateLastVersionFilter($qa);
 
         $order = $configuration->getOrder();
         if (!empty($order)) {
@@ -244,46 +242,49 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         $qa->skip($configuration->getSkip());
         $qa->limit($configuration->getLimit());
 
-        return $this->hydrateAggregateQuery($qa);
+        return $this->hydrateAggregateQuery($qa, 'content');
     }
 
 
     /**
      * @param string $contentType
      * @param string $siteId
+     * @param string $language
      *
      * @return int
      */
-    public function countFilterByContentTypeAndSite($contentTypeId, $siteId)
+    public function countFilterByContentTypeSiteAndLanguage($contentType, $siteId, $language)
     {
         $qa = $this->createAggregateQueryWithDeletedFilter(false);
-        $qa->match(array('contentTypeId' => $contentTypeId));
-        $qa->match(array('$or' => array(array('siteId' => $siteId)), array('linkedToSite' => false)));
-        $elementName = 'content';
-        $this->generateLastVersionFilter($qa, $elementName);
+        $qa->match($this->generateContentTypeFilter($contentType));
+        $qa->match($this->generateSiteIdAndNotLinkedFilter($siteId));
+        $qa->match($this->generateLanguageFilter($language));
 
-        return $this->countDocumentAggregateQuery($qa);
+        $qa = $this->generateLastVersionFilter($qa);
+
+        return $this->countDocumentAggregateQuery($qa, 'content');
     }
 
     /**
      * @param PaginateFinderConfiguration $configuration
      * @param string                      $contentType
      * @param string                      $siteId
+     * @param string                      $language
      *
      * @return int
      */
-    public function countWithFilterAndContentTypeAndSite(PaginateFinderConfiguration $configuration, $contentTypeId, $siteId)
+    public function countWithFilterAndContentTypeSiteAndLanguage(PaginateFinderConfiguration $configuration, $contentType, $siteId, $language)
     {
         $qa = $this->createAggregateQueryWithDeletedFilter(false);
-        $qa->match(array('contentTypeId' => $contentTypeId));
-        $qa->match(array('$or' => array(array('siteId' => $siteId)), array('linkedToSite' => false)));
+        $qa->match($this->generateContentTypeFilter($contentType));
+        $qa->match($this->generateSiteIdAndNotLinkedFilter($siteId));
+        $qa->match($this->generateLanguageFilter($language));
 
         $this->filterSearch($configuration, $qa);
 
-        $elementName = 'content';
-        $this->generateLastVersionFilter($qa, $elementName, $configuration);
+        $qa = $this->generateLastVersionFilter($qa);
 
-        return $this->countDocumentAggregateQuery($qa);
+        return $this->countDocumentAggregateQuery($qa, 'content');
     }
 
     /**
@@ -350,6 +351,16 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     }
 
     /**
+     * @param string $language
+     *
+     * @return array
+     */
+    protected function generateLanguageFilter($language)
+    {
+        return array('language' => $language);
+    }
+
+    /**
      * @return array
      */
     protected function generateDeletedFilter()
@@ -358,12 +369,11 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     }
 
     /**
-     * @param Stage                            $qa
-     * @param string                           $elementName
-     * @param PaginateFinderConfiguration|null $configuration
+     * @param Stage $qa
      */
-    protected function generateLastVersionFilter(Stage $qa, $elementName, $configuration = null)
+    protected function generateLastVersionFilter(Stage $qa)
     {
+        $elementName = 'content';
         $group = array();
 
         $group = array_merge($group,
@@ -374,6 +384,8 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
 
         $qa->sort(array('version' => 1));
         $qa->group($group);
+
+        return $qa;
     }
 
     /**
