@@ -55,7 +55,7 @@ class OpenOrchestraModelExtensionTest extends AbstractBaseTestCase
         return array(
             '1'  => array("empty", "OpenOrchestra\\ModelBundle\\Document\\Content"          , "content"           , "OpenOrchestra\\ModelBundle\\Repository\\ContentRepository"         , true),
             '2'  => array("empty", "OpenOrchestra\\ModelBundle\\Document\\ContentAttribute" , "content_attribute"                                                                             ),
-            '3'  => array("empty", "OpenOrchestra\\ModelBundle\\Document\\ContentType"      , "content_type"      , "OpenOrchestra\\ModelBundle\\Repository\\ContentTypeRepository"     , true),
+            '3'  => array("empty", "OpenOrchestra\\ModelBundle\\Document\\ContentType"      , "content_type"      , "OpenOrchestra\\ModelBundle\\Repository\\ContentTypeRepository"           ),
             '4'  => array("empty", "OpenOrchestra\\ModelBundle\\Document\\Node"             , "node"              , "OpenOrchestra\\ModelBundle\\Repository\\NodeRepository"                  ),
             '5'  => array("empty", "OpenOrchestra\\ModelBundle\\Document\\Area"             , "area"                                                                                          ),
             '6'  => array("empty", "OpenOrchestra\\ModelBundle\\Document\\Block"            , "block"                                                                                         ),

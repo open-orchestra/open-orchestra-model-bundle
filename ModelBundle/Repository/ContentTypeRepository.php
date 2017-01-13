@@ -3,10 +3,8 @@
 namespace OpenOrchestra\ModelBundle\Repository;
 
 use OpenOrchestra\ModelInterface\Model\ContentTypeInterface;
-use OpenOrchestra\Pagination\Configuration\FinderConfiguration;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use OpenOrchestra\ModelInterface\Repository\ContentTypeRepositoryInterface;
-use OpenOrchestra\Pagination\MongoTrait\PaginationTrait;
 use OpenOrchestra\Repository\AbstractAggregateRepository;
 use Solution\MongoAggregation\Pipeline\Stage;
 
@@ -15,8 +13,6 @@ use Solution\MongoAggregation\Pipeline\Stage;
  */
 class ContentTypeRepository extends AbstractAggregateRepository implements ContentTypeRepositoryInterface
 {
-    use PaginationTrait;
-
     /**
      * @param $language
      *
@@ -52,37 +48,44 @@ class ContentTypeRepository extends AbstractAggregateRepository implements Conte
     public function findAllNotDeletedInLastVersionForPaginate(PaginateFinderConfiguration $configuration)
     {
         $qa = $this->createAggregateQueryNotDeletedInLastVersion();
-
-        $qa = $this->generateFilter($qa, $configuration);
-
+        $filters = $this->getFilterSearch($configuration);
+        if (!empty($filters)) {
+            $qa->match($filters);
+        }
         $elementName = 'contentType';
-        $this->generateLastVersionFilter($qa, $elementName, $configuration);
-
-        $qa = $this->generateFilterSort(
-            $qa,
-            $configuration->getOrder(),
-            $configuration->getDescriptionEntity()
+        $group = array(
+            'names' => array('$last' => '$names'),
+            'contentTypeId' => array('$last' => '$contentTypeId')
         );
-        $qa = $this->generateSkipFilter($qa, $configuration->getSkip());
-        $qa = $this->generateLimitFilter($qa, $configuration->getLimit());
+        $this->generateLastVersionFilter($qa, $elementName, $group);
+
+        $order = $configuration->getOrder();
+        if (!empty($order)) {
+            $qa->sort($order);
+        }
+
+        $qa->skip($configuration->getSkip());
+        $qa->limit($configuration->getLimit());
 
         return $this->hydrateAggregateQuery($qa, $elementName, 'getContentTypeId');
     }
 
     /**
-     * @param FinderConfiguration $configuration
+     * @param PaginateFinderConfiguration $configuration
      *
      * @return int
      */
-    public function countNotDeletedInLastVersionWithSearchFilter(FinderConfiguration $configuration)
+    public function countNotDeletedInLastVersionWithSearchFilter(PaginateFinderConfiguration $configuration)
     {
         $qa = $this->createAggregateQueryNotDeletedInLastVersion();
-        $qa = $this->generateFilter($qa, $configuration);
-
+        $filters = $this->getFilterSearch($configuration);
+        if (!empty($filters)) {
+            $qa->match($filters);
+        }
         $elementName = 'contentType';
         $this->generateLastVersionFilter($qa, $elementName);
 
-        return $this->countDocumentAggregateQuery($qa, $elementName);
+        return $this->countDocumentAggregateQuery($qa);
     }
 
     /**
@@ -112,19 +115,55 @@ class ContentTypeRepository extends AbstractAggregateRepository implements Conte
     }
 
     /**
-     * @param Stage                            $qa
-     * @param string                           $elementName
-     * @param PaginateFinderConfiguration|null $configuration
+     * @param array $contentTypeIds
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    protected function generateLastVersionFilter(Stage $qa, $elementName, $configuration = null)
+    public function removeByContentTypeId(array $contentTypeIds)
     {
-        $group = array();
+        $qb = $this->createQueryBuilder();
+        $qb->updateMany()
+            ->field('contentTypeId')->in($contentTypeIds)
+            ->field('deleted')->set(true)
+            ->getQuery()
+            ->execute();
+    }
 
-        if (!is_null($configuration)) {
-            $group = $this->generateGroupForFilterSort($configuration);
+    /**
+     * @param PaginateFinderConfiguration $configuration
+     *
+     * @return array
+     */
+    protected function getFilterSearch(PaginateFinderConfiguration $configuration) {
+        $filter = array();
+        $name = $configuration->getSearchIndex('name');
+        $language = $configuration->getSearchIndex('language');
+        if (null !== $name && $name !== '' && null !== $language && $language !== '' ) {
+            $filter['names.' . $language] = new \MongoRegex('/.*'.$name.'.*/i');
         }
-        $group = array_merge($group,
-            array(
+
+        $linkedToSite = $configuration->getSearchIndex('linkedToSite');
+        if (null !== $linkedToSite && $linkedToSite !== '') {
+            $filter['linkedToSite'] = (boolean) $linkedToSite;
+        }
+
+        $contentTypeId = $configuration->getSearchIndex('contentTypeId');
+        if (null !== $contentTypeId && $contentTypeId !== '') {
+            $filter['contentTypeId'] =new \MongoRegex('/.*'.$contentTypeId.'.*/i');
+        }
+
+        return $filter;
+    }
+
+    /**
+     * @param Stage  $qa
+     * @param string $elementName
+     * @param string $elementName
+     * @param array  $group
+     */
+    protected function generateLastVersionFilter(Stage $qa, $elementName, $group = array())
+    {
+        $group = array_merge($group, array(
                 '_id' => array('contentTypeId' => '$contentTypeId'),
                 $elementName => array('$last' => '$$ROOT')
         ));
