@@ -444,6 +444,41 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     }
 
     /**
+     * @param PaginateFinderConfiguration $configuration
+     * @param string                      $siteId
+     * @param string                      $language
+     * @param string                      $blockId
+     *
+     * @return array
+     */
+    public function findWithBlockUsedForPaginate(PaginateFinderConfiguration $configuration, $siteId, $language, $blockId)
+    {
+        $qb = $this->createQueryBuilder();
+        $qb->field('language')->equals($language);
+        $qb->field('siteId')->equals($siteId);
+
+        $function = new \MongoCode(
+            'function() {
+                for (var areaIndex in this.areas)
+                    for (var key in this.areas[areaIndex].blocks)
+                        if (this.areas[areaIndex].blocks[key].$id == "'.$blockId.'")
+                            return this;
+            }'
+        );
+        $qb->where($function);
+
+        $order = $configuration->getOrder();
+        if (!empty($order)) {
+            $qb->sort($order);
+        }
+
+        $qb->skip($configuration->getSkip());
+        $qb->limit($configuration->getLimit());
+
+        return $qb->getQuery()->execute();
+    }
+
+    /**
      * @param string  $siteId
      * @param string  $language
      *
@@ -461,6 +496,33 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         ));
 
         return $this->countDocumentAggregateQuery($qa);
+    }
+
+
+    /**
+     * @param string  $siteId
+     * @param string  $language
+     * @param string  $blockId
+     *
+     * @return int
+     */
+    public function countWithBlockUsed($siteId, $language, $blockId)
+    {
+        $qb = $this->createQueryBuilder();
+        $qb->field('language')->equals($language);
+        $qb->field('siteId')->equals($siteId);
+
+        $function = new \MongoCode(
+            'function() {
+                for (var areaIndex in this.areas)
+                    for (var key in this.areas[areaIndex].blocks)
+                        if (this.areas[areaIndex].blocks[key].$id == "'.$blockId.'")
+                            return this;
+            }'
+        );
+        $qb->where($function);
+
+        return $qb->getQuery()->execute()->count();
     }
 
     /**
@@ -1111,15 +1173,18 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      */
     public function countBlockUsed($blockId)
     {
-        $qa = $this->createAggregationQuery();
-
-        $filter = array(
-            'areas.blocks.$id' => new \MongoId($blockId),
+        $qb = $this->createQueryBuilder();
+        $function = new \MongoCode(
+            'function() {
+                for (var areaIndex in this.areas)
+                    for (var key in this.areas[areaIndex].blocks)
+                        if (this.areas[areaIndex].blocks[key].$id == "'.$blockId.'")
+                            return this;
+            }'
         );
+        $qb->where($function);
 
-        $qa->match($filter);
-
-        return $this->countDocumentAggregateQuery($qa);
+        return $qb->getQuery()->execute()->count();
     }
 
     /**
