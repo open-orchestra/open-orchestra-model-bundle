@@ -14,12 +14,15 @@ use Solution\MongoAggregation\Pipeline\Stage;
 class StatusRepository extends AbstractAggregateRepository implements StatusRepositoryInterface
 {
     /**
+     * @parameter array $order
+     *
      * @return array
      */
-    public function findNotOutOfWorkflow()
+    public function findNotOutOfWorkflow(array $order = array('name' => 1))
     {
         $qa = $this->createAggregationQuery();
         $qa->match(array('outOfWorkflow' => false));
+        $qa->sort($order);
 
         return $this->hydrateAggregateQuery($qa);
     }
