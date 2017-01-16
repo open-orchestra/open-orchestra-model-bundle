@@ -292,6 +292,18 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     }
 
     /**
+     * @param string $contentType
+     *
+     * @return int
+     */
+    public function countByContentType($contentType)
+    {
+        $qa = $this->createAggregateQueryWithContentTypeFilter($contentType);
+
+        return $this->countDocumentAggregateQuery($qa);
+    }
+
+    /**
      * @param string       $id
      * @param string       $siteId
      * @param array|null   $eventTypes
@@ -564,13 +576,12 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function removeContents(array $contentIds)
+    public function removeContentIds(array $contentIds)
     {
-        array_walk($contentIds, function(&$item) {$item = new \MongoId($item);});
-
         $qb = $this->createQueryBuilder();
-        $qb->remove()
-        ->field('id')->in($contentIds)
+        $qb->updateMany()
+        ->field('contentId')->in($contentIds)
+        ->field('deleted')->set(true)
         ->getQuery()
         ->execute();
     }
