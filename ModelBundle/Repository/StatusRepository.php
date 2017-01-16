@@ -14,6 +14,16 @@ use Solution\MongoAggregation\Pipeline\Stage;
 class StatusRepository extends AbstractAggregateRepository implements StatusRepositoryInterface
 {
     /**
+     * @param string $id
+     *
+     * @return StatusInterface
+     */
+    public function findOneById($id)
+    {
+        return parent::findOneById($id);
+    }
+
+    /**
      * @parameter array $order
      *
      * @return array
