@@ -232,11 +232,15 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
 
         $this->filterSearch($configuration, $qa);
 
-        $qa = $this->generateLastVersionFilter($qa);
-
         $order = $configuration->getOrder();
-        if (!empty($order)) {
-            $qa->sort($order);
+        $qa = $this->generateLastVersionFilter($qa, $order);
+
+        $newOrder = array();
+        array_walk($order, function($item, $key) use(&$newOrder) {
+            $newOrder[str_replace('.', '_', $key)] = $item;
+        });
+        if (!empty($newOrder)) {
+            $qa->sort($newOrder);
         }
 
         $qa->skip($configuration->getSkip());
@@ -370,17 +374,21 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
 
     /**
      * @param Stage $qa
+     * @param array $order
      */
-    protected function generateLastVersionFilter(Stage $qa)
+    protected function generateLastVersionFilter(Stage $qa, array $order=array())
     {
         $elementName = 'content';
         $group = array();
 
-        $group = array_merge($group,
-            array(
-                '_id' => array('contentId' => '$contentId'),
-                $elementName => array('$last' => '$$ROOT')
-        ));
+        $group = array(
+            '_id' => array('contentId' => '$contentId'),
+            $elementName => array('$last' => '$$ROOT'),
+        );
+
+        foreach ($order as $column => $orderDirection) {
+            $group[str_replace('.', '_', $column)] = array('$last' => '$' . $column);
+        }
 
         $qa->sort(array('version' => 1));
         $qa->group($group);
@@ -549,6 +557,22 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
             ->field('contentType')->equals($contentType)
             ->getQuery()
             ->execute();
+    }
+
+    /**
+     * @param array $contentIds
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
+    public function removeContents(array $contentIds)
+    {
+        array_walk($contentIds, function(&$item) {$item = new \MongoId($item);});
+
+        $qb = $this->createQueryBuilder();
+        $qb->remove()
+        ->field('id')->in($contentIds)
+        ->getQuery()
+        ->execute();
     }
 
     /**
