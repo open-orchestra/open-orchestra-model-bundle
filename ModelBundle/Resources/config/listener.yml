@@ -1,41 +1,18 @@
 parameters:
-    open_orchestra_model.doctrine_listener.generate_id.class: OpenOrchestra\ModelBundle\EventListener\GenerateIdListener
-    open_orchestra_model.doctrine_listener.initial_status.class: OpenOrchestra\ModelBundle\EventListener\InitialStatusListener
-    open_orchestra_model.doctrine_listener.auto_unpublish_status.class: OpenOrchestra\ModelBundle\EventListener\AutoUnpublishStatusListener
-    open_orchestra_model.doctrine_listener.generate_path.class: OpenOrchestra\ModelBundle\EventListener\GeneratePathListener
-    open_orchestra_model.doctrine_listener.set_initial_status.class: OpenOrchestra\ModelBundle\EventListener\SetInitialStatusListener
+    open_orchestra_model.doctrine_listener.generate_id.class                          : OpenOrchestra\ModelBundle\EventListener\GenerateIdListener
+    open_orchestra_model.doctrine_listener.generate_path.class                        : OpenOrchestra\ModelBundle\EventListener\GeneratePathListener
+    open_orchestra_model.doctrine_listener.set_initial_status.class                   : OpenOrchestra\ModelBundle\EventListener\SetInitialStatusListener
     open_orchestra_model.doctrine_listener.update_non_translatable_content_field.class: OpenOrchestra\ModelBundle\EventListener\UpdateNonTranslatableContentFieldsListener
-    open_orchestra_model.doctrine_listener.update_site_nodes_theme.class: OpenOrchestra\ModelBundle\EventListener\UpdateSiteNodesThemeListener
-    open_orchestra_model.doctrine_listener.translation_status.class: OpenOrchestra\ModelBundle\EventListener\TranslationStatusListener
+    open_orchestra_model.doctrine_listener.update_site_nodes_theme.class              : OpenOrchestra\ModelBundle\EventListener\UpdateSiteNodesThemeListener
 
 services:
-    open_orchestra_model.doctrine_listener.initial_status:
-        class: '%open_orchestra_model.doctrine_listener.initial_status.class%'
-        calls:
-            - [setContainer, ['@service_container']]
-        tags:
-            -  { name: doctrine_mongodb.odm.event_listener, event: preUpdate }
-            -  { name: doctrine_mongodb.odm.event_listener, event: postFlush }
-    open_orchestra_model.doctrine_listener.auto_unpublish_status:
-        class: '%open_orchestra_model.doctrine_listener.auto_unpublish_status.class%'
-        calls:
-            - [setContainer, ['@service_container']]
-        tags:
-            -  { name: doctrine_mongodb.odm.event_listener, event: preUpdate }
-            -  { name: doctrine_mongodb.odm.event_listener, event: postFlush }
-    open_orchestra_model.doctrine_listener.translation_status:
-        class: '%open_orchestra_model.doctrine_listener.translation_status.class%'
-        calls:
-            - [setContainer, ['@service_container']]
-        tags:
-            -  { name: doctrine_mongodb.odm.event_listener, event: preUpdate }
-            -  { name: doctrine_mongodb.odm.event_listener, event: postFlush }
     open_orchestra_model.doctrine_listener.set_initial_status:
         class: '%open_orchestra_model.doctrine_listener.set_initial_status.class%'
         calls:
             - [ setContainer, [ '@service_container' ] ]
         tags:
             -  { name: doctrine_mongodb.odm.event_listener, event: prePersist }
+
     open_orchestra_model.doctrine_listener.generate_path:
         class: '%open_orchestra_model.doctrine_listener.generate_path.class%'
         calls:
@@ -44,6 +21,7 @@ services:
             -  { name: doctrine_mongodb.odm.event_listener, event: prePersist }
             -  { name: doctrine_mongodb.odm.event_listener, event: preUpdate }
             -  { name: doctrine_mongodb.odm.event_listener, event: postFlush }
+
     open_orchestra_model.doctrine_listener.generate_id:
         class: '%open_orchestra_model.doctrine_listener.generate_id.class%'
         arguments:
@@ -53,6 +31,7 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             - { name: doctrine_mongodb.odm.event_listener, event: prePersist }
+
     open_orchestra_model.doctrine_listener.update_non_translatable_content_field:
         class: '%open_orchestra_model.doctrine_listener.update_non_translatable_content_field.class%'
         arguments:
@@ -62,6 +41,7 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             -  { name: doctrine_mongodb.odm.event_listener, event: preUpdate }
+
     open_orchestra_model.doctrine_listener.update_site_nodes_theme:
         class: '%open_orchestra_model.doctrine_listener.update_site_nodes_theme.class%'
         calls:
