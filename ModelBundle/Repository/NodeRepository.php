@@ -457,15 +457,8 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         $qb->field('language')->equals($language);
         $qb->field('siteId')->equals($siteId);
 
-        $function = new \MongoCode(
-            'function() {
-                for (var areaIndex in this.areas)
-                    for (var key in this.areas[areaIndex].blocks)
-                        if (this.areas[areaIndex].blocks[key].$id == "'.$blockId.'")
-                            return this;
-            }'
-        );
-        $qb->where($function);
+        $functionFilter = $this->generateFunctionFilterBlock($blockId);
+        $qb->where($functionFilter);
 
         $order = $configuration->getOrder();
         if (!empty($order)) {
@@ -498,7 +491,6 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         return $this->countDocumentAggregateQuery($qa);
     }
 
-
     /**
      * @param string  $siteId
      * @param string  $language
@@ -512,15 +504,8 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         $qb->field('language')->equals($language);
         $qb->field('siteId')->equals($siteId);
 
-        $function = new \MongoCode(
-            'function() {
-                for (var areaIndex in this.areas)
-                    for (var key in this.areas[areaIndex].blocks)
-                        if (this.areas[areaIndex].blocks[key].$id == "'.$blockId.'")
-                            return this;
-            }'
-        );
-        $qb->where($function);
+        $functionFilter = $this->generateFunctionFilterBlock($blockId);
+        $qb->where($functionFilter);
 
         return $qb->getQuery()->execute()->count();
     }
@@ -559,6 +544,23 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
             ->field('order')->inc(1)
             ->getQuery()
             ->execute();
+    }
+
+    /**
+     * @param string $blockId
+     *
+     * @return \MongoCode
+     */
+    protected function generateFunctionFilterBlock($blockId)
+    {
+        return new \MongoCode(
+            'function() {
+                for (var areaIndex in this.areas)
+                    for (var key in this.areas[areaIndex].blocks)
+                        if (this.areas[areaIndex].blocks[key].$id == "'.$blockId.'")
+                            return this;
+            }'
+        );
     }
 
     /**
@@ -758,99 +760,6 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         $qa->sort(array('version' => -1));
 
         return $this->singleHydrateAggregateQuery($qa);
-    }
-
-
-    /**
-     * @param string $siteId
-     *
-     * @return Stage
-     */
-    protected function createAggregationQueryBuilderWithSiteId($siteId)
-    {
-        $qa = $this->createAggregationQuery();
-        $qa->match(array('siteId' => $siteId));
-
-        return $qa;
-    }
-
-    /**
-     * @param string $language
-     * @param string $siteId
-     *
-     * @return Stage
-     */
-    protected function buildTreeRequest($language, $siteId)
-    {
-        $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
-        $qa->match(
-            array(
-                'status.publishedState' => true,
-                'deleted' => false,
-            )
-        );
-
-        return $qa;
-    }
-
-    /**
-     * @param string $siteId
-     * @param string $language
-     *
-     * @return Stage
-     */
-    protected function createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language)
-    {
-        $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
-        $qa->match(array('language' => $language));
-
-        return $qa;
-    }
-
-    /**
-     * @param string $type
-     * @param string $siteId
-     * @param bool   $deleted
-     *
-     * @return array
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     */
-    protected function prepareFindLastVersion($type, $siteId, $deleted)
-    {
-        $qa = $this->createAggregationQuery();
-        $qa->match(
-            array(
-                'siteId' => $siteId,
-                'deleted' => $deleted,
-                'nodeType' => $type
-            )
-        );
-
-        return $this->findLastVersion($qa);
-    }
-
-    /**
-     * @param string $language
-     * @param string $field
-     * @param string $siteId
-     *
-     * @return array
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     */
-    protected function getTreeByLanguageAndFieldAndSiteId($language, $field, $siteId)
-    {
-        $qa = $this->createAggregationQuery();
-        $qa->match(
-            array(
-                'siteId' => $siteId,
-                'language' => $language,
-                'currentlyPublished' => true,
-                'deleted' => false,
-                $field => true
-            )
-        );
-
-        return $this->findLastVersion($qa);
     }
 
     /**
@@ -1306,5 +1215,98 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         }
 
         return ($order1 < $order2) ? -1 : 1;
+    }
+
+
+    /**
+     * @param string $siteId
+     *
+     * @return Stage
+     */
+    protected function createAggregationQueryBuilderWithSiteId($siteId)
+    {
+        $qa = $this->createAggregationQuery();
+        $qa->match(array('siteId' => $siteId));
+
+        return $qa;
+    }
+
+    /**
+     * @param string $language
+     * @param string $siteId
+     *
+     * @return Stage
+     */
+    protected function buildTreeRequest($language, $siteId)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
+        $qa->match(
+            array(
+                'status.publishedState' => true,
+                'deleted' => false,
+            )
+        );
+
+        return $qa;
+    }
+
+    /**
+     * @param string $siteId
+     * @param string $language
+     *
+     * @return Stage
+     */
+    protected function createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
+        $qa->match(array('language' => $language));
+
+        return $qa;
+    }
+
+    /**
+     * @param string $type
+     * @param string $siteId
+     * @param bool   $deleted
+     *
+     * @return array
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
+    protected function prepareFindLastVersion($type, $siteId, $deleted)
+    {
+        $qa = $this->createAggregationQuery();
+        $qa->match(
+            array(
+                'siteId' => $siteId,
+                'deleted' => $deleted,
+                'nodeType' => $type
+            )
+        );
+
+        return $this->findLastVersion($qa);
+    }
+
+    /**
+     * @param string $language
+     * @param string $field
+     * @param string $siteId
+     *
+     * @return array
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
+    protected function getTreeByLanguageAndFieldAndSiteId($language, $field, $siteId)
+    {
+        $qa = $this->createAggregationQuery();
+        $qa->match(
+            array(
+                'siteId' => $siteId,
+                'language' => $language,
+                'currentlyPublished' => true,
+                'deleted' => false,
+                $field => true
+            )
+        );
+
+        return $this->findLastVersion($qa);
     }
 }
