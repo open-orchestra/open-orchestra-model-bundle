@@ -263,14 +263,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
      */
     public function countFilterByContentTypeSiteAndLanguage($contentType, $siteId, $language)
     {
-        $qa = $this->createAggregateQueryWithDeletedFilter(false);
-        $qa->match($this->generateContentTypeFilter($contentType));
-        $qa->match($this->generateSiteIdAndNotLinkedFilter($siteId));
-        $qa->match($this->generateLanguageFilter($language));
-
-        $qa = $this->generateLastVersionFilter($qa);
-
-        return $this->countDocumentAggregateQuery($qa, 'content');
+        return $this->countInContextByContentTypeSiteAndLanguage($contentType, $siteId, $language);
     }
 
     /**
@@ -284,16 +277,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
      */
     public function countWithFilterAndContentTypeSiteAndLanguage(PaginateFinderConfiguration $configuration, $contentType, $siteId, $language, array $searchTypes = array())
     {
-        $qa = $this->createAggregateQueryWithDeletedFilter(false);
-        $qa->match($this->generateContentTypeFilter($contentType));
-        $qa->match($this->generateSiteIdAndNotLinkedFilter($siteId));
-        $qa->match($this->generateLanguageFilter($language));
-
-        $this->filterSearch($configuration, $qa, $searchTypes);
-
-        $qa = $this->generateLastVersionFilter($qa);
-
-        return $this->countDocumentAggregateQuery($qa, 'content');
+        return $this->countInContextByContentTypeSiteAndLanguage($contentType, $siteId, $language, $configuration, $searchTypes);
     }
 
     /**
@@ -633,5 +617,30 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         $qa->match(array('deleted' => $deleted));
 
         return $qa;
+    }
+
+    /**
+     * @param string                      $contentType
+     * @param string                      $siteId
+     * @param string                      $language
+     * @param array                       $searchTypes
+     * @param PaginateFinderConfiguration $configuration
+     *
+     * @return int
+     */
+    protected function countInContextByContentTypeSiteAndLanguage($contentType, $siteId, $language, PaginateFinderConfiguration $configuration = null, array $searchTypes = array())
+    {
+        $qa = $this->createAggregateQueryWithDeletedFilter(false);
+        $qa->match($this->generateContentTypeFilter($contentType));
+        $qa->match($this->generateSiteIdAndNotLinkedFilter($siteId));
+        $qa->match($this->generateLanguageFilter($language));
+
+        if (!is_null($configuration)) {
+            $this->filterSearch($configuration, $qa, $searchTypes);
+        }
+
+        $qa = $this->generateLastVersionFilter($qa);
+
+        return $this->countDocumentAggregateQuery($qa, 'content');
     }
 }
