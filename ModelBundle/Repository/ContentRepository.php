@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\Repository;
 
+use Solution\MongoAggregation\Pipeline\Stage;
 use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
@@ -9,10 +10,10 @@ use OpenOrchestra\ModelInterface\Repository\FieldAutoGenerableRepositoryInterfac
 use OpenOrchestra\ModelInterface\Model\ContentInterface;
 use OpenOrchestra\ModelInterface\Repository\ContentRepositoryInterface;
 use OpenOrchestra\Repository\AbstractAggregateRepository;
-use Solution\MongoAggregation\Pipeline\Stage;
 use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\KeywordableTrait;
 use OpenOrchestra\ModelInterface\Repository\RepositoryTrait\KeywordableTraitInterface;
 use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\UseTrackableTrait;
+use OpenOrchestra\Pagination\MongoTrait\FilterTrait;
 
 /**
  * Class ContentRepository
@@ -21,6 +22,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
 {
     use KeywordableTrait;
     use UseTrackableTrait;
+    use FilterTrait;
 
     /**
      * @param string $contentId
@@ -220,25 +222,27 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
      * @param string                      $contentType
      * @param string                      $siteId
      * @param string                      $language
+     * @param array                       $searchTypes
      *
      * @return array
      */
-    public function findForPaginateFilterByContentTypeSiteAndLanguage(PaginateFinderConfiguration $configuration, $contentType, $siteId, $language)
+    public function findForPaginateFilterByContentTypeSiteAndLanguage(PaginateFinderConfiguration $configuration, $contentType, $siteId, $language, array $searchTypes = array())
     {
         $qa = $this->createAggregateQueryWithDeletedFilter(false);
         $qa->match($this->generateContentTypeFilter($contentType));
         $qa->match($this->generateSiteIdAndNotLinkedFilter($siteId));
         $qa->match($this->generateLanguageFilter($language));
 
-        $this->filterSearch($configuration, $qa);
+        $this->filterSearch($configuration, $qa, $searchTypes);
 
         $order = $configuration->getOrder();
-        $qa = $this->generateLastVersionFilter($qa, $order);
+        $qa = $this->generateLastVersionFilter($qa, $order, $searchTypes);
 
         $newOrder = array();
         array_walk($order, function($item, $key) use(&$newOrder) {
             $newOrder[str_replace('.', '_', $key)] = $item;
         });
+
         if (!empty($newOrder)) {
             $qa->sort($newOrder);
         }
@@ -274,17 +278,18 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
      * @param string                      $contentType
      * @param string                      $siteId
      * @param string                      $language
+     * @param array                       $searchTypes
      *
      * @return int
      */
-    public function countWithFilterAndContentTypeSiteAndLanguage(PaginateFinderConfiguration $configuration, $contentType, $siteId, $language)
+    public function countWithFilterAndContentTypeSiteAndLanguage(PaginateFinderConfiguration $configuration, $contentType, $siteId, $language, array $searchTypes = array())
     {
         $qa = $this->createAggregateQueryWithDeletedFilter(false);
         $qa->match($this->generateContentTypeFilter($contentType));
         $qa->match($this->generateSiteIdAndNotLinkedFilter($siteId));
         $qa->match($this->generateLanguageFilter($language));
 
-        $this->filterSearch($configuration, $qa);
+        $this->filterSearch($configuration, $qa, $searchTypes);
 
         $qa = $this->generateLastVersionFilter($qa);
 
@@ -589,11 +594,29 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     /**
      * @param PaginateFinderConfiguration $configuration
      * @param Stage                       $qa
+     * @param array                       $searchTypes
      *
-     * @return array
+     * @return Stage
      */
-    protected function filterSearch(PaginateFinderConfiguration $configuration, Stage $qa)
+    protected function filterSearch(PaginateFinderConfiguration $configuration, Stage $qa, array $searchTypes)
     {
+        $qa = $this->generateFilter($configuration, $qa, 'string', 'name', 'name');
+        $language = $configuration->getSearchIndex('language');
+        if (null !== $language && $language !== '') {
+            $qa->match(array('language' => $language));
+        }
+        $status = $configuration->getSearchIndex('status');
+        if (null !== $status && $status !== '') {
+            $qa->match(array('status._id' => new \MongoId($status)));
+        }
+        $qa = $this->generateFilter($configuration, $qa, 'boolean', 'linked_to_site', 'linkedToSite');
+        $qa = $this->generateFilter($configuration, $qa, 'date', 'created_at', 'createdAt');
+        $qa = $this->generateFilter($configuration, $qa, 'date', 'created_at', 'createdAt');
+        $qa = $this->generateFilter($configuration, $qa, 'string', 'created_by', 'createdBy');
+        $qa = $this->generateFilter($configuration, $qa, 'date', 'updated_at', 'updatedAt');
+        $qa = $this->generateFilter($configuration, $qa, 'string', 'updated_by', 'updatedBy');
+        $qa = $this->generateFieldFilter($configuration, $qa, $searchTypes);
+
         return $qa;
     }
 
