@@ -600,7 +600,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         $qa = $this->generateFilter($configuration, $qa, 'string', 'created_by', 'createdBy');
         $qa = $this->generateFilter($configuration, $qa, 'date', 'updated_at', 'updatedAt', $configuration->getSearchIndex('date_format'));
         $qa = $this->generateFilter($configuration, $qa, 'string', 'updated_by', 'updatedBy');
-        $qa = $this->generateFieldFilter($configuration, $qa, $searchTypes);
+        $qa = $this->generateFieldsFilter($configuration, $qa, $searchTypes);
 
         return $qa;
     }
