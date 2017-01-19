@@ -114,4 +114,18 @@ class WorkflowProfileRepository extends AbstractAggregateRepository implements W
             ->getQuery()
             ->execute();
     }
+
+    /**
+     * @param string $currentLocale
+     *
+     * @return array
+     */
+    public function findAllOrderedByLocale($currentLocale)
+    {
+        if (is_string($currentLocale)) { 
+            return $this->findBy(array(), array('labels.' . $currentLocale => 'asc'));
+        }
+
+        return array();
+    }
 }
