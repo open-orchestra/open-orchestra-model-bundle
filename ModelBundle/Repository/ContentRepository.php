@@ -392,6 +392,8 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     /**
      * @param Stage $qa
      * @param array $order
+     *
+     * @return Stage
      */
     protected function generateLastVersionFilter(Stage $qa, array $order=array())
     {
