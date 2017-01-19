@@ -596,10 +596,9 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
             $qa->match(array('status._id' => new \MongoId($status)));
         }
         $qa = $this->generateFilter($configuration, $qa, 'boolean', 'linked_to_site', 'linkedToSite');
-        $qa = $this->generateFilter($configuration, $qa, 'date', 'created_at', 'createdAt');
-        $qa = $this->generateFilter($configuration, $qa, 'date', 'created_at', 'createdAt');
+        $qa = $this->generateFilter($configuration, $qa, 'date', 'created_at', 'createdAt', $configuration->getSearchIndex('date_format'));
         $qa = $this->generateFilter($configuration, $qa, 'string', 'created_by', 'createdBy');
-        $qa = $this->generateFilter($configuration, $qa, 'date', 'updated_at', 'updatedAt');
+        $qa = $this->generateFilter($configuration, $qa, 'date', 'updated_at', 'updatedAt', $configuration->getSearchIndex('date_format'));
         $qa = $this->generateFilter($configuration, $qa, 'string', 'updated_by', 'updatedBy');
         $qa = $this->generateFieldFilter($configuration, $qa, $searchTypes);
 
