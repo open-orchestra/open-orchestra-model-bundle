@@ -66,6 +66,7 @@ abstract class AbstractDataGenerator
      */
     protected function generateBlock(BlockInterface $block)
     {
+        $block->setSiteId('2');
         $block->setPrivate($this->container->get('open_orchestra_display.display_block_manager')->isPublic($block));
         $block->setParameter($this->blockParameters[$block->getComponent()]);
 
@@ -91,27 +92,31 @@ abstract class AbstractDataGenerator
     abstract protected function generateNodeDe();
 
     /**
+     * @param string $language
+     *
      * @return Area
      */
-    protected function createHeader()
+    protected function createHeader($language)
     {
         $header = new Area();
 
-        $header->addBlock($this->fixture->getReference('Wysiwyg logo'));
-        $header->addBlock($this->fixture->getReference('Menu'));
+        $header->addBlock($this->fixture->getReference('Wysiwyg logo'.'-'.$language));
+        $header->addBlock($this->fixture->getReference('Menu'.'-'.$language));
 
         return $header;
     }
 
     /**
+     * @param string $language
+     *
      * @return Area
      */
-    protected function createFooter()
+    protected function createFooter($language)
     {
         $footer = new Area();
 
-        $footer->addBlock($this->fixture->getReference('footer menu'));
-        $footer->addBlock($this->fixture->getReference('Wysiwyg footer'));
+        $footer->addBlock($this->fixture->getReference('footer menu'.'-'.$language));
+        $footer->addBlock($this->fixture->getReference('Wysiwyg footer'.'-'.$language));
 
         return $footer;
     }

@@ -125,6 +125,7 @@ EOF;
     {
         $nodeHomeBlock = new Block();
         $nodeHomeBlock->setLabel('Wysiwyg');
+        $nodeHomeBlock->setLanguage($language);
         $nodeHomeBlock->setComponent(TinyMCEWysiwygStrategy::NAME);
         $nodeHomeBlock->setAttributes(array(
             "htmlContent" => $htmlContent
@@ -135,10 +136,10 @@ EOF;
         $main = new Area();
         $main->addBlock($nodeHomeBlock);
 
-        $header = $this->createHeader();
-        $header->addBlock($this->fixture->getReference('Language list'));
+        $header = $this->createHeader($language);
+        $header->addBlock($this->fixture->getReference('Language list'.'-'.$language));
 
-        $footer = $this->createFooter();
+        $footer = $this->createFooter($language);
 
         $nodeHome = $this->createBaseNode();
         $keyReference = "node-".NodeInterface::ROOT_NODE_ID.'-'.$language.'-'.$this->version;

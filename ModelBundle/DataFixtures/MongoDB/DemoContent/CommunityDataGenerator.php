@@ -97,6 +97,7 @@ EOF;
     {
         $nodeCommunityBlock = new Block();
         $nodeCommunityBlock->setLabel('Wysiwyg');
+        $nodeCommunityBlock->setLanguage($language);
         $nodeCommunityBlock->setComponent(TinyMCEWysiwygStrategy::NAME);
         $nodeCommunityBlock->setAttributes(array(
             "htmlContent" => $htmlContent
@@ -107,9 +108,9 @@ EOF;
         $main = new Area();
         $main->addBlock($nodeCommunityBlock);
 
-        $header = $this->createHeader();
+        $header = $this->createHeader($language);
 
-        $footer = $this->createFooter();
+        $footer = $this->createFooter($language);
 
         $nodeCommunity = $this->createBaseNode();
         $nodeCommunity->setArea('main', $main);

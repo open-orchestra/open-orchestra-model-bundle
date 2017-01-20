@@ -75,6 +75,7 @@ EOF;
     {
         $nodeError503Block = new Block();
         $nodeError503Block->setLabel('Wysiwyg');
+        $nodeError503Block->setLanguage($language);
         $nodeError503Block->setComponent(TinyMCEWysiwygStrategy::NAME);
         $nodeError503Block->setAttributes(array(
             "htmlContent" => $htmlContent
@@ -85,9 +86,9 @@ EOF;
         $main = new Area();
         $main->addBlock($nodeError503Block);
 
-        $header = $this->createHeader();
+        $header = $this->createHeader($language);
 
-        $footer = $this->createFooter();
+        $footer = $this->createFooter($language);
 
         $nodeError503 = $this->createBaseNode();
         $nodeError503->setArea('main', $main);

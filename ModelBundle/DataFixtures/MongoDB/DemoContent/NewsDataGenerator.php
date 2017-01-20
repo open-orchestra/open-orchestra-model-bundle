@@ -118,6 +118,7 @@ EOF;
         $nodeNewsBlock = new Block();
         $nodeNewsBlock->setLabel('Wysiwyg');
         $nodeNewsBlock->setComponent(TinyMCEWysiwygStrategy::NAME);
+        $nodeNewsBlock->setLanguage($language);
         $nodeNewsBlock->setAttributes(array(
             "htmlContent" => $htmlContent
         ));
@@ -127,9 +128,9 @@ EOF;
         $main = new Area();
         $main->addBlock($nodeNewsBlock);
 
-        $header = $this->createHeader();
+        $header = $this->createHeader($language);
 
-        $footer = $this->createFooter();
+        $footer = $this->createFooter($language);
 
         $nodeNews = $this->createBaseNode();
         $nodeNews->setArea('main', $main);

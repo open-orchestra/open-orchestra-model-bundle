@@ -139,6 +139,7 @@ EOF;
     {
         $nodeContactBlock = new Block();
         $nodeContactBlock->setLabel('Wysiwyg');
+        $nodeContactBlock->setLanguage($language);
         $nodeContactBlock->setComponent(TinyMCEWysiwygStrategy::NAME);
         $nodeContactBlock->setAttributes(array(
             "htmlContent" => $htmlContent
@@ -149,9 +150,9 @@ EOF;
         $main = new Area();
         $main->addBlock($nodeContactBlock);
 
-        $header = $this->createHeader();
+        $header = $this->createHeader($language);
 
-        $footer = $this->createFooter();
+        $footer = $this->createFooter($language);
 
         $nodeContact = $this->createBaseNode();
         $nodeContact->setArea('main', $main);

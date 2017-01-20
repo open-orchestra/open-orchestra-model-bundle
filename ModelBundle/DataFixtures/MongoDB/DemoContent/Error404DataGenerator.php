@@ -75,6 +75,7 @@ EOF;
     {
         $nodeError404Block = new Block();
         $nodeError404Block->setLabel('Wysiwyg');
+        $nodeError404Block->setLanguage($language);
         $nodeError404Block->setComponent(TinyMCEWysiwygStrategy::NAME);
         $nodeError404Block->setAttributes(array(
             "htmlContent" => $htmlContent
@@ -85,9 +86,9 @@ EOF;
         $main = new Area();
         $main->addBlock($nodeError404Block);
 
-        $header = $this->createHeader();
+        $header = $this->createHeader($language);
 
-        $footer = $this->createFooter();
+        $footer = $this->createFooter($language);
 
         $nodeError404 = $this->createBaseNode();
         $nodeError404->setArea('main', $main);
