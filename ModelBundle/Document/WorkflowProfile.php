@@ -41,7 +41,7 @@ class WorkflowProfile implements WorkflowProfileInterface
     protected $descriptions;
 
     /**
-     * @var Collection
+     * @var ArrayCollection
      *
      * @ODM\EmbedMany(
      *  targetDocument="OpenOrchestra\ModelInterface\Model\WorkflowTransitionInterface"
@@ -189,6 +189,10 @@ class WorkflowProfile implements WorkflowProfileInterface
         $this->transitions->add($transition);
     }
 
+    public function setTransitions(array $transitions) {
+        $this->transitions = $transitions;
+    }
+
     /**
      * @param StatusInterface $fromStatus
      * @param StatusInterface $toStatus
@@ -206,6 +210,14 @@ class WorkflowProfile implements WorkflowProfileInterface
         }
 
         return false;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getTransitions()
+    {
+        return $this->transitions;
     }
 
     /**
