@@ -586,7 +586,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
      */
     protected function filterSearch(PaginateFinderConfiguration $configuration, Stage $qa, array $searchTypes)
     {
-        $qa = $this->generateFilter($configuration, $qa, 'string', 'name', 'name');
+        $qa = $this->generateFilter($configuration, $qa, 'text', 'name', 'name');
         $language = $configuration->getSearchIndex('language');
         if (null !== $language && $language !== '') {
             $qa->match(array('language' => $language));
@@ -597,9 +597,9 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         }
         $qa = $this->generateFilter($configuration, $qa, 'boolean', 'linked_to_site', 'linkedToSite');
         $qa = $this->generateFilter($configuration, $qa, 'date', 'created_at', 'createdAt', $configuration->getSearchIndex('date_format'));
-        $qa = $this->generateFilter($configuration, $qa, 'string', 'created_by', 'createdBy');
+        $qa = $this->generateFilter($configuration, $qa, 'text', 'created_by', 'createdBy');
         $qa = $this->generateFilter($configuration, $qa, 'date', 'updated_at', 'updatedAt', $configuration->getSearchIndex('date_format'));
-        $qa = $this->generateFilter($configuration, $qa, 'string', 'updated_by', 'updatedBy');
+        $qa = $this->generateFilter($configuration, $qa, 'text', 'updated_by', 'updatedBy');
         $qa = $this->generateFieldsFilter($configuration, $qa, $searchTypes);
 
         return $qa;
