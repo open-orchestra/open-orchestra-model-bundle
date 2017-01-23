@@ -24,6 +24,8 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     use UseTrackableTrait;
     use FilterTrait;
 
+    const ALIAS_FOR_GROUP = 'content';
+
     /**
      * @param string $contentId
      *
@@ -88,7 +90,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
 
         $qa = $this->generateLastVersionFilter($qa);
 
-        return $this->hydrateAggregateQuery($qa, 'content');
+        return $this->hydrateAggregateQuery($qa, self::ALIAS_FOR_GROUP);
     }
 
     /**
@@ -236,7 +238,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         $this->filterSearch($configuration, $qa, $searchTypes);
 
         $order = $configuration->getOrder();
-        $qa = $this->generateLastVersionFilter($qa, $order, $searchTypes);
+        $qa = $this->generateLastVersionFilter($qa, $order);
 
         $newOrder = array();
         array_walk($order, function($item, $key) use(&$newOrder) {
@@ -250,7 +252,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         $qa->skip($configuration->getSkip());
         $qa->limit($configuration->getLimit());
 
-        return $this->hydrateAggregateQuery($qa, 'content');
+        return $this->hydrateAggregateQuery($qa, self::ALIAS_FOR_GROUP);
     }
 
 
@@ -381,12 +383,11 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
      */
     protected function generateLastVersionFilter(Stage $qa, array $order=array())
     {
-        $elementName = 'content';
         $group = array();
 
         $group = array(
             '_id' => array('contentId' => '$contentId'),
-            $elementName => array('$last' => '$$ROOT'),
+            self::ALIAS_FOR_GROUP => array('$last' => '$$ROOT'),
         );
 
         foreach ($order as $column => $orderDirection) {
@@ -640,6 +641,6 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
 
         $qa = $this->generateLastVersionFilter($qa);
 
-        return $this->countDocumentAggregateQuery($qa, 'content');
+        return $this->countDocumentAggregateQuery($qa, self::ALIAS_FOR_GROUP);
     }
 }
