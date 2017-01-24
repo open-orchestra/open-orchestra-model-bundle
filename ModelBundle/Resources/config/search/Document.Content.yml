@@ -2,8 +2,6 @@ OpenOrchestra\ModelBundle\Document\Content:
     properties:
         name:
             key: name
-        language:
-            key: language
         status:
             key: status_label
             fields: status.labels
