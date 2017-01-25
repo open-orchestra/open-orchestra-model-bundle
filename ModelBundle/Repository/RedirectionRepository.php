@@ -80,13 +80,17 @@ class RedirectionRepository extends AbstractAggregateRepository implements Redir
 
     /**
      * @param string $pattern
+     * @param string $redirectionId
      *
      * @return int
      */
-    public function countByPattern($pattern)
+    public function countByPattern($pattern, $redirectionId)
     {
         $qa = $this->createAggregationQuery();
-        $qa->match(array('routePattern' => $pattern));
+        $qa->match(array(
+            'routePattern' => $pattern,
+            '_id' => array('$ne' => new \MongoId($redirectionId))
+        ));
 
         return $this->countDocumentAggregateQuery($qa);
     }
