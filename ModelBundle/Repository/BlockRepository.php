@@ -62,6 +62,9 @@ class BlockRepository extends AbstractAggregateRepository implements BlockReposi
             $qa->sort($order);
         }
 
+        $qa->skip($configuration->getSkip());
+        $qa->limit($configuration->getLimit());
+
         return $this->hydrateAggregateQuery($qa);
     }
 
