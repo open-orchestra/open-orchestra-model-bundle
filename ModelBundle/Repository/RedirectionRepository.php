@@ -79,6 +79,19 @@ class RedirectionRepository extends AbstractAggregateRepository implements Redir
     }
 
     /**
+     * @param string $pattern
+     *
+     * @return int
+     */
+    public function countByPattern($pattern)
+    {
+        $qa = $this->createAggregationQuery();
+        $qa->match(array('routePattern' => $pattern));
+
+        return $this->countDocumentAggregateQuery($qa);
+    }
+
+    /**
      * @param PaginateFinderConfiguration $configuration
      *
      * @return int
@@ -99,8 +112,6 @@ class RedirectionRepository extends AbstractAggregateRepository implements Redir
      */
     protected function filterSearch(PaginateFinderConfiguration $configuration, Stage $qa)
     {
-//         $qa->match(array('extra.site_id' => $configuration->getSearchIndex('site_id')));
-
         $siteName = $configuration->getSearchIndex('site_name');
         if (null !== $siteName && '' !== $siteName) {
             $qa->match(array('siteName' => new \MongoRegex('/.*' . $siteName . '.*/i')));
