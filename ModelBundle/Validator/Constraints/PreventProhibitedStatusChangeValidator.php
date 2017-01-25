@@ -41,7 +41,6 @@ class PreventProhibitedStatusChangeValidator extends ConstraintValidator
 
         $originalDoc = $this->objectManager->getUnitOfWork()->getOriginalDocumentData($value);
         if (empty($originalDoc)) {
-            return ;
             return;
         }
 
