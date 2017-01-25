@@ -136,4 +136,23 @@ class RedirectionRepository extends AbstractAggregateRepository implements Redir
 
         return $qa;
     }
+
+    /**
+     * @param array $redirectionIds
+     *
+     * @throws \Exception
+     */
+    public function removeRedirections(array $redirectionIds)
+    {
+        $redirectionMongoIds = array();
+        foreach ($redirectionIds as $redirectionId) {
+            $redirectionMongoIds[] = new \MongoId($redirectionId);
+        }
+
+        $qb = $this->createQueryBuilder();
+        $qb->remove()
+            ->field('id')->in($redirectionMongoIds)
+            ->getQuery()
+            ->execute();
+    }
 }
