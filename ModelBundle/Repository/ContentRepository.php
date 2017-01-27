@@ -13,6 +13,7 @@ use OpenOrchestra\Repository\AbstractAggregateRepository;
 use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\KeywordableTrait;
 use OpenOrchestra\ModelInterface\Repository\RepositoryTrait\KeywordableTraitInterface;
 use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\UseTrackableTrait;
+use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\AutoPublishableTrait;
 use OpenOrchestra\Pagination\MongoTrait\FilterTrait;
 use OpenOrchestra\Pagination\MongoTrait\FilterTypeStrategy\Strategies\StringFilterStrategy;
 use OpenOrchestra\Pagination\MongoTrait\FilterTypeStrategy\Strategies\BooleanFilterStrategy;
@@ -26,6 +27,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     use KeywordableTrait;
     use UseTrackableTrait;
     use FilterTrait;
+    use AutoPublishableTrait;
 
     const ALIAS_FOR_GROUP = 'content';
 

@@ -17,6 +17,7 @@ use OpenOrchestra\MongoTrait\Keywordable;
 use OpenOrchestra\MongoTrait\Versionable;
 use OpenOrchestra\MongoTrait\UseTrackable;
 use OpenOrchestra\MongoTrait\Historisable;
+use OpenOrchestra\MongoTrait\AutoPublishable;
 
 /**
  * Description of Content
@@ -50,6 +51,7 @@ class Content implements ContentInterface
     use SoftDeleteable;
     use UseTrackable;
     use Historisable;
+    use AutoPublishable;
 
     /**
      * @var string $id
@@ -99,6 +101,20 @@ class Content implements ContentInterface
      * @ODM\Field(type="string")
      */
     protected $siteId;
+
+    /**
+     * @var string $beginPublication
+     *
+     * @ODM\Field(type="date")
+     */
+    protected $beginPublication;
+
+    /**
+     * @var string $endPublication
+     *
+     * @ODM\Field(type="date")
+     */
+    protected $endPublication;
 
     /**
      * Constructor

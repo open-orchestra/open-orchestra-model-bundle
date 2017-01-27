@@ -17,6 +17,7 @@ use OpenOrchestra\MongoTrait\Sitemapable;
 use OpenOrchestra\MongoTrait\Schemeable;
 use OpenOrchestra\MongoTrait\Versionable;
 use OpenOrchestra\MongoTrait\Historisable;
+use OpenOrchestra\MongoTrait\AutoPublishable;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 
 /**
@@ -55,6 +56,7 @@ class Node implements NodeInterface
     use SoftDeleteable;
     use Historisable;
     use Keywordable;
+    use AutoPublishable;
 
     /**
      * @var string $id
@@ -181,20 +183,6 @@ class Node implements NodeInterface
      * @ODM\Field(type="string")
      */
     protected $canonicalPage;
-
-    /**
-     * @var \DateTime $publishDate
-     *
-     * @ODM\Field(type="date")
-     */
-    protected $publishDate;
-
-    /**
-     * @var \DateTime $unpublishDate
-     *
-     * @ODM\Field(type="date")
-     */
-    protected $unpublishDate;
 
     /**
      * @var string $specialPageName
@@ -549,42 +537,6 @@ class Node implements NodeInterface
     public function getCanonicalPage()
     {
         return $this->canonicalPage;
-    }
-
-    /**
-     * @param \DateTime|null $date
-     */
-    public function setPublishDate($date)
-    {
-        if (is_null($date) || $date instanceof \DateTime) {
-            $this->publishDate = $date;
-        }
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getPublishDate()
-    {
-        return $this->publishDate;
-    }
-
-    /**
-     * @param \DateTime|null $date
-     */
-    public function setUnpublishDate($date)
-    {
-        if (is_null($date) || $date instanceof \DateTime) {
-            $this->unpublishDate = $date;
-        }
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getUnpublishDate()
-    {
-        return $this->unpublishDate;
     }
 
     /**
