@@ -519,6 +519,22 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     }
 
     /**
+     * @param string $contentId
+     *
+     * @return array
+     */
+    public function findAllCurrentlyPublishedByContentId($contentId)
+    {
+        $qa = $this->createAggregationQuery();
+        $filter['currentlyPublished'] = true;
+        $filter['deleted'] = false;
+        $filter['contentId'] = $contentId;
+        $qa->match($filter);
+
+        return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
      * @param ContentInterface $element
      *
      * @return ContentInterface
@@ -577,6 +593,22 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         $qb->updateMany()
         ->field('contentId')->in($contentIds)
         ->field('deleted')->set(true)
+        ->getQuery()
+        ->execute();
+    }
+
+    /**
+     * @param string  $contentType
+     * @param boolean $linkedToSite
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
+    public function updateLinkedToSite($contentType, $linkedToSite)
+    {
+        $qb = $this->createQueryBuilder();
+        $qb->updateMany()
+        ->field('contentType')->equals($contentType)
+        ->field('linkedToSite')->set($linkedToSite)
         ->getQuery()
         ->execute();
     }

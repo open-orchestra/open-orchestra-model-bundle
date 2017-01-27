@@ -199,7 +199,6 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
         $content = new Content();
         $content->setContentId($id);
         $content->setContentType($type);
-        $content->setContentTypeVersion($typeVersion);
         $content->setDeleted(false);
         $content->setCreatedBy('admin');
         $content->setStatus($this->getReference('status-published'));

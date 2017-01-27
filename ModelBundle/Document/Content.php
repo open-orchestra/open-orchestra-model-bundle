@@ -80,13 +80,6 @@ class Content implements ContentInterface
     protected $name;
 
     /**
-     * @var int $contentTypeVersion
-     *
-     * @ODM\Field(type="int")
-     */
-    protected $contentTypeVersion;
-
-    /**
      * @var string $language
      *
      * @ODM\Field(type="string")
@@ -179,22 +172,6 @@ class Content implements ContentInterface
     public function getContentType()
     {
         return $this->contentType;
-    }
-
-    /**
-     * @param int $contentTypeVersion
-     */
-    public function setContentTypeVersion($contentTypeVersion)
-    {
-        $this->contentTypeVersion = $contentTypeVersion;
-    }
-
-    /**
-     * @return int
-     */
-    public function getContentTypeVersion()
-    {
-        return $this->contentTypeVersion;
     }
 
     /**

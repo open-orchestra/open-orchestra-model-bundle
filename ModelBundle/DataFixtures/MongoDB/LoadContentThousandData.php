@@ -83,7 +83,6 @@ class LoadContentThousandData extends AbstractFixture implements OrderedFixtureI
 
         $content->setContentId($id);
         $content->setContentType($type);
-        $content->setContentTypeVersion(1);
         $content->setDeleted($deleted);
         $content->setName($name);
         $content->setLanguage($language);
