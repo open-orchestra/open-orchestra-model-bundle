@@ -22,13 +22,18 @@ class BlockRepository extends AbstractAggregateRepository implements BlockReposi
     }
 
     /**
+     * @param string $component
+     * @param string $siteId
+     * @param string $language
+     *
      * @return array
      */
-    public function findTransverse(){
-        $qa = $this->createAggregationQuery();
+    public function findTransverseBlock($component, $siteId, $language)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language, true);
 
         $qa->match(array(
-            'transverse' => true
+            'component' => $component
         ));
 
         return $this->hydrateAggregateQuery($qa);
@@ -56,6 +61,9 @@ class BlockRepository extends AbstractAggregateRepository implements BlockReposi
         if (!empty($order)) {
             $qa->sort($order);
         }
+
+        $qa->skip($configuration->getSkip());
+        $qa->limit($configuration->getLimit());
 
         return $this->hydrateAggregateQuery($qa);
     }

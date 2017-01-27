@@ -51,10 +51,17 @@ class Area implements AreaInterface
 
     /**
      * @param BlockInterface $block
+     * @param int            $key
      */
-    public function addBlock(BlockInterface $block)
+    public function addBlock(BlockInterface $block, $key = 0)
     {
-        $this->blocks->add($block);
+        if (0 === $key) {
+            $this->blocks->add($block);
+        } else {
+            $blocks = $this->blocks->toArray();
+            array_splice($blocks, $key, 0, array($block));
+            $this->setBlocks(new ArrayCollection($blocks));
+        }
     }
 
     /**
