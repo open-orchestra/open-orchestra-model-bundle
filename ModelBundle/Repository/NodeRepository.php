@@ -205,6 +205,24 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     /**
      * @param string $nodeId
      * @param string $siteId
+     * @param string $areaId
+     *
+     * @return array
+     */
+    public function findByNodeIdAndSiteIdWithBlocksInArea($nodeId, $siteId, $areaId)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
+        $qa->match(array(
+                'nodeId' => $nodeId,
+                'areas.'.$areaId.'.blocks.0' => array('$exists' => true),
+        ));
+
+        return $this->findLastVersionInLanguage($qa);
+    }
+
+    /**
+     * @param string $nodeId
+     * @param string $siteId
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      *
