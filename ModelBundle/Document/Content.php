@@ -103,20 +103,6 @@ class Content implements ContentInterface
     protected $siteId;
 
     /**
-     * @var string $beginPublication
-     *
-     * @ODM\Field(type="date")
-     */
-    protected $beginPublication;
-
-    /**
-     * @var string $endPublication
-     *
-     * @ODM\Field(type="date")
-     */
-    protected $endPublication;
-
-    /**
      * Constructor
      */
     public function __construct()
