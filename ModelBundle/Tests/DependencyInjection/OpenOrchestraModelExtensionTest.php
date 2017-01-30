@@ -67,7 +67,7 @@ class OpenOrchestraModelExtensionTest extends AbstractBaseTestCase
             '12' => array("empty", "OpenOrchestra\\ModelBundle\\Document\\Status"           , "status"            , "OpenOrchestra\\ModelBundle\\Repository\\StatusRepository"                ),
             '13' => array("empty", "OpenOrchestra\\ModelBundle\\Document\\EmbedStatus"      , "embed_status"                                                                                  ),
             '14' => array("empty", "OpenOrchestra\\ModelBundle\\Document\\Theme"            , "theme"             , "OpenOrchestra\\ModelBundle\\Repository\\ThemeRepository"                 ),
-            '15' => array("empty", "OpenOrchestra\\ModelBundle\\Document\\Redirection"      , "redirection"       , "OpenOrchestra\\ModelBundle\\Repository\\RedirectionRepository"     , true),
+            '15' => array("empty", "OpenOrchestra\\ModelBundle\\Document\\Redirection"      , "redirection"       , "OpenOrchestra\\ModelBundle\\Repository\\RedirectionRepository"           ),
             '16' => array("empty", "OpenOrchestra\\ModelBundle\\Document\\Keyword"          , "keyword"           , "OpenOrchestra\\ModelBundle\\Repository\\KeywordRepository"               ),
             '17' => array("empty", "OpenOrchestra\\ModelBundle\\Document\\TranslatedValue"  , "translated_value"                                                                              ),
             '18' => array("empty", "OpenOrchestra\\ModelBundle\\Document\\TrashItem"        , "trash_item"        , "OpenOrchestra\\ModelBundle\\Repository\\TrashItemRepository"       , true),
