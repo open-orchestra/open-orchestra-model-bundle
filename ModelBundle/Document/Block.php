@@ -302,4 +302,14 @@ class Block implements BlockInterface
     {
         return $this->parameter;
     }
+
+    /**
+     * Clone method
+     */
+    public function __clone()
+    {
+        if (!is_null($this->id)) {
+            $this->id = null;
+        }
+    }
 }
