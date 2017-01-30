@@ -63,12 +63,4 @@ class StatusChoiceType extends AbstractStatusChoiceType
     {
         return 'document';
     }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'oo_status_choice';
-    }
 }
