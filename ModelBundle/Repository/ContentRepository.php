@@ -600,22 +600,6 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     }
 
     /**
-     * @param string  $contentType
-     * @param boolean $linkedToSite
-     *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     */
-    public function updateLinkedToSite($contentType, $linkedToSite)
-    {
-        $qb = $this->createQueryBuilder();
-        $qb->updateMany()
-        ->field('contentType')->equals($contentType)
-        ->field('linkedToSite')->set($linkedToSite)
-        ->getQuery()
-        ->execute();
-    }
-
-    /**
      * @param PaginateFinderConfiguration $configuration
      * @param Stage                       $qa
      * @param array                       $searchTypes
