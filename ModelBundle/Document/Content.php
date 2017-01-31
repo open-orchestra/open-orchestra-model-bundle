@@ -17,6 +17,7 @@ use OpenOrchestra\MongoTrait\Keywordable;
 use OpenOrchestra\MongoTrait\Versionable;
 use OpenOrchestra\MongoTrait\UseTrackable;
 use OpenOrchestra\MongoTrait\Historisable;
+use OpenOrchestra\MongoTrait\AutoPublishable;
 
 /**
  * Description of Content
@@ -50,6 +51,7 @@ class Content implements ContentInterface
     use SoftDeleteable;
     use UseTrackable;
     use Historisable;
+    use AutoPublishable;
 
     /**
      * @var string $id
@@ -78,13 +80,6 @@ class Content implements ContentInterface
      * @ODM\Field(type="string")
      */
     protected $name;
-
-    /**
-     * @var int $contentTypeVersion
-     *
-     * @ODM\Field(type="int")
-     */
-    protected $contentTypeVersion;
 
     /**
      * @var string $language
@@ -179,22 +174,6 @@ class Content implements ContentInterface
     public function getContentType()
     {
         return $this->contentType;
-    }
-
-    /**
-     * @param int $contentTypeVersion
-     */
-    public function setContentTypeVersion($contentTypeVersion)
-    {
-        $this->contentTypeVersion = $contentTypeVersion;
-    }
-
-    /**
-     * @return int
-     */
-    public function getContentTypeVersion()
-    {
-        return $this->contentTypeVersion;
     }
 
     /**

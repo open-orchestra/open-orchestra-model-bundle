@@ -46,7 +46,6 @@ class LoadDeletedSiteContentData extends AbstractFixture implements OrderedFixtu
         $content = new Content();
         $content->setContentId("jsmith");
         $content->setContentType("customer");
-        $content->setContentTypeVersion(1);
         $content->setDeleted(false);
         $content->setCreatedBy('admin');
         $content->setStatus($this->getReference('status-published'));

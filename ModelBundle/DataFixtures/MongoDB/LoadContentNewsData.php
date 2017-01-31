@@ -75,7 +75,6 @@ class LoadContentNewsData extends AbstractFixture implements OrderedFixtureInter
 
         $content->setContentId($id);
         $content->setContentType($type);
-        $content->setContentTypeVersion(1);
         $content->setDeleted(false);
         $content->setName($name);
         $content->setLanguage($language);

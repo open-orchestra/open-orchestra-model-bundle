@@ -8,9 +8,6 @@ OpenOrchestra\ModelBundle\Document\Content:
             - NotBlank: ~
         language:
             - NotBlank: ~
-        contentTypeVersion:
-            - Type:
-                type: integer
         deleted:
             - Type:
                 type: bool
