@@ -133,9 +133,6 @@ abstract class AbstractDataGenerator
         $node->setPath('-');
         $node->setVersion($this->version);
         $node->setStatus($this->fixture->getReference($this->status));
-        if ('status-published' == $this->status) {
-            $node->setCurrentlyPublished(true);
-        }
         $node->setDeleted(false);
         $node->setTemplate('default');
         $node->setTheme('themePresentation');

@@ -164,9 +164,6 @@ EOF;
         $nodeHome->setName('Orchestra ?');
         $nodeHome->setVersion($this->version);
         $nodeHome->setStatus($this->fixture->getReference($this->status));
-        if ('status-published' == $this->status) {
-            $nodeHome->setCurrentlyPublished(true);
-        }
 
         return $nodeHome;
     }
