@@ -737,7 +737,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      *
      * @return ReadNodeInterface
      */
-    public function findOnePublishedByLanguageAndSiteId($language, $siteId)
+    public function findPublishedByLanguageAndSiteId($language, $siteId)
     {
         $qa = $this->createAggregationQuery();
         $qa->match(
