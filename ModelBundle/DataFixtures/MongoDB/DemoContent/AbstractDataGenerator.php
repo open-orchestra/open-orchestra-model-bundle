@@ -149,6 +149,7 @@ abstract class AbstractDataGenerator
     protected function getVersionName(NodeInterface $node)
     {
         $date = new \DateTime("now");
+
         return $node->getName().'_'. $node->getVersion(). '_'. $date->format("Y-m-d_H:i:s");
     }
 }

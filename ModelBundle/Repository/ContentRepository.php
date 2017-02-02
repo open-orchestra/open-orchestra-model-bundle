@@ -192,11 +192,37 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
      *
      * @return array
      */
-    public function findByLanguage($contentId, $language)
+    public function findNotDeletedSortByUpdatedAt($contentId, $language)
     {
-        $qa = $this->createAggregationQueryWithContentIdAndLanguageAndVersion($contentId, $language, null);
+        $qa = $this->createAggregationQueryWithLanguage($language);
+        $qa->match(
+            array(
+                'contentId' => $contentId,
+                'deleted'   => false,
+            )
+        );
+        $qa->sort(array('updatedAt' => -1));
 
         return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param string $contentId
+     * @param string $language
+     *
+     * @return array
+     */
+    public function countNotDeletedByLanguage($contentId, $language)
+    {
+        $qa = $this->createAggregationQueryWithLanguage($language);
+        $qa->match(
+            array(
+                'contentId' => $contentId,
+                'deleted'   => false,
+            )
+        );
+
+        return $this->countDocumentAggregateQuery($qa);
     }
 
     /**
@@ -559,6 +585,25 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         $qb->updateMany()
         ->field('contentId')->in($contentIds)
         ->field('deleted')->set(true)
+        ->getQuery()
+        ->execute();
+    }
+
+    /**
+     * @param array $ids
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
+    public function removeContentVersion(array $ids)
+    {
+        $contentMongoIds = array();
+        foreach ($ids as $id) {
+            $contentMongoIds[] = new \MongoId($id);
+        }
+
+        $qb = $this->createQueryBuilder();
+        $qb->remove()
+        ->field('id')->in($contentMongoIds)
         ->getQuery()
         ->execute();
     }

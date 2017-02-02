@@ -8,6 +8,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use OpenOrchestra\ModelBundle\Document\Content;
 use OpenOrchestra\ModelBundle\Document\ContentAttribute;
 use OpenOrchestra\ModelInterface\DataFixtures\OrchestraFunctionalFixturesInterface;
+use OpenOrchestra\ModelInterface\Model\ContentInterface;
 
 /**
  * Class LoadContentData
@@ -94,6 +95,7 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
         $content->addKeyword($this->getReference('keyword-lorem'));
         $content->setLinkedToSite(false);
         $content->setSiteId('2');
+        $content->setVersionName($this->getVersionName($content));
 
         $content->addAttribute($attribute1);
         $content->addAttribute($attribute2);
@@ -116,6 +118,7 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
         $content->addKeyword($this->getReference('keyword-lorem'));
         $content->setLinkedToSite(true);
         $content->setSiteId('2');
+        $content->setVersionName($this->getVersionName($content));
 
         $attribute1 = $this->generateContentAttribute('car_name', 'Ds3');
         $attribute2 = $this->generateContentAttribute('description',
@@ -146,6 +149,7 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
         $content->addKeyword($this->getReference('keyword-sit'));
         $content->setLinkedToSite(false);
         $content->setSiteId('2');
+        $content->setVersionName($this->getVersionName($content));
 
         $attribute1 = $this->generateContentAttribute('car_name', '206');
         $attribute2 = $this->generateContentAttribute('description',
@@ -175,6 +179,7 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
         $content->addKeyword($this->getReference('keyword-sit'));
         $content->setLinkedToSite(false);
         $content->setSiteId('2');
+        $content->setVersionName($this->getVersionName($content));
 
         $attribute1 = $this->generateContentAttribute('firstname', 'Jean-Claude');
         $attribute2 = $this->generateContentAttribute('lastname', 'Convenant');
@@ -204,5 +209,17 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
         $content->setStatus($this->getReference('status-published'));
 
         return $content;
+    }
+
+    /**
+     * @param ContentInterface $content
+     *
+     * @return string
+     */
+    protected function getVersionName(ContentInterface $content)
+    {
+        $date = new \DateTime("now");
+
+        return $content->getName().'_'. $content->getVersion(). '_'. $date->format("Y-m-d_H:i:s");
     }
 }
