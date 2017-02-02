@@ -99,6 +99,7 @@ EOF;
         $nodeError404->setLanguage($language);
         $nodeError404->setNodeId(NodeInterface::ERROR_404_NODE_ID);
         $nodeError404->setName('Error 404');
+        $nodeError404->setVersionName($this->getVersionName($nodeError404));
         $nodeError404->setCreatedBy('fake_admin');
         $nodeError404->setParentId(NodeInterface::ROOT_PARENT_ID);
         $nodeError404->setRoutePattern($routePattern);

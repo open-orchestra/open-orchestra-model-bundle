@@ -133,6 +133,7 @@ EOF;
 
         $nodeAutoPublish->setNodeId('fixture_auto_unpublish');
         $nodeAutoPublish->setName($name);
+        $nodeAutoPublish->setVersionName($this->getVersionName($nodeAutoPublish));
         $nodeAutoPublish->setLanguage($language);
         $nodeAutoPublish->setParentId(NodeInterface::ROOT_NODE_ID);
         $nodeAutoPublish->setOrder(15);

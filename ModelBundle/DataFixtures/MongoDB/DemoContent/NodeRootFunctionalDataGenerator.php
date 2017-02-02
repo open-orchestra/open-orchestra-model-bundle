@@ -162,6 +162,7 @@ EOF;
         $nodeHome->setSitemapChangefreq('hourly');
         $nodeHome->setSitemapPriority('0.8');
         $nodeHome->setName('Orchestra ?');
+        $nodeHome->setVersionName($this->getVersionName($nodeHome));
         $nodeHome->setVersion($this->version);
         $nodeHome->setStatus($this->fixture->getReference($this->status));
 
