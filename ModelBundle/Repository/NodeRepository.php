@@ -120,7 +120,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      *
      * @return mixed
      */
-    public function findVersion($nodeId, $language, $siteId, $version)
+    public function findVersionNotDeleted($nodeId, $language, $siteId, $version)
     {
         $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         $qa->match(

@@ -603,9 +603,9 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
 
         $qb = $this->createQueryBuilder();
         $qb->remove()
-        ->field('id')->in($contentMongoIds)
-        ->getQuery()
-        ->execute();
+            ->field('id')->in($contentMongoIds)
+            ->getQuery()
+            ->execute();
     }
 
     /**
