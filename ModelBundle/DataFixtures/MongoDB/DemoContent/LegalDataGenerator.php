@@ -122,6 +122,7 @@ EOF;
 
         $nodeLegal->setNodeId('fixture_page_legal_mentions');
         $nodeLegal->setName($name);
+        $nodeLegal->setVersionName($this->getVersionName($nodeLegal));
         $nodeLegal->setLanguage($language);
         $nodeLegal->setParentId(NodeInterface::ROOT_NODE_ID);
         $nodeLegal->setOrder(10);

@@ -86,7 +86,6 @@ class LoadDeletedSiteNodeData extends AbstractFixture implements OrderedFixtureI
         $node->setCreatedBy('fake_admin');
         $node->setParentId('-');
         $node->setOrder(0);
-        $node->setCurrentlyPublished(true);
 
         return $node;
     }

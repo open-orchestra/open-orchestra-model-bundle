@@ -52,7 +52,7 @@ class StatusChoiceType extends AbstractStatusChoiceType
             'class' => $this->statusClass,
             'choice_label' => function (StatusInterface $choice) use ($multiLanguagesChoiceManager) {
                 return $multiLanguagesChoiceManager->choose($choice->getLabels());
-            },
+            }
         ));
     }
 

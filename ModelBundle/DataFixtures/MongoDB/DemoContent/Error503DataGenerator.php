@@ -99,6 +99,7 @@ EOF;
         $nodeError503->setLanguage($language);
         $nodeError503->setNodeId(NodeInterface::ERROR_503_NODE_ID);
         $nodeError503->setName('Error 503');
+        $nodeError503->setVersionName($this->getVersionName($nodeError503));
         $nodeError503->setCreatedBy('fake_admin');
         $nodeError503->setParentId(NodeInterface::ROOT_PARENT_ID);
         $nodeError503->setRoutePattern($routePattern);

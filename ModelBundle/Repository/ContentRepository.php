@@ -57,12 +57,11 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
      *
      * @return ContentInterface
      */
-    public function findLastPublishedVersion($contentId, $language)
+    public function findPublishedVersion($contentId, $language)
     {
         $qa = $this->createAggregationQueryWithLanguageAndPublished($language);
 
         $qa->match(array('contentId' => $contentId));
-        $qa->sort(array('version' => -1));
 
         return $this->singleHydrateAggregateQuery($qa);
     }
@@ -193,11 +192,37 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
      *
      * @return array
      */
-    public function findByLanguage($contentId, $language)
+    public function findNotDeletedSortByUpdatedAt($contentId, $language)
     {
-        $qa = $this->createAggregationQueryWithContentIdAndLanguageAndVersion($contentId, $language, null);
+        $qa = $this->createAggregationQueryWithLanguage($language);
+        $qa->match(
+            array(
+                'contentId' => $contentId,
+                'deleted'   => false,
+            )
+        );
+        $qa->sort(array('updatedAt' => -1));
 
         return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param string $contentId
+     * @param string $language
+     *
+     * @return array
+     */
+    public function countNotDeletedByLanguage($contentId, $language)
+    {
+        $qa = $this->createAggregationQueryWithLanguage($language);
+        $qa->match(
+            array(
+                'contentId' => $contentId,
+                'deleted'   => false,
+            )
+        );
+
+        return $this->countDocumentAggregateQuery($qa);
     }
 
     /**
@@ -388,8 +413,6 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
      */
     protected function generateLastVersionFilter(Stage $qa, array $order=array())
     {
-        $group = array();
-
         $group = array(
             '_id' => array('contentId' => '$contentId'),
             self::ALIAS_FOR_GROUP => array('$last' => '$$ROOT'),
@@ -469,7 +492,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         $qa = $this->createAggregationQueryWithLanguage($language);
         $qa->match(
             array(
-                'deleted'          => false,
+                'deleted'               => false,
                 'status.publishedState' => true,
             )
         );
@@ -498,26 +521,13 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
      *
      * @return ContentInterface
      */
-    public function findOneCurrentlyPublished($contentId, $language, $siteId)
+    public function findOnePublished($contentId, $language, $siteId)
     {
         $qa = $this->createAggregationQueryWithLanguageAndPublished($language);
-        $filter['currentlyPublished'] = true;
-        $filter['deleted'] = false;
         $filter['contentId'] = $contentId;
         $qa->match($filter);
-        $qa->sort(array('version' => -1));
 
         return $this->singleHydrateAggregateQuery($qa);
-    }
-
-    /**
-     * @param ContentInterface $element
-     *
-     * @return StatusableInterface
-     */
-    public function findOneCurrentlyPublishedByElement(StatusableInterface $element)
-    {
-        return $this->findOneCurrentlyPublished($element->getContentId(), $element->getLanguage(), $element->getSiteId());
     }
 
     /**
@@ -525,10 +535,10 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
      *
      * @return array
      */
-    public function findAllCurrentlyPublishedByContentId($contentId)
+    public function findAllPublishedByContentId($contentId)
     {
         $qa = $this->createAggregationQuery();
-        $filter['currentlyPublished'] = true;
+        $filter['status.publishedState'] = true;
         $filter['deleted'] = false;
         $filter['contentId'] = $contentId;
         $qa->match($filter);
@@ -537,35 +547,16 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     }
 
     /**
-     * @param ContentInterface $element
-     *
-     * @return ContentInterface
-     */
-    public function findPublishedInLastVersionWithoutFlag(StatusableInterface $element)
-    {
-        $qa = $this->createAggregationQueryWithLanguageAndPublished($element->getLanguage());
-        $filter['status.publishedState'] = true;
-        $filter['currentlyPublished'] = false;
-        $filter['deleted'] = false;
-        $filter['contentId'] = $element->getContentId();
-        $qa->match($filter);
-        $qa->sort(array('version' => -1));
-
-        return $this->singleHydrateAggregateQuery($qa);
-    }
-
-    /**
-     * @param ContentInterface $element
+     * @param StatusableInterface $element
      *
      * @return array
      */
-    public function findAllCurrentlyPublishedByElementId(StatusableInterface $element)
+    public function findPublished(StatusableInterface $element)
     {
-        return $this->findBy(array(
-            'contentId' => $element->getContentId(),
-            'language' => $element->getLanguage(),
-            'currentlyPublished' => true
-        ));
+        $qa = $this->createAggregationQueryWithLanguageAndPublished($element->getLanguage());
+        $qa->match(array('contentId' => $element->getContentId()));
+
+        return $this->hydrateAggregateQuery($qa);
     }
 
     /**
@@ -576,8 +567,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
      */
     public function updateStatusByContentType(StatusInterface $status, $contentType) {
         $this->createQueryBuilder()
-            ->update()
-            ->multiple(true)
+            ->updateMany()
             ->field('status')->set($status)
             ->field('contentType')->equals($contentType)
             ->getQuery()
@@ -597,6 +587,25 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         ->field('deleted')->set(true)
         ->getQuery()
         ->execute();
+    }
+
+    /**
+     * @param array $ids
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
+    public function removeContentVersion(array $ids)
+    {
+        $contentMongoIds = array();
+        foreach ($ids as $id) {
+            $contentMongoIds[] = new \MongoId($id);
+        }
+
+        $qb = $this->createQueryBuilder();
+        $qb->remove()
+            ->field('id')->in($contentMongoIds)
+            ->getQuery()
+            ->execute();
     }
 
     /**

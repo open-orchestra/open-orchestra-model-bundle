@@ -81,7 +81,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      */
     public function getSubMenu($nodeId, $nbLevel, $language, $siteId)
     {
-        $node = $this->findOneCurrentlyPublished($nodeId, $language, $siteId);
+        $node = $this->findOnePublished($nodeId, $language, $siteId);
         $list = array();
 
         if ($node instanceof ReadNodeInterface) {
@@ -99,53 +99,38 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      *
      * @return mixed
      */
-    public function findOneCurrentlyPublished($nodeId, $language, $siteId)
+    public function findOnePublished($nodeId, $language, $siteId)
     {
         $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         $filter = array(
-            'currentlyPublished' => true,
+            'status.publishedState' => true,
             'deleted' => false,
             'nodeId' => $nodeId,
         );
         $qa->match($filter);
-        $qa->sort(array('version' => -1));
 
         return $this->singleHydrateAggregateQuery($qa);
-    }
-
-    /**
-     * @param StatusableInterface $element
-     *
-     * @return StatusableInterface
-     */
-    public function findOneCurrentlyPublishedByElement(StatusableInterface $element)
-    {
-        return $this->findOneCurrentlyPublished($element->getNodeId(), $element->getLanguage(), $element->getSiteId());
     }
 
     /**
      * @param string   $nodeId
      * @param string   $language
      * @param string   $siteId
-     * @param int|null $version
+     * @param int      $version
      *
      * @return mixed
      */
-    public function findVersion($nodeId, $language, $siteId, $version = null)
+    public function findVersionNotDeleted($nodeId, $language, $siteId, $version)
     {
-        if (!is_null($version)) {
-            $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
-            $qa->match(
-                array(
-                    'nodeId'  => $nodeId,
-                    'deleted' => false,
-                    'version' => (int) $version,
-                )
-            );
-            return $this->singleHydrateAggregateQuery($qa);
-        }
-
-        return $this->findInLastVersion($nodeId, $language, $siteId);
+        $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
+        $qa->match(
+            array(
+                'nodeId'  => $nodeId,
+                'deleted' => false,
+                'version' => (int) $version,
+            )
+        );
+        return $this->singleHydrateAggregateQuery($qa);
     }
 
     /**
@@ -157,13 +142,36 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      *
      * @return mixed
      */
-    public function findByNodeAndLanguageAndSite($nodeId, $language, $siteId)
+    public function findNotDeletedSortByUpdatedAt($nodeId, $language, $siteId)
     {
         $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
-        $qa->match(array('nodeId' => $nodeId));
-        $qa->sort(array('version' => -1));
+        $qa->match(array(
+            'nodeId' => $nodeId,
+            'deleted'=> false,
+        ));
+        $qa->sort(array('updatedAt' => -1));
 
         return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param string $nodeId
+     * @param string $language
+     * @param string $siteId
+     *
+     * @throws \Exception
+     *
+     * @return mixed
+     */
+    public function countNotDeletedVersions($nodeId, $language, $siteId)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
+        $qa->match(array(
+            'nodeId' => $nodeId,
+            'deleted'=> false,
+        ));
+
+        return $this->countDocumentAggregateQuery($qa);
     }
 
     /**
@@ -393,7 +401,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      *
      * @return array
      */
-    public function findLastVersionByTypeCurrentlyPublished($siteId, $type = NodeInterface::TYPE_DEFAULT)
+    public function findPublishedByType($siteId, $type = NodeInterface::TYPE_DEFAULT)
     {
         $qa = $this->createAggregationQuery();
         $qa->match(
@@ -401,11 +409,11 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
                 'siteId' => $siteId,
                 'deleted' => false,
                 'nodeType' => $type,
-                'currentlyPublished' => true,
+                'status.publishedState' => true,
             )
         );
 
-        return $this->findLastVersionInLanguage($qa);
+        return $this->hydrateAggregateQuery($qa);
     }
 
     /**
@@ -415,19 +423,19 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      *
      * @return array
      */
-    public function findByPathCurrentlyPublishedAndLanguage($path, $siteId, $language)
+    public function findPublishedByPathAndLanguage($path, $siteId, $language)
     {
         $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
         $qa->match(
             array(
                 'path' => new MongoRegex('/^'.$path.'(\/.*)?$/'),
-                'currentlyPublished' => true,
+                'status.publishedState' => true,
                 'deleted' => false,
                 'language' => $language,
             )
         );
 
-        return $this->findLastVersion($qa);
+        return $this->hydrateAggregateQuery($qa);
     }
 
     /**
@@ -748,39 +756,37 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      *
      * @return ReadNodeInterface
      */
-    public function findCurrentlyPublishedVersion($language, $siteId)
+    public function findPublishedByLanguageAndSiteId($language, $siteId)
     {
         $qa = $this->createAggregationQuery();
         $qa->match(
             array(
                 'siteId'=> $siteId,
                 'language'=> $language,
-                'currentlyPublished' => true,
+                'status.publishedState' => true,
                 'nodeType' => NodeInterface::TYPE_DEFAULT
             )
         );
 
-        return $this->findLastVersion($qa);
+        return $this->hydrateAggregateQuery($qa);
     }
 
     /**
-     * @param NodeInterface $element
+     * @param StatusableInterface $element
      *
-     * @return NodeInterface
+     * @return array
      */
-    public function findPublishedInLastVersionWithoutFlag(StatusableInterface $element)
+    public function findPublished(StatusableInterface $element)
     {
         $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($element->getSiteId(), $element->getLanguage());
         $filter = array(
             'status.publishedState' => true,
-            'currentlyPublished' => false,
             'deleted' => false,
             'nodeId' => $element->getNodeId(),
         );
         $qa->match($filter);
-        $qa->sort(array('version' => -1));
 
-        return $this->singleHydrateAggregateQuery($qa);
+        return $this->hydrateAggregateQuery($qa);
     }
 
     /**
@@ -873,13 +879,13 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      *
      * @return array
      */
-    public function findAllCurrentlyPublishedByTypeWithSkipAndLimit($nodeType, $skip, $limit)
+    public function findAllPublishedByTypeWithSkipAndLimit($nodeType, $skip, $limit)
     {
         $qa = $this->createAggregationQuery();
         $qa->match(
             array(
                 'nodeType' => $nodeType,
-                'currentlyPublished' => true,
+                'status.publishedState' => true,
                 'deleted' => false
             )
         );
@@ -895,29 +901,9 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      *
      * @return int
      */
-    public function countAllCurrentlyPublishedByType($nodeType)
+    public function countAllPublishedByType($nodeType)
     {
         $qa = $this->createAggregationQuery();
-        $qa->match(
-            array(
-                'nodeType' => $nodeType,
-                'currentlyPublished' => true,
-                'deleted' => false
-            )
-        );
-
-        return $this->countDocumentAggregateQuery($qa);
-    }
-
-    /**
-     * @param string $nodeType
-     * @param string $siteId
-     *
-     * @return array
-     */
-    public function findAllNodesOfTypeInLastPublishedVersionForSite($nodeType, $siteId)
-    {
-        $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
         $qa->match(
             array(
                 'nodeType' => $nodeType,
@@ -926,9 +912,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
             )
         );
 
-        $qa->sort(array('version' => 1));
-
-        return $this->hydrateAggregateQuery($qa);
+        return $this->countDocumentAggregateQuery($qa);
     }
 
     /**
@@ -1018,21 +1002,6 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     }
 
     /**
-     * @param NodeInterface $element
-     *
-     * @return array
-     */
-    public function findAllCurrentlyPublishedByElementId(StatusableInterface $element)
-    {
-        return $this->findBy(array(
-            'nodeId' => $element->getNodeId(),
-            'language' => $element->getLanguage(),
-            'siteId' => $element->getSiteId(),
-            'currentlyPublished' => true
-        ));
-    }
-
-    /**
      * @param string $blockId
      *
      * @return boolean
@@ -1073,6 +1042,25 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
             ->field('version')->equals($version)
             ->field('areas.'.$areaName.'.blocks.$id')->equals(new \MongoId($blockId))
             ->field('areas.'.$areaName.'.blocks')->pull(array('$id' => new \MongoId($blockId)))
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * @param array $nodeIds
+     *
+     * @throws \Exception
+     */
+    public function removeNodeVersions(array $nodeIds)
+    {
+        $nodeMongoIds = array();
+        foreach ($nodeIds as $nodeId) {
+            $nodeMongoIds[] = new \MongoId($nodeId);
+        }
+
+        $qb = $this->createQueryBuilder();
+        $qb->remove()
+            ->field('id')->in($nodeIds)
             ->getQuery()
             ->execute();
     }
@@ -1174,7 +1162,6 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         return ($order1 < $order2) ? -1 : 1;
     }
 
-
     /**
      * @param string $siteId
      *
@@ -1258,12 +1245,12 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
             array(
                 'siteId' => $siteId,
                 'language' => $language,
-                'currentlyPublished' => true,
+                'status.publishedState' => true,
                 'deleted' => false,
                 $field => true
             )
         );
 
-        return $this->findLastVersion($qa);
+        return $this->hydrateAggregateQuery($qa);
     }
 }
