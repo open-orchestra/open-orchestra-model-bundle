@@ -77,7 +77,7 @@ class LoadDeletedSiteNodeData extends AbstractFixture implements OrderedFixtureI
     {
         $node = $this->getSitePageNode();
         $node->setNodeId(NodeInterface::ROOT_NODE_ID);
-        $node->setStatus($this->getReference('status-published'));
+        $node->setStatus($this->getReference('status-draft'));
         $node->setDeleted(false);
 
         $node->setName("Site fermé");
@@ -97,7 +97,7 @@ class LoadDeletedSiteNodeData extends AbstractFixture implements OrderedFixtureI
     {
         $node = $this->getSitePageNode();
         $node->setNodeId('some-deleted-node-id');
-        $node->setStatus($this->getReference('status-published'));
+        $node->setStatus($this->getReference('status-draft'));
         $node->setDeleted(true);
 
         $node->setName("Page supprimée");
