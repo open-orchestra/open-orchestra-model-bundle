@@ -67,6 +67,7 @@ class Block implements BlockInterface
      *
      * @ODM\Field(type="string")
      */
+    protected $siteId;
 
     /**
      * @var array $attributes
