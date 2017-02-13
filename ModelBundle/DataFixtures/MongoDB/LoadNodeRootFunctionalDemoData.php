@@ -32,7 +32,6 @@ class LoadNodeRootFunctionalDemoData extends AbstractFixture implements Containe
     protected $nodeen;
     protected $nodefr;
 
-    protected $blockParameters;
     /**
      * @var ContainerInterface
      */
@@ -54,14 +53,6 @@ class LoadNodeRootFunctionalDemoData extends AbstractFixture implements Containe
     public function load(ObjectManager $manager)
     {
         $languages = array("de", "en", "fr");
-        $this->blockParameters = array(
-            'tiny_mce_wysiwyg' => array(),
-            'menu' => array('request.aliasId'),
-            'footer' => array('request.aliasId'),
-            'contact' => array('post_data', 'request.aliasId'),
-            'language_list' => array(),
-        );
-
         foreach($languages as $language) {
             $this->generateGlobalBlock($manager, $language);
         }
@@ -113,8 +104,6 @@ class LoadNodeRootFunctionalDemoData extends AbstractFixture implements Containe
     protected function generateBlock(ObjectManager $manager, BlockInterface $block, $language)
     {
         $block->setSiteId('2');
-        $block->setPrivate(!$this->container->get('open_orchestra_display.display_block_manager')->isPublic($block));
-        $block->setParameter($this->blockParameters[$block->getComponent()]);
         $block->setLanguage($language);
 
         $manager->persist($block);
