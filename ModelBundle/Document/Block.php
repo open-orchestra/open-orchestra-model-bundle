@@ -56,13 +56,6 @@ class Block implements BlockInterface
     protected $style;
 
     /**
-     * @var boolean $private
-     *
-     * @ODM\Field(type="boolean")
-     */
-    protected $private;
-
-    /**
      * @var string $language
      *
      * @ODM\Field(type="string")
@@ -75,13 +68,6 @@ class Block implements BlockInterface
      * @ODM\Field(type="string")
      */
     protected $siteId;
-
-    /**
-     * @var boolean $parameter
-     *
-     * @ODM\Field(type="hash")
-     */
-    protected $parameter;
 
     /**
      * @var array $attributes
@@ -224,26 +210,6 @@ class Block implements BlockInterface
     }
 
     /**
-     * Set private
-     *
-     * @param boolean $private
-     */
-    public function setPrivate($private)
-    {
-        $this->private = $private;
-    }
-
-    /**
-     * Get private
-     *
-     * @return boolean $private
-     */
-    public function isPrivate()
-    {
-        return $this->private;
-    }
-
-    /**
      * Set language
      *
      * @param string $language
@@ -281,26 +247,6 @@ class Block implements BlockInterface
     public function getSiteId()
     {
         return $this->siteId;
-    }
-
-    /**
-     * Set parameter
-     *
-     * @param array $parameter
-     */
-    public function setParameter(array $parameter)
-    {
-        $this->parameter = $parameter;
-    }
-
-    /**
-     * Get parameter
-     *
-     * @return array $parameter
-     */
-    public function getParameter()
-    {
-        return $this->parameter;
     }
 
     /**
