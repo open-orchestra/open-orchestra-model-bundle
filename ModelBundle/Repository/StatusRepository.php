@@ -193,9 +193,10 @@ class StatusRepository extends AbstractAggregateRepository implements StatusRepo
     /**
      * @return int
      */
-    public function count()
+    public function countNotOutOfWorkflow()
     {
         $qa = $this->createAggregationQuery();
+        $qa->match(array('outOfWorkflow' => false));
 
         return $this->countDocumentAggregateQuery($qa);
     }
@@ -227,6 +228,7 @@ class StatusRepository extends AbstractAggregateRepository implements StatusRepo
         if (null !== $label && '' !== $label && null !== $language && '' !== $language) {
             $qa->match(array('labels.' . $language => new \MongoRegex('/.*'.$label.'.*/i')));
         }
+        $qa->match(array('outOfWorkflow' => false));
 
         return $qa;
     }
