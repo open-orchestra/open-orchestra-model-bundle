@@ -113,6 +113,25 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     }
 
     /**
+     * @param string $language
+     * @param string $siteId
+     *
+     * @return array
+     */
+    public function findPublishedSpecialPage($language, $siteId)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
+        $filter = array(
+            'status.publishedState' => true,
+            'deleted' => false,
+            'specialPageName' => array('$exists' => true),
+        );
+        $qa->match($filter);
+
+        return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
      * @param string   $nodeId
      * @param string   $language
      * @param string   $siteId
