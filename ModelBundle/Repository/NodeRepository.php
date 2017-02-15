@@ -118,7 +118,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      *
      * @return array
      */
-    public function findPublishedSpecialPage($language, $siteId)
+    public function findAllPublishedSpecialPage($language, $siteId)
     {
         $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         $filter = array(
@@ -129,6 +129,48 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         $qa->match($filter);
 
         return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param string $language
+     * @param string $siteId
+     *
+     * @return array
+     */
+    public function findAllSpecialPage($language, $siteId)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
+        $filter = array(
+            'deleted' => false,
+            'specialPageName' => array('$exists' => true),
+        );
+        $qa->match($filter);
+
+        return $this->hydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param string $nodeId
+     * @param string $siteId
+     * @param string $language
+     * @param string $name
+     *
+     * @return int
+     */
+    public function countOtherNodeWithSameSpecialPageName($nodeId, $siteId, $language, $name)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
+        $qa->match(
+            array(
+                'siteId'    => $siteId,
+                'language'    => $language,
+                'nodeId'   => array('$ne' => $nodeId),
+                'deleted'  => false,
+                'specialPageName' => $name
+            )
+        );
+
+        return $this->countDocumentAggregateQuery($qa);
     }
 
     /**
