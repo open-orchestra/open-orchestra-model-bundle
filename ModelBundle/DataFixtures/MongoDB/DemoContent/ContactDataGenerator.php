@@ -168,6 +168,7 @@ EOF;
         $nodeContact->setRoutePattern($routePattern);
         $nodeContact->setInFooter(false);
         $nodeContact->setInMenu(true);
+        $nodeContact->setSpecialPageName('DEFAULT');
 
         return $nodeContact;
     }
