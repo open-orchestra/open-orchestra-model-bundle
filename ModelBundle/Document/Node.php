@@ -15,6 +15,7 @@ use OpenOrchestra\MongoTrait\Cacheable;
 use OpenOrchestra\MongoTrait\Metaable;
 use OpenOrchestra\MongoTrait\Sitemapable;
 use OpenOrchestra\MongoTrait\Schemeable;
+use OpenOrchestra\MongoTrait\UseTrackable;
 use OpenOrchestra\MongoTrait\Versionable;
 use OpenOrchestra\MongoTrait\Historisable;
 use OpenOrchestra\MongoTrait\AutoPublishable;
@@ -57,6 +58,7 @@ class Node implements NodeInterface
     use Historisable;
     use Keywordable;
     use AutoPublishable;
+    use UseTrackable;
 
     /**
      * @var string $id
