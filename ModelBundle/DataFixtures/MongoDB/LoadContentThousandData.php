@@ -89,7 +89,7 @@ class LoadContentThousandData extends AbstractFixture implements OrderedFixtureI
         $content->setVersion($version);
         $content->setSiteId('2');
         $date = new \DateTime("now");
-        $content->setVersionName($content->getName().'_'. $content->getVersion(). '_'. $date->format("Y-m-d_H:i:s"));
+        $content->setVersionName($content->getName().'_'. $date->format("Y-m-d_H:i:s"));
 
         switch ($version) {
             case 2: $content->setStatus($this->getReference('status-pending'));

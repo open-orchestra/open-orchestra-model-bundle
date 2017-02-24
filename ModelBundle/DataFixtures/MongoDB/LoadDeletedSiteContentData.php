@@ -51,7 +51,7 @@ class LoadDeletedSiteContentData extends AbstractFixture implements OrderedFixtu
         $content->setStatus($this->getReference('status-published'));
         $content->setName("John Smith");
         $content->setLanguage("fr");
-        $content->setVersion(1);
+        $content->setVersion('1');
         $content->setLinkedToSite(true);
         $content->setSiteId('3');
 

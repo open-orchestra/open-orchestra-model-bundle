@@ -179,7 +179,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      * @param string   $nodeId
      * @param string   $language
      * @param string   $siteId
-     * @param int      $version
+     * @param string   $version
      *
      * @return mixed
      */
@@ -190,7 +190,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
             array(
                 'nodeId'  => $nodeId,
                 'deleted' => false,
-                'version' => (int) $version,
+                'version' => $version,
             )
         );
         return $this->singleHydrateAggregateQuery($qa);
@@ -255,7 +255,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
                 'status.publishedState' => true,
             )
         );
-        $qa->sort(array('version' => -1));
+        $qa->sort(array('createdAt' => -1));
 
         return $this->hydrateAggregateQuery($qa);
     }
@@ -323,7 +323,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
         $qa->match(array('nodeId' => $nodeId));
 
-        $qa->sort(array('version' => -1));
+        $qa->sort(array('createdAt' => -1));
 
         return $this->hydrateAggregateQuery($qa);
     }
@@ -412,7 +412,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
                 'deleted' => false,
             )
         );
-        $qa->sort(array('version' => -1));
+        $qa->sort(array('createdAt' => -1));
 
         return $this->singleHydrateAggregateQuery($qa);
     }
@@ -443,7 +443,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         }
         $qa->match(array('deleted' => false));
 
-        $qa->sort(array('version' => 1));
+        $qa->sort(array('createdAt' => 1));
         $elementName = 'node';
         $qa->group(array(
             '_id' => array('nodesId' => '$nodeId'),
@@ -574,7 +574,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         $qa->match(array('deleted' => false));
         $elementName = 'node';
-        $qa->sort(array('version' => 1));
+        $qa->sort(array('createdAt' => 1));
         $qa->group(array(
             '_id' => array('nodeId' => '$nodeId'),
             $elementName => array('$last' => '$$ROOT')
@@ -678,7 +678,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
             $qa->match($filters);
         }
 
-        $qa->sort(array('version' => 1));
+        $qa->sort(array('createdAt' => 1));
 
         $group = array(
             '_id' => array('nodeId' => '$nodeId'),
@@ -737,7 +737,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     protected function findLastVersion(Stage $qa)
     {
         $elementName = 'node';
-        $qa->sort(array('version' => 1));
+        $qa->sort(array('createdAt' => 1));
         $qa->group(array(
             '_id' => array('nodeId' => '$nodeId'),
             $elementName => array('$last' => '$$ROOT')
@@ -754,7 +754,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     protected function findLastVersionInLanguage(Stage $qa)
     {
         $elementName = 'node';
-        $qa->sort(array('version' => 1));
+        $qa->sort(array('createdAt' => 1));
         $qa->group(array(
             '_id' => array('nodeId' => '$nodeId', 'language' => '$language'),
             $elementName => array('$last' => '$$ROOT')
@@ -1091,7 +1091,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      * @param string  $nodeId
      * @param string  $siteId
      * @param string  $language
-     * @param integer $version
+     * @param string  $version
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
