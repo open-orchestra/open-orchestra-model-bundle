@@ -111,14 +111,8 @@ EOF;
         $main = new Area();
         $main->addBlock($nodeLegalBlock);
 
-        $header = $this->createHeader($language);
-
-        $footer = $this->createFooter($language);
-
         $nodeLegal = $this->createBaseNode();
         $nodeLegal->setArea('main', $main);
-        $nodeLegal->setArea('footer', $footer);
-        $nodeLegal->setArea('header', $header);
 
         $nodeLegal->setNodeId('fixture_page_legal_mentions');
         $nodeLegal->setName($name);

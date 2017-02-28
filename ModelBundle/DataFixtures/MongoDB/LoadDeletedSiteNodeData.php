@@ -121,7 +121,7 @@ class LoadDeletedSiteNodeData extends AbstractFixture implements OrderedFixtureI
         $node->setSiteId('3');
         $node->setPath('-');
         $node->setVersion('1');
-        $node->setTemplate('default');
+        $node->setTemplate('home');
         $node->setTheme('themePresentation');
 
         return $node;

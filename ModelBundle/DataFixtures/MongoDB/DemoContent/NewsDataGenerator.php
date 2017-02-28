@@ -128,14 +128,8 @@ EOF;
         $main = new Area();
         $main->addBlock($nodeNewsBlock);
 
-        $header = $this->createHeader($language);
-
-        $footer = $this->createFooter($language);
-
         $nodeNews = $this->createBaseNode();
         $nodeNews->setArea('main', $main);
-        $nodeNews->setArea('footer', $footer);
-        $nodeNews->setArea('header', $header);
 
         $nodeNews->setNodeId('fixture_page_news');
         $nodeNews->setName($name);

@@ -108,14 +108,8 @@ EOF;
         $main = new Area();
         $main->addBlock($nodeCommunityBlock);
 
-        $header = $this->createHeader($language);
-
-        $footer = $this->createFooter($language);
-
         $nodeCommunity = $this->createBaseNode();
         $nodeCommunity->setArea('main', $main);
-        $nodeCommunity->setArea('footer', $footer);
-        $nodeCommunity->setArea('header', $header);
 
         $nodeCommunity->setNodeId('fixture_page_community');
         $nodeCommunity->setLanguage($language);

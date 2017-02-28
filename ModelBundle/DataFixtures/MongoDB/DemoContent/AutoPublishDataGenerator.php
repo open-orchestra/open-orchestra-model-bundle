@@ -122,14 +122,8 @@ EOF;
         $main = new Area();
         $main->addBlock($nodeAutoPublishBlock);
 
-        $header = $this->createHeader($language);
-
-        $footer = $this->createFooter($language);
-
         $nodeAutoPublish = $this->createBaseNode();
         $nodeAutoPublish->setArea('main', $main);
-        $nodeAutoPublish->setArea('footer', $footer);
-        $nodeAutoPublish->setArea('header', $header);
 
         $nodeAutoPublish->setNodeId('fixture_auto_unpublish');
         $nodeAutoPublish->setName($name);

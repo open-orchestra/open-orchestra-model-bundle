@@ -33,7 +33,7 @@ class LoadSiteData extends AbstractLoadSiteData implements OrchestraFunctionalFi
         $site3->setName('Empty site');
         $site3->setMetaAuthor('Open Orchestra');
         $site3->setTemplateSet('default');
-        $site3->setTemplateNodeRoot('default');
+        $site3->setTemplateNodeRoot('home');
         $this->addSitesAliases(
             array('empty.openorchestra.inte', 'empty.openorchestra.dev'),
             array("fr", "en"),

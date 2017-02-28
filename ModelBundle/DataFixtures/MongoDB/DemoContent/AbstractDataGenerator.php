@@ -86,36 +86,6 @@ abstract class AbstractDataGenerator
     abstract protected function generateNodeDe();
 
     /**
-     * @param string $language
-     *
-     * @return Area
-     */
-    protected function createHeader($language)
-    {
-        $header = new Area();
-
-        $header->addBlock($this->fixture->getReference('Wysiwyg logo'.'-'.$language));
-        $header->addBlock($this->fixture->getReference('Menu'.'-'.$language));
-
-        return $header;
-    }
-
-    /**
-     * @param string $language
-     *
-     * @return Area
-     */
-    protected function createFooter($language)
-    {
-        $footer = new Area();
-
-        $footer->addBlock($this->fixture->getReference('footer menu'.'-'.$language));
-        $footer->addBlock($this->fixture->getReference('Wysiwyg footer'.'-'.$language));
-
-        return $footer;
-    }
-
-    /**
      * @return Node
      */
     protected function createBaseNode()
@@ -128,7 +98,7 @@ abstract class AbstractDataGenerator
         $node->setVersion($this->version);
         $node->setStatus($this->fixture->getReference($this->status));
         $node->setDeleted(false);
-        $node->setTemplate('default');
+        $node->setTemplate('home');
         $node->setTheme('themePresentation');
         $node->setDefaultSiteTheme(true);
 

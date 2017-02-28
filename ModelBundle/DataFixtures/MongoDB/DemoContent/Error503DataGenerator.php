@@ -86,14 +86,8 @@ EOF;
         $main = new Area();
         $main->addBlock($nodeError503Block);
 
-        $header = $this->createHeader($language);
-
-        $footer = $this->createFooter($language);
-
         $nodeError503 = $this->createBaseNode();
         $nodeError503->setArea('main', $main);
-        $nodeError503->setArea('footer', $footer);
-        $nodeError503->setArea('header', $header);
 
         $nodeError503->setNodeType(NodeInterface::TYPE_ERROR);
         $nodeError503->setLanguage($language);
