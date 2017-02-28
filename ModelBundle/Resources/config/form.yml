@@ -1,6 +1,5 @@
 parameters:
     open_orchestra_model.type.group_site_choice.class: OpenOrchestra\ModelBundle\Form\Type\GroupSiteChoiceType
-    open_orchestra_model.type.site_theme_choice.class: OpenOrchestra\ModelBundle\Form\Type\SiteThemeChoiceType
     open_orchestra_model.type.status_choice.class: OpenOrchestra\ModelBundle\Form\Type\StatusChoiceType
 
 services:
@@ -11,9 +10,3 @@ services:
             - '@open_orchestra_model.transformer.embed_site_to_site'
         tags:
             - { name: form.type, alias: oo_group_site_choice }
-    open_orchestra_model.type.site_theme_choice:
-        class: '%open_orchestra_model.type.site_theme_choice.class%'
-        arguments:
-            - '%open_orchestra_model.document.theme.class%'
-        tags:
-            - { name: form.type, alias: oo_site_theme_choice }

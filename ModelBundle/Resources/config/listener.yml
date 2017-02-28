@@ -3,7 +3,6 @@ parameters:
     open_orchestra_model.doctrine_listener.generate_path.class                        : OpenOrchestra\ModelBundle\EventListener\GeneratePathListener
     open_orchestra_model.doctrine_listener.set_initial_status.class                   : OpenOrchestra\ModelBundle\EventListener\SetInitialStatusListener
     open_orchestra_model.doctrine_listener.update_non_translatable_content_field.class: OpenOrchestra\ModelBundle\EventListener\UpdateNonTranslatableContentFieldsListener
-    open_orchestra_model.doctrine_listener.update_site_nodes_theme.class              : OpenOrchestra\ModelBundle\EventListener\UpdateSiteNodesThemeListener
 
 services:
     open_orchestra_model.doctrine_listener.set_initial_status:
@@ -41,10 +40,3 @@ services:
             - [setContainer, ['@service_container']]
         tags:
             -  { name: doctrine_mongodb.odm.event_listener, event: preUpdate }
-
-    open_orchestra_model.doctrine_listener.update_site_nodes_theme:
-        class: '%open_orchestra_model.doctrine_listener.update_site_nodes_theme.class%'
-        calls:
-            - [setContainer, ['@service_container']]
-        tags:
-            - { name: doctrine_mongodb.odm.event_listener, event: preUpdate }

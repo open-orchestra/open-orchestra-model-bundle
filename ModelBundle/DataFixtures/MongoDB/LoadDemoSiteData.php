@@ -43,7 +43,6 @@ class LoadDemoSiteData extends AbstractLoadSiteData implements OrchestraProducti
         $site2->setDeleted(false);
         $site2->setTemplateSet('default');
         $site2->setTemplateNodeRoot('home');
-        $site2->setTheme($this->getReference('themePresentation'));
         $site2->addBlock('slideshow');
         $site2->addBlock('gallery');
         $site2->addBlock('footer');

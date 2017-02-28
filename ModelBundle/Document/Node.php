@@ -124,20 +124,6 @@ class Node implements NodeInterface
     protected $template;
 
     /**
-     * @var string $theme
-     *
-     * @ODM\Field(type="string")
-     */
-    protected $theme;
-
-    /**
-     * @var string $themeSiteDefault
-     *
-     * @ODM\Field(type="boolean")
-     */
-    protected $themeSiteDefault;
-
-    /**
      * @var boolean
      *
      * @ODM\Field(type="boolean")
@@ -374,46 +360,6 @@ class Node implements NodeInterface
     public function getTemplate()
     {
         return $this->template;
-    }
-
-    /**
-     * Set theme
-     *
-     * @param string $theme
-     */
-    public function setTheme($theme)
-    {
-        $this->theme = $theme;
-    }
-
-    /**
-     * Get theme
-     *
-     * @return string $theme
-     */
-    public function getTheme()
-    {
-        return $this->theme;
-    }
-
-    /**
-     * Set default theme site
-     *
-     * @param boolean $themeSiteDefault
-     */
-    public function setDefaultSiteTheme($themeSiteDefault)
-    {
-        $this->themeSiteDefault = $themeSiteDefault;
-    }
-
-    /**
-     * Has default site theme
-     *
-     * @return boolean $themeSiteDefault
-     */
-    public function hasDefaultSiteTheme()
-    {
-        return $this->themeSiteDefault;
     }
 
     /**

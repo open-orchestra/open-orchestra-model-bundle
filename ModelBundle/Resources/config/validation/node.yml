@@ -24,9 +24,6 @@ OpenOrchestra\ModelBundle\Document\Node:
         inMenu:
             - Type:
                 type: bool
-        themeSiteDefault:
-            - Type:
-                type: bool
         inFooter:
             - Type:
                 type: bool
