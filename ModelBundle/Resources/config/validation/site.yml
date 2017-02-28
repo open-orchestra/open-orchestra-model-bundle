@@ -15,3 +15,5 @@ OpenOrchestra\ModelBundle\Document\Site:
             - Valid: ~
         aliases:
             - Valid: ~
+            - Count:
+                min: 1
