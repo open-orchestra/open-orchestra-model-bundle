@@ -248,7 +248,7 @@ class Content implements ContentInterface
     protected function initializeCollections()
     {
         $this->attributes = new ArrayCollection();
-        $this->keywords = new ArrayCollection();
+        $this->initializeKeywords();
         $this->initializeHistories();
     }
 }

@@ -593,7 +593,7 @@ class Node implements NodeInterface
     protected function initializeCollections()
     {
         $this->initializeHistories();
+        $this->initializeKeywords();
         $this->areas = new ArrayCollection();
-        $this->keywords = new ArrayCollection();
     }
 }
