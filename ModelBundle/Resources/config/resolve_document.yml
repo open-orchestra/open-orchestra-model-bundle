@@ -10,7 +10,6 @@ resolve_target_documents:
     OpenOrchestra\ModelInterface\Model\FieldTypeInterface                 : OpenOrchestra\ModelBundle\Document\FieldType
     OpenOrchestra\ModelInterface\Model\FieldOptionInterface               : OpenOrchestra\ModelBundle\Document\FieldOption
     OpenOrchestra\ModelInterface\Model\HistoryInterface                   : OpenOrchestra\ModelBundle\Document\History
-    OpenOrchestra\ModelInterface\Model\ReferenceInterface                 : OpenOrchestra\ModelBundle\Document\Reference
     OpenOrchestra\ModelInterface\Model\WorkflowProfileInterface           : OpenOrchestra\ModelBundle\Document\WorkflowProfile
     OpenOrchestra\ModelInterface\Model\WorkflowProfileCollectionInterface : OpenOrchestra\ModelBundle\Document\WorkflowProfileCollection
     OpenOrchestra\ModelInterface\Model\WorkflowTransitionInterface        : OpenOrchestra\ModelBundle\Document\WorkflowTransition
