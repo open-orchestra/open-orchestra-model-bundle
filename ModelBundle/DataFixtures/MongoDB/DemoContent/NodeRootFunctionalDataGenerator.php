@@ -135,11 +135,7 @@ EOF;
 
         $main = new Area();
         $main->addBlock($nodeHomeBlock);
-
-        $header = $this->createHeader($language);
-        $header->addBlock($this->fixture->getReference('Language list'.'-'.$language));
-
-        $footer = $this->createFooter($language);
+        $main->addBlock($this->fixture->getReference('Wysiwyg logo'.'-'.$language));
 
         $nodeHome = $this->createBaseNode();
         $keyReference = "node-".NodeInterface::ROOT_NODE_ID.'-'.$language.'-'.$this->version;
@@ -148,8 +144,6 @@ EOF;
 
         }
         $nodeHome->setArea('main', $main);
-        $nodeHome->setArea('footer', $footer);
-        $nodeHome->setArea('header', $header);
 
         $nodeHome->setLanguage($language);
         $nodeHome->setNodeId(NodeInterface::ROOT_NODE_ID);

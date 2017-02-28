@@ -86,14 +86,8 @@ EOF;
         $main = new Area();
         $main->addBlock($nodeError404Block);
 
-        $header = $this->createHeader($language);
-
-        $footer = $this->createFooter($language);
-
         $nodeError404 = $this->createBaseNode();
         $nodeError404->setArea('main', $main);
-        $nodeError404->setArea('footer', $footer);
-        $nodeError404->setArea('header', $header);
 
         $nodeError404->setNodeType(NodeInterface::TYPE_ERROR);
         $nodeError404->setLanguage($language);

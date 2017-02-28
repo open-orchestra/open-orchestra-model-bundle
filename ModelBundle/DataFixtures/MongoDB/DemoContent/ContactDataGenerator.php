@@ -150,14 +150,8 @@ EOF;
         $main = new Area();
         $main->addBlock($nodeContactBlock);
 
-        $header = $this->createHeader($language);
-
-        $footer = $this->createFooter($language);
-
         $nodeContact = $this->createBaseNode();
         $nodeContact->setArea('main', $main);
-        $nodeContact->setArea('footer', $footer);
-        $nodeContact->setArea('header', $header);
 
         $nodeContact->setNodeId('fixture_page_contact');
         $nodeContact->setName($name);
