@@ -6,6 +6,8 @@ OpenOrchestra\ModelBundle\Document\Site:
             - NotBlank: ~
         name:
             - NotBlank: ~
+        metaAuthor:
+            - NotBlank: ~
         deleted:
             - Type:
                 type: bool

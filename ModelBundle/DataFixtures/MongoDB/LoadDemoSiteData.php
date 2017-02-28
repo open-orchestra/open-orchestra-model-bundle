@@ -32,6 +32,7 @@ class LoadDemoSiteData extends AbstractLoadSiteData implements OrchestraProducti
         $site2 = new Site();
         $site2->setSiteId('2');
         $site2->setName('Demo site');
+        $site2->setMetaAuthor('Open Orchestra');
         $this->addSitesAliases(
             array('front.pddv-openorchestra-master.eolas-services.com', 'demo.openorchestra.2-0.dev'),
             array('fr', 'en', 'de'),
