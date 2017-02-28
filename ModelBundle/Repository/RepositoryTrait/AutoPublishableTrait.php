@@ -39,7 +39,7 @@ trait AutoPublishableTrait
         );
 
         $qa->match($filter);
-        $qa->sort(array('version' => 1));
+        $qa->sort(array('createdAt' => 1));
 
         return $this->hydrateAggregateQuery($qa);
     }
@@ -67,7 +67,7 @@ trait AutoPublishableTrait
         );
 
         $qa->match($filter);
-        $qa->sort(array('version' => 1));
+        $qa->sort(array('createdAt' => 1));
 
         return $this->hydrateAggregateQuery($qa);
     }

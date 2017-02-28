@@ -238,7 +238,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     /**
      * @param string      $contentId
      * @param string      $language
-     * @param int|null    $version
+     * @param string|null $version
      *
      * @return ContentInterface|null
      */
@@ -422,7 +422,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
             $group[str_replace('.', '_', $column)] = array('$last' => '$' . $column);
         }
 
-        $qa->sort(array('version' => 1));
+        $qa->sort(array('createdAt' => 1));
         $qa->group($group);
 
         return $qa;
@@ -460,7 +460,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     /**
      * @param string      $contentId
      * @param string      $language
-     * @param int|null    $version
+     * @param string|null $version
      *
      * @return Stage
      */
@@ -474,9 +474,9 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
             )
         );
         if (is_null($version)) {
-            $qa->sort(array('version' => -1));
+            $qa->sort(array('createdAt' => -1));
         } else {
-            $qa->match(array('version' => (int) $version));
+            $qa->match(array('version' => $version));
         }
 
         return $qa;

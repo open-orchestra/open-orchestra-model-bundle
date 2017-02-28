@@ -160,7 +160,7 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $news->setDefiningStatusable(true);
         $news->setDefiningVersionable(true);
         $news->setDeleted(false);
-        $news->setVersion(1);
+        $news->setVersion('1');
         $news->setDefaultListable($this->genereteDefaultListable());
 
         $news->addFieldType($newsTitle);
@@ -211,7 +211,7 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $car->setDefiningStatusable(true);
         $car->setDefiningVersionable(true);
         $car->setDeleted(false);
-        $car->setVersion(2);
+        $car->setVersion('2');
         $car->setDefaultListable($this->genereteDefaultListable());
 
         $car->addFieldType($carName);
@@ -268,7 +268,7 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $customer->setDefiningStatusable(true);
         $customer->setDefiningVersionable(true);
         $customer->setDeleted(false);
-        $customer->setVersion(1);
+        $customer->setVersion('1');
         $customer->setDefaultListable($this->genereteDefaultListable());
 
         $customer->addFieldType($customerFirstName);

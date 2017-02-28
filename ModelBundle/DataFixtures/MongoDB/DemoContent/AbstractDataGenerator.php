@@ -30,7 +30,7 @@ abstract class AbstractDataGenerator
      * @param int                $version
      * @param string             $status
      */
-    public function __construct(AbstractFixture $fixture, ContainerInterface $container, ObjectManager $manager, $version = 1, $status = 'status-published')
+    public function __construct(AbstractFixture $fixture, ContainerInterface $container, ObjectManager $manager, $version = '1', $status = 'status-published')
     {
         $this->fixture = $fixture;
         $this->container = $container;

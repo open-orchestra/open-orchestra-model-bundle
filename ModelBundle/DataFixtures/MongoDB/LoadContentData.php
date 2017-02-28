@@ -91,7 +91,7 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
 
         $content->setName("R5 3 portes " . $language);
         $content->setLanguage($language);
-        $content->setVersion(2);
+        $content->setVersion('2');
         $content->addKeyword($this->getReference('keyword-lorem'));
         $content->setLinkedToSite(false);
         $content->setSiteId('2');
@@ -114,7 +114,7 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
         $content->setDeleted(false);
         $content->setName("DS 3 " . $language);
         $content->setLanguage($language);
-        $content->setVersion(1);
+        $content->setVersion('1');
         $content->addKeyword($this->getReference('keyword-lorem'));
         $content->setLinkedToSite(true);
         $content->setSiteId('2');
@@ -144,7 +144,7 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
         $content = $this->addBaseContent("206_3_portes", "car", 1);
         $content->setName("206 3 portes " . $language);
         $content->setLanguage($language);
-        $content->setVersion(2);
+        $content->setVersion('2');
         $content->addKeyword($this->getReference('keyword-lorem'));
         $content->addKeyword($this->getReference('keyword-sit'));
         $content->setLinkedToSite(false);
@@ -174,7 +174,7 @@ class LoadContentData extends AbstractFixture implements OrderedFixtureInterface
         $content = $this->addBaseContent("jean_paul", 'customer', 1);
         $content->setName("Jean-Paul");
         $content->setLanguage($language);
-        $content->setVersion(2);
+        $content->setVersion('2');
         $content->addKeyword($this->getReference('keyword-lorem'));
         $content->addKeyword($this->getReference('keyword-sit'));
         $content->setLinkedToSite(false);
