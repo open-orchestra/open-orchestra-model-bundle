@@ -25,7 +25,7 @@ services:
     open_orchestra_model.doctrine_listener.generate_id:
         class: '%open_orchestra_model.doctrine_listener.generate_id.class%'
         arguments:
-            - '@open_orchestra.annotation_reader'
+            - '@annotations.reader'
             - '@open_orchestra_model.helper.suppress_special_character'
         calls:
             - [setContainer, ['@service_container']]
