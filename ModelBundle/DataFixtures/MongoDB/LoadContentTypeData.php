@@ -156,7 +156,7 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $news = new ContentType();
         $news->setContentTypeId('news');
         $news->addName('en', 'News');
-        $news->addName('fr', 'Actualité');
+        $news->addName('fr', 'Actualités');
         $news->setDefiningStatusable(true);
         $news->setDefiningVersionable(true);
         $news->setDeleted(false);
@@ -206,8 +206,8 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
 
         $car = new ContentType();
         $car->setContentTypeId('car');
-        $car->addName('en', 'Car');
-        $car->addName('fr', 'Voiture');
+        $car->addName('en', 'Cars');
+        $car->addName('fr', 'Voitures');
         $car->setDefiningStatusable(true);
         $car->setDefiningVersionable(true);
         $car->setDeleted(false);
@@ -263,8 +263,8 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
 
         $customer = new ContentType();
         $customer->setContentTypeId('customer');
-        $customer->addName('en', 'Customer');
-        $customer->addName('fr', 'Client');
+        $customer->addName('en', 'Customers');
+        $customer->addName('fr', 'Clients');
         $customer->setDefiningStatusable(true);
         $customer->setDefiningVersionable(true);
         $customer->setDeleted(false);
