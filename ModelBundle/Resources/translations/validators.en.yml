@@ -14,3 +14,5 @@ open_orchestra_model_validators:
             impossible_change: You don't have the right to change the status
         website:
             unique_site_id: Site id has to be unique
+        autopublish:
+            check_publishing_date: Automatic unpublish date must be later than automatic publish date

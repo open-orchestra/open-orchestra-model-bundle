@@ -1,4 +1,6 @@
 OpenOrchestra\ModelBundle\Document\Content:
+    constraints:
+        - OpenOrchestra\ModelBundle\Validator\Constraints\CheckPublishingDate: ~
     properties:
         name:
             - NotBlank: ~

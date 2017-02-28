@@ -14,3 +14,5 @@ open_orchestra_model_validators:
             impossible_change: Vous n'avez pas les droits pour modifier le statut
         website:
             unique_site_id: L'identifiant du site doit être unique
+        autopublish:
+            check_publishing_date: La date de dépublication automatique doit être postérieure à la date de publication automatique
