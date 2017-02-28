@@ -4,7 +4,6 @@ namespace OpenOrchestra\ModelBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use OpenOrchestra\ModelInterface\Model\TrashItemInterface;
-use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 use DateTime;
 
 /**
@@ -28,7 +27,6 @@ class TrashItem implements TrashItemInterface
      * @var string $name
 
      * @ODM\Field(type="string")
-     * @ORCHESTRA\Search(key="name")
      */
     protected $name;
 
@@ -36,7 +34,6 @@ class TrashItem implements TrashItemInterface
      * @var string $type
 
      * @ODM\Field(type="string")
-     * @ORCHESTRA\Search(key="type")
      */
     protected $type;
 
@@ -44,7 +41,6 @@ class TrashItem implements TrashItemInterface
      * @var string
      *
      * @ODM\Field(type="string")
-     * @ORCHESTRA\Search(key="deleted_at")
      */
     protected $deletedAt;
 
@@ -52,7 +48,6 @@ class TrashItem implements TrashItemInterface
      * @var string
      *
      * @ODM\Field(type="string")
-     * @ORCHESTRA\Search(key="site_id")
      */
     protected $siteId;
 
