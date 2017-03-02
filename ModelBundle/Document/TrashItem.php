@@ -52,9 +52,10 @@ class TrashItem implements TrashItemInterface
     protected $siteId;
 
     /**
-     * @ODM\ReferenceOne
+     * @var string
+     * @ODM\Field(type="string")
      */
-    private $entity;
+    private $entityId;
 
     /**
      * Build new instance
@@ -98,19 +99,19 @@ class TrashItem implements TrashItemInterface
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getEntity()
+    public function getEntityId()
     {
-        return $this->entity;
+        return $this->entityId;
     }
 
     /**
-     * @param mixed $entity
+     * @param string $entityId
      */
-    public function setEntity($entity)
+    public function setEntityId($entityId)
     {
-        $this->entity = $entity;
+        $this->entityId = $entityId;
     }
 
     /**

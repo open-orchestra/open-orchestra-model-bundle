@@ -1114,6 +1114,61 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     }
 
     /**
+     * @param string $nodeId
+     * @param string $siteId
+     *
+     * @throws \Exception
+     */
+    public function softDeleteNode($nodeId, $siteId)
+    {
+        $qb = $this->createQueryBuilder();
+        $qb->updateMany()
+            ->field('nodeId')->equals($nodeId)
+            ->field('siteId')->equals($siteId)
+            ->field('deleted')->set(true)
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * @param string $parentId
+     * @param string $siteId
+     *
+     * @return int
+     */
+    public function countByParentId($parentId, $siteId)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
+        $qa->match(
+            array(
+                'parentId' => $parentId,
+                'deleted'  => false,
+            )
+        );
+
+        return $this->countDocumentAggregateQuery($qa);
+    }
+
+    /**
+     * @param string $nodeId
+     * @param string $siteId
+     *
+     * @return int
+     */
+    public function hasNodeIdWithoutAutoUnpublishToState($nodeId, $siteId)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
+        $qa->match(
+            array(
+                'nodeId'  => $nodeId,
+                'status.autoUnpublishToState' => false
+            )
+        );
+
+        return 0 !== $this->countDocumentAggregateQuery($qa);
+    }
+
+    /**
      * @param PaginateFinderConfiguration $configuration
      *
      * @return array
