@@ -79,13 +79,6 @@ class FieldType implements FieldTypeInterface
     protected $type;
 
     /**
-     * @var string $symfonyType
-     *
-     * @ODM\Field(type="string")
-     */
-    protected $symfonyType;
-
-    /**
      * @var ArrayCollection $options
      *
      * @ODM\EmbedMany(targetDocument="OpenOrchestra\ModelInterface\Model\FieldOptionInterface")
