@@ -5,7 +5,6 @@ resolve_target_documents:
     OpenOrchestra\ModelInterface\Model\AreaInterface                      : OpenOrchestra\ModelBundle\Document\Area
     OpenOrchestra\ModelInterface\Model\BlockInterface                     : OpenOrchestra\ModelBundle\Document\Block
     OpenOrchestra\ModelInterface\Model\StatusInterface                    : OpenOrchestra\ModelBundle\Document\Status
-    OpenOrchestra\ModelInterface\Model\ThemeInterface                     : OpenOrchestra\ModelBundle\Document\Theme
     OpenOrchestra\ModelInterface\Model\SiteAliasInterface                 : OpenOrchestra\ModelBundle\Document\SiteAlias
     OpenOrchestra\ModelInterface\Model\ContentAttributeInterface          : OpenOrchestra\ModelBundle\Document\ContentAttribute
     OpenOrchestra\ModelInterface\Model\FieldTypeInterface                 : OpenOrchestra\ModelBundle\Document\FieldType

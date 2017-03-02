@@ -99,8 +99,6 @@ abstract class AbstractDataGenerator
         $node->setStatus($this->fixture->getReference($this->status));
         $node->setDeleted(false);
         $node->setTemplate('home');
-        $node->setTheme('themePresentation');
-        $node->setDefaultSiteTheme(true);
 
         return $node;
     }

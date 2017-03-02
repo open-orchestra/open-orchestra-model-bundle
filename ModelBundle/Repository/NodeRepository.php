@@ -1031,40 +1031,6 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     }
 
     /**
-     * @param string $siteId
-     * @param bool   $themeSiteDefault
-     *
-     * @return array
-     */
-    public function findBySiteIdAndDefaultTheme($siteId, $themeSiteDefault = true)
-    {
-        $qa = $this->createAggregationQuery();
-        $filter = array(
-            'siteId' => $siteId,
-            'themeSiteDefault' => $themeSiteDefault
-        );
-        $qa->match($filter);
-
-        return $this->hydrateAggregateQuery($qa);
-    }
-
-    /**
-     * @param string $theme
-     *
-     * @return array
-     */
-    public function findByTheme($theme)
-    {
-        $qa = $this->createAggregationQuery();
-        $filter = array(
-            'theme' => $theme
-        );
-        $qa->match($filter);
-
-        return $this->hydrateAggregateQuery($qa);
-    }
-
-    /**
      * @param string $blockId
      *
      * @return boolean

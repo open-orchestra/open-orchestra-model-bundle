@@ -118,7 +118,6 @@ EOF;
         $nodeCommunity->setParentId(NodeInterface::ROOT_NODE_ID);
         $nodeCommunity->setOrder(3);
         $nodeCommunity->setRoutePattern($routePattern);
-        $nodeCommunity->setTheme('themePresentation');
         $nodeCommunity->setInFooter(false);
         $nodeCommunity->setInMenu(true);
 

@@ -11,8 +11,6 @@ OpenOrchestra\ModelBundle\Document\Site:
         deleted:
             - Type:
                 type: bool
-        theme:
-            - Valid: ~
         aliases:
             - Valid: ~
             - Count:

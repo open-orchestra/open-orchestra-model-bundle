@@ -18,9 +18,6 @@ open_orchestra_model:
         route_document:
             class: FakeRouteDocument
             repository: FakeRouteDocumentRepository
-        theme:
-            class: FakeTheme
-            repository: FakeThemeRepository
         redirection:
             class: FakeRedirection
             repository: FakeRedirectionRepository

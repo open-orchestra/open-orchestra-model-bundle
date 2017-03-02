@@ -39,7 +39,6 @@ class LoadSiteData extends AbstractLoadSiteData implements OrchestraFunctionalFi
             array("fr", "en"),
             $site3);
         $site3->setDeleted(true);
-        $site3->setTheme($this->getReference('themePresentation'));
 
         return $site3;
     }

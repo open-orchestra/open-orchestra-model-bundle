@@ -9,7 +9,6 @@ use OpenOrchestra\ModelInterface\Model\ReadSiteAliasInterface;
 use OpenOrchestra\ModelInterface\Model\SiteAliasInterface;
 use OpenOrchestra\Mapping\Annotations as ORCHESTRA;
 use OpenOrchestra\ModelInterface\Model\SiteInterface;
-use OpenOrchestra\ModelInterface\Model\ThemeInterface;
 use OpenOrchestra\MongoTrait\Sitemapable;
 use OpenOrchestra\MongoTrait\SoftDeleteable;
 use OpenOrchestra\ModelInterface\Exceptions\MainAliasNotExisting;
@@ -52,13 +51,6 @@ class Site implements SiteInterface
      * @ODM\Field(type="hash")
      */
     protected $blocks = array();
-
-    /**
-     * @var ThemeInterface $theme
-     *
-     * @ODM\ReferenceOne(targetDocument="OpenOrchestra\ModelInterface\Model\ThemeInterface")
-     */
-    protected $theme;
 
     /**
      * @var string $metaAuthor
@@ -187,26 +179,6 @@ class Site implements SiteInterface
     public function getSiteId()
     {
         return $this->siteId;
-    }
-
-    /**
-     * Set theme
-     *
-     * @param ThemeInterface $theme
-     */
-    public function setTheme(ThemeInterface $theme)
-    {
-        $this->theme = $theme;
-    }
-
-    /**
-     * Get theme
-     *
-     * @return ThemeInterface $theme
-     */
-    public function getTheme()
-    {
-        return $this->theme;
     }
 
     /**
