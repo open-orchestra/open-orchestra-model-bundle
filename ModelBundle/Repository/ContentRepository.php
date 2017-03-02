@@ -673,4 +673,19 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
 
         return $this->countDocumentAggregateQuery($qa, self::ALIAS_FOR_GROUP);
     }
+
+    /**
+     * @param string $contentId
+     *
+     * @return ContentInterface
+     */
+    public function findLastVersion($contentId)
+    {
+        $qa = $this->createAggregationQuery();
+        $qa->match(array('deleted' => false));
+        $qa->match(array('contentId' => $contentId));
+        $qa->sort(array('createdAt' => -1));
+
+        return $this->singleHydrateAggregateQuery($qa);
+    }
 }
