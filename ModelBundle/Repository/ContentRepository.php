@@ -624,6 +624,39 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     }
 
     /**
+     * @param string $contentId
+     *
+     * @return ContentInterface
+     */
+    public function findLastVersion($contentId)
+    {
+        $qa = $this->createAggregationQuery();
+        $qa->match(array('deleted' => false));
+        $qa->match(array('contentId' => $contentId));
+        $qa->sort(array('createdAt' => -1));
+
+        return $this->singleHydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param string $contentId
+     *
+     * @return int
+     */
+    public function hasContentIdWithoutAutoUnpublishToState($contentId)
+    {
+        $qa = $this->createAggregationQuery();
+        $qa->match(
+            array(
+                'contentId'  => $contentId,
+                'status.autoUnpublishToState' => false
+            )
+        );
+
+        return 0 !== $this->countDocumentAggregateQuery($qa);
+    }
+
+    /**
      * @param PaginateFinderConfiguration $configuration
      * @param Stage                       $qa
      * @param array                       $searchTypes
@@ -688,38 +721,4 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
 
         return $this->countDocumentAggregateQuery($qa, self::ALIAS_FOR_GROUP);
     }
-
-    /**
-     * @param string $contentId
-     *
-     * @return ContentInterface
-     */
-    public function findLastVersion($contentId)
-    {
-        $qa = $this->createAggregationQuery();
-        $qa->match(array('deleted' => false));
-        $qa->match(array('contentId' => $contentId));
-        $qa->sort(array('createdAt' => -1));
-
-        return $this->singleHydrateAggregateQuery($qa);
-    }
-
-    /**
-     * @param string $contentId
-     *
-     * @return int
-     */
-    public function hasContentIdWithoutAutoUnpublishToState($contentId)
-    {
-        $qa = $this->createAggregationQuery();
-        $qa->match(
-            array(
-                'contentId'  => $contentId,
-                'status.autoUnpublishToState' => false
-            )
-        );
-
-        return 0 !== $this->countDocumentAggregateQuery($qa);
-    }
-
 }
