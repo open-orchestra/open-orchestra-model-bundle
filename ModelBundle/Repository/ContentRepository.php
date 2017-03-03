@@ -575,18 +575,33 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     }
 
     /**
-     * @param array $contentIds
+     * @param string $contentId
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function removeContentIds(array $contentIds)
+    public function softDeleteContent($contentId)
     {
         $qb = $this->createQueryBuilder();
         $qb->updateMany()
-        ->field('contentId')->in($contentIds)
-        ->field('deleted')->set(true)
-        ->getQuery()
-        ->execute();
+            ->field('contentId')->equals($contentId)
+            ->field('deleted')->set(true)
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * @param string $contentId
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
+    public function restoreDeletedContent($contentId)
+    {
+        $qb = $this->createQueryBuilder();
+        $qb->updateMany()
+            ->field('contentId')->equals($contentId)
+            ->field('deleted')->set(false)
+            ->getQuery()
+            ->execute();
     }
 
     /**
@@ -688,4 +703,23 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
 
         return $this->singleHydrateAggregateQuery($qa);
     }
+
+    /**
+     * @param string $contentId
+     *
+     * @return int
+     */
+    public function hasContentIdWithoutAutoUnpublishToState($contentId)
+    {
+        $qa = $this->createAggregationQuery();
+        $qa->match(
+            array(
+                'contentId'  => $contentId,
+                'status.autoUnpublishToState' => false
+            )
+        );
+
+        return 0 !== $this->countDocumentAggregateQuery($qa);
+    }
+
 }

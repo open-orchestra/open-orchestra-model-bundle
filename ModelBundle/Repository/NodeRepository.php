@@ -1131,6 +1131,30 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     }
 
     /**
+     * @param string $nodeId
+     * @param string $siteId
+     * @param string $parentId
+     * @param string $path
+     *
+     * @throws \Exception
+     */
+    public function restoreDeletedNode($nodeId, $siteId, $parentId = null , $path = null)
+    {
+        $qb = $this->createQueryBuilder();
+        $qb->updateMany()
+            ->field('nodeId')->equals($nodeId)
+            ->field('siteId')->equals($siteId)
+            ->field('deleted')->set(false);
+
+        if (null !== $parentId && null !== $path) {
+            $qb->field('path')->set($path)
+               ->field('parentId')->set($parentId);
+        }
+
+        $qb->getQuery()->execute();
+    }
+
+    /**
      * @param string $parentId
      * @param string $siteId
      *

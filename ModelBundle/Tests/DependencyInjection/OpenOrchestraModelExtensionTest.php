@@ -69,7 +69,7 @@ class OpenOrchestraModelExtensionTest extends AbstractBaseTestCase
             '15' => array("empty", "OpenOrchestra\\ModelBundle\\Document\\Redirection"      , "redirection"       , "OpenOrchestra\\ModelBundle\\Repository\\RedirectionRepository"           ),
             '16' => array("empty", "OpenOrchestra\\ModelBundle\\Document\\Keyword"          , "keyword"           , "OpenOrchestra\\ModelBundle\\Repository\\KeywordRepository"               ),
             '17' => array("empty", "OpenOrchestra\\ModelBundle\\Document\\TranslatedValue"  , "translated_value"                                                                              ),
-            '18' => array("empty", "OpenOrchestra\\ModelBundle\\Document\\TrashItem"        , "trash_item"        , "OpenOrchestra\\ModelBundle\\Repository\\TrashItemRepository"       , true),
+            '18' => array("empty", "OpenOrchestra\\ModelBundle\\Document\\TrashItem"        , "trash_item"        , "OpenOrchestra\\ModelBundle\\Repository\\TrashItemRepository"             ),
             '19' => array("value", "FakeContent"                                            , "content"           , "FakeContentRepository"                                                   ),
             '20' => array("value", "FakeContentType"                                        , "content_type"      , "FakeContentTypeRepository"                                               ),
             '21' => array("value", "FakeNode"                                               , "node"              , "FakeNodeRepository"                                                      ),

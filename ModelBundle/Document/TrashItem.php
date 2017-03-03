@@ -40,7 +40,7 @@ class TrashItem implements TrashItemInterface
     /**
      * @var string
      *
-     * @ODM\Field(type="string")
+     * @ODM\Field(type="date")
      */
     protected $deletedAt;
 
@@ -62,8 +62,7 @@ class TrashItem implements TrashItemInterface
      */
     public function __construct()
     {
-        $date = new DateTime();
-        $this->deletedAt =  $date->format('Y-m-d H:i:s');
+        $this->deletedAt = new DateTime();
     }
 
     /**
