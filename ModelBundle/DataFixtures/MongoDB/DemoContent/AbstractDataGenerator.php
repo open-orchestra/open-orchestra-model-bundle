@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ModelBundle\DataFixtures\MongoDB\DemoContent;
 
-use OpenOrchestra\ModelBundle\Document\Area;
 use OpenOrchestra\ModelBundle\Document\Node;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
