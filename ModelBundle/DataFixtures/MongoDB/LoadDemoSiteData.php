@@ -45,17 +45,12 @@ class LoadDemoSiteData extends AbstractLoadSiteData implements OrchestraProducti
         $site2->setTemplateNodeRoot('home');
         $site2->addBlock('slideshow');
         $site2->addBlock('gallery');
-        $site2->addBlock('footer');
-        $site2->addBlock('menu');
-        $site2->addBlock('sub_menu');
-        $site2->addBlock('language_list');
         $site2->addBlock('tiny_mce_wysiwyg');
         $site2->addBlock('configurable_content');
         $site2->addBlock('content_list');
         $site2->addBlock('content');
         $site2->addBlock('media_list_by_keyword');
         $site2->addBlock('video');
-        $site2->addBlock('audience_analysis');
 
         return $site2;
     }
