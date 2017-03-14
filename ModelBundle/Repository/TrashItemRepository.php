@@ -106,7 +106,44 @@ class TrashItemRepository extends AbstractAggregateRepository implements TrashIt
             $qa->match(array('name' => new \MongoRegex('/.*'.$name.'.*/i')));
         }
 
+        $type = $configuration->getSearchIndex('type');
+        if (null !== $type && '' !== $type) {
+            $qa->match(array('type' => $type));
+        }
+
+        $dateBefore = $configuration->getSearchIndex('date-before');
+        if (null !== $dateBefore && '' !== $dateBefore) {
+            $dateFormatBefore = $configuration->getSearchIndex('date-format-before');
+            if (null !== $dateFormatBefore && '' !== $dateFormatBefore) {
+                $dateBefore = $this->getFormattedDate($dateBefore, $dateFormatBefore);
+                $qa->match(array('deletedAt' => array('$lt' => new \MongoDate(strtotime($dateBefore)))));
+            }
+        }
+
+        $dateAfter = $configuration->getSearchIndex('date-after');
+        if (null !== $dateAfter && '' !== $dateAfter) {
+            $dateFormatAfter = $configuration->getSearchIndex('date-format-after');
+            if (null !== $dateFormatAfter && '' !== $dateFormatAfter) {
+                $dateAfter = $this->getFormattedDate($dateAfter, $dateFormatAfter);
+                $qa->match(array('deletedAt' => array('$gt' => new \MongoDate(strtotime($dateAfter)))));
+            }
+        }
+
         return $qa;
     }
 
+    /**
+     * @param string $date
+     * @param string $dateFormat
+     *
+     * @return \DateTime
+     */
+    protected function getFormattedDate($date, $dateFormat)
+    {
+        $dateFormat = str_replace('yy', 'Y', $dateFormat);
+        $dateFormat = str_replace('mm', 'm', $dateFormat);
+        $dateFormat = str_replace('dd', 'd', $dateFormat);
+
+        return \DateTime::createFromFormat($dateFormat, $date)->format('Y-m-d');
+    }
 }

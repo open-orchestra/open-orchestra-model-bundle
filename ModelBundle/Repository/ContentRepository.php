@@ -469,8 +469,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         $qa = $this->createAggregationQueryWithLanguage($language);
         $qa->match(
             array(
-                'contentId' => $contentId,
-                'deleted'   => false,
+                'contentId' => $contentId
             )
         );
         if (is_null($version)) {
