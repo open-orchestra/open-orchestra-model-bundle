@@ -40,7 +40,7 @@ class TrashItem implements TrashItemInterface
     /**
      * @var string
      *
-     * @ODM\Field(type="string")
+     * @ODM\Field(type="date")
      */
     protected $deletedAt;
 
@@ -52,17 +52,17 @@ class TrashItem implements TrashItemInterface
     protected $siteId;
 
     /**
-     * @ODM\ReferenceOne
+     * @var string
+     * @ODM\Field(type="string")
      */
-    private $entity;
+    private $entityId;
 
     /**
      * Build new instance
      */
     public function __construct()
     {
-        $date = new DateTime();
-        $this->deletedAt =  $date->format('Y-m-d H:i:s');
+        $this->deletedAt = new DateTime();
     }
 
     /**
@@ -98,19 +98,19 @@ class TrashItem implements TrashItemInterface
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getEntity()
+    public function getEntityId()
     {
-        return $this->entity;
+        return $this->entityId;
     }
 
     /**
-     * @param mixed $entity
+     * @param string $entityId
      */
-    public function setEntity($entity)
+    public function setEntityId($entityId)
     {
-        $this->entity = $entity;
+        $this->entityId = $entityId;
     }
 
     /**

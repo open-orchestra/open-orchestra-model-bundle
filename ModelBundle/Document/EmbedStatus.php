@@ -28,6 +28,7 @@ class EmbedStatus extends AbstractStatus implements EmbedStatusInterface
         $this->setBlockedEdition($status->isBlockedEdition());
         $this->setOutOfWorkflow($status->isOutOfWorkflow());
         $this->setTranslationState($status->isTranslationState());
+        $this->setAutoUnpublishToState($status->isAutoUnpublishToState());
     }
 
     /**

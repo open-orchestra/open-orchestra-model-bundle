@@ -469,8 +469,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         $qa = $this->createAggregationQueryWithLanguage($language);
         $qa->match(
             array(
-                'contentId' => $contentId,
-                'deleted'   => false,
+                'contentId' => $contentId
             )
         );
         if (is_null($version)) {
@@ -575,18 +574,33 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     }
 
     /**
-     * @param array $contentIds
+     * @param string $contentId
      *
      * @throws \Doctrine\ODM\MongoDB\MongoDBException
      */
-    public function removeContentIds(array $contentIds)
+    public function softDeleteContent($contentId)
     {
         $qb = $this->createQueryBuilder();
         $qb->updateMany()
-        ->field('contentId')->in($contentIds)
-        ->field('deleted')->set(true)
-        ->getQuery()
-        ->execute();
+            ->field('contentId')->equals($contentId)
+            ->field('deleted')->set(true)
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * @param string $contentId
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
+    public function restoreDeletedContent($contentId)
+    {
+        $qb = $this->createQueryBuilder();
+        $qb->updateMany()
+            ->field('contentId')->equals($contentId)
+            ->field('deleted')->set(false)
+            ->getQuery()
+            ->execute();
     }
 
     /**
@@ -606,6 +620,39 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
             ->field('id')->in($contentMongoIds)
             ->getQuery()
             ->execute();
+    }
+
+    /**
+     * @param string $contentId
+     *
+     * @return ContentInterface
+     */
+    public function findLastVersion($contentId)
+    {
+        $qa = $this->createAggregationQuery();
+        $qa->match(array('deleted' => false));
+        $qa->match(array('contentId' => $contentId));
+        $qa->sort(array('createdAt' => -1));
+
+        return $this->singleHydrateAggregateQuery($qa);
+    }
+
+    /**
+     * @param string $contentId
+     *
+     * @return int
+     */
+    public function hasContentIdWithoutAutoUnpublishToState($contentId)
+    {
+        $qa = $this->createAggregationQuery();
+        $qa->match(
+            array(
+                'contentId'  => $contentId,
+                'status.autoUnpublishToState' => false
+            )
+        );
+
+        return 0 !== $this->countDocumentAggregateQuery($qa);
     }
 
     /**
@@ -672,20 +719,5 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         $qa = $this->generateLastVersionFilter($qa);
 
         return $this->countDocumentAggregateQuery($qa, self::ALIAS_FOR_GROUP);
-    }
-
-    /**
-     * @param string $contentId
-     *
-     * @return ContentInterface
-     */
-    public function findLastVersion($contentId)
-    {
-        $qa = $this->createAggregationQuery();
-        $qa->match(array('deleted' => false));
-        $qa->match(array('contentId' => $contentId));
-        $qa->sort(array('createdAt' => -1));
-
-        return $this->singleHydrateAggregateQuery($qa);
     }
 }
