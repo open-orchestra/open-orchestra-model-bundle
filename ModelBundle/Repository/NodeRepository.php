@@ -25,23 +25,6 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     use UseTrackableTrait;
 
     /**
-     * @param $node  NodeInterface
-     * @param string $areaId
-     *
-     * @return null|AreaInterface
-     */
-    public function findAreaInNodeByAreaId(NodeInterface $node, $areaId)
-    {
-        foreach ($node->getAreas() as $key => $area) {
-            if ($areaId === $key) {
-                return $area;
-            }
-        }
-
-        return null;
-    }
-
-    /**
      * @param string $entityId
      *
      * @return NodeInterface
@@ -311,24 +294,6 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     }
 
     /**
-     * @param string $nodeId
-     * @param string $siteId
-     *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     *
-     * @return mixed
-     */
-    public function findByNodeAndSiteSortedByVersion($nodeId, $siteId)
-    {
-        $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
-        $qa->match(array('nodeId' => $nodeId));
-
-        $qa->sort(array('createdAt' => -1));
-
-        return $this->hydrateAggregateQuery($qa);
-    }
-
-    /**
      * @param string $parentId
      * @param string $siteId
      *
@@ -345,24 +310,6 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     }
 
     /**
-     * @param string $parentId
-     * @param string $siteId
-     *
-     * @throws \Exception
-     *
-     * @return mixed
-     */
-    public function findOneByParentWithGreatestOrder($parentId, $siteId)
-    {
-        $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
-        $qa->match(array('parentId' => $parentId));
-
-        $qa->sort(array('order' => -1));
-
-        return $this->singleHydrateAggregateQuery($qa);
-    }
-
-    /**
      * @param string $path
      * @param string $siteId
      * @param string $language
@@ -375,22 +322,6 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     {
         $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
         $qa->match(array('language' => $language));
-        $qa->match(array('path' => new MongoRegex('/^'.$path.'(\/.*)?$/')));
-
-        return $this->hydrateAggregateQuery($qa);
-    }
-
-    /**
-     * @param string $path
-     * @param string $siteId
-     *
-     * @throws \Doctrine\ODM\MongoDB\MongoDBException
-     *
-     * @return mixed
-     */
-    public function findByIncludedPathAndSiteId($path, $siteId)
-    {
-        $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
         $qa->match(array('path' => new MongoRegex('/^'.$path.'(\/.*)?$/')));
 
         return $this->hydrateAggregateQuery($qa);
@@ -784,33 +715,6 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     public function findOneByNodeId($nodeId)
     {
         return $this->findOneBy(array('nodeId' => $nodeId));
-    }
-
-    /**
-     * @param string $type
-     * @param string $siteId
-     *
-     * @throws \Exception
-     *
-     * @return array
-     */
-    public function findByNodeTypeAndSite($type, $siteId)
-    {
-        return parent::findBy(array('nodeType' => $type, 'siteId' => $siteId));
-    }
-
-    /**
-     * @param string $nodeId
-     * @param string $type
-     * @param string $siteId
-     *
-     * @throws \Exception
-     *
-     * @return array
-     */
-    public function findByNodeIdAndNodeTypeAndSite($nodeId, $type, $siteId)
-    {
-        return parent::findBy(array('nodeId' => $nodeId, 'nodeType' => $type, 'siteId' => $siteId));
     }
 
     /**

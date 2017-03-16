@@ -132,31 +132,6 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     }
 
     /**
-     * Generate keywords filter
-     *
-     * @param string $keywords
-     *
-     * @return array|null
-     */
-    protected function generateKeywordsFilter($keywords)
-    {
-        $filter = null;
-
-        if (!is_null($keywords) && '' !== $keywords) {
-            $keywordFilters = array();
-
-            $keywords = explode(',', $keywords);
-            foreach ($keywords as $keyword) {
-                $keywordFilters[] = array('keywords.label' => $keyword);
-            }
-
-            $filter = array('$and' => $keywordFilters);
-        }
-
-        return $filter;
-    }
-
-    /**
      * Append two filters according to $choiceType operator
      *
      * @param array  $filter1
@@ -173,17 +148,6 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         }
 
         return array($choiceOperatior => array($filter1, $filter2));
-    }
-
-    /**
-     * @param string $contentId
-     * @param string $language
-     *
-     * @return ContentInterface|null
-     */
-    public function findOneByLanguage($contentId, $language)
-    {
-        return $this->findOneByLanguageAndVersion($contentId, $language, null);
     }
 
     /**
@@ -395,14 +359,6 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     protected function generateLanguageFilter($language)
     {
         return array('language' => $language);
-    }
-
-    /**
-     * @return array
-     */
-    protected function generateDeletedFilter()
-    {
-        return array('deleted' => false);
     }
 
     /**
