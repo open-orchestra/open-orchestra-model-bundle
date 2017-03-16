@@ -125,7 +125,7 @@ class LoadNodeRootFunctionalDemoData extends AbstractFixture implements Containe
         $siteBlockLogo->setTransverse(true);
         $orchestraTitle = "Open Orchestra";
         if ($this->hasReference('logo-orchestra')) {
-            $orchestraTitle = '[media=original]' . $this->getReference('logo-orchestra')->getId() . '[/media]';
+            $orchestraTitle = '[media={"format":"original", "alt":"logo", "legend":"Legend"}]' . $this->getReference('logo-orchestra')->getId() . '[/media]';
         }
         $siteBlockLogo->setAttributes(
             array(
