@@ -1012,7 +1012,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
 
         $qb = $this->createQueryBuilder();
         $qb->remove()
-            ->field('id')->in($nodeIds)
+            ->field('id')->in($nodeMongoIds)
             ->getQuery()
             ->execute();
     }

@@ -2,7 +2,6 @@
 
 namespace OpenOrchestra\ModelBundle\Repository;
 
-use OpenOrchestra\ModelInterface\Model\TrashItemInterface;
 use OpenOrchestra\ModelInterface\Repository\TrashItemRepositoryInterface;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use OpenOrchestra\Repository\AbstractAggregateRepository;
