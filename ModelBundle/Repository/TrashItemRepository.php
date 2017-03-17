@@ -14,16 +14,6 @@ use Solution\MongoAggregation\Pipeline\Stage;
 class TrashItemRepository extends AbstractAggregateRepository implements TrashItemRepositoryInterface
 {
     /**
-     * @param $entityId
-     *
-     * @return TrashItemInterface
-     */
-    public function findByEntity($entityId)
-    {
-        return $this->findOneBy(array('entity.$id' => new \MongoId($entityId)));
-    }
-
-    /**
      * @param PaginateFinderConfiguration $configuration
      * @param string                      $siteId
      *
