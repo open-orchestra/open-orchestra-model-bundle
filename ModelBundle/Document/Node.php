@@ -185,6 +185,14 @@ class Node implements NodeInterface
     protected $areas;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ODM\Field(type="hash")
+     */
+    protected $frontRoles = array();
+
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -531,6 +539,22 @@ class Node implements NodeInterface
     public function getArea($areaId)
     {
         return $this->areas->get($areaId);
+    }
+
+    /**
+     * @param array $frontRoles
+     */
+    public function setFrontRoles(array $frontRoles)
+    {
+        $this->frontRoles = $frontRoles;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFrontRoles()
+    {
+        return $this->frontRoles;
     }
 
     /**
