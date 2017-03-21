@@ -187,9 +187,9 @@ class Node implements NodeInterface
     /**
      * @var ArrayCollection
      *
-     * @ODM\Field(type="hash")
+     * @ODM\Field(type="collection")
      */
-    protected $frontRoles = array();
+    protected $frontRoles;
 
 
     /**
@@ -542,15 +542,15 @@ class Node implements NodeInterface
     }
 
     /**
-     * @param array $frontRoles
+     * @param ArrayCollection $frontRoles
      */
-    public function setFrontRoles(array $frontRoles)
+    public function setFrontRoles(ArrayCollection $frontRoles)
     {
         $this->frontRoles = $frontRoles;
     }
 
     /**
-     * @return array
+     * @return ArrayCollection
      */
     public function getFrontRoles()
     {
@@ -565,5 +565,6 @@ class Node implements NodeInterface
         $this->initializeHistories();
         $this->initializeKeywords();
         $this->areas = new ArrayCollection();
+        $this->frontRoles = new ArrayCollection();
     }
 }
