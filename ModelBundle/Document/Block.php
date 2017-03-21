@@ -87,6 +87,18 @@ class Block implements BlockInterface
     }
 
     /**
+     * Set id
+     *
+     * @param string $id
+     */
+    public function setId($id)
+    {
+        if (null ===  $this->id) {
+            $this->id = $id;
+        }
+    }
+
+    /**
      * Set component
      *
      * @param string $component
