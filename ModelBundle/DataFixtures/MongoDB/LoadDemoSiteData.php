@@ -41,6 +41,7 @@ class LoadDemoSiteData extends AbstractLoadSiteData implements OrchestraProducti
         );
         $site2->setSitemapPriority(0.5);
         $site2->setDeleted(false);
+        $site2->setContentTypes(array('news', 'customer', 'car'));
         $site2->setTemplateSet('default');
         $site2->setTemplateNodeRoot('home');
         $site2->addBlock('slideshow');
