@@ -14,11 +14,11 @@ use Solution\MongoAggregation\Pipeline\Stage;
 class ContentTypeRepository extends AbstractAggregateRepository implements ContentTypeRepositoryInterface
 {
     /**
-     * @param $language
+     * @param array $contentTypes
      *
      * @return array
      */
-    public function findAllNotDeletedInLastVersion($language = null)
+    public function findAllNotDeletedInLastVersion(array $contentTypes = array())
     {
         $qa = $this->createAggregationQuery();
         $qa->match(
@@ -26,16 +26,13 @@ class ContentTypeRepository extends AbstractAggregateRepository implements Conte
                 'deleted' => false
             )
         );
-        $elementName = 'contentType';
-        $this->generateLastVersionFilter($qa, $elementName);
-
-        if ($language) {
-            $qa->sort(
-                array(
-                    $elementName . '.names.' . $language. '.value' => 1
-                )
+        if (!empty($contentTypes)) {
+            $qa->match(
+                array('contentTypeId' => array('$in' => $contentTypes))
             );
         }
+        $elementName = 'contentType';
+        $this->generateLastVersionFilter($qa, $elementName);
 
         return $this->hydrateAggregateQuery($qa, $elementName, 'getContentTypeId');
     }

@@ -295,11 +295,19 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
      * @param boolean|null $published
      * @param int|null     $limit
      * @param array|null   $sort
+     * @param array        $contentTypes
      *
      * @return array
      */
-    public function findByHistoryAndSiteId($id, $siteId, array $eventTypes = null, $published = null, $limit = null, array $sort = null)
-    {
+    public function findByHistoryAndSiteId(
+        $id,
+        $siteId,
+        array $eventTypes = null,
+        $published = null,
+        $limit = null,
+        array $sort = null,
+        array $contentTypes = array()
+    ) {
         $qa = $this->createAggregationQuery();
         $filter = array(
             'histories.user.$id' => new \MongoId($id),
@@ -311,6 +319,9 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         }
         if (null !== $published) {
             $filter['status.published'] = $published;
+        }
+        if (!empty($contentTypes)) {
+            $filter['contentType'] = array('$in' => $contentTypes);
         }
 
         $qa->match($filter);

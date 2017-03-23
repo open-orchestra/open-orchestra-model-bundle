@@ -46,11 +46,18 @@ class Site implements SiteInterface
     protected $siteId;
 
     /**
-     * @var ArrayCollection
+     * @var array
      *
-     * @ODM\Field(type="hash")
+     * @ODM\Field(type="collection")
      */
     protected $blocks = array();
+
+    /**
+     * @var array
+     *
+     * @ODM\Field(type="collection")
+     */
+    protected $contentTypes = array();
 
     /**
      * @var string $metaAuthor
@@ -155,6 +162,22 @@ class Site implements SiteInterface
     public function getBlocks()
     {
         return $this->blocks;
+    }
+
+    /**
+     * @param array $contentTypes
+     */
+    public function setContentTypes($contentTypes)
+    {
+        $this->contentTypes = $contentTypes;
+    }
+
+    /**
+     * @return array
+     */
+    public function getContentTypes()
+    {
+        return $this->contentTypes;
     }
 
     /**
