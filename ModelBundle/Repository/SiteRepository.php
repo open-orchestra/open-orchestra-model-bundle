@@ -30,9 +30,12 @@ class SiteRepository extends AbstractAggregateRepository implements SiteReposito
      */
     public function findBySiteIds(array $sitesIds)
     {
-        return parent::findBy(array(
-            'siteId' => array('$in' => $sitesIds),
-        ));
+        return parent::findBy(
+            array(
+                'siteId' => array('$in' => $sitesIds),
+                'deleted' => false
+            )
+        );
     }
 
 
