@@ -123,6 +123,7 @@ class LoadNodeRootFunctionalDemoData extends AbstractFixture implements Containe
         $siteBlockLogo->setStyle('default');
         $siteBlockLogo->setComponent(TinyMCEWysiwygStrategy::NAME);
         $siteBlockLogo->setTransverse(true);
+        $siteBlockLogo->setCode('logo');
         $orchestraTitle = "Open Orchestra";
         if ($this->hasReference('logo-orchestra')) {
             $orchestraTitle = '[media={"format":"original", "alt":"logo", "legend":"Legend"}]' . $this->getReference('logo-orchestra')->getId() . '[/media]';
@@ -144,6 +145,7 @@ class LoadNodeRootFunctionalDemoData extends AbstractFixture implements Containe
 
         $siteBlockFooter = new Block();
         $siteBlockFooter->setLabel('Wysiwyg footer');
+        $siteBlockFooter->setCode('footer');
         $siteBlockFooter->setComponent(TinyMCEWysiwygStrategy::NAME);
         $siteBlockFooter->setTransverse(true);
         $siteBlockFooter->setAttributes(array(
