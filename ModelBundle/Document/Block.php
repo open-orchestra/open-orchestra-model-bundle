@@ -70,6 +70,13 @@ class Block implements BlockInterface
     protected $siteId;
 
     /**
+     * @var string $siteId
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $code;
+
+    /**
      * @var array $attributes
      *
      * @ODM\Field(type="hash")
@@ -259,6 +266,24 @@ class Block implements BlockInterface
     public function getSiteId()
     {
         return $this->siteId;
+    }
+
+    /**
+     * Get Code
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    /**
+     * Set Code
+     *
+     * @param string $code
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
     }
 
     /**
