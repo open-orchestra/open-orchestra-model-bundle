@@ -34,5 +34,4 @@ trait StatusableTrait
 
         return 0 !== $this->countDocumentAggregateQuery($qa);
     }
-
 }
