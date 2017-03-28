@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\Repository;
 
+use OpenOrchestra\ModelInterface\Model\ReadBlockInterface;
 use OpenOrchestra\ModelInterface\Repository\BlockRepositoryInterface;
 use OpenOrchestra\Pagination\Configuration\PaginateFinderConfiguration;
 use OpenOrchestra\Repository\AbstractAggregateRepository;
@@ -39,6 +40,24 @@ class BlockRepository extends AbstractAggregateRepository implements BlockReposi
         return $this->hydrateAggregateQuery($qa);
     }
 
+    /**
+     * @param string $code
+     * @param string $language
+     *
+     * @return ReadBlockInterface|null
+     */
+    public function findOneTransverseBlockByCodeAndLanguage($code, $language)
+    {
+        $qa = $this->createAggregationQuery();
+        $qa->match(array(
+            'code' => $code,
+            'language' => $language,
+            'transverse' => true
+        ));
+
+        return $this->singleHydrateAggregateQuery($qa);
+
+    }
 
     /**
      * @param string                      $siteId
