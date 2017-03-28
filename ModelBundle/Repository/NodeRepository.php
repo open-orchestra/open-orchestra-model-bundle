@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\Repository;
 
+use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\StatusableTrait;
 use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\UseTrackableTrait;
 use OpenOrchestra\ModelInterface\Model\AreaInterface;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
@@ -23,6 +24,7 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
 {
     use AutoPublishableTrait;
     use UseTrackableTrait;
+    use StatusableTrait;
 
     /**
      * @param string $entityId
@@ -918,20 +920,6 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         }
 
         return $this->hydrateAggregateQuery($qa);
-    }
-
-    /**
-     * @param StatusInterface $status
-     *
-     * @return bool
-     */
-    public function hasStatusedElement(StatusInterface $status)
-    {
-        $qa = $this->createAggregationQuery();
-        $qa->match(array('status._id' => new \MongoId($status->getId())));
-        $node = $this->singleHydrateAggregateQuery($qa);
-
-        return $node instanceof NodeInterface;
     }
 
     /**

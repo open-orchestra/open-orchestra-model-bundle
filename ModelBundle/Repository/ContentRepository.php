@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\Repository;
 
+use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\StatusableTrait;
 use Solution\MongoAggregation\Pipeline\Stage;
 use OpenOrchestra\ModelInterface\Model\StatusableInterface;
 use OpenOrchestra\ModelInterface\Model\StatusInterface;
@@ -28,6 +29,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     use UseTrackableTrait;
     use FilterTrait;
     use AutoPublishableTrait;
+    use StatusableTrait;
 
     const ALIAS_FOR_GROUP = 'content';
 
@@ -464,20 +466,6 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         );
 
         return $qa;
-    }
-
-    /**
-     * @param StatusInterface $status
-     *
-     * @return bool
-     */
-    public function hasStatusedElement(StatusInterface $status)
-    {
-        $qa = $this->createAggregationQuery();
-        $qa->match(array('status._id' => new \MongoId($status->getId())));
-        $content = $this->singleHydrateAggregateQuery($qa);
-
-        return $content instanceof ContentInterface;
     }
 
     /**
