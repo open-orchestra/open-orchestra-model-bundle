@@ -710,16 +710,6 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     }
 
     /**
-     * @param string $nodeId
-     *
-     * @return NodeInterface
-     */
-    public function findOneByNodeId($nodeId)
-    {
-        return $this->findOneBy(array('nodeId' => $nodeId));
-    }
-
-    /**
      * @param string $language
      * @param string $siteId
      *
