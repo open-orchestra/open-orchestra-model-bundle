@@ -323,7 +323,6 @@ class ContentType implements ContentTypeInterface
             $this->id = null;
             $this->fields = new ArrayCollection();
             $this->setUpdatedAt(new \DateTime());
-            $this->setVersion($this->getVersion() + 1);
         }
     }
 }
