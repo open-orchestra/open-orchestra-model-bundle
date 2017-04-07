@@ -364,6 +364,26 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     /**
      * @param string $siteId
      * @param string $language
+     *
+     * @return array
+     */
+    public function findLastVersionByLanguage($siteId, $language)
+    {
+        $qa = $this->createAggregationQuery();
+        $qa->match(
+            array(
+                'siteId' => $siteId,
+                'deleted' => false,
+                'language' => $language
+            )
+        );
+
+        return $this->findLastVersion($qa);
+    }
+
+    /**
+     * @param string $siteId
+     * @param string $language
      * @param string $parentId
      *
      * @return array
