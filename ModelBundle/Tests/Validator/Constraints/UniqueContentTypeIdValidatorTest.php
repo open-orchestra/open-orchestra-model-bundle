@@ -62,7 +62,7 @@ class UniqueContentTypeIdValidatorTest extends AbstractBaseTestCase
     public function testValidateWithViolation()
     {
         Phake::when($this->contentType2)->getContentTypeId()->thenReturn($this->contentTypeId);
-        Phake::when($this->contentType2)->getVersion()->thenReturn('1');
+        Phake::when($this->contentType2)->getVersion()->thenReturn('0');
 
         Phake::when($this->repository)->findOneByContentTypeIdInLastVersion($this->contentTypeId)->thenReturn($this->contentType);
 
