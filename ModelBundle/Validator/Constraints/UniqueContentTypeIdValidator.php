@@ -28,12 +28,14 @@ class UniqueContentTypeIdValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        $result = $this->repository->findOneByContentTypeIdInLastVersion($value->getContentTypeId());
+        if ((int)$value->getVersion() < 1) {
+            $result = $this->repository->findOneByContentTypeIdInLastVersion($value->getContentTypeId());
 
-        if (null !== $result && $value->getVersion() <= 1) {
-            $this->context->buildViolation($constraint->message)
-                ->atPath('contentTypeId')
-                ->addViolation();
+            if (null !== $result) {
+                $this->context->buildViolation($constraint->message)
+                    ->atPath('contentTypeId')
+                    ->addViolation();
+            }
         }
     }
 }
