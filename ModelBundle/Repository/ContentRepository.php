@@ -320,7 +320,7 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
             $filter['histories.eventType'] = array('$in' => $eventTypes);
         }
         if (null !== $published) {
-            $filter['status.published'] = $published;
+            $filter['status.publishedState'] = $published;
         }
         if (!empty($contentTypes)) {
             $filter['contentType'] = array('$in' => $contentTypes);
