@@ -610,6 +610,17 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         return 0 !== $this->countDocumentAggregateQuery($qa);
     }
 
+
+    public function findWithUseReferences($siteId)
+    {
+        $where = "function() { return this.useReferences && Object.keys(this.useReferences).length > 0; }";
+        $qb = $this->createQueryBuilder();
+        $qb->field('siteId')->equals($siteId)
+            ->field('useReferences')->where($where);
+
+        return $qb->getQuery()->execute();
+    }
+
     /**
      * @param PaginateFinderConfiguration $configuration
      * @param Stage                       $qa
