@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\Repository;
 
+use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\StatusableTrait;
 use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\UseTrackableTrait;
 use OpenOrchestra\ModelInterface\Model\NodeInterface;
@@ -1090,6 +1091,23 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         );
 
         return 0 !== $this->countDocumentAggregateQuery($qa);
+    }
+
+    /**
+     * @param $siteId
+     *
+     * @return Collection
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     */
+    public function findWithUseReferences($siteId)
+    {
+        $where = "function() { return this.useReferences && Object.keys(this.useReferences).length > 0; }";
+        $qb = $this->createQueryBuilder();
+        $qb->field('siteId')->equals($siteId)
+           ->field('useReferences')->where($where);
+
+        return $qb->getQuery()->execute();
     }
 
     /**

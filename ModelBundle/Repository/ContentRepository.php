@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\Repository;
 
+use Doctrine\Common\Collections\Collection;
 use OpenOrchestra\ModelBundle\Repository\RepositoryTrait\StatusableTrait;
 use Solution\MongoAggregation\Pipeline\Stage;
 use OpenOrchestra\ModelInterface\Model\StatusableInterface;
@@ -608,6 +609,21 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
         );
 
         return 0 !== $this->countDocumentAggregateQuery($qa);
+    }
+
+    /**
+     * @param $siteId
+     *
+     * @return Collection
+     */
+    public function findWithUseReferences($siteId)
+    {
+        $where = "function() { return this.useReferences && Object.keys(this.useReferences).length > 0; }";
+        $qb = $this->createQueryBuilder();
+        $qb->field('siteId')->equals($siteId)
+            ->field('useReferences')->where($where);
+
+        return $qb->getQuery()->execute();
     }
 
     /**
