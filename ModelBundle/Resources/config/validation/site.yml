@@ -4,6 +4,7 @@ OpenOrchestra\ModelBundle\Document\Site:
     properties:
         siteId:
             - NotBlank: ~
+            - OpenOrchestra\ModelBundle\Validator\Constraints\IdAuthorizedCharacter: ~
         name:
             - NotBlank: ~
         deleted:
