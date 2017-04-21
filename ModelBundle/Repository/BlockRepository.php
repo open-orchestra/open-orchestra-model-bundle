@@ -43,15 +43,17 @@ class BlockRepository extends AbstractAggregateRepository implements BlockReposi
     /**
      * @param string $code
      * @param string $language
+     * @param string $siteId
      *
      * @return ReadBlockInterface|null
      */
-    public function findOneTransverseBlockByCodeAndLanguage($code, $language)
+    public function findOneTransverseBlockByCode($code, $language, $siteId)
     {
         $qa = $this->createAggregationQuery();
         $qa->match(array(
             'code' => $code,
             'language' => $language,
+            'siteId' => $siteId,
             'transverse' => true
         ));
 
