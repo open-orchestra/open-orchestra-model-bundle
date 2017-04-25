@@ -145,11 +145,9 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      */
     public function countOtherNodeWithSameSpecialPageName($nodeId, $siteId, $language, $name)
     {
-        $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
+        $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
         $qa->match(
             array(
-                'siteId'    => $siteId,
-                'language'    => $language,
                 'nodeId'   => array('$ne' => $nodeId),
                 'deleted'  => false,
                 'specialPageName' => $name
@@ -1067,6 +1065,25 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         $qa->match(
             array(
                 'parentId' => $parentId,
+                'deleted'  => false,
+            )
+        );
+
+        return $this->countDocumentAggregateQuery($qa);
+    }
+
+    /**
+     * @param string $parentId
+     * @param string $siteId
+     *
+     * @return int
+     */
+    public function countById($id, $siteId)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
+        $qa->match(
+            array(
+                'nodeId' => $id,
                 'deleted'  => false,
             )
         );
