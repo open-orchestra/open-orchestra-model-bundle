@@ -270,6 +270,7 @@ class LoadContentTypeData extends AbstractFixture implements OrderedFixtureInter
         $customer->setDeleted(false);
         $customer->setVersion('1');
         $customer->setDefaultListable($this->genereteDefaultListable());
+        $customer->setDefiningStatusable(false);
 
         $customer->addFieldType($customerFirstName);
         $customer->addFieldType($customerLastName);
