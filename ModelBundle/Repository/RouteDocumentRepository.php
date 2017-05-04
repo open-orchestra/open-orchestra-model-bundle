@@ -27,9 +27,13 @@ class RouteDocumentRepository extends AbstractAggregateRepository implements Rou
      *
      * @return RouteDocumentInterface
      */
-    public function findByRedirection($redirectionId)
+    public function removeByRedirectionId($redirectionId)
     {
-        return $this->findBy(array('name' => new \MongoRegex('/.*_' . $redirectionId . '/')));
+        $this->createQueryBuilder()
+            ->remove()
+            ->field('name')->equals(new \MongoRegex('/.*_' . $redirectionId . '/'))
+            ->getQuery()
+            ->execute();
     }
 
     /**
@@ -61,24 +65,30 @@ class RouteDocumentRepository extends AbstractAggregateRepository implements Rou
     }
 
     /**
-     * @param string $nodeId
+     * @param array  $nodeIds
      * @param string $siteId
      * @param string $language
-     *
-     * @return Collection
      */
-    public function findByNodeIdSiteIdAndLanguage($nodeId, $siteId, $language)
+    public function removeByNodeIdsSiteIdAndLanguage(array $nodeIds, $siteId, $language)
     {
-        return $this->findBy(array('nodeId' => $nodeId, 'siteId' => $siteId, 'language' => $language));
+        $this->createQueryBuilder()
+            ->remove()
+            ->field('siteId')->equals($siteId)
+            ->field('language')->equals($language)
+            ->field('nodeId')->in($nodeIds)
+            ->getQuery()
+            ->execute();
     }
 
     /**
      * @param string $siteId
-     *
-     * @return Collection
      */
-    public function findBySite($siteId)
+    public function removeBySiteId($siteId)
     {
-        return $this->findBy(array('siteId' => $siteId));
+        $this->createQueryBuilder()
+             ->remove()
+             ->field('siteId')->equals($siteId)
+             ->getQuery()
+             ->execute();
     }
 }

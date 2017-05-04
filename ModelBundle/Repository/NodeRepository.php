@@ -317,13 +317,16 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
      *
      * @return array
      */
-    public function findByIncludedPathSiteIdAndLanguage($path, $siteId, $language)
+    public function findNodeIdByIncludedPathSiteIdAndLanguage($path, $siteId, $language)
     {
-        $qa = $this->createAggregationQueryBuilderWithSiteId($siteId);
-        $qa->match(array('language' => $language));
-        $qa->match(array('path' => new MongoRegex('/^'.$path.'(\/.*)?$/')));
+        $qb = $this->createQueryBuilder()->hydrate(false);
+        $qb->field('siteId')->equals($siteId)
+           ->field('language')->equals($language)
+           ->field('deleted')->equals(false)
+           ->field('path')->equals(new MongoRegex('/^'.$path.'(\/.*)?$/'))
+           ->distinct('nodeId');
 
-        return $this->hydrateAggregateQuery($qa);
+        return $qb->getQuery()->execute()->toArray();
     }
 
     /**
@@ -376,6 +379,24 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
         );
 
         return $this->findLastVersion($qa);
+    }
+
+    /**
+     * @param string $language
+     * @param string $siteId
+     *
+     * @return array
+     */
+    public function findAllRoutePattern($language, $siteId)
+    {
+        $qa = $this->createAggregationQueryBuilderWithSiteIdAndLanguage($siteId, $language);
+        $qa->project(array(
+            'routePattern' => true,
+            'nodeId' => true,
+            'parentId' => true,
+        ));
+
+        return $qa->getQuery()->aggregate()->toArray();
     }
 
     /**
