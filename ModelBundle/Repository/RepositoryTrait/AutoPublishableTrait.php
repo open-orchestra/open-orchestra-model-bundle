@@ -31,6 +31,7 @@ trait AutoPublishableTrait
             'siteId' => $siteId,
             'deleted' => false,
             'status._id' => array('$in' => $statusIds),
+            'status.outOfWorkflow' => false,
             'publishDate' => array('$lte' => $date),
             '$or' => array(
                 array('unpublishDate' => array('$exists' => false)),
@@ -63,6 +64,7 @@ trait AutoPublishableTrait
             'siteId' => $siteId,
             'deleted' => false,
             'status._id' => $statusId,
+            'status.outOfWorkflow' => false,
             'unpublishDate' => array('$lte' => $date)
         );
 

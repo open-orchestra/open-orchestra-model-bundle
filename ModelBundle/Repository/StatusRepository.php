@@ -43,7 +43,10 @@ class StatusRepository extends AbstractAggregateRepository implements StatusRepo
     public function findOneByInitial()
     {
         $qa = $this->createAggregationQuery();
-        $qa->match(array('initialState' => true));
+        $qa->match(array(
+            'initialState' => true,
+            'outOfWorkflow' => false
+        ));
 
         return $this->singleHydrateAggregateQuery($qa);
     }
@@ -54,7 +57,10 @@ class StatusRepository extends AbstractAggregateRepository implements StatusRepo
     public function findOneByPublished()
     {
         $qa = $this->createAggregationQuery();
-        $qa->match(array('publishedState' => true));
+        $qa->match(array(
+            'publishedState' => true,
+            'outOfWorkflow' => false
+        ));
 
         return $this->singleHydrateAggregateQuery($qa);
     }
@@ -65,7 +71,10 @@ class StatusRepository extends AbstractAggregateRepository implements StatusRepo
     public function findByAutoPublishFrom()
     {
         $qa = $this->createAggregationQuery();
-        $qa->match(array('autoPublishFromState' => true));
+        $qa->match(array(
+            'autoPublishFromState' => true,
+            'outOfWorkflow' => false
+        ));
 
         return $this->hydrateAggregateQuery($qa);
     }
@@ -76,7 +85,10 @@ class StatusRepository extends AbstractAggregateRepository implements StatusRepo
     public function findOnebyAutoUnpublishTo()
     {
         $qa = $this->createAggregationQuery();
-        $qa->match(array('autoUnpublishToState' => true));
+        $qa->match(array(
+            'autoUnpublishToState' => true,
+            'outOfWorkflow' => false
+        ));
 
         return $this->singleHydrateAggregateQuery($qa);
     }
@@ -87,7 +99,10 @@ class StatusRepository extends AbstractAggregateRepository implements StatusRepo
     public function findOneByTranslationState()
     {
         $qa = $this->createAggregationQuery();
-        $qa->match(array('translationState' => true));
+        $qa->match(array(
+            'translationState' => true,
+            'outOfWorkflow' => false
+        ));
 
         return $this->singleHydrateAggregateQuery($qa);
     }
