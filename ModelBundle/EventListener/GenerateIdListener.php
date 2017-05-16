@@ -48,8 +48,12 @@ class GenerateIdListener implements ContainerAwareInterface
             if ($testMethod === null && $repository instanceof FieldAutoGenerableRepositoryInterface) {
                 $testMethod = 'testUniquenessInContext';
             }
+
             if (is_null($document->$getGenerated())) {
                 $source = $document->$getSource();
+                if (is_array($source)) {
+                    $source = array_values($source)[0];
+                }
                 $source = Inflector::tableize($source);
                 $sourceField = $this->suppressSpecialCharacterHelper->transform($source);
                 $generatedField = $sourceField;
