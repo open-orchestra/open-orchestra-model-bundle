@@ -44,13 +44,10 @@ class LoadDemoSiteData extends AbstractLoadSiteData implements OrchestraProducti
         $site2->setContentTypes(array('news', 'customer', 'car'));
         $site2->setTemplateSet('default');
         $site2->setTemplateNodeRoot('home');
-        $site2->addBlock('slideshow');
-        $site2->addBlock('gallery');
         $site2->addBlock('tiny_mce_wysiwyg');
         $site2->addBlock('configurable_content');
         $site2->addBlock('content_list');
         $site2->addBlock('content');
-        $site2->addBlock('media_list_by_keyword');
         $site2->addBlock('video');
 
         return $site2;
