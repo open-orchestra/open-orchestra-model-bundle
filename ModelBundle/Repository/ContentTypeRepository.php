@@ -106,7 +106,7 @@ class ContentTypeRepository extends AbstractAggregateRepository implements Conte
     {
         $qa = $this->createAggregationQuery();
         $qa->match(array('contentTypeId' => $contentType));
-        $qa->sort(array('version' => -1));
+        $qa->sort(array('updatedAt' => -1));
 
         return $this->singleHydrateAggregateQuery($qa);
     }
