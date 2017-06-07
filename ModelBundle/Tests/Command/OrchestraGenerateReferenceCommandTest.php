@@ -26,13 +26,6 @@ class OrchestraGenerateReferenceCommandTest extends AbstractBaseTestCase
     public function setUp()
     {
         $this->container = Phake::mock('Symfony\Component\DependencyInjection\Container');
-
-
-    /*use OpenOrchestra\ModelBundle\Document\Block;
-    use OpenOrchestra\ModelBundle\Document\Content;
-    use OpenOrchestra\ModelBundle\Document\Node;*/
-
-
         $this->command = new OrchestraGenerateReferenceCommand();
         $this->command->setContainer($this->container);
 
