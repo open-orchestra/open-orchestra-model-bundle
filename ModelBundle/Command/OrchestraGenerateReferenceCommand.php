@@ -24,7 +24,7 @@ class OrchestraGenerateReferenceCommand extends ContainerAwareCommand
         $this
             ->setName('orchestra:references:generate')
             ->setDescription('generate references')
-            ->addOption('document', null, InputOption::VALUE_REQUIRED, 'Class of Document.');
+            ->addArgument('document', null, 'Class of Document.');
     }
 
     /**
@@ -36,12 +36,7 @@ class OrchestraGenerateReferenceCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (is_null($input->getOption('document'))) {
-            throw new \InvalidArgumentException(
-                'You have to specify the class of the document which must be referenced'
-            );
-        }
-        $document = $input->getOption('document');
+        $document = $input->getArgument('document');
 
         $dm = $this->getContainer()->get('doctrine.odm.mongodb.document_manager');
         $referenceManager = $this->getContainer()->get('open_orchestra_backoffice.reference.manager');
