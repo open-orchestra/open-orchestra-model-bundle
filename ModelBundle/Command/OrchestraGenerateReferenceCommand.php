@@ -4,10 +4,8 @@ namespace OpenOrchestra\ModelBundle\Command;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use OpenOrchestra\Backoffice\Reference\ReferenceManager;
-use OpenOrchestra\ModelBundle\Document\Block;
-use OpenOrchestra\ModelBundle\Document\Content;
-use OpenOrchestra\ModelBundle\Document\Node;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -24,15 +22,12 @@ class OrchestraGenerateReferenceCommand extends ContainerAwareCommand
         $this
             ->setName('orchestra:references:generate')
             ->setDescription('generate references')
-            ->addArgument('document', null, 'Class of Document.');
+            ->addArgument('document', InputArgument::REQUIRED, 'Class of Document.');
     }
 
     /**
      * @param InputInterface  $input
      * @param OutputInterface $output
-     *
-     * @return mixed
-     * @throws \InvalidArgumentException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
