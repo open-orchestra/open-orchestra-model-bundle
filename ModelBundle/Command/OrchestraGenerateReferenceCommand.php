@@ -23,7 +23,8 @@ class OrchestraGenerateReferenceCommand extends ContainerAwareCommand
     {
         $this
             ->setName('orchestra:references:generate')
-            ->setDescription('generate references');
+            ->setDescription('generate references')
+            ->addOption('document', null, InputOption::VALUE_REQUIRED, 'Class of Document.');
     }
 
     /**
@@ -35,17 +36,16 @@ class OrchestraGenerateReferenceCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        if (is_null($input->getOption('document'))) {
+            throw new \InvalidArgumentException(
+                'You have to specify the class of the document which must be referenced'
+            );
+        }
+        $document = $input->getOption('document');
+
         $dm = $this->getContainer()->get('doctrine.odm.mongodb.document_manager');
         $referenceManager = $this->getContainer()->get('open_orchestra_backoffice.reference.manager');
-
-        $output->writeln(' + Update use references of nodes');
-        $this->updateUseReferenceEntity(Node::class, $dm, $referenceManager, $output);
-
-        $output->writeln(' + Update use references of blocks');
-        $this->updateUseReferenceEntity(Block::class, $dm, $referenceManager, $output);
-
-        $output->writeln(' + Update use references of contents');
-        $this->updateUseReferenceEntity(Content::class, $dm, $referenceManager, $output);
+        $this->updateUseReferenceEntity($document, $dm, $referenceManager, $output);
     }
 
     /**
