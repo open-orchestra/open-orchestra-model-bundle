@@ -57,5 +57,6 @@ class OpenOrchestraModelExtension extends Extension
         $loader->load('form.yml');
         $loader->load('transformer.yml');
         $loader->load('helper.yml');
+        $loader->load('health_check.yml');
     }
 }

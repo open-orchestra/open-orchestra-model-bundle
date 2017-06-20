@@ -1,0 +1,10 @@
+parameters:
+    open_orchestra_model.health_check.mongo_connection.class: OpenOrchestra\ModelBundle\HealthCheck\MongoDbConnectionTest
+
+services:
+    open_orchestra_model.health_check.mongo_connection:
+        class: '%open_orchestra_model.health_check.mongo_connection.class%'
+        arguments:
+            - '@object_manager'
+        tags:
+            - { name: open_orchestra_base.health_check.test }
