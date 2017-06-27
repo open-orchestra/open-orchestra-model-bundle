@@ -330,6 +330,24 @@ class NodeRepository extends AbstractAggregateRepository implements FieldAutoGen
     }
 
     /**
+     * @param string $path
+     * @param string $siteId
+     * @param string $language
+     *
+     * @throws \Doctrine\ODM\MongoDB\MongoDBException
+     *
+     * @return array
+     */
+    public function findNodeIdByIncludedPathSiteId($path, $siteId)
+    {
+        $qb = $this->createQueryBuilder();
+        $qb->field('siteId')->equals($siteId)
+            ->field('path')->equals(new MongoRegex('/^'.$path.'(\/.*)?$/'));
+
+        return $qb->getQuery()->execute()->toArray();
+    }
+
+    /**
      * @param string $nodeId
      * @param string $language
      * @param string $siteId
