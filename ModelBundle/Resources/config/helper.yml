@@ -3,11 +3,3 @@ parameters:
 services:
     open_orchestra_model.helper.suppress_special_character:
         class: '%open_orchestra_model.helper.suppress_special_character.class%'
-
-    open_orchestra_front.health_check.writable_dir:
-        class: '%open_orchestra_front.health_check.writable_dir.class%'
-        arguments:
-            - '%kernel.cache_dir%'
-            - '%kernel.logs_dir%'
-        tags:
-            - { name: open_orchestra_base.health_check.test }
