@@ -51,11 +51,11 @@ class Area implements AreaInterface
 
     /**
      * @param BlockInterface $block
-     * @param int            $key
+     * @param int|null       $key
      */
-    public function addBlock(BlockInterface $block, $key = 0)
+    public function addBlock(BlockInterface $block, $key = null)
     {
-        if (0 === $key) {
+        if (null === $key) {
             $this->blocks->add($block);
         } else {
             $blocks = $this->blocks->toArray();
