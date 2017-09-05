@@ -34,21 +34,7 @@ class Redirection implements RedirectionInterface
      *
      * @ODM\Field(type="string")
      */
-    protected $locale;
-
-    /**
-     * @var string
-     *
-     * @ODM\Field(type="string")
-     */
-    protected $siteName;
-
-    /**
-     * @var string
-     *
-     * @ODM\Field(type="string")
-     */
-    protected $routePattern;
+    protected $aliasId;
 
     /**
      * @var string
@@ -56,6 +42,20 @@ class Redirection implements RedirectionInterface
      * @ODM\Field(type="string")
      */
     protected $nodeId;
+
+    /**
+     * @var string
+     *
+     * @ODM\Field(type="hash")
+     */
+    protected $wildcard;
+
+    /**
+     * @var string
+     *
+     * @ODM\Field(type="string")
+     */
+    protected $routePattern;
 
     /**
      * @var string
@@ -70,6 +70,14 @@ class Redirection implements RedirectionInterface
      * @ODM\Field(type="boolean")
      */
     protected $permanent;
+
+    /**
+     * Class constructor
+     */
+    public function __construct()
+    {
+        $this->wildcard = array();
+    }
 
     /**
      * @return string
@@ -98,49 +106,17 @@ class Redirection implements RedirectionInterface
     /**
      * @return string
      */
-    public function getLocale()
+    public function getAliasId()
     {
-        return $this->locale;
+        return $this->aliasId;
     }
 
     /**
-     * @param string $locale
+     * @param string $aliasId
      */
-    public function setLocale($locale)
+    public function setAliasId($aliasId)
     {
-        $this->locale = $locale;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSiteName()
-    {
-        return $this->siteName;
-    }
-
-    /**
-     * @param string $siteName
-     */
-    public function setSiteName($siteName)
-    {
-        $this->siteName = $siteName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRoutePattern()
-    {
-        return $this->routePattern;
-    }
-
-    /**
-     * @param string $routePattern
-     */
-    public function setRoutePattern($routePattern)
-    {
-        $this->routePattern = $routePattern;
+        $this->aliasId = $aliasId;
     }
 
     /**
@@ -157,6 +133,41 @@ class Redirection implements RedirectionInterface
     public function setNodeId($nodeId)
     {
         $this->nodeId = $nodeId;
+    }
+
+    /**
+     * @return array
+     */
+    public function getWildcard()
+    {
+        return $this->wildcard;
+    }
+
+    /**
+     * @param array $wildcard
+     */
+    public function setWildcard($wildcard)
+    {
+        $this->wildcard = array();
+        foreach ($wildcard as $key => $item) {
+            $this->wildcard[$key] = $item;
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getRoutePattern()
+    {
+        return $this->routePattern;
+    }
+
+    /**
+     * @param string $routePattern
+     */
+    public function setRoutePattern($routePattern)
+    {
+        $this->routePattern = $routePattern;
     }
 
     /**
