@@ -13,3 +13,4 @@ resolve_target_documents:
     OpenOrchestra\ModelInterface\Model\WorkflowProfileInterface           : OpenOrchestra\ModelBundle\Document\WorkflowProfile
     OpenOrchestra\ModelInterface\Model\WorkflowProfileCollectionInterface : OpenOrchestra\ModelBundle\Document\WorkflowProfileCollection
     OpenOrchestra\ModelInterface\Model\WorkflowTransitionInterface        : OpenOrchestra\ModelBundle\Document\WorkflowTransition
+    OpenOrchestra\ModelInterface\Model\InternalUrlInterface               : OpenOrchestra\ModelBundle\Document\InternalUrl

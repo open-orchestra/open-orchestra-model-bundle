@@ -2,6 +2,7 @@
 
 namespace OpenOrchestra\ModelBundle\Document;
 
+use OpenOrchestra\ModelInterface\Model\InternalUrlInterface;
 use OpenOrchestra\ModelInterface\Model\RedirectionInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
@@ -34,21 +35,7 @@ class Redirection implements RedirectionInterface
      *
      * @ODM\Field(type="string")
      */
-    protected $aliasId;
-
-    /**
-     * @var string
-     *
-     * @ODM\Field(type="string")
-     */
-    protected $nodeId;
-
-    /**
-     * @var string
-     *
-     * @ODM\Field(type="hash")
-     */
-    protected $wildcard;
+    protected $locale;
 
     /**
      * @var string
@@ -65,19 +52,17 @@ class Redirection implements RedirectionInterface
     protected $url;
 
     /**
+     * @ODM\EmbedOne(targetDocument="OpenOrchestra\ModelInterface\Model\InternalUrlInterface")
+     */
+    protected $internalUrl;
+
+
+    /**
      * @var boolean
      *
      * @ODM\Field(type="boolean")
      */
     protected $permanent;
-
-    /**
-     * Class constructor
-     */
-    public function __construct()
-    {
-        $this->wildcard = array();
-    }
 
     /**
      * @return string
@@ -106,52 +91,17 @@ class Redirection implements RedirectionInterface
     /**
      * @return string
      */
-    public function getAliasId()
+    public function getLocale()
     {
-        return $this->aliasId;
+        return $this->locale;
     }
 
     /**
-     * @param string $aliasId
+     * @param string $locale
      */
-    public function setAliasId($aliasId)
+    public function setLocale($locale)
     {
-        $this->aliasId = $aliasId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getNodeId()
-    {
-        return $this->nodeId;
-    }
-
-    /**
-     * @param string $nodeId
-     */
-    public function setNodeId($nodeId)
-    {
-        $this->nodeId = $nodeId;
-    }
-
-    /**
-     * @return array
-     */
-    public function getWildcard()
-    {
-        return $this->wildcard;
-    }
-
-    /**
-     * @param array $wildcard
-     */
-    public function setWildcard($wildcard)
-    {
-        $this->wildcard = array();
-        foreach ($wildcard as $key => $item) {
-            $this->wildcard[$key] = $item;
-        }
+        $this->locale = $locale;
     }
 
     /**
@@ -184,6 +134,22 @@ class Redirection implements RedirectionInterface
     public function setUrl($url)
     {
         $this->url = $url;
+    }
+
+    /**
+     * @return string
+     */
+    public function getInternalUrl()
+    {
+        return $this->internalUrl;
+    }
+
+    /**
+     * @param InternalUrlInterface $internalUrl
+     */
+    public function setInternalUrl(InternalUrlInterface $internalUrl)
+    {
+        $this->internalUrl = $internalUrl;
     }
 
     /**
