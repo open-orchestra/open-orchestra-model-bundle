@@ -627,6 +627,25 @@ class ContentRepository extends AbstractAggregateRepository implements FieldAuto
     }
 
     /**
+     * @param $attributeId
+     * @param $contentTypeId
+     *
+     * @return Collection
+     */
+    public function deleteAttributeForContentType($attributeId, $contentTypeId)
+    {
+        $qb = $this->createQueryBuilder()
+            ->updateMany()
+            ->field('contentType')
+            ->equals($contentTypeId)
+            ->field('attributes.' . $attributeId)
+            ->unsetField()
+            ->exists(true)
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
      * @param PaginateFinderConfiguration $configuration
      * @param Stage                       $qa
      * @param array                       $searchTypes
